@@ -11,7 +11,6 @@ import Overplay from "./Overplay";
 import ProfileMenu from "./ProfileMenu";
 import Image from "./Image";
 function Header() {
-  const [isLogin, setIsLogin] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
   const [menuMobileOpen, setMenuMobileOpen] = useState(false);
   const [openMenuProfile, setOpenMenuProfile] = useState(false);
@@ -22,11 +21,6 @@ function Header() {
 
   const toggleMobileMenu = () => {
     setMenuMobileOpen(!menuMobileOpen);
-    if (openSearch) setOpenSearch(false);
-  };
-
-  const toggleProfileMenu = () => {
-    setOpenMenuProfile((prev) => !prev);
     if (openSearch) setOpenSearch(false);
   };
 
@@ -215,18 +209,15 @@ function Header() {
                 </form>
               </div>
 
-              {!isLogin ? (
-                <div className="relative cursor-pointer group">
-                  <CiUser size={24} />
-                  <ProfileMenu isOpen={openMenuProfile} />
-                </div>
-              ) : (
-                <button>
-                  <Link href={"/login"}>
-                    <CiUser size={24} />
-                  </Link>
-                </button>
-              )}
+              <div className="relative cursor-pointer group">
+                <CiUser size={24} />
+                <ProfileMenu isOpen={openMenuProfile} />
+              </div>
+              {/*
+      <Link href={"/login"}>
+      <CiUser size={24} />
+    </Link>
+    */}
 
               <Link href={"/cart"} className="relative">
                 <CiShoppingCart size={26} />
@@ -284,18 +275,16 @@ function Header() {
                 <CiSearch size={24} />
               </button>
 
-              {!isLogin ? (
-                <div className="relative cursor-pointer group">
-                  <CiUser size={24} />
-                  <ProfileMenu isOpen={openMenuProfile} />
-                </div>
-              ) : (
-                <button>
-                  <Link href={"/login"}>
-                    <CiUser size={24} />
-                  </Link>
-                </button>
-              )}
+              <div className="relative cursor-pointer group">
+                <CiUser size={24} />
+                <ProfileMenu isOpen={openMenuProfile} />
+              </div>
+
+              {/*
+  <Link href={"/login"}>
+  <CiUser size={24} />
+</Link>
+*/}
 
               <Link href={"/cart"} className="relative">
                 <CiShoppingCart size={26} />
