@@ -17,14 +17,14 @@ const AdvancedSearch: React.FC<AdvancedSearchProp> = ({
   const minLimit = 0;
   const maxLimit = 1000000;
   const priceGap = 1;
-  const handleMinChange = (e: any) => {
+  const handleMinChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = parseInt(e.target.value);
     if (value < minLimit) value = minLimit;
     if (value > maxPrice - priceGap) value = maxPrice - priceGap;
     setMinPrice(value);
   };
 
-  const handleMaxChange = (e: any) => {
+  const handleMaxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     let value = parseInt(e.target.value);
     if (value > maxLimit) value = maxLimit;
     if (value < minPrice + priceGap) value = minPrice + priceGap;

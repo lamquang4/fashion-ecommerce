@@ -10,7 +10,7 @@ function AccountInfo() {
     birthday: "2004-05-04",
   });
 
-  const handleChange = (e: any) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setData({ ...data, [e.target.name]: e.target.value });
   };
 

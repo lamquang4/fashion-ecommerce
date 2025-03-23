@@ -12,7 +12,7 @@ interface MenuMobileProp {
 const Menumobile: React.FC<MenuMobileProp> = ({ isOpen, toggleMenu }) => {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
 
-  const toggleOpen = (menu: any) => {
+  const toggleOpen = (menu: string) => {
     setOpenMenus((prev) => ({
       ...prev,
       [menu]: !prev[menu],
