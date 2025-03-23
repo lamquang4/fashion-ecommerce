@@ -3,8 +3,10 @@ import React from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import Link from "next/link";
-
-function ProductSlider({ title }: any) {
+interface TitleProp {
+  title: string;
+}
+const ProductSlider: React.FC<TitleProp> = ({ title }) => {
   const productLists = [
     {
       name: "Áo sơ mi Leweu Kio",
@@ -114,6 +116,6 @@ function ProductSlider({ title }: any) {
       </div>
     </section>
   );
-}
+};
 
 export default ProductSlider;

@@ -1,9 +1,14 @@
 "use client";
 import React, { useState } from "react";
 import { CiHeart } from "react-icons/ci";
+{
+  /*
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
-function ProductForm() {
+  */
+}
+
+function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState("S");
 
   return (
@@ -232,4 +237,4 @@ function ProductForm() {
   );
 }
 
-export default ProductForm;
+export default ProductDetail;

@@ -326,7 +326,7 @@ function Header() {
       </header>
 
       <Menumobile isOpen={menuMobileOpen} toggleMenu={toggleMobileMenu} />
-      {openSearch && <Overplay closeSearch={toggleSearch} />}
+      {openSearch && <Overplay closeMenu={toggleSearch} IndexForZ={12} />}
     </>
   );
 }

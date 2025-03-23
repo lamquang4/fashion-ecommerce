@@ -4,8 +4,14 @@ import { HiMiniXMark } from "react-icons/hi2";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaArrowRightLong } from "react-icons/fa6";
 import Overplay from "./Overplay";
-
-function AdvancedSearch({ isOpen, toggleMenu }: any) {
+interface AdvancedSearchProp {
+  isOpen: boolean;
+  toggleMenu: () => void;
+}
+const AdvancedSearch: React.FC<AdvancedSearchProp> = ({
+  isOpen,
+  toggleMenu,
+}) => {
   const [minPrice, setMinPrice] = useState(0);
   const [maxPrice, setMaxPrice] = useState(1000000);
   const minLimit = 0;
@@ -286,9 +292,9 @@ function AdvancedSearch({ isOpen, toggleMenu }: any) {
         </form>
       </div>
 
-      {isOpen && <Overplay closeMenu={toggleMenu} />}
+      {isOpen && <Overplay closeMenu={toggleMenu} IndexForZ={15} />}
     </>
   );
-}
+};
 
 export default AdvancedSearch;

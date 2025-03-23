@@ -1,11 +1,11 @@
 import React from "react";
-import ProductForm from "../components/ProductForm";
 import ProductSlider from "../components/ProductSlider";
+import ProductDetail from "../components/ProductDetail";
 
 function Product() {
   return (
     <>
-      <ProductForm />
+      <ProductDetail />
       <ProductSlider title={"Có thể bạn sẽ thích"} />
     </>
   );

@@ -1,7 +1,9 @@
 "use client";
 import React from "react";
-
-function DifferentLR({ title }: any) {
+interface TitleProp {
+  title: string;
+}
+const DifferentLR: React.FC<TitleProp> = ({ title }) => {
   return (
     <>
       <div className="flex items-center m-[30px_0]">
@@ -20,6 +22,6 @@ function DifferentLR({ title }: any) {
       </div>
     </>
   );
-}
+};
 
 export default DifferentLR;
