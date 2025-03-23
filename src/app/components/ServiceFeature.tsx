@@ -1,5 +1,5 @@
 import React from "react";
-
+import Image from "./Image";
 function ServiceFeature() {
   return (
     <section className="px-[10px] mt-[40px] sm:mt-[45px] sm:px-[15px]">
@@ -32,7 +32,7 @@ function ServiceFeature() {
               className="flex flex-col items-center text-center xl:flex-row xl:text-start"
             >
               <div className="w-[40px] h-[40px] flex items-center justify-center">
-                <img className="w-full h-full" src={item.img} alt="" />
+                <Image Src={item.img} Alt={""} ClassName={"w-full h-full"} />
               </div>
               <div className="flex flex-col mt-2 xl:mt-0 xl:ml-3">
                 <h3 className="text-[0.9rem] font-medium dark:text-white">

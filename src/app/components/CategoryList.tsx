@@ -6,7 +6,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
-
+import Image from "./Image";
 interface CategoryItem {
   name: string;
   count: number;
@@ -63,11 +63,10 @@ function CategoryList() {
                   >
                     <Link href={"/"}>
                       <div className="mb-[8px]">
-                        <img
-                          src={item.img}
-                          alt={item.name}
-                          className="block w-[90px] sm:w-[110px] object-cover"
-                          loading="lazy"
+                        <Image
+                          Src={item.img}
+                          Alt={item.name}
+                          ClassName={"block w-[90px] sm:w-[110px] object-cover"}
                         />
                       </div>
                       <div className="w-full">

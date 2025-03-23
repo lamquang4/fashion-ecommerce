@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-
+import Image from "./Image";
 function Blog() {
   return (
     <section className="px-[10px] mt-[30px] sm:mt-[45px] sm:px-[15px]">
@@ -17,12 +17,14 @@ function Blog() {
                 key={index}
                 className="group cursor-pointer min-w-[calc(100%/1.7)] lg:min-w-[calc(100%/3)] transition-all duration-300 snap-center"
               >
-                <div className="flex items-center mb-5 overflow-hidden">
+                <div className="flex items-center mb-5 overflow-hidden rounded-lg">
                   <Link href={"/"}>
-                    <img
-                      src="/assets/banner/banner-new.png"
-                      alt=""
-                      className="rounded-lg w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    <Image
+                      Src={"/assets/banner/banner-new.png"}
+                      Alt={""}
+                      ClassName={
+                        "rounded-lg w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                      }
                     />
                   </Link>
                 </div>

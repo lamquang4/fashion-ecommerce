@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
+import Image from "./Image";
 function WishlistItem() {
   const [isProduct, setIsProduct] = useState(true);
   return (
@@ -19,9 +20,10 @@ function WishlistItem() {
                   <div className="flex gap-4.5">
                     <Link href={"/"}>
                       <div className="w-50 h-50 max-sm:w-30 max-sm:h-30 shrink-0">
-                        <img
-                          src="/assets/products/IMGSP3483.png"
-                          className="w-full h-full object-cover"
+                        <Image
+                          Src={"/assets/products/IMGSP3483.png"}
+                          Alt={""}
+                          ClassName={"w-full h-full object-cover"}
                         />
                       </div>
                     </Link>
@@ -63,9 +65,10 @@ function WishlistItem() {
                   <div className="flex gap-4.5">
                     <Link href={"/"}>
                       <div className="w-50 h-50 max-sm:w-30 max-sm:h-30 shrink-0">
-                        <img
-                          src="/assets/products/IMGSP3483.png"
-                          className="w-full h-full object-cover"
+                        <Image
+                          Src={"/assets/products/IMGSP3483.png"}
+                          Alt={""}
+                          ClassName={"w-full h-full object-cover"}
                         />
                       </div>
                     </Link>
@@ -108,10 +111,10 @@ function WishlistItem() {
             <div className="flex justify-center items-center h-[60vh]">
               <div>
                 <div className="mb-[25px] flex justify-center">
-                  <img
-                    src="/assets/other/empty-wishlist.png"
-                    alt=""
-                    className="w-[220px]"
+                  <Image
+                    Src={"/assets/other/empty-wishlist.png"}
+                    Alt={""}
+                    ClassName={"w-[220px]"}
                   />
                 </div>
 

@@ -6,7 +6,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
 import React from "react";
-
+import Image from "./Image";
 function BannerCarousel() {
   const bannerCarousels = [
     {
@@ -37,10 +37,10 @@ function BannerCarousel() {
                     srcSet={banner.imgMobile}
                     media="(max-width: 640px)"
                   />
-                  <img
-                    src={banner.imgDesktop}
-                    alt="Banner"
-                    className="w-full object-cover"
+                  <Image
+                    Src={banner.imgDesktop}
+                    Alt={""}
+                    ClassName={"w-full object-cover"}
                   />
                 </picture>
 

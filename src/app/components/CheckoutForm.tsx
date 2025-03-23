@@ -1,13 +1,17 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-
+import Image from "./Image";
 function CheckoutForm() {
   return (
     <section className="max-w-6xl mx-auto my-[30px] sm:my-[45px]">
       <div className="w-full px-[10px] sm:px-[15px]">
         <Link href={"/"}>
-          <img src="/assets/other/logo.png" alt="" width={"80px"} />
+          <Image
+            Src={"/assets/other/logo.png"}
+            Alt={""}
+            ClassName={"w-[80px]"}
+          />
         </Link>
 
         <hr className="border-slate-300 my-[15px]" />
@@ -245,11 +249,12 @@ function CheckoutForm() {
                 <div className="space-y-5.5 bg-white">
                   <div className="flex rounded-lg bg-white gap-[15px]">
                     <div className="relative">
-                      <img
-                        className="w-[120px] object-cover"
-                        src="/assets/products/IMGSP3483.png"
-                        alt=""
+                      <Image
+                        Src={"/assets/products/IMGSP3483.png"}
+                        Alt={""}
+                        ClassName={"w-[120px] object-cover"}
                       />
+
                       <span className="absolute flex items-center justify-center    top-[-9px] right-[-11px]    bg-[#197FB6] text-white text-[0.85rem] font-medium leading-none    rounded-full w-[25px] h-[25px]">
                         3
                       </span>
@@ -268,10 +273,10 @@ function CheckoutForm() {
 
                   <div className="flex rounded-lg bg-white gap-[15px]">
                     <div className="relative">
-                      <img
-                        className="w-[120px] object-cover"
-                        src="/assets/products/IMGSP3483.png"
-                        alt=""
+                      <Image
+                        Src={"/assets/products/IMGSP3483.png"}
+                        Alt={""}
+                        ClassName={"w-[120px] object-cover"}
                       />
                       <span className="absolute flex items-center justify-center    top-[-9px] right-[-11px]    bg-[#197FB6] text-white text-[0.85rem] font-medium leading-none    rounded-full w-[25px] h-[25px]">
                         3

@@ -9,6 +9,7 @@ import { AiOutlineMenu } from "react-icons/ai";
 import Menumobile from "./Menumobile";
 import Overplay from "./Overplay";
 import ProfileMenu from "./ProfileMenu";
+import Image from "./Image";
 function Header() {
   const [isLogin, setIsLogin] = useState(false);
   const [openSearch, setOpenSearch] = useState(false);
@@ -56,7 +57,11 @@ function Header() {
           {/* Desktop */}
           <div className="flex justify-between items-center w-full py-[20px] px-[15px] md:px-[20px] lg:px-[40px] relative">
             <Link href={"/"}>
-              <img src="/assets/other/logo.png" alt="" width="80px" />
+              <Image
+                Src={"/assets/other/logo.png"}
+                Alt={""}
+                ClassName={"w-[80px]"}
+              />
             </Link>
 
             <nav className="hidden lg:block">

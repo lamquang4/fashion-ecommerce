@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import SideBarMenu from "./SideBarMenu";
-
+import Image from "./Image";
 function OrderDetail() {
   return (
     <section className="w-full mt-[30px] sm:mt-[45px]">
@@ -11,7 +11,11 @@ function OrderDetail() {
           <div className="py-[30px]">
             <div className="flex justify-between px-[15px]">
               <div>
-                <img src="/assets/other/logo.png" className="w-[80px]" alt="" />
+                <Image
+                  Src={"/assets/other/logo.png"}
+                  Alt={""}
+                  ClassName={"w-[80px]"}
+                />
               </div>
 
               <div className="flex flex-col gap-[5px]">
@@ -54,11 +58,12 @@ function OrderDetail() {
                     <tr>
                       <td className="pl-[15px] py-[15px]">
                         <div className="flex items-center gap-[10px]">
-                          <img
-                            src="/assets/products/IMGSP3483.png"
-                            alt=""
-                            width="60px"
+                          <Image
+                            Src={"/assets/products/IMGSP3483.png"}
+                            Alt={""}
+                            ClassName={"w-[60px]"}
                           />
+
                           <div>
                             <p>Jack Hydrangea Melange Shirt</p>
                             <p>M / Đen</p>

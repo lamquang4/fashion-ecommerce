@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
+import Image from "./Image";
 function CartItem() {
   const [isProduct, setIsProduct] = useState(true);
   return (
@@ -22,9 +23,10 @@ function CartItem() {
                     <div className="flex gap-4.5">
                       <Link href={"/"}>
                         <div className="w-50 h-50 max-sm:w-30 max-sm:h-30 shrink-0">
-                          <img
-                            src="/assets/products/IMGSP3483.png"
-                            className="w-full h-full object-cover"
+                          <Image
+                            Src={"/assets/products/IMGSP3483.png"}
+                            Alt={""}
+                            ClassName={"w-full h-full object-cover"}
                           />
                         </div>
                       </Link>
@@ -103,9 +105,10 @@ function CartItem() {
                     <div className="flex gap-4.5">
                       <Link href={"/"}>
                         <div className="w-50 h-50 max-sm:w-30 max-sm:h-30 shrink-0">
-                          <img
-                            src="/assets/products/IMGSP3483.png"
-                            className="w-full h-full object-cover"
+                          <Image
+                            Src={"/assets/products/IMGSP3483.png"}
+                            Alt={""}
+                            ClassName={"w-full h-full object-cover"}
                           />
                         </div>
                       </Link>
@@ -231,7 +234,8 @@ function CartItem() {
                   </div>
 
                   <div className="mt-[20px] flex flex-wrap justify-center gap-4">
-                    <img
+                    {/*
+<img
                       src="https://readymadeui.com/images/master.webp"
                       alt="card1"
                       className="w-10 object-contain"
@@ -246,6 +250,7 @@ function CartItem() {
                       alt="card3"
                       className="w-10 object-contain"
                     />
+                      */}
                   </div>
                 </div>
               </div>
@@ -254,10 +259,10 @@ function CartItem() {
             <div className="flex justify-center items-center h-[60vh]">
               <div>
                 <div className="mb-[25px] flex justify-center">
-                  <img
-                    src="/assets/other/empty-cart.png"
-                    alt=""
-                    className="w-[190px]"
+                  <Image
+                    Src={"/assets/other/empty-cart.png"}
+                    Alt={""}
+                    ClassName={"w-[190px]"}
                   />
                 </div>
 

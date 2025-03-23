@@ -3,6 +3,7 @@ import React from "react";
 import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import Link from "next/link";
+import Image from "./Image";
 interface TitleProp {
   title: string;
 }
@@ -79,17 +80,19 @@ const ProductSlider: React.FC<TitleProp> = ({ title }) => {
             <div key={index} className="keen-slider__slide">
               <div className="relative group">
                 <Link href={"/product"}>
-                  <img
-                    src={product.imgFront}
-                    alt=""
-                    className="block w-full h-auto object-cover z-[1] relative"
-                    loading="lazy"
+                  <Image
+                    Src={product.imgFront}
+                    Alt={""}
+                    ClassName={
+                      "block w-full h-auto object-cover z-[1] relative"
+                    }
                   />
-                  <img
-                    src={product.imgBack}
-                    alt=""
-                    loading="lazy"
-                    className="block w-full h-auto object-cover absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
+                  <Image
+                    Src={product.imgBack}
+                    Alt={""}
+                    ClassName={
+                      "block w-full h-auto object-cover absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
+                    }
                   />
                 </Link>
                 <div className="absolute bottom-[10px] md:top-[10px] left-[10px] z-[3] font-semibold text-center text-black">

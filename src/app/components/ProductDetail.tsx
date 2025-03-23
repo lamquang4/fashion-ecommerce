@@ -1,6 +1,7 @@
 "use client";
 import React, { useState } from "react";
 import { CiHeart } from "react-icons/ci";
+import Image from "./Image";
 {
   /*
 import { IoIosArrowDown } from "react-icons/io";
@@ -19,18 +20,18 @@ function ProductDetail() {
             <div className=" md:order-2 relative grow overflow-hidden bg-white">
               <div className="max-w-full lg:max-w-[450px] flex flex-col gap-[30px]">
                 <div className="hidden first:block lg:block">
-                  <img
-                    src="/assets/products/SECSP34831.png"
-                    alt=""
-                    className="w-full h-full object-cover"
+                  <Image
+                    Src={"/assets/products/SECSP34831.png"}
+                    Alt={""}
+                    ClassName={"w-full h-full object-cover"}
                   />
                 </div>
 
                 <div className="hidden first:block lg:block">
-                  <img
-                    src="/assets/products/SECSP34831.png"
-                    alt=""
-                    className="w-full h-full object-cover"
+                  <Image
+                    Src={"/assets/products/SECSP34831.png"}
+                    Alt={""}
+                    ClassName={"w-full h-full object-cover"}
                   />
                 </div>
               </div>
@@ -39,18 +40,18 @@ function ProductDetail() {
             <div className="md:order-1 flex justify-center">
               <div className=" max-h-fit flex flex-row md:flex-col gap-[15px] overflow-x-auto md:overflow-x-hidden md:overflow-y-auto lg:sticky lg:top-[140px]">
                 <div className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]">
-                  <img
-                    src="/assets/products/SECSP34831.png"
-                    alt=""
-                    className="w-full h-full object-cover"
+                  <Image
+                    Src={"/assets/products/SECSP34831.png"}
+                    Alt={""}
+                    ClassName={"w-full h-full object-cover"}
                   />
                 </div>
 
                 <div className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]">
-                  <img
-                    src="/assets/products/SECSP34831.png"
-                    alt=""
-                    className="w-full h-full object-cover"
+                  <Image
+                    Src={"/assets/products/SECSP34831.png"}
+                    Alt={""}
+                    ClassName={"w-full h-full object-cover"}
                   />
                 </div>
               </div>

@@ -1,7 +1,6 @@
 "use client";
-import Link from "next/link";
 import React from "react";
-
+import Image from "./Image";
 function Gallery() {
   return (
     <section className="px-[10px] mt-[30px] sm:mt-[45px] sm:px-[15px]">
@@ -12,20 +11,20 @@ function Gallery() {
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="grid gap-4">
             <div>
-              <img
-                className="h-auto max-w-full rounded-lg"
-                src="/assets/banner/men.png"
-                alt=""
+              <Image
+                Src={"/assets/banner/men.png"}
+                Alt={""}
+                ClassName={"h-auto max-w-full rounded-lg"}
               />
             </div>
           </div>
 
           <div className="grid gap-4">
             <div>
-              <img
-                className="h-auto max-w-full rounded-lg"
-                src="/assets/banner/women.png"
-                alt=""
+              <Image
+                Src={"/assets/banner/women.png"}
+                Alt={""}
+                ClassName={"h-auto max-w-full rounded-lg"}
               />
             </div>
           </div>

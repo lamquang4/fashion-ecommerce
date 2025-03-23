@@ -1,5 +1,6 @@
 "use client";
 import React from "react";
+import Image from "./Image";
 interface TitleProp {
   title: string;
 }
@@ -15,7 +16,11 @@ const DifferentLR: React.FC<TitleProp> = ({ title }) => {
       <div className="flex justify-center">
         <button className="px-[12px] py-[7px] border border-[rgba(0,0,0,0.26)]">
           <div className="text-[1rem] flex items-center gap-[10px] font-medium">
-            <img src="/assets/other/google.png" alt="" width={"25px"} />
+            <Image
+              Src={"/assets/other/google.png"}
+              Alt={""}
+              ClassName={"w-[25px]"}
+            />
             <div>Google</div>
           </div>
         </button>

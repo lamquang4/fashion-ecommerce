@@ -2,6 +2,7 @@
 import React, { useState } from "react";
 import SideBarMenu from "./SideBarMenu";
 import Link from "next/link";
+import Image from "./Image";
 
 function OrderHistory() {
   const [isOrder, setIsOrder] = useState(true);
@@ -18,9 +19,10 @@ function OrderHistory() {
               <div className="border-[1.5px] border-double border-gray-300 p-[15px] pt-0">
                 <div className="relative flex items-center py-[15px] border-b-[1.5px] border-b-double border-gray-300 gap-[10px]">
                   <div>
-                    <img
-                      src="/assets/products/IMGSP3483.png"
-                      className="max-w-[120px] round-[5px] object-cover"
+                    <Image
+                      Src={"/assets/products/IMGSP3483.png"}
+                      Alt={""}
+                      ClassName={"max-w-[120px] round-[5px] object-cover"}
                     />
                   </div>
 
@@ -43,9 +45,10 @@ function OrderHistory() {
 
                 <div className="relative flex items-center py-[15px] border-b-[1.5px] border-b-double border-gray-300 gap-[10px]">
                   <div>
-                    <img
-                      src="/assets/products/IMGSP3483.png"
-                      className="max-w-[120px] round-[5px] object-cover"
+                    <Image
+                      Src={"/assets/products/IMGSP3483.png"}
+                      Alt={""}
+                      ClassName={"max-w-[120px] round-[5px] object-cover"}
                     />
                   </div>
 
@@ -86,10 +89,10 @@ function OrderHistory() {
               <div className="flex justify-center items-center h-[60vh]">
                 <div>
                   <div className="mb-[25px] flex justify-center">
-                    <img
-                      src="/assets/other/empty-order.png"
-                      alt=""
-                      className="w-[190px]"
+                    <Image
+                      Src={"/assets/other/empty-order.png"}
+                      Alt={""}
+                      ClassName={"w-[190px]"}
                     />
                   </div>
 
