@@ -13,7 +13,6 @@ import Image from "./Image";
 function Header() {
   const [openSearch, setOpenSearch] = useState(false);
   const [menuMobileOpen, setMenuMobileOpen] = useState(false);
-  const [openMenuProfile, setOpenMenuProfile] = useState(false);
   const toggleSearch = () => {
     setOpenSearch(!openSearch);
     if (menuMobileOpen) setMenuMobileOpen(false);
@@ -211,7 +210,7 @@ function Header() {
 
               <div className="relative cursor-pointer group">
                 <CiUser size={24} />
-                <ProfileMenu isOpen={openMenuProfile} />
+                <ProfileMenu isOpen={false} />
               </div>
               {/*
       <Link href={"/login"}>
@@ -277,7 +276,7 @@ function Header() {
 
               <div className="relative cursor-pointer group">
                 <CiUser size={24} />
-                <ProfileMenu isOpen={openMenuProfile} />
+                <ProfileMenu isOpen={false} />
               </div>
 
               {/*
