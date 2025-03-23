@@ -4,8 +4,8 @@ import DifferentLR from "./DifferentLR";
 
 function LoginForm() {
   return (
-    <section className="my-[45px]">
-      <div className="flex flex-col items-center justify-center px-6 py-8">
+    <section className="mt-[30px] sm:mt-[45px]">
+      <div className="flex flex-col items-center justify-center  px-[10px] sm:px-[15px]">
         <div className="w-full bg-white md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
             <h1 className="text-[2rem] uppercase font-bold mb-[20px] tracking-tight text-center text-gray-900 dark:text-white">
@@ -17,7 +17,7 @@ function LoginForm() {
                   htmlFor=""
                   className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
                 >
-                  Email:
+                  Email
                 </label>
                 <input
                   type="text"
@@ -33,7 +33,7 @@ function LoginForm() {
                   htmlFor=""
                   className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
                 >
-                  Mật khẩu:
+                  Mật khẩu
                 </label>
                 <input
                   type="password"

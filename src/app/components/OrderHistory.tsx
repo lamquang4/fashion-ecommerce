@@ -7,7 +7,7 @@ import Image from "./Image";
 function OrderHistory() {
   return (
     <section className="w-full mt-[30px] sm:mt-[45px]">
-      <div className="flex justify-center flex-wrap gap-[15px] px-[10px]  sm:px-[15px]">
+      <div className="flex justify-center flex-wrap gap-[15px] px-[10px] sm:px-[15px]">
         <SideBarMenu />
 
         <div className="w-full border-[1.5px] border-double border-gray-300 md:w-[700px] rounded-md">

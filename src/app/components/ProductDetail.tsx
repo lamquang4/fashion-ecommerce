@@ -2,6 +2,9 @@
 import React, { useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import Image from "./Image";
+import { LiaRulerHorizontalSolid } from "react-icons/lia";
+import { HiOutlineMinusSmall } from "react-icons/hi2";
+import { HiOutlinePlusSmall } from "react-icons/hi2";
 {
   /*
 import { IoIosArrowDown } from "react-icons/io";
@@ -60,13 +63,13 @@ function ProductDetail() {
         </div>
 
         <div className="relative lg:max-w-[500px] max-w-full px-[15px] sm:px-[20px]">
-          <div className="">
-            <p className="text-[1rem] mb-[15px]">Áo sơ mi / Nam</p>
-            <h2 className="text-[1.3rem] mb-[15px] font-medium">
+          <div className="py-[10px]">
+            <p className="text-[1rem] mb-[5px]">Áo sơ mi / Nam</p>
+            <h2 className="text-[1.3rem] mb-[5px] font-medium">
               Áo sơ mi ewewewe dài tay ver2
             </h2>
-            <div className="text-[1.2rem] flex gap-[15px] mb-[15px]">
-              <del>180,000₫</del>
+            <div className="text-[1.5rem] flex gap-[15px] mb-[15px] font-medium">
+              <del className="text-[#707072] font-light">180,000₫</del>
               <span>200,000₫</span>
             </div>
 
@@ -78,23 +81,34 @@ function ProductDetail() {
                 <div className="flex space-x-2">
                   <button
                     type="button"
-                    className="w-8 h-8 bg-black rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
+                    className="w-8 h-8 bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
                   ></button>
                   <button
                     type="button"
-                    className="w-8 h-8 bg-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
+                    className="w-8 h-8 bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
                   ></button>
                   <button
                     type="button"
-                    className="w-8 h-8 bg-blue-500 rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
+                    className="w-8 h-8 bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
                   ></button>
                 </div>
               </div>
 
               <div className="flex flex-col space-y-2 mb-[30px]">
-                <p className="text-gray-700 font-medium mb-[5px]">
-                  Kích thước: M
-                </p>
+                <div className="flex justify-between">
+                  <p className="text-gray-700 font-medium mb-[5px]">
+                    Kích thước: M
+                  </p>
+
+                  <button type="button" className="flex gap-[6px] items-center">
+                    <LiaRulerHorizontalSolid size={20} />
+
+                    <span className="uppercase text-[0.9rem] underline">
+                      Hướng dẫn chọn size
+                    </span>
+                  </button>
+                </div>
+
                 <div className="flex space-x-2">
                   <button
                     type="button"
@@ -142,84 +156,70 @@ function ProductDetail() {
                 </div>
               </div>
 
-              <div className="flex gap-[25px] flex-wrap mb-[30px] items-center">
-                <div className="relative flex justify-between items-center max-w-[8rem] border border-gray-300 rounded-sm">
-                  <button
-                    type="button"
-                    id="decrement-button"
-                    data-input-counter-decrement="quantity-input"
-                    className=" p-3 h-11 outline-none"
-                  >
-                    <svg
-                      className="w-3 h-3 text-gray-900 dark:text-white"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 18 2"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M1 1h16"
-                      />
-                    </svg>
-                  </button>
-                  <input
-                    type="number"
-                    id="quantity-input"
-                    data-input-counter
-                    aria-describedby="helper-text-explanation"
-                    className="h-11 text-center text-black w-11 outline-none placeholder:text-black text-[1rem]"
-                    placeholder="1"
-                    min={1}
-                    max={10}
-                    required
-                  />
-                  <button
-                    type="button"
-                    id="increment-button"
-                    data-input-counter-increment="quantity-input"
-                    className=" p-3 h-11 outline-none"
-                  >
-                    <svg
-                      className="w-3 h-3 text-gray-900 dark:text-white"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 18 18"
-                    >
-                      <path
-                        stroke="currentColor"
-                        stroke-linecap="round"
-                        stroke-linejoin="round"
-                        stroke-width="2"
-                        d="M9 1v16M1 9h16"
-                      />
-                    </svg>
-                  </button>
-                </div>
+              <div className="mb-[20px] relative flex justify-between items-center max-w-[8rem] border border-gray-300 rounded-sm">
+                <button
+                  type="button"
+                  id="decrement-button"
+                  data-input-counter-decrement="quantity-input"
+                  className=" p-3 h-11 outline-none"
+                >
+                  <HiOutlineMinusSmall size={22} />
+                </button>
+                <input
+                  type="number"
+                  id="quantity-input"
+                  data-input-counter
+                  aria-describedby="helper-text-explanation"
+                  className="h-11 text-center text-black w-11 outline-none placeholder:text-black text-[1rem] font-normal"
+                  placeholder="1"
+                  min={1}
+                  max={10}
+                />
+                <button
+                  type="button"
+                  id="increment-button"
+                  data-input-counter-increment="quantity-input"
+                  className=" p-3 h-11 outline-none"
+                >
+                  <HiOutlinePlusSmall size={22} />
+                </button>
+              </div>
 
+              <div className="w-full flex gap-[25px] flex-wrap mb-[30px] items-center">
                 <button
                   type="submit"
-                  className="text-[1rem] bg-black text-white w-[130px] h-[44px] font-medium hover:bg-[#050708]/80"
+                  className="px-[20px] py-[5px] w-[180px] uppercase text-[0.9rem] bg-black text-white max-w-[240px] min-h-[45px] font-medium hover:bg-[#050708]/80"
                 >
                   Thêm vào giỏ
                 </button>
 
                 <button
                   type="button"
-                  className="flex hover:border-black gap-[5px] justify-center items-center text-[1rem] bg-transparent border border-[#CACACB] w-[130px] h-[44px] font-medium"
+                  className="px-[20px] py-[5px] w-[180px] uppercase flex hover:border-black hover:bg-[#F7F7F7] gap-[5px] justify-center items-center text-[0.9rem] bg-transparent border border-[#CACACB] max-w-[240px] min-h-[45px]  font-medium"
                 >
                   Yêu thích <CiHeart size={18} />
                 </button>
               </div>
             </form>
 
-            <div>
+            <div className="flex flex-col gap-y-[30px]">
               <div>
                 <h2 className="text-[1.2rem] font-medium">Mô tả sản phẩm</h2>
+
+                <hr className="border-1 my-[15px]" />
+
+                <p className="text-[#6c757d] text-[0.95rem]">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Fuga
+                  veniam est velit nemo vitae deserunt nobis neque, natus
+                  consequuntur voluptatibus temporibus recusandae porro ab eum
+                  tempore aperiam voluptatum rerum? Nesciunt.
+                </p>
+              </div>
+
+              <div>
+                <h2 className="text-[1.2rem] font-medium">
+                  Hướng dẫn bảo quản
+                </h2>
 
                 <hr className="border-1 my-[15px]" />
 
