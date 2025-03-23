@@ -1,0 +1,131 @@
+"use client";
+import React, { useState } from "react";
+import { HiMiniXMark } from "react-icons/hi2";
+import { FaPlus } from "react-icons/fa6";
+import { FaMinus } from "react-icons/fa";
+import Link from "next/link";
+import Overplay from "./Overplay";
+function Menumobile({ isOpen, toggleMenu }: any) {
+  const [openMenus, setOpenMenus] = useState<Record<any, any>>({});
+
+  const toggleOpen = (menu: any) => {
+    setOpenMenus((prev) => ({
+      ...prev,
+      [menu]: !prev[menu],
+    }));
+  };
+  return (
+    <>
+      <nav
+        className={`fixed top-0 w-full max-w-[320px] h-screen p-5 bg-white shadow-md overflow-hidden overscroll-contain transition-all duration-500 ease-in-out z-[22] ${
+          isOpen ? "right-0 visible" : "right-[-100%] invisible"
+        }`}
+      >
+        <div className="mb-5 flex justify-end items-center">
+          <button onClick={toggleMenu} className="flex">
+            <HiMiniXMark size={30} color="black" />
+          </button>
+        </div>
+
+        <ul className="mb-[30px]">
+          <li className="border-b border-black/25">
+            <Link
+              href={"/"}
+              className="text-black text-[0.9rem] font-medium py-4 uppercase"
+            >
+              Trang chủ
+            </Link>
+          </li>
+
+          <li className="border-b border-black/25">
+            <div
+              onClick={() => toggleOpen(`abc`)}
+              className="w-full cursor-pointer flex justify-between items-center"
+            >
+              <p className="text-black text-[0.9rem] font-medium py-4 uppercase">
+                Sản phẩm
+              </p>
+              <button>
+                {openMenus[`abc`] ? (
+                  <FaMinus className="text-[#3b3a3a]" size={15} />
+                ) : (
+                  <FaPlus className="text-[#3b3a3a]" size={15} />
+                )}
+              </button>
+            </div>
+
+            <ul
+              className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out ${
+                openMenus[`abc`] ? "max-h-fit visible" : ""
+              }`}
+            >
+              <li className="my-[10px]">
+                <Link
+                  href={"/"}
+                  className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                >
+                  Sản phẩm 1
+                </Link>
+              </li>
+
+              <li className="my-[10px]">
+                <Link
+                  href={"/"}
+                  className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                >
+                  Sản phẩm 2
+                </Link>
+              </li>
+            </ul>
+          </li>
+
+          <li className="border-b border-black/25">
+            <div
+              onClick={() => toggleOpen(`xyz`)}
+              className="w-full cursor-pointer flex justify-between items-center"
+            >
+              <p className="text-black text-[0.9rem] font-medium py-4 uppercase">
+                Sản phẩm
+              </p>
+              <button>
+                {openMenus[`xyz`] ? (
+                  <FaMinus className="text-[#3b3a3a]" size={15} />
+                ) : (
+                  <FaPlus className="text-[#3b3a3a]" size={15} />
+                )}
+              </button>
+            </div>
+
+            <ul
+              className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out ${
+                openMenus[`xyz`] ? "max-h-fit visible" : ""
+              }`}
+            >
+              <li className="my-[10px]">
+                <Link
+                  href={"/"}
+                  className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                >
+                  Sản phẩm 1
+                </Link>
+              </li>
+
+              <li className="my-[10px]">
+                <Link
+                  href={"/"}
+                  className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                >
+                  Sản phẩm 2
+                </Link>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      {isOpen && <Overplay closeMenu={toggleMenu} />}
+    </>
+  );
+}
+
+export default Menumobile;

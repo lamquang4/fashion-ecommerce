@@ -1,0 +1,104 @@
+"use client";
+import React from "react";
+import SideBarMenu from "./SideBarMenu";
+import Link from "next/link";
+
+function OrderDetail() {
+  return (
+    <section className="w-full mt-[30px] sm:mt-[45px]">
+      <div className="px-[10px] flex justify-center flex-wrap gap-[15px] sm:px-[15px]">
+        <SideBarMenu />
+        <div className="w-full border-[1.5px] border-double border-gray-300 md:w-[700px] rounded-md">
+          <div className="py-[30px]">
+            <div className="flex justify-between px-[15px]">
+              <div>
+                <img src="/assets/other/logo.png" className="w-[80px]" alt="" />
+              </div>
+
+              <div className="flex flex-col gap-[5px]">
+                <h2 className="uppercase text-[1.2rem] font-semibold">
+                  Đơn hàng
+                </h2>
+
+                <span className="text-[0.95rem]">Mã: OD5048</span>
+                <span className="text-[0.95rem]">Ngày: 21/03/2025</span>
+              </div>
+            </div>
+
+            <div className="mt-[30px]">
+              <div className="flex flex-col p-[15px] gap-[5px]">
+                <h2 className="text-[1.2rem] font-semibold uppercase">
+                  Thông tin giao hàng:
+                </h2>
+
+                <span className="text-[0.95rem]">Họ và tên: ewwwwewew</span>
+                <span className="text-[0.95rem]">
+                  Địa chỉ: abc Province Quảng Ninh District Ba Chẽ Commune Thanh
+                  Lâm
+                </span>
+                <span className="text-[0.95rem]">
+                  Phương thức thanh toán: cod
+                </span>
+              </div>
+
+              <div className="w-full overflow-auto mb-[30px]">
+                <table className="w-[200%] my-[15px] border-collapse text-[0.9rem] sm:w-full">
+                  <thead>
+                    <tr className="font-medium text-left bg-[#F1F2F4]">
+                      <th className="pl-[15px] py-[15px]">Tên</th>
+                      <th className="p-[15px]">Giá</th>
+                      <th className="p-[15px]">Số lượng</th>
+                      <th className="p-[15px]">Thành tiền</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td className="pl-[15px] py-[15px]">
+                        <div className="flex items-center gap-[10px]">
+                          <img
+                            src="/assets/products/IMGSP3483.png"
+                            alt=""
+                            width="60px"
+                          />
+                          <div>
+                            <p>Jack Hydrangea Melange Shirt</p>
+                            <p>M / Đen</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="p-[15px]">75,000₫</td>
+                      <td className="p-[15px]">x3</td>
+                      <td className="p-[15px]">150,000₫</td>
+                    </tr>
+
+                    <tr>
+                      <td className="p-[15px]">
+                        <hr className="border border-black" />
+                      </td>
+                    </tr>
+                    <tr className="text-[1rem]">
+                      <td className="font-semibold p-[15px]">Thành tiền:</td>
+                      <td className="p-[15px]">150,000₫</td>
+                    </tr>
+
+                    <tr className="text-[1rem]">
+                      <td className="font-semibold p-[15px]">Phí ship:</td>
+                      <td className="p-[15px]">20,000₫</td>
+                    </tr>
+
+                    <tr className="text-[1rem]">
+                      <td className="font-semibold p-[15px]">Tổng cộng:</td>
+                      <td className="p-[15px]">170,000₫</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
+export default OrderDetail;
