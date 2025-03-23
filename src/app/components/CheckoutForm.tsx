@@ -325,7 +325,7 @@ function CheckoutForm() {
               <div>
                 <div className="flex flex-col">
                   <div className="flex items-center justify-between text-[1rem] font-medium mb-[15px]">
-                    <p className=" text-gray-600">Tạm tính</p>
+                    <p className=" text-gray-600">Thành tiền</p>
                     <p className=" text-gray-600">150,000₫</p>
                   </div>
                   <div className="flex items-center justify-between text-[1rem] font-medium">
