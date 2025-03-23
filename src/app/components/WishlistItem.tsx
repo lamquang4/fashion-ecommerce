@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import Image from "./Image";
 function WishlistItem() {
   return (
