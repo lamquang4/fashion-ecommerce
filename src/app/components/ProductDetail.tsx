@@ -17,7 +17,7 @@ function ProductDetail() {
 
   return (
     <section className="w-full mx-auto my-0 lg:my-[20px]">
-      <div className="flex justify-center flex-wrap  gap-[40px] w-full">
+      <div className="flex justify-center flex-wrap gap-[40px] w-full">
         <div>
           <div className="flex flex-col md:flex-row gap-[30px]">
             <div className=" md:order-2 relative grow overflow-hidden bg-white">

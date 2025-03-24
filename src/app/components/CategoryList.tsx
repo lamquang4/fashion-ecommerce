@@ -28,7 +28,7 @@ function CategoryList() {
   const [selectedGender, setSelectedGender] = useState<string>("Nam");
 
   return (
-    <section className="px-[10px] sm:px-[15px] mt-[30px] sm:mt-[45px]">
+    <section className="px-[10px] sm:px-[15px] mt-[40px] sm:mt-[45px]">
       <div className="w-full m-[0_auto] md:max-w-[1000px] lg:max-w-[1240px]">
         <div className="flex justify-center gap-10 mb-5">
           {["Nam", "Nữ"].map((gender) => (

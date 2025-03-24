@@ -4,7 +4,7 @@ import React from "react";
 import Image from "./Image";
 function Blog() {
   return (
-    <section className="px-[10px] mt-[30px] sm:mt-[45px] sm:px-[15px]">
+    <section className="px-[10px] mt-[40px] sm:mt-[45px] sm:px-[15px]">
       <div className="w-full m-[0_auto] md:max-w-[1000px] lg:max-w-[1240px]">
         <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
           Tin tức

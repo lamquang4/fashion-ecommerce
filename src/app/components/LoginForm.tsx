@@ -23,7 +23,7 @@ function LoginForm() {
                   type="text"
                   name="email"
                   id="email"
-                  className="text-[0.9rem] block w-full px-3 py-2 border-2 border-[#e5e5e5] text-[#243238]"
+                  className="text-[0.9rem] block w-full px-3 py-2 border border-[#e5e5e5] text-[#243238]"
                   placeholder="Nhập email"
                   required
                 />
@@ -40,7 +40,7 @@ function LoginForm() {
                   name="password"
                   id="password"
                   placeholder="Nhập mật khẩu"
-                  className="text-[0.9rem] block w-full px-3 py-2 border-2 border-[#e5e5e5] text-[#243238]"
+                  className="text-[0.9rem] block w-full px-3 py-2 border border-[#e5e5e5] text-[#243238]"
                   required
                 />
               </div>
@@ -54,7 +54,7 @@ function LoginForm() {
               </div>
               <button
                 type="submit"
-                className="w-full bg-black text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full bg-black text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-sm text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
               >
                 Đăng nhập
               </button>

@@ -70,7 +70,7 @@ const ProductSlider: React.FC<TitleProp> = ({ title }) => {
   });
 
   return (
-    <section className="px-[10px] mt-[30px] sm:mt-[45px] sm:px-[15px]">
+    <section className="px-[10px] mt-[40px] sm:mt-[45px] sm:px-[15px]">
       <div className="w-full mx-auto md:max-w-[980px] lg:max-w-[1200px]">
         <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
           {title}

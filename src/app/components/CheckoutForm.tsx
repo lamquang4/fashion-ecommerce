@@ -4,7 +4,7 @@ import React from "react";
 import Image from "./Image";
 function CheckoutForm() {
   return (
-    <section className="max-w-6xl mx-auto my-[30px] sm:my-[45px]">
+    <section className="max-w-6xl mx-auto my-[40px] sm:my-[45px]">
       <div className="w-full px-[10px] sm:px-[15px]">
         <Link href={"/"}>
           <Image

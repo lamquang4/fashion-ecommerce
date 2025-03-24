@@ -15,7 +15,7 @@ function AccountInfo() {
   };
 
   return (
-    <section className="w-full mt-[30px] sm:mt-[45px] ">
+    <section className="w-full mt-[40px] sm:mt-[45px] ">
       <div className="px-[10px] flex justify-center flex-wrap gap-[15px] sm:px-[15px]">
         <SideBarMenu />
 

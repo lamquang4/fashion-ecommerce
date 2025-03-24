@@ -4,7 +4,7 @@ import SideBarMenu from "./SideBarMenu";
 import Image from "./Image";
 function OrderDetail() {
   return (
-    <section className="w-full mt-[30px] sm:mt-[45px]">
+    <section className="w-full mt-[40px] sm:mt-[45px]">
       <div className="px-[10px] flex justify-center flex-wrap gap-[15px] sm:px-[15px]">
         <SideBarMenu />
         <div className="w-full max-w-full border-[1.5px] border-double border-gray-300 lg:max-w-[700px] rounded-sm">

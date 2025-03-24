@@ -7,8 +7,8 @@ import Image from "./Image";
 function CartItem() {
   return (
     <>
-      <section className="max-w-[1230px] mx-auto mt-[30px] sm:mt-[45px]">
-        <div className=" px-[10px] sm:px-[15px]">
+      <section className="max-w-[1230px] mx-auto mt-[40px] sm:mt-[45px]">
+        <div className="px-[10px] sm:px-[15px]">
           <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
             Giỏ hàng
           </h2>
