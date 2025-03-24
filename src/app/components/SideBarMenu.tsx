@@ -8,7 +8,7 @@ import { HiOutlineUser } from "react-icons/hi";
 import { TbTruckDelivery } from "react-icons/tb";
 function SideBarMenu() {
   return (
-    <div className=" w-full xl:max-w-[320px] border-[1.5px] border-double border-gray-300 rounded-md">
+    <div className="w-full max-w-full lg:max-w-[320px] border-[1.5px] border-double border-gray-300 rounded-sm">
       <div className="p-[25px_15px] sm:p-[30px_20px]">
         <Link href="/account">
           <div className="flex justify-between items-center p-[13px] text-[15px] border border-gray-300 my-[12px] text-[#262626]">

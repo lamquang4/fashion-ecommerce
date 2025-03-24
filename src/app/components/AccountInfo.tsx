@@ -19,7 +19,7 @@ function AccountInfo() {
       <div className="px-[10px] flex justify-center flex-wrap gap-[15px] sm:px-[15px]">
         <SideBarMenu />
 
-        <div className="w-full border-[1.5px] border-double border-gray-300 xl:w-[700px] rounded-md">
+        <div className="w-full max-w-full border-[1.5px] border-double border-gray-300 lg:max-w-[700px] rounded-sm">
           <form action="" className="p-[25px_15px] sm:p-[30px_20px]">
             <h2 className="text-[1.5rem] font-bold mb-[25px]">Tài khoản</h2>
             <div className="mb-[25px]">

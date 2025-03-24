@@ -16,7 +16,7 @@ function CartItem() {
           <form action="">
             <div className="grid lg:grid-cols-3 gap-8">
               <div className="md:col-span-2 space-y-5 bg-white">
-                <div className="flex gap-4 bg-white px-2.5 sm:px-4 py-6 border border-gray-300 rounded-md">
+                <div className="flex gap-4 bg-white px-2.5 sm:px-4 py-6 border border-gray-300 rounded-sm">
                   <div className="flex gap-4.5">
                     <Link href={"/"}>
                       <div className="w-50 h-50 max-sm:w-30 max-sm:h-30 shrink-0">
@@ -181,7 +181,7 @@ function CartItem() {
                 </div>
               </div>
 
-              <div className="bg-[#F7F7F7] rounded-md px-4 py-6 h-max border border-gray-300">
+              <div className="bg-[#F7F7F7] rounded-sm px-4 py-6 h-auto">
                 <div className="">
                   <label
                     htmlFor="discount"
