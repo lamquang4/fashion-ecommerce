@@ -7,9 +7,9 @@ function OrderDetail() {
     <section className="w-full mt-[30px] sm:mt-[45px]">
       <div className="px-[10px] flex justify-center flex-wrap gap-[15px] sm:px-[15px]">
         <SideBarMenu />
-        <div className="w-full border-[1.5px] border-double border-gray-300 md:w-[700px] rounded-md">
+        <div className="w-full border-[1.5px] border-double border-gray-300 xl:w-[700px] rounded-md">
           <div className="py-[30px]">
-            <div className="flex justify-between px-[15px]">
+            <div className="flex justify-between px-[15px] sm:px-[20px]">
               <div>
                 <Image
                   Src={"/assets/other/logo.png"}
@@ -29,7 +29,7 @@ function OrderDetail() {
             </div>
 
             <div className="mt-[30px]">
-              <div className="flex flex-col p-[15px] gap-[5px]">
+              <div className="flex flex-col py-[15px] px-[15px] sm:px-[20px] gap-[5px]">
                 <h2 className="text-[1.2rem] font-semibold uppercase">
                   Thông tin giao hàng:
                 </h2>
@@ -48,7 +48,7 @@ function OrderDetail() {
                 <table className="w-[200%] my-[15px] border-collapse text-[0.9rem] sm:w-full">
                   <thead>
                     <tr className="font-medium text-left bg-[#F1F2F4]">
-                      <th className="pl-[15px] py-[15px]">Tên</th>
+                      <th className="pl-[15px] sm:pl-[20px] py-[15px]">Tên</th>
                       <th className="p-[15px]">Giá</th>
                       <th className="p-[15px]">Số lượng</th>
                       <th className="p-[15px]">Thành tiền</th>
@@ -56,7 +56,7 @@ function OrderDetail() {
                   </thead>
                   <tbody>
                     <tr>
-                      <td className="pl-[15px] py-[15px]">
+                      <td className="pl-[15px] sm:pl-[20px] py-[15px]">
                         <div className="flex items-center gap-[10px]">
                           <Image
                             Src={"/assets/products/IMGSP3483.png"}
@@ -76,17 +76,21 @@ function OrderDetail() {
                     </tr>
 
                     <tr>
-                      <td className="p-[15px]">
+                      <td className="pl-[15px] sm:pl-[20px] p-[15px]">
                         <hr className="border border-black" />
                       </td>
                     </tr>
                     <tr className="text-[1rem]">
-                      <td className="font-semibold p-[15px]">Thành tiền:</td>
+                      <td className="font-semibold p-[15px] pl-[15px] sm:pl-[20px]">
+                        Thành tiền:
+                      </td>
                       <td className="p-[15px]">150,000₫</td>
                     </tr>
 
                     <tr className="text-[1rem]">
-                      <td className="font-semibold p-[15px]">Phí ship:</td>
+                      <td className="font-semibold p-[15px] pl-[15px] sm:pl-[20px]">
+                        Phí ship:
+                      </td>
                       <td className="p-[15px]">20,000₫</td>
                     </tr>
 
