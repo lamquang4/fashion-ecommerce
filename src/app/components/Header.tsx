@@ -17,15 +17,19 @@ function Header() {
   const toggleSearch = () => {
     setOpenSearch(!openSearch);
     if (menuMobileOpen) setMenuMobileOpen(false);
+    if (profileMenuOpen) setProfileMenuOpen(false);
   };
 
   const toggleMobileMenu = () => {
     setMenuMobileOpen(!menuMobileOpen);
     if (openSearch) setOpenSearch(false);
+    if (profileMenuOpen) setProfileMenuOpen(false);
   };
 
   const toggleProfileMenu = () => {
     setProfileMenuOpen((prev) => !prev);
+    if (menuMobileOpen) setMenuMobileOpen(false);
+    if (openSearch) setOpenSearch(false);
   };
 
   useEffect(() => {
