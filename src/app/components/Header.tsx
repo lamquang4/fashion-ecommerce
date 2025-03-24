@@ -13,6 +13,7 @@ import Image from "./Image";
 function Header() {
   const [openSearch, setOpenSearch] = useState(false);
   const [menuMobileOpen, setMenuMobileOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const toggleSearch = () => {
     setOpenSearch(!openSearch);
     if (menuMobileOpen) setMenuMobileOpen(false);
@@ -21,6 +22,10 @@ function Header() {
   const toggleMobileMenu = () => {
     setMenuMobileOpen(!menuMobileOpen);
     if (openSearch) setOpenSearch(false);
+  };
+
+  const toggleProfileMenu = () => {
+    setProfileMenuOpen((prev) => !prev);
   };
 
   useEffect(() => {
@@ -208,9 +213,13 @@ function Header() {
                 </form>
               </div>
 
-              <div className="relative cursor-pointer group">
+              <div
+                className="relative cursor-pointer group"
+                onMouseOver={toggleProfileMenu}
+                onMouseOut={toggleProfileMenu}
+              >
                 <CiUser size={24} />
-                <ProfileMenu isOpen={false} />
+                <ProfileMenu isOpen={profileMenuOpen} />
               </div>
               {/*
       <Link href={"/login"}>
@@ -274,9 +283,13 @@ function Header() {
                 <CiSearch size={24} />
               </button>
 
-              <div className="relative cursor-pointer group">
+              <div
+                className="relative cursor-pointer group"
+                onMouseOver={toggleProfileMenu}
+                onMouseOut={toggleProfileMenu}
+              >
                 <CiUser size={24} />
-                <ProfileMenu isOpen={false} />
+                <ProfileMenu isOpen={profileMenuOpen} />
               </div>
 
               {/*
