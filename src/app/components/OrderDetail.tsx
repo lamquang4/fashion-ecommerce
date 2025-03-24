@@ -36,6 +36,9 @@ function OrderDetail() {
 
                 <span className="text-[0.95rem]">Họ và tên: ewwwwewew</span>
                 <span className="text-[0.95rem]">
+                  Số điện thoại: 0984845xxx
+                </span>
+                <span className="text-[0.95rem]">
                   Địa chỉ: abc Province Quảng Ninh District Ba Chẽ Commune Thanh
                   Lâm
                 </span>
