@@ -24,7 +24,7 @@ function ProductDetail() {
               <div className="max-w-full lg:max-w-[450px] flex flex-col gap-[30px]">
                 <div className="hidden first:block lg:block">
                   <Image
-                    Src={"/assets/products/SECSP34831.png"}
+                    Src={"/assets/products/IMGSP1360.png"}
                     Alt={""}
                     ClassName={"w-full h-full object-cover"}
                   />
@@ -32,7 +32,7 @@ function ProductDetail() {
 
                 <div className="hidden first:block lg:block">
                   <Image
-                    Src={"/assets/products/SECSP34831.png"}
+                    Src={"/assets/products/SECSP13601.png"}
                     Alt={""}
                     ClassName={"w-full h-full object-cover"}
                   />
@@ -44,7 +44,7 @@ function ProductDetail() {
               <div className=" max-h-fit flex flex-row md:flex-col gap-[15px] overflow-x-auto md:overflow-x-hidden md:overflow-y-auto lg:sticky lg:top-[140px]">
                 <div className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]">
                   <Image
-                    Src={"/assets/products/SECSP34831.png"}
+                    Src={"/assets/products/IMGSP1360.png"}
                     Alt={""}
                     ClassName={"w-full h-full object-cover"}
                   />
@@ -52,7 +52,7 @@ function ProductDetail() {
 
                 <div className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]">
                   <Image
-                    Src={"/assets/products/SECSP34831.png"}
+                    Src={"/assets/products/SECSP13601.png"}
                     Alt={""}
                     ClassName={"w-full h-full object-cover"}
                   />
@@ -66,7 +66,7 @@ function ProductDetail() {
           <div className="py-[10px]">
             <p className="text-[1rem] mb-[5px]">Áo sơ mi / Nam</p>
             <h2 className="text-[1.3rem] mb-[5px] font-medium">
-              Áo sơ mi ewewewe dài tay ver2
+              Áo sơ mi gạch đỏ
             </h2>
             <div className="text-[1.5rem] flex gap-[15px] mb-[15px] font-medium">
               <del className="text-[#707072] font-light">180,000₫</del>

@@ -34,13 +34,12 @@ function OrderDetail() {
                   Thông tin giao hàng:
                 </h2>
 
-                <span className="text-[0.95rem]">Họ và tên: ewwwwewew</span>
+                <span className="text-[0.95rem]">Họ và tên: Quang Lam</span>
                 <span className="text-[0.95rem]">
                   Số điện thoại: 0984845xxx
                 </span>
                 <span className="text-[0.95rem]">
-                  Địa chỉ: abc Province Quảng Ninh District Ba Chẽ Commune Thanh
-                  Lâm
+                  Địa chỉ: ABC, HWWWXYZ, Quận 6, Phường 6
                 </span>
                 <span className="text-[0.95rem]">
                   Phương thức thanh toán: cod
@@ -73,11 +72,29 @@ function OrderDetail() {
                           </div>
                         </div>
                       </td>
-                      <td className="p-[15px]">75,000₫</td>
-                      <td className="p-[15px]">x3</td>
-                      <td className="p-[15px]">150,000₫</td>
+                      <td className="p-[15px]">290,000₫</td>
+                      <td className="p-[15px]">x1</td>
+                      <td className="p-[15px]">290,000₫</td>
                     </tr>
+                    <tr>
+                      <td className="pl-[15px] sm:pl-[20px] py-[15px]">
+                        <div className="flex items-center gap-[10px]">
+                          <Image
+                            Src={"/assets/products/IMGSP3483.png"}
+                            Alt={""}
+                            ClassName={"w-[60px]"}
+                          />
 
+                          <div>
+                            <p>Jack Hydrangea Melange Shirt</p>
+                            <p>S / Đen</p>
+                          </div>
+                        </div>
+                      </td>
+                      <td className="p-[15px]">290,000₫</td>
+                      <td className="p-[15px]">x1</td>
+                      <td className="p-[15px]">290,000₫</td>
+                    </tr>
                     <tr>
                       <td className="pl-[15px] sm:pl-[20px] p-[15px]">
                         <hr className="border border-black" />
@@ -87,7 +104,7 @@ function OrderDetail() {
                       <td className="font-semibold p-[15px] pl-[15px] sm:pl-[20px]">
                         Thành tiền:
                       </td>
-                      <td className="p-[15px]">150,000₫</td>
+                      <td className="p-[15px]">580,000₫</td>
                     </tr>
 
                     <tr className="text-[1rem]">
@@ -99,7 +116,7 @@ function OrderDetail() {
 
                     <tr className="text-[1rem]">
                       <td className="font-semibold p-[15px]">Tổng cộng:</td>
-                      <td className="p-[15px]">170,000₫</td>
+                      <td className="p-[15px]">600,000₫</td>
                     </tr>
                   </tbody>
                 </table>

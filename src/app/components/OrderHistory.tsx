@@ -26,11 +26,11 @@ function OrderHistory() {
 
                 <div>
                   <h2 className="text-[0.85rem] sm:text-[0.95rem] font-medium mb-[10px]">
-                    Jack Hydrangea Melange Shirt
+                    Áo sơ mi Leweu Kio
                   </h2>
                   <div className="flex gap-[15px] items-center flex-wrap">
                     <div className="flex gap-[15px] text-[0.85rem] sm:text-[0.95rem]">
-                      <span>x3</span>
+                      <span>x1</span>
                       <span>M / Đen</span>
                     </div>
 
@@ -52,12 +52,12 @@ function OrderHistory() {
 
                 <div>
                   <h2 className="text-sm sm:text-base font-medium mb-[10px]">
-                    Jack Hydrangea Melange Shirt
+                    Áo sơ mi Leweu Kio
                   </h2>
                   <div className="flex gap-[15px] items-center flex-wrap">
                     <div className="flex gap-[15px]">
-                      <span>x3</span>
-                      <span>M / Đen</span>
+                      <span>x1</span>
+                      <span>S / Đen</span>
                     </div>
 
                     <div className="">
@@ -74,7 +74,7 @@ function OrderHistory() {
 
                 <div className="flex justify-between items-center mt-[15px]">
                   <span className="text-black text-[1.1rem] font-medium">
-                    Tổng cộng: 490,000₫
+                    Tổng cộng: 600,000₫
                   </span>
 
                   <button className="text-[#3b82f6] text-[0.9rem] p-[6px_16px] transition-[0.3s] border border-[#3b82f6] hover:bg-[#3b82f6] hover:text-white">

@@ -72,10 +72,6 @@ function AddressInfo() {
                         Họ và tên:
                         <p className="font-normal text-black">Quang Lam</p>
                       </span>
-                      <span className="text-[#27AE60] font-normal text-[0.8rem] flex items-center gap-[4px]">
-                        <IoIosCheckmarkCircleOutline />
-                        Địa chỉ mặc định
-                      </span>
                     </div>
 
                     <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
@@ -85,7 +81,7 @@ function AddressInfo() {
                     <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
                       Địa chỉ:
                       <p className="font-normal text-black">
-                        ABC, HWWW, Quận 6, Phường 6
+                        ABC, HWWWXYZ, Quận 6, Phường 6
                       </p>
                     </span>
                   </div>
