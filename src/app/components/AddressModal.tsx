@@ -122,7 +122,7 @@ const AddressModal: React.FC<AddressModalProp> = ({ isOpen, toggleMenu }) => {
                   </select>
                 </div>
 
-                <div className="col-span-1 w-full flex items-center">
+                <div className="col-span-2 w-full flex items-center">
                   <input
                     id="default-check"
                     type="checkbox"
