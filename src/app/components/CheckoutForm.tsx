@@ -78,14 +78,14 @@ function CheckoutForm() {
                     htmlFor="address"
                     className="mt-4 mb-2 block text-[0.9rem] font-medium"
                   >
-                    Địa chỉ
+                    Địa chỉ cụ thể
                   </label>
                   <input
                     type="text"
                     id="address"
                     name="address"
                     className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                    placeholder="Địa chỉ"
+                    placeholder="Địa chỉ cụ thể"
                   />
                 </div>
 

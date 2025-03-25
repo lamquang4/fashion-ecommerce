@@ -21,7 +21,7 @@ function AccountInfo() {
 
         <div className="w-full max-w-full border-[1.5px] border-double border-gray-300 lg:max-w-[700px] rounded-sm">
           <form action="" className="p-[25px_15px] sm:p-[30px_20px]">
-            <h2 className="text-[1.5rem] font-bold mb-[25px]">Tài khoản</h2>
+            <h2 className="text-[1.5rem] font-semibold mb-[25px]">Tài khoản</h2>
             <div className="mb-[25px]">
               <div className="w-full">
                 <span className="block text-left text-[0.9rem]">
@@ -71,7 +71,7 @@ function AccountInfo() {
               <button
                 type="submit"
                 name="submit"
-                className="px-[14px] py-[10px] bg-blue-500 text-white text-[0.9rem] text-center rounded-md hover:bg-blue-400"
+                className="px-[14px] py-[10px] bg-blue-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-blue-400"
               >
                 Cập nhật
               </button>

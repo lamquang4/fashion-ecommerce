@@ -31,9 +31,6 @@ input[type="number"]::-webkit-inner-spin-button {
 input[type="number"] {
   -moz-appearance: textfield;
 }
-input[type="checkbox"] {
-  accent-color: black;
-}
 
 input[type="range"]::-webkit-slider-thumb {
   height: 20px;

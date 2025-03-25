@@ -12,7 +12,7 @@ function OrderHistory() {
 
         <div className="w-full max-w-full border-[1.5px] border-double border-gray-300 lg:max-w-[700px] rounded-sm">
           <div className="p-[25px_15px] sm:p-[30px_20px]">
-            <h2 className="text-[1.5rem] font-bold mb-[25px]">Đơn hàng</h2>
+            <h2 className="text-[1.5rem] font-semibold mb-[25px]">Đơn hàng</h2>
 
             <div className="border-[1.5px] border-double border-gray-300 p-[15px] pt-0">
               <div className="relative flex items-center py-[15px] border-b-[1.5px] border-b-double border-gray-300 gap-[10px]">
