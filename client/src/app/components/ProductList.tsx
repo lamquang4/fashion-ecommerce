@@ -148,13 +148,13 @@ function ProductList() {
                 )}
               </div>
               <div className="p-[14px_2px]">
-                <h2 className="text-[#969696] text-[0.85rem] sm:text-[0.95rem] font-medium uppercase mb-[6px]">
+                <h2 className="text-[#969696] text-[0.9rem] sm:text-[0.95rem] font-medium uppercase mb-[6px]">
                   {product.type} / {product.gender}
                 </h2>
-                <h2 className="text-black text-[0.85rem] sm:text-[0.95rem] font-medium capitalize mb-[6px]">
+                <h2 className="text-black text-[0.9rem] sm:text-[0.95rem] font-medium capitalize mb-[6px]">
                   {product.name}
                 </h2>
-                <div className="flex gap-[10px] text-[0.9rem] sm:text-[1rem] text-black mb-[8px]">
+                <div className="flex gap-[10px] text-[0.95rem] sm:text-[1rem] text-black mb-[8px]">
                   {product.discountPercent && (
                     <del className="text-[#707072]">{product.price}</del>
                   )}

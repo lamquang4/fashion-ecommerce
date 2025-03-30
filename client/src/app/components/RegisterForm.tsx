@@ -21,8 +21,7 @@ function RegisterForm() {
                 </label>
                 <input
                   type="text"
-                  name="email"
-                  id="email"
+                  name="fullname"
                   className="text-[0.9rem] block w-full px-3 py-2 border border-[#e5e5e5] text-[#243238]"
                   placeholder="Nhập họ và tên"
                   required
@@ -102,11 +101,11 @@ function RegisterForm() {
               <p className="flex gap-1.5 justify-center font-light text-[0.9rem]">
                 Bạn đã có tài khoản?
                 <Link href="/login" className="text-[#2196f3]">
-                  Đăng kí
+                  Đăng nhập
                 </Link>
               </p>
 
-              <DifferentLR title={"đăng nhập"} />
+              <DifferentLR title={"đăng kí"} />
             </form>
           </div>
         </div>
