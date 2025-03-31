@@ -8,9 +8,9 @@ function RegisterForm() {
       <div className="flex flex-col items-center justify-center  px-[10px] sm:px-[15px]">
         <div className="w-full bg-white md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h1 className="text-[2rem] font-bold mb-[20px] tracking-tight text-center text-gray-900 dark:text-white uppercase">
+            <h2 className="text-[1.5rem] sm:text-[1.7rem] uppercase font-[550] mb-[20px] text-center text-black">
               Đăng kí
-            </h1>
+            </h2>
             <form className="space-y-4 md:space-y-6" action="#">
               <div className="mb-[15px]">
                 <label
