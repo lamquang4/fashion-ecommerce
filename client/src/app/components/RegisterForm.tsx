@@ -100,7 +100,7 @@ function RegisterForm() {
               </button>
               <p className="flex gap-1.5 justify-center font-light text-[0.9rem]">
                 Bạn đã có tài khoản?
-                <Link href="/login" className="text-[#2196f3]">
+                <Link href="/login" className="text-blue-400 font-medium">
                   Đăng nhập
                 </Link>
               </p>

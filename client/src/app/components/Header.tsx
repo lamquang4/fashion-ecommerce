@@ -61,7 +61,7 @@ function Header() {
             <Link href={"/"}>
               <Image
                 Src={"/assets/other/logo.png"}
-                Alt={""}
+                Alt={"logo"}
                 ClassName={"w-[80px]"}
               />
             </Link>
@@ -231,8 +231,8 @@ function Header() {
     </Link>
     */}
 
-              <Link href={"/cart"} className="relative">
-                <CiShoppingCart size={26} />
+              <Link href={"/cart"} className="relative" title="Giỏ hàng">
+                <CiShoppingCart size={26} title="Giỏ hàng" />
 
                 <span
                   className="absolute flex items-center justify-center 
@@ -244,8 +244,8 @@ function Header() {
                 </span>
               </Link>
 
-              <Link href="/wishlist" className="relative">
-                <CiHeart size={25} />
+              <Link href="/wishlist" className="relative" title="Yêu thích">
+                <CiHeart size={25} title="Yêu thích" />
 
                 <span
                   className="absolute flex items-center justify-center 
@@ -275,16 +275,20 @@ function Header() {
                     className="w-full px-2 py-2 rounded outline-none"
                   />
                 </form>
-                <button onClick={toggleSearch}>
-                  <HiMiniXMark size={23} />
+                <button onClick={toggleSearch} title="Đóng">
+                  <HiMiniXMark size={23} title="Đóng" />
                 </button>
               </div>
             </div>
 
             {/* Mobile */}
             <div className="flex lg:hidden items-center gap-4 relative">
-              <button onClick={toggleSearch} className="text-gray-800">
-                <CiSearch size={24} />
+              <button
+                onClick={toggleSearch}
+                className="text-gray-800"
+                title="Tìm kiếm"
+              >
+                <CiSearch size={24} title="Tìm kiếm" />
               </button>
 
               <div
@@ -302,8 +306,8 @@ function Header() {
 </Link>
 */}
 
-              <Link href={"/cart"} className="relative">
-                <CiShoppingCart size={26} />
+              <Link href={"/cart"} className="relative" title="Giỏ hàng">
+                <CiShoppingCart size={26} title="Giỏ hàng" />
 
                 <span
                   className="absolute flex items-center justify-center 
@@ -315,8 +319,8 @@ function Header() {
                 </span>
               </Link>
 
-              <Link href={"/wishlist"} className="relative">
-                <CiHeart size={25} />
+              <Link href={"/wishlist"} className="relative" title="Yêu thích">
+                <CiHeart size={25} title="Yêu thích" />
 
                 <span
                   className="absolute flex items-center justify-center 
@@ -327,8 +331,8 @@ function Header() {
                   0
                 </span>
               </Link>
-              <button onClick={toggleMobileMenu}>
-                <AiOutlineMenu size={24} />
+              <button onClick={toggleMobileMenu} title="Mở menu">
+                <AiOutlineMenu size={24} title="Mở menu" />
               </button>
             </div>
           </div>

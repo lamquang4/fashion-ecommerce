@@ -47,7 +47,7 @@ function LoginForm() {
               <div className="flex items-center justify-between">
                 <Link
                   href="/login"
-                  className="text-[0.95rem] font-light text-[#2196f3]"
+                  className="text-[0.95rem] text-blue-400 font-medium"
                 >
                   Quên mật khẩu?
                 </Link>
@@ -60,7 +60,7 @@ function LoginForm() {
               </button>
               <p className="flex gap-1.5 justify-center font-light text-[0.95rem]">
                 Bạn chưa có tài khoản ư?
-                <Link href="/register" className="text-[#2196f3]">
+                <Link href="/register" className="text-blue-400 font-medium">
                   Đăng kí
                 </Link>
               </p>
