@@ -45,19 +45,19 @@ function BannerCarousel() {
                 </picture>
 
                 <div className="text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full">
-                  <h2 className="text-[1.65rem] md:text-[1.8rem] uppercase font-bold mb-5">
+                  <h2 className="text-[1.6rem] md:text-[1.8rem] uppercase font-bold mb-5">
                     Thời trang hiện đại
                   </h2>
                   <div className="flex gap-7 justify-center items-center">
                     <Link
                       href={"/shop"}
-                      className="w-[95px] py-[7.5px] md:w-[100px]  bg-white text-black text-[1rem] font-bold uppercase hover:scale-105"
+                      className="w-[85px] py-[7.5px] md:w-[90px]  bg-white text-black text-[0.95rem] font-bold uppercase hover:scale-105"
                     >
                       Nữ
                     </Link>
                     <Link
                       href={"/shop"}
-                      className="w-[95px] py-[7.5px] md:w-[100px]  bg-white text-black text-[1rem] font-bold uppercase hover:scale-105"
+                      className="w-[85px] py-[7.5px] md:w-[90px]  bg-white text-black text-[0.95rem] font-bold uppercase hover:scale-105"
                     >
                       Nam
                     </Link>

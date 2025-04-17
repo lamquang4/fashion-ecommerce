@@ -1,24 +1,31 @@
 import Link from "next/link";
 import React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
-import { SlOptions } from "react-icons/sl";
+import { LiaBell } from "react-icons/lia";
+import Image from "./Image";
+
 function Header() {
   return (
     <>
-      <header className="sticky top-0 z-20 flex w-full border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900 lg:border-b">
-        <div className="flex grow flex-col items-center justify-between lg:flex-row lg:px-6">
-          <div className="flex w-full items-center justify-between gap-2 border-b border-gray-200 px-3 py-3 dark:border-gray-800 sm:gap-4 lg:justify-normal lg:border-b-0 lg:px-0 lg:py-4">
-            <button>
-              <AiOutlineMenu />
+      <header className="sticky top-0 z-20 flex w-full bg-white border-b border-gray-200 items-center border">
+        <div className="w-full flex justify-between items-center sm:px-[20px] py-3 px-[15px]">
+          <button className="w-9 h-9 rounded-lg border border-gray-200 text-gray-500 justify-center items-center flex">
+            <AiOutlineMenu size={20} />
+          </button>
+
+          <div className="flex gap-[20px] items-center">
+            <button className="w-9 h-9 rounded-lg border border-gray-200 text-gray-500 justify-center items-center flex">
+              <LiaBell size={21} />
             </button>
 
-            <Link href={"/"} className="lg:hidden">
-              <img src="" alt="" />
-            </Link>
-
-            <button>
-              <SlOptions />
-            </button>
+            <div className="flex cursor-pointer items-center gap-[10px] text-[0.9rem]">
+              <Image
+                Src={"assets/other/owner.png"}
+                Alt={""}
+                ClassName="w-[40px] rounded-full"
+              />
+              QuangLam
+            </div>
           </div>
         </div>
       </header>

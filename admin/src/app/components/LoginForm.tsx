@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "./Image";
 import { GoLock } from "react-icons/go";
@@ -21,9 +22,9 @@ function LoginForm() {
               </h2>
 
               <form action="">
-                <div className="relative h-12 w-full mt-8 focus-within:text-blue-500 text-gray-400">
+                <div className="relative h-12 w-full mt-8 focus-within:text-blue-500 text-gray-500">
                   <AiOutlineMail
-                    className="absolute left-0 top-1/2 transform -translate-y-1/2  transition-all duration-200 focus-within:text-blue-500"
+                    className="z-99 absolute left-0 top-1/2 transform -translate-y-1/2  transition-all duration-200 focus-within:text-blue-500"
                     size={20}
                   />
                   <input
@@ -35,7 +36,7 @@ function LoginForm() {
                   />
                 </div>
 
-                <div className="relative h-12 w-full mt-8 focus-within:text-blue-500 text-gray-400">
+                <div className="relative h-12 w-full mt-8 focus-within:text-blue-500 text-gray-500">
                   <GoLock
                     className="absolute left-0 top-1/2 transform -translate-y-1/2 transition-all duration-200 focus-within:text-blue-500"
                     size={20}
