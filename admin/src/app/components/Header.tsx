@@ -1,15 +1,22 @@
-import Link from "next/link";
+"use client";
 import React from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { LiaBell } from "react-icons/lia";
 import Image from "./Image";
 
-function Header() {
+type HeaderProps = {
+  toggleMenu: () => void;
+};
+
+function Header({ toggleMenu }: HeaderProps) {
   return (
     <>
-      <header className="sticky top-0 z-20 flex w-full bg-white border-b border-gray-200 items-center border">
+      <header className="sticky top-0 z-20 flex w-full bg-white border-b-gray-200 items-center border-b">
         <div className="w-full flex justify-between items-center sm:px-[20px] py-3 px-[15px]">
-          <button className="w-9 h-9 rounded-lg border border-gray-200 text-gray-500 justify-center items-center flex">
+          <button
+            onClick={toggleMenu}
+            className="w-9 h-9 rounded-lg border border-gray-200 text-gray-500 justify-center items-center flex"
+          >
             <AiOutlineMenu size={20} />
           </button>
 

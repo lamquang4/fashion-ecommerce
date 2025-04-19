@@ -15,10 +15,15 @@ import { RiShoppingBag4Line } from "react-icons/ri";
 import { PiHouseLineBold } from "react-icons/pi";
 import { FaRegCreditCard } from "react-icons/fa";
 import { RiCoupon2Line } from "react-icons/ri";
-interface MenuMobileProp {}
-const MenuSide: React.FC<MenuMobileProp> = () => {
+
+type MenuSideProps = {
+  menuOpen: Boolean;
+  toggleMenu: () => void;
+};
+
+function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
-  const [menuOpen, setMenuOpen] = useState(false);
+
   const toggleOpen = (menu: string) => {
     setOpenMenus((prev) => ({
       ...prev,
@@ -26,13 +31,16 @@ const MenuSide: React.FC<MenuMobileProp> = () => {
     }));
   };
 
-  const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
-  };
   return (
     <>
       <nav
-        className={`fixed border top-0 left-[-100%] w-[290px] h-screen px-5 py-5 bg-white transition-all duration-500 ease-in-out z-[22] lg:static lg:translate-x-0 overflow-y-auto border-b border-gray-200`}
+        className={` ${menuOpen ? "left-0" : "left-[-100%]"} 
+        ${
+          menuOpen
+            ? "lg:translate-x-[-100%] lg:w-[0px] lg:p-0"
+            : "lg:translate-x-0"
+        } 
+        fixed border top-0 h-screen w-[300px] px-4 py-5 bg-white transition-all duration-500 ease-in-out z-[25] lg:static lg:translate-x-0 overflow-y-auto border-b border-gray-200`}
       >
         <div className="mb-[25px] flex justify-center">
           <Image Src={"assets/other/logo.png"} Alt="" ClassName="w-[85px]" />
@@ -407,8 +415,10 @@ const MenuSide: React.FC<MenuMobileProp> = () => {
           </div>
         </ul>
       </nav>
+
+      {menuOpen && <Overplay closeMenu={toggleMenu} />}
     </>
   );
-};
+}
 
 export default MenuSide;
