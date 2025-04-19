@@ -1,11 +1,11 @@
 import React from "react";
 import LayoutPage from "../components/LayoutPage";
-import Product from "../components/Product";
+import Customer from "../components/Customer";
 
 function page() {
   return (
     <LayoutPage>
-      <Product />
+      <Customer />
     </LayoutPage>
   );
 }

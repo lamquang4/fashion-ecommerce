@@ -1,11 +1,11 @@
 import React from "react";
 import LayoutPage from "../components/LayoutPage";
-import Product from "../components/Product";
+import AddAdmin from "../components/AddAdmin";
 
 function page() {
   return (
     <LayoutPage>
-      <Product />
+      <AddAdmin />
     </LayoutPage>
   );
 }

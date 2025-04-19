@@ -14,7 +14,9 @@ import { FaRegUser } from "react-icons/fa";
 import { RiShoppingBag4Line } from "react-icons/ri";
 import { PiHouseLineBold } from "react-icons/pi";
 import { FaRegCreditCard } from "react-icons/fa";
+import { IoColorPaletteOutline } from "react-icons/io5";
 import { RiCoupon2Line } from "react-icons/ri";
+import { usePathname } from "next/navigation";
 
 type MenuSideProps = {
   menuOpen: Boolean;
@@ -22,6 +24,8 @@ type MenuSideProps = {
 };
 
 function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
+  const pathname = usePathname();
+
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
 
   const toggleOpen = (menu: string) => {
@@ -51,10 +55,10 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
               Hàng hóa
             </p>
             <li>
-              <div
-                onClick={() => toggleOpen(`1a`)}
+              <Link
+                href={"/dashboard"}
                 className={`${
-                  openMenus["1a"]
+                  pathname === "/dashboard"
                     ? "text-[#465fff] bg-[#ECF3FF]"
                     : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
@@ -62,7 +66,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
                   <MdOutlineDashboard size={20} /> Bảng điều khiển
                 </p>
-              </div>
+              </Link>
             </li>
 
             <li>
@@ -89,14 +93,29 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                   openMenus[`2a`] ? "max-h-fit visible" : ""
                 }`}
               >
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/product"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link href={"/product"} className="text-[0.9rem] font-medium">
                     Danh sách sản phẩm
                   </Link>
                 </li>
 
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/add-product"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link
+                    href={"/add-product"}
+                    className="text-[0.9rem] font-medium"
+                  >
                     Thêm sản phẩm
                   </Link>
                 </li>
@@ -127,14 +146,32 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                   openMenus[`3a`] ? "max-h-fit visible" : ""
                 }`}
               >
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/category"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link
+                    href={"/category"}
+                    className="text-[0.9rem] font-medium"
+                  >
                     Danh sách danh mục
                   </Link>
                 </li>
 
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/add-category"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link
+                    href={"/add-category"}
+                    className="text-[0.9rem] font-medium"
+                  >
                     Thêm danh mục
                   </Link>
                 </li>
@@ -165,15 +202,18 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                   openMenus[`4a`] ? "max-h-fit visible" : ""
                 }`}
               >
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
-                    Kho
-                  </Link>
-                </li>
-
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
-                    Đơn hàng đã nhập
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/inventory"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link
+                    href={"/inventory"}
+                    className="text-[0.9rem] font-medium"
+                  >
+                    Hàng trong kho
                   </Link>
                 </li>
               </ul>
@@ -203,15 +243,22 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                   openMenus[`12a`] ? "max-h-fit visible" : ""
                 }`}
               >
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/order"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link href={"/order"} className="text-[0.9rem] font-medium">
                     Danh sách đơn hàng
                   </Link>
                 </li>
               </ul>
             </li>
 
-            <li>
+            {/*
+     <li>
               <div
                 onClick={() => toggleOpen(`8a`)}
                 className={`${
@@ -248,6 +295,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </li>
               </ul>
             </li>
+        */}
           </div>
 
           <div>
@@ -279,14 +327,29 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                   openMenus[`5a`] ? "max-h-fit visible" : ""
                 }`}
               >
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/admin"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link href={"/admin"} className="text-[0.9rem] font-medium">
                     Danh sách quản trị viên
                   </Link>
                 </li>
 
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/add-admin"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link
+                    href={"/add-admin"}
+                    className="text-[0.9rem] font-medium"
+                  >
                     Thêm sản quản trị viên
                   </Link>
                 </li>
@@ -317,21 +380,40 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                   openMenus[`6a`] ? "max-h-fit visible" : ""
                 }`}
               >
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/customer"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link
+                    href={"/customer"}
+                    className="text-[0.9rem] font-medium"
+                  >
                     Danh sách khách hàng
                   </Link>
                 </li>
 
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/add-customer"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link
+                    href={"/add-customer"}
+                    className="text-[0.9rem] font-medium"
+                  >
                     Thêm khách hàng
                   </Link>
                 </li>
               </ul>
             </li>
 
-            <li>
+            {/*
+  <li>
               <div
                 onClick={() => toggleOpen(`7a`)}
                 className={`${
@@ -357,7 +439,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
               >
                 <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
                   <Link href={"/"} className="text-[0.9rem] font-medium">
-                    Danh sách nhà cung câp
+                    Danh sách nhà cung cấp
                   </Link>
                 </li>
 
@@ -368,6 +450,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </li>
               </ul>
             </li>
+            */}
           </div>
 
           <div>
@@ -399,15 +482,83 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                   openMenus[`10a`] ? "max-h-fit visible" : ""
                 }`}
               >
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/coupon"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link href={"/coupon"} className="text-[0.9rem] font-medium">
                     Danh sách phiếu giảm giá
                   </Link>
                 </li>
 
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/add-coupon"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link
+                    href={"/add-coupon"}
+                    className="text-[0.9rem] font-medium"
+                  >
                     Thêm sản phiếu giảm giá
+                  </Link>
+                </li>
+              </ul>
+            </li>
+
+            <li>
+              <div
+                onClick={() => toggleOpen(`14a`)}
+                className={`${
+                  openMenus["14a"] ? "text-[#465fff]" : "hover:bg-gray-200"
+                } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
+              >
+                <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
+                  <IoColorPaletteOutline size={20} /> Màu
+                </p>
+                <button>
+                  {openMenus[`14a`] ? (
+                    <IoIosArrowDown size={18} />
+                  ) : (
+                    <IoIosArrowUp size={18} />
+                  )}
+                </button>
+              </div>
+
+              <ul
+                className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
+                  openMenus[`14a`] ? "max-h-fit visible" : ""
+                }`}
+              >
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/color"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link href={"/color"} className="text-[0.9rem] font-medium">
+                    Danh sách màu
+                  </Link>
+                </li>
+
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                    pathname === "/add-color"
+                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link
+                    href={"/add-color"}
+                    className="text-[0.9rem] font-medium"
+                  >
+                    Thêm màu
                   </Link>
                 </li>
               </ul>
