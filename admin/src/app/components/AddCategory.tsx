@@ -6,7 +6,7 @@ function AddCategory() {
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px]">
       <form className="flex flex-col gap-6 w-full">
-        <h1 className="font-bold text-[1.85rem] text-[#74767d]">
+        <h1 className="font-bold text-[1.8rem] text-[#74767d]">
           Thêm danh mục
         </h1>
 

@@ -16,7 +16,7 @@ function Customer() {
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h1 className="font-bold mb-[20px] text-[1.85rem] text-[#74767d]">
+        <h1 className="font-bold mb-[20px] text-[1.8rem] text-[#74767d]">
           Khách hàng (20)
         </h1>
 
