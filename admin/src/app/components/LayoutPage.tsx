@@ -14,8 +14,24 @@ function LayoutPage({ children }: LayoutProps) {
   };
 
   useEffect(() => {
+    if (window.innerWidth < 1024) {
+      if (menuOpen) {
+        document.body.style.overflowY = "hidden";
+      } else {
+        document.body.style.overflowY = "auto";
+      }
+    }
+
+    return () => {
+      document.body.style.overflowY = "auto";
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
+        setMenuOpen(false);
+      } else {
         setMenuOpen(false);
       }
     };

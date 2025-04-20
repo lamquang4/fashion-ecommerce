@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 import AdvancedSearch from "./AdvancedSearch";
 import Image from "./Image";
@@ -9,6 +9,19 @@ function ProductList() {
   const toggleAdvancedSearch = () => {
     setAdvancedSearchOpen(!advancedSearchOpen);
   };
+
+  useEffect(() => {
+    if (advancedSearchOpen) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "auto";
+    }
+
+    return () => {
+      document.body.style.overflowY = "auto";
+    };
+  }, [advancedSearchOpen]);
+
   const productLists = [
     {
       name: "Áo sơ mi Leweu Kio",

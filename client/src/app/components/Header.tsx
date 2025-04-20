@@ -32,6 +32,7 @@ function Header() {
     if (openSearch) setOpenSearch(false);
   };
 
+
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1041) {
