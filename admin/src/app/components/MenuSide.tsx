@@ -17,7 +17,7 @@ import { RiCoupon2Line } from "react-icons/ri";
 import { usePathname } from "next/navigation";
 
 type MenuSideProps = {
-  menuOpen: Boolean;
+  menuOpen: boolean;
   toggleMenu: () => void;
 };
 

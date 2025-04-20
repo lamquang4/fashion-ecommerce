@@ -5,7 +5,6 @@ import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
 import { IoMdAddCircle } from "react-icons/io";
 import { TbLock } from "react-icons/tb";
-import { TbLockOpen } from "react-icons/tb";
 import { FaSortDown } from "react-icons/fa";
 import Pagination from "./Pagination";
 
