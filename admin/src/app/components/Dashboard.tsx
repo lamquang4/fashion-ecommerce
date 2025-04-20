@@ -82,7 +82,7 @@ function Dashboard() {
           </div>
         </div>
 
-        <div className="flex gap-[10px] mb-[25px]">
+        <div className="flex gap-[15px] mb-[25px] flex-wrap">
           <div className="relative flex gap-1.5 items-center">
             <label htmlFor="" className="text-[0.9rem] text-black">
               Từ:
@@ -90,11 +90,9 @@ function Dashboard() {
             <input
               name="startDate"
               type="date"
-              className="bg-gray-50 border border-gray-300 text-[0.9rem] p-2 outline-none focus:border-gray-400 text-gray-900"
+              className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400 text-gray-900"
             />
           </div>
-
-          <div className="relative flex items-center">-</div>
 
           <div className="relative flex gap-1.5 items-center">
             <label htmlFor="" className="text-[0.9rem] text-black">
@@ -103,7 +101,7 @@ function Dashboard() {
             <input
               name="endDate"
               type="date"
-              className="bg-gray-50 border border-gray-300 text-[0.9rem] p-2 outline-none focus:border-gray-400 text-gray-900"
+              className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400 text-gray-900"
             />
           </div>
         </div>
