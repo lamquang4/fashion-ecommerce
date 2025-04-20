@@ -21,7 +21,7 @@ function AddCoupon() {
                 name="code"
                 maxLength={20}
                 required
-                className="border border-gray-400 px-2 py-1 text-[0.9rem] w-full outline-none"
+                className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
               />
             </div>
 
@@ -33,7 +33,7 @@ function AddCoupon() {
                 type="number"
                 name="limitCoupon"
                 required
-                className="border border-gray-400 px-2 py-1 text-[0.9rem] w-full outline-none"
+                className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
               />
             </div>
 
@@ -44,7 +44,7 @@ function AddCoupon() {
               <select
                 name="typeCoupon"
                 required
-                className="border border-gray-400 px-2 py-1 text-[0.9rem] w-full outline-none"
+                className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
               >
                 <option value="">Chọn loại giảm giá</option>
                 <option value="free">Miễn phí giao hàng</option>
@@ -61,7 +61,7 @@ function AddCoupon() {
                 type="text"
                 name="valueCoupon"
                 required
-                className="border border-gray-400 px-2 py-1 text-[0.9rem] w-full outline-none"
+                className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
               />
             </div>
 
@@ -74,7 +74,7 @@ function AddCoupon() {
                   type="date"
                   name="startDate"
                   required
-                  className="border border-gray-400 px-2 py-1 text-[0.9rem] w-full outline-none"
+                  className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
                 />
               </div>
               <div className="w-full flex flex-col gap-1">
@@ -85,7 +85,7 @@ function AddCoupon() {
                   type="date"
                   name="endDate"
                   required
-                  className="border border-gray-400 px-2 py-1 text-[0.9rem] w-full outline-none"
+                  className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
                 />
               </div>
             </div>
@@ -95,13 +95,13 @@ function AddCoupon() {
         <div className="flex justify-center gap-6 mt-6">
           <button
             type="submit"
-            className="w-[75px] bg-teal-500 text-white text-[0.9rem] py-2 "
+            className="px-[14px] py-[5px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
           >
             Thêm
           </button>
           <Link
             href="/coupon"
-            className="w-[75px] bg-red-500 text-white text-[0.9rem] py-2 text-center"
+            className="px-[14px] py-[10px] bg-red-500 text-white text-[0.9rem] text-center rounded-sm"
           >
             Trở về
           </Link>

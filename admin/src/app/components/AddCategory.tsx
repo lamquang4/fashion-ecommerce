@@ -20,7 +20,7 @@ function AddCategory() {
                 type="text"
                 name="namecate"
                 required
-                className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
             </div>
 
@@ -31,7 +31,7 @@ function AddCategory() {
               <select
                 name="gender"
                 required
-                className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               >
                 <option value="">Chọn giới tính</option>
                 <option value="nam">Nam</option>
@@ -44,13 +44,13 @@ function AddCategory() {
         <div className="flex justify-center gap-6 mt-6">
           <button
             type="submit"
-            className="w-[75px] bg-teal-500 text-white text-[0.9rem] py-2 "
+            className="px-[14px] py-[5px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
           >
             Thêm
           </button>
           <Link
             href="/category"
-            className="w-[75px] bg-red-500 text-white text-[0.9rem] py-2 text-center"
+            className="px-[14px] py-[10px] bg-red-500 text-white text-[0.9rem] text-center rounded-sm"
           >
             Trở về
           </Link>

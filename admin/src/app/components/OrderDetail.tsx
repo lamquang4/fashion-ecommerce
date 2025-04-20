@@ -1,25 +1,19 @@
 "use client";
 import React from "react";
 import Image from "./Image";
-import Link from "next/link";
+
 function OrderDetail() {
   return (
     <div className="w-full  px-[15px]">
       <div className="w-full max-w-full border-[1.5px] border-double border-gray-300 lg:max-w-[700px] rounded-sm mx-auto my-[30px]">
         <div className="py-[30px]">
           <div className="flex justify-between px-[15px] sm:px-[20px]">
-            <div className="flex flex-col gap-[15px]">
+            <div className="">
               <Image
                 Src={"/assets/other/logo.png"}
                 Alt={""}
                 ClassName={"w-[80px]"}
               />
-              <Link
-                className=" p-1.5 bg-red-500 text-center text-white"
-                href={"/order"}
-              >
-                Trở về
-              </Link>
             </div>
 
             <div className="flex flex-col gap-[5px]">

@@ -23,7 +23,7 @@ function AddAdmin() {
                 type="text"
                 name="fullname"
                 required
-                className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
             </div>
 
@@ -35,8 +35,25 @@ function AddAdmin() {
                 type="text"
                 name="email"
                 required
-                className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label htmlFor="" className="text-[0.9rem] text-black">
+                Chức vụ
+              </label>
+              <select
+                name="role"
+                required
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+              >
+                <option value="">Chọn chức vụ</option>
+                <option value="0">Siêu quản trị viên</option>
+                <option value="1">Nhân viên bán hàng</option>
+                <option value="2">Nhân viên nội dung</option>
+                <option value="3">Kế toán</option>
+              </select>
             </div>
 
             <div className="flex flex-col gap-1">
@@ -47,7 +64,7 @@ function AddAdmin() {
                 type="number"
                 name="phone"
                 required
-                className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
             </div>
 
@@ -59,7 +76,7 @@ function AddAdmin() {
                 type="date"
                 name="birthday"
                 required
-                className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
             </div>
 
@@ -71,7 +88,7 @@ function AddAdmin() {
                 type="password"
                 name="password"
                 required
-                className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
             </div>
           </div>

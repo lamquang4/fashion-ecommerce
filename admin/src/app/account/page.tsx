@@ -1,11 +1,13 @@
-import React from 'react'
+import React from "react";
+import LayoutPage from "../components/LayoutPage";
+import Account from "../components/Account";
 
 function page() {
   return (
-    <div>
-      
-    </div>
-  )
+    <LayoutPage>
+      <Account />
+    </LayoutPage>
+  );
 }
 
-export default page
+export default page;

@@ -105,7 +105,7 @@ function AddProduct() {
                   type="text"
                   name="nameproduct"
                   required
-                  className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
               </div>
 
@@ -116,7 +116,7 @@ function AddProduct() {
                 <select
                   name="category"
                   required
-                  className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 >
                   <option value="">Chọn giới tính</option>
                   <option value="0">Nam</option>
@@ -131,7 +131,7 @@ function AddProduct() {
                 <select
                   name="category"
                   required
-                  className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 >
                   <option value="">Chọn danh mục</option>
                   <option value="">Áo sơ mi</option>
@@ -147,7 +147,7 @@ function AddProduct() {
               <select
                 name="status"
                 required
-                className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               >
                 <option value="">Chọn tình trạng</option>
                 <option value="0">Ẩn </option>
@@ -162,7 +162,7 @@ function AddProduct() {
               <textarea
                 name="description"
                 rows={4}
-                className="border border-gray-300 p-2.5 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px].5 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 placeholder="Viết mô tả..."
               ></textarea>
             </div>
@@ -182,7 +182,7 @@ function AddProduct() {
                   type="number"
                   name="price"
                   required
-                  className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
               </div>
 
@@ -194,7 +194,7 @@ function AddProduct() {
                   type="number"
                   name="discount"
                   required
-                  className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
               </div>
 
@@ -206,7 +206,7 @@ function AddProduct() {
                   type="number"
                   name="discount"
                   required
-                  className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
               </div>
             </div>
@@ -238,7 +238,7 @@ function AddProduct() {
                   <select
                     name="size"
                     required
-                    className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   >
                     <option value="">Chọn kích thước</option>
                     <option value="XL">XL</option>
@@ -255,7 +255,7 @@ function AddProduct() {
                   <select
                     name="color"
                     required
-                    className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   >
                     <option value="">Chọn màu</option>
                     <option value="XL" className="text-[#FF0000]">
@@ -273,7 +273,7 @@ function AddProduct() {
                     type="number"
                     name="quantity"
                     required
-                    className="border border-gray-300 p-2 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   />
                 </div>
               </div>
@@ -284,13 +284,13 @@ function AddProduct() {
         <div className="flex justify-center gap-6 mt-6">
           <button
             type="submit"
-            className="w-[75px] bg-teal-500 text-white text-[0.9rem] py-2 "
+            className="px-[14px] py-[5px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
           >
             Thêm
           </button>
           <Link
             href="/product"
-            className="w-[75px] bg-red-500 text-white text-[0.9rem] py-2 text-center"
+            className="px-[14px] py-[10px] bg-red-500 text-white text-[0.9rem] text-center rounded-sm"
           >
             Trở về
           </Link>
