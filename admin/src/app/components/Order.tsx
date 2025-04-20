@@ -22,7 +22,7 @@ function Order() {
           Đơn hàng (20)
         </h1>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6 mb-[20px]">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6 mb-[25px]">
           <div className="relative break-words rounded-lg border border-gray-200 dark:border-dark-600 flex justify-between p-5 bg-white">
             <div>
               <p>Tổng đơn</p>
@@ -88,7 +88,7 @@ function Order() {
           </div>
         </div>
 
-        <div className="flex gap-[10px]">
+        <div className="flex gap-[10px] mb-[25px]">
           <div className="relative flex gap-1.5 items-center">
             <label htmlFor="" className="text-[0.9rem] text-black">
               Từ:

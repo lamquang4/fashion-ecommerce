@@ -162,7 +162,7 @@ function AddProduct() {
               <textarea
                 name="description"
                 rows={4}
-                className="border border-gray-300 p-[6px_10px].5 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 placeholder="Viết mô tả..."
               ></textarea>
             </div>
