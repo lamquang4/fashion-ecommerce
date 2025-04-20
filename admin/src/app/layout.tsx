@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
+import { Toaster } from "react-hot-toast";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -19,7 +20,16 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={quicksand.className}>{children}</body>
+      <body className={quicksand.className}>
+        <Toaster
+          toastOptions={{
+            style: {
+              zIndex: 99,
+            },
+          }}
+        />
+        {children}
+      </body>
     </html>
   );
 }

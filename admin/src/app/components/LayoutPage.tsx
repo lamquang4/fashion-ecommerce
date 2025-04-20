@@ -26,7 +26,7 @@ function LayoutPage({ children }: LayoutProps) {
     };
   }, []);
   return (
-    <div className="flex h-screen overflow-hidden w-full">
+    <div className="flex h-auto w-full">
       <MenuSide menuOpen={menuOpen} toggleMenu={toggleMenu} />
       <main className="w-full">
         <Header toggleMenu={toggleMenu} />

@@ -33,13 +33,13 @@ function Header({ toggleMenu }: HeaderProps) {
             </button>
 
             <div
-              className="flex cursor-pointer items-center gap-[10px] text-[0.9rem] relative"
+              className="flex cursor-pointer items-center gap-[10px] text-[0.9rem] relative0"
               onClick={toggleProfileMenu}
             >
               <Image
                 Src={"assets/other/owner.png"}
                 Alt={""}
-                ClassName="w-[35px] rounded-full"
+                ClassName="w-[35px] rounded-full border border-gray-30 p-1"
               />
               QuangLam
               <div

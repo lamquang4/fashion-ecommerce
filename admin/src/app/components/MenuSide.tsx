@@ -12,8 +12,6 @@ import { FaRegAddressCard } from "react-icons/fa";
 import { LuWarehouse } from "react-icons/lu";
 import { FaRegUser } from "react-icons/fa";
 import { RiShoppingBag4Line } from "react-icons/ri";
-import { PiHouseLineBold } from "react-icons/pi";
-import { FaRegCreditCard } from "react-icons/fa";
 import { IoColorPaletteOutline } from "react-icons/io5";
 import { RiCoupon2Line } from "react-icons/ri";
 import { usePathname } from "next/navigation";
@@ -43,10 +41,9 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
           menuOpen
             ? "lg:translate-x-[-100%] lg:w-[0px] lg:p-0"
             : "lg:translate-x-0"
-        } 
-        fixed border top-0 h-screen w-[300px] px-4 py-5 bg-white transition-all duration-500 ease-in-out z-[25] lg:static lg:translate-x-0 overflow-y-auto border-b border-gray-200`}
+        } custom-scroll fixed border top-0 h-screen w-[300px] px-4 pb-5 bg-white transition-all duration-500 ease-in-out z-[25] lg:sticky lg:translate-x-0 overflow-y-auto border-b border-gray-200`}
       >
-        <div className="mb-[25px] flex justify-center">
+        <div className="mb-[20px] flex justify-center sticky top-0 bg-white px-4 py-5">
           <Image Src={"assets/other/logo.png"} Alt="" ClassName="w-[85px]" />
         </div>
         <ul className="flex flex-col gap-[10px]">

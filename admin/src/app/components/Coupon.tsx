@@ -7,6 +7,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { FaSortDown } from "react-icons/fa";
+import Pagination from "./Pagination";
 
 function Coupon() {
   const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
@@ -16,7 +17,7 @@ function Coupon() {
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h1 className="font-bold mb-[20px] text-[1.8rem] text-[#74767d]">
+        <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
           Phiếu giảm giá (20)
         </h1>
 
@@ -156,6 +157,8 @@ function Coupon() {
           </tbody>
         </table>
       </div>
+
+      <Pagination />
     </>
   );
 }

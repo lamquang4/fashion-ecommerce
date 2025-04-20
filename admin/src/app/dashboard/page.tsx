@@ -1,10 +1,11 @@
 import React from "react";
 import LayoutPage from "../components/LayoutPage";
+import Dashboard from "../components/Dashboard";
 
 function page() {
   return (
     <LayoutPage>
-      <h2>hello</h2>
+      <Dashboard />
     </LayoutPage>
   );
 }

@@ -2,9 +2,14 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import { LiaExternalLinkAltSolid } from "react-icons/lia";
-import { IoMdAddCircle } from "react-icons/io";
 import { FaSortDown } from "react-icons/fa";
-
+import { IoIosArrowRoundUp } from "react-icons/io";
+import { IoIosArrowRoundDown } from "react-icons/io";
+import { RiShoppingBag4Line } from "react-icons/ri";
+import { RiTruckLine } from "react-icons/ri";
+import { LuClock } from "react-icons/lu";
+import { TbCancel } from "react-icons/tb";
+import Pagination from "./Pagination";
 function Order() {
   const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
   const toggleDropdownMenu = () => {
@@ -13,9 +18,101 @@ function Order() {
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h1 className="font-bold mb-[20px] text-[1.8rem] text-[#74767d]">
+        <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
           Đơn hàng (20)
         </h1>
+
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6 mb-[20px]">
+          <div className="relative break-words rounded-lg border border-gray-200 dark:border-dark-600 flex justify-between p-5 bg-white">
+            <div>
+              <p>Tổng đơn</p>
+              <p className="mt-0.5 text-xl font-medium">1500</p>
+              <p className=" mt-3 flex items-center text-red-500">
+                <IoIosArrowRoundDown size={25} />
+                <span>1.3%</span>
+              </p>
+            </div>
+
+            <div className="relative inline-flex shrink-0">
+              <div className="flex h-full w-full select-none items-center justify-center font-medium uppercase  rounded-none">
+                <RiShoppingBag4Line size={25} />
+              </div>
+            </div>
+          </div>
+
+          <div className="relative break-words rounded-lg border border-gray-200 dark:border-dark-600 flex justify-between p-5 bg-white">
+            <div>
+              <p>Đơn giao thành công</p>
+              <p className="mt-0.5 text-xl font-medium">500</p>
+              <p className="mt-3 flex items-center text-[#029A67]">
+                <IoIosArrowRoundUp size={25} />
+                <span>4.3%</span>
+              </p>
+            </div>
+
+            <div className="elative inline-flex shrink-0">
+              <div className="flex h-full w-full select-none items-center justify-center font-medium uppercase rounded-none">
+                <RiTruckLine size={25} />
+              </div>
+            </div>
+          </div>
+
+          <div className="relative break-words rounded-lg border border-gray-200 dark:border-dark-600 flex justify-between p-5 bg-white">
+            <div>
+              <p>Đơn đã hủy</p>
+              <p className="mt-0.5 text-xl font-medium">210</p>
+              <p className="mt-3 flex items-center text-[#029A67]">
+                <IoIosArrowRoundUp size={25} />
+                <span>1%</span>
+              </p>
+            </div>
+
+            <div className="elative inline-flex shrink-0">
+              <div className="flex h-full w-full select-none items-center justify-center font-medium uppercase rounded-none">
+                <TbCancel size={25} />
+              </div>
+            </div>
+          </div>
+
+          <div className="relative break-words rounded-lg border border-gray-200 dark:border-dark-600 flex justify-between p-5 bg-white">
+            <div>
+              <p>Đơn chờ xác nhận</p>
+              <p className="mt-0.5 text-xl font-medium">100</p>
+            </div>
+
+            <div className="elative inline-flex shrink-0">
+              <div className="flex h-full w-full select-none items-center justify-center font-medium uppercase  rounded-none">
+                <LuClock size={25} />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="flex gap-[10px]">
+          <div className="relative flex gap-1.5 items-center">
+            <label htmlFor="" className="text-[0.9rem] text-black">
+              Từ:
+            </label>
+            <input
+              name="startDate"
+              type="date"
+              className="bg-gray-50 border border-gray-300 text-[0.9rem] p-2 outline-none focus:border-gray-400 text-gray-900"
+            />
+          </div>
+
+          <div className="relative flex items-center">-</div>
+
+          <div className="relative flex gap-1.5 items-center">
+            <label htmlFor="" className="text-[0.9rem] text-black">
+              Đến:
+            </label>
+            <input
+              name="endDate"
+              type="date"
+              className="bg-gray-50 border border-gray-300 text-[0.9rem] p-2 outline-none focus:border-gray-400 text-gray-900"
+            />
+          </div>
+        </div>
       </div>
 
       <div className="shadow-sm bg-white rounded-[3px] w-full overflow-auto">
@@ -117,7 +214,7 @@ function Order() {
               <td className="py-[1rem] text-[0.9rem] text-[#444]">Hiện</td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">
                 <div className="flex items-center gap-[15px]">
-                  <Link href={"/"}>
+                  <Link href={"/order-detail"}>
                     <LiaExternalLinkAltSolid
                       size={23}
                       className="text-[#076ffe]"
@@ -143,6 +240,8 @@ function Order() {
           </tbody>
         </table>
       </div>
+
+      <Pagination />
     </>
   );
 }

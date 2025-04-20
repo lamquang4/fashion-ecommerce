@@ -1,13 +1,10 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { VscTrash } from "react-icons/vsc";
-import { LiaEdit } from "react-icons/lia";
-import { IoMdAddCircle } from "react-icons/io";
-import { FaRegEyeSlash } from "react-icons/fa";
-import { MdOutlineRemoveRedEye } from "react-icons/md";
+import { LiaExternalLinkAltSolid } from "react-icons/lia";
 import { FaSortDown } from "react-icons/fa";
 import Image from "./Image";
+import Pagination from "./Pagination";
 function Inventory() {
   const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
   const toggleDropdownMenu = () => {
@@ -16,7 +13,7 @@ function Inventory() {
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h1 className="font-bold mb-[20px] text-[1.8rem] text-[#74767d]">
+        <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
           Hàng trong kho (20)
         </h1>
       </div>
@@ -86,6 +83,7 @@ function Inventory() {
                   )}
                 </span>
               </th>
+              <th className="text-left text-[#444] text-[0.9rem]">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -119,6 +117,16 @@ function Inventory() {
               <td className="py-[1rem] text-[0.9rem] text-[#444]">20/4/2025</td>
 
               <td className="py-[1rem] text-[0.9rem] text-[#444]">Còn hàng</td>
+              <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                <div className="flex items-center gap-[15px]">
+                  <Link href={"/product"}>
+                    <LiaExternalLinkAltSolid
+                      size={23}
+                      className="text-[#076ffe]"
+                    />
+                  </Link>
+                </div>
+              </td>
             </tr>
 
             {/*
@@ -137,6 +145,8 @@ function Inventory() {
           </tbody>
         </table>
       </div>
+
+      <Pagination />
     </>
   );
 }
