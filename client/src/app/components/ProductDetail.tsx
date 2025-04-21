@@ -13,26 +13,29 @@ import { IoIosArrowUp } from "react-icons/io";
 }
 
 function ProductDetail() {
-  const [selectedSize, setSelectedSize] = useState("S");
+  const [selectedSize, setSelectedSize] = useState<string>("S");
+  const [mainImage, setMainImage] = useState<string>(
+    "/assets/products/IMGSP1360.png"
+  );
 
+  const HandleIncrement = () => {
+    setQuantity((prev) => (prev < 10 ? prev + 1 : prev));
+  };
+
+  const HandleDecrement = () => {
+    setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
+  };
+  const [quantity, setQuantity] = useState(1);
   return (
-    <section className="w-full mx-auto my-0 lg:my-[20px]">
+    <section className="w-full mx-auto mt-0 lg:mt-[20px] mb-[40px]">
       <div className="flex justify-center flex-wrap gap-[40px] w-full">
         <div>
-          <div className="flex flex-col md:flex-row gap-[30px]">
+          <div className="flex flex-col md:flex-row gap-[30px] lg:sticky lg:top-[140px]">
             <div className=" md:order-2 relative grow overflow-hidden bg-white">
               <div className="max-w-full lg:max-w-[450px] flex flex-col gap-[30px]">
                 <div className="hidden first:block lg:block">
                   <Image
-                    Src={"/assets/products/IMGSP1360.png"}
-                    Alt={""}
-                    ClassName={"w-full h-full object-cover"}
-                  />
-                </div>
-
-                <div className="hidden first:block lg:block">
-                  <Image
-                    Src={"/assets/products/SECSP13601.png"}
+                    Src={mainImage}
                     Alt={""}
                     ClassName={"w-full h-full object-cover"}
                   />
@@ -41,8 +44,13 @@ function ProductDetail() {
             </div>
 
             <div className="md:order-1 flex justify-center">
-              <div className=" max-h-fit flex flex-row md:flex-col gap-[15px] overflow-x-auto md:overflow-x-hidden md:overflow-y-auto lg:sticky lg:top-[140px]">
-                <div className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]">
+              <div className=" max-h-fit flex flex-row md:flex-col gap-[15px] overflow-x-auto md:overflow-x-hidden md:overflow-y-auto">
+                <div
+                  className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
+                  onMouseEnter={() =>
+                    setMainImage("/assets/products/IMGSP1360.png")
+                  }
+                >
                   <Image
                     Src={"/assets/products/IMGSP1360.png"}
                     Alt={""}
@@ -50,7 +58,12 @@ function ProductDetail() {
                   />
                 </div>
 
-                <div className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]">
+                <div
+                  className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
+                  onMouseEnter={() =>
+                    setMainImage("/assets/products/SECSP13601.png")
+                  }
+                >
                   <Image
                     Src={"/assets/products/SECSP13601.png"}
                     Alt={""}
@@ -159,26 +172,26 @@ function ProductDetail() {
               <div className="mb-[20px] relative flex justify-between items-center max-w-[8rem] border border-gray-300 rounded-sm">
                 <button
                   type="button"
-                  id="decrement-button"
-                  data-input-counter-decrement="quantity-input"
+                  onClick={HandleDecrement}
+                  disabled={quantity <= 1}
                   className=" p-3 h-11 outline-none"
                 >
                   <HiOutlineMinusSmall size={22} />
                 </button>
                 <input
                   type="number"
-                  id="quantity-input"
-                  data-input-counter
-                  aria-describedby="helper-text-explanation"
+                  name="quantity"
+                  readOnly
                   className="h-11 text-center text-black w-11 outline-none placeholder:text-black text-[1rem] font-normal"
                   placeholder="1"
                   min={1}
                   max={10}
+                  value={quantity}
                 />
                 <button
                   type="button"
-                  id="increment-button"
-                  data-input-counter-increment="quantity-input"
+                  onClick={HandleIncrement}
+                  disabled={quantity >= 10}
                   className=" p-3 h-11 outline-none"
                 >
                   <HiOutlinePlusSmall size={22} />
