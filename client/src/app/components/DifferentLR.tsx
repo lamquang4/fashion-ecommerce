@@ -1,10 +1,10 @@
 "use client";
 import React from "react";
 import Image from "./Image";
-interface TitleProp {
+type TitleProp = {
   title: string;
-}
-const DifferentLR: React.FC<TitleProp> = ({ title }) => {
+};
+function DifferentLR({ title }: TitleProp) {
   return (
     <>
       <div className="flex items-center m-[30px_0]">
@@ -27,6 +27,6 @@ const DifferentLR: React.FC<TitleProp> = ({ title }) => {
       </div>
     </>
   );
-};
+}
 
 export default DifferentLR;

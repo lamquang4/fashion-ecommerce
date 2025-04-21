@@ -1,12 +1,33 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { LiaExternalLinkAltSolid } from "react-icons/lia";
 import { FaSortDown } from "react-icons/fa";
 import Image from "./Image";
 import Pagination from "./Pagination";
+import ImageViewer from "./ImageViewer";
 function Inventory() {
   const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
+  const [selectedImage, setSelectedImage] = useState<string>("");
+  const [showImageViewer, setShowImageViewer] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (showImageViewer) {
+      document.body.style.overflowY = "hidden";
+    } else {
+      document.body.style.overflowY = "auto";
+    }
+
+    return () => {
+      document.body.style.overflowY = "auto";
+    };
+  }, [showImageViewer]);
+
+  const handleImageClick = (image: string) => {
+    setSelectedImage(image);
+    setShowImageViewer(true);
+  };
+
   const toggleDropdownMenu = () => {
     setOpenDropdownMenu((prev) => !prev);
   };
@@ -90,7 +111,12 @@ function Inventory() {
             <tr>
               <td className="pl-[1rem] py-[1rem] w-[300px]">
                 <div className="flex gap-[10px] items-center">
-                  <div>
+                  <div
+                    className="cursor-pointer"
+                    onClick={() => {
+                      handleImageClick("assets/products/IMGSP0841.png");
+                    }}
+                  >
                     <Image
                       Src={"assets/products/IMGSP0841.png"}
                       Alt={""}
@@ -147,6 +173,13 @@ function Inventory() {
       </div>
 
       <Pagination />
+
+      {showImageViewer && (
+        <ImageViewer
+          imgSrc={selectedImage}
+          closeMenu={() => setShowImageViewer(false)}
+        />
+      )}
     </>
   );
 }

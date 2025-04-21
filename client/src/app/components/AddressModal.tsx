@@ -2,11 +2,12 @@
 import React from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import Overplay from "./Overplay";
-interface AddressModalProp {
+
+type AddressModalProps = {
   isOpen: boolean;
   toggleMenu: () => void;
-}
-const AddressModal: React.FC<AddressModalProp> = ({ isOpen, toggleMenu }) => {
+};
+function AddressModal({ isOpen, toggleMenu }: AddressModalProps) {
   return (
     <>
       <div className="flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-20 h-full">
@@ -162,6 +163,6 @@ const AddressModal: React.FC<AddressModalProp> = ({ isOpen, toggleMenu }) => {
       </div>
     </>
   );
-};
+}
 
 export default AddressModal;

@@ -5,11 +5,11 @@ import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import Link from "next/link";
 import Overplay from "./Overplay";
-interface MenuMobileProp {
+type MenuMobileProps = {
   isOpen: boolean;
   toggleMenu: () => void;
-}
-const Menumobile: React.FC<MenuMobileProp> = ({ isOpen, toggleMenu }) => {
+};
+function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
 
   const toggleOpen = (menu: string) => {
@@ -130,6 +130,6 @@ const Menumobile: React.FC<MenuMobileProp> = ({ isOpen, toggleMenu }) => {
       {isOpen && <Overplay closeMenu={toggleMenu} IndexForZ={15} />}
     </>
   );
-};
+}
 
 export default Menumobile;

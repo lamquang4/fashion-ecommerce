@@ -15,7 +15,8 @@ import { RiShoppingBag4Line } from "react-icons/ri";
 import { IoColorPaletteOutline } from "react-icons/io5";
 import { RiCoupon2Line } from "react-icons/ri";
 import { usePathname } from "next/navigation";
-
+import { PiHouseLineBold } from "react-icons/pi";
+import { IoNewspaperOutline } from "react-icons/io5";
 type MenuSideProps = {
   menuOpen: boolean;
   toggleMenu: () => void;
@@ -559,6 +560,42 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                   </Link>
                 </li>
               </ul>
+            </li>
+          </div>
+
+          <div>
+            <p className="mb-[10px] text-[0.8rem] leading-[20px] text-gray-500 uppercase">
+              Nội dung trang
+            </p>
+
+            <li>
+              <Link
+                href={""}
+                className={`${
+                  pathname === ""
+                    ? "text-[#465fff] bg-[#ECF3FF]"
+                    : "hover:bg-gray-200"
+                } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
+              >
+                <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
+                  <PiHouseLineBold size={20} /> Trang chính
+                </p>
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                href={""}
+                className={`${
+                  pathname === ""
+                    ? "text-[#465fff] bg-[#ECF3FF]"
+                    : "hover:bg-gray-200"
+                } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
+              >
+                <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
+                  <IoNewspaperOutline size={20} /> Trang tin tức
+                </p>
+              </Link>
             </li>
           </div>
         </ul>

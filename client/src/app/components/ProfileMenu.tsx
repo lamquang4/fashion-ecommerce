@@ -4,10 +4,10 @@ import React from "react";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { LuDoorOpen } from "react-icons/lu";
 import { HiOutlineUser } from "react-icons/hi";
-interface ProfileMenuProp {
+type ProfileMenuProp = {
   isOpen: boolean;
-}
-const ProfileMenu: React.FC<ProfileMenuProp> = ({ isOpen }) => {
+};
+function ProfileMenu({ isOpen }: ProfileMenuProp) {
   return (
     <div
       className={`absolute top-[35px] right-[-40px] w-[210px] overflow-hidden z-20 transition-max-height duration-400 ease-in-out bg-white group-hover:max-h-[400px] shadow-md rounded-[6px] ${

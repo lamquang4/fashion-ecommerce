@@ -1,12 +1,11 @@
 "use client";
 import React from "react";
 
-interface OverplayProp {
+type OverplayProps = {
   closeMenu: () => void;
   IndexForZ: number;
-}
-
-const Overplay: React.FC<OverplayProp> = ({ closeMenu, IndexForZ }) => {
+};
+function Overplay({ closeMenu, IndexForZ }: OverplayProps) {
   const handleOverlayClick = () => {
     if (closeMenu) closeMenu();
   };
@@ -18,6 +17,6 @@ const Overplay: React.FC<OverplayProp> = ({ closeMenu, IndexForZ }) => {
       onClick={handleOverlayClick}
     ></div>
   );
-};
+}
 
 export default Overplay;

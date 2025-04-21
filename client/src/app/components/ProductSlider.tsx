@@ -7,7 +7,7 @@ import Image from "./Image";
 interface TitleProp {
   title: string;
 }
-const ProductSlider: React.FC<TitleProp> = ({ title }) => {
+function ProductSlider({ title }: TitleProp) {
   const productLists = [
     {
       name: "Áo sơ mi Leweu Kio",
@@ -192,6 +192,6 @@ const ProductSlider: React.FC<TitleProp> = ({ title }) => {
       </div>
     </section>
   );
-};
+}
 
 export default ProductSlider;
