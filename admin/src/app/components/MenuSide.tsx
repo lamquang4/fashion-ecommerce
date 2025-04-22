@@ -39,9 +39,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
       <nav
         className={` ${menuOpen ? "left-0" : "left-[-100%]"} 
         ${
-          menuOpen
-            ? "lg:translate-x-[-100%] lg:w-[0px] lg:p-0"
-            : "lg:translate-x-0"
+          menuOpen ? "lg:translate-x-[-100%] lg:w-0 lg:p-0" : "lg:translate-x-0"
         } custom-scroll fixed border top-0 h-screen w-[300px] px-4 pb-5 bg-white transition-all duration-500 ease-in-out z-[25] lg:sticky lg:translate-x-0 overflow-y-auto border-b border-gray-200`}
       >
         <div className="mb-[20px] flex justify-center sticky top-0 bg-white px-4 py-5">
@@ -579,6 +577,21 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
               >
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
                   <PiHouseLineBold size={20} /> Trang chính
+                </p>
+              </Link>
+            </li>
+
+            <li>
+              <Link
+                href={""}
+                className={`${
+                  pathname === ""
+                    ? "text-[#465fff] bg-[#ECF3FF]"
+                    : "hover:bg-gray-200"
+                } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
+              >
+                <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
+                  <IoNewspaperOutline size={20} /> Trang tin tức
                 </p>
               </Link>
             </li>

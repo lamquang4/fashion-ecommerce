@@ -42,7 +42,7 @@ function LayoutPage({ children }: LayoutProps) {
     };
   }, []);
   return (
-    <div className="flex h-auto w-full">
+    <div className="flex h-screen w-full">
       <MenuSide menuOpen={menuOpen} toggleMenu={toggleMenu} />
       <main className="w-full">
         <Header toggleMenu={toggleMenu} />
