@@ -595,21 +595,6 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </p>
               </Link>
             </li>
-
-            <li>
-              <Link
-                href={""}
-                className={`${
-                  pathname === ""
-                    ? "text-[#465fff] bg-[#ECF3FF]"
-                    : "hover:bg-gray-200"
-                } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
-              >
-                <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
-                  <IoNewspaperOutline size={20} /> Trang tin tức
-                </p>
-              </Link>
-            </li>
           </div>
         </ul>
       </nav>

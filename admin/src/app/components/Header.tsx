@@ -49,9 +49,9 @@ function Header({ toggleMenu }: HeaderProps) {
                 }`}
               >
                 <div>
-                  <h2 className="text-[0.9rem] max-w-[160px] overflow-hidden text-ellipsis whitespace-nowrap text-center my-[15px] text-black px-[15px]">
+                  <p className="text-[0.9rem] max-w-[160px] overflow-hidden text-ellipsis whitespace-nowrap text-center my-[15px] text-black px-[15px]">
                     Xin chào Quang Lam
-                  </h2>
+                  </p>
 
                   <hr className="border-0 h-[1px] w-full bg-gray-300" />
 

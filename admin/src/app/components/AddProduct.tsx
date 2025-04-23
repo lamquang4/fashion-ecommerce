@@ -5,6 +5,7 @@ import Image from "./Image";
 import toast from "react-hot-toast";
 import { FaRegCircleXmark } from "react-icons/fa6";
 import ImageViewer from "./ImageViewer";
+import TiptapEditor from "./TiptapEditor";
 
 function AddProduct() {
   const [variants, setVariants] = useState([
@@ -218,12 +219,7 @@ function AddProduct() {
                 <label htmlFor="" className="text-[0.9rem] text-black">
                   Mô tả
                 </label>
-                <textarea
-                  name="description"
-                  rows={4}
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
-                  placeholder="Viết mô tả..."
-                ></textarea>
+                <TiptapEditor />
               </div>
 
               <div className="flex flex-col gap-1 w-full">
