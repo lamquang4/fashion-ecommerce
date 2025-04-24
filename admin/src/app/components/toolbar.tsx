@@ -10,7 +10,6 @@ import { MdOutlineFormatListNumbered } from "react-icons/md";
 import { BsTypeH1 } from "react-icons/bs";
 import { BsTypeH2 } from "react-icons/bs";
 import { BsTypeH3 } from "react-icons/bs";
-import { MdOutlineInsertLink } from "react-icons/md";
 import { FaRegImage } from "react-icons/fa6";
 function Toolbar({ editor }: { editor: Editor }) {
   return (
