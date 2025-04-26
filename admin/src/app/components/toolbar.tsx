@@ -148,7 +148,7 @@ function Toolbar({ editor }: { editor: Editor }) {
           editor.chain().focus();
 
           if (isActive) {
-            editor.chain().setTextAlign("left").run(); // chuyển về left
+            editor.chain().setTextAlign("left").run();
           } else {
             editor.chain().setTextAlign("right").run();
           }
