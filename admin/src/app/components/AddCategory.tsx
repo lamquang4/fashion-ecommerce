@@ -1,23 +1,8 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import InputImage from "./InputImage";
-import ImageViewer from "./ImageViewer";
 function AddCategory() {
-  const [selectedImage, setSelectedImage] = useState<string>("");
-  const [showImageViewer, setShowImageViewer] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (showImageViewer) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "auto";
-    }
-
-    return () => {
-      document.body.style.overflowY = "auto";
-    };
-  }, [showImageViewer]);
   return (
     <>
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
@@ -82,12 +67,6 @@ function AddCategory() {
         </form>
       </div>
 
-      {showImageViewer && (
-        <ImageViewer
-          imgSrc={selectedImage}
-          closeMenu={() => setShowImageViewer(false)}
-        />
-      )}
     </>
   );
 }

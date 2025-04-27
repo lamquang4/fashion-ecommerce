@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import ImageViewer from "./ImageViewer";
+import React, { useState } from "react";
 import TiptapEditor from "./TiptapEditor";
 import InputImage from "./InputImage";
 

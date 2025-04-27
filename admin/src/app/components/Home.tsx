@@ -1,9 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import toast from "react-hot-toast";
-import { HiMiniXMark } from "react-icons/hi2";
-import ImageViewer from "./ImageViewer";
+import React from "react";
 import Image from "./Image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
