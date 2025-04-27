@@ -10,7 +10,7 @@ type InputImageProps = {
 function InputImage({ isAlotImage, InputId }: InputImageProps) {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [openViewer, setOpenViewer] = useState(false);
-  const handleOpenViewer = (index: number) => {
+  const handleOpenViewer = () => {
     setOpenViewer(true);
   };
 
@@ -86,7 +86,7 @@ function InputImage({ isAlotImage, InputId }: InputImageProps) {
                   onClick={(e) => {
                     e.stopPropagation();
                     e.preventDefault();
-                    handleOpenViewer(index);
+                    handleOpenViewer();
                   }}
                 >
                   <Image
