@@ -10,6 +10,7 @@ import ListItem from "@tiptap/extension-list-item";
 import OrderedList from "@tiptap/extension-ordered-list";
 import BulletList from "@tiptap/extension-bullet-list";
 import Toolbar from "./toolbar";
+import Strike from "@tiptap/extension-strike";
 import ImageResize from "tiptap-extension-resize-image";
 export default function TiptapEditor() {
   const editor = useEditor({
@@ -19,6 +20,7 @@ export default function TiptapEditor() {
         orderedList: false,
         listItem: false,
       }),
+      Strike,
       BulletList.configure({
         HTMLAttributes: {
           class: "list-disc pl-6",
@@ -32,19 +34,19 @@ export default function TiptapEditor() {
       ImageResize,
       ListItem,
       TextAlign.configure({
-        types: ["heading", "paragraph"],
+        types: ["paragraph", "heading"],
       }),
       Underline,
-      Link.configure({
-        openOnClick: true,
+      Link,
+      Image.configure({
+        inline: false,
       }),
-      Image,
     ],
     content: "<p></p>",
     editorProps: {
       attributes: {
         class:
-          "border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none text-gray-900 min-h-[150px] border-t-0",
+          "border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none text-gray-900 min-h-[220px] border-t-0",
       },
     },
   });
@@ -54,7 +56,7 @@ export default function TiptapEditor() {
   return (
     <div>
       <Toolbar editor={editor} />
-      <EditorContent editor={editor} />
+      <EditorContent editor={editor} className="editor-content" />
     </div>
   );
 }

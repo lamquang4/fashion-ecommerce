@@ -84,9 +84,13 @@ function InputImage({ isAlotImage, InputId }: InputImageProps) {
                   <button
                     type="button"
                     className="bg-white rounded-full flex justify-center items-center border-2"
-                    onClick={() => handleRemovePreviewImage(index)}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      handleRemovePreviewImage(index);
+                    }}
                   >
-                    <HiMiniXMark size={22} />
+                    <HiMiniXMark size={20} />
                   </button>
                 </div>
               </div>

@@ -59,13 +59,13 @@ input[type="range"]::-moz-range-thumb {
 }
 
 @layer base {
-  h1 {
+  .editor-content h1 {
     @apply text-2xl font-bold;
   }
-  h2 {
+  .editor-content h2 {
     @apply text-xl font-bold;
   }
-  h3 {
+  .editor-content h3 {
     @apply text-lg font-bold;
   }
 }

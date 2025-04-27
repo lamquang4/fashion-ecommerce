@@ -11,6 +11,7 @@ import { BsTypeH1 } from "react-icons/bs";
 import { BsTypeH2 } from "react-icons/bs";
 import { BsTypeH3 } from "react-icons/bs";
 import { FaRegImage } from "react-icons/fa6";
+import { AiOutlineStrikethrough } from "react-icons/ai";
 function Toolbar({ editor }: { editor: Editor }) {
   return (
     <div className="flex gap-1.5 p-1.5 border border-gray-300 items-center flex-wrap">
@@ -104,7 +105,26 @@ function Toolbar({ editor }: { editor: Editor }) {
           editor.isActive("underline") ? "bg-[rgb(238,238,238)]" : ""
         } p-1`}
       >
-        <AiOutlineUnderline size={17} />
+        <AiOutlineUnderline size={18} />
+      </button>
+
+      <button
+        type="button"
+        onClick={() => {
+          const isActive = editor.isActive("strike");
+          editor.chain().focus();
+
+          if (isActive) {
+            editor.commands.unsetMark("strike");
+          } else {
+            editor.commands.setMark("strike");
+          }
+        }}
+        className={`${
+          editor.isActive("strike") ? "bg-[rgb(238,238,238)]" : ""
+        } p-1`}
+      >
+        <AiOutlineStrikethrough size={17} />
       </button>
 
       <button
