@@ -18,8 +18,8 @@ function OrderDetail() {
                 />
               </div>
 
-              <div className="flex flex-col gap-[5px]">
-                <h2 className="uppercase text-[1.2rem] font-semibold">
+              <div className="flex flex-col gap-[8px]">
+                <h2 className="uppercase text-[1.15rem] font-semibold">
                   Đơn hàng
                 </h2>
 
@@ -29,9 +29,9 @@ function OrderDetail() {
             </div>
 
             <div className="mt-[30px]">
-              <div className="flex flex-col py-[15px] px-[15px] sm:px-[20px] gap-[5px]">
-                <h2 className="text-[1.2rem] font-semibold uppercase">
-                  Thông tin giao hàng:
+              <div className="flex flex-col py-[15px] px-[15px] sm:px-[20px] gap-[8px]">
+                <h2 className="text-[1.15rem] font-semibold uppercase">
+                  Thông tin giao hàng
                 </h2>
 
                 <span className="text-[0.95rem]">Họ và tên: Quang Lam</span>

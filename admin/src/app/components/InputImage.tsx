@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import Image from "./Image";
 import toast from "react-hot-toast";
 import { HiMiniXMark } from "react-icons/hi2";
+import ImageViewer from "./ImageViewer";
 type InputImageProps = {
   isAlotImage: boolean;
   InputId: string;
 };
 function InputImage({ isAlotImage, InputId }: InputImageProps) {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
+  const [openViewer, setOpenViewer] = useState(false);
+  const handleOpenViewer = (index: number) => {
+    setOpenViewer(true);
+  };
 
   const handleRemovePreviewImage = (index: number) => {
     URL.revokeObjectURL(previewImages[index]);
@@ -76,8 +81,19 @@ function InputImage({ isAlotImage, InputId }: InputImageProps) {
           <div className="flex gap-3 px-[15px] flex-wrap py-5 justify-center">
             {previewImages.map((image, index) => (
               <div className=" relative" key={index}>
-                <div className="cursor-pointer">
-                  <Image Src={image} Alt={""} ClassName="w-[150px]" />
+                <div
+                  className="cursor-pointer"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    handleOpenViewer(index);
+                  }}
+                >
+                  <Image
+                    Src={image}
+                    Alt={""}
+                    ClassName="w-full max-w-[280px]"
+                  />
                 </div>
 
                 <div className="absolute top-[6px] right-[6px]">
@@ -106,6 +122,14 @@ function InputImage({ isAlotImage, InputId }: InputImageProps) {
           onChange={handlePreviewImage}
         />
       </label>
+
+      {openViewer && (
+        <ImageViewer
+          images={previewImages}
+          open={openViewer}
+          onClose={() => setOpenViewer(false)}
+        />
+      )}
     </div>
   );
 }
