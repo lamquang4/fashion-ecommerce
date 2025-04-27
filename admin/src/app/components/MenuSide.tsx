@@ -39,8 +39,8 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
       <nav
         className={` ${menuOpen ? "left-0" : "left-[-100%]"} 
         ${
-          menuOpen ? "lg:translate-x-[-100%] lg:w-0 lg:p-0" : "lg:translate-x-0"
-        } custom-scroll fixed border top-0 h-screen w-[300px] px-4 pb-5 bg-white transition-all duration-500 ease-in-out z-[25] lg:sticky lg:translate-x-0 overflow-y-auto border-b border-gray-200`}
+          menuOpen ? "xl:translate-x-[-100%] xl:p-0 xl:w-0" : "xl:translate-x-0"
+        } custom-scroll fixed border top-0 h-screen w-[300px] px-4 pb-5 bg-white transition-all duration-500 ease-in-out z-[25] xl:sticky xl:translate-x-0 overflow-y-auto border-b border-gray-200`}
       >
         <div className="mb-[20px] flex justify-center sticky top-0 bg-white px-4 py-5">
           <Image Src={"assets/other/logo.png"} Alt="" ClassName="w-[85px]" />
@@ -252,46 +252,6 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </li>
               </ul>
             </li>
-
-            {/*
-     <li>
-              <div
-                onClick={() => toggleOpen(`8a`)}
-                className={`${
-                  openMenus["8a"] ? "text-[#465fff]" : "hover:bg-gray-200"
-                } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
-              >
-                <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
-                  <FaRegCreditCard size={20} /> Mua hàng
-                </p>
-                <button>
-                  {openMenus[`8a`] ? (
-                    <IoIosArrowDown size={18} />
-                  ) : (
-                    <IoIosArrowUp size={18} />
-                  )}
-                </button>
-              </div>
-
-              <ul
-                className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
-                  openMenus[`8a`] ? "max-h-fit visible" : ""
-                }`}
-              >
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
-                    Danh sách mua hàng
-                  </Link>
-                </li>
-
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
-                    Đặt hàng
-                  </Link>
-                </li>
-              </ul>
-            </li>
-        */}
           </div>
 
           <div>
@@ -568,7 +528,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
 
             <li>
               <Link
-                href={""}
+                href={"/home"}
                 className={`${
                   pathname === ""
                     ? "text-[#465fff] bg-[#ECF3FF]"
@@ -583,7 +543,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
 
             <li>
               <Link
-                href={""}
+                href={"/news"}
                 className={`${
                   pathname === ""
                     ? "text-[#465fff] bg-[#ECF3FF]"

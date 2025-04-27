@@ -1,19 +1,14 @@
 "use client";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import Image from "./Image";
-import toast from "react-hot-toast";
-import { FaRegCircleXmark } from "react-icons/fa6";
 import ImageViewer from "./ImageViewer";
 import TiptapEditor from "./TiptapEditor";
+import InputImage from "./InputImage";
 
 function AddProduct() {
   const [variants, setVariants] = useState([
     { size: "", color: "", quantity: "" },
   ]);
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
-  const [selectedImage, setSelectedImage] = useState<string>("");
-  const [showImageViewer, setShowImageViewer] = useState<boolean>(false);
 
   const [selected, setSelected] = useState<boolean[]>(
     Array(variants.length).fill(false)
@@ -42,49 +37,9 @@ function AddProduct() {
     }
   };
 
-  const handleRemovePreviewImage = (index: number) => {
-    URL.revokeObjectURL(previewImages[index]);
-    const newImages = previewImages.filter((_, i) => i !== index);
-    setPreviewImages(newImages);
-  };
-
-  useEffect(() => {
-    if (showImageViewer) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "auto";
-    }
-
-    return () => {
-      document.body.style.overflowY = "auto";
-    };
-  }, [showImageViewer]);
-
-  const handleImageClick = (image: string) => {
-    setSelectedImage(image);
-    setShowImageViewer(true);
-  };
-
   const handleAddVariant = () => {
     setVariants([...variants, { size: "", color: "", quantity: "" }]);
     setSelected((prev) => [...prev.map(() => false), false]);
-  };
-
-  const handlePreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    const maxFiles = 4;
-
-    if (!files) return;
-
-    const selectedFiles = Array.from(files);
-
-    if (previewImages.length + selectedFiles.length > maxFiles) {
-      toast.error(`Tổng số ảnh không được vượt quá ${maxFiles}.`);
-      return;
-    }
-
-    const imageUrls = selectedFiles.map((file) => URL.createObjectURL(file));
-    setPreviewImages((prev) => [...prev, ...imageUrls]);
   };
 
   return (
@@ -95,78 +50,12 @@ function AddProduct() {
             Thêm sản phẩm
           </h1>
 
-          <div className="flex gap-[20px] w-full flex-col">
-            <div className="flex items-center justify-center w-full sm:p-[25px] p-[15px] bg-white rounded-md">
-              <label
-                htmlFor="dropzone-file"
-                className="flex flex-col items-center justify-center w-full h-auto min-h-60 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
-              >
-                {!previewImages.length ? (
-                  <div className="flex flex-col items-center justify-center py-5">
-                    <svg
-                      className="w-12 h-12 mb-4 text-gray-500 dark:text-gray-400"
-                      aria-hidden="true"
-                      xmlns="http://www.w3.org/2000/svg"
-                      fill="none"
-                      viewBox="0 0 20 16"
-                    >
-                      <path
-                        stroke="currentColor"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth="2"
-                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
-                      />
-                    </svg>
-
-                    <p className="mb-2 text-[0.9rem] text-gray-500 dark:text-gray-400">
-                      <span className="font-semibold">
-                        Bấm để tải hoặc kéo và thả
-                      </span>
-                    </p>
-                    <p className="text-[0.8rem] text-gray-500 dark:text-gray-400">
-                      PNG, JPG, WEBP
-                    </p>
-                  </div>
-                ) : (
-                  <div className="flex gap-3 px-[15px] flex-wrap py-5 justify-center">
-                    {previewImages.map((image, index) => (
-                      <div className=" relative" key={index}>
-                        <div
-                          className="cursor-pointer"
-                          onClick={(e) => {
-                            e.preventDefault();
-                            handleImageClick(image);
-                          }}
-                        >
-                          <Image Src={image} Alt={""} ClassName="w-[150px]" />
-                        </div>
-
-                        <div className="absolute top-[6px] right-[6px]">
-                          <button
-                            type="button"
-                            className="text-black bg-white rounded-full"
-                            onClick={() => handleRemovePreviewImage(index)}
-                          >
-                            <FaRegCircleXmark size={22} />
-                          </button>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-                <input
-                  id="dropzone-file"
-                  type="file"
-                  className="hidden"
-                  accept=".png,.jpg,.webp"
-                  multiple
-                  onChange={handlePreviewImage}
-                />
-              </label>
+          <div className="flex gap-[25px] w-full flex-col">
+            <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
+              <InputImage isAlotImage={true} InputId="img-product" />
             </div>
 
-            <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
+            <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
               <p className="font-bold text-[1rem] text-[#74767d] mb-[10px]">
                 Thông tin chung
               </p>
@@ -238,7 +127,7 @@ function AddProduct() {
               </div>
             </div>
 
-            <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
+            <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
               <p className="font-bold text-[1rem] text-[#74767d] mb-[10px]">
                 Giá cả
               </p>
@@ -282,7 +171,7 @@ function AddProduct() {
               </div>
             </div>
 
-            <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
+            <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
               <p className="font-bold text-[1rem] text-[#74767d] mb-[10px]">
                 Số lượng
               </p>
@@ -402,13 +291,6 @@ function AddProduct() {
           </div>
         </form>
       </div>
-
-      {showImageViewer && (
-        <ImageViewer
-          imgSrc={selectedImage}
-          closeMenu={() => setShowImageViewer(false)}
-        />
-      )}
     </>
   );
 }
