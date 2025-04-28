@@ -29,47 +29,43 @@ function ProductDetail() {
   return (
     <section className="w-full mx-auto mt-0 lg:mt-[20px] mb-[40px]">
       <div className="flex justify-center flex-wrap gap-[40px] w-full">
-        <div>
-          <div className="flex flex-col md:flex-row gap-[30px] lg:sticky lg:top-[140px]">
-            <div className=" md:order-2 relative grow overflow-hidden bg-white">
-              <div className="max-w-full lg:max-w-[450px] flex flex-col gap-[30px]">
-                <div className="hidden first:block lg:block">
-                  <Image
-                    Src={mainImage}
-                    Alt={""}
-                    ClassName={"w-full h-full object-cover"}
-                  />
-                </div>
-              </div>
+        <div className="flex flex-col md:flex-row gap-[20px] lg:sticky lg:top-[140px]">
+          <div className=" md:order-2 relative grow overflow-hidden bg-white">
+            <div className="max-w-full lg:max-w-[450px] flex flex-col gap-[30px]">
+              <Image
+                Src={mainImage}
+                Alt={""}
+                ClassName={"w-full h-full object-cover"}
+              />
             </div>
+          </div>
 
-            <div className="md:order-1 flex justify-center">
-              <div className=" max-h-fit flex flex-row md:flex-col gap-[15px] overflow-x-auto md:overflow-x-hidden md:overflow-y-auto">
-                <div
-                  className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
-                  onMouseEnter={() =>
-                    setMainImage("/assets/products/IMGSP1360.png")
-                  }
-                >
-                  <Image
-                    Src={"/assets/products/IMGSP1360.png"}
-                    Alt={""}
-                    ClassName={"w-full h-full object-cover"}
-                  />
-                </div>
+          <div className="md:order-1 flex justify-center">
+            <div className=" max-h-fit flex flex-row md:flex-col gap-[15px] overflow-x-auto md:overflow-x-hidden md:overflow-y-auto">
+              <div
+                className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
+                onMouseEnter={() =>
+                  setMainImage("/assets/products/IMGSP1360.png")
+                }
+              >
+                <Image
+                  Src={"/assets/products/IMGSP1360.png"}
+                  Alt={""}
+                  ClassName={"w-full h-full object-cover"}
+                />
+              </div>
 
-                <div
-                  className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
-                  onMouseEnter={() =>
-                    setMainImage("/assets/products/SECSP13601.png")
-                  }
-                >
-                  <Image
-                    Src={"/assets/products/SECSP13601.png"}
-                    Alt={""}
-                    ClassName={"w-full h-full object-cover"}
-                  />
-                </div>
+              <div
+                className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
+                onMouseEnter={() =>
+                  setMainImage("/assets/products/SECSP13601.png")
+                }
+              >
+                <Image
+                  Src={"/assets/products/SECSP13601.png"}
+                  Alt={""}
+                  ClassName={"w-full h-full object-cover"}
+                />
               </div>
             </div>
           </div>

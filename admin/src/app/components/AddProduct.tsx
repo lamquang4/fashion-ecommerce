@@ -6,7 +6,7 @@ import InputImage from "./InputImage";
 
 function AddProduct() {
   const [variants, setVariants] = useState([
-    { size: "", color: "", quantity: "" },
+    { size: "", color: "", quantity: "1" },
   ]);
 
   const [selected, setSelected] = useState<boolean[]>(
@@ -28,7 +28,7 @@ function AddProduct() {
   const handleRemoveSelect = () => {
     const filteredVariants = variants.filter((_, index) => !selected[index]);
     if (filteredVariants.length === 0) {
-      setVariants([{ size: "", color: "", quantity: "" }]);
+      setVariants([{ size: "", color: "", quantity: "1" }]);
       setSelected([false]);
     } else {
       setVariants(filteredVariants);
@@ -37,7 +37,7 @@ function AddProduct() {
   };
 
   const handleAddVariant = () => {
-    setVariants([...variants, { size: "", color: "", quantity: "" }]);
+    setVariants([...variants, { size: "", color: "", quantity: "1" }]);
     setSelected((prev) => [...prev.map(() => false), false]);
   };
 
@@ -226,13 +226,19 @@ function AddProduct() {
                             type="checkbox"
                             checked={selected[index]}
                             onChange={() => handleSelectOne(index)}
-                            name="select-one"
                             className="w-4 h-4 rounded-sm"
                           />
                         </td>
+
                         <td className="py-[1rem]">
                           <select
                             name="size"
+                            value={variant.size}
+                            onChange={(e) => {
+                              const updatedVariants = [...variants];
+                              updatedVariants[index].size = e.target.value;
+                              setVariants(updatedVariants);
+                            }}
                             required
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
@@ -247,13 +253,17 @@ function AddProduct() {
                         <td className="py-[1rem]">
                           <select
                             name="color"
+                            value={variant.color}
+                            onChange={(e) => {
+                              const updatedVariants = [...variants];
+                              updatedVariants[index].color = e.target.value;
+                              setVariants(updatedVariants);
+                            }}
                             required
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
                             <option value="">Chọn màu</option>
-                            <option value="XL" className="text-[#FF0000]">
-                              Màu đỏ tươi
-                            </option>
+                            <option value="red">Màu đỏ tươi</option>
                             <option value="no">Không có màu</option>
                           </select>
                         </td>
@@ -262,6 +272,12 @@ function AddProduct() {
                           <input
                             type="number"
                             name="quantity"
+                            value={variant.quantity}
+                            onChange={(e) => {
+                              const updatedVariants = [...variants];
+                              updatedVariants[index].quantity = e.target.value;
+                              setVariants(updatedVariants);
+                            }}
                             required
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           />
