@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import Image from "./Image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
@@ -37,10 +37,10 @@ function Home() {
 
               <div className="w-full mx-auto max-w-[600px] ">
                 <Swiper
-                  modules={[Autoplay]}
-                  pagination={{ clickable: true }}
+                  modules={[Autoplay, Pagination]}
+                  pagination={{ clickable: true, type: "bullets" }}
                   autoplay={{ delay: 5000 }}
-                  loop={true}
+                  loop={false}
                   speed={1000}
                 >
                   {bannerCarousels.map((banner, index) => (
@@ -67,10 +67,10 @@ function Home() {
 
               <div className="w-full mx-auto max-w-[250px] ">
                 <Swiper
-                  modules={[Autoplay]}
-                  pagination={{ clickable: true }}
+                  modules={[Autoplay, Pagination]}
+                  pagination={{ clickable: true, type: "bullets" }}
                   autoplay={{ delay: 5000 }}
-                  loop={true}
+                  loop={false}
                   speed={1000}
                 >
                   {bannerCarousels.map((banner, index) => (

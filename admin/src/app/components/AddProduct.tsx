@@ -279,6 +279,7 @@ function AddProduct() {
                               setVariants(updatedVariants);
                             }}
                             required
+                            min={1}
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           />
                         </td>

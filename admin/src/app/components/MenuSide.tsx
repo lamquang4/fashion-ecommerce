@@ -42,8 +42,8 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
           menuOpen ? "xl:translate-x-[-100%] xl:p-0 xl:w-0" : "xl:translate-x-0"
         } custom-scroll fixed border top-0 h-screen w-[300px] px-4 pb-5 bg-white transition-all duration-500 ease-in-out z-[25] xl:sticky xl:translate-x-0 overflow-y-auto border-b border-gray-200`}
       >
-        <div className="mb-[20px] flex justify-center sticky top-0 bg-white px-4 py-5">
-          <Image Src={"assets/other/logo.png"} Alt="" ClassName="w-[85px]" />
+        <div className="mb-[20px] flex justify-center sticky top-0 bg-white px-4 py-4.5">
+          <Image Src={"assets/other/logo.png"} Alt="" ClassName="w-[80px]" />
         </div>
         <ul className="flex flex-col gap-[10px]">
           <div>
@@ -55,7 +55,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 href={"/dashboard"}
                 className={`${
                   pathname === "/dashboard"
-                    ? "text-[#465fff] bg-[#ECF3FF]"
+                    ? "text-[#0AB39C] bg-[#daf4f0]"
                     : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
@@ -69,14 +69,20 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
               <div
                 onClick={() => toggleOpen(`2a`)}
                 className={`${
-                  openMenus["2a"] ? "text-[#465fff]" : "hover:bg-gray-200"
+                  openMenus["2a"] ||
+                  pathname === "/product" ||
+                  pathname === "/add-product"
+                    ? "text-[#0AB39C]"
+                    : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
                   <PiTShirtBold size={20} /> Sản phẩm
                 </p>
                 <button>
-                  {openMenus[`2a`] ? (
+                  {openMenus[`2a`] ||
+                  pathname === "/product" ||
+                  pathname === "/add-product" ? (
                     <IoIosArrowDown size={18} />
                   ) : (
                     <IoIosArrowUp size={18} />
@@ -86,13 +92,17 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
 
               <ul
                 className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
-                  openMenus[`2a`] ? "max-h-fit visible" : ""
+                  openMenus[`2a`] ||
+                  pathname === "/product" ||
+                  pathname === "/add-product"
+                    ? "max-h-fit visible"
+                    : ""
                 }`}
               >
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/product"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -102,9 +112,9 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </li>
 
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/add-product"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -122,14 +132,20 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
               <div
                 onClick={() => toggleOpen(`3a`)}
                 className={`${
-                  openMenus["3a"] ? "text-[#465fff]" : "hover:bg-gray-200"
+                  openMenus["3a"] ||
+                  pathname === "/category" ||
+                  pathname === "/add-category"
+                    ? "text-[#0AB39C]"
+                    : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
                   <TbCategoryPlus size={20} /> Danh mục
                 </p>
                 <button>
-                  {openMenus[`3a`] ? (
+                  {openMenus[`3a`] ||
+                  pathname === "/category" ||
+                  pathname === "/add-category" ? (
                     <IoIosArrowDown size={18} />
                   ) : (
                     <IoIosArrowUp size={18} />
@@ -139,13 +155,17 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
 
               <ul
                 className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
-                  openMenus[`3a`] ? "max-h-fit visible" : ""
+                  openMenus[`3a`] ||
+                  pathname === "/category" ||
+                  pathname === "/add-category"
+                    ? "max-h-fit visible"
+                    : ""
                 }`}
               >
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/category"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -158,9 +178,9 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </li>
 
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/add-category"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -173,19 +193,20 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </li>
               </ul>
             </li>
-
             <li>
               <div
                 onClick={() => toggleOpen(`4a`)}
                 className={`${
-                  openMenus["4a"] ? "text-[#465fff]" : "hover:bg-gray-200"
+                  openMenus["4a"] || pathname === "/inventory"
+                    ? "text-[#0AB39C]"
+                    : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
                   <LuWarehouse size={20} /> Hàng tồn kho
                 </p>
                 <button>
-                  {openMenus[`4a`] ? (
+                  {openMenus[`4a`] || pathname === "/inventory" ? (
                     <IoIosArrowDown size={18} />
                   ) : (
                     <IoIosArrowUp size={18} />
@@ -195,13 +216,15 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
 
               <ul
                 className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
-                  openMenus[`4a`] ? "max-h-fit visible" : ""
+                  openMenus[`4a`] || pathname === "/inventory"
+                    ? "max-h-fit visible"
+                    : ""
                 }`}
               >
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/inventory"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -219,14 +242,16 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
               <div
                 onClick={() => toggleOpen(`12a`)}
                 className={`${
-                  openMenus["12a"] ? "text-[#465fff]" : "hover:bg-gray-200"
+                  openMenus["12a"] || pathname === "/order"
+                    ? "text-[#0AB39C]"
+                    : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
                   <RiShoppingBag4Line size={20} /> Đơn hàng
                 </p>
                 <button>
-                  {openMenus[`12a`] ? (
+                  {openMenus[`12a`] || pathname === "/order" ? (
                     <IoIosArrowDown size={18} />
                   ) : (
                     <IoIosArrowUp size={18} />
@@ -236,13 +261,15 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
 
               <ul
                 className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
-                  openMenus[`12a`] ? "max-h-fit visible" : ""
+                  openMenus[`12a`] || pathname === "/order"
+                    ? "max-h-fit visible"
+                    : ""
                 }`}
               >
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/order"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? " text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -263,14 +290,20 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
               <div
                 onClick={() => toggleOpen(`5a`)}
                 className={`${
-                  openMenus["5a"] ? "text-[#465fff]" : "hover:bg-gray-200"
+                  openMenus["5a"] ||
+                  pathname === "/admin" ||
+                  pathname === "/add-admin"
+                    ? "text-[#0AB39C]"
+                    : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
                   <FaRegAddressCard size={20} /> Quản trị viên
                 </p>
                 <button>
-                  {openMenus[`5a`] ? (
+                  {openMenus[`5a`] ||
+                  pathname === "/admin" ||
+                  pathname === "/add-admin" ? (
                     <IoIosArrowDown size={18} />
                   ) : (
                     <IoIosArrowUp size={18} />
@@ -280,13 +313,17 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
 
               <ul
                 className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
-                  openMenus[`5a`] ? "max-h-fit visible" : ""
+                  openMenus[`5a`] ||
+                  pathname === "/admin" ||
+                  pathname === "/add-admin"
+                    ? "max-h-fit visible"
+                    : ""
                 }`}
               >
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/admin"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -296,9 +333,9 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </li>
 
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/add-admin"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -311,19 +348,24 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </li>
               </ul>
             </li>
-
             <li>
               <div
                 onClick={() => toggleOpen(`6a`)}
                 className={`${
-                  openMenus["6a"] ? "text-[#465fff]" : "hover:bg-gray-200"
+                  openMenus["6a"] ||
+                  pathname === "/customer" ||
+                  pathname === "/add-customer"
+                    ? "text-[#0AB39C]"
+                    : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
                   <FaRegUser size={20} /> Khách hàng
                 </p>
                 <button>
-                  {openMenus[`6a`] ? (
+                  {openMenus[`6a`] ||
+                  pathname === "/customer" ||
+                  pathname === "/add-customer" ? (
                     <IoIosArrowDown size={18} />
                   ) : (
                     <IoIosArrowUp size={18} />
@@ -333,13 +375,17 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
 
               <ul
                 className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
-                  openMenus[`6a`] ? "max-h-fit visible" : ""
+                  openMenus[`6a`] ||
+                  pathname === "/customer" ||
+                  pathname === "/add-customer"
+                    ? "max-h-fit visible"
+                    : ""
                 }`}
               >
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/customer"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -352,9 +398,9 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </li>
 
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/add-customer"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -367,46 +413,6 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </li>
               </ul>
             </li>
-
-            {/*
-  <li>
-              <div
-                onClick={() => toggleOpen(`7a`)}
-                className={`${
-                  openMenus["7a"] ? "text-[#465fff]" : "hover:bg-gray-200"
-                } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
-              >
-                <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
-                  <PiHouseLineBold size={20} /> Nhà cung cấp
-                </p>
-                <button>
-                  {openMenus[`7a`] ? (
-                    <IoIosArrowDown size={18} />
-                  ) : (
-                    <IoIosArrowUp size={18} />
-                  )}
-                </button>
-              </div>
-
-              <ul
-                className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
-                  openMenus[`7a`] ? "max-h-fit visible" : ""
-                }`}
-              >
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
-                    Danh sách nhà cung cấp
-                  </Link>
-                </li>
-
-                <li className="rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200">
-                  <Link href={"/"} className="text-[0.9rem] font-medium">
-                    Thêm nhà cung câp
-                  </Link>
-                </li>
-              </ul>
-            </li>
-            */}
           </div>
 
           <div>
@@ -418,14 +424,20 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
               <div
                 onClick={() => toggleOpen(`10a`)}
                 className={`${
-                  openMenus["10a"] ? "text-[#465fff]" : "hover:bg-gray-200"
+                  openMenus["10a"] ||
+                  pathname === "/coupon" ||
+                  pathname === "/add-coupon"
+                    ? "text-[#0AB39C]"
+                    : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
                   <RiCoupon2Line size={20} /> Phiếu giảm giá
                 </p>
                 <button>
-                  {openMenus[`10a`] ? (
+                  {openMenus[`10a`] ||
+                  pathname === "/coupon" ||
+                  pathname === "/add-coupon" ? (
                     <IoIosArrowDown size={18} />
                   ) : (
                     <IoIosArrowUp size={18} />
@@ -435,13 +447,17 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
 
               <ul
                 className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
-                  openMenus[`10a`] ? "max-h-fit visible" : ""
+                  openMenus[`10a`] ||
+                  pathname === "/coupon" ||
+                  pathname === "/add-coupon"
+                    ? "max-h-fit visible"
+                    : ""
                 }`}
               >
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/coupon"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -451,9 +467,9 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </li>
 
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/add-coupon"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -466,19 +482,24 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </li>
               </ul>
             </li>
-
             <li>
               <div
                 onClick={() => toggleOpen(`14a`)}
                 className={`${
-                  openMenus["14a"] ? "text-[#465fff]" : "hover:bg-gray-200"
+                  openMenus["14a"] ||
+                  pathname === "/color" ||
+                  pathname === "/add-color"
+                    ? "text-[#0AB39C]"
+                    : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
                   <IoColorPaletteOutline size={20} /> Màu
                 </p>
                 <button>
-                  {openMenus[`14a`] ? (
+                  {openMenus[`14a`] ||
+                  pathname === "/color" ||
+                  pathname === "/add-color" ? (
                     <IoIosArrowDown size={18} />
                   ) : (
                     <IoIosArrowUp size={18} />
@@ -488,13 +509,17 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
 
               <ul
                 className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
-                  openMenus[`14a`] ? "max-h-fit visible" : ""
+                  openMenus[`14a`] ||
+                  pathname === "/color" ||
+                  pathname === "/add-color"
+                    ? "max-h-fit visible"
+                    : ""
                 }`}
               >
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/color"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -504,9 +529,9 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 </li>
 
                 <li
-                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] hover:bg-gray-200 ${
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
                     pathname === "/add-color"
-                      ? "text-[#465fff] bg-[#ECF3FF]"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
                       : "hover:bg-gray-200"
                   }`}
                 >
@@ -530,8 +555,8 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
               <Link
                 href={"/home"}
                 className={`${
-                  pathname === ""
-                    ? "text-[#465fff] bg-[#ECF3FF]"
+                  pathname === "/home"
+                    ? "text-[#0AB39C] bg-[#daf4f0]"
                     : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
@@ -545,8 +570,8 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
               <Link
                 href={"/news"}
                 className={`${
-                  pathname === ""
-                    ? "text-[#465fff] bg-[#ECF3FF]"
+                  pathname === "/news"
+                    ? "text-[#0AB39C] bg-[#daf4f0]"
                     : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >

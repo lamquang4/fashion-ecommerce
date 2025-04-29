@@ -6,7 +6,7 @@ function AddCategory() {
   return (
     <>
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
-        <form className="flex flex-col gap-6 w-full">
+        <form className="flex flex-col gap-7 w-full">
           <h1 className="font-bold text-[1.5rem] text-[#74767d]">
             Thêm danh mục
           </h1>
@@ -50,7 +50,7 @@ function AddCategory() {
             </div>
           </div>
 
-          <div className="flex justify-center gap-6 mt-6">
+          <div className="flex justify-center gap-6">
             <button
               type="submit"
               className="px-[14px] py-[5px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
@@ -66,7 +66,6 @@ function AddCategory() {
           </div>
         </form>
       </div>
-
     </>
   );
 }

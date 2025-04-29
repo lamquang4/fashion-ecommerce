@@ -7,7 +7,7 @@ import { IoMdAddCircle } from "react-icons/io";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { FaSortDown } from "react-icons/fa";
 import Pagination from "./Pagination";
-
+import Image from "./Image";
 function Category() {
   const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
   const toggleDropdownMenu = () => {
@@ -97,7 +97,23 @@ function Category() {
           </thead>
           <tbody>
             <tr>
-              <td className="pl-[1rem] py-[1rem]">Áo sơ mi</td>
+              <td className="pl-[1rem] py-[1rem]">
+                <div className="flex gap-[10px] items-center">
+                  <div className="cursor-pointer">
+                    <Image
+                      Src={"assets/products/IMGSP0841.png"}
+                      Alt={""}
+                      ClassName={"w-[75px] cursor-pointer"}
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-[5px]">
+                    <p className="text-[0.9rem] font-medium  text-[#444]">
+                      Áo sơ mi
+                    </p>
+                  </div>
+                </div>
+              </td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">Nam</td>
 
               <td className="py-[1rem] text-[0.9rem] text-[#444]">500</td>

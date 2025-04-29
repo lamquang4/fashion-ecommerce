@@ -4,8 +4,8 @@ import React from "react";
 
 function AddAdmin() {
   return (
-    <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
-      <form className="flex flex-col gap-6 w-full">
+    <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
+      <form className="flex flex-col gap-7 w-full">
         <h1 className="font-bold text-[1.5rem] text-[#74767d]">
           Thêm quản trị viên
         </h1>
@@ -39,6 +39,32 @@ function AddAdmin() {
               />
             </div>
 
+            <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
+              <div className="flex flex-col gap-1 w-full">
+                <label htmlFor="" className="text-[0.9rem] text-black">
+                  Số điện thoại
+                </label>
+                <input
+                  type="number"
+                  name="phone"
+                  required
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1 w-full">
+                <label htmlFor="" className="text-[0.9rem] text-black">
+                  Sinh nhật
+                </label>
+                <input
+                  type="date"
+                  name="birthday"
+                  required
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                />
+              </div>
+            </div>
+
             <div className="flex flex-col gap-1">
               <label htmlFor="" className="text-[0.9rem] text-black">
                 Chức vụ
@@ -58,30 +84,6 @@ function AddAdmin() {
 
             <div className="flex flex-col gap-1">
               <label htmlFor="" className="text-[0.9rem] text-black">
-                Số điện thoại
-              </label>
-              <input
-                type="number"
-                name="phone"
-                required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.9rem] text-black">
-                Sinh nhật
-              </label>
-              <input
-                type="date"
-                name="birthday"
-                required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
-              />
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.9rem] text-black">
                 Mật khẩu
               </label>
               <input
@@ -94,7 +96,7 @@ function AddAdmin() {
           </div>
         </div>
 
-        <div className="flex justify-center gap-6 mt-6">
+        <div className="flex justify-center gap-6">
           <button
             type="submit"
             className="w-[75px] bg-teal-500 text-white text-[0.9rem] py-2 "

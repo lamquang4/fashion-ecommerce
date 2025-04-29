@@ -149,7 +149,7 @@ function Dashboard() {
                 fontFamily: "Quicksand",
               },
             },
-            colors: ["#465fff", "#f39c12"],
+            colors: ["#0AB39C", "#f39c12"],
             stroke: {
               width: [0, 3],
             },
