@@ -46,7 +46,7 @@ export default function TiptapEditor() {
     editorProps: {
       attributes: {
         class:
-          "border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none text-gray-900 min-h-[220px] border-t-0",
+          "border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none text-gray-900 min-h-[250px] border-t-0",
       },
     },
   });

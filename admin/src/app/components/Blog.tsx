@@ -4,11 +4,11 @@ import React, { useState } from "react";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
 import { IoMdAddCircle } from "react-icons/io";
-import { TbLock } from "react-icons/tb";
+import { FaRegEyeSlash } from "react-icons/fa";
 import { FaSortDown } from "react-icons/fa";
 import Pagination from "./Pagination";
-
-function Admin() {
+import Image from "./Image";
+function Blog() {
   const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
   const toggleDropdownMenu = () => {
     setOpenDropdownMenu((prev) => !prev);
@@ -17,11 +17,11 @@ function Admin() {
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
-          Quản trị viên (20)
+          Tin tức (20)
         </h1>
 
         <Link
-          href={"/add-admin"}
+          href={"/add-blog"}
           className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium w-[90px] !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
         >
           <IoMdAddCircle size={22} /> Thêm
@@ -56,13 +56,11 @@ function Admin() {
           <thead>
             <tr className="bg-[#E9EDF2]">
               <th className="pl-[1rem] text-left text-[#444] text-[0.9rem]">
-                Họ tên
+                Hình bìa
               </th>
 
-              <th className="text-left text-[#444] text-[0.9rem]">Email</th>
-              <th className="text-left text-[#444] text-[0.9rem]">Sinh nhật</th>
-              <th className="text-left text-[#444] text-[0.9rem]">Ngày tạo</th>
-              <th className="text-left text-[#444] text-[0.9rem]">Vai trò</th>
+              <th className="text-left text-[#444] text-[0.9rem]">Tiêu đề</th>
+              <th className="text-left text-[#444] text-[0.9rem]">Ngày thêm</th>
               <th className="text-left text-[#444] text-[0.9rem] relative">
                 <span
                   onMouseOut={toggleDropdownMenu}
@@ -80,12 +78,12 @@ function Admin() {
                       <button
                         className={`text-black px-4 py-3 block w-full text-left`}
                       >
-                        Bình thường
+                        Công bố
                       </button>
                       <button
                         className={`text-black px-4 py-3 block w-full text-left`}
                       >
-                        Đã chặn
+                        Ẩn
                       </button>
                     </div>
                   )}
@@ -98,25 +96,29 @@ function Admin() {
           </thead>
           <tbody>
             <tr>
-              <td className="pl-[1rem] py-[1rem] w-[300px]">Lam Dieu Quang</td>
+              <td className="pl-[1rem] py-[1rem]">
+                <div className="flex gap-[10px] items-center">
+                  <div className="cursor-pointer">
+                    <Image
+                      Src={"assets/banner/banner-new.png"}
+                      Alt={""}
+                      ClassName={"w-[120px] cursor-pointer"}
+                    />
+                  </div>
+                </div>
+              </td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                quanglam@gmail.com
+                DỌN KHO HÈ CŨ - ĐÓN HÀNG MỚI VỀ
               </td>
 
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">1/5/2004</td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">20/4/2025</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                Siêu quản trị viên
-              </td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                Bình thường
-              </td>
+              <td className="py-[1rem] text-[0.9rem] text-[#444]">Công bố</td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">
                 <div className="flex items-center gap-[15px]">
                   <button>
-                    <TbLock size={22} className="text-[#74767d]" />
+                    <FaRegEyeSlash size={22} className="text-[#74767d]" />
                     {/*
-   <TbLockOpen
+   <MdOutlineRemoveRedEye
                             size={22}
                             className="text-[#74767d]"
                           />
@@ -149,10 +151,9 @@ function Admin() {
           </tbody>
         </table>
       </div>
-
       <Pagination />
     </>
   );
 }
 
-export default Admin;
+export default Blog;

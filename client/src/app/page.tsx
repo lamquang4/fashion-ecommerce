@@ -1,6 +1,6 @@
 "use client";
 import BannerCarousel from "./components/BannerCarousel";
-import Blog from "./components/Blog";
+import BlogList from "./components/BlogList";
 import CategoryList from "./components/CategoryList";
 import Gallery from "./components/Gallery";
 import ProductSlider from "./components/ProductSlider";
@@ -16,7 +16,7 @@ export default function Home() {
         <ProductSlider title={"Nam"} />
         <ProductSlider title={"Nữ"} />
         <Gallery />
-        <Blog />
+        <BlogList />
       </section>
     </>
   );

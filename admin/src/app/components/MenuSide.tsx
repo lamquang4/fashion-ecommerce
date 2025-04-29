@@ -40,7 +40,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
         className={` ${menuOpen ? "left-0" : "left-[-100%]"} 
         ${
           menuOpen ? "xl:translate-x-[-100%] xl:p-0 xl:w-0" : "xl:translate-x-0"
-        } custom-scroll fixed border top-0 h-screen w-[300px] px-4 pb-5 bg-white transition-all duration-500 ease-in-out z-[25] xl:sticky xl:translate-x-0 overflow-y-auto border-b border-gray-200`}
+        } custom-scroll fixed border top-0 h-screen w-[300px] px-4 pb-5 bg-white transition-all duration-300 ease-in-out z-[25] xl:sticky xl:translate-x-0 overflow-y-auto border-b border-gray-200`}
       >
         <div className="mb-[20px] flex justify-center sticky top-0 bg-white px-4 py-4.5">
           <Image Src={"assets/other/logo.png"} Alt="" ClassName="w-[80px]" />
@@ -567,18 +567,66 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
             </li>
 
             <li>
-              <Link
-                href={"/news"}
+              <div
+                onClick={() => toggleOpen(`16a`)}
                 className={`${
-                  pathname === "/news"
-                    ? "text-[#0AB39C] bg-[#daf4f0]"
+                  openMenus["16a"] ||
+                  pathname === "/blog" ||
+                  pathname === "/add-blog"
+                    ? "text-[#0AB39C]"
                     : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
                   <IoNewspaperOutline size={20} /> Trang tin tức
                 </p>
-              </Link>
+                <button>
+                  {openMenus[`16a`] ||
+                  pathname === "/blog" ||
+                  pathname === "/add-blog" ? (
+                    <IoIosArrowDown size={18} />
+                  ) : (
+                    <IoIosArrowUp size={18} />
+                  )}
+                </button>
+              </div>
+
+              <ul
+                className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
+                  openMenus[`16a`] ||
+                  pathname === "/blog" ||
+                  pathname === "/add-blog"
+                    ? "max-h-fit visible"
+                    : ""
+                }`}
+              >
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
+                    pathname === "/blog"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link href={"/blog"} className="text-[0.9rem] font-medium">
+                    Danh sách tin tức
+                  </Link>
+                </li>
+
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
+                    pathname === "/add-blog"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link
+                    href={"/add-blog"}
+                    className="text-[0.9rem] font-medium"
+                  >
+                    Thêm tin tức
+                  </Link>
+                </li>
+              </ul>
             </li>
           </div>
         </ul>
