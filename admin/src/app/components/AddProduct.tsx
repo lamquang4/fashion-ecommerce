@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import TiptapEditor from "./TiptapEditor";
+import TiptapEditor from "./TinyMCEEditor";
 import InputImage from "./InputImage";
 
 function AddProduct() {
