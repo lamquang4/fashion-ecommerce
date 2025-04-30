@@ -4,7 +4,7 @@ import { FaSortDown } from "react-icons/fa";
 
 type FilterDropDownMenuProps = {
   title: string;
-  array: Array<any>;
+  array: Array<{ name: string; status: number | null }>;
 };
 
 function FilterDropDownMenu({ title, array }: FilterDropDownMenuProps) {

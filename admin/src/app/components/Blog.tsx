@@ -1,11 +1,10 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
 import { IoMdAddCircle } from "react-icons/io";
 import { FaRegEyeSlash } from "react-icons/fa";
-import { FaSortDown } from "react-icons/fa";
 import Pagination from "./Pagination";
 import Image from "./Image";
 import FilterDropDownMenu from "./FilterDropDownMenu";
@@ -28,12 +27,15 @@ function Blog() {
   const array1 = [
     {
       name: "Mới nhất",
+      status: null,
     },
     {
       name: "Lượt xem nhiều nhất",
+      status: null,
     },
     {
       name: "Lượt xem ít nhất",
+      status: null,
     },
   ];
   return (
