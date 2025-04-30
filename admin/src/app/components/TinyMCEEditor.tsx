@@ -1,13 +1,11 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import { Editor } from "@tinymce/tinymce-react";
 export default function TinyMCEEditor() {
-  const [editorContent, setEditorContent] = useState("");
-
   return (
     <Editor
       apiKey="siwdxq4dd9436t9lhf5mko4n5m9h8ozdbvh0ztmuz9atxjs9"
-      value={editorContent}
+      value={""}
       init={{
         menubar: false,
         branding: false,
