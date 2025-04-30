@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import React from "react";
-import TiptapEditor from "./TinyMCEEditor";
 import InputImage from "./InputImage";
+import TinyMCEEditor from "./TinyMCEEditor";
 
 function AddBlog() {
   return (
@@ -35,7 +35,7 @@ function AddBlog() {
               <label htmlFor="" className="text-[0.9rem] text-black">
                 Nội dung
               </label>
-              <TiptapEditor />
+              <TinyMCEEditor />
             </div>
 
             <div className="flex flex-col gap-1 w-full">

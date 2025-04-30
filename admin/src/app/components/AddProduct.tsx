@@ -1,8 +1,8 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import TiptapEditor from "./TinyMCEEditor";
 import InputImage from "./InputImage";
+import TinyMCEEditor from "./TinyMCEEditor";
 
 function AddProduct() {
   const [variants, setVariants] = useState([
@@ -107,7 +107,7 @@ function AddProduct() {
                 <label htmlFor="" className="text-[0.9rem] text-black">
                   Mô tả
                 </label>
-                <TiptapEditor />
+                <TinyMCEEditor />
               </div>
 
               <div className="flex flex-col gap-1 w-full">
