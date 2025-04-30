@@ -1,8 +1,7 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { LiaExternalLinkAltSolid } from "react-icons/lia";
-import { FaSortDown } from "react-icons/fa";
 import { IoIosArrowRoundUp } from "react-icons/io";
 import { IoIosArrowRoundDown } from "react-icons/io";
 import { RiShoppingBag4Line } from "react-icons/ri";
@@ -10,11 +9,34 @@ import { RiTruckLine } from "react-icons/ri";
 import { LuClock } from "react-icons/lu";
 import { TbCancel } from "react-icons/tb";
 import Pagination from "./Pagination";
+import FilterDropDownMenu from "./FilterDropDownMenu";
 function Order() {
-  const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
-  const toggleDropdownMenu = () => {
-    setOpenDropdownMenu((prev) => !prev);
-  };
+  const array = [
+    {
+      name: "Tất cả",
+      status: null,
+    },
+    {
+      name: "Chờ xác nhận",
+      status: 0,
+    },
+    {
+      name: "Xác nhận",
+      status: 1,
+    },
+    {
+      name: "Đang giao",
+      status: 2,
+    },
+    {
+      name: "Giao thành công",
+      status: 3,
+    },
+    {
+      name: "Đã hủy",
+      status: 4,
+    },
+  ];
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -153,47 +175,7 @@ function Order() {
               <th className="text-left text-[#444] text-[0.9rem]">Tổng cộng</th>
               <th className="text-left text-[#444] text-[0.9rem]">Ngày tạo</th>
               <th className="text-left text-[#444] text-[0.9rem] relative">
-                <span
-                  onMouseOut={toggleDropdownMenu}
-                  onMouseOver={toggleDropdownMenu}
-                  className="py-[1rem] cursor-pointer flex items-center gap-[2px]"
-                >
-                  Tình trạng <FaSortDown size={14} />
-                  {openDropdownMenu && (
-                    <div className="absolute bg-[#f9f9f9] z-10 top-[90%] left-0 min-w-[160px] shadow-sm font-medium">
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Tất cả
-                      </button>
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Chờ xác nhận
-                      </button>
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Xác nhận
-                      </button>
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Đang giao
-                      </button>
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Giao thành công
-                      </button>
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Đã hủy
-                      </button>
-                    </div>
-                  )}
-                </span>
+                <FilterDropDownMenu title="Tình trạng" array={array} />
               </th>
               <th className="p-[1rem_0] text-left text-[#444] text-[0.9rem]">
                 Hành động
@@ -209,7 +191,16 @@ function Order() {
               <td className="py-[1rem] text-[0.9rem] text-[#444]">COD</td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">250,000₫</td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">20/4/2025</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">Hiện</td>
+              <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                <select
+                  name="status"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                >
+                  <option value="0">Chờ xác nhận</option>
+                  <option value="1">Xác nhận</option>
+                  <option value="4">Hủy</option>
+                </select>
+              </td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">
                 <div className="flex items-center gap-[15px]">
                   <Link href={"/order-detail"}>

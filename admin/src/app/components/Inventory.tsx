@@ -1,16 +1,25 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { LiaExternalLinkAltSolid } from "react-icons/lia";
-import { FaSortDown } from "react-icons/fa";
 import Image from "./Image";
 import Pagination from "./Pagination";
+import FilterDropDownMenu from "./FilterDropDownMenu";
 function Inventory() {
-  const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
-
-  const toggleDropdownMenu = () => {
-    setOpenDropdownMenu((prev) => !prev);
-  };
+  const array = [
+    {
+      name: "Tất cả",
+      status: null,
+    },
+    {
+      name: "Còn hàng",
+      status: 1,
+    },
+    {
+      name: "Hết hàng",
+      status: 0,
+    },
+  ];
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -57,32 +66,7 @@ function Inventory() {
               <th className="text-left text-[#444] text-[0.9rem]">Ngày tạo</th>
 
               <th className="text-left text-[#444] text-[0.9rem] relative">
-                <span
-                  onMouseOut={toggleDropdownMenu}
-                  onMouseOver={toggleDropdownMenu}
-                  className="py-[1rem] cursor-pointer flex items-center gap-[2px]"
-                >
-                  Tình trạng <FaSortDown size={14} />
-                  {openDropdownMenu && (
-                    <div className="absolute bg-[#f9f9f9] z-10 top-[90%] left-0 min-w-[160px] shadow-sm font-medium">
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Tất cả
-                      </button>
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Còn hàng
-                      </button>
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Hết hàng
-                      </button>
-                    </div>
-                  )}
-                </span>
+                <FilterDropDownMenu title="Tình trạng" array={array} />
               </th>
               <th className="text-left text-[#444] text-[0.9rem]">Hành động</th>
             </tr>

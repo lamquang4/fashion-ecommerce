@@ -10,7 +10,7 @@ import { TbCategoryPlus } from "react-icons/tb";
 import { PiTShirtBold } from "react-icons/pi";
 import { FaRegAddressCard } from "react-icons/fa";
 import { LuWarehouse } from "react-icons/lu";
-import { FaRegUser } from "react-icons/fa";
+import { FaRegCircleUser } from "react-icons/fa6";
 import { RiShoppingBag4Line } from "react-icons/ri";
 import { IoColorPaletteOutline } from "react-icons/io5";
 import { RiCoupon2Line } from "react-icons/ri";
@@ -360,7 +360,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
-                  <FaRegUser size={20} /> Khách hàng
+                  <FaRegCircleUser size={20} /> Khách hàng
                 </p>
                 <button>
                   {openMenus[`6a`] ||

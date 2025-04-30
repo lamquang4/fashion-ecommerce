@@ -8,11 +8,34 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import { FaSortDown } from "react-icons/fa";
 import Pagination from "./Pagination";
 import Image from "./Image";
+import FilterDropDownMenu from "./FilterDropDownMenu";
 function Blog() {
-  const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
-  const toggleDropdownMenu = () => {
-    setOpenDropdownMenu((prev) => !prev);
-  };
+  const array = [
+    {
+      name: "Tất cả",
+      status: null,
+    },
+    {
+      name: "Công bố",
+      status: 1,
+    },
+    {
+      name: "Ẩn",
+      status: 0,
+    },
+  ];
+
+  const array1 = [
+    {
+      name: "Mới nhất",
+    },
+    {
+      name: "Lượt xem nhiều nhất",
+    },
+    {
+      name: "Lượt xem ít nhất",
+    },
+  ];
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -60,34 +83,12 @@ function Blog() {
               </th>
 
               <th className="text-left text-[#444] text-[0.9rem]">Tiêu đề</th>
+              <th className="text-left text-[#444] text-[0.9rem]">
+                <FilterDropDownMenu title="Thông số" array={array1} />
+              </th>
               <th className="text-left text-[#444] text-[0.9rem]">Ngày thêm</th>
               <th className="text-left text-[#444] text-[0.9rem] relative">
-                <span
-                  onMouseOut={toggleDropdownMenu}
-                  onMouseOver={toggleDropdownMenu}
-                  className="py-[1rem] cursor-pointer flex items-center gap-[2px]"
-                >
-                  Tình trạng <FaSortDown size={14} />
-                  {openDropdownMenu && (
-                    <div className="absolute bg-[#f9f9f9] z-10 top-[90%] left-0 min-w-[160px] shadow-sm font-medium">
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Tất cả
-                      </button>
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Công bố
-                      </button>
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Ẩn
-                      </button>
-                    </div>
-                  )}
-                </span>
+                <FilterDropDownMenu title="Tình trạng" array={array} />
               </th>
               <th className="p-[1rem_0] text-left text-[#444] text-[0.9rem]">
                 Hành động
@@ -110,7 +111,9 @@ function Blog() {
               <td className="py-[1rem] text-[0.9rem] text-[#444]">
                 DỌN KHO HÈ CŨ - ĐÓN HÀNG MỚI VỀ
               </td>
-
+              <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                23 lượt xem
+              </td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">20/4/2025</td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">Công bố</td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">

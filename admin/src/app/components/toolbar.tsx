@@ -1,3 +1,4 @@
+"use client";
 import { Editor } from "@tiptap/react";
 import { AiOutlineBold } from "react-icons/ai";
 import { AiOutlineItalic } from "react-icons/ai";

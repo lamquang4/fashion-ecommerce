@@ -3,11 +3,13 @@ import Link from "next/link";
 import React from "react";
 import Image from "./Image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination } from "swiper/modules";
+import { Pagination } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import InputImage from "./InputImage";
+import { FaRegEyeSlash } from "react-icons/fa";
+import { VscTrash } from "react-icons/vsc";
 function Home() {
   const bannerCarousels = [
     {
@@ -37,9 +39,8 @@ function Home() {
 
               <div className="w-full mx-auto max-w-[600px] ">
                 <Swiper
-                  modules={[Autoplay, Pagination]}
+                  modules={[Pagination]}
                   pagination={{ clickable: true, type: "bullets" }}
-                  autoplay={{ delay: 5000 }}
                   loop={false}
                   speed={1000}
                 >
@@ -51,6 +52,24 @@ function Home() {
                           Alt={""}
                           ClassName={"w-full object-cover"}
                         />
+                        <div className="absolute top-[10px] right-[10px] flex gap-3 items-center bg-white border p-1">
+                          <button>
+                            <FaRegEyeSlash
+                              size={22}
+                              className="text-[#74767d]"
+                            />
+                            {/*
+                             <MdOutlineRemoveRedEye
+                                                      size={22}
+                                                      className="text-[#74767d]"
+                                                    />
+                                              */}
+                          </button>
+
+                          <button>
+                            <VscTrash size={22} className="text-[#d9534f]" />
+                          </button>
+                        </div>
                       </div>
                     </SwiperSlide>
                   ))}
@@ -67,9 +86,8 @@ function Home() {
 
               <div className="w-full mx-auto max-w-[250px] ">
                 <Swiper
-                  modules={[Autoplay, Pagination]}
+                  modules={[Pagination]}
                   pagination={{ clickable: true, type: "bullets" }}
-                  autoplay={{ delay: 5000 }}
                   loop={false}
                   speed={1000}
                 >
@@ -81,6 +99,24 @@ function Home() {
                           Alt={""}
                           ClassName={"w-full object-cover"}
                         />
+                        <div className="absolute top-[10px] right-[10px] flex gap-3 items-center bg-white border p-1">
+                          <button>
+                            <FaRegEyeSlash
+                              size={22}
+                              className="text-[#74767d]"
+                            />
+                            {/*
+                             <MdOutlineRemoveRedEye
+                                                      size={22}
+                                                      className="text-[#74767d]"
+                                                    />
+                                              */}
+                          </button>
+
+                          <button>
+                            <VscTrash size={22} className="text-[#d9534f]" />
+                          </button>
+                        </div>
                       </div>
                     </SwiperSlide>
                   ))}

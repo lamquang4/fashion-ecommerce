@@ -1,18 +1,28 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
 import { IoMdAddCircle } from "react-icons/io";
 import { TbLock } from "react-icons/tb";
-import { FaSortDown } from "react-icons/fa";
 import Pagination from "./Pagination";
+import FilterDropDownMenu from "./FilterDropDownMenu";
 
 function Admin() {
-  const [openDropdownMenu, setOpenDropdownMenu] = useState(false);
-  const toggleDropdownMenu = () => {
-    setOpenDropdownMenu((prev) => !prev);
-  };
+  const array = [
+    {
+      name: "Tất cả",
+      status: null,
+    },
+    {
+      name: "Bình thường",
+      status: 1,
+    },
+    {
+      name: "Đã chặn",
+      status: 0,
+    },
+  ];
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -64,32 +74,7 @@ function Admin() {
               <th className="text-left text-[#444] text-[0.9rem]">Ngày tạo</th>
               <th className="text-left text-[#444] text-[0.9rem]">Vai trò</th>
               <th className="text-left text-[#444] text-[0.9rem] relative">
-                <span
-                  onMouseOut={toggleDropdownMenu}
-                  onMouseOver={toggleDropdownMenu}
-                  className="py-[1rem] cursor-pointer flex items-center gap-[2px]"
-                >
-                  Tình trạng <FaSortDown size={14} />
-                  {openDropdownMenu && (
-                    <div className="absolute bg-[#f9f9f9] z-10 top-[90%] left-0 min-w-[160px] shadow-sm font-medium">
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Tất cả
-                      </button>
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Bình thường
-                      </button>
-                      <button
-                        className={`text-black px-4 py-3 block w-full text-left`}
-                      >
-                        Đã chặn
-                      </button>
-                    </div>
-                  )}
-                </span>
+                <FilterDropDownMenu title="Tình trạng" array={array} />
               </th>
               <th className="p-[1rem_0] text-left text-[#444] text-[0.9rem]">
                 Hành động
