@@ -35,7 +35,11 @@ function Home() {
                 Banner chính desktop
               </p>
 
-              <InputImage isAlotImage={true} InputId="desktop-banner" />
+              <InputImage
+                isAlotImage={true}
+                InputId="desktop-banner"
+                arrayImg={[]}
+              />
 
               <div className="w-full mx-auto max-w-[600px] ">
                 <Swiper
@@ -82,7 +86,11 @@ function Home() {
                 Banner chính mobile
               </p>
 
-              <InputImage isAlotImage={true} InputId="mobile-banner" />
+              <InputImage
+                isAlotImage={true}
+                InputId="mobile-banner"
+                arrayImg={[]}
+              />
 
               <div className="w-full mx-auto max-w-[250px] ">
                 <Swiper
