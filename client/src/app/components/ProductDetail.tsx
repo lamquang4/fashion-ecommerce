@@ -30,7 +30,7 @@ function ProductDetail() {
     <section className="w-full mx-auto mt-0 lg:mt-[20px] mb-[40px]">
       <div className="flex justify-center flex-wrap gap-[40px] w-full">
         <div>
-          <div className="flex flex-col md:flex-row gap-[20px] lg:sticky lg:top-[140px]">
+          <div className="flex flex-col md:flex-row gap-[20px] lg:sticky lg:top-[100px]">
             <div className=" md:order-2 relative grow overflow-hidden bg-white">
               <div className="max-w-full lg:max-w-[450px] flex flex-col gap-[20px]">
                 <Image

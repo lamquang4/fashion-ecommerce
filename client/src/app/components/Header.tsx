@@ -32,7 +32,6 @@ function Header() {
     if (openSearch) setOpenSearch(false);
   };
 
-
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1041) {
@@ -49,7 +48,7 @@ function Header() {
       <header className="w-full bg-white sticky top-0 border-b border-gray-200 z-[15]">
         <div>
           {/* Header top */}
-          <div className="bg-black w-full">
+          <div className="bg-black w-full hidden">
             <div className="py-[9px]">
               <p className="text-white text-center text-[0.8rem] uppercase font-bold">
                 Free Ship với đơn hàng trên 100K
@@ -188,8 +187,6 @@ function Header() {
                     </li>
                   </ul>
                 </li>
-
-          
               </ul>
             </nav>
 

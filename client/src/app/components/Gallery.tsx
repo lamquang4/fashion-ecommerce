@@ -43,39 +43,6 @@ function Gallery() {
             </div>
           </div>
         </div>
-
-        <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
-          <div>
-            <Image
-              Src={"/assets/banner/blog-3.png"}
-              Alt={""}
-              ClassName={"h-auto max-w-full"}
-            />
-          </div>
-          <div>
-            <Image
-              Src={"/assets/banner/blog-2.png"}
-              Alt={""}
-              ClassName={"h-auto max-w-full"}
-            />
-          </div>
-
-          <div>
-            <Image
-              Src={"/assets/banner/blog-5.png"}
-              Alt={""}
-              ClassName={"h-auto max-w-full"}
-            />
-          </div>
-
-          <div>
-            <Image
-              Src={"/assets/banner/blog-6.png"}
-              Alt={""}
-              ClassName={"h-auto max-w-full"}
-            />
-          </div>
-        </div>
       </div>
     </section>
   );

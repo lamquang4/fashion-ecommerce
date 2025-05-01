@@ -4,6 +4,7 @@ import BlogList from "./components/BlogList";
 import CategoryList from "./components/CategoryList";
 import Gallery from "./components/Gallery";
 import ProductSlider from "./components/ProductSlider";
+import PromoteBanner from "./components/PromoteBanner";
 import ServiceFeature from "./components/ServiceFeature";
 
 export default function Home() {
@@ -14,8 +15,10 @@ export default function Home() {
         <ServiceFeature />
         <CategoryList />
         <ProductSlider title={"Nam"} />
+        <PromoteBanner />
         <ProductSlider title={"Nữ"} />
         <Gallery />
+
         <BlogList />
       </section>
     </>
