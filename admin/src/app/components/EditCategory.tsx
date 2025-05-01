@@ -18,6 +18,12 @@ function EditCategory() {
       [name]: value,
     });
   };
+
+  const array = [
+    {
+      image: "assets/products/IMGSP0841.png",
+    },
+  ];
   return (
     <>
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
@@ -28,7 +34,11 @@ function EditCategory() {
 
           <div className="flex gap-[20px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
-              <InputImage isAlotImage={false} InputId="img-category" />
+              <InputImage
+                isAlotImage={false}
+                InputId="img-category"
+                arrayImg={array}
+              />
             </div>
 
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
