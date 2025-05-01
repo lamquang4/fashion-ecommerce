@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import InputImage from "./InputImage";
 import TinyMCEEditor from "./TinyMCEEditor";
 
-function AddBlog() {
+function EditBlog() {
   const [data, setData] = useState({
     title: "",
     status: "",
@@ -20,14 +20,26 @@ function AddBlog() {
       [name]: value,
     }));
   };
+
+  const array = [
+    {
+      image: "assets/banner/banner-new.png",
+    },
+  ];
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
       <form className="flex flex-col gap-6 w-full">
-        <h1 className="font-bold text-[1.5rem] text-[#74767d]">Thêm tin tức</h1>
+        <h1 className="font-bold text-[1.5rem] text-[#74767d]">
+          Chỉnh sửa tin tức
+        </h1>
 
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-            <InputImage isAlotImage={false} InputId="img-new" />
+            <InputImage
+              isAlotImage={false}
+              InputId="img-new"
+              arrayImg={array}
+            />
           </div>
           <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
             <p className="font-bold text-[1rem] text-[#74767d] mb-[10px]">
@@ -79,7 +91,7 @@ function AddBlog() {
             type="submit"
             className="px-[14px] py-[5px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
           >
-            Thêm
+            Cập nhật
           </button>
           <Link
             href="/blog"
@@ -93,4 +105,4 @@ function AddBlog() {
   );
 }
 
-export default AddBlog;
+export default EditBlog;

@@ -1,10 +1,18 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
 import Image from "./Image";
 function CartItem() {
+  const [quantity, setQuantity] = useState(1);
+  const HandleIncrement = () => {
+    setQuantity((prev) => (prev < 10 ? prev + 1 : prev));
+  };
+
+  const HandleDecrement = () => {
+    setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
+  };
   return (
     <>
       <section className="max-w-[1230px] mx-auto mt-[40px] sm:mt-[45px]">
@@ -44,15 +52,19 @@ function CartItem() {
                       <div className="mt-auto flex items-center gap-3.5">
                         <button
                           type="button"
+                          name="button-1"
+                          onClick={HandleDecrement}
                           className="flex items-center justify-center w-6.5 h-6.5 bg-white border border-[#8c9196] outline-none rounded-full"
                         >
                           <HiOutlineMinusSmall size={25} />
                         </button>
                         <span className="font-normal text-[1.2rem] leading-[18px]">
-                          2
+                          {quantity}
                         </span>
                         <button
                           type="button"
+                          name="button-1"
+                          onClick={HandleIncrement}
                           className="flex items-center justify-center w-6.5 h-6.5 bg-white border border-[#8c9196] outline-none rounded-full"
                         >
                           <HiOutlinePlusSmall size={25} />
@@ -128,15 +140,19 @@ function CartItem() {
                       <div className="mt-auto flex items-center gap-3.5">
                         <button
                           type="button"
+                          name="button-2"
+                          onClick={HandleDecrement}
                           className="flex items-center justify-center w-6.5 h-6.5 bg-white border border-[#8c9196] outline-none rounded-full"
                         >
                           <HiOutlineMinusSmall size={25} />
                         </button>
                         <span className="font-normal text-[1.2rem] leading-[18px]">
-                          2
+                          {quantity}
                         </span>
                         <button
                           type="button"
+                          name="button-2"
+                          onClick={HandleIncrement}
                           className="flex items-center justify-center w-6.5 h-6.5 bg-white border border-[#8c9196] outline-none rounded-full"
                         >
                           <HiOutlinePlusSmall size={25} />

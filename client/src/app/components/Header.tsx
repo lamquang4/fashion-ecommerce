@@ -189,14 +189,7 @@ function Header() {
                   </ul>
                 </li>
 
-                <li className="relative">
-                  <Link
-                    href={"/"}
-                    className="relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100"
-                  >
-                    Liên hệ
-                  </Link>
-                </li>
+          
               </ul>
             </nav>
 

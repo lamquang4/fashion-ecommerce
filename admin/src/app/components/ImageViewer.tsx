@@ -6,17 +6,17 @@ import Download from "yet-another-react-lightbox/plugins/download";
 import Zoom from "yet-another-react-lightbox/plugins/zoom";
 
 type ImageViewerProps = {
-  images: string[];
+  image: string;
   open: boolean;
   onClose: () => void;
 };
 
-function ImageViewer({ images, open, onClose }: ImageViewerProps) {
+function ImageViewer({ image, open, onClose }: ImageViewerProps) {
   return (
     <Lightbox
       open={open}
       close={onClose}
-      slides={images.map((img) => ({ src: img }))}
+      slides={[{ src: image }]}
       render={{
         buttonPrev: () => null,
         buttonNext: () => null,

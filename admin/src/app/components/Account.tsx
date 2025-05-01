@@ -1,7 +1,25 @@
 "use client";
-import React from "react";
+import React, { useState } from "react";
 
 function Account() {
+  const [data, setData] = useState({
+    fullname: "",
+    email: "",
+    password: "",
+    phone: "",
+    birthday: "",
+    role: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: name === "email" ? value.toLowerCase() : value,
+    }));
+  };
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
       <form className="flex flex-col gap-7 w-full">
@@ -20,7 +38,8 @@ function Account() {
               <input
                 type="text"
                 name="fullname"
-                value={"Quang Lam"}
+                value={data.fullname}
+                onChange={handleChange}
                 required
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -34,7 +53,8 @@ function Account() {
               <input
                 type="text"
                 name="email"
-                value={"exmaple@gmail.com"}
+                value={data.email}
+                onChange={handleChange}
                 required
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -49,7 +69,8 @@ function Account() {
                 <input
                   type="number"
                   name="phone"
-                  value={"0972427751"}
+                  value={data.phone}
+                  onChange={handleChange}
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
@@ -62,7 +83,8 @@ function Account() {
                 <input
                   type="date"
                   name="birthday"
-                  value={"2000-05-01"}
+                  value={data.birthday}
+                  onChange={handleChange}
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
@@ -76,7 +98,8 @@ function Account() {
               <input
                 type="text"
                 name="role"
-                value={"Nhân viên bán hàng"}
+                value={data.role}
+                onChange={handleChange}
                 required
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"

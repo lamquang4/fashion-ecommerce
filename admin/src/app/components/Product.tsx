@@ -131,7 +131,7 @@ function Product() {
                           />
                     */}
                   </button>
-                  <Link href={"/"}>
+                  <Link href={"/edit-product"}>
                     <LiaEdit size={22} className="text-[#076ffe]" />
                   </Link>
 

@@ -1,8 +1,25 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 function AddCustomer() {
+  const [data, setData] = useState({
+    fullname: "",
+    email: "",
+    password: "",
+    phone: "",
+    birthday: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: name === "email" ? value.toLowerCase() : value,
+    }));
+  };
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
       <form className="flex flex-col gap-7 w-full">
@@ -22,6 +39,8 @@ function AddCustomer() {
               <input
                 type="text"
                 name="fullname"
+                value={data.fullname}
+                onChange={handleChange}
                 required
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
@@ -34,6 +53,8 @@ function AddCustomer() {
               <input
                 type="text"
                 name="email"
+                value={data.email}
+                onChange={handleChange}
                 required
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
@@ -47,6 +68,8 @@ function AddCustomer() {
                 <input
                   type="number"
                   name="phone"
+                  value={data.phone}
+                  onChange={handleChange}
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
@@ -59,6 +82,8 @@ function AddCustomer() {
                 <input
                   type="date"
                   name="birthday"
+                  value={data.birthday}
+                  onChange={handleChange}
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
@@ -72,6 +97,8 @@ function AddCustomer() {
               <input
                 type="password"
                 name="password"
+                value={data.password}
+                onChange={handleChange}
                 required
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />

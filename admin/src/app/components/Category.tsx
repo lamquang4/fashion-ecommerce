@@ -115,7 +115,7 @@ function Category() {
                           />
                     */}
                   </button>
-                  <Link href={"/"}>
+                  <Link href={"/edit-category"}>
                     <LiaEdit size={22} className="text-[#076ffe]" />
                   </Link>
 

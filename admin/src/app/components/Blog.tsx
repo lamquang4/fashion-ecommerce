@@ -129,7 +129,7 @@ function Blog() {
                           />
                     */}
                   </button>
-                  <Link href={"/"}>
+                  <Link href={"/edit-blog"}>
                     <LiaEdit size={22} className="text-[#076ffe]" />
                   </Link>
 

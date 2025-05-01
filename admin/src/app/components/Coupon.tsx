@@ -70,12 +70,8 @@ function Coupon() {
               </th>
               <th className="text-left text-[#444] text-[0.9rem]">Mô tả</th>
               <th className="text-left text-[#444] text-[0.9rem]">Giảm giá</th>
-              <th className="text-left text-[#444] text-[0.9rem]">
-                Số lượng tối đa
-              </th>
-              <th className="text-left text-[#444] text-[0.9rem]">
-                Số lượng đã dùng
-              </th>
+              <th className="text-left text-[#444] text-[0.9rem]">Số lượng</th>
+
               <th className="text-left text-[#444] text-[0.9rem]">Thời gian</th>
               <th className="text-left text-[#444] text-[0.9rem] relative">
                 <FilterDropDownMenu title="Tình trạng" array={array} />
@@ -95,8 +91,9 @@ function Coupon() {
               </td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">200K</td>
 
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">30</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">10</td>
+              <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                Tối đa: 30 / Đã dùng: 10
+              </td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">
                 20/4/2025 - 25/4/2025
               </td>
@@ -114,7 +111,7 @@ function Coupon() {
                           />
                     */}
                   </button>
-                  <Link href={"/"}>
+                  <Link href={"/edit-coupon"}>
                     <LiaEdit size={22} className="text-[#076ffe]" />
                   </Link>
 

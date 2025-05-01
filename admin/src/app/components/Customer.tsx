@@ -103,7 +103,7 @@ function Customer() {
                           />
                     */}
                   </button>
-                  <Link href={"/"}>
+                  <Link href={"/edit-customer"}>
                     <LiaEdit size={22} className="text-[#076ffe]" />
                   </Link>
 

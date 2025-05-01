@@ -107,7 +107,7 @@ function Admin() {
                           />
                     */}
                   </button>
-                  <Link href={"/"}>
+                  <Link href={"/edit-admin"}>
                     <LiaEdit size={22} className="text-[#076ffe]" />
                   </Link>
 

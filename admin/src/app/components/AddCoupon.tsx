@@ -1,8 +1,23 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 
 function AddCoupon() {
+  const [data, setData] = useState({
+    code: "",
+    limit: "",
+    discountType: "",
+    value: "",
+    startDate: "",
+    expiryDate: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData((prev) => ({ ...prev, [name]: value }));
+  };
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
       <form className="flex flex-col gap-7 w-full">
@@ -23,6 +38,8 @@ function AddCoupon() {
               <input
                 type="text"
                 name="code"
+                value={data.code}
+                onChange={handleChange}
                 maxLength={20}
                 required
                 className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
@@ -35,7 +52,9 @@ function AddCoupon() {
               </label>
               <input
                 type="number"
-                name="limitCoupon"
+                name="limit"
+                value={data.limit}
+                onChange={handleChange}
                 required
                 className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
               />
@@ -46,14 +65,16 @@ function AddCoupon() {
                 Loại giảm giá
               </label>
               <select
-                name="typeCoupon"
+                name="discountType"
+                value={data.discountType}
+                onChange={handleChange}
                 required
                 className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
               >
                 <option value="">Chọn loại giảm giá</option>
-                <option value="free">Miễn phí giao hàng</option>
-                <option value="%">Phần trăm %</option>
-                <option value="money">Số tiền cố định</option>
+                <option value="1">Miễn phí giao hàng</option>
+                <option value="0">Phần trăm %</option>
+                <option value="2">Số tiền cố định</option>
               </select>
             </div>
 
@@ -63,7 +84,9 @@ function AddCoupon() {
               </label>
               <input
                 type="text"
-                name="valueCoupon"
+                name="value"
+                value={data.value}
+                onChange={handleChange}
                 required
                 className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
               />
@@ -77,6 +100,8 @@ function AddCoupon() {
                 <input
                   type="date"
                   name="startDate"
+                  value={data.startDate}
+                  onChange={handleChange}
                   required
                   className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
                 />
@@ -87,7 +112,9 @@ function AddCoupon() {
                 </label>
                 <input
                   type="date"
-                  name="endDate"
+                  name="expiryDate"
+                  value={data.expiryDate}
+                  onChange={handleChange}
                   required
                   className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
                 />

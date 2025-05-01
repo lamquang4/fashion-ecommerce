@@ -17,7 +17,7 @@ function ProductDetail() {
   const [mainImage, setMainImage] = useState<string>(
     "/assets/products/IMGSP1360.png"
   );
-
+  const [quantity, setQuantity] = useState(1);
   const HandleIncrement = () => {
     setQuantity((prev) => (prev < 10 ? prev + 1 : prev));
   };
@@ -25,7 +25,7 @@ function ProductDetail() {
   const HandleDecrement = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
   };
-  const [quantity, setQuantity] = useState(1);
+
   return (
     <section className="w-full mx-auto mt-0 lg:mt-[20px] mb-[40px]">
       <div className="flex justify-center flex-wrap gap-[40px] w-full">

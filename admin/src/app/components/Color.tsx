@@ -4,25 +4,9 @@ import React from "react";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
 import { IoMdAddCircle } from "react-icons/io";
-import { FaRegEyeSlash } from "react-icons/fa";
 import Pagination from "./Pagination";
-import FilterDropDownMenu from "./FilterDropDownMenu";
 
 function Color() {
-  const array = [
-    {
-      name: "Tất cả",
-      status: null,
-    },
-    {
-      name: "Hiện",
-      status: 1,
-    },
-    {
-      name: "Ẩn",
-      status: 0,
-    },
-  ];
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -71,9 +55,10 @@ function Color() {
 
               <th className="text-left text-[#444] text-[0.9rem]">Mã màu</th>
               <th className="text-left text-[#444] text-[0.9rem]">Ngày thêm</th>
-              <th className="text-left text-[#444] text-[0.9rem] relative">
-                <FilterDropDownMenu title="Tình trạng" array={array} />
+              <th className="text-left text-[#444] text-[0.9rem]">
+                Số lượng đang dùng
               </th>
+
               <th className="p-[1rem_0] text-left text-[#444] text-[0.9rem]">
                 Hành động
               </th>
@@ -89,19 +74,10 @@ function Color() {
               </td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">#FF0000</td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">20/4/2025</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">Hiện</td>
+              <td className="py-[1rem] text-[0.9rem] text-[#444]">5</td>
               <td className="py-[1rem] text-[0.9rem] text-[#444]">
                 <div className="flex items-center gap-[15px]">
-                  <button>
-                    <FaRegEyeSlash size={22} className="text-[#74767d]" />
-                    {/*
-   <MdOutlineRemoveRedEye
-                            size={22}
-                            className="text-[#74767d]"
-                          />
-                    */}
-                  </button>
-                  <Link href={"/"}>
+                  <Link href={"/edit-color"}>
                     <LiaEdit size={22} className="text-[#076ffe]" />
                   </Link>
 

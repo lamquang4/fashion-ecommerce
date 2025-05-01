@@ -1,8 +1,23 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import InputImage from "./InputImage";
 function AddCategory() {
+  const [data, setData] = useState({
+    namecategory: "",
+    gender: "",
+    image: "",
+  });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
   return (
     <>
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
@@ -27,7 +42,9 @@ function AddCategory() {
                 </label>
                 <input
                   type="text"
-                  name="namecate"
+                  name="namecategory"
+                  value={data.namecategory}
+                  onChange={handleChange}
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
@@ -39,12 +56,14 @@ function AddCategory() {
                 </label>
                 <select
                   name="gender"
+                  value={data.gender}
+                  onChange={handleChange}
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 >
                   <option value="">Chọn giới tính</option>
-                  <option value="nam">Nam</option>
-                  <option value="nữ">Nữ</option>
+                  <option value="1">Nam</option>
+                  <option value="0">Nữ</option>
                 </select>
               </div>
             </div>
