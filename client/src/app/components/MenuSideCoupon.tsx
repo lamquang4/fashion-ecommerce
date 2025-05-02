@@ -25,23 +25,31 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
         <hr className=" border-gray-300 mt-[15px]" />
 
         <div className="flex gap-[25px] flex-col items-center h-full w-full mt-[30px]">
-          <div
-            className="relative w-full flex rounded-none filter-none min-h-0 overflow-hidden px-0
-    before:content-[''] before:absolute before:rounded-full before:w-[20px] before:h-[20px] before:bg-white before:border before:border-[#001F5D] before:top-1/2 before:translate-y-[-50%] before:left-[-6px] before:z-[10]
-    after:content-[''] after:absolute after:rounded-full after:w-[20px] after:h-[20px] after:bg-white after:border after:border-[#001F5D] after:top-1/2 after:translate-y-[-50%] after:right-[-6px] after:z-[10]"
-          >
-            <div className="border border-[#001F5D] text-[#001F5D] px-[26px] relative text-[0.9rem] font-medium w-full">
-              <div className="flex items-center  border-dashed border-l-2 border-r-2 px-3 py-4 border-[#001F5D] w-full">
+          <div className="relative w-full flex rounded-none filter-none min-h-0 overflow-hidden px-0 bg-[#197FB6]">
+            <div className="absolute left-[-6px] top-[16.6%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+            <div className="absolute left-[-6px] top-[38%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+            <div className="absolute left-[-6px] top-[61%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+            <div className="absolute left-[-6px] top-[83.4%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+
+            <div className="absolute right-[-6px] top-[16.6%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+            <div className="absolute right-[-6px] top-[38%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+            <div className="absolute right-[-6px] top-[61%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+            <div className="absolute right-[-6px] top-[83.4%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+
+            <div className="border border-[#197FB6] text-[#197FB6] px-[26px] relative w-full">
+              <div className="flex items-center border-l border-r px-3 py-4 border-[#197FB6] w-full bg-white">
                 <div className="flex gap-2 flex-col w-full">
-                  <h2 className="text-[1.3rem] font-semibold uppercase">
+                  <h2 className="text-[1.35rem] font-semibold uppercase">
                     Giảm 10%
                   </h2>
-                  <p className="text-[0.9rem]">
+                  <p className="text-[0.9rem] font-medium text-black">
                     Đơn hàng từ 599K trở lên, giảm tối đa 100K
                   </p>
                   <div className="flex justify-between items-center w-full">
-                    <p className="text-[0.9rem]">Nhập mã: GIAM10</p>
-                    <button className="border text-[0.9rem] px-2 py-1.5 bg-[#001F5D] text-white">
+                    <p className="text-[0.9rem] font-medium text-black">
+                      Nhập mã: GIAM10
+                    </p>
+                    <button className="border text-[0.9rem] px-2.5 py-1.5 bg-[#197FB6] text-white rounded-sm">
                       Sao chép
                     </button>
                   </div>

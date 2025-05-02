@@ -101,22 +101,22 @@ function ProductDetail() {
                 <div className="flex gap-[12px] flex-wrap w-full">
                   <div
                     className="relative flex rounded-none filter-none min-h-0 overflow-hidden px-0 cursor-pointer
-    before:content-[''] before:absolute before:rounded-full before:w-[12px] before:h-[12px] before:bg-white before:border before:border-[#001F5D] before:top-1/2 before:translate-y-[-50%] before:left-[-6px] before:z-[10]
-    after:content-[''] after:absolute after:rounded-full after:w-[12px] after:h-[12px] after:bg-white after:border after:border-[#001F5D] after:top-1/2 after:translate-y-[-50%] after:right-[-6px] after:z-[10]"
+    before:content-[''] before:absolute before:rounded-full before:w-[12px] before:h-[12px] before:bg-white before:border before:border-[#197FB6] before:top-1/2 before:translate-y-[-50%] before:left-[-6px] before:z-[10]
+    after:content-[''] after:absolute after:rounded-full after:w-[12px] after:h-[12px] after:bg-white after:border after:border-[#197FB6] after:top-1/2 after:translate-y-[-50%] after:right-[-6px] after:z-[10]"
                     onClick={toggleOpen}
                   >
-                    <div className="border border-[#001F5D] text-[#001F5D] px-3 py-[7px] relative text-[0.9rem] font-medium uppercase">
+                    <div className="border border-[#197FB6] text-[#197FB6] px-3 py-[7px] relative text-[0.9rem] font-medium uppercase">
                       Giảm 10%
                     </div>
                   </div>
 
                   <div
                     className="relative flex rounded-none filter-none min-h-0 overflow-hidden px-0 cursor-pointer
-    before:content-[''] before:absolute before:rounded-full before:w-[12px] before:h-[12px] before:bg-white before:border before:border-[#001F5D] before:top-1/2 before:translate-y-[-50%] before:left-[-6px] before:z-[10]
-    after:content-[''] after:absolute after:rounded-full after:w-[12px] after:h-[12px] after:bg-white after:border after:border-[#001F5D] after:top-1/2 after:translate-y-[-50%] after:right-[-6px] after:z-[10]"
+    before:content-[''] before:absolute before:rounded-full before:w-[12px] before:h-[12px] before:bg-white before:border before:border-[#197FB6] before:top-1/2 before:translate-y-[-50%] before:left-[-6px] before:z-[10]
+    after:content-[''] after:absolute after:rounded-full after:w-[12px] after:h-[12px] after:bg-white after:border after:border-[#197FB6] after:top-1/2 after:translate-y-[-50%] after:right-[-6px] after:z-[10]"
                     onClick={toggleOpen}
                   >
-                    <div className="border border-[#001F5D] text-[#001F5D] px-3 py-[7px] relative text-[0.9rem] font-medium uppercase">
+                    <div className="border border-[#197FB6] text-[#197FB6] px-3 py-[7px] relative text-[0.9rem] font-medium uppercase">
                       Giảm 100K
                     </div>
                   </div>
