@@ -14,8 +14,9 @@ export default function Home() {
         <BannerCarousel />
         <ServiceFeature />
         <CategoryList />
+        <PromoteBanner gender="nam" />
         <ProductSlider title={"Nam"} />
-        <PromoteBanner />
+        <PromoteBanner gender="nữ" />
         <ProductSlider title={"Nữ"} />
         <Gallery />
 

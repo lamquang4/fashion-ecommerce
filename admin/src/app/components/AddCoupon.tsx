@@ -10,6 +10,8 @@ function AddCoupon() {
     value: "",
     startDate: "",
     expiryDate: "",
+    minOrderValue: "",
+    maxDiscountValue: "",
   });
 
   const handleChange = (
@@ -21,7 +23,7 @@ function AddCoupon() {
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
       <form className="flex flex-col gap-7 w-full">
-        <h1 className="font-bold text-[1.8rem] text-[#74767d]">
+        <h1 className="font-bold text-[1.5rem] text-[#74767d]">
           Thêm phiếu giảm giá
         </h1>
 
@@ -40,9 +42,9 @@ function AddCoupon() {
                 name="code"
                 value={data.code}
                 onChange={handleChange}
-                maxLength={20}
+                maxLength={12}
                 required
-                className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
             </div>
 
@@ -56,7 +58,7 @@ function AddCoupon() {
                 value={data.limit}
                 onChange={handleChange}
                 required
-                className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
             </div>
 
@@ -69,7 +71,7 @@ function AddCoupon() {
                 value={data.discountType}
                 onChange={handleChange}
                 required
-                className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               >
                 <option value="">Chọn loại giảm giá</option>
                 <option value="1">Miễn phí giao hàng</option>
@@ -78,21 +80,52 @@ function AddCoupon() {
               </select>
             </div>
 
+            <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
+              <div className="flex flex-col gap-1 w-full">
+                <label htmlFor="" className="text-[0.95rem] text-black">
+                  Giá trị giảm giá
+                </label>
+                <input
+                  type="text"
+                  name="value"
+                  value={data.value}
+                  onChange={handleChange}
+                  required
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full"
+                />
+              </div>
+
+              <div className="flex flex-col gap-1 w-full">
+                <label htmlFor="" className="text-[0.95rem] text-black">
+                  Giá trị giảm giá tối đa
+                </label>
+                <input
+                  type="text"
+                  name="maxDiscountValue"
+                  value={data.maxDiscountValue}
+                  onChange={handleChange}
+                  required
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                />
+              </div>
+            </div>
+
             <div className="flex flex-col gap-1">
               <label htmlFor="" className="text-[0.95rem] text-black">
-                Giá trị giảm giá
+                Giá trị đơn hàng tối thiểu
               </label>
               <input
-                type="text"
-                name="value"
-                value={data.value}
+                type="number"
+                name="minOrderValue"
+                value={data.minOrderValue}
                 onChange={handleChange}
+                maxLength={12}
                 required
-                className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
             </div>
 
-            <div className="flex gap-5">
+            <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
               <div className="w-full flex flex-col gap-1">
                 <label htmlFor="" className="text-[0.95rem] text-black">
                   Ngày bắt đầu
@@ -103,7 +136,7 @@ function AddCoupon() {
                   value={data.startDate}
                   onChange={handleChange}
                   required
-                  className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
               </div>
               <div className="w-full flex flex-col gap-1">
@@ -116,7 +149,7 @@ function AddCoupon() {
                   value={data.expiryDate}
                   onChange={handleChange}
                   required
-                  className="border border-gray-400 p-[6px_10px] text-[0.9rem] w-full outline-none"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
               </div>
             </div>

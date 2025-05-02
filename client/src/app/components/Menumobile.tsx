@@ -32,7 +32,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
         </div>
 
         <ul className="mb-[30px]">
-          <li className="border-b border-black/25">
+          <li className="border-b border-gray-300">
             <Link
               href={"/"}
               className="text-black text-[0.9rem] font-medium py-4 uppercase"
@@ -41,7 +41,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
             </Link>
           </li>
 
-          <li className="border-b border-black/25">
+          <li className="border-b border-gray-300">
             <div
               onClick={() => toggleOpen(`abc`)}
               className="w-full cursor-pointer flex justify-between items-center"
@@ -83,7 +83,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
             </ul>
           </li>
 
-          <li className="border-b border-black/25">
+          <li className="border-b border-gray-300">
             <div
               onClick={() => toggleOpen(`xyz`)}
               className="w-full cursor-pointer flex justify-between items-center"

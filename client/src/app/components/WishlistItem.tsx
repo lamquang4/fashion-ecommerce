@@ -16,7 +16,7 @@ function WishlistItem() {
               <div className="flex gap-4 bg-white py-6">
                 <div className="flex gap-4.5">
                   <Link href={"/"}>
-                    <div className="w-50 h-50 max-sm:w-30 max-sm:h-30 shrink-0">
+                    <div className="w-full max-w-[150px] shrink-0">
                       <Image
                         Src={"/assets/products/IMGSP3483.png"}
                         Alt={""}
@@ -58,12 +58,12 @@ function WishlistItem() {
                 </div>
               </div>
 
-              <hr className="border-slate-300" />
+              <hr className="border-gray-300" />
 
               <div className="flex gap-4 bg-white py-6">
                 <div className="flex gap-4.5">
                   <Link href={"/"}>
-                    <div className="w-50 h-50 max-sm:w-30 max-sm:h-30 shrink-0">
+                    <div className="w-full max-w-[150px] shrink-0">
                       <Image
                         Src={"/assets/products/IMGSP3483.png"}
                         Alt={""}

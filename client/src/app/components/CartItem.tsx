@@ -27,7 +27,7 @@ function CartItem() {
                 <div className="flex gap-4 bg-white py-6">
                   <div className="flex gap-4.5">
                     <Link href={"/"}>
-                      <div className="w-50 h-50 max-sm:w-30 max-sm:h-30 shrink-0">
+                      <div className="w-full max-w-[150px] shrink-0">
                         <Image
                           Src={"/assets/products/IMGSP3483.png"}
                           Alt={""}
@@ -110,12 +110,12 @@ function CartItem() {
                   </div>
                 </div>
 
-                <hr className="border-slate-300" />
+                <hr className="border-gray-300" />
 
                 <div className="flex gap-4 bg-white py-6">
                   <div className="flex gap-4.5">
                     <Link href={"/"}>
-                      <div className="w-50 h-50 max-sm:w-30 max-sm:h-30 shrink-0">
+                      <div className="w-full max-w-[150px] shrink-0">
                         <Image
                           Src={"/assets/products/IMGSP3483.png"}
                           Alt={""}
@@ -222,7 +222,7 @@ function CartItem() {
                   </div>
                 </div>
 
-                <hr className="border-slate-300 my-[20px]" />
+                <hr className="border-gray-300 my-[20px]" />
 
                 <ul className="text-slate-900 font-medium space-y-4">
                   <li className="flex flex-wrap gap-4 text-[1.1rem] font-semibold">
@@ -230,7 +230,7 @@ function CartItem() {
                   </li>
                 </ul>
 
-                <hr className="border-slate-300 my-[20px]" />
+                <hr className="border-gray-300 my-[20px]" />
 
                 <div className="space-y-[20px]">
                   <button
@@ -241,7 +241,7 @@ function CartItem() {
                   </button>
 
                   <Link
-                    className="text-[0.9rem] px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-gray-200 text-slate-900 border border-slate-300 rounded-md text-center"
+                    className="text-[0.9rem] px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-gray-200 text-slate-900 border border-gray-300 rounded-md text-center"
                     href={"/shop"}
                   >
                     Tiếp tục mua sắm
