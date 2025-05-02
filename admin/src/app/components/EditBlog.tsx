@@ -35,11 +35,7 @@ function EditBlog() {
 
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-            <InputImage
-              isAlotImage={false}
-              InputId="img-new"
-              arrayImg={array}
-            />
+            <InputImage max={1} InputId="img-new" arrayImg={array} />
           </div>
           <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
             <p className="font-bold text-[1rem] text-[#74767d] mb-[10px]">

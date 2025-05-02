@@ -21,7 +21,7 @@ function AddCoupon() {
     setData((prev) => ({ ...prev, [name]: value }));
   };
   return (
-    <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
+    <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
       <form className="flex flex-col gap-7 w-full">
         <h1 className="font-bold text-[1.5rem] text-[#74767d]">
           Thêm phiếu giảm giá

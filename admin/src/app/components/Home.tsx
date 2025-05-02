@@ -35,11 +35,7 @@ function Home() {
                 Banner chính desktop
               </p>
 
-              <InputImage
-                isAlotImage={true}
-                InputId="desktop-banner"
-                arrayImg={[]}
-              />
+              <InputImage max={4} InputId="desktop-banner" arrayImg={[]} />
 
               <div className="w-full mx-auto max-w-[600px] ">
                 <Swiper
@@ -86,11 +82,7 @@ function Home() {
                 Banner chính mobile
               </p>
 
-              <InputImage
-                isAlotImage={true}
-                InputId="mobile-banner"
-                arrayImg={[]}
-              />
+              <InputImage max={4} InputId="mobile-banner" arrayImg={[]} />
 
               <div className="w-full mx-auto max-w-[250px] ">
                 <Swiper
@@ -130,6 +122,16 @@ function Home() {
                   ))}
                 </Swiper>
               </div>
+            </div>
+
+            <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
+              <p className="font-bold text-[1rem] text-[#74767d]">
+                Banner khuyễn mãi
+              </p>
+
+              <InputImage max={2} InputId="promote-banner" arrayImg={[]} />
+
+              <div className="w-full mx-auto max-w-[250px] "></div>
             </div>
           </div>
 

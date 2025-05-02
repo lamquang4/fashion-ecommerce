@@ -5,11 +5,11 @@ import toast from "react-hot-toast";
 import { HiMiniXMark } from "react-icons/hi2";
 import ImageViewer from "./ImageViewer";
 type InputImageProps = {
-  isAlotImage: boolean;
   InputId: string;
   arrayImg: Array<{ image: string }>;
+  max: number;
 };
-function InputImage({ isAlotImage, InputId, arrayImg }: InputImageProps) {
+function InputImage({ InputId, arrayImg, max }: InputImageProps) {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
@@ -25,30 +25,20 @@ function InputImage({ isAlotImage, InputId, arrayImg }: InputImageProps) {
   };
 
   const handlePreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (isAlotImage) {
-      const files = e.target.files;
-      const maxFiles = 4;
+    const files = e.target.files;
+    const maxFiles = max;
 
-      if (!files) return;
+    if (!files) return;
 
-      const selectedFiles = Array.from(files);
+    const selectedFiles = Array.from(files);
 
-      if (previewImages.length + selectedFiles.length > maxFiles) {
-        toast.error(`Tổng số ảnh không được vượt quá ${maxFiles}.`);
-        return;
-      }
-
-      const imageUrls = selectedFiles.map((file) => URL.createObjectURL(file));
-      setPreviewImages((prev) => [...prev, ...imageUrls]);
-    } else {
-      const files = e.target.files;
-
-      if (!files || files.length === 0) return;
-
-      const file = files[0];
-      const imageUrl = URL.createObjectURL(file);
-      setPreviewImages([imageUrl]);
+    if (previewImages.length + selectedFiles.length > maxFiles) {
+      toast.error(`Tổng số ảnh không được vượt quá ${maxFiles}.`);
+      return;
     }
+
+    const imageUrls = selectedFiles.map((file) => URL.createObjectURL(file));
+    setPreviewImages((prev) => [...prev, ...imageUrls]);
   };
   return (
     <>

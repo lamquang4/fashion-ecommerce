@@ -56,11 +56,7 @@ function EditProduct() {
 
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-              <InputImage
-                isAlotImage={true}
-                InputId="img-product"
-                arrayImg={array}
-              />
+              <InputImage max={4} InputId="img-product" arrayImg={array} />
             </div>
 
             <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">

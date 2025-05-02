@@ -26,19 +26,15 @@ function EditCategory() {
   ];
   return (
     <>
-      <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
+      <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
         <form className="flex flex-col gap-7 w-full">
           <h1 className="font-bold text-[1.5rem] text-[#74767d]">
             Chỉnh sửa danh mục
           </h1>
 
-          <div className="flex gap-[20px] w-full flex-col">
+          <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
-              <InputImage
-                isAlotImage={false}
-                InputId="img-category"
-                arrayImg={array}
-              />
+              <InputImage max={1} InputId="img-category" arrayImg={array} />
             </div>
 
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
