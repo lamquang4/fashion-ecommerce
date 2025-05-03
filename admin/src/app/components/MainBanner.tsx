@@ -2,7 +2,6 @@
 import Link from "next/link";
 import React from "react";
 import { VscTrash } from "react-icons/vsc";
-import { LiaEdit } from "react-icons/lia";
 import { IoMdAddCircle } from "react-icons/io";
 import { FaRegEyeSlash } from "react-icons/fa";
 import Pagination from "./Pagination";
