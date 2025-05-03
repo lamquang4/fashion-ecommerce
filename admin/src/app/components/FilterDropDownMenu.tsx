@@ -18,10 +18,10 @@ function FilterDropDownMenu({ title, array }: FilterDropDownMenuProps) {
     >
       {title} <FaSortDown size={14} />
       {isOpen && (
-        <div className="absolute bg-[#f9f9f9] z-10 top-[90%] left-0 w-full min-w-max shadow-sm font-medium">
+        <div className="absolute bg-[#f9f9f9] z-10 top-[90%] left-0 w-full shadow-sm font-medium">
           {array.map((item, index) => (
             <button
-              className="text-black px-4 py-3 block w-full text-left"
+              className="text-black px-3 py-2.5 block w-full text-left"
               key={index}
             >
               {item.name}

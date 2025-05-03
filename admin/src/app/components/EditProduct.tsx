@@ -3,7 +3,8 @@ import Link from "next/link";
 import React, { useState } from "react";
 import InputImage from "./InputImage";
 import TinyMCEEditor from "./TinyMCEEditor";
-
+import Image from "./Image";
+import { VscTrash } from "react-icons/vsc";
 function EditProduct() {
   const [variants, setVariants] = useState([
     { size: "", color: "", quantity: "1" },
@@ -41,11 +42,6 @@ function EditProduct() {
     setSelected((prev) => [...prev.map(() => false), false]);
   };
 
-  const array = [
-    {
-      image: "assets/products/IMGSP0841.png",
-    },
-  ];
   return (
     <>
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
@@ -56,7 +52,57 @@ function EditProduct() {
 
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-              <InputImage max={4} InputId="img-product" arrayImg={array} />
+              <InputImage max={4} InputId="img-product" />
+
+              <div className="flex gap-3 flex-wrap justify-center">
+                <div className=" relative">
+                  <div>
+                    <Image
+                      Src={"assets/products/IMGSP0841.png"}
+                      Alt={""}
+                      ClassName="w-full max-w-[140px]"
+                    />
+                  </div>
+
+                  <div className="absolute top-[6px] right-[6px]">
+                    <button>
+                      <VscTrash size={22} className="text-[#d9534f]" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className=" relative">
+                  <div>
+                    <Image
+                      Src={"assets/products/IMGSP0841.png"}
+                      Alt={""}
+                      ClassName="w-full max-w-[140px]"
+                    />
+                  </div>
+
+                  <div className="absolute top-[6px] right-[6px]">
+                    <button>
+                      <VscTrash size={22} className="text-[#d9534f]" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className=" relative">
+                  <div>
+                    <Image
+                      Src={"assets/products/IMGSP0841.png"}
+                      Alt={""}
+                      ClassName="w-full max-w-[140px]"
+                    />
+                  </div>
+
+                  <div className="absolute top-[6px] right-[6px]">
+                    <button>
+                      <VscTrash size={22} className="text-[#d9534f]" />
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
 
             <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">

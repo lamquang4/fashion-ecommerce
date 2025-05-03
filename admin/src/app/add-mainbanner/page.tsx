@@ -1,11 +1,11 @@
 import React from "react";
 import LayoutPage from "../components/LayoutPage";
-import Home from "../components/Home";
+import AddMainBanner from "../components/AddMainBanner";
 
 function page() {
   return (
     <LayoutPage>
-      <Home />
+      <AddMainBanner />
     </LayoutPage>
   );
 }

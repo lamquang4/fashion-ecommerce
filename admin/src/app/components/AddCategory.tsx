@@ -28,7 +28,7 @@ function AddCategory() {
 
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
-              <InputImage max={1} InputId="img-category" arrayImg={[]} />
+              <InputImage max={1} InputId="img-category" />
             </div>
 
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">

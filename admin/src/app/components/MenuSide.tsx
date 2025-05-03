@@ -548,22 +548,73 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
 
           <div>
             <p className="mb-[10px] text-[0.8rem] leading-[20px] text-gray-500 uppercase">
-              Nội dung trang
+              Nội dung
             </p>
 
             <li>
-              <Link
-                href={"/home"}
+              <div
+                onClick={() => toggleOpen(`20a`)}
                 className={`${
-                  pathname === "/home"
-                    ? "text-[#0AB39C] bg-[#daf4f0]"
+                  openMenus["20a"] ||
+                  pathname === "/mainbanner" ||
+                  pathname === "/add-mainbanner"
+                    ? "text-[#0AB39C]"
                     : "hover:bg-gray-200"
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
-                  <PiHouseLineBold size={20} /> Trang chính
+                  <PiHouseLineBold size={20} /> Banner chính
                 </p>
-              </Link>
+                <button>
+                  {openMenus[`20a`] ||
+                  pathname === "/mainbanner" ||
+                  pathname === "/add-mainbanner" ? (
+                    <IoIosArrowDown size={18} />
+                  ) : (
+                    <IoIosArrowUp size={18} />
+                  )}
+                </button>
+              </div>
+
+              <ul
+                className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
+                  openMenus[`20a`] ||
+                  pathname === "/mainbanner" ||
+                  pathname === "/add-mainbanner"
+                    ? "max-h-fit visible"
+                    : ""
+                }`}
+              >
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
+                    pathname === "/mainbanner"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link
+                    href={"/mainbanner"}
+                    className="text-[0.9rem] font-medium"
+                  >
+                    Danh sách banner chính
+                  </Link>
+                </li>
+
+                <li
+                  className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
+                    pathname === "/add-mainbanner"
+                      ? "text-[#0AB39C] bg-[#daf4f0]"
+                      : "hover:bg-gray-200"
+                  }`}
+                >
+                  <Link
+                    href={"/add-mainbanner"}
+                    className="text-[0.9rem] font-medium"
+                  >
+                    Thêm banner chính
+                  </Link>
+                </li>
+              </ul>
             </li>
 
             <li>
@@ -578,7 +629,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                 } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
               >
                 <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
-                  <IoNewspaperOutline size={20} /> Trang tin tức
+                  <IoNewspaperOutline size={20} /> Tin tức
                 </p>
                 <button>
                   {openMenus[`16a`] ||

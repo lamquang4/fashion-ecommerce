@@ -51,7 +51,7 @@ function AddProduct() {
 
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-              <InputImage max={4} InputId="img-product" arrayImg={[]} />
+              <InputImage max={4} InputId="img-product" />
             </div>
 
             <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">

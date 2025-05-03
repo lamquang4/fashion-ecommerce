@@ -8,9 +8,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import InputImage from "./InputImage";
-import { FaRegEyeSlash } from "react-icons/fa";
-import { VscTrash } from "react-icons/vsc";
-function Home() {
+function AddMainBanner() {
   const bannerCarousels = [
     {
       imgDesktop: "/assets/banner/banner1-desktop.png",
@@ -26,7 +24,7 @@ function Home() {
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
         <form className="flex flex-col gap-7 w-full">
           <h1 className="font-bold text-[1.5rem] text-[#74767d]">
-            Trang chính
+            Thêm banner chính
           </h1>
 
           <div className="flex gap-[25px] w-full flex-col">
@@ -35,7 +33,11 @@ function Home() {
                 Banner chính desktop
               </p>
 
-              <InputImage max={4} InputId="desktop-banner" arrayImg={[]} />
+              <InputImage max={4} InputId="desktop-banner" />
+
+              <p className="font-bold text-[1rem] text-[#74767d]">
+                Banner đang hoạt động
+              </p>
 
               <div className="w-full mx-auto max-w-[600px] ">
                 <Swiper
@@ -52,24 +54,6 @@ function Home() {
                           Alt={""}
                           ClassName={"w-full object-cover"}
                         />
-                        <div className="absolute top-[10px] right-[10px] flex gap-3 items-center bg-white border p-1">
-                          <button>
-                            <FaRegEyeSlash
-                              size={22}
-                              className="text-[#74767d]"
-                            />
-                            {/*
-                             <MdOutlineRemoveRedEye
-                                                      size={22}
-                                                      className="text-[#74767d]"
-                                                    />
-                                              */}
-                          </button>
-
-                          <button>
-                            <VscTrash size={22} className="text-[#d9534f]" />
-                          </button>
-                        </div>
                       </div>
                     </SwiperSlide>
                   ))}
@@ -82,7 +66,11 @@ function Home() {
                 Banner chính mobile
               </p>
 
-              <InputImage max={4} InputId="mobile-banner" arrayImg={[]} />
+              <InputImage max={4} InputId="mobile-banner" />
+
+              <p className="font-bold text-[1rem] text-[#74767d]">
+                Banner đang hoạt động
+              </p>
 
               <div className="w-full mx-auto max-w-[250px] ">
                 <Swiper
@@ -99,39 +87,11 @@ function Home() {
                           Alt={""}
                           ClassName={"w-full object-cover"}
                         />
-                        <div className="absolute top-[10px] right-[10px] flex gap-3 items-center bg-white border p-1">
-                          <button>
-                            <FaRegEyeSlash
-                              size={22}
-                              className="text-[#74767d]"
-                            />
-                            {/*
-                             <MdOutlineRemoveRedEye
-                                                      size={22}
-                                                      className="text-[#74767d]"
-                                                    />
-                                              */}
-                          </button>
-
-                          <button>
-                            <VscTrash size={22} className="text-[#d9534f]" />
-                          </button>
-                        </div>
                       </div>
                     </SwiperSlide>
                   ))}
                 </Swiper>
               </div>
-            </div>
-
-            <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-              <p className="font-bold text-[1rem] text-[#74767d]">
-                Banner khuyễn mãi
-              </p>
-
-              <InputImage max={2} InputId="promote-banner" arrayImg={[]} />
-
-              <div className="w-full mx-auto max-w-[250px] "></div>
             </div>
           </div>
 
@@ -143,7 +103,7 @@ function Home() {
               Thêm
             </button>
             <Link
-              href="/color"
+              href="/mainbanner"
               className="px-[14px] py-[10px] bg-red-500 text-white text-[0.9rem] text-center rounded-sm"
             >
               Trở về
@@ -155,4 +115,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default AddMainBanner;

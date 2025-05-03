@@ -6,10 +6,9 @@ import { HiMiniXMark } from "react-icons/hi2";
 import ImageViewer from "./ImageViewer";
 type InputImageProps = {
   InputId: string;
-  arrayImg: Array<{ image: string }>;
   max: number;
 };
-function InputImage({ InputId, arrayImg, max }: InputImageProps) {
+function InputImage({ InputId, max }: InputImageProps) {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
@@ -89,7 +88,7 @@ function InputImage({ InputId, arrayImg, max }: InputImageProps) {
                     <Image
                       Src={image}
                       Alt={""}
-                      ClassName="w-full max-w-[280px]"
+                      ClassName="w-full max-w-[220px]"
                     />
                   </div>
 
@@ -109,44 +108,6 @@ function InputImage({ InputId, arrayImg, max }: InputImageProps) {
                 </div>
               ))}
             </div>
-          )}
-          {arrayImg && arrayImg.length > 0 && (
-            <>
-              <hr className="border-slate-300 w-full" />
-              <div className="flex gap-3 px-[15px] flex-wrap py-5 justify-center">
-                {arrayImg.map((image, index) => (
-                  <div className=" relative" key={index}>
-                    <div
-                      className="cursor-pointer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        handleOpenViewer(image.image);
-                      }}
-                    >
-                      <Image
-                        Src={image.image}
-                        Alt={""}
-                        ClassName="w-full max-w-[250px]"
-                      />
-                    </div>
-
-                    <div className="absolute top-[6px] right-[6px]">
-                      <button
-                        type="button"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          e.preventDefault();
-                        }}
-                        className="bg-white rounded-full flex justify-center items-center border-2"
-                      >
-                        <HiMiniXMark size={20} />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </>
           )}
 
           <input

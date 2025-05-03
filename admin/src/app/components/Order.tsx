@@ -194,7 +194,7 @@ function Order() {
               <td className="py-[1rem] text-[0.9rem] text-[#444]">
                 <select
                   name="status"
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                 >
                   <option value="0">Chờ xác nhận</option>
                   <option value="1">Xác nhận</option>
