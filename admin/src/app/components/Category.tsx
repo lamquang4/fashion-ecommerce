@@ -135,6 +135,7 @@ function Category() {
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
                       ClassName={"w-[180px]"}
+                          loadingType="lazy"
                     />
                   </div>
                 </td>

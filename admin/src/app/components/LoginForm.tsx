@@ -12,6 +12,7 @@ function LoginForm() {
             Src={"/assets/other/logo.png"}
             Alt={""}
             ClassName={"w-[100px]"}
+            loadingType="eager"
           />
         </div>
         <div className="relative max-w-[420px] w-full bg-white rounded-lg shadow-lg border border-slate-200 overflow-hidden mx-5">

@@ -13,6 +13,7 @@ function OrderDetail() {
                 Src={"/assets/other/logo.png"}
                 Alt={""}
                 ClassName={"w-[80px]"}
+                loadingType="eager"
               />
             </div>
 
@@ -60,6 +61,7 @@ function OrderDetail() {
                           Src={"/assets/products/IMGSP3483.png"}
                           Alt={""}
                           ClassName={"w-[60px]"}
+                          loadingType="eager"
                         />
 
                         <div>
@@ -79,6 +81,7 @@ function OrderDetail() {
                           Src={"/assets/products/IMGSP3483.png"}
                           Alt={""}
                           ClassName={"w-[60px]"}
+                          loadingType="eager"
                         />
 
                         <div>
