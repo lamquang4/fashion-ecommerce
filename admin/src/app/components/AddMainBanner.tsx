@@ -53,6 +53,7 @@ function AddMainBanner() {
                           Src={banner.imgDesktop}
                           Alt={""}
                           ClassName={"w-full object-cover"}
+                          loadingType="eager"
                         />
                       </div>
                     </SwiperSlide>
@@ -86,6 +87,7 @@ function AddMainBanner() {
                           Src={banner.imgMobile}
                           Alt={""}
                           ClassName={"w-full object-cover"}
+                          loadingType="eager"
                         />
                       </div>
                     </SwiperSlide>
