@@ -89,6 +89,7 @@ function InputImage({ InputId, max }: InputImageProps) {
                       Src={image}
                       Alt={""}
                       ClassName="w-full max-w-[220px]"
+                      loadingType="eager"
                     />
                   </div>
 
