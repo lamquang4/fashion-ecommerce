@@ -110,28 +110,38 @@ function Order() {
           </div>
         </div>
 
-        <div className="flex gap-[15px] mb-[25px] flex-wrap">
-          <div className="relative flex gap-1.5 items-center">
-            <label htmlFor="" className="text-[0.9rem] text-black">
-              Từ:
-            </label>
-            <input
-              name="startDate"
-              type="date"
-              className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400 text-gray-900"
-            />
-          </div>
+        <div>
+          <form action="">
+            <div className="flex gap-[15px] mb-[25px] flex-wrap">
+              <div className="relative flex gap-1.5 items-center">
+                <label htmlFor="" className="text-[0.9rem] text-black">
+                  Từ:
+                </label>
+                <input
+                  name="startDate"
+                  type="date"
+                  className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400 text-gray-900"
+                />
+              </div>
 
-          <div className="relative flex gap-1.5 items-center">
-            <label htmlFor="" className="text-[0.9rem] text-black">
-              Đến:
-            </label>
-            <input
-              name="endDate"
-              type="date"
-              className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400 text-gray-900"
-            />
-          </div>
+              <div className="relative flex gap-1.5 items-center">
+                <label htmlFor="" className="text-[0.9rem] text-black">
+                  Đến:
+                </label>
+                <input
+                  name="endDate"
+                  type="date"
+                  className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400 text-gray-900"
+                />
+              </div>
+
+              <div>
+                <button className="p-[6px_10px] text-[0.9rem] bg-[#22BAA0] text-white">
+                  Tìm kiếm
+                </button>
+              </div>
+            </div>
+          </form>
         </div>
       </div>
 
@@ -139,9 +149,9 @@ function Order() {
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
             <input
-              type="text"
+              type="search"
               placeholder="Tìm kiếm..."
-              className="w-[150px] h-[30px] border border-[#b0b0b0] inline-block px-[0.5rem] text-[#666] outline-none text-[0.8rem]"
+              className="p-[6px_10px] border border-[#b0b0b0] inline-block text-[#666] outline-none text-[0.9rem]"
             />
           </div>
           <div className="flex items-center">
@@ -150,7 +160,7 @@ function Order() {
             </span>
             <select
               name=""
-              className="w-[100px] h-[30px] border border-[#b0b0b0] inline-block px-[0.5rem] text-[#666] outline-none text-[0.9rem]"
+              className="p-[6px_10px] border border-[#b0b0b0] inline-block px-[0.5rem] text-[#666] outline-none text-[0.9rem]"
             >
               <option value="8">8</option>
               <option value="12">12</option>

@@ -216,7 +216,7 @@ function EditProduct() {
                 <button
                   type="button"
                   onClick={handleAddVariant}
-                  className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
+                  className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_10px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
                 >
                   Thêm số lượng
                 </button>
@@ -224,7 +224,7 @@ function EditProduct() {
                 <button
                   type="button"
                   onClick={handleRemoveSelect}
-                  className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_12px] items-center justify-center gap-[5px] text-white"
+                  className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_10px] items-center justify-center gap-[5px] text-white"
                 >
                   Xóa
                 </button>
@@ -331,13 +331,13 @@ function EditProduct() {
           <div className="flex justify-center gap-6">
             <button
               type="submit"
-              className="px-[14px] py-[8px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
+              className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
             >
               Cập nhật
             </button>
             <Link
               href="/product"
-              className="px-[14px] py-[10px] bg-red-500 text-white text-[0.9rem] text-center rounded-sm"
+              className="p-[6px_10px] bg-red-500 text-white text-[0.9rem] text-center rounded-sm"
             >
               Trở về
             </Link>

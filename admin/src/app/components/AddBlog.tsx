@@ -77,13 +77,13 @@ function AddBlog() {
         <div className="flex justify-center gap-6">
           <button
             type="submit"
-            className="px-[14px] py-[5px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
+            className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
           >
             Thêm
           </button>
           <Link
             href="/blog"
-            className="px-[14px] py-[10px] bg-red-500 text-white text-[0.9rem] text-center rounded-sm"
+            className="p-[6px_10px] bg-red-500 text-white text-[0.9rem] text-center rounded-sm"
           >
             Trở về
           </Link>

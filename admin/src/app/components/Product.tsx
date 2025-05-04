@@ -46,9 +46,9 @@ function Product() {
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
             <input
-              type="text"
+              type="search"
               placeholder="Tìm kiếm..."
-              className="w-[150px] h-[30px] border border-[#b0b0b0] inline-block px-[0.5rem] text-[#666] outline-none text-[0.8rem]"
+              className="p-[6px_10px] border border-[#b0b0b0] inline-block text-[#666] outline-none text-[0.9rem]"
             />
           </div>
           <div className="flex items-center">
@@ -57,7 +57,7 @@ function Product() {
             </span>
             <select
               name=""
-              className="w-[100px] h-[30px] border border-[#b0b0b0] inline-block px-[0.5rem] text-[#666] outline-none text-[0.9rem]"
+              className="p-[6px_10px] border border-[#b0b0b0] inline-block text-[#666] outline-none text-[0.9rem]"
             >
               <option value="8">8</option>
               <option value="12">12</option>
