@@ -42,6 +42,7 @@ function BannerCarousel() {
                       Src={banner.imgDesktop}
                       Alt={""}
                       ClassName={"w-full object-cover"}
+                      loadingType="eager"
                     />
                   </picture>
 

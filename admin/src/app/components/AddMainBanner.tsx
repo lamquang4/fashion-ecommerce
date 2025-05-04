@@ -33,7 +33,7 @@ function AddMainBanner() {
                 Banner chính desktop
               </p>
 
-              <InputImage max={4} InputId="desktop-banner" />
+              <InputImage max={5} InputId="desktop-banner" />
 
               <p className="font-bold text-[1rem] text-[#74767d]">
                 Banner đang hoạt động
@@ -66,7 +66,7 @@ function AddMainBanner() {
                 Banner chính mobile
               </p>
 
-              <InputImage max={4} InputId="mobile-banner" />
+              <InputImage max={5} InputId="mobile-banner" />
 
               <p className="font-bold text-[1rem] text-[#74767d]">
                 Banner đang hoạt động

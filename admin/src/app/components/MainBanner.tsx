@@ -103,6 +103,7 @@ function MainBanner() {
                       Src={"assets/banner/banner-desktop.png"}
                       Alt={""}
                       ClassName={"w-[120px] cursor-pointer"}
+                      loadingType="lazy"
                     />
                   </div>
                 </div>

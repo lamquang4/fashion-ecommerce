@@ -42,6 +42,7 @@ function ProductDetail() {
                   Src={mainImage}
                   Alt={""}
                   ClassName={"w-full h-full object-cover"}
+                  loadingType="eager"
                 />
               </div>
             </div>
@@ -58,6 +59,7 @@ function ProductDetail() {
                     Src={"/assets/products/IMGSP1360.png"}
                     Alt={""}
                     ClassName={"w-full h-full object-cover"}
+                    loadingType="eager"
                   />
                 </div>
 
@@ -71,6 +73,7 @@ function ProductDetail() {
                     Src={"/assets/products/SECSP13601.png"}
                     Alt={""}
                     ClassName={"w-full h-full object-cover"}
+                    loadingType="eager"
                   />
                 </div>
               </div>

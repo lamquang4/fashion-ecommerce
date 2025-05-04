@@ -39,6 +39,7 @@ function EditCategory() {
                       Src={"assets/products/IMGSP0841.png"}
                       Alt={""}
                       ClassName="w-full max-w-[140px]"
+                      loadingType="eager"
                     />
                   </div>
 
@@ -92,7 +93,7 @@ function EditCategory() {
           <div className="flex justify-center gap-6">
             <button
               type="submit"
-              className="px-[14px] py-[5px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
+              className="px-[14px] py-[8px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
             >
               Cập nhật
             </button>

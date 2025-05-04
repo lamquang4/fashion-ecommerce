@@ -67,6 +67,7 @@ function CategoryList() {
                           Src={item.img}
                           Alt={item.name}
                           ClassName={"block w-[90px] sm:w-[110px] object-cover"}
+                          loadingType="eager"
                         />
                       </div>
                       <div className="w-full">

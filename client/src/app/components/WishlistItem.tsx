@@ -21,6 +21,7 @@ function WishlistItem() {
                         Src={"/assets/products/IMGSP3483.png"}
                         Alt={""}
                         ClassName={"w-full h-full object-cover"}
+                        loadingType="eager"
                       />
                     </div>
                   </Link>
@@ -68,6 +69,7 @@ function WishlistItem() {
                         Src={"/assets/products/IMGSP3483.png"}
                         Alt={""}
                         ClassName={"w-full h-full object-cover"}
+                        loadingType="eager"
                       />
                     </div>
                   </Link>

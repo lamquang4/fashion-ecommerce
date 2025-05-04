@@ -20,6 +20,7 @@ function DifferentLR({ title }: TitleProp) {
               Src={"/assets/other/google.png"}
               Alt={""}
               ClassName={"w-[25px]"}
+              loadingType="eager"
             />
             <div>Google</div>
           </div>

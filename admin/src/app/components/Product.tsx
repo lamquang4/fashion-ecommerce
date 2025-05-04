@@ -94,6 +94,7 @@ function Product() {
                       Src={"assets/products/IMGSP0841.png"}
                       Alt={""}
                       ClassName={"w-[75px] cursor-pointer"}
+                      loadingType="lazy"
                     />
                   </div>
 

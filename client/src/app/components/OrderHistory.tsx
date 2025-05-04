@@ -21,6 +21,7 @@ function OrderHistory() {
                     Src={"/assets/products/IMGSP3483.png"}
                     Alt={""}
                     ClassName={"max-w-[120px] round-[5px] object-cover"}
+                    loadingType="eager"
                   />
                 </div>
 
@@ -47,6 +48,7 @@ function OrderHistory() {
                     Src={"/assets/products/IMGSP3483.png"}
                     Alt={""}
                     ClassName={"max-w-[120px] round-[5px] object-cover"}
+                    loadingType="eager"
                   />
                 </div>
 

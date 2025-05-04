@@ -106,6 +106,7 @@ function Blog() {
                       Src={"assets/banner/banner-new.png"}
                       Alt={""}
                       ClassName={"w-[120px] cursor-pointer"}
+                      loadingType="lazy"
                     />
                   </div>
                 </div>

@@ -63,6 +63,7 @@ function Header() {
                 Src={"/assets/other/logo.png"}
                 Alt={"logo"}
                 ClassName={"w-[80px]"}
+                loadingType="eager"
               />
             </Link>
 

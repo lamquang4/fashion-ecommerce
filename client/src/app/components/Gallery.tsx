@@ -15,6 +15,7 @@ function Gallery() {
               Src={"/assets/banner/men.png"}
               Alt={""}
               ClassName={"h-auto max-w-full"}
+              loadingType="lazy"
             />
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
               <h2 className="text-[2rem] mb-[10px] font-bold">NAM</h2>
@@ -31,6 +32,7 @@ function Gallery() {
               Src={"/assets/banner/women.png"}
               Alt={""}
               ClassName={"h-auto max-w-full"}
+              loadingType="lazy"
             />
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
               <h2 className="text-[2rem] mb-[10px] font-bold">NỮ</h2>

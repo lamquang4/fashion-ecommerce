@@ -128,23 +128,24 @@ function ProductSlider({ title }: TitleProp) {
             <div key={index} className="keen-slider__slide">
               <div className="relative group">
                 <Link href={"/product"}>
-                <picture>
+                  <picture>
                     <Image
-                    Src={product.imgFront}
-                    Alt={""}
-                    ClassName={
-                      "block w-full h-auto object-cover z-[1] relative"
-                    }
-                  />
-                  <Image
-                    Src={product.imgBack}
-                    Alt={""}
-                    ClassName={
-                      "block w-full h-auto object-cover absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
-                    }
-                  />
-                </picture>
-                
+                      Src={product.imgFront}
+                      Alt={""}
+                      ClassName={
+                        "block w-full h-auto object-cover z-[1] relative"
+                      }
+                      loadingType="lazy"
+                    />
+                    <Image
+                      Src={product.imgBack}
+                      Alt={""}
+                      ClassName={
+                        "block w-full h-auto object-cover absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
+                      }
+                      loadingType="lazy"
+                    />
+                  </picture>
                 </Link>
                 {product.discountPercent && (
                   <div className="absolute bottom-[10px] md:top-[10px] left-[10px] z-[3] font-semibold text-center text-black">

@@ -12,25 +12,23 @@ function PromoteBanner({ gender }: PromoteBannerProp) {
           {gender === "nam" ? (
             <Link href={"/shop"}>
               <div className="relative">
-                <picture>
-                  <Image
-                    Src="assets/banner/banner-1.png"
-                    Alt=""
-                    ClassName="w-full object-cover"
-                  />
-                </picture>
+                <Image
+                  Src="assets/banner/banner-1.png"
+                  Alt=""
+                  ClassName="w-full object-cover"
+                  loadingType="lazy"
+                />
               </div>
             </Link>
           ) : (
             <Link href={"/shop"}>
               <div className="relative">
-                <picture>
-                  <Image
-                    Src="assets/banner/banner-2.png"
-                    Alt=""
-                    ClassName="w-full object-cover"
-                  />
-                </picture>
+                <Image
+                  Src="assets/banner/banner-2.png"
+                  Alt=""
+                  ClassName="w-full object-cover"
+                  loadingType="lazy"
+                />
               </div>
             </Link>
           )}

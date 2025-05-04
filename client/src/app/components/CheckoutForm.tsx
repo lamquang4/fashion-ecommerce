@@ -11,6 +11,7 @@ function CheckoutForm() {
             Src={"/assets/other/logo.png"}
             Alt={""}
             ClassName={"w-[80px]"}
+            loadingType="eager"
           />
         </Link>
 
@@ -253,6 +254,7 @@ function CheckoutForm() {
                         Src={"/assets/products/IMGSP3483.png"}
                         Alt={""}
                         ClassName={"w-[120px] object-cover"}
+                        loadingType="eager"
                       />
 
                       <span className="absolute flex items-center justify-center    top-[-9px] right-[-11px]    bg-[#197FB6] text-white text-[0.85rem] font-medium leading-none    rounded-full w-[25px] h-[25px]">
@@ -277,6 +279,7 @@ function CheckoutForm() {
                         Src={"/assets/products/IMGSP3483.png"}
                         Alt={""}
                         ClassName={"w-[120px] object-cover"}
+                        loadingType="eager"
                       />
                       <span className="absolute flex items-center justify-center    top-[-9px] right-[-11px]    bg-[#197FB6] text-white text-[0.85rem] font-medium leading-none    rounded-full w-[25px] h-[25px]">
                         3
