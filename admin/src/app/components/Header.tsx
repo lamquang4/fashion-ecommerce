@@ -41,6 +41,7 @@ function Header({ toggleMenu }: HeaderProps) {
                 Src={"assets/other/owner.png"}
                 Alt={""}
                 ClassName="w-[30px] rounded-full border border-gray-30 p-1"
+                loadingType="eager"
               />
               QuangLam
               <div
