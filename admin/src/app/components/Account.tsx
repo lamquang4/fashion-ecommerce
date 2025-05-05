@@ -71,6 +71,7 @@ function Account() {
                   name="phone"
                   value={data.phone}
                   onChange={handleChange}
+                  readOnly
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
@@ -85,6 +86,7 @@ function Account() {
                   name="birthday"
                   value={data.birthday}
                   onChange={handleChange}
+                  readOnly
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
