@@ -9,7 +9,7 @@ function BlogList() {
         <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
           Tin tức
         </h2>
-        <div className="flex justify-start pb-[20px] items-center gap-[25px] overflow-x-auto overflow-y-hidden snap-x snap-mandatory overscroll-contain flex-nowrap scroll-smooth">
+        <div className="flex justify-start pb-[20px] items-center sm:gap-[20px] gap-[15px] overflow-x-auto overflow-y-hidden snap-x snap-mandatory overscroll-contain flex-nowrap scroll-smooth">
           {Array(4)
             .fill(0)
             .map((_, index) => (
