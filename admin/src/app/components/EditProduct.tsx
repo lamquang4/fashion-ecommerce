@@ -5,6 +5,7 @@ import InputImage from "./InputImage";
 import TinyMCEEditor from "./TinyMCEEditor";
 import Image from "./Image";
 import { VscTrash } from "react-icons/vsc";
+import ImageViewer from "./ImageViewer";
 function EditProduct() {
   const [variants, setVariants] = useState([
     { size: "", color: "", quantity: "1" },
@@ -13,6 +14,12 @@ function EditProduct() {
   const [selected, setSelected] = useState<boolean[]>(
     Array(variants.length).fill(false)
   );
+  const [openViewer, setOpenViewer] = useState(false);
+  const [viewerImage, setViewerImage] = useState<string>("");
+  const handleOpenViewer = (image: string) => {
+    setViewerImage(image);
+    setOpenViewer(true);
+  };
 
   const isAllSelected = selected.every(Boolean);
 
@@ -56,7 +63,14 @@ function EditProduct() {
 
               <div className="flex gap-3 flex-wrap justify-center">
                 <div className=" relative">
-                  <div>
+                  <div
+                    className="cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      handleOpenViewer("assets/products/IMGSP0841.png");
+                    }}
+                  >
                     <Image
                       Src={"assets/products/IMGSP0841.png"}
                       Alt={""}
@@ -73,7 +87,14 @@ function EditProduct() {
                 </div>
 
                 <div className=" relative">
-                  <div>
+                  <div
+                    className="cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      handleOpenViewer("assets/products/IMGSP0841.png");
+                    }}
+                  >
                     <Image
                       Src={"assets/products/IMGSP0841.png"}
                       Alt={""}
@@ -344,6 +365,14 @@ function EditProduct() {
           </div>
         </form>
       </div>
+
+      {openViewer && (
+        <ImageViewer
+          image={viewerImage}
+          open={openViewer}
+          onClose={() => setOpenViewer(false)}
+        />
+      )}
     </>
   );
 }

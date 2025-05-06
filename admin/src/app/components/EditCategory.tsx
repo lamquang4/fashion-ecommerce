@@ -4,12 +4,19 @@ import React, { useState } from "react";
 import InputImage from "./InputImage";
 import Image from "./Image";
 import { VscTrash } from "react-icons/vsc";
+import ImageViewer from "./ImageViewer";
 function EditCategory() {
   const [data, setData] = useState({
     namecategory: "",
     gender: "",
     image: "",
   });
+  const [openViewer, setOpenViewer] = useState(false);
+  const [viewerImage, setViewerImage] = useState<string>("");
+  const handleOpenViewer = (image: string) => {
+    setViewerImage(image);
+    setOpenViewer(true);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -34,7 +41,14 @@ function EditCategory() {
 
               <div className="flex gap-3 flex-wrap justify-center">
                 <div className=" relative">
-                  <div>
+                  <div
+                    className="cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      handleOpenViewer("assets/products/IMGSP0841.png");
+                    }}
+                  >
                     <Image
                       Src={"assets/products/IMGSP0841.png"}
                       Alt={""}
@@ -106,6 +120,14 @@ function EditCategory() {
           </div>
         </form>
       </div>
+
+      {openViewer && (
+        <ImageViewer
+          image={viewerImage}
+          open={openViewer}
+          onClose={() => setOpenViewer(false)}
+        />
+      )}
     </>
   );
 }

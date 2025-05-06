@@ -4,7 +4,9 @@ import React, { useState } from "react";
 import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
 import Image from "./Image";
+import MenuSideCoupon from "./MenuSideCoupon";
 function CartItem() {
+  const [menuOpen, setMenuOpen] = useState(false);
   const [quantity, setQuantity] = useState(1);
   const HandleIncrement = () => {
     setQuantity((prev) => (prev < 10 ? prev + 1 : prev));
@@ -12,6 +14,10 @@ function CartItem() {
 
   const HandleDecrement = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
+  };
+
+  const toggleOpen = () => {
+    setMenuOpen(!menuOpen);
   };
   return (
     <>
@@ -203,12 +209,23 @@ function CartItem() {
 
               <div className="bg-[#F7F7F7] rounded-sm px-4 py-6 h-auto">
                 <div className="">
-                  <label
-                    htmlFor="discount"
-                    className="block text-[1rem] font-semibold mb-[5px]"
-                  >
-                    Mã giảm giá
-                  </label>
+                  <div className="flex justify-between items-center mb-[5px]">
+                    <label
+                      htmlFor="discount"
+                      className="block text-[1rem] font-semibold"
+                    >
+                      Mã giảm giá
+                    </label>
+
+                    <button
+                      type="button"
+                      className="underline text-[0.9rem]"
+                      onClick={toggleOpen}
+                    >
+                      Xem tất cả
+                    </button>
+                  </div>
+
                   <div className="flex gap-[15px] items-center">
                     <input
                       type="text"
@@ -295,6 +312,8 @@ function CartItem() {
               </div>
             </div>
   */}
+
+          <MenuSideCoupon toggleMenu={toggleOpen} isOpen={menuOpen} />
         </div>
       </section>
     </>

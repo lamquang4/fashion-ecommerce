@@ -1,8 +1,13 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+import React, { useState } from "react";
 import Image from "./Image";
+import MenuSideCoupon from "./MenuSideCoupon";
 function CheckoutForm() {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const toggleOpen = () => {
+    setMenuOpen(!menuOpen);
+  };
   return (
     <section className="max-w-6xl mx-auto my-[40px] sm:my-[45px]">
       <div className="w-full px-[10px] sm:px-[15px]">
@@ -302,12 +307,22 @@ function CheckoutForm() {
               <hr className="border-slate-300 my-[20px]" />
 
               <div className="">
-                <label
-                  htmlFor="discount"
-                  className="block text-[1rem] font-medium mb-[5px]"
-                >
-                  Mã giảm giá
-                </label>
+                <div className="flex justify-between items-center mb-[5px]">
+                  <label
+                    htmlFor="discount"
+                    className="block text-[1rem] font-semibold"
+                  >
+                    Mã giảm giá
+                  </label>
+
+                  <button
+                    type="button"
+                    className="underline text-[0.9rem]"
+                    onClick={toggleOpen}
+                  >
+                    Xem tất cả
+                  </button>
+                </div>
                 <div className="flex gap-[15px] items-center">
                   <input
                     type="text"
@@ -346,6 +361,8 @@ function CheckoutForm() {
             </div>
           </div>
         </form>
+
+        <MenuSideCoupon toggleMenu={toggleOpen} isOpen={menuOpen} />
       </div>
     </section>
   );
