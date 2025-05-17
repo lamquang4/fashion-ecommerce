@@ -10,7 +10,7 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
   return (
     <>
       <div
-        className={`fixed top-0 right-0 w-full max-w-[400px] h-full overflow-scroll bg-white z-[25] px-[12px] pl-[20px] transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 right-0 w-full max-w-[400px] h-full overflow-scroll bg-white z-[25] px-[12px] pl-[20px] transform transition-transform duration-350 ease-in-out ${
           isOpen ? "translate-x-[0px]" : "translate-x-[400px]"
         }`}
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
@@ -25,6 +25,39 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
         <hr className=" border-gray-300 mt-[15px]" />
 
         <div className="flex gap-[25px] flex-col items-center h-full w-full mt-[30px]">
+          <div className="relative w-full flex rounded-none filter-none min-h-0 overflow-hidden px-0 bg-[#197FB6]">
+            <div className="absolute left-[-6px] top-[16.6%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+            <div className="absolute left-[-6px] top-[38%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+            <div className="absolute left-[-6px] top-[61%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+            <div className="absolute left-[-6px] top-[83.4%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+
+            <div className="absolute right-[-6px] top-[16.6%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+            <div className="absolute right-[-6px] top-[38%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+            <div className="absolute right-[-6px] top-[61%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+            <div className="absolute right-[-6px] top-[83.4%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
+
+            <div className="border border-[#197FB6] text-[#197FB6] px-[26px] relative w-full">
+              <div className="flex items-center border-l border-r px-3 py-4 border-[#197FB6] w-full bg-white">
+                <div className="flex gap-2 flex-col w-full">
+                  <h2 className="text-[1.35rem] font-semibold uppercase">
+                    Giảm 10%
+                  </h2>
+                  <p className="text-[0.9rem] font-medium text-black">
+                    Đơn hàng từ 599K trở lên, giảm tối đa 100K
+                  </p>
+                  <div className="flex justify-between items-center w-full">
+                    <p className="text-[0.9rem] font-medium text-black">
+                      Nhập mã: GIAM10
+                    </p>
+                    <button className="border text-[0.9rem] px-2.5 py-1.5 bg-[#197FB6] text-white rounded-sm">
+                      Sao chép
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <div className="relative w-full flex rounded-none filter-none min-h-0 overflow-hidden px-0 bg-[#197FB6]">
             <div className="absolute left-[-6px] top-[16.6%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
             <div className="absolute left-[-6px] top-[38%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
