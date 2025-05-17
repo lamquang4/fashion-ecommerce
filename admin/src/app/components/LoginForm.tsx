@@ -7,6 +7,14 @@ function LoginForm() {
   return (
     <>
       <section className="bg-[#F9FAFB] w-full h-screen flex justify-center items-center flex-col gap-[30px] px-[15px]">
+        <Image
+          Src="/assets/banner/bg-1.png"
+          Alt={""}
+          ClassName={
+            "fixed top-0 left-0 w-full h-full opacity-8 pointer-events-none"
+          }
+          loadingType="eager"
+        />
         <div className="">
           <Image
             Src={"/assets/other/logo.png"}

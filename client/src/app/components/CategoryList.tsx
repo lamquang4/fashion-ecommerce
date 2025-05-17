@@ -1,12 +1,12 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import { Navigation } from "swiper/modules";
+import Image from "./Image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import Image from "./Image";
+import "swiper/css/free-mode";
+import { FreeMode } from "swiper/modules";
+
 interface CategoryItem {
   name: string;
   count: number;
@@ -30,16 +30,20 @@ function CategoryList() {
   return (
     <section className="px-[10px] sm:px-[15px] mt-[40px] sm:mt-[45px]">
       <div className="w-full m-[0_auto] md:max-w-[1000px] lg:max-w-[1240px]">
-        <div className="flex justify-center gap-10 mb-5">
+        <div className="flex justify-center mb-5">
           {["Nam", "Nữ"].map((gender) => (
             <button
               key={gender}
-              onClick={() => setSelectedGender(gender as "Nam" | "Nữ")}
-              className={`w-[120px] text-[1.2rem] uppercase font-medium pb-1 ${
-                selectedGender === gender
-                  ? "text-red-500 border-b-2 border-red-500"
-                  : "text-gray-500"
-              }`}
+              onClick={() => setSelectedGender(gender)}
+              className={`relative w-[120px] text-[1.2rem] uppercase font-medium pb-1 transition-all duration-300 ease-in-out
+    after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[2px]
+    after:bg-red-500 after:transition-all after:duration-300 after:ease-in-out
+    ${
+      selectedGender === gender
+        ? "text-red-500 after:w-full"
+        : "text-gray-500 after:w-0"
+    }
+  `}
             >
               {gender}
             </button>
@@ -47,45 +51,39 @@ function CategoryList() {
         </div>
 
         <Swiper
-          modules={[Navigation]}
-          pagination={{ clickable: true }}
-          autoplay={{ delay: 5000 }}
-          loop={true}
-          speed={1000}
+          spaceBetween={30}
+          slidesPerView={"auto"}
+          freeMode={true}
+          modules={[FreeMode]}
+          className="mx-auto w-fit"
         >
-          <SwiperSlide>
-            <div className="flex justify-center items-center gap-[50px] overflow-x-auto overflow-y-hidden snap-x snap-mandatory overscroll-contain">
-              {categories[selectedGender].map(
-                (item: CategoryItem, index: number) => (
-                  <div
-                    className="flex flex-col items-center gap-[10px] snap-center"
-                    key={index}
-                  >
-                    <Link href={"/"}>
-                      <div className="mb-[8px]">
-                        <Image
-                          Src={item.img}
-                          Alt={item.name}
-                          ClassName={"block w-[90px] sm:w-[110px] object-cover"}
-                          loadingType="eager"
-                        />
-                      </div>
-                      <div className="w-full">
-                        <div className="flex justify-between items-center">
-                          <h3 className="text-[0.85rem] uppercase font-medium">
-                            {item.name}
-                          </h3>
-                          <p className="text-black text-[0.85rem] font-medium">
-                            ({item.count})
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
+          {categories[selectedGender].map((item, index) => (
+            <SwiperSlide
+              key={index}
+              className="!flex !flex-col !items-center !w-[90px] sm:!w-[110px]"
+            >
+              <Link href={"/"}>
+                <div className="mb-[8px]">
+                  <Image
+                    Src={item.img}
+                    Alt={item.name}
+                    ClassName="block w-[90px] sm:w-[110px] object-cover"
+                    loadingType="eager"
+                  />
+                </div>
+                <div className="w-full">
+                  <div className="flex justify-between items-center">
+                    <h3 className="text-[0.85rem] uppercase font-medium">
+                      {item.name}
+                    </h3>
+                    <p className="text-black text-[0.85rem] font-medium">
+                      ({item.count})
+                    </p>
                   </div>
-                )
-              )}
-            </div>
-          </SwiperSlide>
+                </div>
+              </Link>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </div>
     </section>

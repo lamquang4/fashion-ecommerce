@@ -6,13 +6,16 @@ import { IoPeopleOutline } from "react-icons/io5";
 import { IoIosArrowRoundUp } from "react-icons/io";
 import { IoIosArrowRoundDown } from "react-icons/io";
 import { PiTShirtBold } from "react-icons/pi";
+import Image from "./Image";
 import dynamic from "next/dynamic";
+import { LiaEdit } from "react-icons/lia";
+import Link from "next/link";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 function Dashboard() {
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6 mb-[25px]">
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
           <div className="relative break-words rounded-lg border border-gray-200 dark:border-dark-600 flex justify-between p-5 bg-white">
             <div>
               <p>Doanh thu</p>
@@ -81,8 +84,10 @@ function Dashboard() {
             </div>
           </div>
         </div>
+      </div>
 
-        <div>
+      <div className="bg-[#f1f4f9]">
+        <div className="px-[1.2rem] pb-[1.3rem]">
           <form action="">
             <div className="flex gap-[15px] flex-wrap">
               <div className="relative flex gap-1.5 items-center">
@@ -115,8 +120,7 @@ function Dashboard() {
             </div>
           </form>
         </div>
-      </div>
-      <div className="bg-[#f1f4f9]">
+
         <Chart
           options={{
             chart: {
@@ -207,6 +211,87 @@ function Dashboard() {
           width="100%"
           height={400}
         />
+      </div>
+
+      <div className="p-[1.3rem] px-[1.2rem] bg-white">
+        <h1 className="font-bold text-[1.5rem] text-[#74767d]">
+          Top 5 bán chạy
+        </h1>
+      </div>
+
+      <div className="shadow-sm bg-white rounded-[3px] w-full overflow-auto">
+        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
+          <thead>
+            <tr className="bg-[#E9EDF2]">
+              <th className="pl-[1rem] text-left text-[#444] text-[0.9rem]">
+                Sản phẩm
+              </th>
+
+              <th className="text-left text-[#444] text-[0.9rem]">Giá</th>
+              <th className="text-left text-[#444] text-[0.9rem]">Số lượng</th>
+
+              <th className="p-[1rem_0] text-left text-[#444] text-[0.9rem]">
+                Hành động
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="pl-[1rem] py-[1rem] w-[300px]">
+                <div className="flex gap-[10px] items-center">
+                  <div className="cursor-pointer">
+                    <Image
+                      Src={"assets/products/IMGSP0841.png"}
+                      Alt={""}
+                      ClassName={"w-[75px] cursor-pointer"}
+                      loadingType="lazy"
+                    />
+                  </div>
+
+                  <div className="flex flex-col gap-[5px]">
+                    <p className="text-[0.9rem] font-medium  text-[#444]">
+                      Áo sơ mi
+                    </p>
+                    <p className="text-[0.9rem]  text-[#444]">
+                      Kích thước: XL, L, S
+                    </p>
+                  </div>
+                </div>
+              </td>
+
+              <td className="py-[1rem] text-[0.9rem]  text-[#444]">50,000₫</td>
+              <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                <div className="flex flex-col gap-[10px]">
+                  <p className="text-[0.9rem]">Còn lại: 480</p>
+                  <p className="text-[0.9rem]">Đã bán: 220</p>
+                </div>
+              </td>
+
+              <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                <div className="flex items-center gap-[15px]">
+                  <Link href={"/edit-product"}>
+                    <LiaEdit size={22} className="text-[#076ffe]" />
+                  </Link>
+                </div>
+              </td>
+            </tr>
+
+            {/*
+                 <tr>
+                      <td colSpan="8" className="w-full h-[70vh]">
+                        <div className="flex flex-col justify-center items-center">
+                          <Image
+                            Src={"/assets/other/notfound1.png"}
+                            Alt={""}
+                            ClassName={"w-[180px]"}
+                            loadingType="lazy"
+                          />
+                        </div>
+                      </td>
+                    </tr>
+          */}
+          </tbody>
+        </table>
       </div>
     </>
   );
