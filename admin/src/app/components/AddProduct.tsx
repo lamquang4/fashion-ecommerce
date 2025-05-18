@@ -1,9 +1,9 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React from "react";
 import InputImage from "./InputImage";
 import TinyMCEEditor from "./TinyMCEEditor";
-import { useVariants } from "./useVariants";
+import { useVariants } from "./hooks/useVariants";
 function AddProduct() {
   const {
     variants,
