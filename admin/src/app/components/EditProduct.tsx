@@ -6,7 +6,7 @@ import TinyMCEEditor from "./TinyMCEEditor";
 import Image from "./Image";
 import { VscTrash } from "react-icons/vsc";
 import ImageViewer from "./ImageViewer";
-import { useVariants } from "./hooks/useVariants";
+import { useVariants } from "../hooks/useVariants";
 function EditProduct() {
   const {
     variants,

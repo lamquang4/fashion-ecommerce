@@ -3,7 +3,7 @@ import Link from "next/link";
 import React from "react";
 import InputImage from "./InputImage";
 import TinyMCEEditor from "./TinyMCEEditor";
-import { useVariants } from "./hooks/useVariants";
+import { useVariants } from "../hooks/useVariants";
 function AddProduct() {
   const {
     variants,
