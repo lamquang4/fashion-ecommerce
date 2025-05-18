@@ -1,9 +1,12 @@
-import LoginForm from "./components/LoginForm";
+import Dashboard from "./components/Dashboard";
+import LayoutPage from "./components/LayoutPage";
 
-export default function Home() {
+export default function page() {
   return (
     <>
-      <LoginForm />
+      <LayoutPage>
+        <Dashboard />
+      </LayoutPage>
     </>
   );
 }

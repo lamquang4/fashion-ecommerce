@@ -3,43 +3,18 @@ import Link from "next/link";
 import React, { useState } from "react";
 import InputImage from "./InputImage";
 import TinyMCEEditor from "./TinyMCEEditor";
-
+import { useVariants } from "./useVariants";
 function AddProduct() {
-  const [variants, setVariants] = useState([
-    { size: "", color: "", quantity: "1" },
-  ]);
-
-  const [selected, setSelected] = useState<boolean[]>(
-    Array(variants.length).fill(false)
-  );
-
-  const isAllSelected = selected.every(Boolean);
-
-  const handleSelectAll = () => {
-    setSelected(Array(variants.length).fill(!isAllSelected));
-  };
-
-  const handleSelectOne = (index: number) => {
-    const updated = [...selected];
-    updated[index] = !updated[index];
-    setSelected(updated);
-  };
-
-  const handleRemoveSelect = () => {
-    const filteredVariants = variants.filter((_, index) => !selected[index]);
-    if (filteredVariants.length === 0) {
-      setVariants([{ size: "", color: "", quantity: "1" }]);
-      setSelected([false]);
-    } else {
-      setVariants(filteredVariants);
-      setSelected(filteredVariants.map(() => false));
-    }
-  };
-
-  const handleAddVariant = () => {
-    setVariants([...variants, { size: "", color: "", quantity: "1" }]);
-    setSelected((prev) => [...prev.map(() => false), false]);
-  };
+  const {
+    variants,
+    selected,
+    isAllSelected,
+    handleSelectAll,
+    handleSelectOne,
+    handleRemoveSelect,
+    handleAddVariant,
+    updateVariant,
+  } = useVariants();
 
   return (
     <>
@@ -234,11 +209,9 @@ function AddProduct() {
                           <select
                             name="size"
                             value={variant.size}
-                            onChange={(e) => {
-                              const updatedVariants = [...variants];
-                              updatedVariants[index].size = e.target.value;
-                              setVariants(updatedVariants);
-                            }}
+                            onChange={(e) =>
+                              updateVariant(index, "size", e.target.value)
+                            }
                             required
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
@@ -254,11 +227,9 @@ function AddProduct() {
                           <select
                             name="color"
                             value={variant.color}
-                            onChange={(e) => {
-                              const updatedVariants = [...variants];
-                              updatedVariants[index].color = e.target.value;
-                              setVariants(updatedVariants);
-                            }}
+                            onChange={(e) =>
+                              updateVariant(index, "color", e.target.value)
+                            }
                             required
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
@@ -273,11 +244,9 @@ function AddProduct() {
                             type="number"
                             name="quantity"
                             value={variant.quantity}
-                            onChange={(e) => {
-                              const updatedVariants = [...variants];
-                              updatedVariants[index].quantity = e.target.value;
-                              setVariants(updatedVariants);
-                            }}
+                            onChange={(e) =>
+                              updateVariant(index, "quantity", e.target.value)
+                            }
                             required
                             min={1}
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
