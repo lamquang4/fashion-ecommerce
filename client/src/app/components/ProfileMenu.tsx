@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import React from "react";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { LuDoorOpen } from "react-icons/lu";
 import { HiOutlineUser } from "react-icons/hi";

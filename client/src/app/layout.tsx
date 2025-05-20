@@ -1,8 +1,8 @@
 import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
-import LayoutWrapper from "./layoutwrapper";
 import { Toaster } from "react-hot-toast";
+import LayoutPage from "./components/LayoutPage";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -29,7 +29,10 @@ export default function RootLayout({
             },
           }}
         />
-        <LayoutWrapper>{children}</LayoutWrapper>
+        <LayoutPage>
+      {children}
+        </LayoutPage>
+  
       </body>
     </html>
   );

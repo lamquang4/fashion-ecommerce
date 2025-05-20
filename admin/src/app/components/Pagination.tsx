@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React from "react";
+
 function Pagination() {
   return (
     <div className="flex items-center justify-center bg-white px-[15px] py-3 w-full my-[20px]">

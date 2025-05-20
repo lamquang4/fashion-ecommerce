@@ -1,4 +1,3 @@
-import React from "react";
 import WishlistItem from "../components/WishlistItem";
 import ProductSlider from "../components/ProductSlider";
 

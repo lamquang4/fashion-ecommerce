@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import Overplay from "./Overplay";
 import { HiMiniXMark } from "react-icons/hi2";
 type MenuSideCouponProps = {

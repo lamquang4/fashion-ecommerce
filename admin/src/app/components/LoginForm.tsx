@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import Image from "./Image";
 import { GoLock } from "react-icons/go";
 import { AiOutlineMail } from "react-icons/ai";

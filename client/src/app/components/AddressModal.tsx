@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import Overplay from "./Overplay";
 

@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { RiShoppingBag4Line } from "react-icons/ri";
 import { IoPeopleOutline } from "react-icons/io5";

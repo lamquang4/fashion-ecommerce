@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import React from "react";
 import { LiaExternalLinkAltSolid } from "react-icons/lia";
 import Image from "./Image";
 import Pagination from "./Pagination";

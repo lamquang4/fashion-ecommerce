@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { RiImageEditFill } from "react-icons/ri";
 type InputImageProp = {
   InputId: string;

@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaArrowRightLong } from "react-icons/fa6";

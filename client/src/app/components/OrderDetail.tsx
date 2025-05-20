@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import SideBarMenu from "./SideBarMenu";
 import Image from "./Image";
 function OrderDetail() {

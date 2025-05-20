@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import Image from "./Image";
 import Link from "next/link";
 function Gallery() {

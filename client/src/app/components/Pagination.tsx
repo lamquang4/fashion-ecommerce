@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 function Pagination() {
   return (

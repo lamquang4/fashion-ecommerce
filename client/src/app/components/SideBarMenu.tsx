@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import Link from "next/link";
 import { FiChevronRight } from "react-icons/fi";
 import { IoBagHandleOutline } from "react-icons/io5";

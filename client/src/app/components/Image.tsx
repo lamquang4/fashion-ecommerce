@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 type ImageProps = {
   Src: string;
   Alt: string;

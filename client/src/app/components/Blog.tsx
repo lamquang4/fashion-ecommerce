@@ -1,5 +1,3 @@
-import React from "react";
-
 function Blog() {
   return (
     <section className="px-[10px] mt-[40px] sm:mt-[45px] sm:px-[15px]">
