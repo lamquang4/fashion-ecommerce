@@ -1,6 +1,6 @@
 import React from "react";
-import LayoutPage from "../components/LayoutPage";
-import AddColor from "../components/AddColor";
+import LayoutPage from "../../components/LayoutPage";
+import AddColor from "../../components/AddColor";
 
 function page() {
   return (

@@ -1,5 +1,5 @@
-import LayoutPage from "../components/LayoutPage";
-import EditCustomer from "../components/EditCustomer";
+import LayoutPage from "../../components/LayoutPage";
+import EditCustomer from "../../components/EditCustomer";
 
 function page() {
   return (

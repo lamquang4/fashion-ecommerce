@@ -1,4 +1,4 @@
-import AddressInfo from "../components/AddressInfo";
+import AddressInfo from "../../components/AddressInfo";
 function page() {
   return (
     <>

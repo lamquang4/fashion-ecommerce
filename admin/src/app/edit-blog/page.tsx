@@ -1,5 +1,5 @@
-import LayoutPage from "../components/LayoutPage";
-import EditBlog from "../components/EditBlog";
+import LayoutPage from "../../components/LayoutPage";
+import EditBlog from "../../components/EditBlog";
 
 function page() {
   return (

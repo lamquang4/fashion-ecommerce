@@ -1,6 +1,6 @@
 import React from "react";
-import LayoutPage from "../components/LayoutPage";
-import AddCoupon from "../components/AddCoupon";
+import LayoutPage from "../../components/LayoutPage";
+import AddCoupon from "../../components/AddCoupon";
 
 function page() {
   return (

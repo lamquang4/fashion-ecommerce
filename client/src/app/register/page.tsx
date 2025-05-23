@@ -1,5 +1,5 @@
 "use client";
-import RegisterForm from "../components/RegisterForm";
+import RegisterForm from "../../components/RegisterForm";
 
 const Register = () => {
   return (

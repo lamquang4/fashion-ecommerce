@@ -1,6 +1,6 @@
 import React from "react";
-import LayoutPage from "../components/LayoutPage";
-import Category from "../components/Category";
+import LayoutPage from "../../components/LayoutPage";
+import Category from "../../components/Category";
 
 function page() {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
-import LayoutPage from "../components/LayoutPage";
-import Collection from "../components/Collection";
+import LayoutPage from "../../components/LayoutPage";
+import Collection from "../../components/Collection";
 
 function page() {
   return (

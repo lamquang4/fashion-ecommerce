@@ -1,6 +1,6 @@
 import React from "react";
-import LayoutPage from "../components/LayoutPage";
-import Account from "../components/Account";
+import LayoutPage from "../../components/LayoutPage";
+import Account from "../../components/Account";
 
 function page() {
   return (

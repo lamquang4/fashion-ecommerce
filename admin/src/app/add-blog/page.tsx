@@ -1,6 +1,6 @@
 import React from "react";
-import LayoutPage from "../components/LayoutPage";
-import AddBlog from "../components/AddBlog";
+import LayoutPage from "../../components/LayoutPage";
+import AddBlog from "../../components/AddBlog";
 
 function page() {
   return (

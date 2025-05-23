@@ -1,4 +1,4 @@
-import AccountInfo from "../components/AccountInfo";
+import AccountInfo from "../../components/AccountInfo";
 
 function Account() {
   return (

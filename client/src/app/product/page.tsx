@@ -1,5 +1,5 @@
-import ProductSlider from "../components/ProductSlider";
-import ProductDetail from "../components/ProductDetail";
+import ProductSlider from "../../components/ProductSlider";
+import ProductDetail from "../../components/ProductDetail";
 
 function Product() {
   return (

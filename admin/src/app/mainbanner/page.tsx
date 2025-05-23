@@ -1,5 +1,5 @@
-import LayoutPage from "../components/LayoutPage";
-import MainBanner from "../components/MainBanner";
+import LayoutPage from "../../components/LayoutPage";
+import MainBanner from "../../components/MainBanner";
 
 function page() {
   return (

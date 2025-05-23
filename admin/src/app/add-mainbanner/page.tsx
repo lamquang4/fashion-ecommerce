@@ -1,6 +1,6 @@
 import React from "react";
-import LayoutPage from "../components/LayoutPage";
-import AddMainBanner from "../components/AddMainBanner";
+import LayoutPage from "../../components/LayoutPage";
+import AddMainBanner from "../../components/AddMainBanner";
 
 function page() {
   return (

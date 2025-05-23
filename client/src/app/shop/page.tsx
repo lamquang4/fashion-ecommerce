@@ -1,5 +1,5 @@
 "use client";
-import ProductList from "../components/ProductList";
+import ProductList from "../../components/ProductList";
 
 function Shop() {
   return (

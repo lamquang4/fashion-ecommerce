@@ -1,5 +1,5 @@
-import LayoutPage from "../components/LayoutPage";
-import Coupon from "../components/Coupon";
+import LayoutPage from "../../components/LayoutPage";
+import Coupon from "../../components/Coupon";
 
 function page() {
   return (

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import LayoutPage from "./components/LayoutPage";
+import LayoutPage from "../components/LayoutPage";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -29,10 +29,7 @@ export default function RootLayout({
             },
           }}
         />
-        <LayoutPage>
-      {children}
-        </LayoutPage>
-  
+        <LayoutPage>{children}</LayoutPage>
       </body>
     </html>
   );

@@ -1,5 +1,5 @@
-import LayoutPage from "../components/LayoutPage";
-import OrderDetail from "../components/OrderDetail";
+import LayoutPage from "../../components/LayoutPage";
+import OrderDetail from "../../components/OrderDetail";
 
 function page() {
   return (

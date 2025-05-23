@@ -1,6 +1,6 @@
 import React from "react";
-import LayoutPage from "../components/LayoutPage";
-import AddCustomer from "../components/AddCustomer";
+import LayoutPage from "../../components/LayoutPage";
+import AddCustomer from "../../components/AddCustomer";
 
 function page() {
   return (

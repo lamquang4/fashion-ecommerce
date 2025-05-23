@@ -1,6 +1,6 @@
 import React from "react";
-import LayoutPage from "../components/LayoutPage";
-import Admin from "../components/Admin";
+import LayoutPage from "../../components/LayoutPage";
+import Admin from "../../components/Admin";
 
 function page() {
   return (
