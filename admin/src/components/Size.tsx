@@ -47,7 +47,7 @@ function Size() {
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
             <tr className="bg-[#E9EDF2]">
-              <th className="text-left text-[#444] text-[0.9rem]">
+              <th className="pl-[1rem] py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Kích thước
               </th>
               <th className="text-left text-[#444] text-[0.9rem]">Ngày tạo</th>

@@ -18,7 +18,7 @@ import { usePathname } from "next/navigation";
 import { PiHouseLineBold } from "react-icons/pi";
 import { IoNewspaperOutline } from "react-icons/io5";
 import { MdOutlineContentPasteSearch } from "react-icons/md";
-import { SiZelle } from "react-icons/si";
+import { RxSize } from "react-icons/rx";
 type MenuSideProps = {
   menuOpen: boolean;
   toggleMenu: () => void;
@@ -115,7 +115,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
           ],
         },
         {
-          icon: <SiZelle size={20} />,
+          icon: <RxSize size={20} />,
           label: "Kích thước",
           key: "28a",
           children: [
