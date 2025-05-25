@@ -290,7 +290,7 @@ function CartItem() {
             </div>
           </form>
 
-          {/* Khi không có sản phẩm trong giỏ
+          {/*
       <div className="flex justify-center items-center h-[60vh]">
               <div>
                 <div className="mb-[25px] flex justify-center">

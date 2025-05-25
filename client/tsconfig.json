@@ -22,6 +22,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "../admin/src/components/EditSize.tsx", "../admin/src/components/AddSize.tsx", "../admin/src/components/Size.tsx"],
   "exclude": ["node_modules"]
 }
