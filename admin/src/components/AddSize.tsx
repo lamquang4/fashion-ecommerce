@@ -20,7 +20,7 @@ function AddSize() {
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
       <form className="flex flex-col gap-7 w-full">
         <h1 className="font-bold text-[1.5rem] text-[#74767d]">
-          Thêm khách hàng
+          Thêm kích thước
         </h1>
 
         <div className="flex gap-[25px] w-full flex-col">
@@ -35,7 +35,7 @@ function AddSize() {
               </label>
               <input
                 type="text"
-                name="email"
+                name="namesize"
                 value={data.namesize}
                 onChange={handleChange}
                 required

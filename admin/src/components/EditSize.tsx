@@ -34,7 +34,7 @@ function EditSize() {
               </label>
               <input
                 type="text"
-                name="email"
+                name="namesize"
                 value={data.namesize}
                 onChange={handleChange}
                 required
