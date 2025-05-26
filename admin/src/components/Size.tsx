@@ -13,7 +13,7 @@ function Size() {
         </h1>
 
         <Link
-          href={"/add-admin"}
+          href={"/add-size"}
           className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium w-[90px] !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
         >
           <IoMdAddCircle size={22} /> Thêm
