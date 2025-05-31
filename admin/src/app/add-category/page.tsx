@@ -1,4 +1,3 @@
-import React from "react";
 import LayoutPage from "../../components/LayoutPage";
 import AddCategory from "../../components/AddCategory";
 

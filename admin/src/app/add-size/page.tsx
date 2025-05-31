@@ -1,5 +1,5 @@
-import AddSize from "@/components/AddSize";
-import LayoutPage from "@/components/LayoutPage";
+import LayoutPage from "../../components/LayoutPage";
+import AddSize from "../../components/AddSize";
 
 function page() {
   return (
