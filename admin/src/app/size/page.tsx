@@ -1,6 +1,5 @@
-import LayoutPage from "@/components/LayoutPage";
-import Size from "@/components/Size";
-import React from "react";
+import LayoutPage from "../../components/LayoutPage";
+import Size from "../../components/Size";
 
 function page() {
   return (

@@ -1,5 +1,5 @@
-import EditSize from "@/components/EditSize";
-import LayoutPage from "@/components/LayoutPage";
+import LayoutPage from "../../components/LayoutPage";
+import EditSize from "../../components/EditSize";
 
 function page() {
   return (
