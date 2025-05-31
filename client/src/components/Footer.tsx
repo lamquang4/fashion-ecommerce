@@ -20,7 +20,7 @@ function Footer() {
                   href="/"
                   className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
                 >
-                  Smtewewrwrwr
+                  Smtewewrwrw
                 </Link>
               </li>
 
@@ -29,7 +29,7 @@ function Footer() {
                   href="/"
                   className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
                 >
-                  Smtewewrwrwr
+                  Smtewewrwrw
                 </Link>
               </li>
 
