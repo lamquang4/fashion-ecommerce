@@ -9,6 +9,7 @@ import { LuClock } from "react-icons/lu";
 import { TbCancel } from "react-icons/tb";
 import Pagination from "./Pagination";
 import FilterDropDownMenu from "./FilterDropDownMenu";
+import StaticCards from "./StaticCards";
 function Order() {
   const array = [
     {
@@ -36,6 +37,37 @@ function Order() {
       status: 4,
     },
   ];
+
+  const array1 = [
+    {
+      title: "Tổng đơn",
+      number: 1500,
+      icon1: <RiShoppingBag4Line size={25} />,
+      icon2: <IoIosArrowRoundDown size={25} />,
+      percent: -1.3,
+    },
+    {
+      title: "Đơn giao thành công",
+      number: 5000,
+      icon1: <RiTruckLine size={25} />,
+      icon2: <IoIosArrowRoundUp size={25} />,
+      percent: 2.3,
+    },
+    {
+      title: "Đơn đã hủy",
+      number: 210,
+      icon1: <TbCancel size={25} />,
+      icon2: <IoIosArrowRoundUp size={25} />,
+      percent: 1,
+    },
+    {
+      title: "Đơn chờ xác nhận",
+      number: 100,
+      icon1: <LuClock size={25} />,
+      icon2: <IoIosArrowRoundUp size={25} />,
+      percent: 2.2,
+    },
+  ];
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -43,70 +75,8 @@ function Order() {
           Đơn hàng (20)
         </h1>
 
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6 mb-[25px]">
-          <div className="relative break-words rounded-lg border border-gray-200 dark:border-dark-600 flex justify-between p-5 bg-white">
-            <div>
-              <p>Tổng đơn</p>
-              <p className="mt-0.5 text-xl font-medium">1500</p>
-              <p className=" mt-3 flex items-center text-red-500">
-                <IoIosArrowRoundDown size={25} />
-                <span>1.3%</span>
-              </p>
-            </div>
-
-            <div className="relative inline-flex shrink-0">
-              <div className="flex h-full w-full select-none items-center justify-center font-medium uppercase  rounded-none">
-                <RiShoppingBag4Line size={25} />
-              </div>
-            </div>
-          </div>
-
-          <div className="relative break-words rounded-lg border border-gray-200 dark:border-dark-600 flex justify-between p-5 bg-white">
-            <div>
-              <p>Đơn giao thành công</p>
-              <p className="mt-0.5 text-xl font-medium">500</p>
-              <p className="mt-3 flex items-center text-[#029A67]">
-                <IoIosArrowRoundUp size={25} />
-                <span>4.3%</span>
-              </p>
-            </div>
-
-            <div className="elative inline-flex shrink-0">
-              <div className="flex h-full w-full select-none items-center justify-center font-medium uppercase rounded-none">
-                <RiTruckLine size={25} />
-              </div>
-            </div>
-          </div>
-
-          <div className="relative break-words rounded-lg border border-gray-200 dark:border-dark-600 flex justify-between p-5 bg-white">
-            <div>
-              <p>Đơn đã hủy</p>
-              <p className="mt-0.5 text-xl font-medium">210</p>
-              <p className="mt-3 flex items-center text-[#029A67]">
-                <IoIosArrowRoundUp size={25} />
-                <span>1%</span>
-              </p>
-            </div>
-
-            <div className="elative inline-flex shrink-0">
-              <div className="flex h-full w-full select-none items-center justify-center font-medium uppercase rounded-none">
-                <TbCancel size={25} />
-              </div>
-            </div>
-          </div>
-
-          <div className="relative break-words rounded-lg border border-gray-200 dark:border-dark-600 flex justify-between p-5 bg-white">
-            <div>
-              <p>Đơn chờ xác nhận</p>
-              <p className="mt-0.5 text-xl font-medium">100</p>
-            </div>
-
-            <div className="elative inline-flex shrink-0">
-              <div className="flex h-full w-full select-none items-center justify-center font-medium uppercase  rounded-none">
-                <LuClock size={25} />
-              </div>
-            </div>
-          </div>
+        <div className="mb-[25px]">
+          <StaticCards array={array1} />
         </div>
 
         <div>

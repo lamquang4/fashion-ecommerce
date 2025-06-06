@@ -1,10 +1,13 @@
 "use client";
 import React, { useState } from "react";
 import { FaSortDown } from "react-icons/fa";
-
+type ArrayProps = {
+  name: string;
+  status: number | null;
+};
 type FilterDropDownMenuProps = {
   title: string;
-  array: Array<{ name: string; status: number | null }>;
+  array: ArrayProps[];
 };
 
 function FilterDropDownMenu({ title, array }: FilterDropDownMenuProps) {
