@@ -139,7 +139,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
         },
         {
           icon: <MdOutlineContentPasteSearch size={20} />,
-          label: "Banner khuyễn mãi",
+          label: "Banner khuyến mãi",
           path: "/promotebanner",
         },
         {

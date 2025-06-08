@@ -50,19 +50,6 @@ function Product() {
               className="p-[6px_10px] border border-[#b0b0b0] inline-block text-[#666] outline-none text-[0.9rem]"
             />
           </div>
-          <div className="flex items-center">
-            <span className="inline-block mr-[0.6rem] text-[0.9rem] text-[#666]">
-              Số lượng
-            </span>
-            <select
-              name=""
-              className="p-[6px_10px] border border-[#b0b0b0] inline-block text-[#666] outline-none text-[0.9rem]"
-            >
-              <option value="8">8</option>
-              <option value="12">12</option>
-              <option value="16">16</option>
-            </select>
-          </div>
         </div>
 
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">

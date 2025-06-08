@@ -3,7 +3,21 @@ import Link from "next/link";
 
 function Pagination() {
   return (
-    <div className="flex items-center justify-center bg-white px-[15px] py-3 w-full my-[20px]">
+    <div className="flex items-center justify-center bg-white px-[15px] py-3 w-full my-[20px] flex-wrap gap-5 sm:gap-3 text-[0.9rem]">
+      <div className="flex gap-2 items-center">
+        Số dòng mỗi trang
+        <select className="p-1 border border-gray-300 focus:border-black text-[0.9rem]">
+          <option>10</option>
+          <option>20</option>
+          <option>30</option>
+          <option>50</option>
+        </select>
+      </div>
+
+      <div>
+        <p>1-10 của 1000</p>
+      </div>
+
       <div>
         <nav
           className="isolate inline-flex -space-x-px rounded-md shadow-xs"
