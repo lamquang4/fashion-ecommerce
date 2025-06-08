@@ -1,6 +1,5 @@
 "use client";
 import React, { useState } from "react";
-import { LiaBell } from "react-icons/lia";
 import { AiOutlineMenu } from "react-icons/ai";
 import ProfileMenu from "./ProfileMenu";
 import Notification from "./Notification";
