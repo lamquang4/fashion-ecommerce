@@ -15,6 +15,8 @@ function AddProduct() {
     updateVariant,
   } = useVariants();
 
+  
+
   return (
     <>
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">

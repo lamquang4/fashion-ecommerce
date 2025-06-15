@@ -1,17 +1,21 @@
 "use client";
+import useAddCoupon from "@/hooks/useAddCoupon";
+import { validatePositiveInt } from "@/utils/validtePositiveInt";
 import Link from "next/link";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 function AddCoupon() {
   const [data, setData] = useState({
     code: "",
-    limit: "",
+    limit: 1,
+    amount: 1,
     discountType: "",
-    value: "",
+    discountValue: 1,
     startDate: "",
     expiryDate: "",
-    minOrderValue: "",
-    maxDiscountValue: "",
+    minOrderValue: 1,
+    maxDiscountValue: 1,
   });
 
   const handleChange = (
@@ -20,9 +24,85 @@ function AddCoupon() {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const { addCoupon } = useAddCoupon();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const start = new Date(data.startDate);
+    const expiry = new Date(data.expiryDate);
+    const now = new Date();
+
+    if (start < now) {
+      toast.error("Ngày bắt đầu không được sau ngày hiện tại");
+      return;
+    }
+
+    if (start >= expiry) {
+      toast.error("Ngày kết thúc phải sau ngày bắt đầu");
+      return;
+    }
+
+    if (!validatePositiveInt(data.amount)) {
+      toast.error("Số lượng phải là số nguyên dương");
+      return;
+    }
+
+    if (!validatePositiveInt(data.limit)) {
+      toast.error("Số lần dùng phải là số nguyên dương");
+      return;
+    }
+
+    if (!validatePositiveInt(data.discountValue)) {
+      toast.error("Giá trị giảm giá phải là số nguyên dương");
+      return;
+    }
+
+    if (!validatePositiveInt(data.minOrderValue)) {
+      toast.error("Giá trị đơn hàng tối thiểu phải là số nguyên dương");
+      return;
+    }
+
+    if (data.discountType === "0") {
+      if (!validatePositiveInt(Number(data.maxDiscountValue))) {
+        toast.error("Giá trị giảm tối đa (áp dụng %) phải là số nguyên dương");
+        return;
+      }
+    }
+
+    try {
+      await addCoupon({
+        code: data.code.toUpperCase(),
+        limit: data.limit,
+        amount: data.amount,
+        discountType: parseInt(data.discountType),
+        discountValue:
+          data.discountType === "1" ? 0 : parseInt(data.discountType),
+        startDate: new Date(data.startDate),
+        expiryDate: new Date(data.expiryDate),
+        minOrderValue: data.minOrderValue,
+        maxDiscountValue: data.maxDiscountValue,
+      });
+      toast.success("Thêm thành công!");
+      setData({
+        code: "",
+        limit: 1,
+        amount: 1,
+        discountType: "",
+        discountValue: 1,
+        startDate: "",
+        expiryDate: "",
+        minOrderValue: 1,
+        maxDiscountValue: 1,
+      });
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
-      <form className="flex flex-col gap-7 w-full">
+      <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
         <h1 className="font-bold text-[1.5rem] text-[#74767d]">
           Thêm phiếu giảm giá
         </h1>
@@ -44,22 +124,42 @@ function AddCoupon() {
                 onChange={handleChange}
                 maxLength={12}
                 required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900 uppercase"
               />
             </div>
 
-            <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.95rem] text-black">
-                Số lượng tối đa
-              </label>
-              <input
-                type="number"
-                name="limit"
-                value={data.limit}
-                onChange={handleChange}
-                required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
-              />
+            <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
+              <div className="flex flex-col gap-1 w-full">
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="" className="text-[0.95rem] text-black">
+                    Số lượng
+                  </label>
+                  <input
+                    type="number"
+                    name="amount"
+                    value={data.amount}
+                    onChange={handleChange}
+                    required
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-1 w-full">
+                <div className="flex flex-col gap-1">
+                  <label htmlFor="" className="text-[0.95rem] text-black">
+                    Số lần dùng
+                  </label>
+                  <input
+                    type="number"
+                    name="limit"
+                    value={data.limit}
+                    onChange={handleChange}
+                    required
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  />
+                </div>
+              </div>
             </div>
 
             <div className="flex flex-col gap-1">
@@ -80,27 +180,45 @@ function AddCoupon() {
               </select>
             </div>
 
-            <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
+            {data.discountType !== "1" && (
               <div className="flex flex-col gap-1 w-full">
                 <label htmlFor="" className="text-[0.95rem] text-black">
-                  Giá trị giảm giá
+                  {`Giá trị ${
+                    data.discountType === "0" ? "phần trăm" : "tiền cố định"
+                  } giảm giá `}
                 </label>
                 <input
-                  type="text"
-                  name="value"
-                  value={data.value}
+                  type="number"
+                  name="discountValue"
+                  value={data.discountValue}
                   onChange={handleChange}
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full"
                 />
               </div>
+            )}
 
-              <div className="flex flex-col gap-1 w-full">
+            <div className="flex flex-col gap-1">
+              <label htmlFor="" className="text-[0.95rem] text-black">
+                Giá trị đơn hàng tối thiểu (điều kiện áp dụng phiếu)
+              </label>
+              <input
+                type="number"
+                name="minOrderValue"
+                value={data.minOrderValue}
+                onChange={handleChange}
+                required
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+              />
+            </div>
+
+            {data.discountType === "0" && (
+              <div className="flex flex-col gap-1">
                 <label htmlFor="" className="text-[0.95rem] text-black">
-                  Giá trị giảm giá tối đa
+                  Giá trị giảm tối đa (áp dụng %)
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   name="maxDiscountValue"
                   value={data.maxDiscountValue}
                   onChange={handleChange}
@@ -108,22 +226,7 @@ function AddCoupon() {
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
               </div>
-            </div>
-
-            <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.95rem] text-black">
-                Giá trị đơn hàng tối thiểu
-              </label>
-              <input
-                type="number"
-                name="minOrderValue"
-                value={data.minOrderValue}
-                onChange={handleChange}
-                maxLength={12}
-                required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
-              />
-            </div>
+            )}
 
             <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
               <div className="w-full flex flex-col gap-1">
@@ -131,7 +234,7 @@ function AddCoupon() {
                   Ngày bắt đầu
                 </label>
                 <input
-                  type="date"
+                  type="datetime-local"
                   name="startDate"
                   value={data.startDate}
                   onChange={handleChange}
@@ -144,7 +247,7 @@ function AddCoupon() {
                   Ngày kết thúc
                 </label>
                 <input
-                  type="date"
+                  type="datetime-local"
                   name="expiryDate"
                   value={data.expiryDate}
                   onChange={handleChange}

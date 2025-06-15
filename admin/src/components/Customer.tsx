@@ -3,11 +3,21 @@ import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
 import { IoMdAddCircle } from "react-icons/io";
-import { TbLock } from "react-icons/tb";
+import { TbLock, TbLockOpen } from "react-icons/tb";
 import Pagination from "./Pagination";
 import FilterDropDownMenu from "./FilterDropDownMenu";
-
+import useGetCustomers from "@/hooks/useGetCustomers";
+import Image from "./Image";
+import useBlockUser from "@/hooks/useBlockUser";
+import useDeleteUser from "@/hooks/useDeleteUser";
+import { useAppSelector } from "@/redux/hook";
+import Loading from "./Loading";
 function Customer() {
+  const { customers, fetchCustomers } = useGetCustomers();
+  const { blockUser } = useBlockUser(fetchCustomers);
+  const { deleteUser } = useDeleteUser(fetchCustomers);
+  const loading = useAppSelector((state) => state.loadingSlice);
+
   const array = [
     {
       name: "Tất cả",
@@ -26,7 +36,7 @@ function Customer() {
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
-          Khách hàng (20)
+          Khách hàng ({customers.length})
         </h1>
 
         <Link
@@ -67,53 +77,77 @@ function Customer() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="pl-[1rem] py-[1rem]">Lam Dieu Quang</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                quanglam@gmail.com
-              </td>
+            {loading ? (
+              <tr>
+                <td colSpan={8} className="w-full">
+                  <Loading />
+                </td>
+              </tr>
+            ) : customers.length > 0 ? (
+              customers.map((customer, index) => (
+                <tr key={index}>
+                  <td className="pl-[1rem] py-[1rem] text-[0.9rem]">
+                    {customer.fullname}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {customer.email}
+                  </td>
 
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">1/5/2004</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">20/4/2025</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                Bình thường
-              </td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                <div className="flex items-center gap-[15px]">
-                  <button>
-                    <TbLock size={22} className="text-[#74767d]" />
-                    {/*
-   <TbLockOpen
-                            size={22}
-                            className="text-[#74767d]"
-                          />
-                    */}
-                  </button>
-                  <Link href={"/edit-customer"}>
-                    <LiaEdit size={22} className="text-[#076ffe]" />
-                  </Link>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {new Date(customer.birthday as string).toLocaleDateString(
+                      "vi-VN"
+                    )}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {new Date(customer.createdAt as string).toLocaleDateString(
+                      "vi-VN"
+                    )}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {customer.status === 1 ? "Bình thường" : "Đã chặn"}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex items-center gap-[15px]">
+                      <button
+                        onClick={() =>
+                          blockUser({
+                            _id: customer._id,
+                            status: customer.status === 1 ? 0 : 1,
+                          })
+                        }
+                      >
+                        {customer.status === 1 ? (
+                          <TbLock size={22} className="text-[#74767d]" />
+                        ) : (
+                          <TbLockOpen size={22} className="text-[#74767d]" />
+                        )}
+                      </button>
 
-                  <button>
-                    <VscTrash size={22} className="text-[#d9534f]" />
-                  </button>
-                </div>
-              </td>
-            </tr>
+                      <Link href={`/edit-customer/${customer._id}`}>
+                        <LiaEdit size={22} className="text-[#076ffe]" />
+                      </Link>
 
-            {/*
-           <tr>
-                <td colSpan="8" className="w-full h-[70vh]">
+                      <button onClick={() => deleteUser(customer._id)}>
+                        <VscTrash size={22} className="text-[#d9534f]" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex flex-col justify-center items-center">
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
                       ClassName={"w-[180px]"}
-                          loadingType="lazy"
+                      loadingType="lazy"
                     />
                   </div>
                 </td>
               </tr>
-    */}
+            )}
           </tbody>
         </table>
       </div>

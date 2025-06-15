@@ -1,11 +1,15 @@
 "use client";
+import useGetColor from "@/hooks/useGetColor";
+import useUpdateColor from "@/hooks/useUpdateColor";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 function EditColor() {
   const [data, setData] = useState({
-    colorname: "",
-    colorcode: "#000000",
+    namecolor: "",
+    codecolor: "#000000",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -15,11 +19,49 @@ function EditColor() {
       [name]: value,
     });
   };
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+
+  const color = useGetColor(id);
+
+  useEffect(() => {
+    if (color) {
+      setData({
+        namecolor: color.namecolor,
+        codecolor: color.codecolor,
+      });
+    } else if (id && !color) {
+      const timeout = setTimeout(() => {
+        toast.error("Không tìm thấy màu");
+        router.push("/color");
+      }, 1500);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [color, router, id]);
+
+  const { updateColor } = useUpdateColor(id);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await updateColor({
+        namecolor: data.namecolor,
+        codecolor: data.codecolor,
+      });
+      toast.success("Cập nhật thành công!");
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
-      <form className="flex flex-col gap-7 w-full">
+      <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
         <h1 className="font-bold text-[1.5rem] text-[#74767d]">
-          Thêm phiếu giảm giá
+          Chỉnh sửa màu
         </h1>
 
         <div className="flex gap-[25px] w-full flex-col">
@@ -34,8 +76,8 @@ function EditColor() {
               </label>
               <input
                 type="text"
-                name="colorname"
-                value={data.colorname}
+                name="namecolor"
+                value={data.namecolor}
                 onChange={handleChange}
                 required
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -44,12 +86,12 @@ function EditColor() {
 
             <div className="flex flex-col gap-1">
               <label htmlFor="" className="text-[0.9rem] text-black">
-                Chọn màu: {data.colorcode}
+                Chọn màu: {data.codecolor}
               </label>
               <input
                 type="color"
-                name="colorcode"
-                value={data.colorcode}
+                name="codecolor"
+                value={data.codecolor}
                 onChange={handleChange}
                 required
                 className="border border-gray-300 p-1 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"

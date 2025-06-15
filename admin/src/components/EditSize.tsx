@@ -1,6 +1,10 @@
 "use client";
+import useGetSize from "@/hooks/useGetSize";
+import useUpdateSize from "@/hooks/useUpdateSize";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 function EditSize() {
   const [data, setData] = useState({
@@ -15,9 +19,45 @@ function EditSize() {
       [name]: value,
     }));
   };
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+
+  const size = useGetSize(id);
+
+  useEffect(() => {
+    if (size) {
+      setData({
+        namesize: size.namesize,
+      });
+    } else if (id && !size) {
+      const timeout = setTimeout(() => {
+        toast.error("Không tìm thấy kích thước");
+        router.push("/size");
+      }, 1500);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [size, router, id]);
+
+  const { updateSize } = useUpdateSize(id);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await updateSize({
+        namesize: data.namesize,
+      });
+      toast.success("Cập nhật thành công!");
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
-      <form className="flex flex-col gap-7 w-full">
+      <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
         <h1 className="font-bold text-[1.5rem] text-[#74767d]">
           Chỉnh sửa kích thước
         </h1>

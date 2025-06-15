@@ -2,11 +2,16 @@
 import { RiImageEditFill } from "react-icons/ri";
 type InputImageProp = {
   InputId: string;
-  onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  inputRef?: React.RefObject<HTMLInputElement | null>;
+  onFileSelect: (file: File) => void;
 };
 
-function InputImage1({ InputId, onChange, inputRef }: InputImageProp) {
+function InputImage1({ InputId, onFileSelect }: InputImageProp) {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file && onFileSelect) {
+      onFileSelect(file);
+    }
+  };
   return (
     <div className="rounded-full border flex justify-center items-center bg-white">
       <label htmlFor={InputId} className="cursor-pointer  p-2">
@@ -18,8 +23,7 @@ function InputImage1({ InputId, onChange, inputRef }: InputImageProp) {
         className="hidden"
         accept=".png,.jpg,.webp"
         id={InputId}
-        onChange={onChange}
-        ref={inputRef}
+        onChange={handleChange}
       />
     </div>
   );

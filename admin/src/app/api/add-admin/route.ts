@@ -1,0 +1,55 @@
+import { connectMongoDB } from "@/lib/MongoConnect";
+import User from "@/model/User";
+import { validateEmail } from "@/utils/validateEmail";
+import { validatePhone } from "@/utils/validatePhone";
+import bcryptjs from "bcryptjs";
+import { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+export async function POST(req: NextRequest) {
+  try {
+    await connectMongoDB();
+
+    const body = await req.json();
+    const { fullname, email, phone, birthday, password, role } = body;
+
+    if (!validateEmail(email)) {
+      return NextResponse.json({ msg: "Email không hợp lệ" }, { status: 400 });
+    }
+
+    if (!validatePhone(phone)) {
+      return NextResponse.json(
+        { msg: "Số điện thoại không hợp lệ" },
+        { status: 400 }
+      );
+    }
+
+    const checkEmail = await User.findOne({ email });
+    if (checkEmail) {
+      return NextResponse.json(
+        { msg: "Email đã được sử dụng" },
+        { status: 400 }
+      );
+    }
+
+    const salt = await bcryptjs.genSalt(10);
+    const hashpassword = await bcryptjs.hash(password, salt);
+    const newUser = await User.create({
+      fullname,
+      email,
+      phone,
+      birthday,
+      password: hashpassword,
+      role,
+      status: 1,
+    });
+
+    return NextResponse.json({ user: newUser }, { status: 201 });
+  } catch (err) {
+    return NextResponse.json(
+      { err, msg: "Lỗi" },
+      {
+        status: 400,
+      }
+    );
+  }
+}

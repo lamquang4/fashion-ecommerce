@@ -1,6 +1,12 @@
 "use client";
+import useGetUser from "@/hooks/useGetUser";
+import useUpdateUser from "@/hooks/useUpdateUser";
+import { validateEmail } from "@/utils/validateEmail";
+import { validatePhone } from "@/utils/validatePhone";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 function EditAdmin() {
   const [data, setData] = useState({
@@ -16,14 +22,68 @@ function EditAdmin() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: name === "email" ? value.toLowerCase() : value,
-    }));
+    setData((prev) => ({ ...prev, [name]: value }));
   };
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+
+  const user = useGetUser(id);
+
+  useEffect(() => {
+    if (user) {
+      setData({
+        fullname: user.fullname,
+        email: user.email,
+        phone: user.phone,
+        birthday: user.birthday?.slice(0, 10),
+        password: "",
+        role: String(user.role),
+      });
+    } else if (id && !user) {
+      const timeout = setTimeout(() => {
+        toast.error("Không tìm thấy quản trị viên");
+        router.push("/admin");
+      }, 1500);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [user, router, id]);
+
+  const { updateUser } = useUpdateUser(id);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateEmail(data.email)) {
+      toast.error("Email không hợp lệ");
+      return;
+    }
+    if (!validatePhone(data.phone)) {
+      toast.error("Số điện thoại không hợp lệ");
+      return;
+    }
+    try {
+      await updateUser({
+        fullname: data.fullname,
+        email: data.email,
+        phone: data.phone,
+        birthday: data.birthday,
+        password: data.password,
+        role: Number(data.role),
+      });
+      toast.success("Cập nhật thành công!");
+      setData((prev) => ({
+        ...prev,
+        password: "",
+      }));
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
-      <form className="flex flex-col gap-7 w-full">
+      <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
         <h1 className="font-bold text-[1.5rem] text-[#74767d]">
           Chỉnh sửa quản trị viên
         </h1>
@@ -57,7 +117,7 @@ function EditAdmin() {
                 required
                 value={data.email}
                 onChange={handleChange}
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="lowercase border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
             </div>
 

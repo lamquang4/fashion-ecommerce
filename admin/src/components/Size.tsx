@@ -1,15 +1,25 @@
+"use client";
 import Link from "next/link";
 import Pagination from "./Pagination";
 import { LiaEdit } from "react-icons/lia";
 import { VscTrash } from "react-icons/vsc";
 import { IoMdAddCircle } from "react-icons/io";
-
+import { useEffect } from "react";
+import { useAppSelector } from "@/redux/hook";
+import useGetSizes from "@/hooks/useGetSizes";
+import Loading from "./Loading";
+import Image from "./Image";
+import useDeleteSize from "@/hooks/useDeleteSize";
 function Size() {
+  const { sizes, fetchSizes } = useGetSizes();
+  const loading = useAppSelector((state) => state.loadingSlice);
+  const { deleteSize } = useDeleteSize(fetchSizes);
+
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
-          KÍch thước (20)
+          Kích thước ({sizes.length})
         </h1>
 
         <Link
@@ -44,38 +54,52 @@ function Size() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="pl-[1rem] py-[1rem] w-[300px]">XL</td>
+            {loading ? (
+              <tr>
+                <td colSpan={8} className="w-full">
+                  <Loading />
+                </td>
+              </tr>
+            ) : sizes.length > 0 ? (
+              sizes.map((size, index) => (
+                <tr key={index}>
+                  <td className="pl-[1rem] py-[1rem] w-[300px]">
+                    {size.namesize}
+                  </td>
 
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">1/5/2004</td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {new Date(size.createdAt as string).toLocaleDateString(
+                      "vi-VN"
+                    )}
+                  </td>
 
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                <div className="flex items-center gap-[15px]">
-                  <Link href={"/edit-size"}>
-                    <LiaEdit size={22} className="text-[#076ffe]" />
-                  </Link>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex items-center gap-[15px]">
+                      <Link href={`/edit-size/${size._id}`}>
+                        <LiaEdit size={22} className="text-[#076ffe]" />
+                      </Link>
 
-                  <button>
-                    <VscTrash size={22} className="text-[#d9534f]" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-
-            {/*
-           <tr>
-                <td colSpan="8" className="w-full h-[70vh]">
+                      <button onClick={() => deleteSize(size._id)}>
+                        <VscTrash size={22} className="text-[#d9534f]" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex flex-col justify-center items-center">
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
                       ClassName={"w-[180px]"}
-                          loadingType="lazy"
+                      loadingType="lazy"
                     />
                   </div>
                 </td>
               </tr>
-    */}
+            )}
           </tbody>
         </table>
       </div>

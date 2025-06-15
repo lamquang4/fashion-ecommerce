@@ -1,6 +1,12 @@
 "use client";
+import useGetUser from "@/hooks/useGetUser";
+import useUpdateUser from "@/hooks/useUpdateUser";
+import { validateEmail } from "@/utils/validateEmail";
+import { validatePhone } from "@/utils/validatePhone";
 import Link from "next/link";
-import React, { useState } from "react";
+import { useParams, useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import toast from "react-hot-toast";
 
 function EditCustomer() {
   const [data, setData] = useState({
@@ -20,9 +26,66 @@ function EditCustomer() {
       [name]: name === "email" ? value.toLowerCase() : value,
     }));
   };
+
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+
+  const user = useGetUser(id);
+
+  useEffect(() => {
+    if (user) {
+      setData({
+        fullname: user.fullname || "",
+        email: user.email || "",
+        phone: user.phone || "",
+        birthday: user.birthday?.slice(0, 10) || "",
+        password: "",
+      });
+    } else if (id && !user) {
+      const timeout = setTimeout(() => {
+        toast.error("Không tìm thấy khách hàng");
+        router.push("/customer");
+      }, 1500);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [user, router, id]);
+
+  const { updateUser } = useUpdateUser(id);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateEmail(data.email)) {
+      toast.error("Email không hợp lệ");
+      return;
+    }
+    if (!validatePhone(data.phone)) {
+      toast.error("Số điện thoại không hợp lệ");
+      return;
+    }
+    try {
+      await updateUser({
+        fullname: data.fullname,
+        email: data.email,
+        phone: data.phone,
+        birthday: data.birthday,
+        password: data.password,
+      });
+      toast.success("Cập nhật thành công!");
+
+      setData((prev) => ({
+        ...prev,
+        password: "",
+      }));
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
-      <form className="flex flex-col gap-7 w-full">
+      <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
         <h1 className="font-bold text-[1.5rem] text-[#74767d]">
           Chỉnh sửa khách hàng
         </h1>
@@ -92,7 +155,7 @@ function EditCustomer() {
 
             <div className="flex flex-col gap-1">
               <label htmlFor="" className="text-[0.9rem] text-black">
-                Mật khẩu
+                Mật khẩu mới
               </label>
               <input
                 type="password"

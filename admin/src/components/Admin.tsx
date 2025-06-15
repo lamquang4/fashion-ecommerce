@@ -3,11 +3,21 @@ import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
 import { IoMdAddCircle } from "react-icons/io";
-import { TbLock } from "react-icons/tb";
+import { TbLock, TbLockOpen } from "react-icons/tb";
 import Pagination from "./Pagination";
 import FilterDropDownMenu from "./FilterDropDownMenu";
-
+import useGetAdmins from "@/hooks/useGetAdmins";
+import Image from "./Image";
+import useBlockUser from "@/hooks/useBlockUser";
+import { useAppSelector } from "@/redux/hook";
+import Loading from "./Loading";
+import useDeleteUser from "@/hooks/useDeleteUser";
 function Admin() {
+  const { admins, fetchAdmins } = useGetAdmins();
+  const { blockUser } = useBlockUser(fetchAdmins);
+  const { deleteUser } = useDeleteUser(fetchAdmins);
+  const loading = useAppSelector((state) => state.loadingSlice);
+
   const array = [
     {
       name: "Tất cả",
@@ -26,7 +36,7 @@ function Admin() {
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
-          Quản trị viên (20)
+          Quản trị viên ({admins.length})
         </h1>
 
         <Link
@@ -68,56 +78,88 @@ function Admin() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="pl-[1rem] py-[1rem] w-[300px]">Lam Dieu Quang</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                quanglam@gmail.com
-              </td>
+            {loading ? (
+              <tr>
+                <td colSpan={8} className="w-full">
+                  <Loading />
+                </td>
+              </tr>
+            ) : admins.length > 0 ? (
+              admins.map((admin, index) => (
+                <tr key={index}>
+                  <td className="pl-[1rem] text-[0.9rem] py-[1rem] w-[300px]">
+                    {admin.fullname}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {admin.email}
+                  </td>
 
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">1/5/2004</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">20/4/2025</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                Siêu quản trị viên
-              </td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                Bình thường
-              </td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                <div className="flex items-center gap-[15px]">
-                  <button>
-                    <TbLock size={22} className="text-[#74767d]" />
-                    {/*
-   <TbLockOpen
-                            size={22}
-                            className="text-[#74767d]"
-                          />
-                    */}
-                  </button>
-                  <Link href={"/edit-admin"}>
-                    <LiaEdit size={22} className="text-[#076ffe]" />
-                  </Link>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {new Date(admin.birthday as string).toLocaleDateString(
+                      "vi-VN"
+                    )}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {new Date(admin.createdAt as string).toLocaleDateString(
+                      "vi-VN"
+                    )}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {admin.role === 0
+                      ? "Siêu quản trị viên"
+                      : admin.status === 1
+                      ? "Nhân viên bán hàng"
+                      : admin.status === 2
+                      ? "Nhân viên nội dung"
+                      : admin.status === 3
+                      ? "Kế toán"
+                      : ""}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {admin.status === 1 ? "Bình thường" : "Đã chặn"}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex items-center gap-[15px]">
+                      <button
+                        onClick={() =>
+                          blockUser({
+                            _id: admin._id,
+                            status: admin.status === 1 ? 0 : 1,
+                          })
+                        }
+                      >
+                        {admin.status === 1 ? (
+                          <TbLock size={22} className="text-[#74767d]" />
+                        ) : (
+                          <TbLockOpen size={22} className="text-[#74767d]" />
+                        )}
+                      </button>
 
-                  <button>
-                    <VscTrash size={22} className="text-[#d9534f]" />
-                  </button>
-                </div>
-              </td>
-            </tr>
+                      <Link href={`/edit-admin/${admin._id}`}>
+                        <LiaEdit size={22} className="text-[#076ffe]" />
+                      </Link>
 
-            {/*
-           <tr>
-                <td colSpan="8" className="w-full h-[70vh]">
+                      <button onClick={() => deleteUser(admin._id)}>
+                        <VscTrash size={22} className="text-[#d9534f]" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex flex-col justify-center items-center">
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
                       ClassName={"w-[180px]"}
-                          loadingType="lazy"
+                      loadingType="lazy"
                     />
                   </div>
                 </td>
               </tr>
-    */}
+            )}
           </tbody>
         </table>
       </div>

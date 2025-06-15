@@ -177,7 +177,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
       >
         <div className="mb-[20px] flex justify-center sticky top-0 bg-white px-3.5 py-4.5">
           <Image
-            Src={"assets/other/logo.png"}
+            Src={"/assets/other/logo.png"}
             Alt=""
             ClassName="w-[80px]"
             loadingType="eager"

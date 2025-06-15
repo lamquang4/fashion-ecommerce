@@ -7,7 +7,10 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import Image from "./Image";
 import Pagination from "./Pagination";
 import FilterDropDownMenu from "./FilterDropDownMenu";
+import useProducts from "@/hooks/useGetProducts";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
 function Product() {
+  const products = useProducts();
   const array = [
     {
       name: "Tất cả",
@@ -72,66 +75,90 @@ function Product() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="pl-[1rem] py-[1rem] w-[300px]">
-                <div className="flex gap-[10px] items-center">
-                  <div className="cursor-pointer">
-                    <Image
-                      Src={"assets/products/IMGSP0841.png"}
-                      Alt={""}
-                      ClassName={"w-[75px] cursor-pointer"}
-                      loadingType="lazy"
-                    />
-                  </div>
+            {products.length > 0 ? (
+              products.map((product, index) => (
+                <tr key={index}>
+                  <td className="pl-[1rem] py-[1rem] w-[300px]">
+                    <div className="flex gap-[10px] items-center">
+                      <div className="cursor-pointer">
+                        <Image
+                          Src={"assets/products/IMGSP0841.png"}
+                          Alt={""}
+                          ClassName={"w-[75px] cursor-pointer"}
+                          loadingType="lazy"
+                        />
+                      </div>
 
-                  <div className="flex flex-col gap-[5px]">
-                    <p className="text-[0.9rem] font-medium  text-[#444]">
-                      Áo sơ mi
-                    </p>
-                    <p className="text-[0.9rem]  text-[#444]">
-                      Kích thước: XL, L, S
-                    </p>
-                  </div>
-                </div>
-              </td>
+                      <div className="flex flex-col gap-[5px]">
+                        <p className="text-[0.9rem] font-medium  text-[#444]">
+                          {product.name}
+                        </p>
+                        <p className="text-[0.9rem]  text-[#444]">
+                          Kích thước: XL, L, S
+                        </p>
+                      </div>
+                    </div>
+                  </td>
 
-              <td className="py-[1rem] text-[0.9rem]  text-[#444]">50,000₫</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                <div className="flex flex-col gap-[10px]">
-                  <p className="text-[0.9rem]">Còn lại: 480</p>
-                  <p className="text-[0.9rem]">Đã bán: 220</p>
-                </div>
-              </td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">20/4/2025</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                Nam / Sơ mi
-              </td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">Bán ra</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                <div className="flex items-center gap-[15px]">
-                  <button>
-                    <FaRegEyeSlash size={22} className="text-[#74767d]" />
-                    {/*
-   <MdOutlineRemoveRedEye
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex flex-col">
+                      <span className="line-through text-gray-400">
+                        {product.price?.toLocaleString("vi-VN")}₫
+                      </span>
+                      <span className="text-red-500 font-semibold">
+                        {product.discount?.toLocaleString("vi-VN")}₫
+                      </span>
+                    </div>
+                  </td>
+
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex flex-col gap-[10px]">
+                      <p className="text-[0.9rem]">Còn lại: 480</p>
+                      <p className="text-[0.9rem]">Đã bán: 220</p>
+                    </div>
+                  </td>
+
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {new Date(product.createdAt).toLocaleDateString("vi-VN")}
+                  </td>
+
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    Nam / Sơ mi
+                  </td>
+
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {product.status === 1
+                      ? "Bán ra"
+                      : product.status === 0
+                      ? "Ẩn"
+                      : "Hết hàng"}
+                  </td>
+
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex items-center gap-[15px]">
+                      <button>
+                        {product.status === 1 ? (
+                          <FaRegEyeSlash size={22} className="text-[#74767d]" />
+                        ) : (
+                          <MdOutlineRemoveRedEye
                             size={22}
                             className="text-[#74767d]"
                           />
-                    */}
-                  </button>
-                  <Link href={"/edit-product"}>
-                    <LiaEdit size={22} className="text-[#076ffe]" />
-                  </Link>
-
-                  <button>
-                    <VscTrash size={22} className="text-[#d9534f]" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-
-            {/*
-           <tr>
-                <td colSpan="8" className="w-full h-[70vh]">
+                        )}
+                      </button>
+                      <Link href={"/edit-product"}>
+                        <LiaEdit size={22} className="text-[#076ffe]" />
+                      </Link>
+                      <button>
+                        <VscTrash size={22} className="text-[#d9534f]" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex flex-col justify-center items-center">
                     <Image
                       Src={"/assets/other/notfound1.png"}
@@ -142,7 +169,7 @@ function Product() {
                   </div>
                 </td>
               </tr>
-    */}
+            )}
           </tbody>
         </table>
       </div>

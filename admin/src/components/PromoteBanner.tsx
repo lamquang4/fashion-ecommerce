@@ -4,31 +4,47 @@ import Image from "./Image";
 import InputImage1 from "./InputImage1";
 import { HiMiniXMark } from "react-icons/hi2";
 function PromoteBanner() {
-  const [image1, setImage1] = useState<string | null>(null);
-  const [image2, setImage2] = useState<string | null>(null);
+  const [images, setImages] = useState<(File | null)[]>([]);
+  const [previewImages, setPreviewImages] = useState<(string | null)[]>([]);
 
-  const inputRef1 = useRef<HTMLInputElement>(null!);
-  const inputRef2 = useRef<HTMLInputElement>(null!);
+  const array = [
+    {
+      image: "/assets/banner/banner-1.png",
+    },
+    {
+      image: "/assets/banner/banner-2.png",
+    },
+  ];
 
-  const handleImageChange = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    setImage: React.Dispatch<React.SetStateAction<string | null>>
-  ) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setImage(imageUrl);
-    }
+  const onFileSelect = (file: File, index: number) => {
+    setPreviewImages((prev) => {
+      // giải phóng URL cũ
+      if (prev[index]) URL.revokeObjectURL(prev[index]!);
+      const updated = [...prev];
+      updated[index] = URL.createObjectURL(file);
+      return updated;
+    });
+
+    setImages((prev) => {
+      const updated = [...prev];
+      updated[index] = file;
+      return updated;
+    });
   };
 
-  const handleClear = (
-    setImage: React.Dispatch<React.SetStateAction<string | null>>,
-    inputRef: React.RefObject<HTMLInputElement>
-  ) => {
-    setImage(null);
-    if (inputRef.current) {
-      inputRef.current.value = "";
-    }
+  const handleClear = (index: number) => {
+    setPreviewImages((prev) => {
+      if (prev[index]) URL.revokeObjectURL(prev[index]!);
+      const updated = [...prev];
+      updated[index] = null;
+      return updated;
+    });
+
+    setImages((prev) => {
+      const updated = [...prev];
+      updated[index] = null;
+      return updated;
+    });
   };
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
@@ -40,61 +56,34 @@ function PromoteBanner() {
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
             <div className="flex flex-col gap-[20px] sm:gap-[30px]">
-              <div className="relative">
-                <Image
-                  Src={image1 || "assets/banner/banner-1.png"}
-                  Alt=""
-                  ClassName="w-full object-cover"
-                  loadingType="eager"
-                />
-
-                <div className="flex gap-[15px] absolute top-[20px] right-[20px]">
-                  <InputImage1
-                    InputId="input1"
-                    onChange={(e) => handleImageChange(e, setImage1)}
-                    inputRef={inputRef1}
+              {array.map((item, index) => (
+                <div className="relative" key={index}>
+                  <Image
+                    Src={previewImages[index] || item.image}
+                    Alt=""
+                    ClassName="w-full object-cover"
+                    loadingType="eager"
                   />
-                  {image1 && (
-                    <div className="rounded-full border flex justify-center items-center bg-white">
-                      <button
-                        type="button"
-                        className="  p-2"
-                        onClick={() => handleClear(setImage1, inputRef1)}
-                      >
-                        <HiMiniXMark size={26} />
-                      </button>
-                    </div>
-                  )}
-                </div>
-              </div>
 
-              <div className="relative">
-                <Image
-                  Src={image2 || "assets/banner/banner-2.png"}
-                  Alt=""
-                  ClassName="w-full object-cover"
-                  loadingType="eager"
-                />
-
-                <div className="flex gap-[15px] absolute top-[20px] right-[20px]">
-                  <InputImage1
-                    InputId="input2"
-                    onChange={(e) => handleImageChange(e, setImage2)}
-                    inputRef={inputRef2}
-                  />
-                  {image2 && (
-                    <div className="rounded-full border flex justify-center items-center bg-white">
-                      <button
-                        type="button"
-                        className="  p-2"
-                        onClick={() => handleClear(setImage2, inputRef2)}
-                      >
-                        <HiMiniXMark size={26} />
-                      </button>
-                    </div>
-                  )}
+                  <div className="flex gap-[15px] absolute top-[20px] right-[20px]">
+                    <InputImage1
+                      onFileSelect={(file) => onFileSelect(file, index)}
+                      InputId={`b${index}`}
+                    />
+                    {images[index] && (
+                      <div className="rounded-full border flex justify-center items-center bg-white">
+                        <button
+                          type="button"
+                          className="p-2"
+                          onClick={() => handleClear(index)}
+                        >
+                          <HiMiniXMark size={26} />
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 </div>
-              </div>
+              ))}
             </div>
           </div>
         </div>

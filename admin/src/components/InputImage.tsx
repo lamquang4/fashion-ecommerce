@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "./Image";
 import toast from "react-hot-toast";
 import { HiMiniXMark } from "react-icons/hi2";
@@ -7,11 +7,20 @@ import ImageViewer from "./ImageViewer";
 type InputImageProps = {
   InputId: string;
   max: number;
+  onFileSelect?: (files: File[]) => void;
+  success?: boolean;
 };
-function InputImage({ InputId, max }: InputImageProps) {
+function InputImage({ InputId, max, onFileSelect, success }: InputImageProps) {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
+
+  useEffect(() => {
+    if (success) {
+      setPreviewImages([]);
+    }
+  }, [success]);
+
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);
     setOpenViewer(true);
@@ -36,8 +45,32 @@ function InputImage({ InputId, max }: InputImageProps) {
       return;
     }
 
+    const allowTypes = ["image/png", "image/jpeg", "image/webp"];
+    const maxSizeKB = 1000; // 1000KB
+
+    const validFiles: File[] = [];
+    for (const file of selectedFiles) {
+      if (!allowTypes.includes(file.type)) {
+        toast.error(
+          `Ảnh "${file.name}" không đúng định dạng PNG, JPG, hoặc WEBP.`
+        );
+        continue;
+      }
+      if (file.size / 1024 > maxSizeKB) {
+        toast.error(`Ảnh "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.`);
+        continue;
+      }
+      validFiles.push(file);
+    }
+
+    if (validFiles.length === 0) return;
+
     const imageUrls = selectedFiles.map((file) => URL.createObjectURL(file));
     setPreviewImages((prev) => [...prev, ...imageUrls]);
+
+    if (onFileSelect) {
+      onFileSelect(selectedFiles);
+    }
   };
   return (
     <>

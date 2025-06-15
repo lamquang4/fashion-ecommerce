@@ -1,7 +1,15 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
 
 function Pagination() {
+  const pageLimit = 10;
+  const [currentPage, setCurrentPage] = useState(1);
+  const startIndex = (currentPage - 1) * pageLimit;
+  const endIndex = startIndex + pageLimit;
+ // const totalPages = Math.ceil(data.length / pageLimit);
+  // const currentDisplayData=data.slice(startIndex, endIndex);
+
   return (
     <div className="flex items-center justify-center bg-white px-[15px] py-3 w-full my-[20px] flex-wrap gap-5 sm:gap-3 text-[0.9rem]">
       <div className="flex gap-2 items-center">

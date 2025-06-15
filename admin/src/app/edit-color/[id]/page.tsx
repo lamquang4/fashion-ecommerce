@@ -1,5 +1,5 @@
-import LayoutPage from "../../components/LayoutPage";
-import EditColor from "../../components/EditColor";
+import EditColor from "@/components/EditColor";
+import LayoutPage from "@/components/LayoutPage";
 
 function page() {
   return (

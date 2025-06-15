@@ -4,13 +4,20 @@ import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
 import { IoMdAddCircle } from "react-icons/io";
 import Pagination from "./Pagination";
-
+import useGetColors from "@/hooks/useGetColors";
+import { useAppSelector } from "@/redux/hook";
+import Image from "./Image";
+import Loading from "./Loading";
+import useDeleteColor from "@/hooks/useDeleteColor";
 function Color() {
+  const { colors, fetchColors } = useGetColors();
+  const loading = useAppSelector((state) => state.loadingSlice);
+  const { deleteColor } = useDeleteColor(fetchColors);
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
-          Màu (20)
+          Màu ({colors.length})
         </h1>
 
         <Link
@@ -51,43 +58,60 @@ function Color() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="pl-[1rem] py-[1rem] text-[0.9rem] font-medium">
-                <div className="flex gap-[10px] items-center text-[#FF0000]">
-                  <div className="w-5 h-5 bg-[#FF0000]"></div>
-                  Đỏ tươi
-                </div>
-              </td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">#FF0000</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">20/4/2025</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">5</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                <div className="flex items-center gap-[15px]">
-                  <Link href={"/edit-color"}>
-                    <LiaEdit size={22} className="text-[#076ffe]" />
-                  </Link>
+            {loading ? (
+              <tr>
+                <td colSpan={8} className="w-full">
+                  <Loading />
+                </td>
+              </tr>
+            ) : colors.length > 0 ? (
+              colors.map((color, index) => (
+                <tr key={index}>
+                  <td className="pl-[1rem] py-[1rem] text-[0.9rem] font-medium">
+                    <div className="flex gap-[10px] items-center">
+                      <div
+                        className={`w-5 h-5 border-gray-500 border`}
+                        style={{ backgroundColor: color.codecolor }}
+                      ></div>
+                      {color.namecolor}
+                    </div>
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {color.codecolor}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {new Date(color.createdAt as string).toLocaleDateString(
+                      "vi-VN"
+                    )}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">5</td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex items-center gap-[15px]">
+                      <Link href={`/edit-color/${color._id}`}>
+                        <LiaEdit size={22} className="text-[#076ffe]" />
+                      </Link>
 
-                  <button>
-                    <VscTrash size={22} className="text-[#d9534f]" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-
-            {/*
-           <tr>
-                <td colSpan="8" className="w-full h-[70vh]">
+                      <button onClick={() => deleteColor(color._id)}>
+                        <VscTrash size={22} className="text-[#d9534f]" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex flex-col justify-center items-center">
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
                       ClassName={"w-[180px]"}
-                          loadingType="lazy"
+                      loadingType="lazy"
                     />
                   </div>
                 </td>
               </tr>
-    */}
+            )}
           </tbody>
         </table>
       </div>

@@ -1,6 +1,10 @@
 "use client";
+import useAddAdmin from "@/hooks/useAddAdmin";
+import { validateEmail } from "@/utils/validateEmail";
+import { validatePhone } from "@/utils/validatePhone";
 import Link from "next/link";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 function AddAdmin() {
   const [data, setData] = useState({
@@ -16,14 +20,47 @@ function AddAdmin() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: name === "email" ? value.toLowerCase() : value,
-    }));
+    setData((prev) => ({ ...prev, [name]: value }));
   };
+
+  const { addAdmin } = useAddAdmin();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateEmail(data.email)) {
+      toast.error("Email không hợp lệ");
+      return;
+    }
+    if (!validatePhone(data.phone)) {
+      toast.error("Số điện thoại không hợp lệ");
+      return;
+    }
+    try {
+      await addAdmin({
+        fullname: data.fullname,
+        email: data.email,
+        phone: data.phone,
+        birthday: data.birthday,
+        password: data.password,
+        role: parseInt(data.role),
+      });
+      toast.success("Thêm thành công!");
+      setData({
+        fullname: "",
+        email: "",
+        password: "",
+        phone: "",
+        birthday: "",
+        role: "",
+      });
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
-      <form className="flex flex-col gap-7 w-full">
+      <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
         <h1 className="font-bold text-[1.5rem] text-[#74767d]">
           Thêm quản trị viên
         </h1>
@@ -57,7 +94,7 @@ function AddAdmin() {
                 value={data.email}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="lowercase border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
             </div>
 
@@ -134,7 +171,7 @@ function AddAdmin() {
             Thêm
           </button>
           <Link
-            href="/customer"
+            href="/admin"
             className="p-[6px_10px] bg-red-500 text-white text-[0.9rem] text-center"
           >
             Trở về

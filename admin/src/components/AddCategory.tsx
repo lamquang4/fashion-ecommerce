@@ -2,13 +2,15 @@
 import Link from "next/link";
 import React, { useState } from "react";
 import InputImage from "./InputImage";
+import useAddCategory from "@/hooks/useAddCategory";
+import toast from "react-hot-toast";
 function AddCategory() {
   const [data, setData] = useState({
     namecategory: "",
     gender: "",
-    image: "",
   });
-
+  const [image, setImage] = useState<File | null>(null);
+  const [success, setSuccess] = useState(false);
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -18,17 +20,50 @@ function AddCategory() {
       [name]: value,
     });
   };
+
+  const { addCategory } = useAddCategory();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("namecategory", data.namecategory);
+    formData.append("gender", data.gender);
+    if (image) {
+      formData.append("image", image);
+    }
+
+    try {
+      await addCategory(formData);
+      toast.success("Thêm thành công!");
+      setData({
+        namecategory: "",
+        gender: "",
+      });
+      setSuccess(true);
+      setImage(null);
+      setTimeout(() => setSuccess(false), 100);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
   return (
     <>
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
-        <form className="flex flex-col gap-7 w-full">
+        <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
           <h1 className="font-bold text-[1.5rem] text-[#74767d]">
             Thêm danh mục
           </h1>
 
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
-              <InputImage max={1} InputId="img-category" />
+              <InputImage
+                max={1}
+                InputId="img-category"
+                onFileSelect={(files) => setImage(files[0])}
+                success={success}
+              />
             </div>
 
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">

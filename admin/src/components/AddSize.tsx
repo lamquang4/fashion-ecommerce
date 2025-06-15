@@ -1,6 +1,8 @@
 "use client";
+import useAddSize from "@/hooks/useAddSize";
 import Link from "next/link";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 function AddSize() {
   const [data, setData] = useState({
@@ -16,9 +18,27 @@ function AddSize() {
     }));
   };
 
+  const { addSize } = useAddSize();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      await addSize({
+        namesize: data.namesize,
+      });
+      toast.success("Thêm thành công!");
+      setData({
+        namesize: "",
+      });
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
-      <form className="flex flex-col gap-7 w-full">
+      <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
         <h1 className="font-bold text-[1.5rem] text-[#74767d]">
           Thêm kích thước
         </h1>

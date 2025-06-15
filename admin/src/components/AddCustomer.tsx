@@ -1,6 +1,10 @@
 "use client";
+import useAddCustomer from "@/hooks/useAddCustomer";
+import { validateEmail } from "@/utils/validateEmail";
+import { validatePhone } from "@/utils/validatePhone";
 import Link from "next/link";
 import React, { useState } from "react";
+import toast from "react-hot-toast";
 
 function AddCustomer() {
   const [data, setData] = useState({
@@ -20,9 +24,43 @@ function AddCustomer() {
       [name]: name === "email" ? value.toLowerCase() : value,
     }));
   };
+
+  const { addCustomer } = useAddCustomer();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateEmail(data.email)) {
+      toast.error("Email không hợp lệ");
+      return;
+    }
+    if (!validatePhone(data.phone)) {
+      toast.error("Số điện thoại không hợp lệ");
+      return;
+    }
+    try {
+      await addCustomer({
+        fullname: data.fullname,
+        email: data.email,
+        phone: data.phone,
+        birthday: data.birthday,
+        password: data.password,
+      });
+      toast.success("Thêm thành công!");
+      setData({
+        fullname: "",
+        email: "",
+        password: "",
+        phone: "",
+        birthday: "",
+      });
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
-      <form className="flex flex-col gap-7 w-full">
+      <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
         <h1 className="font-bold text-[1.5rem] text-[#74767d]">
           Thêm khách hàng
         </h1>
