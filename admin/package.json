@@ -29,7 +29,6 @@
     "react-redux": "^9.2.0",
     "react-spinners": "^0.15.0",
     "sweetalert2": "^11.22.0",
-    "swiper": "^11.2.6",
     "yet-another-react-lightbox": "^3.23.0"
   },
   "devDependencies": {

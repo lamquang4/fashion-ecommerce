@@ -1,27 +1,48 @@
 "use client";
 import Link from "next/link";
-import Image from "./Image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
 import InputImage from "./InputImage";
+import toast from "react-hot-toast";
+import { useState } from "react";
+import useAddBanner from "@/hooks/useAddBanner";
 function AddMainBanner() {
-  const bannerCarousels = [
-    {
-      imgDesktop: "/assets/banner/banner1-desktop.png",
-      imgMobile: "/assets/banner/banner1-mobile.png",
-    },
-    {
-      imgDesktop: "/assets/banner/banner-desktop.png",
-      imgMobile: "/assets/banner/banner-mobile.png",
-    },
-  ];
+  const [desktopImages, setDesktopImages] = useState<File[]>([]);
+  const [mobileImages, setMobileImages] = useState<File[]>([]);
+  const [success, setSuccess] = useState(false);
+
+  const { addBanner } = useAddBanner();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      if (desktopImages.length > 0) {
+        const formData = new FormData();
+        desktopImages.forEach((file) => formData.append("image", file));
+        formData.append("type", "0");
+        await addBanner(formData);
+      }
+
+      if (mobileImages.length > 0) {
+        const formData = new FormData();
+        mobileImages.forEach((file) => formData.append("image", file));
+        formData.append("type", "1");
+        await addBanner(formData);
+      }
+      toast.success("Thêm thành công!");
+
+      setSuccess(true);
+      setDesktopImages([]);
+      setMobileImages([]);
+      setTimeout(() => setSuccess(false), 100);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
   return (
     <>
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
-        <form className="flex flex-col gap-7 w-full">
+        <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
           <h1 className="font-bold text-[1.5rem] text-[#74767d]">
             Thêm banner chính
           </h1>
@@ -32,33 +53,12 @@ function AddMainBanner() {
                 Banner chính desktop
               </p>
 
-              <InputImage max={5} InputId="desktop-banner" />
-
-              <p className="font-bold text-[1rem] text-[#74767d]">
-                Banner đang hoạt động
-              </p>
-
-              <div className="w-full mx-auto max-w-[600px] ">
-                <Swiper
-                  modules={[Pagination]}
-                  pagination={{ clickable: true, type: "bullets" }}
-                  loop={false}
-                  speed={1000}
-                >
-                  {bannerCarousels.map((banner, index) => (
-                    <SwiperSlide key={index}>
-                      <div>
-                        <Image
-                          Src={banner.imgDesktop}
-                          Alt={""}
-                          ClassName={"w-full object-cover"}
-                          loadingType="eager"
-                        />
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
+              <InputImage
+                onFileSelect={(files) => setDesktopImages(files)}
+                max={5}
+                InputId="desktop-banner"
+                success={success}
+              />
             </div>
 
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
@@ -66,33 +66,12 @@ function AddMainBanner() {
                 Banner chính mobile
               </p>
 
-              <InputImage max={5} InputId="mobile-banner" />
-
-              <p className="font-bold text-[1rem] text-[#74767d]">
-                Banner đang hoạt động
-              </p>
-
-              <div className="w-full mx-auto max-w-[250px] ">
-                <Swiper
-                  modules={[Pagination]}
-                  pagination={{ clickable: true, type: "bullets" }}
-                  loop={false}
-                  speed={1000}
-                >
-                  {bannerCarousels.map((banner, index) => (
-                    <SwiperSlide key={index}>
-                      <div>
-                        <Image
-                          Src={banner.imgMobile}
-                          Alt={""}
-                          ClassName={"w-full object-cover"}
-                          loadingType="eager"
-                        />
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
+              <InputImage
+                onFileSelect={(files) => setMobileImages(files)}
+                max={5}
+                InputId="mobile-banner"
+                success={success}
+              />
             </div>
           </div>
 

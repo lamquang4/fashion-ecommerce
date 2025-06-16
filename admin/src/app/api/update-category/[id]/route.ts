@@ -49,7 +49,7 @@ export async function PUT(
     const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
-        { msg: `Ảnh "${file.name}" không đúng định dạng PNG, JPG, hoặc WEBP.` },
+        { msg: `Ảnh "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.` },
         { status: 400 }
       );
     }

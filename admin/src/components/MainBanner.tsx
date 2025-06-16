@@ -6,14 +6,24 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import Pagination from "./Pagination";
 import Image from "./Image";
 import FilterDropDownMenu from "./FilterDropDownMenu";
+import useGetMainBanners from "@/hooks/useGetMainBanners";
+import Loading from "./Loading";
+import { useAppSelector } from "@/redux/hook";
+import { MdOutlineRemoveRedEye } from "react-icons/md";
+import useDeleteBanner from "@/hooks/useDeleteBanner";
+import useVisibleBanner from "@/hooks/useVisibleBanner";
 function MainBanner() {
+  const loading = useAppSelector((state) => state.loadingSlice);
+  const { mainBanners, fetchMainBanners } = useGetMainBanners();
+  const { deleteBanner } = useDeleteBanner(fetchMainBanners);
+  const { visibleBanner } = useVisibleBanner(fetchMainBanners);
   const array = [
     {
       name: "Tất cả",
       status: null,
     },
     {
-      name: "Công bố",
+      name: "Hiện",
       status: 1,
     },
     {
@@ -40,7 +50,7 @@ function MainBanner() {
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
-          Banner chính (20)
+          Banner chính ({mainBanners.length})
         </h1>
 
         <Link
@@ -81,57 +91,81 @@ function MainBanner() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="pl-[1rem] py-[1rem]">
-                <div className="flex gap-[10px] items-center">
-                  <div className="cursor-pointer">
-                    <Image
-                      Src={"assets/banner/banner-desktop.png"}
-                      Alt={""}
-                      ClassName={"w-[120px] cursor-pointer"}
-                      loadingType="lazy"
-                    />
-                  </div>
-                </div>
-              </td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">20/4/2025</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                Banner chính desktop
-              </td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">Công bố</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                <div className="flex items-center gap-[15px]">
-                  <button>
-                    <FaRegEyeSlash size={22} className="text-[#74767d]" />
-                    {/*
-   <MdOutlineRemoveRedEye
+            {loading ? (
+              <tr>
+                <td colSpan={8} className="w-full">
+                  <Loading />
+                </td>
+              </tr>
+            ) : mainBanners.length > 0 ? (
+              mainBanners.map((mainBanner, index) => (
+                <tr key={index}>
+                  <td className="pl-[1rem] py-[1rem]">
+                    <div className="flex gap-[10px] items-center">
+                      <div className="cursor-pointer">
+                        <Image
+                          Src={mainBanner.image}
+                          Alt={""}
+                          ClassName={"w-[120px] cursor-pointer"}
+                          loadingType="lazy"
+                        />
+                      </div>
+                    </div>
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {new Date(
+                      mainBanner.createdAt as string
+                    ).toLocaleDateString("vi-VN")}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {mainBanner.type === 0
+                      ? "Banner chính desktop"
+                      : "Banner chính mobile"}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {mainBanner.status === 0 ? "Ẩn" : "Hiện"}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex items-center gap-[15px]">
+                      <button
+                        onClick={() =>
+                          visibleBanner({
+                            _id: mainBanner._id,
+                            status: mainBanner.status === 1 ? 0 : 1,
+                          })
+                        }
+                      >
+                        {mainBanner.status === 1 ? (
+                          <FaRegEyeSlash size={22} className="text-[#74767d]" />
+                        ) : (
+                          <MdOutlineRemoveRedEye
                             size={22}
                             className="text-[#74767d]"
                           />
-                    */}
-                  </button>
+                        )}
+                      </button>
 
-                  <button>
-                    <VscTrash size={22} className="text-[#d9534f]" />
-                  </button>
-                </div>
-              </td>
-            </tr>
-
-            {/*
-           <tr>
-                <td colSpan="8" className="w-full h-[70vh]">
+                      <button onClick={() => deleteBanner(mainBanner._id)}>
+                        <VscTrash size={22} className="text-[#d9534f]" />
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex flex-col justify-center items-center">
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
                       ClassName={"w-[180px]"}
-                          loadingType="lazy"
+                      loadingType="lazy"
                     />
                   </div>
                 </td>
               </tr>
-    */}
+            )}
           </tbody>
         </table>
       </div>
