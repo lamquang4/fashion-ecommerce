@@ -1,4 +1,5 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
+import Inventory from "@/model/Inventory";
 import Product from "@/model/Product";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
@@ -30,7 +31,7 @@ export async function DELETE(
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
-        const fileName = file.split("/uploads/product/")[1]; 
+        const fileName = file.split("/uploads/product/")[1];
         const filePathAdmin = path.join(
           process.cwd(),
           `/public/uploads/product/${fileName}`
@@ -46,6 +47,7 @@ export async function DELETE(
     }
 
     const deleteProduct = await Product.findByIdAndDelete(id);
+    await Inventory.deleteMany({ product: id });
 
     return NextResponse.json({ Product: deleteProduct }, { status: 201 });
   } catch (err) {

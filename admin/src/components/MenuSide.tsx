@@ -59,14 +59,12 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
         {
           icon: <LuWarehouse size={20} />,
           label: "Hàng tồn kho",
-          key: "4a",
-          children: [{ label: "Hàng trong kho", path: "/inventory" }],
+          path: "/inventory",
         },
         {
           icon: <RiShoppingBag4Line size={20} />,
           label: "Đơn hàng",
-          key: "12a",
-          children: [{ label: "Danh sách đơn hàng", path: "/order" }],
+          path: "/order",
         },
       ],
     },
@@ -183,90 +181,84 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
             loadingType="eager"
           />
         </div>
-        <ul className="flex flex-col gap-[10px]">
-          <ul className="flex flex-col gap-[10px]">
-            {menuData.map((group, groupIndex) => (
-              <div key={groupIndex}>
-                <p className="mb-[10px] text-[0.8rem] leading-[20px] text-gray-500 uppercase">
-                  {group.title}
-                </p>
-                {group.items.map((item, index) => (
-                  <li key={index}>
-                    {item.children ? (
-                      <>
-                        <div
-                          onClick={() => toggleOpen(item.key)}
-                          className={`${
-                            openMenus[item.key] ||
-                            item.children.some(
-                              (child) => pathname === child.path
-                            )
-                              ? "text-[#0AB39C]"
-                              : "hover:bg-gray-200"
-                          } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
-                        >
-                          <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
-                            {item.icon} {item.label}
-                          </p>
-                          <button>
-                            {openMenus[item.key] ||
-                            item.children.some(
-                              (child) => pathname === child.path
-                            ) ? (
-                              <IoIosArrowDown size={18} />
-                            ) : (
-                              <IoIosArrowUp size={18} />
-                            )}
-                          </button>
-                        </div>
-                        <ul
-                          className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
-                            openMenus[item.key] ||
-                            item.children.some(
-                              (child) => pathname === child.path
-                            )
-                              ? "max-h-fit visible"
-                              : ""
-                          }`}
-                        >
-                          {item.children.map((child, childIndex) => (
-                            <li
-                              key={childIndex}
-                              className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
-                                pathname === child.path
-                                  ? "text-[#0AB39C] bg-[#daf4f0]"
-                                  : "hover:bg-gray-200"
-                              }`}
-                            >
-                              <Link
-                                href={child.path}
-                                className="text-[0.9rem] font-medium"
-                              >
-                                {child.label}
-                              </Link>
-                            </li>
-                          ))}
-                        </ul>
-                      </>
-                    ) : (
-                      <Link
-                        href={item.path}
+        <ul className="flex flex-col gap-[15px]">
+          {menuData.map((group, groupIndex) => (
+            <div key={groupIndex} className="flex flex-col gap-[10px]">
+              <p className=" text-[0.8rem] leading-[20px] text-gray-500 uppercase">
+                {group.title}
+              </p>
+              {group.items.map((item, index) => (
+                <li key={index}>
+                  {item.children ? (
+                    <>
+                      <div
+                        onClick={() => toggleOpen(item.key)}
                         className={`${
-                          pathname === item.path
-                            ? "text-[#0AB39C] bg-[#daf4f0]"
+                          openMenus[item.key] ||
+                          item.children.some((child) => pathname === child.path)
+                            ? "text-[#0AB39C]"
                             : "hover:bg-gray-200"
                         } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
                       >
                         <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
                           {item.icon} {item.label}
                         </p>
-                      </Link>
-                    )}
-                  </li>
-                ))}
-              </div>
-            ))}
-          </ul>
+                        <button>
+                          {openMenus[item.key] ||
+                          item.children.some(
+                            (child) => pathname === child.path
+                          ) ? (
+                            <IoIosArrowDown size={18} />
+                          ) : (
+                            <IoIosArrowUp size={18} />
+                          )}
+                        </button>
+                      </div>
+                      <ul
+                        className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out pl-[25px] ${
+                          openMenus[item.key] ||
+                          item.children.some((child) => pathname === child.path)
+                            ? "max-h-fit visible"
+                            : ""
+                        }`}
+                      >
+                        {item.children.map((child, childIndex) => (
+                          <li
+                            key={childIndex}
+                            className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
+                              pathname === child.path
+                                ? "text-[#0AB39C] bg-[#daf4f0]"
+                                : "hover:bg-gray-200"
+                            }`}
+                          >
+                            <Link
+                              href={child.path}
+                              className="text-[0.9rem] font-medium"
+                            >
+                              {child.label}
+                            </Link>
+                          </li>
+                        ))}
+                      </ul>
+                    </>
+                  ) : (
+                    <Link
+                      href={item.path}
+                      className={`${
+                        pathname === item.path
+                          ? "text-[#0AB39C] bg-[#daf4f0]"
+                          : "hover:bg-gray-200"
+                      } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
+                    >
+                      <p className="text-[0.9rem] font-medium flex items-center gap-[10px]">
+                        {item.icon} {item.label}
+                      </p>
+                    </Link>
+                  )}
+                </li>
+              ))}
+            </div>
+          ))}
         </ul>
       </nav>
 

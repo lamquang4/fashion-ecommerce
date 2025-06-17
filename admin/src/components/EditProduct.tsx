@@ -15,6 +15,10 @@ import toast from "react-hot-toast";
 import useGetCategories from "@/hooks/useGetCategories";
 import useGetSizes from "@/hooks/useGetSizes";
 import useGetColors from "@/hooks/useGetColors";
+import { useAppSelector } from "@/redux/hook";
+import Loading from "./Loading";
+import useGetInventory from "@/hooks/useGetInventory";
+import useUpdateProduct from "@/hooks/useUpdateProduct";
 function EditProduct() {
   const {
     variants,
@@ -25,7 +29,9 @@ function EditProduct() {
     handleRemoveSelect,
     handleAddVariant,
     updateVariant,
+    handleResetVariants,
   } = useVariants();
+
   const [data, setData] = useState({
     name: "",
     price: 1,
@@ -34,6 +40,9 @@ function EditProduct() {
     image: [""],
     category: "",
   });
+
+  const loading = useAppSelector((state) => state.loadingSlice);
+  const [success, setSuccess] = useState(false);
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
   const [images, setImages] = useState<(File | null)[]>([]);
@@ -89,8 +98,10 @@ function EditProduct() {
   const id = params.id as string;
 
   const product = useGetProduct(id);
+  const { inventories, fetchInventory } = useGetInventory(id);
 
   useEffect(() => {
+    if (loading) return;
     if (product) {
       setData({
         name: product.name,
@@ -108,69 +119,148 @@ function EditProduct() {
 
       return () => clearTimeout(timeout);
     }
-  }, [product, router, id]);
+  }, [product, router, id, loading]);
 
   const { categories } = useGetCategories();
   const { colors } = useGetColors();
   const { sizes } = useGetSizes();
+  const { updateProduct } = useUpdateProduct(id);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("price", data.price.toString());
+    formData.append("discount", data.discount.toString());
+    formData.append("description", data.description);
+    formData.append("category", data.category);
+    images.forEach((image) => {
+      if (image) {
+        formData.append("image", image);
+      }
+    });
+    formData.append("inventories", JSON.stringify(inventories));
+    formData.append("variants", JSON.stringify(variants));
+
+    if (data.price < data.discount) {
+      toast.error("Giá sản phẩm phải lớn hơn giá giảm");
+      return;
+    }
+
+    const comboSet = new Set();
+
+    const addComboOrFail = (size: string, color: string) => {
+      const key = `${size}-${color}`;
+      if (comboSet.has(key)) {
+        toast.error(`Sản phẩm này bị trùng size và màu.`);
+        return true;
+      }
+      comboSet.add(key);
+      return false;
+    };
+
+    const hasDuplicateInInventories = inventories.some((inv) =>
+      addComboOrFail(inv.size, inv.color)
+    );
+    const hasDuplicateInVariants = variants.some((variant) =>
+      addComboOrFail(variant.size, variant.color)
+    );
+
+    if (hasDuplicateInInventories || hasDuplicateInVariants) {
+      return;
+    }
+
+    try {
+      await updateProduct(formData);
+      toast.success("Cập nhật thành công!");
+
+      setSuccess(true);
+      setImages([]);
+      setTimeout(() => {
+        fetchInventory();
+        handleResetVariants();
+        setSuccess(false);
+      }, 100);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
 
   return (
     <>
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
-        <form className="flex flex-col gap-7 w-full">
+        <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
           <h1 className="font-bold text-[1.5rem] text-[#74767d]">
             Chỉnh sửa sản phẩm
           </h1>
 
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-              <InputImage max={5} InputId="img-product" />
+              <InputImage
+                max={5}
+                InputId="img-product"
+                onFileSelect={(files) => setImages(files)}
+                success={success}
+              />
 
               <div className="flex gap-3 flex-wrap justify-center">
-                {data.image.map((img, index) => (
-                  <div className=" relative" key={index}>
-                    <div
-                      className="cursor-pointer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        handleOpenViewer(img);
-                      }}
-                    >
-                      <Image
-                        Src={previewImages[index] || img}
-                        Alt={""}
-                        ClassName="w-full max-w-[140px]"
-                        loadingType="eager"
-                      />
-                    </div>
+                {loading ? (
+                  <Loading />
+                ) : (
+                  data.image.map((img, index) => (
+                    <div className="relative" key={index}>
+                      <div
+                        className="cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          handleOpenViewer(img);
+                        }}
+                      >
+                        <Image
+                          Src={
+                            previewImages[index] ||
+                            img ||
+                            "/assets/banner/default-banner.jpg"
+                          }
+                          Alt=""
+                          ClassName="w-full max-w-[140px]"
+                          loadingType="eager"
+                        />
+                      </div>
 
-                    <div className="absolute top-[6px] right-[6px]">
-                      <div className="flex items-center flex-col gap-2">
-                        {!previewImages[index] ? (
-                          <>
-                            <button type="button">
-                              <VscTrash size={22} className="text-[#d9534f]" />
+                      <div className="absolute top-[6px] right-[6px]">
+                        <div className="flex items-center flex-col gap-2">
+                          {!previewImages[index] ? (
+                            <>
+                              <button type="button">
+                                <VscTrash
+                                  size={22}
+                                  className="text-[#d9534f]"
+                                />
+                              </button>
+
+                              <InputImage1
+                                onFileSelect={(file) =>
+                                  onFileSelect(file, index)
+                                }
+                                InputId={`c${index}`}
+                              />
+                            </>
+                          ) : (
+                            <button
+                              type="button"
+                              className="p-2"
+                              onClick={() => handleClear(index)}
+                            >
+                              <HiMiniXMark size={26} />
                             </button>
-
-                            <InputImage1
-                              onFileSelect={(file) => onFileSelect(file, index)}
-                              InputId={`c${index}`}
-                            />
-                          </>
-                        ) : (
-                          <button
-                            type="button"
-                            className="p-2"
-                            onClick={() => handleClear(index)}
-                          >
-                            <HiMiniXMark size={26} />
-                          </button>
-                        )}
+                          )}
+                        </div>
                       </div>
                     </div>
-                  </div>
-                ))}
+                  ))
+                )}
               </div>
             </div>
 
@@ -274,6 +364,7 @@ function EditProduct() {
                 <button
                   type="button"
                   onClick={handleAddVariant}
+                  disabled={variants.length + inventories.length >= 5}
                   className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_10px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
                 >
                   Thêm số lượng
@@ -314,6 +405,67 @@ function EditProduct() {
                   </thead>
 
                   <tbody>
+                    {inventories.map((inventory, index) => (
+                      <tr key={inventory._id}>
+                        <td className="pl-[1rem] py-[1rem]">
+                          <input
+                            type="checkbox"
+                            checked={selected[index]}
+                            onChange={() => handleSelectOne(index)}
+                            className="w-4 h-4 rounded-sm"
+                          />
+                        </td>
+
+                        <td className="py-[1rem]">
+                          <select
+                            name="size"
+                            value={inventory.size}
+                            onChange={(e) =>
+                              updateVariant(index, "size", e.target.value)
+                            }
+                            className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                          >
+                            <option value="">Chọn kích thước</option>
+                            {sizes.map((size, index) => (
+                              <option value={size._id} key={index}>
+                                {size.namesize}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+
+                        <td className="py-[1rem]">
+                          <select
+                            name="color"
+                            value={inventory.color}
+                            onChange={(e) =>
+                              updateVariant(index, "color", e.target.value)
+                            }
+                            className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                          >
+                            <option value="">Chọn màu</option>
+                            {colors.map((color, index) => (
+                              <option value={color._id} key={index}>
+                                {color.namecolor}
+                              </option>
+                            ))}
+                          </select>
+                        </td>
+
+                        <td className="py-[1rem]">
+                          <input
+                            type="number"
+                            name="quantity"
+                            value={inventory.quantity}
+                            onChange={(e) =>
+                              updateVariant(index, "quantity", e.target.value)
+                            }
+                            min={1}
+                            className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                          />
+                        </td>
+                      </tr>
+                    ))}
                     {variants.map((variant, index) => (
                       <tr key={index}>
                         <td className="pl-[1rem] py-[1rem]">

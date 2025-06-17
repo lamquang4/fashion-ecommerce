@@ -40,6 +40,7 @@ export const useVariants = () => {
   };
 
   const handleAddVariant = () => {
+    if (variants.length >= 5) return;
     setVariants((prev) => [...prev, { size: "", color: "", quantity: "1" }]);
     setSelected((prev) => [...prev, false]);
   };
@@ -54,6 +55,11 @@ export const useVariants = () => {
     setVariants(updated);
   };
 
+  const handleResetVariants = () => {
+    setVariants([{ size: "", color: "", quantity: "1" }]);
+    setSelected([false]);
+  };
+
   return {
     variants,
     selected,
@@ -63,5 +69,6 @@ export const useVariants = () => {
     handleRemoveSelect,
     handleAddVariant,
     updateVariant,
+    handleResetVariants,
   };
 };

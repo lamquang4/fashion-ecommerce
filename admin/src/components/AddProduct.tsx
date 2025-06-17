@@ -10,6 +10,14 @@ import toast from "react-hot-toast";
 import useGetColors from "@/hooks/useGetColors";
 import useGetSizes from "@/hooks/useGetSizes";
 function AddProduct() {
+  const [images, setImages] = useState<File[]>([]);
+  const [success, setSuccess] = useState(false);
+
+  const { categories } = useGetCategories();
+  const { colors } = useGetColors();
+  const { sizes } = useGetSizes();
+
+  const { addProduct } = useAddProduct();
   const {
     variants,
     selected,
@@ -19,6 +27,7 @@ function AddProduct() {
     handleRemoveSelect,
     handleAddVariant,
     updateVariant,
+    handleResetVariants,
   } = useVariants();
 
   const [data, setData] = useState({
@@ -28,8 +37,7 @@ function AddProduct() {
     description: "",
     category: "",
   });
-  const [images, setImages] = useState<File[]>([]);
-  const [success, setSuccess] = useState(false);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -39,12 +47,6 @@ function AddProduct() {
       [name]: value,
     });
   };
-
-  const { categories } = useGetCategories();
-  const { colors } = useGetColors();
-  const { sizes } = useGetSizes();
-
-  const { addProduct } = useAddProduct();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -58,6 +60,23 @@ function AddProduct() {
     images.forEach((image) => {
       formData.append("image", image);
     });
+    formData.append("variants", JSON.stringify(variants));
+
+    if (data.price < data.discount) {
+      toast.error("Giá sản phẩm phải lớn hơn giá giảm");
+      return;
+    }
+
+    const seen = new Set<string>();
+    for (let i = 0; i < variants.length; i++) {
+      const variant = variants[i];
+      const key = `${variant.size}-${variant.color}`;
+      if (seen.has(key)) {
+        toast.error(`Sản phẩm này bị trùng size và màu.`);
+        return;
+      }
+      seen.add(key);
+    }
     try {
       await addProduct(formData);
       toast.success("Thêm thành công!");
@@ -70,7 +89,10 @@ function AddProduct() {
       });
       setSuccess(true);
       setImages([]);
-      setTimeout(() => setSuccess(false), 100);
+      setTimeout(() => {
+        handleResetVariants();
+        setSuccess(false);
+      }, 100);
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }

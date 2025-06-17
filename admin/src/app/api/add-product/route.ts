@@ -1,4 +1,5 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
+import Inventory from "@/model/Inventory";
 import Product from "@/model/Product";
 import { removeVietNamese } from "@/utils/removeVietnamese";
 import { NextRequest, NextResponse } from "next/server";
@@ -21,24 +22,24 @@ export async function POST(req: NextRequest) {
     const discount = formData.get("discount") as string;
     const description = formData.get("description") as string;
     const category = formData.get("category") as string;
+    const variants = JSON.parse(formData.get("variants") as string);
     const slug = removeVietNamese(name);
 
+    if (price < discount) {
+      return NextResponse.json(
+        { msg: "Giá sản phẩm phải lớn hơn giá giảm" },
+        { status: 400 }
+      );
+    }
     const checkName = await Product.findOne({ name });
     if (checkName) {
       return NextResponse.json(
         { msg: "Tên sản phẩm đã được sử dụng" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
     const files = formData.getAll("image") as File[];
-
-    if (!files.length) {
-      return NextResponse.json(
-        { msg: "Bạn chưa tải ảnh lên" },
-        { status: 400 }
-      );
-    }
 
     const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
     const maxSizeKB = 1000;
@@ -62,14 +63,14 @@ export async function POST(req: NextRequest) {
           {
             msg: `Ảnh "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.`,
           },
-          { status: 400 }
+          { status: 415 }
         );
       }
 
       if (file.size / 1024 > maxSizeKB) {
         return NextResponse.json(
           { msg: `Ảnh "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.` },
-          { status: 400 }
+          { status: 413 }
         );
       }
 
@@ -97,12 +98,35 @@ export async function POST(req: NextRequest) {
       image: imagePaths,
     });
 
+    const seen = new Set();
+
+    for (let i = 0; i < variants.length; i++) {
+      const variant = variants[i];
+      const key = `${variant.size}-${variant.color}`;
+
+      if (seen.has(key)) {
+        return NextResponse.json(
+          { msg: "Sản phẩm này bị trùng size và màu." },
+          { status: 409 }
+        );
+      }
+
+      seen.add(key);
+
+      await Inventory.create({
+        product: newProduct._id,
+        size: variant.size,
+        color: variant.color,
+        quantity: Number(variant.quantity),
+      });
+    }
+
     return NextResponse.json({ product: newProduct }, { status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }
