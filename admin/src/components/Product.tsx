@@ -7,17 +7,24 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import Image from "./Image";
 import Pagination from "./Pagination";
 import FilterDropDownMenu from "./FilterDropDownMenu";
-import useProducts from "@/hooks/useGetProducts";
+import useGetProducts from "@/hooks/useGetProducts";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
+import useVisibleProduct from "@/hooks/useVisibleProduct";
+import useDeleteProduct from "@/hooks/useDeleteProduct";
+import Loading from "./Loading";
+import { useAppSelector } from "@/redux/hook";
 function Product() {
-  const products = useProducts();
+  const loading = useAppSelector((state) => state.loadingSlice);
+  const { products, fetchProducts } = useGetProducts();
+  const { visibleProduct } = useVisibleProduct(fetchProducts);
+  const { deleteProduct } = useDeleteProduct(fetchProducts);
   const array = [
     {
       name: "Tất cả",
       status: null,
     },
     {
-      name: "Bán ra",
+      name: "Hiện",
       status: 1,
     },
     {
@@ -33,7 +40,7 @@ function Product() {
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
-          Sản phẩm (20)
+          Sản phẩm ({products.length})
         </h1>
 
         <Link
@@ -75,14 +82,20 @@ function Product() {
             </tr>
           </thead>
           <tbody>
-            {products.length > 0 ? (
+            {loading ? (
+              <tr>
+                <td colSpan={8} className="w-full">
+                  <Loading />
+                </td>
+              </tr>
+            ) : products.length > 0 ? (
               products.map((product, index) => (
                 <tr key={index}>
                   <td className="pl-[1rem] py-[1rem] w-[300px]">
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">
                         <Image
-                          Src={"assets/products/IMGSP0841.png"}
+                          Src={product.image[0]}
                           Alt={""}
                           ClassName={"w-[75px] cursor-pointer"}
                           loadingType="lazy"
@@ -102,12 +115,20 @@ function Product() {
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex flex-col">
-                      <span className="line-through text-gray-400">
+                      <span
+                        className={` ${
+                          product.discount > 0
+                            ? "line-through text-gray-400"
+                            : "text-black"
+                        } `}
+                      >
                         {product.price?.toLocaleString("vi-VN")}₫
                       </span>
-                      <span className="text-red-500 font-semibold">
-                        {product.discount?.toLocaleString("vi-VN")}₫
-                      </span>
+                      {product.discount > 0 && (
+                        <span className="text-red-500 font-semibold">
+                          {product.discount?.toLocaleString("vi-VN")}₫
+                        </span>
+                      )}
                     </div>
                   </td>
 
@@ -128,7 +149,7 @@ function Product() {
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {product.status === 1
-                      ? "Bán ra"
+                      ? "Hiện"
                       : product.status === 0
                       ? "Ẩn"
                       : "Hết hàng"}
@@ -136,7 +157,14 @@ function Product() {
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex items-center gap-[15px]">
-                      <button>
+                      <button
+                        onClick={() =>
+                          visibleProduct({
+                            _id: product._id,
+                            status: product.status === 1 ? 0 : 1,
+                          })
+                        }
+                      >
                         {product.status === 1 ? (
                           <FaRegEyeSlash size={22} className="text-[#74767d]" />
                         ) : (
@@ -146,10 +174,10 @@ function Product() {
                           />
                         )}
                       </button>
-                      <Link href={"/edit-product"}>
+                      <Link href={`/edit-product/${product._id}`}>
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
-                      <button>
+                      <button onClick={() => deleteProduct(product._id)}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

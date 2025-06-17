@@ -12,20 +12,21 @@ export interface Product {
   description: string;
   image: string[];
   slug: string;
-  status: number;
+  status?: number;
   category: string;
-  createdAt: string;
+  createdAt?: string;
 }
 
-export default function useGetProducts() {
-  const [products, setProducts] = useState<Product[]>([]);
+export default function useGetProduct(id: string) {
+  const [product, setProduct] = useState<Product>();
   const dispatch = useAppDispatch();
 
-  const fetchProducts = async () => {
+  const fetchProduct = async () => {
     dispatch(setLoading(true));
+    if (!id) return;
     try {
-      const res = await axios.get("/api/get-products");
-      setProducts(res.data);
+      const res = await axios.get(`/api/get-product/${id}`);
+      setProduct(res.data);
     } catch (err) {
       console.error("Lỗi:", err);
     } finally {
@@ -34,8 +35,8 @@ export default function useGetProducts() {
   };
 
   useEffect(() => {
-    fetchProducts();
-  }, []);
+    fetchProduct();
+  }, [id]);
 
-  return { products, fetchProducts };
+  return product;
 }

@@ -3,18 +3,18 @@ import { useAppDispatch } from "@/redux/hook";
 import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 
-export default function useAddProduct() {
+export default function useUpdateBanner() {
   const dispatch = useAppDispatch();
 
-  const addProduct = async (formData: FormData) => {
+  const updateBanner = async (formData: FormData) => {
     try {
       dispatch(setLoading(true));
-      const res = await axios.post("/api/add-product", formData, {
+      const res = await axios.put("/api/update-banner", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      return res.data.product;
+      return res.data.banner;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
@@ -23,5 +23,5 @@ export default function useAddProduct() {
     }
   };
 
-  return { addProduct };
+  return { updateBanner };
 }

@@ -1,4 +1,5 @@
 "use client";
+import toast from "react-hot-toast";
 import { RiImageEditFill } from "react-icons/ri";
 type InputImageProp = {
   InputId: string;
@@ -8,6 +9,7 @@ type InputImageProp = {
 function InputImage1({ InputId, onFileSelect }: InputImageProp) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
+
     if (file && onFileSelect) {
       onFileSelect(file);
     }
@@ -15,7 +17,7 @@ function InputImage1({ InputId, onFileSelect }: InputImageProp) {
   return (
     <div className="rounded-full border flex justify-center items-center bg-white">
       <label htmlFor={InputId} className="cursor-pointer  p-2">
-        <RiImageEditFill size={26} />
+        <RiImageEditFill size={22} />
       </label>
 
       <input

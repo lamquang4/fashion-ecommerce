@@ -1,12 +1,20 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import InputImage from "./InputImage";
 import TinyMCEEditor from "./TinyMCEEditor";
 import Image from "./Image";
 import { VscTrash } from "react-icons/vsc";
 import ImageViewer from "./ImageViewer";
 import { useVariants } from "../hooks/useVariants";
+import InputImage1 from "./InputImage1";
+import { HiMiniXMark } from "react-icons/hi2";
+import { useParams, useRouter } from "next/navigation";
+import useGetProduct from "@/hooks/useGetProduct";
+import toast from "react-hot-toast";
+import useGetCategories from "@/hooks/useGetCategories";
+import useGetSizes from "@/hooks/useGetSizes";
+import useGetColors from "@/hooks/useGetColors";
 function EditProduct() {
   const {
     variants,
@@ -18,13 +26,93 @@ function EditProduct() {
     handleAddVariant,
     updateVariant,
   } = useVariants();
-
+  const [data, setData] = useState({
+    name: "",
+    price: 1,
+    discount: 0,
+    description: "",
+    image: [""],
+    category: "",
+  });
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
+  const [images, setImages] = useState<(File | null)[]>([]);
+  const [previewImages, setPreviewImages] = useState<(string | null)[]>([]);
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);
     setOpenViewer(true);
   };
+
+  const onFileSelect = (file: File, index: number) => {
+    setPreviewImages((prev) => {
+      // giải phóng URL cũ
+      if (prev[index]) URL.revokeObjectURL(prev[index]!);
+      const updated = [...prev];
+      updated[index] = URL.createObjectURL(file);
+      return updated;
+    });
+
+    setImages((prev) => {
+      const updated = [...prev];
+      updated[index] = file;
+      return updated;
+    });
+  };
+
+  const handleClear = (index: number) => {
+    setPreviewImages((prev) => {
+      if (prev[index]) URL.revokeObjectURL(prev[index]!);
+      const updated = [...prev];
+      updated[index] = null;
+      return updated;
+    });
+
+    setImages((prev) => {
+      const updated = [...prev];
+      updated[index] = null;
+      return updated;
+    });
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+
+  const product = useGetProduct(id);
+
+  useEffect(() => {
+    if (product) {
+      setData({
+        name: product.name,
+        price: product.price,
+        discount: product.discount,
+        description: product.description,
+        image: Array.isArray(product.image) ? product.image : [],
+        category: product.category,
+      });
+    } else if (id && !product) {
+      const timeout = setTimeout(() => {
+        toast.error("Không tìm thấy sản phẩm");
+        router.push("/product");
+      }, 1500);
+
+      return () => clearTimeout(timeout);
+    }
+  }, [product, router, id]);
+
+  const { categories } = useGetCategories();
+  const { colors } = useGetColors();
+  const { sizes } = useGetSizes();
 
   return (
     <>
@@ -39,53 +127,50 @@ function EditProduct() {
               <InputImage max={5} InputId="img-product" />
 
               <div className="flex gap-3 flex-wrap justify-center">
-                <div className=" relative">
-                  <div
-                    className="cursor-pointer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      e.preventDefault();
-                      handleOpenViewer("assets/products/IMGSP0841.png");
-                    }}
-                  >
-                    <Image
-                      Src={"assets/products/IMGSP0841.png"}
-                      Alt={""}
-                      ClassName="w-full max-w-[140px]"
-                      loadingType="eager"
-                    />
-                  </div>
+                {data.image.map((img, index) => (
+                  <div className=" relative" key={index}>
+                    <div
+                      className="cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        handleOpenViewer(img);
+                      }}
+                    >
+                      <Image
+                        Src={previewImages[index] || img}
+                        Alt={""}
+                        ClassName="w-full max-w-[140px]"
+                        loadingType="eager"
+                      />
+                    </div>
 
-                  <div className="absolute top-[6px] right-[6px]">
-                    <button>
-                      <VscTrash size={22} className="text-[#d9534f]" />
-                    </button>
-                  </div>
-                </div>
+                    <div className="absolute top-[6px] right-[6px]">
+                      <div className="flex items-center flex-col gap-2">
+                        {!previewImages[index] ? (
+                          <>
+                            <button type="button">
+                              <VscTrash size={22} className="text-[#d9534f]" />
+                            </button>
 
-                <div className=" relative">
-                  <div
-                    className="cursor-pointer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      e.preventDefault();
-                      handleOpenViewer("assets/products/IMGSP0841.png");
-                    }}
-                  >
-                    <Image
-                      Src={"assets/products/IMGSP0841.png"}
-                      Alt={""}
-                      ClassName="w-full max-w-[140px]"
-                      loadingType="eager"
-                    />
+                            <InputImage1
+                              onFileSelect={(file) => onFileSelect(file, index)}
+                              InputId={`c${index}`}
+                            />
+                          </>
+                        ) : (
+                          <button
+                            type="button"
+                            className="p-2"
+                            onClick={() => handleClear(index)}
+                          >
+                            <HiMiniXMark size={26} />
+                          </button>
+                        )}
+                      </div>
+                    </div>
                   </div>
-
-                  <div className="absolute top-[6px] right-[6px]">
-                    <button>
-                      <VscTrash size={22} className="text-[#d9534f]" />
-                    </button>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
 
@@ -101,25 +186,12 @@ function EditProduct() {
                   </label>
                   <input
                     type="text"
-                    name="nameproduct"
+                    name="name"
+                    value={data.name}
+                    onChange={handleChange}
                     required
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   />
-                </div>
-
-                <div className="flex flex-col gap-1 w-full">
-                  <label htmlFor="" className="text-[0.9rem] text-black">
-                    Giới tính
-                  </label>
-                  <select
-                    name="category"
-                    required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
-                  >
-                    <option value="">Chọn giới tính</option>
-                    <option value="0">Nam</option>
-                    <option value="1">Nữ</option>
-                  </select>
                 </div>
 
                 <div className="flex flex-col gap-1 w-full">
@@ -129,11 +201,17 @@ function EditProduct() {
                   <select
                     name="category"
                     required
+                    value={data.category}
+                    onChange={handleChange}
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   >
                     <option value="">Chọn danh mục</option>
-                    <option value="">Áo sơ mi</option>
-                    <option value="">Áo khoác</option>
+                    {categories.map((category, index) => (
+                      <option value={category._id} key={index}>
+                        {category.namecategory} -
+                        {category.gender === 1 ? "Nam" : "Nữ"}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -142,22 +220,12 @@ function EditProduct() {
                 <label htmlFor="" className="text-[0.9rem] text-black">
                   Mô tả
                 </label>
-                <TinyMCEEditor />
-              </div>
-
-              <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="" className="text-[0.9rem] text-black">
-                  Tình trạng
-                </label>
-                <select
-                  name="status"
-                  required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
-                >
-                  <option value="">Chọn tình trạng</option>
-                  <option value="0">Ẩn </option>
-                  <option value="1">Bán ra</option>
-                </select>
+                <TinyMCEEditor
+                  text={data.description}
+                  onChange={(value) =>
+                    setData((prev) => ({ ...prev, description: value }))
+                  }
+                />
               </div>
             </div>
 
@@ -174,6 +242,8 @@ function EditProduct() {
                   <input
                     type="number"
                     name="price"
+                    value={data.price}
+                    onChange={handleChange}
                     required
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   />
@@ -186,18 +256,8 @@ function EditProduct() {
                   <input
                     type="number"
                     name="discount"
-                    required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1 w-full">
-                  <label htmlFor="" className="text-[0.9rem] text-black">
-                    Thuế (%)
-                  </label>
-                  <input
-                    type="number"
-                    name="discount"
+                    value={data.discount}
+                    onChange={handleChange}
                     required
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   />
@@ -272,14 +332,14 @@ function EditProduct() {
                             onChange={(e) =>
                               updateVariant(index, "size", e.target.value)
                             }
-                            required
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
                             <option value="">Chọn kích thước</option>
-                            <option value="XL">XL</option>
-                            <option value="L">L</option>
-                            <option value="M">M</option>
-                            <option value="S">S</option>
+                            {sizes.map((size, index) => (
+                              <option value={size._id} key={index}>
+                                {size.namesize}
+                              </option>
+                            ))}
                           </select>
                         </td>
 
@@ -290,12 +350,14 @@ function EditProduct() {
                             onChange={(e) =>
                               updateVariant(index, "color", e.target.value)
                             }
-                            required
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
                             <option value="">Chọn màu</option>
-                            <option value="red">Màu đỏ tươi</option>
-                            <option value="no">Không có màu</option>
+                            {colors.map((color, index) => (
+                              <option value={color._id} key={index}>
+                                {color.namecolor}
+                              </option>
+                            ))}
                           </select>
                         </td>
 
@@ -307,7 +369,6 @@ function EditProduct() {
                             onChange={(e) =>
                               updateVariant(index, "quantity", e.target.value)
                             }
-                            required
                             min={1}
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           />

@@ -3,6 +3,12 @@ import Link from "next/link";
 import InputImage from "./InputImage";
 import TinyMCEEditor from "./TinyMCEEditor";
 import { useVariants } from "../hooks/useVariants";
+import useGetCategories from "@/hooks/useGetCategories";
+import { useState } from "react";
+import useAddProduct from "@/hooks/useAddProduct";
+import toast from "react-hot-toast";
+import useGetColors from "@/hooks/useGetColors";
+import useGetSizes from "@/hooks/useGetSizes";
 function AddProduct() {
   const {
     variants,
@@ -15,19 +21,77 @@ function AddProduct() {
     updateVariant,
   } = useVariants();
 
-  
+  const [data, setData] = useState({
+    name: "",
+    price: 1,
+    discount: 0,
+    description: "",
+    category: "",
+  });
+  const [images, setImages] = useState<File[]>([]);
+  const [success, setSuccess] = useState(false);
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
+
+  const { categories } = useGetCategories();
+  const { colors } = useGetColors();
+  const { sizes } = useGetSizes();
+
+  const { addProduct } = useAddProduct();
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("price", data.price.toString());
+    formData.append("discount", data.discount.toString());
+    formData.append("description", data.description);
+    formData.append("category", data.category);
+    images.forEach((image) => {
+      formData.append("image", image);
+    });
+    try {
+      await addProduct(formData);
+      toast.success("Thêm thành công!");
+      setData({
+        name: "",
+        price: 1,
+        discount: 0,
+        description: "",
+        category: "",
+      });
+      setSuccess(true);
+      setImages([]);
+      setTimeout(() => setSuccess(false), 100);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
 
   return (
     <>
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
-        <form className="flex flex-col gap-7 w-full">
+        <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
           <h1 className="font-bold text-[1.5rem] text-[#74767d]">
             Thêm sản phẩm
           </h1>
 
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-              <InputImage max={5} InputId="img-product" />
+              <InputImage
+                max={5}
+                InputId="img-product"
+                onFileSelect={(files) => setImages(files)}
+                success={success}
+              />
             </div>
 
             <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
@@ -42,25 +106,12 @@ function AddProduct() {
                   </label>
                   <input
                     type="text"
-                    name="nameproduct"
+                    value={data.name}
+                    onChange={handleChange}
+                    name="name"
                     required
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   />
-                </div>
-
-                <div className="flex flex-col gap-1 w-full">
-                  <label htmlFor="" className="text-[0.9rem] text-black">
-                    Giới tính
-                  </label>
-                  <select
-                    name="category"
-                    required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
-                  >
-                    <option value="">Chọn giới tính</option>
-                    <option value="0">Nam</option>
-                    <option value="1">Nữ</option>
-                  </select>
                 </div>
 
                 <div className="flex flex-col gap-1 w-full">
@@ -70,11 +121,17 @@ function AddProduct() {
                   <select
                     name="category"
                     required
+                    onChange={handleChange}
+                    value={data.category}
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   >
                     <option value="">Chọn danh mục</option>
-                    <option value="">Áo sơ mi</option>
-                    <option value="">Áo khoác</option>
+                    {categories.map((category, index) => (
+                      <option value={category._id} key={index}>
+                        {category.namecategory} -
+                        {category.gender === 1 ? "Nam" : "Nữ"}
+                      </option>
+                    ))}
                   </select>
                 </div>
               </div>
@@ -83,22 +140,12 @@ function AddProduct() {
                 <label htmlFor="" className="text-[0.9rem] text-black">
                   Mô tả
                 </label>
-                <TinyMCEEditor />
-              </div>
-
-              <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="" className="text-[0.9rem] text-black">
-                  Tình trạng
-                </label>
-                <select
-                  name="status"
-                  required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
-                >
-                  <option value="">Chọn tình trạng</option>
-                  <option value="0">Ẩn </option>
-                  <option value="1">Bán ra</option>
-                </select>
+                <TinyMCEEditor
+                  text={data.description}
+                  onChange={(value) =>
+                    setData((prev) => ({ ...prev, description: value }))
+                  }
+                />
               </div>
             </div>
 
@@ -115,6 +162,8 @@ function AddProduct() {
                   <input
                     type="number"
                     name="price"
+                    value={data.price}
+                    onChange={handleChange}
                     required
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   />
@@ -127,18 +176,8 @@ function AddProduct() {
                   <input
                     type="number"
                     name="discount"
-                    required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-1 w-full">
-                  <label htmlFor="" className="text-[0.9rem] text-black">
-                    Thuế (%)
-                  </label>
-                  <input
-                    type="number"
-                    name="discount"
+                    value={data.discount}
+                    onChange={handleChange}
                     required
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   />
@@ -209,46 +248,50 @@ function AddProduct() {
                         <td className="py-[1rem]">
                           <select
                             name="size"
+                            required
                             value={variant.size}
                             onChange={(e) =>
                               updateVariant(index, "size", e.target.value)
                             }
-                            required
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
                             <option value="">Chọn kích thước</option>
-                            <option value="XL">XL</option>
-                            <option value="L">L</option>
-                            <option value="M">M</option>
-                            <option value="S">S</option>
+                            {sizes.map((size, index) => (
+                              <option value={size._id} key={index}>
+                                {size.namesize}
+                              </option>
+                            ))}
                           </select>
                         </td>
 
                         <td className="py-[1rem]">
                           <select
                             name="color"
+                            required
                             value={variant.color}
                             onChange={(e) =>
                               updateVariant(index, "color", e.target.value)
                             }
-                            required
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
                             <option value="">Chọn màu</option>
-                            <option value="red">Màu đỏ tươi</option>
-                            <option value="no">Không có màu</option>
+                            {colors.map((color, index) => (
+                              <option value={color._id} key={index}>
+                                {color.namecolor}
+                              </option>
+                            ))}
                           </select>
                         </td>
 
                         <td className="py-[1rem]">
                           <input
                             type="number"
+                            required
                             name="quantity"
                             value={variant.quantity}
                             onChange={(e) =>
                               updateVariant(index, "quantity", e.target.value)
                             }
-                            required
                             min={1}
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           />

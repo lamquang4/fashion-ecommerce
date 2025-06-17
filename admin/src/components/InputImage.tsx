@@ -45,26 +45,6 @@ function InputImage({ InputId, max, onFileSelect, success }: InputImageProps) {
       return;
     }
 
-    const allowTypes = ["image/png", "image/jpeg", "image/webp"];
-    const maxSizeKB = 1000; // 1000KB
-
-    const validFiles: File[] = [];
-    for (const file of selectedFiles) {
-      if (!allowTypes.includes(file.type)) {
-        toast.error(
-          `Ảnh "${file.name}" không đúng định dạng PNG, JPG, hoặc WEBP.`
-        );
-        continue;
-      }
-      if (file.size / 1024 > maxSizeKB) {
-        toast.error(`Ảnh "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.`);
-        continue;
-      }
-      validFiles.push(file);
-    }
-
-    if (validFiles.length === 0) return;
-
     const imageUrls = selectedFiles.map((file) => URL.createObjectURL(file));
     setPreviewImages((prev) => [...prev, ...imageUrls]);
 

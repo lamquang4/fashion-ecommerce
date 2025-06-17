@@ -12,7 +12,7 @@ export const config = {
 export async function POST(req: NextRequest) {
   try {
     await connectMongoDB();
-
+    // gửi nhiều ảnh và mỗi ảnh sẽ được thêm thành một document riêng biệt trong MongoDB
     const formData = await req.formData();
     const files = formData.getAll("image") as File[];
     const type = formData.get("type") as string;
@@ -29,7 +29,8 @@ export async function POST(req: NextRequest) {
 
     const createdBanners = [];
 
-    for (const file of files) {
+    for (let i = 0; i < files.length; i++) {
+      const file = files[i];
       if (!allowedTypes.includes(file.type)) {
         return NextResponse.json(
           {
