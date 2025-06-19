@@ -12,7 +12,7 @@ export async function PUT(
     const { id } = await params;
     const body = await req.json();
 
-    const { colorname, colorcode } = body;
+    const { namecolor, codecolor } = body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
@@ -23,7 +23,7 @@ export async function PUT(
       return NextResponse.json({ msg: "Không tìm thấy màu" }, { status: 404 });
     }
 
-    const checkName = await Color.findOne({ colorname, _id: { $ne: id } });
+    const checkName = await Color.findOne({ namecolor, _id: { $ne: id } });
     if (checkName) {
       return NextResponse.json(
         { msg: "Tên màu đã được sử dụng" },
@@ -32,15 +32,15 @@ export async function PUT(
     }
 
     const updatedData: any = {
-      colorname,
-      colorcode,
+      namecolor,
+      codecolor,
     };
 
     const updatedColor = await Color.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
 
-    return NextResponse.json({ user: updatedColor }, { status: 201 });
+    return NextResponse.json({ color: updatedColor }, { status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

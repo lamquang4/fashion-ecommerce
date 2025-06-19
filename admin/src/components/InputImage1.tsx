@@ -1,5 +1,4 @@
 "use client";
-import toast from "react-hot-toast";
 import { RiImageEditFill } from "react-icons/ri";
 type InputImageProp = {
   InputId: string;

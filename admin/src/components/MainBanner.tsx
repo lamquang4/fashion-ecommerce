@@ -94,7 +94,7 @@ function MainBanner() {
             {loading ? (
               <tr>
                 <td colSpan={8} className="w-full">
-                  <Loading />
+                  <Loading height={30} />
                 </td>
               </tr>
             ) : mainBanners.length > 0 ? (

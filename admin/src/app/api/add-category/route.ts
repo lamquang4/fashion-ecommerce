@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
 
     const formData = await req.formData();
     const namecategory = formData.get("namecategory") as string;
-    const gender = formData.get("gender") as string;
+    const gender = Number(formData.get("gender"));
     const file = formData.get("image") as File;
 
     const checkName = await Category.findOne({ namecategory });
@@ -27,10 +27,17 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (!file || file.size === 0) {
+      return NextResponse.json(
+        { msg: "Vui lòng chọn một Hình." },
+        { status: 400 }
+      );
+    }
+
     const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
-        { msg: `Ảnh "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.` },
+        { msg: `Hình "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.` },
         { status: 400 }
       );
     }
@@ -38,7 +45,7 @@ export async function POST(req: NextRequest) {
     const maxSizeKB = 1000; // 1000KB
     if (file.size / 1024 > maxSizeKB) {
       return NextResponse.json(
-        { msg: `Ảnh "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.` },
+        { msg: `Hình "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.` },
         { status: 400 }
       );
     }

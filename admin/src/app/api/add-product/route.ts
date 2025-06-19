@@ -18,11 +18,11 @@ export async function POST(req: NextRequest) {
 
     const formData = await req.formData();
     const name = formData.get("name") as string;
-    const price = formData.get("price") as string;
-    const discount = formData.get("discount") as string;
+    const price = Number(formData.get("price"));
+    const discount = Number(formData.get("discount"));
     const description = formData.get("description") as string;
     const category = formData.get("category") as string;
-    const variants = JSON.parse(formData.get("variants") as string);
+    const newInventories = JSON.parse(formData.get("newInventories") as string);
     const slug = removeVietNamese(name);
 
     if (price < discount) {
@@ -40,6 +40,13 @@ export async function POST(req: NextRequest) {
     }
 
     const files = formData.getAll("image") as File[];
+
+    if (files.length > 5) {
+      return NextResponse.json(
+        { msg: "Hình sản phẩm không vượt quá 5 hình" },
+        { status: 404 }
+      );
+    }
 
     const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
     const maxSizeKB = 1000;
@@ -61,7 +68,7 @@ export async function POST(req: NextRequest) {
       if (!allowedTypes.includes(file.type)) {
         return NextResponse.json(
           {
-            msg: `Ảnh "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.`,
+            msg: `Hình "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.`,
           },
           { status: 415 }
         );
@@ -69,7 +76,7 @@ export async function POST(req: NextRequest) {
 
       if (file.size / 1024 > maxSizeKB) {
         return NextResponse.json(
-          { msg: `Ảnh "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.` },
+          { msg: `Hình "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.` },
           { status: 413 }
         );
       }
@@ -100,9 +107,9 @@ export async function POST(req: NextRequest) {
 
     const seen = new Set();
 
-    for (let i = 0; i < variants.length; i++) {
-      const variant = variants[i];
-      const key = `${variant.size}-${variant.color}`;
+    for (let i = 0; i < newInventories.length; i++) {
+      const newInventory = newInventories[i];
+      const key = `${newInventory.size}-${newInventory.color}`;
 
       if (seen.has(key)) {
         return NextResponse.json(
@@ -115,9 +122,9 @@ export async function POST(req: NextRequest) {
 
       await Inventory.create({
         product: newProduct._id,
-        size: variant.size,
-        color: variant.color,
-        quantity: Number(variant.quantity),
+        size: newInventory.size,
+        color: newInventory.color,
+        quantity: Number(newInventory.quantity),
       });
     }
 

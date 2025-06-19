@@ -30,15 +30,8 @@ function EditSize() {
       setData({
         namesize: size.namesize,
       });
-    } else if (id && !size) {
-      const timeout = setTimeout(() => {
-        toast.error("Không tìm thấy kích thước");
-        router.push("/size");
-      }, 1500);
-
-      return () => clearTimeout(timeout);
     }
-  }, [size, router, id]);
+  }, [size]);
 
   const { updateSize } = useUpdateSize(id);
 
@@ -89,7 +82,7 @@ function EditSize() {
             type="submit"
             className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
           >
-            Lưu
+            Cập nhật
           </button>
           <Link
             href="/size"

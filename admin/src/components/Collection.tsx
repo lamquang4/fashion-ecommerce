@@ -57,7 +57,7 @@ function Collection() {
       } else {
         for (let i = 0; i < collections.length; i++) {
           const file = images[i];
-          if (!file) return;
+          if (!file) continue;
 
           const formData = new FormData();
           formData.append("image", file);

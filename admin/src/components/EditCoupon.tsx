@@ -55,15 +55,8 @@ function EditCoupon() {
         minOrderValue: coupon.minOrderValue,
         maxDiscountValue: coupon.maxDiscountValue || 1,
       });
-    } else if (id && !coupon) {
-      const timeout = setTimeout(() => {
-        toast.error("Không tìm thấy phiếu giảm giá");
-        router.push("/coupon");
-      }, 1500);
-
-      return () => clearTimeout(timeout);
     }
-  }, [coupon, router, id]);
+  }, [coupon]);
 
   const { updateCoupon } = useUpdateCoupon(id);
 

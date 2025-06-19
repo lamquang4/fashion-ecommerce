@@ -41,7 +41,7 @@ function InputImage({ InputId, max, onFileSelect, success }: InputImageProps) {
     const selectedFiles = Array.from(files);
 
     if (previewImages.length + selectedFiles.length > maxFiles) {
-      toast.error(`Tổng số ảnh không được vượt quá ${maxFiles}.`);
+      toast.error(`Tổng số hình không được vượt quá ${maxFiles}.`);
       return;
     }
 

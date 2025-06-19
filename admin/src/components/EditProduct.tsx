@@ -6,10 +6,9 @@ import TinyMCEEditor from "./TinyMCEEditor";
 import Image from "./Image";
 import { VscTrash } from "react-icons/vsc";
 import ImageViewer from "./ImageViewer";
-import { useVariants } from "../hooks/useVariants";
 import InputImage1 from "./InputImage1";
 import { HiMiniXMark } from "react-icons/hi2";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import useGetProduct from "@/hooks/useGetProduct";
 import toast from "react-hot-toast";
 import useGetCategories from "@/hooks/useGetCategories";
@@ -19,18 +18,19 @@ import { useAppSelector } from "@/redux/hook";
 import Loading from "./Loading";
 import useGetInventory from "@/hooks/useGetInventory";
 import useUpdateProduct from "@/hooks/useUpdateProduct";
+import { useInventory } from "@/hooks/useInventory";
 function EditProduct() {
   const {
-    variants,
-    selected,
-    isAllSelected,
-    handleSelectAll,
-    handleSelectOne,
-    handleRemoveSelect,
-    handleAddVariant,
-    updateVariant,
-    handleResetVariants,
-  } = useVariants();
+    newInventories,
+    currentInventories,
+    handleAddInventory,
+    handleChangeInventory,
+    handleChangeCurrentInventory,
+    handleRemoveInventory,
+    handleRemoveAllInventory,
+    handleSendCurrentInventories,
+    handleResets,
+  } = useInventory();
 
   const [data, setData] = useState({
     name: "",
@@ -93,7 +93,6 @@ function EditProduct() {
     }));
   };
 
-  const router = useRouter();
   const params = useParams();
   const id = params.id as string;
 
@@ -101,7 +100,6 @@ function EditProduct() {
   const { inventories, fetchInventory } = useGetInventory(id);
 
   useEffect(() => {
-    if (loading) return;
     if (product) {
       setData({
         name: product.name,
@@ -111,15 +109,11 @@ function EditProduct() {
         image: Array.isArray(product.image) ? product.image : [],
         category: product.category,
       });
-    } else if (id && !product) {
-      const timeout = setTimeout(() => {
-        toast.error("Không tìm thấy sản phẩm");
-        router.push("/product");
-      }, 1500);
-
-      return () => clearTimeout(timeout);
     }
-  }, [product, router, id, loading]);
+    if (inventories) {
+      handleSendCurrentInventories(inventories);
+    }
+  }, [product, inventories]);
 
   const { categories } = useGetCategories();
   const { colors } = useGetColors();
@@ -139,10 +133,12 @@ function EditProduct() {
         formData.append("image", image);
       }
     });
-    formData.append("inventories", JSON.stringify(inventories));
-    formData.append("variants", JSON.stringify(variants));
+    formData.append("currentInventories", JSON.stringify(currentInventories));
+    if (newInventories) {
+      formData.append("newInventories", JSON.stringify(newInventories));
+    }
 
-    if (data.price < data.discount) {
+    if (Number(data.price) < Number(data.discount)) {
       toast.error("Giá sản phẩm phải lớn hơn giá giảm");
       return;
     }
@@ -159,14 +155,14 @@ function EditProduct() {
       return false;
     };
 
-    const hasDuplicateInInventories = inventories.some((inv) =>
+    const hasDuplicateInventories = currentInventories.some((inv) =>
       addComboOrFail(inv.size, inv.color)
     );
-    const hasDuplicateInVariants = variants.some((variant) =>
-      addComboOrFail(variant.size, variant.color)
+    const hasDuplicateNewInventories = newInventories.some((newInventory) =>
+      addComboOrFail(newInventory.size, newInventory.color)
     );
 
-    if (hasDuplicateInInventories || hasDuplicateInVariants) {
+    if (hasDuplicateInventories || hasDuplicateNewInventories) {
       return;
     }
 
@@ -178,7 +174,7 @@ function EditProduct() {
       setImages([]);
       setTimeout(() => {
         fetchInventory();
-        handleResetVariants();
+        handleResets();
         setSuccess(false);
       }, 100);
     } catch (err: any) {
@@ -205,7 +201,7 @@ function EditProduct() {
 
               <div className="flex gap-3 flex-wrap justify-center">
                 {loading ? (
-                  <Loading />
+                  <Loading height={25} />
                 ) : (
                   data.image.map((img, index) => (
                     <div className="relative" key={index}>
@@ -359,40 +355,11 @@ function EditProduct() {
               <p className="font-bold text-[1rem] text-[#74767d] mb-[10px]">
                 Số lượng
               </p>
-
-              <div className="flex gap-[15px] mb-[20px] justify-between items-center">
-                <button
-                  type="button"
-                  onClick={handleAddVariant}
-                  disabled={variants.length + inventories.length >= 5}
-                  className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_10px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
-                >
-                  Thêm số lượng
-                </button>
-
-                <button
-                  type="button"
-                  onClick={handleRemoveSelect}
-                  className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_10px] items-center justify-center gap-[5px] text-white"
-                >
-                  Xóa
-                </button>
-              </div>
-
-              <div className="bg-white w-full overflow-auto">
+              <div className="bg-white w-full overflow-auto flex flex-col gap-3.5">
                 <table className="border-collapse w-[250%] sm:w-[130%] lg:w-full">
                   <thead>
                     <tr>
                       <th className="pl-[1rem] text-left text-[#444] text-[0.9rem] py-[1rem]">
-                        <input
-                          type="checkbox"
-                          checked={isAllSelected}
-                          onChange={handleSelectAll}
-                          name="select-all"
-                          className="w-4 h-4 rounded-sm"
-                        />
-                      </th>
-                      <th className="text-left text-[#444] text-[0.9rem] py-[1rem]">
                         Kích thước
                       </th>
                       <th className="text-left text-[#444] text-[0.9rem] py-[1rem]">
@@ -401,27 +368,26 @@ function EditProduct() {
                       <th className="text-left text-[#444] text-[0.9rem] py-[1rem]">
                         Số lượng
                       </th>
+                      <th className="text-left text-[#444] text-[0.9rem] py-[1rem]">
+                        Hành động
+                      </th>
                     </tr>
                   </thead>
 
                   <tbody>
-                    {inventories.map((inventory, index) => (
-                      <tr key={inventory._id}>
+                    {currentInventories.map((inventory, index) => (
+                      <tr key={index}>
                         <td className="pl-[1rem] py-[1rem]">
-                          <input
-                            type="checkbox"
-                            checked={selected[index]}
-                            onChange={() => handleSelectOne(index)}
-                            className="w-4 h-4 rounded-sm"
-                          />
-                        </td>
-
-                        <td className="py-[1rem]">
                           <select
                             name="size"
                             value={inventory.size}
+                            required
                             onChange={(e) =>
-                              updateVariant(index, "size", e.target.value)
+                              handleChangeCurrentInventory(
+                                index,
+                                "size",
+                                e.target.value
+                              )
                             }
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
@@ -437,9 +403,14 @@ function EditProduct() {
                         <td className="py-[1rem]">
                           <select
                             name="color"
+                            required
                             value={inventory.color}
                             onChange={(e) =>
-                              updateVariant(index, "color", e.target.value)
+                              handleChangeCurrentInventory(
+                                index,
+                                "color",
+                                e.target.value
+                              )
                             }
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
@@ -456,33 +427,83 @@ function EditProduct() {
                           <input
                             type="number"
                             name="quantity"
-                            value={inventory.quantity}
+                            required
                             onChange={(e) =>
-                              updateVariant(index, "quantity", e.target.value)
+                              handleChangeCurrentInventory(
+                                index,
+                                "quantity",
+                                Number(e.target.value)
+                              )
                             }
+                            value={inventory.quantity}
                             min={1}
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           />
+                        </td>
+
+                        <td className="py-[1rem]">
+                          <button
+                            type="button"
+                            className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_12px] items-center justify-center gap-[5px] text-white"
+                          >
+                            Xóa
+                          </button>
                         </td>
                       </tr>
                     ))}
-                    {variants.map((variant, index) => (
+                  </tbody>
+                </table>
+
+                <div className="flex gap-[15px] mb-[10px] justify-between items-center">
+                  <button
+                    type="button"
+                    onClick={handleAddInventory}
+                    disabled={newInventories.length + inventories.length >= 5}
+                    className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_10px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
+                  >
+                    Thêm số lượng
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleRemoveAllInventory}
+                    className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_10px] items-center justify-center gap-[5px] text-white"
+                  >
+                    Xóa tất cả
+                  </button>
+                </div>
+
+                <table className="border-collapse w-[250%] sm:w-[130%] lg:w-full">
+                  <thead>
+                    <tr>
+                      <th className="pl-[1rem] text-left text-[#444] text-[0.9rem] py-[1rem]">
+                        Kích thước
+                      </th>
+                      <th className="text-left text-[#444] text-[0.9rem] py-[1rem]">
+                        Màu
+                      </th>
+                      <th className="text-left text-[#444] text-[0.9rem] py-[1rem]">
+                        Số lượng
+                      </th>
+                      <th className="text-left text-[#444] text-[0.9rem] py-[1rem]">
+                        Hành động
+                      </th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {newInventories.map((newInventory, index) => (
                       <tr key={index}>
                         <td className="pl-[1rem] py-[1rem]">
-                          <input
-                            type="checkbox"
-                            checked={selected[index]}
-                            onChange={() => handleSelectOne(index)}
-                            className="w-4 h-4 rounded-sm"
-                          />
-                        </td>
-
-                        <td className="py-[1rem]">
                           <select
                             name="size"
-                            value={variant.size}
+                            value={newInventory.size}
                             onChange={(e) =>
-                              updateVariant(index, "size", e.target.value)
+                              handleChangeInventory(
+                                index,
+                                "size",
+                                e.target.value
+                              )
                             }
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
@@ -498,9 +519,13 @@ function EditProduct() {
                         <td className="py-[1rem]">
                           <select
                             name="color"
-                            value={variant.color}
+                            value={newInventory.color}
                             onChange={(e) =>
-                              updateVariant(index, "color", e.target.value)
+                              handleChangeInventory(
+                                index,
+                                "color",
+                                e.target.value
+                              )
                             }
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
@@ -517,13 +542,27 @@ function EditProduct() {
                           <input
                             type="number"
                             name="quantity"
-                            value={variant.quantity}
+                            value={newInventory.quantity}
                             onChange={(e) =>
-                              updateVariant(index, "quantity", e.target.value)
+                              handleChangeInventory(
+                                index,
+                                "quantity",
+                                Number(e.target.value)
+                              )
                             }
                             min={1}
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           />
+                        </td>
+
+                        <td className="py-[1rem]">
+                          <button
+                            type="button"
+                            onClick={(e) => handleRemoveInventory(index)}
+                            className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_12px] items-center justify-center gap-[5px] text-white"
+                          >
+                            Xóa
+                          </button>
                         </td>
                       </tr>
                     ))}

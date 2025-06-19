@@ -81,7 +81,7 @@ function Category() {
             {loading ? (
               <tr>
                 <td colSpan={8} className="w-full">
-                  <Loading />
+                  <Loading height={50} />
                 </td>
               </tr>
             ) : categories.length > 0 ? (

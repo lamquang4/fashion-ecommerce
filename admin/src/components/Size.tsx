@@ -57,7 +57,7 @@ function Size() {
             {loading ? (
               <tr>
                 <td colSpan={8} className="w-full">
-                  <Loading />
+                  <Loading height={50} />
                 </td>
               </tr>
             ) : sizes.length > 0 ? (

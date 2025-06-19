@@ -32,7 +32,7 @@ function Coupon() {
       name: "Hết lượt dùng",
       status: 2,
     },
-      {
+    {
       name: "Hết hạn",
       status: 3,
     },
@@ -89,7 +89,7 @@ function Coupon() {
             {loading ? (
               <tr>
                 <td colSpan={8} className="w-full">
-                  <Loading />
+                  <Loading height={50} />
                 </td>
               </tr>
             ) : coupons.length > 0 ? (

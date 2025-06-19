@@ -13,7 +13,7 @@ export interface Color {
 export default function useUpdateColor(id: string) {
   const dispatch = useAppDispatch();
   const updateColor = async (data: Color) => {
-    if (!id) throw new Error("ID không hợp lệ");
+    if (!id) return;
     try {
       dispatch(setLoading(true));
       const res = await axios.put(`/api/update-color/${id}`, data);

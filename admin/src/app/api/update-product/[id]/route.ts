@@ -14,14 +14,13 @@ export async function PUT(
   try {
     await connectMongoDB();
 
-    const { id } = params;
+    const { id } = await params;
     const formData = await req.formData();
     const name = formData.get("name") as string;
-    const price = formData.get("price") as string;
-    const discount = formData.get("discount") as string;
+    const price = Number(formData.get("price"));
+    const discount = Number(formData.get("discount"));
     const description = formData.get("description") as string;
     const category = formData.get("category") as string;
-    const variants = JSON.parse(formData.get("variants") as string);
     const slug = removeVietNamese(name);
     const files = formData.getAll("image") as File[];
 
@@ -44,9 +43,9 @@ export async function PUT(
       );
     }
 
-    if (product.image.length > 5) {
+    if (product.image.length + files.length > 5) {
       return NextResponse.json(
-        { msg: "Sản phẩm vượt quá 6 ảnh" },
+        { msg: "Hình sản phẩm đã đủ 5 hình" },
         { status: 404 }
       );
     }
@@ -71,18 +70,17 @@ export async function PUT(
     await fs.mkdir(uploadDirAdmin, { recursive: true });
     await fs.mkdir(uploadDirClient, { recursive: true });
 
-    let imagePaths: string[] = product.image; // giữ ảnh cũ nếu không upload ảnh mới
+    let imagePaths: string[] = [...product.image];
 
+    // thêm hình nếu sản phẩm chưa đủ 5 hinh
     if (files.length > 0 && files[0].size > 0) {
-      imagePaths = [];
-
       for (let i = 0; i < files.length; i++) {
         const file = files[i];
 
         if (!allowedTypes.includes(file.type)) {
           return NextResponse.json(
             {
-              msg: `Ảnh "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.`,
+              msg: `Hình "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.`,
             },
             { status: 400 }
           );
@@ -90,7 +88,7 @@ export async function PUT(
 
         if (file.size / 1024 > maxSizeKB) {
           return NextResponse.json(
-            { msg: `Ảnh "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.` },
+            { msg: `Hình "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.` },
             { status: 400 }
           );
         }
@@ -117,18 +115,18 @@ export async function PUT(
       category,
       slug,
       image: imagePaths,
+      status: product.status,
     };
 
     const updatedProduct = await Product.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
 
-    const currentInventories = await Inventory.find({ product: id });
-
     // Cập nhật
     const updatedInventories = JSON.parse(
-      formData.get("inventories") as string
+      formData.get("currentInventories") as string
     );
+
     for (let i = 0; i < updatedInventories.length; i++) {
       const inv = updatedInventories[i];
       if (inv._id) {
@@ -147,6 +145,7 @@ export async function PUT(
         }
 
         await Inventory.findByIdAndUpdate(inv._id, {
+          product: id,
           size: inv.size,
           color: inv.color,
           quantity: Number(inv.quantity),
@@ -155,29 +154,31 @@ export async function PUT(
     }
 
     // Thêm mới
-    const newVariants = JSON.parse(formData.get("variants") as string);
-    for (let i = 0; i < newVariants.length; i++) {
-      const variant = newVariants[i];
+    const newInventories = JSON.parse(formData.get("newInventories") as string);
 
-      const exists = await Inventory.findOne({
-        product: id,
-        size: variant.size,
-        color: variant.color,
-      });
+    for (let i = 0; i < newInventories.length; i++) {
+      const newInventory = newInventories[i];
+      if (newInventory.size && newInventory.color) {
+        const exists = await Inventory.findOne({
+          product: id,
+          size: newInventory.size,
+          color: newInventory.color,
+        });
 
-      if (exists) {
-        return NextResponse.json(
-          { msg: `Sản phẩm này bị trùng size và màu.` },
-          { status: 400 }
-        );
+        if (exists) {
+          return NextResponse.json(
+            { msg: `Sản phẩm này bị trùng size và màu.` },
+            { status: 400 }
+          );
+        }
+
+        await Inventory.create({
+          product: id,
+          size: newInventory.size,
+          color: newInventory.color,
+          quantity: Number(newInventory.quantity),
+        });
       }
-
-      await Inventory.create({
-        product: id,
-        size: variant.size,
-        color: variant.color,
-        quantity: Number(variant.quantity),
-      });
     }
 
     return NextResponse.json({ product: updatedProduct }, { status: 201 });

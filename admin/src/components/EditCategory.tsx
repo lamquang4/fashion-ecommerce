@@ -45,14 +45,8 @@ function EditCategory() {
         gender: String(category.gender),
         image: category.image,
       });
-    } else if (id && !category) {
-      const timeout = setTimeout(() => {
-        toast.error("Không tìm thấy danh mục");
-        router.push("/category");
-      }, 1500);
-      return () => clearTimeout(timeout);
     }
-  }, [category, router, id]);
+  }, [category]);
 
   const { updateCategory } = useUpdateCategory(id);
 

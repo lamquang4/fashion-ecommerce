@@ -31,13 +31,6 @@ function EditColor() {
         namecolor: color.namecolor,
         codecolor: color.codecolor,
       });
-    } else if (id && !color) {
-      const timeout = setTimeout(() => {
-        toast.error("Không tìm thấy màu");
-        router.push("/color");
-      }, 1500);
-
-      return () => clearTimeout(timeout);
     }
   }, [color, router, id]);
 
