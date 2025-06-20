@@ -20,9 +20,8 @@ export default function useDeleteUser(fetchUsers: () => void) {
 
     try {
       dispatch(setLoading(true));
-      const res = await axios.delete(`/api/delete-user/${id}`);
+      await axios.delete(`/api/delete-user/${id}`);
       fetchUsers();
-      return res.data.user;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

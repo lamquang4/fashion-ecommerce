@@ -4,12 +4,12 @@ import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export default function useDeleteColor(fetchColors: () => void) {
+export default function useDeleteInventory() {
   const dispatch = useAppDispatch();
-  const deleteColor = async (id: string) => {
+  const deleteInventory = async (id: string) => {
     const result = await Swal.fire({
       title: `Xác nhận xóa?`,
-      text: `Bạn có chắc muốn xóa màu này không?`,
+      text: `Bạn có chắc muốn xóa tồn kho này không?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Đồng ý",
@@ -20,8 +20,7 @@ export default function useDeleteColor(fetchColors: () => void) {
 
     try {
       dispatch(setLoading(true));
-      await axios.delete(`/api/delete-color/${id}`);
-      fetchColors();
+      await axios.delete(`/api/delete-inventory/${id}`);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
@@ -30,5 +29,5 @@ export default function useDeleteColor(fetchColors: () => void) {
     }
   };
 
-  return { deleteColor };
+  return { deleteInventory };
 }

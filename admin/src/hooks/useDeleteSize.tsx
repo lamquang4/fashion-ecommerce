@@ -20,9 +20,8 @@ export default function useDeleteSize(fetchSizes: () => void) {
 
     try {
       dispatch(setLoading(true));
-      const res = await axios.delete(`/api/delete-size/${id}`);
+      await axios.delete(`/api/delete-size/${id}`);
       fetchSizes();
-      return res.data.size;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

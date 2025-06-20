@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     if (checkName) {
       return NextResponse.json(
         { msg: "Tên sản phẩm đã được sử dụng" },
-        { status: 409 }
+        { status: 400 }
       );
     }
 
@@ -78,14 +78,14 @@ export async function POST(req: NextRequest) {
           {
             msg: `Hình "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.`,
           },
-          { status: 415 }
+          { status: 404 }
         );
       }
 
       if (file.size / 1024 > maxSizeKB) {
         return NextResponse.json(
           { msg: `Hình "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.` },
-          { status: 413 }
+          { status: 404 }
         );
       }
 
@@ -123,7 +123,7 @@ export async function POST(req: NextRequest) {
       if (seen.has(key)) {
         return NextResponse.json(
           { msg: "Sản phẩm này bị trùng size và màu." },
-          { status: 409 }
+          { status: 404 }
         );
       }
 
@@ -142,7 +142,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 500,
+        status: 400,
       }
     );
   }

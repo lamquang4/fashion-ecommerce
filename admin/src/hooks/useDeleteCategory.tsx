@@ -20,9 +20,8 @@ export default function useDeleteCategory(fetchCategories: () => void) {
 
     try {
       dispatch(setLoading(true));
-      const res = await axios.delete(`/api/delete-category/${id}`);
+      await axios.delete(`/api/delete-category/${id}`);
       fetchCategories();
-      return res.data.category;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

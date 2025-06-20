@@ -20,9 +20,8 @@ export default function useDeleteProduct(fetchProducts: () => void) {
 
     try {
       dispatch(setLoading(true));
-      const res = await axios.delete(`/api/delete-product/${id}`);
+      await axios.delete(`/api/delete-product/${id}`);
       fetchProducts();
-      return res.data.product;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

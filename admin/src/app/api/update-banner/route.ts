@@ -1,7 +1,7 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Banner from "@/model/Banner";
 import mongoose from "mongoose";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import fs from "node:fs/promises";
 import path from "path";
 export const config = {
@@ -9,7 +9,7 @@ export const config = {
     bodyParser: false,
   },
 };
-export async function PUT(req: Request) {
+export async function PUT(req: NextRequest) {
   try {
     await connectMongoDB();
 

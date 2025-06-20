@@ -2,9 +2,9 @@ import { connectMongoDB } from "@/lib/MongoConnect";
 import Coupon from "@/model/Coupon";
 import { validatePositiveInt } from "@/utils/validtePositiveInt";
 import mongoose from "mongoose";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 export async function PUT(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {

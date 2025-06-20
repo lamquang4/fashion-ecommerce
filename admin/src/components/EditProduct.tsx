@@ -21,6 +21,9 @@ import useUpdateProduct from "@/hooks/useUpdateProduct";
 import { useInventory } from "@/hooks/useInventory";
 import { useImageViewer1 } from "@/hooks/useImageViewer1";
 import { useImageViewer } from "@/hooks/useImageViewer";
+import useDeleteImage from "@/hooks/useDeleteImage";
+import useUpdateImage from "@/hooks/useUpdateImage";
+import useDeleteInventory from "@/hooks/useDeleteInventory";
 function EditProduct() {
   const {
     newInventories,
@@ -43,6 +46,8 @@ function EditProduct() {
     handleClear,
   } = useImageViewer1(); // cập nhật hình sản phẩm
 
+  console.log(selectedFiles1);
+
   const {
     previewImages,
     setPreviewImages,
@@ -63,7 +68,9 @@ function EditProduct() {
   const { colors } = useGetColors();
   const { sizes } = useGetSizes();
   const { updateProduct } = useUpdateProduct(id);
-
+  const { deleteImage } = useDeleteImage();
+  const { updateImage } = useUpdateImage(id);
+  const { deleteInventory } = useDeleteInventory();
   const [data, setData] = useState({
     name: "",
     price: 1,
@@ -84,8 +91,24 @@ function EditProduct() {
 
   const handleReset = () => {
     setNewInventories([{ size: "", color: "", quantity: 1 }]);
+    setSelectedFiles1([]);
+    setPreviewImages1([]);
     setSuccess(true);
     setTimeout(() => setSuccess(false), 100);
+  };
+
+  const handleDeleteImage = async (id: string, img: string) => {
+    if (data.image.length === 1) {
+      toast.error("Sản phẩm chỉ còn 1 hình không được xóa");
+      return;
+    }
+
+    try {
+      await deleteImage(id, img);
+      await fetchProduct();
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
   };
 
   const handleChange = (
@@ -96,6 +119,19 @@ function EditProduct() {
       ...prev,
       [name]: value,
     }));
+  };
+
+  const handleDeleteInventory = async (id: string) => {
+    if (inventories.length === 1) {
+      toast.error("Không thể xóa vì sản phẩm chỉ còn 1 tồn kho.");
+      return;
+    }
+    try {
+      await deleteInventory(id);
+      await fetchInventory();
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
   };
 
   useEffect(() => {
@@ -160,6 +196,16 @@ function EditProduct() {
       return;
     }
 
+    for (let i = 0; i < selectedFiles1.length; i++) {
+      const file = selectedFiles1[i];
+      if (file) {
+        const formData = new FormData();
+        formData.append("imageUpdate", file);
+        formData.append("imageNeedUpdate", data.image[i]);
+        await updateImage(formData);
+      }
+    }
+
     try {
       await updateProduct(formData);
       toast.success("Cập nhật thành công!");
@@ -221,7 +267,10 @@ function EditProduct() {
                         <div className="flex items-center flex-col gap-2">
                           {!previewImages1[index] ? (
                             <>
-                              <button type="button">
+                              <button
+                                type="button"
+                                onClick={() => handleDeleteImage(id, img)}
+                              >
                                 <VscTrash
                                   size={22}
                                   className="text-[#d9534f]"
@@ -436,6 +485,9 @@ function EditProduct() {
                         <td className="py-[1rem]">
                           <button
                             type="button"
+                            onClick={() =>
+                              handleDeleteInventory(inventory._id as string)
+                            }
                             className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_12px] items-center justify-center gap-[5px] text-white"
                           >
                             Xóa

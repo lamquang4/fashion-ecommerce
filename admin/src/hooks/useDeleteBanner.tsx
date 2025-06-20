@@ -20,9 +20,8 @@ export default function useDeleteBanner(fetchBanners: () => void) {
 
     try {
       dispatch(setLoading(true));
-      const res = await axios.delete(`/api/delete-banner/${id}`);
+      await axios.delete(`/api/delete-banner/${id}`);
       fetchBanners();
-      return res.data.banner;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

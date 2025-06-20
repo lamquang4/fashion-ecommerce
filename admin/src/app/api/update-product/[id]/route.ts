@@ -3,12 +3,12 @@ import Product from "@/model/Product";
 import Inventory from "@/model/Inventory";
 import { removeVietNamese } from "@/utils/removeVietnamese";
 import mongoose from "mongoose";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import fs from "node:fs/promises";
 import path from "path";
 
 export async function PUT(
-  req: Request,
+  req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -123,7 +123,6 @@ export async function PUT(
       category,
       slug,
       image: imagePaths,
-      status: product.status,
     };
 
     const updatedProduct = await Product.findByIdAndUpdate(id, updatedData, {

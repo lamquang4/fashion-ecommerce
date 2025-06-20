@@ -1,8 +1,8 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
-import Size from "@/model/Size";
+import Inventory from "@/model/Inventory";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-export async function PUT(
+export async function DELETE(
   req: NextRequest,
   { params }: { params: { id: string } }
 ) {
@@ -10,39 +10,32 @@ export async function PUT(
     await connectMongoDB();
 
     const { id } = await params;
-    const body = await req.json();
-
-    const { namesize } = body;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const size = await Size.findById(id);
-    if (!size) {
+    const inventory = await Inventory.findById(id);
+    if (!inventory) {
       return NextResponse.json(
-        { msg: "Không tìm thấy kích thước" },
+        { msg: "Không tìm thấy tồn kho" },
         { status: 404 }
       );
     }
 
-    const checkName = await Size.findOne({ namesize, _id: { $ne: id } });
-    if (checkName) {
+    const checkCount = await Inventory.find({
+      product: { $in: inventory.product },
+    });
+    if (checkCount.length === 1) {
       return NextResponse.json(
-        { msg: "Tên kích thước đã được sử dụng" },
-        { status: 400 }
+        { msg: "Không thể xóa vì sản phẩm chỉ còn 1 tồn kho." },
+        { status: 404 }
       );
     }
 
-    const updatedData: any = {
-      namesize,
-    };
+    const deleteInventory = await Inventory.findByIdAndDelete(id);
 
-    const updatedSize = await Size.findByIdAndUpdate(id, updatedData, {
-      new: true,
-    });
-
-    return NextResponse.json({ size: updatedSize }, { status: 201 });
+    return NextResponse.json({ Inventory: deleteInventory }, { status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

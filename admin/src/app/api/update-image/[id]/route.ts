@@ -1,5 +1,5 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
-import Category from "@/model/Category";
+import Product from "@/model/Product";
 import { removeVietNamese } from "@/utils/removeVietnamese";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
@@ -21,37 +21,26 @@ export async function PUT(
 
     const { id } = await params;
     const formData = await req.formData();
-    const namecategory = formData.get("namecategory") as string;
-    const gender = Number(formData.get("gender"));
-    const file = formData.get("image") as File;
+    const file = formData.get("imageUpdate") as File;
+    const image = formData.get("imageNeedUpdate") as string;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const category = await Category.findById(id);
-    if (!category) {
+    const product = await Product.findById(id);
+    if (!product) {
       return NextResponse.json(
-        { msg: "Không tìm thấy danh mục" },
+        { msg: "Không tìm thấy sản phẩm" },
         { status: 404 }
       );
     }
 
-    const checkName = await Category.findOne({
-      namecategory,
-      _id: { $ne: id },
-    });
-    if (checkName) {
-      return NextResponse.json(
-        { msg: "Tên danh mục đã được sử dụng" },
-        { status: 400 }
-      );
-    }
-
-    const slug = removeVietNamese(namecategory);
-    let imagePath = category.image;
+    let imageList = product.image;
+    const indexToUpdate = imageList.indexOf(image);
 
     if (file && file.size > 0) {
+      // Kiểm tra định dạng
       const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
       if (!allowedTypes.includes(file.type)) {
         return NextResponse.json(
@@ -62,6 +51,7 @@ export async function PUT(
         );
       }
 
+      // Kiểm tra dung lượng
       const maxSizeKB = 1000;
       if (file.size / 1024 > maxSizeKB) {
         return NextResponse.json(
@@ -72,63 +62,57 @@ export async function PUT(
         );
       }
 
-      // Xoá Hình cũ
-      if (imagePath) {
-        const fileNameOld = imagePath.split("/uploads/category/")[1];
-        const oldPathAdmin = path.join(
-          process.cwd(),
-          "public/uploads/category",
-          fileNameOld
-        );
-        const oldPathClient = path.join(
-          process.cwd(),
-          "../client/public/uploads/category",
-          fileNameOld
-        );
-        await fs.rm(oldPathAdmin, { force: true }).catch(() => {});
-        await fs.rm(oldPathClient, { force: true }).catch(() => {});
-      }
+      // Xoá hình cũ
+      const fileNameOld = image.split("/uploads/product/")[1];
+      const oldPathAdmin = path.join(
+        process.cwd(),
+        "public/uploads/product",
+        fileNameOld
+      );
+      const oldPathClient = path.join(
+        process.cwd(),
+        "../client/public/uploads/product",
+        fileNameOld
+      );
+      await fs.rm(oldPathAdmin, { force: true }).catch(() => {});
+      await fs.rm(oldPathClient, { force: true }).catch(() => {});
 
       // Lưu hình mới
-      const arrayBuffer = await file.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
+      const slug = removeVietNamese(file.name.split(".")[0]);
       const ext = file.name.split(".").pop();
       const timestamp = Date.now();
       const fileName = `${slug}-${timestamp}.${ext}`;
 
-      const uploadDirAdmin = path.join(
-        process.cwd(),
-        "public/uploads/category"
-      );
+      const uploadDirAdmin = path.join(process.cwd(), "public/uploads/product");
       const uploadDirClient = path.join(
         process.cwd(),
-        "../client/public/uploads/category"
+        "../client/public/uploads/product"
       );
       await fs.mkdir(uploadDirAdmin, { recursive: true });
       await fs.mkdir(uploadDirClient, { recursive: true });
 
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
       const filePathAdmin = path.join(uploadDirAdmin, fileName);
       const filePathClient = path.join(uploadDirClient, fileName);
 
       await fs.writeFile(filePathAdmin, buffer);
       await fs.writeFile(filePathClient, buffer);
 
-      imagePath = `/uploads/category/${fileName}`;
+      const newImagePath = `/uploads/product/${fileName}`;
+
+      // Cập nhật trong mảng
+      imageList[indexToUpdate] = newImagePath;
     }
 
-    const updatedData = {
-      namecategory,
-      gender,
-      slug,
-      image: imagePath,
-      status: category.status,
-    };
+    // Cập nhật sản phẩm
+    const updatedProduct = await Product.findByIdAndUpdate(
+      id,
+      { image: imageList },
+      { new: true }
+    );
 
-    const updatedCategory = await Category.findByIdAndUpdate(id, updatedData, {
-      new: true,
-    });
-
-    return NextResponse.json({ category: updatedCategory }, { status: 201 });
+    return NextResponse.json({ Product: updatedProduct }, { status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
