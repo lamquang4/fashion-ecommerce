@@ -19,9 +19,12 @@ import Loading from "./Loading";
 import useGetInventory from "@/hooks/useGetInventory";
 import useUpdateProduct from "@/hooks/useUpdateProduct";
 import { useInventory } from "@/hooks/useInventory";
+import { useImageViewer1 } from "@/hooks/useImageViewer1";
+import { useImageViewer } from "@/hooks/useImageViewer";
 function EditProduct() {
   const {
     newInventories,
+    setNewInventories,
     currentInventories,
     handleAddInventory,
     handleChangeInventory,
@@ -29,8 +32,37 @@ function EditProduct() {
     handleRemoveInventory,
     handleRemoveAllInventory,
     handleSendCurrentInventories,
-    handleResets,
   } = useInventory();
+
+  const {
+    selectedFiles1,
+    setSelectedFiles1,
+    previewImages1,
+    setPreviewImages1,
+    onFileSelect,
+    handleClear,
+  } = useImageViewer1(); // cập nhật hình sản phẩm
+
+  const {
+    previewImages,
+    setPreviewImages,
+    selectedFiles,
+    setSelectedFiles,
+    handlePreviewImage,
+    handleRemovePreviewImage,
+  } = useImageViewer(5); // thêm hình sản phẩm
+
+  console.log(selectedFiles);
+
+  const params = useParams();
+  const id = params.id as string;
+
+  const { product, fetchProduct } = useGetProduct(id);
+  const { inventories, fetchInventory } = useGetInventory(id);
+  const { categories } = useGetCategories();
+  const { colors } = useGetColors();
+  const { sizes } = useGetSizes();
+  const { updateProduct } = useUpdateProduct(id);
 
   const [data, setData] = useState({
     name: "",
@@ -40,47 +72,20 @@ function EditProduct() {
     image: [""],
     category: "",
   });
-
-  const loading = useAppSelector((state) => state.loadingSlice);
   const [success, setSuccess] = useState(false);
+  const loading = useAppSelector((state) => state.loadingSlice);
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
-  const [images, setImages] = useState<(File | null)[]>([]);
-  const [previewImages, setPreviewImages] = useState<(string | null)[]>([]);
+
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);
     setOpenViewer(true);
   };
 
-  const onFileSelect = (file: File, index: number) => {
-    setPreviewImages((prev) => {
-      // giải phóng URL cũ
-      if (prev[index]) URL.revokeObjectURL(prev[index]!);
-      const updated = [...prev];
-      updated[index] = URL.createObjectURL(file);
-      return updated;
-    });
-
-    setImages((prev) => {
-      const updated = [...prev];
-      updated[index] = file;
-      return updated;
-    });
-  };
-
-  const handleClear = (index: number) => {
-    setPreviewImages((prev) => {
-      if (prev[index]) URL.revokeObjectURL(prev[index]!);
-      const updated = [...prev];
-      updated[index] = null;
-      return updated;
-    });
-
-    setImages((prev) => {
-      const updated = [...prev];
-      updated[index] = null;
-      return updated;
-    });
+  const handleReset = () => {
+    setNewInventories([{ size: "", color: "", quantity: 1 }]);
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 100);
   };
 
   const handleChange = (
@@ -92,12 +97,6 @@ function EditProduct() {
       [name]: value,
     }));
   };
-
-  const params = useParams();
-  const id = params.id as string;
-
-  const product = useGetProduct(id);
-  const { inventories, fetchInventory } = useGetInventory(id);
 
   useEffect(() => {
     if (product) {
@@ -115,11 +114,6 @@ function EditProduct() {
     }
   }, [product, inventories]);
 
-  const { categories } = useGetCategories();
-  const { colors } = useGetColors();
-  const { sizes } = useGetSizes();
-  const { updateProduct } = useUpdateProduct(id);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
@@ -128,11 +122,11 @@ function EditProduct() {
     formData.append("discount", data.discount.toString());
     formData.append("description", data.description);
     formData.append("category", data.category);
-    images.forEach((image) => {
-      if (image) {
-        formData.append("image", image);
-      }
+
+    selectedFiles.forEach((file) => {
+      formData.append("image", file);
     });
+
     formData.append("currentInventories", JSON.stringify(currentInventories));
     if (newInventories) {
       formData.append("newInventories", JSON.stringify(newInventories));
@@ -169,14 +163,9 @@ function EditProduct() {
     try {
       await updateProduct(formData);
       toast.success("Cập nhật thành công!");
-
-      setSuccess(true);
-      setImages([]);
-      setTimeout(() => {
-        fetchInventory();
-        handleResets();
-        setSuccess(false);
-      }, 100);
+      handleReset();
+      fetchInventory();
+      fetchProduct();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -193,10 +182,13 @@ function EditProduct() {
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
               <InputImage
-                max={5}
                 InputId="img-product"
-                onFileSelect={(files) => setImages(files)}
                 success={success}
+                previewImages={previewImages}
+                handlePreviewImage={handlePreviewImage}
+                handleRemovePreviewImage={handleRemovePreviewImage}
+                setPreviewImages={setPreviewImages}
+                setSelectedFiles={setSelectedFiles}
               />
 
               <div className="flex gap-3 flex-wrap justify-center">
@@ -215,7 +207,7 @@ function EditProduct() {
                       >
                         <Image
                           Src={
-                            previewImages[index] ||
+                            previewImages1[index] ||
                             img ||
                             "/assets/banner/default-banner.jpg"
                           }
@@ -227,7 +219,7 @@ function EditProduct() {
 
                       <div className="absolute top-[6px] right-[6px]">
                         <div className="flex items-center flex-col gap-2">
-                          {!previewImages[index] ? (
+                          {!previewImages1[index] ? (
                             <>
                               <button type="button">
                                 <VscTrash
@@ -458,7 +450,7 @@ function EditProduct() {
                   <button
                     type="button"
                     onClick={handleAddInventory}
-                    disabled={newInventories.length + inventories.length >= 5}
+                    disabled={newInventories.length + inventories.length >= 30}
                     className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_10px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
                   >
                     Thêm số lượng

@@ -8,6 +8,9 @@ function AddSize() {
   const [data, setData] = useState({
     namesize: "",
   });
+
+  const { addSize } = useAddSize();
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -17,8 +20,6 @@ function AddSize() {
       [name]: value,
     }));
   };
-
-  const { addSize } = useAddSize();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

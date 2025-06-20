@@ -3,7 +3,7 @@ import useGetCoupon from "@/hooks/useGetCoupon";
 import useUpdateCoupon from "@/hooks/useUpdateCoupon";
 import { validatePositiveInt } from "@/utils/validtePositiveInt";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -20,18 +20,18 @@ function EditCoupon() {
     maxDiscountValue: 1,
   });
 
+  const params = useParams();
+  const id = params.id as string;
+
+  const coupon = useGetCoupon(id);
+  const { updateCoupon } = useUpdateCoupon(id);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
-
-  const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
-
-  const coupon = useGetCoupon(id);
 
   useEffect(() => {
     if (coupon) {
@@ -57,8 +57,6 @@ function EditCoupon() {
       });
     }
   }, [coupon]);
-
-  const { updateCoupon } = useUpdateCoupon(id);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -10,6 +10,13 @@ function EditSize() {
   const [data, setData] = useState({
     namesize: "",
   });
+
+  const params = useParams();
+  const id = params.id as string;
+
+  const size = useGetSize(id);
+  const { updateSize } = useUpdateSize(id);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -19,11 +26,6 @@ function EditSize() {
       [name]: value,
     }));
   };
-  const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
-
-  const size = useGetSize(id);
 
   useEffect(() => {
     if (size) {
@@ -32,8 +34,6 @@ function EditSize() {
       });
     }
   }, [size]);
-
-  const { updateSize } = useUpdateSize(id);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

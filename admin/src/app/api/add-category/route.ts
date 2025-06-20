@@ -27,10 +27,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    if (!file || file.size === 0) {
+    if (file.size === 0 || !file) {
       return NextResponse.json(
-        { msg: "Vui lòng chọn một Hình." },
-        { status: 400 }
+        { msg: "danh mục không để trống" },
+        { status: 404 }
       );
     }
 
@@ -63,7 +63,8 @@ export async function POST(req: NextRequest) {
 
     const slug = removeVietNamese(namecategory);
     const ext = file.name.split(".").pop(); // png, jpg, webp
-    const fileName = `${slug}.${ext}`;
+    const timestamp = Date.now();
+    const fileName = `${slug}-${timestamp}.${ext}`;
     const filePathAdmin = path.join(uploadDirAdmin, fileName);
     const filePathClient = path.join(uploadDirClient, fileName);
     await fs.writeFile(filePathAdmin, buffer);

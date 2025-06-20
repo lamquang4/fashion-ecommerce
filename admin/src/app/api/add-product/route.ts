@@ -31,6 +31,7 @@ export async function POST(req: NextRequest) {
         { status: 400 }
       );
     }
+
     const checkName = await Product.findOne({ name });
     if (checkName) {
       return NextResponse.json(
@@ -44,6 +45,13 @@ export async function POST(req: NextRequest) {
     if (files.length > 5) {
       return NextResponse.json(
         { msg: "Hình sản phẩm không vượt quá 5 hình" },
+        { status: 404 }
+      );
+    }
+
+    if (files.length === 0 || !files) {
+      return NextResponse.json(
+        { msg: "Hình sản phẩm không để trống" },
         { status: 404 }
       );
     }
@@ -84,7 +92,8 @@ export async function POST(req: NextRequest) {
       const arrayBuffer = await file.arrayBuffer();
       const buffer = new Uint8Array(arrayBuffer);
       const ext = file.name.split(".").pop();
-      const fileName = `${slug}-${i}.${ext}`;
+      const timestamp = Date.now();
+      const fileName = `${slug}-${timestamp}-${i}.${ext}`;
       const filePathAdmin = path.join(uploadDirAdmin, fileName);
       const filePathClient = path.join(uploadDirClient, fileName);
 

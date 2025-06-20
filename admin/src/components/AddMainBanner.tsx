@@ -4,35 +4,60 @@ import InputImage from "./InputImage";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import useAddBanner from "@/hooks/useAddBanner";
+import { useImageViewer } from "@/hooks/useImageViewer";
 function AddMainBanner() {
-  const [desktopImages, setDesktopImages] = useState<File[]>([]);
-  const [mobileImages, setMobileImages] = useState<File[]>([]);
   const [success, setSuccess] = useState(false);
 
   const { addBanner } = useAddBanner();
 
+  const {
+    previewImages: desktopPreviewImages,
+    setPreviewImages: setDesktopPreviewImages,
+    selectedFiles: desktopFiles,
+    setSelectedFiles: setDesktopFiles,
+    handlePreviewImage: handleDesktopPreviewImage,
+    handleRemovePreviewImage: handleRemoveDesktopPreviewImage,
+  } = useImageViewer(5);
+
+  const {
+    previewImages: mobilePreviewImages,
+    setPreviewImages: setMobilePreviewImages,
+    selectedFiles: mobileFiles,
+    setSelectedFiles: setMobileFiles,
+    handlePreviewImage: handleMobilePreviewImage,
+    handleRemovePreviewImage: handleRemoveMobilePreviewImage,
+  } = useImageViewer(5);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (desktopFiles.length === 0) {
+      toast.error("Hình banner chính desktop không để trống");
+      return;
+    }
+
+    if (mobileFiles.length === 0) {
+      toast.error("Hình banner chính mobile không để trống");
+      return;
+    }
+
     try {
-      if (desktopImages.length > 0) {
+      if (desktopFiles.length > 0) {
         const formData = new FormData();
-        desktopImages.forEach((file) => formData.append("image", file));
+        desktopFiles.forEach((file) => formData.append("image", file));
         formData.append("type", "0");
         await addBanner(formData);
       }
 
-      if (mobileImages.length > 0) {
+      if (mobileFiles.length > 0) {
         const formData = new FormData();
-        mobileImages.forEach((file) => formData.append("image", file));
+        mobileFiles.forEach((file) => formData.append("image", file));
         formData.append("type", "1");
         await addBanner(formData);
       }
       toast.success("Thêm thành công!");
 
       setSuccess(true);
-      setDesktopImages([]);
-      setMobileImages([]);
       setTimeout(() => setSuccess(false), 100);
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
@@ -54,10 +79,13 @@ function AddMainBanner() {
               </p>
 
               <InputImage
-                onFileSelect={(files) => setDesktopImages(files)}
-                max={5}
                 InputId="desktop-banner"
                 success={success}
+                previewImages={desktopPreviewImages}
+                handlePreviewImage={handleDesktopPreviewImage}
+                handleRemovePreviewImage={handleRemoveDesktopPreviewImage}
+                setPreviewImages={setDesktopPreviewImages}
+                setSelectedFiles={setDesktopFiles}
               />
             </div>
 
@@ -67,10 +95,13 @@ function AddMainBanner() {
               </p>
 
               <InputImage
-                onFileSelect={(files) => setMobileImages(files)}
-                max={5}
                 InputId="mobile-banner"
                 success={success}
+                previewImages={mobilePreviewImages}
+                handlePreviewImage={handleMobilePreviewImage}
+                handleRemovePreviewImage={handleRemoveMobilePreviewImage}
+                setPreviewImages={setMobilePreviewImages}
+                setSelectedFiles={setMobileFiles}
               />
             </div>
           </div>

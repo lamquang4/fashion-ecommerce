@@ -9,11 +9,9 @@ import useAddProduct from "@/hooks/useAddProduct";
 import toast from "react-hot-toast";
 import useGetColors from "@/hooks/useGetColors";
 import useGetSizes from "@/hooks/useGetSizes";
-import useGetInventory from "@/hooks/useGetInventory";
+import { useImageViewer } from "@/hooks/useImageViewer";
 function AddProduct() {
-  const [images, setImages] = useState<File[]>([]);
   const [success, setSuccess] = useState(false);
-
   const { categories } = useGetCategories();
   const { colors } = useGetColors();
   const { sizes } = useGetSizes();
@@ -21,11 +19,11 @@ function AddProduct() {
   const { addProduct } = useAddProduct();
   const {
     newInventories,
+    setNewInventories,
     handleAddInventory,
     handleChangeInventory,
     handleRemoveInventory,
     handleRemoveAllInventory,
-    handleResets,
   } = useInventory();
 
   const [data, setData] = useState({
@@ -36,6 +34,17 @@ function AddProduct() {
     category: "",
   });
 
+  const {
+    previewImages,
+    setPreviewImages,
+    selectedFiles,
+    setSelectedFiles,
+    handlePreviewImage,
+    handleRemovePreviewImage,
+  } = useImageViewer(5);
+
+  console.log(previewImages, selectedFiles);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -43,6 +52,19 @@ function AddProduct() {
     setData({
       ...data,
       [name]: value,
+    });
+  };
+
+  const handleReset = () => {
+    setNewInventories([{ size: "", color: "", quantity: 1 }]);
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 100);
+    setData({
+      name: "",
+      price: 1,
+      discount: 0,
+      description: "",
+      category: "",
     });
   };
 
@@ -55,13 +77,18 @@ function AddProduct() {
     formData.append("discount", data.discount.toString());
     formData.append("description", data.description);
     formData.append("category", data.category);
-    images.forEach((image) => {
+    selectedFiles.forEach((image) => {
       formData.append("image", image);
     });
     formData.append("newInventories", JSON.stringify(newInventories));
 
     if (Number(data.price) < Number(data.discount)) {
       toast.error("Giá sản phẩm phải lớn hơn giá giảm");
+      return;
+    }
+
+    if (selectedFiles.length <= 0) {
+      toast.error("Hình sản phẩm không để trống");
       return;
     }
 
@@ -77,20 +104,8 @@ function AddProduct() {
     }
     try {
       await addProduct(formData);
+      handleReset();
       toast.success("Thêm thành công!");
-      setData({
-        name: "",
-        price: 1,
-        discount: 0,
-        description: "",
-        category: "",
-      });
-      setSuccess(true);
-      setImages([]);
-      setTimeout(() => {
-        handleResets();
-        setSuccess(false);
-      }, 100);
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -107,10 +122,13 @@ function AddProduct() {
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
               <InputImage
-                max={5}
                 InputId="img-product"
-                onFileSelect={(files) => setImages(files)}
                 success={success}
+                previewImages={previewImages}
+                handlePreviewImage={handlePreviewImage}
+                handleRemovePreviewImage={handleRemovePreviewImage}
+                setPreviewImages={setPreviewImages}
+                setSelectedFiles={setSelectedFiles}
               />
             </div>
 
@@ -221,9 +239,10 @@ function AddProduct() {
 
                 <button
                   type="button"
+                  onClick={handleRemoveAllInventory}
                   className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_12px] items-center justify-center gap-[5px] text-white"
                 >
-                  Xóa
+                  Xóa tất cả
                 </button>
               </div>
 
@@ -316,6 +335,7 @@ function AddProduct() {
                         <td className="py-[1rem]">
                           <button
                             type="button"
+                            onClick={(e) => handleRemoveInventory(index)}
                             className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_12px] items-center justify-center gap-[5px] text-white"
                           >
                             Xóa

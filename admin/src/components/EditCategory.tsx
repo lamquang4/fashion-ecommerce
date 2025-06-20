@@ -6,8 +6,9 @@ import Image from "./Image";
 import ImageViewer from "./ImageViewer";
 import useUpdateCategory from "@/hooks/useUpdateCategory";
 import toast from "react-hot-toast";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import useGetCategory from "@/hooks/useGetCategory";
+import { useImageViewer } from "@/hooks/useImageViewer";
 function EditCategory() {
   const [data, setData] = useState({
     namecategory: "",
@@ -16,12 +17,25 @@ function EditCategory() {
   });
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
-  const [image, setImage] = useState<File | null>(null);
   const [success, setSuccess] = useState(false);
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);
     setOpenViewer(true);
   };
+  const params = useParams();
+  const id = params.id as string;
+  const category = useGetCategory(id);
+  const { updateCategory } = useUpdateCategory(id);
+
+  const {
+    previewImages,
+    setPreviewImages,
+    selectedFiles,
+    setSelectedFiles,
+    handlePreviewImage,
+    handleRemovePreviewImage,
+  } = useImageViewer(1);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -32,11 +46,10 @@ function EditCategory() {
     });
   };
 
-  const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
-
-  const category = useGetCategory(id);
+  const handelReset = () => {
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 100);
+  };
 
   useEffect(() => {
     if (category) {
@@ -48,16 +61,14 @@ function EditCategory() {
     }
   }, [category]);
 
-  const { updateCategory } = useUpdateCategory(id);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append("namecategory", data.namecategory);
     formData.append("gender", data.gender);
-    if (image) {
-      formData.append("image", image);
+    if (selectedFiles[0]) {
+      formData.append("image", selectedFiles[0]);
     }
 
     try {
@@ -67,12 +78,10 @@ function EditCategory() {
       setData({
         namecategory: updated.namecategory,
         gender: String(updated.gender),
-        image: `${updated.image}?t=${new Date().getTime()}`, // thêm thời gian
+        image: `${updated.image}?t=${new Date().getTime()}`,
       });
 
-      setSuccess(true);
-      setImage(null);
-      setTimeout(() => setSuccess(false), 100);
+      handelReset();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -88,10 +97,13 @@ function EditCategory() {
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
               <InputImage
-                max={1}
                 InputId="img-category"
-                onFileSelect={(files) => setImage(files[0])}
                 success={success}
+                previewImages={previewImages}
+                handlePreviewImage={handlePreviewImage}
+                handleRemovePreviewImage={handleRemovePreviewImage}
+                setPreviewImages={setPreviewImages}
+                setSelectedFiles={setSelectedFiles}
               />
 
               <div className="flex gap-3 flex-wrap justify-center">

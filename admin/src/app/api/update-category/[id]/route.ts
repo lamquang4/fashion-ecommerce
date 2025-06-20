@@ -93,7 +93,8 @@ export async function PUT(
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
       const ext = file.name.split(".").pop();
-      const fileName = `${slug}.${ext}`;
+      const timestamp = Date.now();
+      const fileName = `${slug}-${timestamp}.${ext}`;
 
       const uploadDirAdmin = path.join(
         process.cwd(),

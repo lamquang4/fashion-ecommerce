@@ -15,6 +15,8 @@ function AddCustomer() {
     birthday: "",
   });
 
+  const { addCustomer } = useAddCustomer();
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -24,8 +26,6 @@ function AddCustomer() {
       [name]: name === "email" ? value.toLowerCase() : value,
     }));
   };
-
-  const { addCustomer } = useAddCustomer();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

@@ -29,7 +29,9 @@ export const useInventory = () => {
   };
 
   const handleAddInventory = () => {
-    if (newInventories.length >= 5) return;
+    if (newInventories.length >= 30) {
+      return;
+    }
     setNewInventories((prev) => [
       ...prev,
       { size: "", color: "", quantity: 1 },
@@ -71,12 +73,10 @@ export const useInventory = () => {
     setCurrentInventories(updated);
   };
 
-  const handleResets = () => {
-    setNewInventories([{ size: "", color: "", quantity: 1 }]);
-  };
 
   return {
     newInventories,
+    setNewInventories,
     currentInventories,
     handleAddInventory,
     handleChangeInventory,
@@ -84,6 +84,5 @@ export const useInventory = () => {
     handleRemoveInventory,
     handleRemoveAllInventory,
     handleSendCurrentInventories,
-    handleResets,
   };
 };

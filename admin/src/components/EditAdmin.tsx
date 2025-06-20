@@ -4,7 +4,7 @@ import useUpdateUser from "@/hooks/useUpdateUser";
 import { validateEmail } from "@/utils/validateEmail";
 import { validatePhone } from "@/utils/validatePhone";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -18,17 +18,18 @@ function EditAdmin() {
     role: "",
   });
 
+  const params = useParams();
+  const id = params.id as string;
+
+  const user = useGetUser(id);
+  const { updateUser } = useUpdateUser(id);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
-  const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
-
-  const user = useGetUser(id);
 
   useEffect(() => {
     if (user) {
@@ -40,17 +41,8 @@ function EditAdmin() {
         password: "",
         role: String(user.role),
       });
-    } else if (id && !user) {
-      const timeout = setTimeout(() => {
-        toast.error("Không tìm thấy quản trị viên");
-        router.push("/admin");
-      }, 1500);
-
-      return () => clearTimeout(timeout);
     }
-  }, [user, router, id]);
-
-  const { updateUser } = useUpdateUser(id);
+  }, [user]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

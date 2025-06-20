@@ -18,14 +18,14 @@ function AddCoupon() {
     maxDiscountValue: 1,
   });
 
+  const { addCoupon } = useAddCoupon();
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
-
-  const { addCoupon } = useAddCoupon();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

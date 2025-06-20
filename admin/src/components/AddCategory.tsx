@@ -4,13 +4,24 @@ import React, { useState } from "react";
 import InputImage from "./InputImage";
 import useAddCategory from "@/hooks/useAddCategory";
 import toast from "react-hot-toast";
+import { useImageViewer } from "@/hooks/useImageViewer";
 function AddCategory() {
   const [data, setData] = useState({
     namecategory: "",
     gender: "",
   });
-  const [image, setImage] = useState<File | null>(null);
   const [success, setSuccess] = useState(false);
+  const { addCategory } = useAddCategory();
+
+  const {
+    previewImages,
+    setPreviewImages,
+    selectedFiles,
+    setSelectedFiles,
+    handlePreviewImage,
+    handleRemovePreviewImage,
+  } = useImageViewer(1);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -21,7 +32,14 @@ function AddCategory() {
     });
   };
 
-  const { addCategory } = useAddCategory();
+  const handelReset = () => {
+    setSuccess(true);
+    setTimeout(() => setSuccess(false), 100);
+    setData({
+      namecategory: "",
+      gender: "",
+    });
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,20 +47,19 @@ function AddCategory() {
     const formData = new FormData();
     formData.append("namecategory", data.namecategory);
     formData.append("gender", data.gender);
-    if (image) {
-      formData.append("image", image);
+    if (selectedFiles[0]) {
+      formData.append("image", selectedFiles[0]);
+    }
+
+    if (!selectedFiles) {
+      toast.error("Hình danh mục không để trống");
+      return;
     }
 
     try {
       await addCategory(formData);
       toast.success("Thêm thành công!");
-      setData({
-        namecategory: "",
-        gender: "",
-      });
-      setSuccess(true);
-      setImage(null);
-      setTimeout(() => setSuccess(false), 100);
+      handelReset();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -59,10 +76,13 @@ function AddCategory() {
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
               <InputImage
-                max={1}
                 InputId="img-category"
-                onFileSelect={(files) => setImage(files[0])}
                 success={success}
+                previewImages={previewImages}
+                handlePreviewImage={handlePreviewImage}
+                handleRemovePreviewImage={handleRemovePreviewImage}
+                setPreviewImages={setPreviewImages}
+                setSelectedFiles={setSelectedFiles}
               />
             </div>
 

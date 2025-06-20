@@ -16,14 +16,14 @@ function AddAdmin() {
     role: "",
   });
 
+  const { addAdmin } = useAddAdmin();
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
-
-  const { addAdmin } = useAddAdmin();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

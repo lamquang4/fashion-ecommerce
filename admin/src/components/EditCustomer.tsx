@@ -4,7 +4,7 @@ import useUpdateUser from "@/hooks/useUpdateUser";
 import { validateEmail } from "@/utils/validateEmail";
 import { validatePhone } from "@/utils/validatePhone";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -17,6 +17,11 @@ function EditCustomer() {
     birthday: "",
   });
 
+  const params = useParams();
+  const id = params.id as string;
+
+  const user = useGetUser(id);
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -27,12 +32,6 @@ function EditCustomer() {
     }));
   };
 
-  const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
-
-  const user = useGetUser(id);
-
   useEffect(() => {
     if (user) {
       setData({
@@ -42,15 +41,8 @@ function EditCustomer() {
         birthday: user.birthday?.slice(0, 10) || "",
         password: "",
       });
-    } else if (id && !user) {
-      const timeout = setTimeout(() => {
-        toast.error("Không tìm thấy khách hàng");
-        router.push("/customer");
-      }, 1500);
-
-      return () => clearTimeout(timeout);
     }
-  }, [user, router, id]);
+  }, [user]);
 
   const { updateUser } = useUpdateUser(id);
 

@@ -34,15 +34,24 @@ export async function POST(req: NextRequest) {
       if (!allowedTypes.includes(file.type)) {
         return NextResponse.json(
           {
-            msg: `Ảnh "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.`,
+            msg: `Hình "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.`,
           },
+          { status: 400 }
+        );
+      }
+
+      const maxSizeKB = 1000;
+      if (file.size / 1024 > maxSizeKB) {
+        return NextResponse.json(
+          { msg: `Hình "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.` },
           { status: 400 }
         );
       }
 
       const buffer = new Uint8Array(await file.arrayBuffer());
       const ext = file.name.split(".").pop();
-      const fileName = `${file.name}.${ext}`;
+      const timestamp = Date.now();
+      const fileName = `${file.name}-${timestamp}.${ext}`;
       const filePathAdmin = path.join(uploadDirAdmin, fileName);
       const filePathClient = path.join(uploadDirClient, fileName);
       await fs.writeFile(filePathAdmin, buffer);

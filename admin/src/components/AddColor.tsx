@@ -10,6 +10,8 @@ function AddColor() {
     codecolor: "#000000",
   });
 
+  const { addColor } = useAddColor();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setData({
@@ -17,8 +19,6 @@ function AddColor() {
       [name]: value,
     });
   };
-
-  const { addColor } = useAddColor();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

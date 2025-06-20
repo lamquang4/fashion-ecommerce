@@ -43,9 +43,16 @@ export async function PUT(
       );
     }
 
-    if (product.image.length + files.length > 5) {
+    if (files.length > 5) {
       return NextResponse.json(
-        { msg: "Hình sản phẩm đã đủ 5 hình" },
+        { msg: "Hình sản phẩm không vượt quá 5 hình" },
+        { status: 404 }
+      );
+    }
+
+    if (product.image.length === 5) {
+      return NextResponse.json(
+        { msg: "Sản phẩm đã đủ 5 ảnh" },
         { status: 404 }
       );
     }
@@ -96,7 +103,8 @@ export async function PUT(
         const arrayBuffer = await file.arrayBuffer();
         const buffer = new Uint8Array(arrayBuffer);
         const ext = file.name.split(".").pop();
-        const fileName = `${slug}-${i}.${ext}`;
+        const timestamp = Date.now();
+        const fileName = `${slug}-${timestamp}-${i}.${ext}`;
         const filePathAdmin = path.join(uploadDirAdmin, fileName);
         const filePathClient = path.join(uploadDirClient, fileName);
 

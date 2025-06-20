@@ -2,7 +2,7 @@
 import useGetColor from "@/hooks/useGetColor";
 import useUpdateColor from "@/hooks/useUpdateColor";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -19,7 +19,6 @@ function EditColor() {
       [name]: value,
     });
   };
-  const router = useRouter();
   const params = useParams();
   const id = params.id as string;
 
@@ -32,7 +31,7 @@ function EditColor() {
         codecolor: color.codecolor,
       });
     }
-  }, [color, router, id]);
+  }, [color]);
 
   const { updateColor } = useUpdateColor(id);
 

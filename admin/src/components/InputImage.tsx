@@ -1,23 +1,26 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "./Image";
-import toast from "react-hot-toast";
 import { HiMiniXMark } from "react-icons/hi2";
 import ImageViewer from "./ImageViewer";
+
 type InputImageProps = {
   InputId: string;
-  max: number;
-  onFileSelect?: (files: File[]) => void;
   success?: boolean;
+  previewImages: string[];
+  handlePreviewImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  handleRemovePreviewImage: (index: number) => void;
+  setPreviewImages: React.Dispatch<React.SetStateAction<string[]>>;
+  setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
 };
-function InputImage({ InputId, max, onFileSelect, success }: InputImageProps) {
-  const [previewImages, setPreviewImages] = useState<string[]>([]);
+function InputImage({ InputId, success, previewImages, handlePreviewImage, handleRemovePreviewImage, setPreviewImages, setSelectedFiles }: InputImageProps) {
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
 
   useEffect(() => {
     if (success) {
       setPreviewImages([]);
+      setSelectedFiles([]); 
     }
   }, [success]);
 
@@ -26,32 +29,6 @@ function InputImage({ InputId, max, onFileSelect, success }: InputImageProps) {
     setOpenViewer(true);
   };
 
-  const handleRemovePreviewImage = (index: number) => {
-    URL.revokeObjectURL(previewImages[index]);
-    const newImages = previewImages.filter((_, i) => i !== index);
-    setPreviewImages(newImages);
-  };
-
-  const handlePreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    const maxFiles = max;
-
-    if (!files) return;
-
-    const selectedFiles = Array.from(files);
-
-    if (previewImages.length + selectedFiles.length > maxFiles) {
-      toast.error(`Tổng số hình không được vượt quá ${maxFiles}.`);
-      return;
-    }
-
-    const imageUrls = selectedFiles.map((file) => URL.createObjectURL(file));
-    setPreviewImages((prev) => [...prev, ...imageUrls]);
-
-    if (onFileSelect) {
-      onFileSelect(selectedFiles);
-    }
-  };
   return (
     <>
       <div className="flex items-center justify-center w-full">
