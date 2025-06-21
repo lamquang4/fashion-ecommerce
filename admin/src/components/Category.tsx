@@ -14,7 +14,14 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import useDeleteCategory from "@/hooks/useDeleteCategory";
 import useVisibleCategory from "@/hooks/useVisibleCategory";
 function Category() {
-  const { categories, fetchCategories } = useGetCategories();
+  const {
+    categories,
+    fetchCategories,
+    totalPages,
+    totalItems,
+    currentPage,
+    limit,
+  } = useGetCategories();
   const loading = useAppSelector((state) => state.loadingSlice);
   const { deleteCategory } = useDeleteCategory(fetchCategories);
   const { visibleCategory } = useVisibleCategory(fetchCategories);
@@ -166,7 +173,12 @@ function Category() {
           </tbody>
         </table>
       </div>
-      <Pagination />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        limit={limit}
+        totalItems={totalItems}
+      />
     </>
   );
 }

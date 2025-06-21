@@ -40,7 +40,7 @@ function EditSize() {
 
     try {
       await updateSize({
-        namesize: data.namesize,
+        namesize: data.namesize.trim(),
       });
       toast.success("Cập nhật thành công!");
     } catch (err: any) {

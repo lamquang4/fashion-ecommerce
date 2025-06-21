@@ -104,7 +104,7 @@ function EditCoupon() {
 
     try {
       await updateCoupon({
-        code: data.code.toUpperCase(),
+        code: data.code.toUpperCase().trim(),
         limit: data.limit,
         amount: data.amount,
         discountType: parseInt(data.discountType),

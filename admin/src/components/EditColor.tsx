@@ -40,7 +40,7 @@ function EditColor() {
 
     try {
       await updateColor({
-        namecolor: data.namecolor,
+        namecolor: data.namecolor.trim(),
         codecolor: data.codecolor,
       });
       toast.success("Cập nhật thành công!");

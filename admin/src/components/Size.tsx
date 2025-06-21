@@ -11,7 +11,8 @@ import Loading from "./Loading";
 import Image from "./Image";
 import useDeleteSize from "@/hooks/useDeleteSize";
 function Size() {
-  const { sizes, fetchSizes } = useGetSizes();
+  const { sizes, fetchSizes, totalPages, totalItems, currentPage, limit } =
+    useGetSizes();
   const loading = useAppSelector((state) => state.loadingSlice);
   const { deleteSize } = useDeleteSize(fetchSizes);
 
@@ -104,7 +105,12 @@ function Size() {
         </table>
       </div>
 
-      <Pagination />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        limit={limit}
+        totalItems={totalItems}
+      />
     </>
   );
 }

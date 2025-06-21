@@ -9,7 +9,14 @@ import Loading from "./Loading";
 import { useAppSelector } from "@/redux/hook";
 function Inventory() {
   const loading = useAppSelector((state) => state.loadingSlice);
-  const { inventories, fetchInventories } = useGetInventories();
+  const {
+    inventories,
+    fetchInventories,
+    totalPages,
+    totalItems,
+    currentPage,
+    limit,
+  } = useGetInventories();
   const array = [
     {
       name: "Tất cả",
@@ -145,7 +152,12 @@ function Inventory() {
         </table>
       </div>
 
-      <Pagination />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        limit={limit}
+        totalItems={totalItems}
+      />
     </>
   );
 }

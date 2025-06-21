@@ -29,21 +29,21 @@ function AddCustomer() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateEmail(data.email)) {
+    if (!validateEmail(data.email.trim())) {
       toast.error("Email không hợp lệ");
       return;
     }
-    if (!validatePhone(data.phone)) {
+    if (!validatePhone(data.phone.trim())) {
       toast.error("Số điện thoại không hợp lệ");
       return;
     }
     try {
       await addCustomer({
-        fullname: data.fullname,
-        email: data.email,
-        phone: data.phone,
+        fullname: data.fullname.trim(),
+        email: data.email.trim(),
+        phone: data.phone.trim(),
         birthday: data.birthday,
-        password: data.password,
+        password: data.password.trim(),
       });
       toast.success("Thêm thành công!");
       setData({

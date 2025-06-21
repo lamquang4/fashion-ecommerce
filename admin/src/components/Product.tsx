@@ -15,7 +15,14 @@ import Loading from "./Loading";
 import { useAppSelector } from "@/redux/hook";
 function Product() {
   const loading = useAppSelector((state) => state.loadingSlice);
-  const { products, fetchProducts } = useGetProducts();
+  const {
+    products,
+    fetchProducts,
+    totalPages,
+    totalItems,
+    currentPage,
+    limit,
+  } = useGetProducts();
   const { visibleProduct } = useVisibleProduct(fetchProducts);
   const { deleteProduct } = useDeleteProduct(fetchProducts);
   const array = [
@@ -200,7 +207,12 @@ function Product() {
         </table>
       </div>
 
-      <Pagination />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        limit={limit}
+        totalItems={totalItems}
+      />
     </>
   );
 }

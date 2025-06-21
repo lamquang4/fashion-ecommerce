@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/redux/hook";
 import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
 export interface Size {
   _id: string;
@@ -12,13 +13,21 @@ export interface Size {
 
 export default function useGetSizes() {
   const [sizes, setSizes] = useState<Size[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const searchParams = useSearchParams();
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = parseInt(searchParams.get("limit") || "10");
   const dispatch = useAppDispatch();
 
   const fetchSizes = async () => {
     dispatch(setLoading(true));
     try {
-      const res = await axios.get("/api/get-sizes");
-      setSizes(res.data);
+      const res = await axios.get(`/api/get-sizes?page=${page}&limit=${limit}`);
+      setSizes(res.data.sizes);
+      setTotalPages(res.data.totalPages);
+      setTotalItems(res.data.total);
     } catch (err) {
       console.error("Lỗi:", err);
     } finally {
@@ -28,7 +37,14 @@ export default function useGetSizes() {
 
   useEffect(() => {
     fetchSizes();
-  }, []);
+  }, [page, limit]);
 
-  return { sizes, fetchSizes };
+  return {
+    sizes,
+    fetchSizes,
+    totalPages,
+    totalItems,
+    currentPage: page,
+    limit,
+  };
 }

@@ -45,7 +45,7 @@ function AddCategory() {
     e.preventDefault();
 
     const formData = new FormData();
-    formData.append("namecategory", data.namecategory);
+    formData.append("namecategory", data.namecategory.trim());
     formData.append("gender", data.gender);
     if (selectedFiles[0]) {
       formData.append("image", selectedFiles[0]);

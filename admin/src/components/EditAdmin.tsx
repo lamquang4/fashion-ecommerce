@@ -56,11 +56,11 @@ function EditAdmin() {
     }
     try {
       await updateUser({
-        fullname: data.fullname,
-        email: data.email,
-        phone: data.phone,
+        fullname: data.fullname.trim(),
+        email: data.email.trim(),
+        phone: data.phone.trim(),
         birthday: data.birthday,
-        password: data.password,
+        password: data.password.trim(),
         role: Number(data.role),
       });
       toast.success("Cập nhật thành công!");

@@ -153,10 +153,10 @@ function EditProduct() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const formData = new FormData();
-    formData.append("name", data.name);
+    formData.append("name", data.name.trim());
     formData.append("price", data.price.toString());
     formData.append("discount", data.discount.toString());
-    formData.append("description", data.description);
+    formData.append("description", data.description.trim());
     formData.append("category", data.category);
 
     selectedFiles.forEach((file) => {

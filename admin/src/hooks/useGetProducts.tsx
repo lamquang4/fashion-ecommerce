@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/redux/hook";
 import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
 export interface Product {
   _id: string;
@@ -23,13 +24,23 @@ export interface Product {
 
 export default function useGetProducts() {
   const [products, setProducts] = useState<Product[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const searchParams = useSearchParams();
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = parseInt(searchParams.get("limit") || "10");
   const dispatch = useAppDispatch();
 
   const fetchProducts = async () => {
     dispatch(setLoading(true));
     try {
-      const res = await axios.get("/api/get-products");
-      setProducts(res.data);
+      const res = await axios.get(
+        `/api/get-products?page=${page}&limit=${limit}`
+      );
+      setProducts(res.data.products);
+      setTotalPages(res.data.totalPages);
+      setTotalItems(res.data.total);
     } catch (err) {
       console.error("Lỗi:", err);
     } finally {
@@ -39,7 +50,14 @@ export default function useGetProducts() {
 
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [page, limit]);
 
-  return { products, fetchProducts };
+  return {
+    products,
+    fetchProducts,
+    totalPages,
+    totalItems,
+    currentPage: page,
+    limit,
+  };
 }

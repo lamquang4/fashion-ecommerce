@@ -11,7 +11,8 @@ import useDeleteCoupon from "@/hooks/useDeleteCoupon";
 import Loading from "./Loading";
 import Image from "./Image";
 function Coupon() {
-  const { coupons, fetchCoupons } = useGetCoupons();
+  const { coupons, fetchCoupons, totalPages, totalItems, currentPage, limit } =
+    useGetCoupons();
   const { deleteCoupon } = useDeleteCoupon(fetchCoupons);
   const loading = useAppSelector((state) => state.loadingSlice);
 
@@ -180,7 +181,12 @@ function Coupon() {
         </table>
       </div>
 
-      <Pagination />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        limit={limit}
+        totalItems={totalItems}
+      />
     </>
   );
 }

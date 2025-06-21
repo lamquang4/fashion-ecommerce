@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/redux/hook";
 import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
 export interface User {
   _id: string;
@@ -18,13 +19,23 @@ export interface User {
 
 export default function useGetAdmins() {
   const [admins, setAdmins] = useState<User[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const searchParams = useSearchParams();
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = parseInt(searchParams.get("limit") || "10");
   const dispatch = useAppDispatch();
 
   const fetchAdmins = async () => {
     dispatch(setLoading(true));
     try {
-      const res = await axios.get("/api/get-admins");
-      setAdmins(res.data);
+      const res = await axios.get(
+        `/api/get-admins?page=${page}&limit=${limit}`
+      );
+      setAdmins(res.data.admins);
+      setTotalPages(res.data.totalPages);
+      setTotalItems(res.data.total);
     } catch (err) {
       console.error("Lỗi:", err);
     } finally {
@@ -34,7 +45,14 @@ export default function useGetAdmins() {
 
   useEffect(() => {
     fetchAdmins();
-  }, []);
+  }, [page, limit]);
 
-  return { admins, fetchAdmins };
+  return {
+    admins,
+    fetchAdmins,
+    totalPages,
+    totalItems,
+    currentPage: page,
+    limit,
+  };
 }

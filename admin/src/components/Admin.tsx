@@ -13,7 +13,8 @@ import { useAppSelector } from "@/redux/hook";
 import Loading from "./Loading";
 import useDeleteUser from "@/hooks/useDeleteUser";
 function Admin() {
-  const { admins, fetchAdmins } = useGetAdmins();
+  const { admins, fetchAdmins, totalPages, totalItems, currentPage, limit } =
+    useGetAdmins();
   const { blockUser } = useBlockUser(fetchAdmins);
   const { deleteUser } = useDeleteUser(fetchAdmins);
   const loading = useAppSelector((state) => state.loadingSlice);
@@ -164,7 +165,12 @@ function Admin() {
         </table>
       </div>
 
-      <Pagination />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        limit={limit}
+        totalItems={totalItems}
+      />
     </>
   );
 }

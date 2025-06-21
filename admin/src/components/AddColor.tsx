@@ -25,7 +25,7 @@ function AddColor() {
 
     try {
       await addColor({
-        namecolor: data.namecolor,
+        namecolor: data.namecolor.trim(),
         codecolor: data.codecolor,
       });
       toast.success("Thêm thành công!");

@@ -73,7 +73,7 @@ function AddCoupon() {
 
     try {
       await addCoupon({
-        code: data.code.toUpperCase(),
+        code: data.code.toUpperCase().trim(),
         limit: data.limit,
         amount: data.amount,
         discountType: parseInt(data.discountType),

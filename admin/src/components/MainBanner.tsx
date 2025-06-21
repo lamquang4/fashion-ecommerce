@@ -14,7 +14,14 @@ import useDeleteBanner from "@/hooks/useDeleteBanner";
 import useVisibleBanner from "@/hooks/useVisibleBanner";
 function MainBanner() {
   const loading = useAppSelector((state) => state.loadingSlice);
-  const { mainBanners, fetchMainBanners } = useGetMainBanners();
+  const {
+    mainBanners,
+    fetchMainBanners,
+    totalPages,
+    totalItems,
+    currentPage,
+    limit,
+  } = useGetMainBanners();
   const { deleteBanner } = useDeleteBanner(fetchMainBanners);
   const { visibleBanner } = useVisibleBanner(fetchMainBanners);
   const array = [
@@ -169,7 +176,12 @@ function MainBanner() {
           </tbody>
         </table>
       </div>
-      <Pagination />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        limit={limit}
+        totalItems={totalItems}
+      />
     </>
   );
 }

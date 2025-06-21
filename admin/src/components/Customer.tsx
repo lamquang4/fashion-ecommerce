@@ -13,7 +13,14 @@ import useDeleteUser from "@/hooks/useDeleteUser";
 import { useAppSelector } from "@/redux/hook";
 import Loading from "./Loading";
 function Customer() {
-  const { customers, fetchCustomers } = useGetCustomers();
+  const {
+    customers,
+    fetchCustomers,
+    totalPages,
+    totalItems,
+    currentPage,
+    limit,
+  } = useGetCustomers();
   const { blockUser } = useBlockUser(fetchCustomers);
   const { deleteUser } = useDeleteUser(fetchCustomers);
   const loading = useAppSelector((state) => state.loadingSlice);
@@ -152,7 +159,12 @@ function Customer() {
         </table>
       </div>
 
-      <Pagination />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        limit={limit}
+        totalItems={totalItems}
+      />
     </>
   );
 }

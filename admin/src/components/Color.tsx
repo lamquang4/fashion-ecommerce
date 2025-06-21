@@ -10,7 +10,8 @@ import Image from "./Image";
 import Loading from "./Loading";
 import useDeleteColor from "@/hooks/useDeleteColor";
 function Color() {
-  const { colors, fetchColors } = useGetColors();
+  const { colors, fetchColors, totalPages, totalItems, currentPage, limit } =
+    useGetColors();
   const loading = useAppSelector((state) => state.loadingSlice);
   const { deleteColor } = useDeleteColor(fetchColors);
   return (
@@ -116,7 +117,12 @@ function Color() {
         </table>
       </div>
 
-      <Pagination />
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        limit={limit}
+        totalItems={totalItems}
+      />
     </>
   );
 }

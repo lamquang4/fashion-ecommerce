@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/redux/hook";
 import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
+import { useSearchParams } from "next/navigation";
 
 export interface Category {
   _id: string;
@@ -16,13 +17,23 @@ export interface Category {
 
 export default function useGetCategories() {
   const [categories, setCategories] = useState<Category[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
+  const [totalItems, setTotalItems] = useState(0);
+
+  const searchParams = useSearchParams();
+  const page = parseInt(searchParams.get("page") || "1");
+  const limit = parseInt(searchParams.get("limit") || "10");
   const dispatch = useAppDispatch();
 
   const fetchCategories = async () => {
     dispatch(setLoading(true));
     try {
-      const res = await axios.get("/api/get-categories");
-      setCategories(res.data);
+      const res = await axios.get(
+        `/api/get-categories?page=${page}&limit=${limit}`
+      );
+      setCategories(res.data.categories);
+      setTotalPages(res.data.totalPages);
+      setTotalItems(res.data.total);
     } catch (err) {
       console.error("Lỗi:", err);
     } finally {
@@ -32,7 +43,14 @@ export default function useGetCategories() {
 
   useEffect(() => {
     fetchCategories();
-  }, []);
+  }, [page, limit]);
 
-  return { categories, fetchCategories };
+  return {
+    categories,
+    fetchCategories,
+    totalPages,
+    totalItems,
+    currentPage: page,
+    limit,
+  };
 }
