@@ -80,8 +80,9 @@ export async function PUT(req: NextRequest) {
         // Thêm ảnh mới
         const buffer = new Uint8Array(await file.arrayBuffer());
         const ext = file.name.split(".").pop();
+        const originalName = file.name.split(".").slice(0, -1).join(".");
         const timestamp = Date.now();
-        const fileName = `${file.name}-${timestamp}.${ext}`;
+        const fileName = `${originalName}-${timestamp}.${ext}`;
         const filePathAdmin = path.join(uploadDirAdmin, fileName);
         const filePathClient = path.join(uploadDirClient, fileName);
         await fs.writeFile(filePathAdmin, buffer);

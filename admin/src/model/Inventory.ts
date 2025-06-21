@@ -4,6 +4,7 @@ const inventorySchema = new Schema(
   {
     product: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Product",
       required: true,
     },
     quantity: {
@@ -12,10 +13,12 @@ const inventorySchema = new Schema(
     },
     size: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Size",
       required: true,
     },
     color: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: "Color",
       required: true,
     },
   },

@@ -6,12 +6,22 @@ import TinyMCEEditor from "./TinyMCEEditor";
 import Image from "./Image";
 import { VscTrash } from "react-icons/vsc";
 import ImageViewer from "./ImageViewer";
+import { useImageViewer } from "@/hooks/useImageViewer";
 function EditBlog() {
   const [data, setData] = useState({
     title: "",
     status: "",
     content: "",
   });
+
+  const {
+    previewImages,
+    setPreviewImages,
+    selectedFiles,
+    setSelectedFiles,
+    handlePreviewImage,
+    handleRemovePreviewImage,
+  } = useImageViewer(1);
 
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
@@ -40,7 +50,14 @@ function EditBlog() {
 
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-              <InputImage max={1} InputId="img-blog" />
+              <InputImage
+                InputId="img-blog"
+                previewImages={previewImages}
+                handlePreviewImage={handlePreviewImage}
+                handleRemovePreviewImage={handleRemovePreviewImage}
+                setPreviewImages={setPreviewImages}
+                setSelectedFiles={setSelectedFiles}
+              />
 
               <div className="flex gap-3 flex-wrap justify-center">
                 <div className=" relative">

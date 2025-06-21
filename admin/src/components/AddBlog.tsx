@@ -3,6 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import InputImage from "./InputImage";
 import TinyMCEEditor from "./TinyMCEEditor";
+import { useImageViewer } from "@/hooks/useImageViewer";
 
 function AddBlog() {
   const [data, setData] = useState({
@@ -10,6 +11,15 @@ function AddBlog() {
     status: "",
     content: "",
   });
+
+  const {
+    previewImages,
+    setPreviewImages,
+    selectedFiles,
+    setSelectedFiles,
+    handlePreviewImage,
+    handleRemovePreviewImage,
+  } = useImageViewer(1);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -27,7 +37,14 @@ function AddBlog() {
 
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-            <InputImage max={1} InputId="img-new" />
+            <InputImage
+              InputId="img-blog"
+              previewImages={previewImages}
+              handlePreviewImage={handlePreviewImage}
+              handleRemovePreviewImage={handleRemovePreviewImage}
+              setPreviewImages={setPreviewImages}
+              setSelectedFiles={setSelectedFiles}
+            />
           </div>
           <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
             <p className="font-bold text-[1rem] text-[#74767d] mb-[10px]">

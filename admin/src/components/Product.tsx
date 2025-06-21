@@ -106,9 +106,6 @@ function Product() {
                         <p className="text-[0.9rem] font-medium  text-[#444]">
                           {product.name}
                         </p>
-                        <p className="text-[0.9rem]  text-[#444]">
-                          Kích thước: XL, L, S
-                        </p>
                       </div>
                     </div>
                   </td>
@@ -144,7 +141,8 @@ function Product() {
                   </td>
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    Nam / Sơ mi
+                    {product.category.namecategory}/
+                    {product.category.gender === 1 ? "Nam" : "Nữ"}
                   </td>
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">

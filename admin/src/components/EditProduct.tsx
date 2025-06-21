@@ -173,29 +173,6 @@ function EditProduct() {
       return;
     }
 
-    const comboSet = new Set();
-
-    const addComboOrFail = (size: string, color: string) => {
-      const key = `${size}-${color}`;
-      if (comboSet.has(key)) {
-        toast.error(`Sản phẩm này bị trùng size và màu.`);
-        return true;
-      }
-      comboSet.add(key);
-      return false;
-    };
-
-    const hasDuplicateInventories = currentInventories.some((inv) =>
-      addComboOrFail(inv.size, inv.color)
-    );
-    const hasDuplicateNewInventories = newInventories.some((newInventory) =>
-      addComboOrFail(newInventory.size, newInventory.color)
-    );
-
-    if (hasDuplicateInventories || hasDuplicateNewInventories) {
-      return;
-    }
-
     for (let i = 0; i < selectedFiles1.length; i++) {
       const file = selectedFiles1[i];
       if (file) {
@@ -432,7 +409,6 @@ function EditProduct() {
                             }
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
-                            <option value="">Chọn kích thước</option>
                             {sizes.map((size, index) => (
                               <option value={size._id} key={index}>
                                 {size.namesize}
@@ -455,7 +431,6 @@ function EditProduct() {
                             }
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
-                            <option value="">Chọn màu</option>
                             {colors.map((color, index) => (
                               <option value={color._id} key={index}>
                                 {color.namecolor}

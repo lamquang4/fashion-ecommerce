@@ -4,7 +4,12 @@ import { LiaExternalLinkAltSolid } from "react-icons/lia";
 import Image from "./Image";
 import Pagination from "./Pagination";
 import FilterDropDownMenu from "./FilterDropDownMenu";
+import useGetInventories from "@/hooks/useGetInventories";
+import Loading from "./Loading";
+import { useAppSelector } from "@/redux/hook";
 function Inventory() {
+  const loading = useAppSelector((state) => state.loadingSlice);
+  const { inventories, fetchInventories } = useGetInventories();
   const array = [
     {
       name: "Tất cả",
@@ -23,7 +28,7 @@ function Inventory() {
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
-          Hàng trong kho (20)
+          Hàng trong kho ({inventories.length})
         </h1>
       </div>
 
@@ -58,62 +63,84 @@ function Inventory() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="pl-[1rem] py-[1rem] w-[300px]">
-                <div className="flex gap-[10px] items-center">
-                  <div className="cursor-pointer">
-                    <Image
-                      Src={"assets/products/IMGSP0841.png"}
-                      Alt={""}
-                      ClassName={"w-[75px] cursor-pointer"}
-                      loadingType="lazy"
-                    />
-                  </div>
+            {loading ? (
+              <tr>
+                <td colSpan={8} className="w-full">
+                  <Loading height={50} />
+                </td>
+              </tr>
+            ) : inventories.length > 0 ? (
+              inventories.map((inventory, index) => (
+                <tr key={index}>
+                  <td className="pl-[1rem] py-[1rem] w-[300px]">
+                    <div className="flex gap-[10px] items-center">
+                      <div className="cursor-pointer">
+                        <Image
+                          Src={inventory.product.image[0]}
+                          Alt={""}
+                          ClassName={"w-[75px] cursor-pointer"}
+                          loadingType="lazy"
+                        />
+                      </div>
 
-                  <div className="flex flex-col gap-[5px]">
-                    <p className="text-[0.9rem] font-medium  text-[#444]">
-                      Áo sơ mi
-                    </p>
-                  </div>
-                </div>
-              </td>
+                      <div className="flex flex-col gap-[5px]">
+                        <p className="text-[0.9rem] font-medium  text-[#444]">
+                          {inventory.product.name}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
 
-              <td className="py-[1rem] text-[0.9rem]  text-[#444]">
-                <div className="flex gap-[10px] items-center text-[#FF0000]">
-                  <div className="w-5 h-5 bg-[#FF0000]"></div>
-                  Đỏ tươi
-                </div>
-              </td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">XL</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">20</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">20/4/2025</td>
+                  <td className="py-[1rem] text-[0.9rem]  text-[#444]">
+                    <div className="flex gap-[10px] items-center">
+                      <div
+                        className={`w-5 h-5 border-gray-500 border`}
+                        style={{ backgroundColor: inventory.color.codecolor }}
+                      ></div>
+                      {inventory.color.namecolor}
+                    </div>
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {inventory.size.namesize}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {inventory.quantity}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {new Date(inventory.createdAt as string).toLocaleDateString(
+                      "vi-VN"
+                    )}
+                  </td>
 
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">Còn hàng</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                <div className="flex items-center gap-[15px]">
-                  <Link href={"/product"}>
-                    <LiaExternalLinkAltSolid
-                      size={23}
-                      className="text-[#076ffe]"
-                    />
-                  </Link>
-                </div>
-              </td>
-            </tr>
-
-            {/*
-           <tr>
-                <td colSpan="8" className="w-full h-[70vh]">
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {inventory.quantity === 0 ? "Hết hàng" : "Còn hàng"}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex items-center gap-[15px]">
+                      <Link href={`/edit-product/${inventory.product._id}`}>
+                        <LiaExternalLinkAltSolid
+                          size={23}
+                          className="text-[#076ffe]"
+                        />
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex flex-col justify-center items-center">
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
                       ClassName={"w-[180px]"}
+                      loadingType="lazy"
                     />
                   </div>
                 </td>
               </tr>
-    */}
+            )}
           </tbody>
         </table>
       </div>

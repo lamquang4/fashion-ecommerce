@@ -13,7 +13,11 @@ export interface Product {
   image: string[];
   slug: string;
   status: number;
-  category: string;
+  category: {
+    _id: string;
+    namecategory: string;
+    gender: number;
+  };
   createdAt: string;
 }
 
