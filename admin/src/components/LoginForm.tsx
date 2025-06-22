@@ -2,7 +2,42 @@
 import Image from "./Image";
 import { GoLock } from "react-icons/go";
 import { AiOutlineMail } from "react-icons/ai";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { signIn } from "next-auth/react";
+import toast from "react-hot-toast";
 function LoginForm() {
+  const router = useRouter();
+  const [data, setData] = useState({ email: "", password: "" });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const res = await signIn("credentials", {
+        redirect: false,
+        email: data.email,
+        password: data.password,
+      });
+
+      if (res?.ok) {
+        router.replace("/dashboard");
+        toast.success("Đăng nhập thành công");
+      } else {
+        toast.error("Email hoặc mật khẩu không đúng");
+      }
+    } catch (err) {
+      toast.error("Email hoặc mật khẩu không đúng");
+    }
+  };
+
   return (
     <>
       <section className="bg-[#F9FAFB] w-full h-screen flex justify-center items-center flex-col gap-[30px] px-[15px]">
@@ -29,7 +64,7 @@ function LoginForm() {
                 Đăng nhập quản trị viên
               </h2>
 
-              <form action="">
+              <form action="" onSubmit={handleSubmit}>
                 <div className="relative h-12 w-full mt-8 focus-within:text-blue-500 text-gray-500">
                   <AiOutlineMail
                     className="z-99 absolute left-0 top-1/2 transform -translate-y-1/2  transition-all duration-200 focus-within:text-blue-500"
@@ -38,6 +73,7 @@ function LoginForm() {
                   <input
                     type="text"
                     name="email"
+                    onChange={handleChange}
                     className="absolute text-[0.9rem] h-full w-full px-8 outline-none border-b-2 border-gray-300 transition-all duration-200 focus:border-blue-500"
                     placeholder="Nhập email"
                     required
@@ -52,6 +88,7 @@ function LoginForm() {
                   <input
                     type="password"
                     name="password"
+                    onChange={handleChange}
                     className="absolute text-[0.9rem] h-full w-full px-8 outline-none border-b-2 border-gray-300 transition-all duration-200 focus:border-blue-500"
                     placeholder="Nhập mật khẩu"
                     required

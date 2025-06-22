@@ -1,25 +1,22 @@
 "use client";
-import React, { useState } from "react";
+type UserProps =
+  | {
+      id?: string | null | undefined;
+      fullname?: string | null | undefined;
+      email?: string | null | undefined;
+      phone?: string | null | undefined;
+      birthday?: string | null | undefined;
+      role?: number | null | undefined;
+    }
+  | undefined;
 
-function Account() {
-  const [data, setData] = useState({
-    fullname: "",
-    email: "",
-    password: "",
-    phone: "",
-    birthday: "",
-    role: "",
-  });
+type Props = {
+  user: UserProps;
+};
 
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: name === "email" ? value.toLowerCase() : value,
-    }));
-  };
+function Account({ user }: Props) {
+  console.log(user);
+
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
       <form className="flex flex-col gap-7 w-full">
@@ -38,8 +35,7 @@ function Account() {
               <input
                 type="text"
                 name="fullname"
-                value={data.fullname}
-                onChange={handleChange}
+                value={user?.fullname || ""}
                 required
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -53,8 +49,7 @@ function Account() {
               <input
                 type="text"
                 name="email"
-                value={data.email}
-                onChange={handleChange}
+                value={user?.email || ""}
                 required
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -67,10 +62,9 @@ function Account() {
                   Số điện thoại
                 </label>
                 <input
-                  type="number"
+                  type="text"
                   name="phone"
-                  value={data.phone}
-                  onChange={handleChange}
+                  value={user?.phone || ""}
                   readOnly
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -84,8 +78,7 @@ function Account() {
                 <input
                   type="date"
                   name="birthday"
-                  value={data.birthday}
-                  onChange={handleChange}
+                  value={user?.birthday?.slice(0, 10) || ""}
                   readOnly
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -100,8 +93,17 @@ function Account() {
               <input
                 type="text"
                 name="role"
-                value={data.role}
-                onChange={handleChange}
+                value={
+                  user?.role === 0
+                    ? "Siêu quản trị viên"
+                    : user?.role === 1
+                    ? "Nhân viên bán hàng"
+                    : user?.role === 2
+                    ? "Nhân viên nội dung"
+                    : user?.role === 3
+                    ? "Kế toán"
+                    : ""
+                }
                 required
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"

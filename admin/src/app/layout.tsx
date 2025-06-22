@@ -3,6 +3,7 @@ import { Quicksand } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import App from "./App";
+import { AuthProvider } from "./AuthProvider";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -29,7 +30,9 @@ export default function RootLayout({
             },
           }}
         />
-        <App>{children}</App>
+        <AuthProvider>
+          <App>{children}</App>
+        </AuthProvider>
       </body>
     </html>
   );

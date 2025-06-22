@@ -1,12 +1,13 @@
-import Dashboard from "../components/Dashboard";
-import LayoutPage from "../components/LayoutPage";
-
-export default function page() {
+import { redirect } from "next/navigation";
+import LoginForm from "@/components/LoginForm";
+import { options } from "./api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
+export default async function page() {
+  const session = await getServerSession(options);
+  if (session) redirect("/dashboard");
   return (
     <>
-      <LayoutPage>
-        <Dashboard />
-      </LayoutPage>
+      <LoginForm />
     </>
   );
 }

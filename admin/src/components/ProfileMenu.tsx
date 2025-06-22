@@ -3,6 +3,7 @@ import Image from "./Image";
 import Link from "next/link";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { RiLogoutBoxLine } from "react-icons/ri";
+import { signOut } from "next-auth/react";
 type menuProps = {
   menuOpen: boolean;
   toggleMenu: () => void;
@@ -43,7 +44,10 @@ function ProfileMenu({ menuOpen, toggleMenu }: menuProps) {
             </div>
           </Link>
 
-          <button className="w-full justify-left hover:bg-[#F8F9FA] px-3 py-3.5">
+          <button
+            className="w-full justify-left hover:bg-[#F8F9FA] px-3 py-3.5"
+            onClick={() => signOut()}
+          >
             <div className="!flex items-center gap-[8px] text-[#EF5F5F]">
               <RiLogoutBoxLine size={18} />
               <p className="text-[0.9rem]">Đăng xuất</p>
