@@ -21,6 +21,8 @@ export default function useGetCustomers() {
   const [customers, setCustomers] = useState<User[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [keyword, setKeyword] = useState("");
+  const [status, setStatus] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
@@ -31,7 +33,13 @@ export default function useGetCustomers() {
     dispatch(setLoading(true));
     try {
       const res = await axios.get(
-        `/api/get-customers?page=${page}&limit=${limit}`
+        `/api/get-customers?page=${page}&limit=${limit}`,
+        {
+          params: {
+            keyword,
+            status,
+          },
+        }
       );
       setCustomers(res.data.customers);
       setTotalPages(res.data.totalPages);
@@ -45,7 +53,7 @@ export default function useGetCustomers() {
 
   useEffect(() => {
     fetchCustomers();
-  }, [page, limit]);
+  }, [page, limit, keyword, status]);
 
   return {
     customers,
@@ -54,5 +62,7 @@ export default function useGetCustomers() {
     totalItems,
     currentPage: page,
     limit,
+    setKeyword,
+    setStatus,
   };
 }

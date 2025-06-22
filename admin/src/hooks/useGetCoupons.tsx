@@ -23,6 +23,8 @@ export default function useGetCoupons() {
   const [coupons, setCoupons] = useState<Coupon[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [keyword, setKeyword] = useState("");
+  const [status, setStatus] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
@@ -33,7 +35,13 @@ export default function useGetCoupons() {
     dispatch(setLoading(true));
     try {
       const res = await axios.get(
-        `/api/get-coupons?page=${page}&limit=${limit}`
+        `/api/get-coupons?page=${page}&limit=${limit}`,
+        {
+          params: {
+            keyword,
+            status,
+          },
+        }
       );
       setCoupons(res.data.coupons);
       setTotalPages(res.data.totalPages);
@@ -47,7 +55,7 @@ export default function useGetCoupons() {
 
   useEffect(() => {
     fetchCoupons();
-  }, [page, limit]);
+  }, [page, limit, keyword, status]);
 
   return {
     coupons,
@@ -56,5 +64,7 @@ export default function useGetCoupons() {
     totalItems,
     currentPage: page,
     limit,
+    setKeyword,
+    setStatus,
   };
 }

@@ -19,6 +19,8 @@ export default function useGetCategories() {
   const [categories, setCategories] = useState<Category[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [keyword, setKeyword] = useState("");
+  const [status, setStatus] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
@@ -29,7 +31,13 @@ export default function useGetCategories() {
     dispatch(setLoading(true));
     try {
       const res = await axios.get(
-        `/api/get-categories?page=${page}&limit=${limit}`
+        `/api/get-categories?page=${page}&limit=${limit}`,
+        {
+          params: {
+            keyword,
+            status,
+          },
+        }
       );
       setCategories(res.data.categories);
       setTotalPages(res.data.totalPages);
@@ -43,7 +51,7 @@ export default function useGetCategories() {
 
   useEffect(() => {
     fetchCategories();
-  }, [page, limit]);
+  }, [page, limit, keyword, status]);
 
   return {
     categories,
@@ -52,5 +60,7 @@ export default function useGetCategories() {
     totalItems,
     currentPage: page,
     limit,
+    setKeyword,
+    setStatus,
   };
 }

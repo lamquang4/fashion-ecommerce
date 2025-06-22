@@ -17,6 +17,8 @@ export default function useGetMainBanners() {
   const [mainBanners, setMainBanners] = useState<Banner[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [status, setStatus] = useState("");
+  const [type, setType] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
@@ -27,7 +29,13 @@ export default function useGetMainBanners() {
     dispatch(setLoading(true));
     try {
       const res = await axios.get(
-        `/api/get-mainbanners?page=${page}&limit=${limit}`
+        `/api/get-mainbanners?page=${page}&limit=${limit}`,
+        {
+          params: {
+            status,
+            type,
+          },
+        }
       );
       setMainBanners(res.data.mainbanners);
       setTotalPages(res.data.totalPages);
@@ -41,7 +49,7 @@ export default function useGetMainBanners() {
 
   useEffect(() => {
     fetchMainBanners();
-  }, [page, limit]);
+  }, [page, limit, status, type]);
 
   return {
     mainBanners,
@@ -50,5 +58,7 @@ export default function useGetMainBanners() {
     totalItems,
     currentPage: page,
     limit,
+    setStatus,
+    setType,
   };
 }

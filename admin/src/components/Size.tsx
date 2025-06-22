@@ -4,15 +4,22 @@ import Pagination from "./Pagination";
 import { LiaEdit } from "react-icons/lia";
 import { VscTrash } from "react-icons/vsc";
 import { IoMdAddCircle } from "react-icons/io";
-import { useEffect } from "react";
 import { useAppSelector } from "@/redux/hook";
 import useGetSizes from "@/hooks/useGetSizes";
 import Loading from "./Loading";
 import Image from "./Image";
 import useDeleteSize from "@/hooks/useDeleteSize";
+import InputSearch from "./InputSearch";
 function Size() {
-  const { sizes, fetchSizes, totalPages, totalItems, currentPage, limit } =
-    useGetSizes();
+  const {
+    sizes,
+    fetchSizes,
+    totalPages,
+    totalItems,
+    currentPage,
+    limit,
+    setKeyword,
+  } = useGetSizes();
   const loading = useAppSelector((state) => state.loadingSlice);
   const { deleteSize } = useDeleteSize(fetchSizes);
 
@@ -20,7 +27,7 @@ function Size() {
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
-          Kích thước ({sizes.length})
+          Kích thước ({totalItems})
         </h1>
 
         <Link
@@ -34,11 +41,7 @@ function Size() {
       <div className="shadow-sm bg-white rounded-[3px] w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
-            <input
-              type="search"
-              placeholder="Tìm kiếm..."
-              className="p-[6px_10px] border border-[#b0b0b0] inline-block text-[#666] outline-none text-[0.9rem]"
-            />
+            <InputSearch onSearchChange={(val) => setKeyword(val)} />
           </div>
         </div>
 
@@ -48,8 +51,10 @@ function Size() {
               <th className="pl-[1rem] py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Kích thước
               </th>
-              <th className="text-left text-[#444] text-[0.9rem]">Ngày tạo</th>
-              <th className="p-[1rem_0] text-left text-[#444] text-[0.9rem]">
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Ngày tạo
+              </th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Hành động
               </th>
             </tr>

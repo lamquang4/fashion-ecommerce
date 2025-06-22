@@ -26,6 +26,8 @@ export default function useGetProducts() {
   const [products, setProducts] = useState<Product[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [keyword, setKeyword] = useState("");
+  const [status, setStatus] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
@@ -36,7 +38,13 @@ export default function useGetProducts() {
     dispatch(setLoading(true));
     try {
       const res = await axios.get(
-        `/api/get-products?page=${page}&limit=${limit}`
+        `/api/get-products?page=${page}&limit=${limit}`,
+        {
+          params: {
+            keyword,
+            status,
+          },
+        }
       );
       setProducts(res.data.products);
       setTotalPages(res.data.totalPages);
@@ -50,7 +58,7 @@ export default function useGetProducts() {
 
   useEffect(() => {
     fetchProducts();
-  }, [page, limit]);
+  }, [page, limit, keyword, status]);
 
   return {
     products,
@@ -59,5 +67,7 @@ export default function useGetProducts() {
     totalItems,
     currentPage: page,
     limit,
+    setKeyword,
+    setStatus
   };
 }

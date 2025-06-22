@@ -30,6 +30,7 @@ export default function useGetInventories() {
   const [inventories, setInventories] = useState<Inventory[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [keyword, setKeyword] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
@@ -40,7 +41,12 @@ export default function useGetInventories() {
     dispatch(setLoading(true));
     try {
       const res = await axios.get(
-        `/api/get-inventories?page=${page}&limit=${limit}`
+        `/api/get-inventories?page=${page}&limit=${limit}`,
+        {
+          params: {
+            keyword,
+          },
+        }
       );
       setInventories(res.data.inventories);
       setTotalPages(res.data.totalPages);
@@ -54,7 +60,7 @@ export default function useGetInventories() {
 
   useEffect(() => {
     fetchInventories();
-  }, [page, limit]);
+  }, [page, limit, keyword]);
 
   return {
     inventories,
@@ -63,5 +69,6 @@ export default function useGetInventories() {
     totalItems,
     currentPage: page,
     limit,
+    setKeyword,
   };
 }

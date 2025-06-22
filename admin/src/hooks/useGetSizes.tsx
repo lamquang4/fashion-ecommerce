@@ -15,6 +15,7 @@ export default function useGetSizes() {
   const [sizes, setSizes] = useState<Size[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [keyword, setKeyword] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
@@ -24,7 +25,14 @@ export default function useGetSizes() {
   const fetchSizes = async () => {
     dispatch(setLoading(true));
     try {
-      const res = await axios.get(`/api/get-sizes?page=${page}&limit=${limit}`);
+      const res = await axios.get(
+        `/api/get-sizes?page=${page}&limit=${limit}`,
+        {
+          params: {
+            keyword,
+          },
+        }
+      );
       setSizes(res.data.sizes);
       setTotalPages(res.data.totalPages);
       setTotalItems(res.data.total);
@@ -37,7 +45,7 @@ export default function useGetSizes() {
 
   useEffect(() => {
     fetchSizes();
-  }, [page, limit]);
+  }, [page, limit, keyword]);
 
   return {
     sizes,
@@ -46,5 +54,6 @@ export default function useGetSizes() {
     totalItems,
     currentPage: page,
     limit,
+    setKeyword,
   };
 }

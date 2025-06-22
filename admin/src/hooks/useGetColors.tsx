@@ -16,6 +16,7 @@ export default function useGetColors() {
   const [colors, setColors] = useState<Color[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [keyword, setKeyword] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
@@ -26,7 +27,12 @@ export default function useGetColors() {
     dispatch(setLoading(true));
     try {
       const res = await axios.get(
-        `/api/get-colors?page=${page}&limit=${limit}`
+        `/api/get-colors?page=${page}&limit=${limit}`,
+        {
+          params: {
+            keyword,
+          },
+        }
       );
       setColors(res.data.colors);
       setTotalPages(res.data.totalPages);
@@ -40,7 +46,7 @@ export default function useGetColors() {
 
   useEffect(() => {
     fetchColors();
-  }, [page, limit]);
+  }, [page, limit, keyword]);
 
   return {
     colors,
@@ -49,5 +55,6 @@ export default function useGetColors() {
     totalItems,
     currentPage: page,
     limit,
+    setKeyword,
   };
 }

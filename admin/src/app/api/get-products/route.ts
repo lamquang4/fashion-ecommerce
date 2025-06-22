@@ -9,22 +9,23 @@ export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
-    const search = searchParams.get("search")?.trim() as string;
     const skip = (page - 1) * limit;
-
+    const keyword = searchParams.get("keyword") || "";
+    const status = searchParams.get("status") || "";
     const query: any = {};
-
-    if (search) {
-      query.name = { $regex: search, $options: "i" };
+    if (keyword) {
+      query.name = { $regex: keyword, $options: "i" };
+    }
+    if (status) {
+      query.status = parseInt(status);
     }
 
     const [data, total] = await Promise.all([
       Product.find(query)
         .populate("category", "namecategory gender")
         .skip(skip)
-        .limit(limit)
-        .sort({ createdAt: -1 }),
-      Product.countDocuments(),
+        .limit(limit),
+      Product.countDocuments(query),
     ]);
 
     return NextResponse.json({
@@ -36,7 +37,7 @@ export async function GET(req: NextRequest) {
     });
   } catch (err) {
     return NextResponse.json(
-      { err, msg: "Something was wrong" },
+      { err, msg: "Lỗi" },
       {
         status: 400,
       }

@@ -8,11 +8,20 @@ export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
-
     const skip = (page - 1) * limit;
+    const keyword = searchParams.get("keyword") || "";
+    const status = searchParams.get("status") || "";
+    const query: any = {};
+    if (keyword) {
+      query.namecategory = { $regex: keyword, $options: "i" };
+    }
+    if (status) {
+      query.status = parseInt(status);
+    }
+
     const [data, total] = await Promise.all([
-      await Category.find().skip(skip).limit(limit),
-      Category.countDocuments(),
+      await Category.find(query).skip(skip).limit(limit),
+      Category.countDocuments(query),
     ]);
     return NextResponse.json({
       categories: data,

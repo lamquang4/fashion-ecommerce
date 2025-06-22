@@ -12,9 +12,18 @@ import useBlockUser from "@/hooks/useBlockUser";
 import { useAppSelector } from "@/redux/hook";
 import Loading from "./Loading";
 import useDeleteUser from "@/hooks/useDeleteUser";
+import InputSearch from "./InputSearch";
 function Admin() {
-  const { admins, fetchAdmins, totalPages, totalItems, currentPage, limit } =
-    useGetAdmins();
+  const {
+    admins,
+    fetchAdmins,
+    totalPages,
+    totalItems,
+    currentPage,
+    limit,
+    setKeyword,
+    setStatus,
+  } = useGetAdmins();
   const { blockUser } = useBlockUser(fetchAdmins);
   const { deleteUser } = useDeleteUser(fetchAdmins);
   const loading = useAppSelector((state) => state.loadingSlice);
@@ -37,7 +46,7 @@ function Admin() {
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
-          Quản trị viên ({admins.length})
+          Quản trị viên ({totalItems})
         </h1>
 
         <Link
@@ -51,29 +60,37 @@ function Admin() {
       <div className="shadow-sm bg-white rounded-[3px] w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
-            <input
-              type="search"
-              placeholder="Tìm kiếm..."
-              className="p-[6px_10px] border border-[#b0b0b0] inline-block text-[#666] outline-none text-[0.9rem]"
-            />
+            <InputSearch onSearchChange={(val) => setKeyword(val)} />
           </div>
         </div>
 
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
             <tr className="bg-[#E9EDF2]">
-              <th className="pl-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="py-[1rem] pl-[1rem] text-left text-[#444] text-[0.9rem]">
                 Họ tên
               </th>
 
-              <th className="text-left text-[#444] text-[0.9rem]">Email</th>
-              <th className="text-left text-[#444] text-[0.9rem]">Sinh nhật</th>
-              <th className="text-left text-[#444] text-[0.9rem]">Ngày tạo</th>
-              <th className="text-left text-[#444] text-[0.9rem]">Vai trò</th>
-              <th className="text-left text-[#444] text-[0.9rem] relative">
-                <FilterDropDownMenu title="Tình trạng" array={array} />
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Email
               </th>
-              <th className="p-[1rem_0] text-left text-[#444] text-[0.9rem]">
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Sinh nhật
+              </th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Ngày tạo
+              </th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Vai trò
+              </th>
+              <th className="text-left text-[#444] text-[0.9rem] relative">
+                <FilterDropDownMenu
+                  title="Tình trạng"
+                  array={array}
+                  onFilterChange={(val) => setStatus(val)}
+                />
+              </th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Hành động
               </th>
             </tr>

@@ -10,6 +10,7 @@ import { TbCancel } from "react-icons/tb";
 import Pagination from "./Pagination";
 import FilterDropDownMenu from "./FilterDropDownMenu";
 import StaticCards from "./StaticCards";
+import InputSearch from "./InputSearch";
 function Order() {
   const array = [
     {
@@ -117,33 +118,37 @@ function Order() {
       <div className="shadow-sm bg-white rounded-[3px] w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
-            <input
-              type="search"
-              placeholder="Tìm kiếm..."
-              className="p-[6px_10px] border border-[#b0b0b0] inline-block text-[#666] outline-none text-[0.9rem]"
-            />
+            {
+              // <InputSearch />
+            }
           </div>
         </div>
 
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
             <tr className="bg-[#E9EDF2]">
-              <th className="pl-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="pl-[1rem] py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Mã đơn
               </th>
 
-              <th className="text-left text-[#444] text-[0.9rem]">
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Khách hàng
               </th>
-              <th className="text-left text-[#444] text-[0.9rem]">
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Thanh toán
               </th>
-              <th className="text-left text-[#444] text-[0.9rem]">Tổng cộng</th>
-              <th className="text-left text-[#444] text-[0.9rem]">Ngày tạo</th>
-              <th className="text-left text-[#444] text-[0.9rem] relative">
-                <FilterDropDownMenu title="Tình trạng" array={array} />
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Tổng cộng
               </th>
-              <th className="p-[1rem_0] text-left text-[#444] text-[0.9rem]">
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Ngày tạo
+              </th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem] relative">
+                {
+                  // <FilterDropDownMenu title="Tình trạng" array={array} />
+                }
+              </th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Hành động
               </th>
             </tr>
@@ -197,7 +202,9 @@ function Order() {
         </table>
       </div>
 
-      <Pagination />
+      {
+        // <Pagination />
+      }
     </>
   );
 }

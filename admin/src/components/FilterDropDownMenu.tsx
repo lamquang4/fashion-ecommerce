@@ -8,9 +8,14 @@ type ArrayProps = {
 type FilterDropDownMenuProps = {
   title: string;
   array: ArrayProps[];
+  onFilterChange: (status: string) => void;
 };
 
-function FilterDropDownMenu({ title, array }: FilterDropDownMenuProps) {
+function FilterDropDownMenu({
+  title,
+  array,
+  onFilterChange,
+}: FilterDropDownMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -25,6 +30,7 @@ function FilterDropDownMenu({ title, array }: FilterDropDownMenuProps) {
           {array.map((item, index) => (
             <button
               className="text-black px-3 py-2.5 block w-full text-left"
+              onClick={() => onFilterChange(item.status?.toString() || "")}
               key={index}
             >
               {item.name}

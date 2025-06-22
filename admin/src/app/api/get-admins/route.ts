@@ -8,23 +8,23 @@ export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
-    const search = searchParams.get("search")?.trim() as string;
-
     const skip = (page - 1) * limit;
-
-    const query: any = {
-      role: { $in: [0, 1, 2, 3] },
-    };
-
-    if (search) {
+    const keyword = searchParams.get("keyword") || "";
+    const status = searchParams.get("status") || "";
+    const query: any = { role: { $in: [0, 1, 2, 3] } };
+    if (keyword) {
       query.$or = [
-        { fullname: { $regex: search, $options: "i" } },
-        { email: { $regex: search, $options: "i" } },
+        { fullname: { $regex: keyword, $options: "i" } },
+        { email: { $regex: keyword, $options: "i" } },
       ];
     }
+    if (status) {
+      query.status = parseInt(status);
+    }
+
     const [data, total] = await Promise.all([
       User.find(query).skip(skip).limit(limit),
-      User.countDocuments(),
+      User.countDocuments(query),
     ]);
     return NextResponse.json({
       admins: data,
