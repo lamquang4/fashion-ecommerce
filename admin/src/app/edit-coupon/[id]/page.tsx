@@ -1,12 +1,15 @@
 import EditCoupon from "@/components/EditCoupon";
 import LayoutPage from "@/components/LayoutPage";
+import { options } from "@/app/api/auth/[...nextauth]/options";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
 
-function page() {
+export default async function page() {
+  const session = await getServerSession(options);
+  if (!session) redirect("/");
   return (
     <LayoutPage>
       <EditCoupon />
     </LayoutPage>
   );
 }
-
-export default page;

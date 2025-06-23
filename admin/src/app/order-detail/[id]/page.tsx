@@ -1,5 +1,5 @@
-import EditCategory from "@/components/EditCategory";
 import LayoutPage from "@/components/LayoutPage";
+import OrderDetail from "@/components/OrderDetail";
 import { options } from "@/app/api/auth/[...nextauth]/options";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";
@@ -9,7 +9,7 @@ export default async function page() {
   if (!session) redirect("/");
   return (
     <LayoutPage>
-      <EditCategory />
+      <OrderDetail />
     </LayoutPage>
   );
 }

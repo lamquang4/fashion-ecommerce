@@ -13,7 +13,12 @@ import { useAppSelector } from "@/redux/hook";
 import Loading from "./Loading";
 import useDeleteUser from "@/hooks/useDeleteUser";
 import InputSearch from "./InputSearch";
+import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
 function Admin() {
+  const { data: session } = useSession({
+    required: true,
+  });
   const {
     admins,
     fetchAdmins,
@@ -42,6 +47,14 @@ function Admin() {
       status: 0,
     },
   ];
+
+  const handleBlockUser = (_id: string, status: number) => {
+    if (_id === session?.user.id) {
+      toast.error("Không được khóa chính tài khoản đang đăng nhập");
+      return;
+    }
+    blockUser({ _id, status });
+  };
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -125,11 +138,11 @@ function Admin() {
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {admin.role === 0
                       ? "Siêu quản trị viên"
-                      : admin.status === 1
+                      : admin.role === 1
                       ? "Nhân viên bán hàng"
-                      : admin.status === 2
+                      : admin.role === 2
                       ? "Nhân viên nội dung"
-                      : admin.status === 3
+                      : admin.role === 3
                       ? "Kế toán"
                       : ""}
                   </td>
@@ -140,10 +153,7 @@ function Admin() {
                     <div className="flex items-center gap-[15px]">
                       <button
                         onClick={() =>
-                          blockUser({
-                            _id: admin._id,
-                            status: admin.status === 1 ? 0 : 1,
-                          })
+                          handleBlockUser(admin._id, admin.status === 1 ? 0 : 1)
                         }
                       >
                         {admin.status === 1 ? (

@@ -3,12 +3,15 @@ import Image from "./Image";
 import Link from "next/link";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { RiLogoutBoxLine } from "react-icons/ri";
-import { signOut } from "next-auth/react";
+import { signOut, useSession } from "next-auth/react";
 type menuProps = {
   menuOpen: boolean;
   toggleMenu: () => void;
 };
 function ProfileMenu({ menuOpen, toggleMenu }: menuProps) {
+  const { data: session } = useSession({
+    required: true,
+  });
   return (
     <div
       className="flex cursor-pointer items-center gap-[6px] text-[0.9rem] relative"
@@ -21,7 +24,7 @@ function ProfileMenu({ menuOpen, toggleMenu }: menuProps) {
         ClassName="w-[30px] rounded-full border border-gray-30 p-1"
         loadingType="eager"
       />
-      QuangLam
+      {session?.user.fullname || ""}
       <div
         className={`absolute top-[40px] right-[15px] w-[170px] overflow-hidden z-20 transition-max-height duration-400 ease-in-out bg-white group-hover:max-h-[400px] shadow-md rounded-[6px] ${
           menuOpen ? "max-h-[400px]" : "max-h-0"
@@ -30,7 +33,7 @@ function ProfileMenu({ menuOpen, toggleMenu }: menuProps) {
         <div>
           <div className="px-3 py-3.5 border-b border-gray-300 w-full">
             <p className=" text-[0.9rem] max-w-[160px] overflow-hidden text-ellipsis whitespace-nowrap text-center text-black">
-              Xin chào Quang Lam
+              Xin chào {session?.user.fullname || ""}
             </p>
           </div>
 

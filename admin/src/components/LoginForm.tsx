@@ -23,19 +23,18 @@ function LoginForm() {
     try {
       const res = await signIn("credentials", {
         redirect: false,
-        email: data.email,
-        password: data.password,
+        email: data.email.trim(),
+        password: data.password.trim(),
       });
 
       if (res?.ok) {
-        router.replace("/dashboard");
+        router.push("/dashboard");
         toast.success("Đăng nhập thành công");
       } else {
-        toast.error("Email hoặc mật khẩu không đúng");
+        const errorMsg = res?.error || "Email hoặc mật khẩu không đúng";
+        toast.error(errorMsg);
       }
-    } catch (err) {
-      toast.error("Email hoặc mật khẩu không đúng");
-    }
+    } catch (err) {}
   };
 
   return (

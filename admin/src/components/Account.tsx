@@ -1,21 +1,9 @@
 "use client";
-type UserProps =
-  | {
-      id?: string | null | undefined;
-      fullname?: string | null | undefined;
-      email?: string | null | undefined;
-      phone?: string | null | undefined;
-      birthday?: string | null | undefined;
-      role?: number | null | undefined;
-    }
-  | undefined;
-
-type Props = {
-  user: UserProps;
-};
-
-function Account({ user }: Props) {
-  console.log(user);
+import { useSession } from "next-auth/react";
+function Account() {
+  const { data: session } = useSession({
+    required: true,
+  });
 
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
@@ -35,7 +23,7 @@ function Account({ user }: Props) {
               <input
                 type="text"
                 name="fullname"
-                value={user?.fullname || ""}
+                value={session?.user.fullname || ""}
                 required
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -49,7 +37,7 @@ function Account({ user }: Props) {
               <input
                 type="text"
                 name="email"
-                value={user?.email || ""}
+                value={session?.user.email || ""}
                 required
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -64,7 +52,7 @@ function Account({ user }: Props) {
                 <input
                   type="text"
                   name="phone"
-                  value={user?.phone || ""}
+                  value={session?.user.phone || ""}
                   readOnly
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -78,7 +66,7 @@ function Account({ user }: Props) {
                 <input
                   type="date"
                   name="birthday"
-                  value={user?.birthday?.slice(0, 10) || ""}
+                  value={session?.user.birthday?.slice(0, 10) || ""}
                   readOnly
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -94,13 +82,13 @@ function Account({ user }: Props) {
                 type="text"
                 name="role"
                 value={
-                  user?.role === 0
+                  session?.user.role === 0
                     ? "Siêu quản trị viên"
-                    : user?.role === 1
+                    : session?.user.role === 1
                     ? "Nhân viên bán hàng"
-                    : user?.role === 2
+                    : session?.user.role === 2
                     ? "Nhân viên nội dung"
-                    : user?.role === 3
+                    : session?.user.role === 3
                     ? "Kế toán"
                     : ""
                 }

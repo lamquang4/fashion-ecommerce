@@ -7,7 +7,6 @@ export default async function page() {
   const session = await getServerSession(options);
   if (!session) redirect("/");
 
-
   return (
     <LayoutPage>
       <Dashboard />

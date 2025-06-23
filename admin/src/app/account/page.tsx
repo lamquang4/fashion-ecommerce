@@ -1,17 +1,16 @@
 "use client";
 import LayoutPage from "../../components/LayoutPage";
 import Account from "../../components/Account";
-import { useSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
+import { redirect } from "next/navigation";
+import { options } from "../api/auth/[...nextauth]/options";
 
-function page() {
-  const { data: session } = useSession({
-    required: true,
-  });
+export default async function page() {
+  const session = await getServerSession(options);
+  if (!session) redirect("/");
   return (
     <LayoutPage>
-      <Account user={session?.user} />
+      <Account />
     </LayoutPage>
   );
 }
-
-export default page;
