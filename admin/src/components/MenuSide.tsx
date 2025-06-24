@@ -100,7 +100,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
           key: "10a",
           children: [
             { label: "Danh sách phiếu giảm giá", path: "/coupon" },
-            { label: "Thêm sản phiếu giảm giá", path: "/add-coupon" },
+            { label: "Thêm phiếu giảm giá", path: "/add-coupon" },
           ],
         },
         {

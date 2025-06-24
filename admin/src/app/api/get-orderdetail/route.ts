@@ -18,10 +18,12 @@ export async function GET(
     const data = await OrderDetail.find({ order: id })
       .populate({
         path: "order",
-        select: "address coupon paymethod status total createdAt",
+        select:
+          "address user orderCode coupon paymethod status total createdAt",
         populate: {
           path: "coupon",
-          select: "code discountValue discountType minOrderValue maxDiscountValue",
+          select:
+            "code discountValue discountType minOrderValue maxDiscountValue",
         },
       })
       .populate("buy.product", "name price image discount")

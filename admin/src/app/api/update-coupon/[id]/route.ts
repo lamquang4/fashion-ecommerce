@@ -1,6 +1,9 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Coupon from "@/model/Coupon";
-import { validatePositiveInt } from "@/utils/validtePositiveInt";
+import { validateNonNegativeNumber } from "@/utils/validateNonNegativeNumber";
+import { validatePercentNumber } from "@/utils/validatePercentNumber";
+import { validatePositiveNumber } from "@/utils/validatePositiveNumber";
+
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function PUT(
@@ -63,38 +66,53 @@ export async function PUT(
       );
     }
 
-    if (!validatePositiveInt(amount)) {
+    if (!validatePositiveNumber(amount)) {
       return NextResponse.json(
-        { msg: "Số lượng phải là số nguyên dương" },
+        { msg: "Số lượng phải lớn hơn 0" },
         { status: 400 }
       );
     }
 
-    if (!validatePositiveInt(limit)) {
+    if (!validatePositiveNumber(limit)) {
       return NextResponse.json(
-        { msg: "Số lần dùng phải là số nguyên dương" },
+        { msg: "Số lần dùng phải lớn hơn 0" },
         { status: 400 }
       );
     }
 
-    if (!validatePositiveInt(discountValue)) {
-      return NextResponse.json(
-        { msg: "Giá trị giảm giá phải là số nguyên dương" },
-        { status: 400 }
-      );
+    if (discountType === "2") {
+      if (!validatePositiveNumber(discountValue)) {
+        return NextResponse.json(
+          { msg: "Giá trị giảm giá phải lớn hơn 0" },
+          { status: 400 }
+        );
+      }
     }
 
-    if (!validatePositiveInt(minOrderValue)) {
+    if (discountType === "0") {
+      if (!validatePercentNumber(discountValue)) {
+        return NextResponse.json(
+          { msg: "Giá trị % giảm giá từ 1 đến 100" },
+          { status: 400 }
+        );
+      }
+    }
+
+    if (!validateNonNegativeNumber(minOrderValue)) {
       return NextResponse.json(
-        { msg: "Giá trị đơn hàng tối thiểu phải là số nguyên dương" },
+        {
+          msg: "Giá trị tiền cố định đơn hàng tối thiểu phải lớn hơn hoặc bằng 0",
+        },
         { status: 400 }
       );
     }
 
     if (discountType === "0") {
-      if (!validatePositiveInt(Number(maxDiscountValue))) {
+      if (!validatePositiveNumber(Number(maxDiscountValue))) {
         return NextResponse.json(
-          { msg: "Giá trị giảm tối đa (áp dụng %) phải là số nguyên dương" },
+          {
+            msg: "Giá trị tiền cố định giảm tối đa (chỉ áp dụng loại phiếu %) phải lớn hơn 0",
+          },
           { status: 400 }
         );
       }
@@ -118,12 +136,15 @@ export async function PUT(
       limit,
       startDate,
       expiryDate,
-      minOrderValue,
       status,
     };
 
     if (discountType === 0) {
       couponData.maxDiscountValue = maxDiscountValue;
+    }
+
+    if (minOrderValue >= 0) {
+      couponData.minOrderValue = minOrderValue;
     }
 
     const updatedCoupon = await Coupon.findByIdAndUpdate(id, couponData, {

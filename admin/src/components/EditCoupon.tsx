@@ -1,7 +1,10 @@
 "use client";
 import useGetCoupon from "@/hooks/useGetCoupon";
 import useUpdateCoupon from "@/hooks/useUpdateCoupon";
-import { validatePositiveInt } from "@/utils/validtePositiveInt";
+import { validateNonNegativeNumber } from "@/utils/validateNonNegativeNumber";
+import { validatePercentNumber } from "@/utils/validatePercentNumber";
+import { validatePositiveNumber } from "@/utils/validatePositiveNumber";
+
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -16,7 +19,7 @@ function EditCoupon() {
     discountValue: 1,
     startDate: "",
     expiryDate: "",
-    minOrderValue: 1,
+    minOrderValue: 0,
     maxDiscountValue: 1,
   });
 
@@ -75,29 +78,42 @@ function EditCoupon() {
       return;
     }
 
-    if (!validatePositiveInt(data.amount)) {
-      toast.error("Số lượng phải là số nguyên dương");
+    if (!validatePositiveNumber(data.amount)) {
+      toast.error("Số lượng phải lớn hơn 0");
       return;
     }
 
-    if (!validatePositiveInt(data.limit)) {
-      toast.error("Số lần dùng phải là số nguyên dương");
+    if (!validatePositiveNumber(data.limit)) {
+      toast.error("Số lần dùng phải lớn hơn 0");
       return;
     }
 
-    if (!validatePositiveInt(data.discountValue)) {
-      toast.error("Giá trị giảm giá phải là số nguyên dương");
-      return;
+    if (data.discountType === "2") {
+      if (!validatePositiveNumber(data.discountValue)) {
+        toast.error("Giá trị cố định giảm giá phải lớn hơn 0");
+        return;
+      }
     }
 
-    if (!validatePositiveInt(data.minOrderValue)) {
-      toast.error("Giá trị đơn hàng tối thiểu phải là số nguyên dương");
+    if (data.discountType === "0") {
+      if (!validatePercentNumber(data.discountValue)) {
+        toast.error("Giá trị % giảm giá từ 1 đến 100");
+        return;
+      }
+    }
+
+    if (!validateNonNegativeNumber(data.minOrderValue)) {
+      toast.error(
+        "Giá trị tiền cố định đơn hàng tối thiểu phải lớn hơn hoặc bằng 0"
+      );
       return;
     }
 
     if (data.discountType === "0") {
-      if (!validatePositiveInt(Number(data.maxDiscountValue))) {
-        toast.error("Giá trị giảm tối đa (áp dụng %) phải là số nguyên dương");
+      if (!validatePositiveNumber(Number(data.maxDiscountValue))) {
+        toast.error(
+          "Giá trị tiền cố định giảm tối đa (chỉ áp dụng loại phiếu %) phải lớn hơn 0"
+        );
         return;
       }
     }
@@ -193,7 +209,6 @@ function EditCoupon() {
                 required
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               >
-                <option value="">Chọn loại giảm giá</option>
                 <option value="1">Miễn phí giao hàng</option>
                 <option value="0">Phần trăm %</option>
                 <option value="2">Số tiền cố định</option>
@@ -220,7 +235,8 @@ function EditCoupon() {
 
             <div className="flex flex-col gap-1">
               <label htmlFor="" className="text-[0.95rem] text-black">
-                Giá trị đơn hàng tối thiểu (điều kiện áp dụng phiếu)
+                Giá trị tối thiểu của đơn hàng để áp dụng phiếu (0 để áp dụng
+                cho mọi đơn hàng)
               </label>
               <input
                 type="number"
@@ -235,7 +251,7 @@ function EditCoupon() {
             {data.discountType === "0" && (
               <div className="flex flex-col gap-1">
                 <label htmlFor="" className="text-[0.95rem] text-black">
-                  Giá trị giảm tối đa (áp dụng %)
+                  Giá trị tiền cố định giảm tối đa (chỉ áp dụng loại phiếu %)
                 </label>
                 <input
                   type="number"

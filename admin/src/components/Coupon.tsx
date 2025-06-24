@@ -119,7 +119,7 @@ function Coupon() {
                       ? `Đơn hàng phải ${coupon.minOrderValue.toLocaleString(
                           "vi-VN"
                         )}₫`
-                      : "Không có"}
+                      : "Mọi đơn hàng"}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {coupon.discountType === 2

@@ -32,7 +32,6 @@ const couponSchema = new Schema(
     },
     minOrderValue: {
       type: Number,
-      required: true,
     },
     maxDiscountValue: {
       type: Number,

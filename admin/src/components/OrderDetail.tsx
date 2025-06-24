@@ -1,7 +1,12 @@
 "use client";
+import useGetOrderDetail from "@/hooks/useGetOrderDetail";
 import Image from "./Image";
+import { useParams } from "next/navigation";
 
 function OrderDetail() {
+  const params = useParams();
+  const id = params.id as string;
+  const orderdetail = useGetOrderDetail(id);
   return (
     <div className="w-full px-[15px] py-[30px]">
       <div className="w-full max-w-full border-[1.5px] border-double border-gray-300 lg:max-w-[750px] rounded-sm mx-auto">
@@ -21,8 +26,12 @@ function OrderDetail() {
                 Đơn hàng
               </h2>
 
-              <span className="text-[0.95rem]">Mã: OD5048</span>
-              <span className="text-[0.95rem]">Ngày: 21/03/2025</span>
+              <span className="text-[0.95rem]">
+                Mã: {orderdetail?.order.orderCode}
+              </span>
+              <span className="text-[0.95rem]">
+                Ngày: {orderdetail?.order.createdAt}
+              </span>
             </div>
           </div>
 
@@ -32,13 +41,24 @@ function OrderDetail() {
                 Thông tin giao hàng
               </h2>
 
-              <span className="text-[0.95rem]">Họ và tên: Quang Lam</span>
-              <span className="text-[0.95rem]">Số điện thoại: 0984845xxx</span>
               <span className="text-[0.95rem]">
-                Địa chỉ: ABC, HWWWXYZ, Quận 6, Phường 6
+                Họ và tên: {orderdetail?.order.address.fullname}
               </span>
               <span className="text-[0.95rem]">
-                Phương thức thanh toán: cod
+                Số điện thoại: {orderdetail?.order.address.phone}
+              </span>
+              <span className="text-[0.95rem]">
+                Địa chỉ: {orderdetail?.order.address.speaddress}
+                {", "}
+                {orderdetail?.order.address.city}
+                {", "}
+                {orderdetail?.order.address.district}
+                {", "}
+                {orderdetail?.order.address.ward}
+              </span>
+              <span className="text-[0.95rem]">
+                Phương thức thanh toán:{" "}
+                {orderdetail?.order.paymethod === 1 ? "Chuyển khoản" : "COD"}
               </span>
             </div>
 
@@ -53,68 +73,64 @@ function OrderDetail() {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td className="pl-[15px] sm:pl-[20px] py-[15px]">
-                      <div className="flex items-center gap-[10px]">
-                        <Image
-                          Src={"/assets/products/IMGSP3483.png"}
-                          Alt={""}
-                          ClassName={"w-[60px]"}
-                          loadingType="eager"
-                        />
+                  {orderdetail?.buy.map((item, index) => (
+                    <tr key={index}>
+                      <td className="pl-[15px] sm:pl-[20px] py-[15px]">
+                        <div className="flex items-center gap-[10px]">
+                          <Image
+                            Src={item.product.image}
+                            Alt={""}
+                            ClassName={"w-[60px]"}
+                            loadingType="eager"
+                          />
 
-                        <div>
-                          <p>Jack Hydrangea Melange Shirt</p>
-                          <p>M / Đen</p>
+                          <div>
+                            <p>{item.product.name}</p>
+                            <p>
+                              {item.size.namesize} / {item.color.namecolor}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    </td>
-                    <td className="p-[15px]">290,000₫</td>
-                    <td className="p-[15px]">x1</td>
-                    <td className="p-[15px]">290,000₫</td>
-                  </tr>
-                  <tr>
-                    <td className="pl-[15px] sm:pl-[20px] py-[15px]">
-                      <div className="flex items-center gap-[10px]">
-                        <Image
-                          Src={"/assets/products/IMGSP3483.png"}
-                          Alt={""}
-                          ClassName={"w-[60px]"}
-                          loadingType="eager"
-                        />
+                      </td>
+                      <td className="p-[15px]">
+                        {item.product.price.toLocaleString("vi-VN")}₫
+                      </td>
+                      <td className="p-[15px]">x{item.quantity}</td>
+                      <td className="p-[15px]">
+                        {item.subtotal.toLocaleString("vi-VN")}₫
+                      </td>
+                    </tr>
+                  ))}
 
-                        <div>
-                          <p>Jack Hydrangea Melange Shirt</p>
-                          <p>S / Đen</p>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="p-[15px]">290,000₫</td>
-                    <td className="p-[15px]">x1</td>
-                    <td className="p-[15px]">290,000₫</td>
-                  </tr>
                   <tr>
                     <td className="pl-[15px] sm:pl-[20px] p-[15px]">
                       <hr className="border border-black" />
                     </td>
                   </tr>
-                  <tr className="text-[1rem]">
+
+                  {/*
+       <tr className="text-[1rem]">
                     <td className="font-semibold p-[15px] pl-[15px] sm:pl-[20px]">
                       Thành tiền:
                     </td>
                     <td className="p-[15px]">580,000₫</td>
                   </tr>
+                  */}
 
-                  <tr className="text-[1rem]">
+                  {/*
+      <tr className="text-[1rem]">
                     <td className="font-semibold p-[15px] pl-[15px] sm:pl-[20px]">
                       Phí ship:
                     </td>
                     <td className="p-[15px]">20,000₫</td>
                   </tr>
+  */}
 
                   <tr className="text-[1rem]">
                     <td className="font-semibold p-[15px]">Tổng cộng:</td>
-                    <td className="p-[15px]">600,000₫</td>
+                    <td className="p-[15px]">
+                      {orderdetail?.order.total.toLocaleString("vi-VN")}₫
+                    </td>
                   </tr>
                 </tbody>
               </table>

@@ -7,6 +7,7 @@ import { useSearchParams } from "next/navigation";
 
 export interface Order {
   _id: string;
+  orderCode: string;
   user: string;
   address: {
     fullname: string;
@@ -27,6 +28,7 @@ export default function useGetOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [keyword, setKeyword] = useState("");
   const [status, setStatus] = useState("");
 
   const searchParams = useSearchParams();
@@ -41,6 +43,7 @@ export default function useGetOrders() {
         `/api/get-orders?page=${page}&limit=${limit}`,
         {
           params: {
+            keyword,
             status,
           },
         }
@@ -57,7 +60,7 @@ export default function useGetOrders() {
 
   useEffect(() => {
     fetchOrders();
-  }, [page, limit, status]);
+  }, [page, limit, keyword, status]);
 
   return {
     orders,
@@ -66,6 +69,7 @@ export default function useGetOrders() {
     totalItems,
     currentPage: page,
     limit,
+    setKeyword,
     setStatus,
   };
 }

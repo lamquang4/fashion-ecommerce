@@ -7,11 +7,25 @@ import { RiShoppingBag4Line } from "react-icons/ri";
 import { RiTruckLine } from "react-icons/ri";
 import { LuClock } from "react-icons/lu";
 import { TbCancel } from "react-icons/tb";
+import Image from "./Image";
 import Pagination from "./Pagination";
 import FilterDropDownMenu from "./FilterDropDownMenu";
 import StaticCards from "./StaticCards";
 import InputSearch from "./InputSearch";
+import { useAppSelector } from "@/redux/hook";
+import useGetOrders from "@/hooks/useGetOrders";
+import Loading from "./Loading";
 function Order() {
+  const loading = useAppSelector((state) => state.loadingSlice);
+  const {
+    orders,
+    totalPages,
+    totalItems,
+    currentPage,
+    limit,
+    setKeyword,
+    setStatus,
+  } = useGetOrders();
   const array = [
     {
       name: "Tất cả",
@@ -42,7 +56,7 @@ function Order() {
   const array1 = [
     {
       title: "Tổng đơn",
-      number: 1500,
+      number: orders.length,
       icon1: <RiShoppingBag4Line size={25} />,
       icon2: <IoIosArrowRoundDown size={25} />,
       percent: -1.3,
@@ -73,7 +87,7 @@ function Order() {
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
-          Đơn hàng (20)
+          Đơn hàng
         </h1>
 
         <div className="mb-[25px]">
@@ -118,9 +132,7 @@ function Order() {
       <div className="shadow-sm bg-white rounded-[3px] w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
-            {
-              // <InputSearch />
-            }
+            <InputSearch onSearchChange={(val) => setKeyword(val)} />
           </div>
         </div>
 
@@ -143,10 +155,12 @@ function Order() {
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Ngày tạo
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem] relative">
-                {
-                  // <FilterDropDownMenu title="Tình trạng" array={array} />
-                }
+              <th className=" text-left text-[#444] text-[0.9rem] relative">
+                <FilterDropDownMenu
+                  title="Tình trạng"
+                  array={array}
+                  onFilterChange={(val) => setStatus(val)}
+                />
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Hành động
@@ -154,57 +168,77 @@ function Order() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="pl-[1rem] py-[1rem] text-[#22BAA0] font-semibold">
-                #OD45876
-              </td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">Quang Lam</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">COD</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">250,000₫</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">20/4/2025</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                <select
-                  name="status"
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
-                >
-                  <option value="0">Chờ xác nhận</option>
-                  <option value="1">Xác nhận</option>
-                  <option value="4">Hủy</option>
-                </select>
-              </td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                <div className="flex items-center gap-[15px]">
-                  <Link href={"/order-detail"}>
-                    <LiaExternalLinkAltSolid
-                      size={23}
-                      className="text-[#076ffe]"
-                    />
-                  </Link>
-                </div>
-              </td>
-            </tr>
-
-            {/*
-           <tr>
-                <td colSpan="8" className="w-full h-[70vh]">
+            {loading ? (
+              <tr>
+                <td colSpan={8} className="w-full">
+                  <Loading height={50} />
+                </td>
+              </tr>
+            ) : orders.length > 0 ? (
+              orders.map((order, index) => (
+                <tr key={index}>
+                  <td className="pl-[1rem] py-[1rem] text-[#22BAA0] font-semibold">
+                    {order.orderCode}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {order.address.fullname}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {order.paymethod === 1 ? "Chuyển khoản" : "COD"}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {order.total}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {new Date(order.createdAt).toLocaleDateString("vi-VN")}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <select
+                      name="status"
+                      value={order.status}
+                      className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                    >
+                      <option value="0">Chờ xác nhận</option>
+                      <option value="1">Xác nhận</option>
+                      <option value="4">Hủy</option>
+                    </select>
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex items-center gap-[15px]">
+                      <Link href={`/order-detail/${order._id}`}>
+                        <LiaExternalLinkAltSolid
+                          size={23}
+                          className="text-[#076ffe]"
+                        />
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex flex-col justify-center items-center">
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
                       ClassName={"w-[180px]"}
-                           loadingType="lazy"
+                      loadingType="lazy"
                     />
                   </div>
                 </td>
               </tr>
-    */}
+            )}
           </tbody>
         </table>
       </div>
 
-      {
-        // <Pagination />
-      }
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        limit={limit}
+        totalItems={totalItems}
+      />
     </>
   );
 }

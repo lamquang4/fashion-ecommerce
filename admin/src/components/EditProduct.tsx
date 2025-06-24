@@ -309,7 +309,6 @@ function EditProduct() {
                     onChange={handleChange}
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   >
-                    <option value="">Chọn danh mục</option>
                     {categories.map((category, index) => (
                       <option value={category._id} key={index}>
                         {category.namecategory} -

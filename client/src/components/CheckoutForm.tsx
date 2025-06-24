@@ -226,7 +226,7 @@ function CheckoutForm() {
                         </svg>
                         <div>
                           <span className="font-medium text-[0.9rem]">
-                            Chuyển khoản ngân hàng
+                            Chuyển khoản
                           </span>
                         </div>
                       </label>

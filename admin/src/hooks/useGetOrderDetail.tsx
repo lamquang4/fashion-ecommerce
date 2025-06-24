@@ -24,6 +24,7 @@ export interface Address {
 
 export interface Order {
   _id: string;
+  orderCode: string;
   address: Address;
   coupon?: Coupon;
   paymethod: number;
@@ -51,7 +52,7 @@ export interface Color {
   codecolor: string;
 }
 
-export interface Buy {
+export interface BuyItems {
   product: Product;
   size: Size;
   color: Color;
@@ -63,7 +64,7 @@ export interface Buy {
 export interface OrderDetail {
   _id: string;
   order: Order;
-  buy: Buy[];
+  buy: BuyItems[];
 }
 
 export default function useGetOrderDetail(id: string) {

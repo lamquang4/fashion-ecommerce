@@ -9,9 +9,12 @@ export async function GET(req: NextRequest) {
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
     const skip = (page - 1) * limit;
+    const keyword = searchParams.get("keyword") || "";
     const status = searchParams.get("status") || "";
     const query: any = {};
-
+    if (keyword) {
+      query.name = { $regex: keyword, $options: "i" };
+    }
     if (status) {
       query.status = parseInt(status);
     }

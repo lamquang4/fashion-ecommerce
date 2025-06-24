@@ -159,7 +159,6 @@ function EditCategory() {
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 >
-                  <option value="">Chọn giới tính</option>
                   <option value="1">Nam</option>
                   <option value="0">Nữ</option>
                 </select>
