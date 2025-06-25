@@ -1,8 +1,8 @@
 import { NextAuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import User from "@/model/User";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import bcrypt from "bcryptjs";
+import User from "@/model/User";
 
 export const options: NextAuthOptions = {
   providers: [
@@ -22,7 +22,7 @@ export const options: NextAuthOptions = {
           const user = await User.findOne({ email });
           if (!user) throw new Error("Email hoặc mật khẩu không đúng");
 
-          if (![0, 1, 2, 3].includes(user.role)) {
+          if (![0, 1, 2].includes(user.role)) {
             throw new Error("Email hoặc mật khẩu không đúng");
           }
 

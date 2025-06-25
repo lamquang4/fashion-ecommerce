@@ -55,6 +55,14 @@ function Admin() {
     }
     blockUser({ _id, status });
   };
+
+  const handleDeleteUser = (_id: string) => {
+    if (_id === session?.user.id) {
+      toast.error("Không được xóa chính tài khoản đang đăng nhập");
+      return;
+    }
+    deleteUser(_id);
+  };
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -142,8 +150,6 @@ function Admin() {
                       ? "Nhân viên bán hàng"
                       : admin.role === 2
                       ? "Nhân viên nội dung"
-                      : admin.role === 3
-                      ? "Kế toán"
                       : ""}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
@@ -167,7 +173,7 @@ function Admin() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => deleteUser(admin._id)}>
+                      <button onClick={() => handleDeleteUser(admin._id)}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

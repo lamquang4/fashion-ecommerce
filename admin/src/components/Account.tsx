@@ -24,7 +24,6 @@ function Account() {
                 type="text"
                 name="fullname"
                 value={session?.user.fullname || ""}
-                required
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
@@ -38,7 +37,6 @@ function Account() {
                 type="text"
                 name="email"
                 value={session?.user.email || ""}
-                required
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
@@ -54,7 +52,6 @@ function Account() {
                   name="phone"
                   value={session?.user.phone || ""}
                   readOnly
-                  required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
               </div>
@@ -68,7 +65,6 @@ function Account() {
                   name="birthday"
                   value={session?.user.birthday?.slice(0, 10) || ""}
                   readOnly
-                  required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
               </div>
@@ -88,11 +84,8 @@ function Account() {
                     ? "Nhân viên bán hàng"
                     : session?.user.role === 2
                     ? "Nhân viên nội dung"
-                    : session?.user.role === 3
-                    ? "Kế toán"
                     : ""
                 }
-                required
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />

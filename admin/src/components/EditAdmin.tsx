@@ -3,12 +3,16 @@ import useGetUser from "@/hooks/useGetUser";
 import useUpdateUser from "@/hooks/useUpdateUser";
 import { validateEmail } from "@/utils/validateEmail";
 import { validatePhone } from "@/utils/validatePhone";
+import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 function EditAdmin() {
+  const { data: session } = useSession({
+    required: true,
+  });
   const [data, setData] = useState({
     fullname: "",
     email: "",
@@ -64,6 +68,11 @@ function EditAdmin() {
         role: Number(data.role),
       });
       toast.success("Cập nhật thành công!");
+      if (session?.user.id === id) {
+        toast(
+          "Tài khoản bạn đang đăng nhập sẽ được cập nhật sau khi đăng xuất và đăng nhập lại."
+        );
+      }
       setData((prev) => ({
         ...prev,
         password: "",
@@ -157,7 +166,6 @@ function EditAdmin() {
                 <option value="0">Siêu quản trị viên</option>
                 <option value="1">Nhân viên bán hàng</option>
                 <option value="2">Nhân viên nội dung</option>
-                <option value="3">Kế toán</option>
               </select>
             </div>
 

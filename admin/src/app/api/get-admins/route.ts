@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     const skip = (page - 1) * limit;
     const keyword = searchParams.get("keyword") || "";
     const status = searchParams.get("status") || "";
-    const query: any = { role: { $in: [0, 1, 2, 3] } };
+    const query: any = { role: { $in: [0, 1, 2] } };
     if (keyword) {
       query.$or = [
         { fullname: { $regex: keyword, $options: "i" } },

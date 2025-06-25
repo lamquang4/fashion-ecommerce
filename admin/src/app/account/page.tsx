@@ -1,4 +1,3 @@
-"use client";
 import LayoutPage from "../../components/LayoutPage";
 import Account from "../../components/Account";
 import { getServerSession } from "next-auth";
