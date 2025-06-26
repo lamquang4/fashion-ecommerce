@@ -1,5 +1,6 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Order from "@/model/Order";
+import OrderDetail from "@/model/OrderDetail";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -13,22 +14,47 @@ export async function GET(req: NextRequest) {
     const status = searchParams.get("status") || "";
     const query: any = {};
     if (keyword) {
-      query.name = { $regex: keyword, $options: "i" };
+      query.orderCode = { $regex: keyword, $options: "i" };
     }
     if (status) {
       query.status = parseInt(status);
     }
 
-    const [data, total] = await Promise.all([
+    const successfulOrders = await Order.find({ status: 3 }).select("_id");
+    const successfulOrderIds = successfulOrders.map((order) => order._id);
+
+    const [data, total, totalRevenue, totalSold] = await Promise.all([
       Order.find(query).skip(skip).limit(limit),
       Order.countDocuments(query),
+      Order.aggregate([
+        { $match: { status: 3 } },
+        { $group: { _id: null, totalSum: { $sum: "$total" } } },
+      ]),
+      OrderDetail.aggregate([
+        {
+          $match: {
+            order: { $in: successfulOrderIds },
+          },
+        },
+        { $unwind: "$buy" },
+        {
+          $group: {
+            _id: null,
+            totalSum: { $sum: "$buy.quantity" },
+          },
+        },
+      ]),
     ]);
+    const revenue = totalRevenue[0]?.totalSum || 0;
+    const sold = totalSold[0]?.totalSold || 0;
     return NextResponse.json({
       orders: data,
       total,
       page,
       limit,
       totalPages: Math.ceil(total / limit),
+      totalRevenue: revenue,
+      totalSold: sold,
     });
   } catch (err) {
     return NextResponse.json(

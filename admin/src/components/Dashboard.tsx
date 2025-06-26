@@ -10,33 +10,37 @@ import dynamic from "next/dynamic";
 import { LiaEdit } from "react-icons/lia";
 import Link from "next/link";
 import StaticCards from "./StaticCards";
+import useGetOrders from "@/hooks/useGetOrders";
+import useGetCustomers from "@/hooks/useGetCustomers";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 function Dashboard() {
+  const { orders, totalRevenue, totalSold } = useGetOrders();
+  const { customers } = useGetCustomers();
   const array = [
     {
       title: "Doanh thu",
-      number: 30500000,
+      number: `${totalRevenue.toLocaleString("vi-VN")}₫`,
       icon1: <FaRegMoneyBillAlt size={25} />,
       icon2: <IoIosArrowRoundDown size={25} />,
       percent: -1.3,
     },
     {
       title: "Tổng đơn",
-      number: 7500,
+      number: orders.length,
       icon1: <RiShoppingBag4Line size={25} />,
       icon2: <IoIosArrowRoundUp size={25} />,
       percent: 2.3,
     },
     {
       title: "Khách hàng",
-      number: 210,
+      number: customers.length,
       icon1: <IoPeopleOutline size={25} />,
       icon2: <IoIosArrowRoundUp size={25} />,
       percent: 1,
     },
     {
       title: "Số lượng đã bán",
-      number: 100,
+      number: totalSold,
       icon1: <PiTShirtBold size={25} />,
       icon2: <IoIosArrowRoundUp size={25} />,
       percent: 2.2,

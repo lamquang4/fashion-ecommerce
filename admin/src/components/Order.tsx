@@ -187,7 +187,7 @@ function Order() {
                     {order.paymethod === 1 ? "Chuyển khoản" : "COD"}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {order.total}
+                    {order.total.toLocaleString("vi-VN")}₫
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(order.createdAt).toLocaleDateString("vi-VN")}

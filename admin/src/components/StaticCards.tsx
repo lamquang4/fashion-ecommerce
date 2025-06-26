@@ -1,7 +1,7 @@
 import React from "react";
 type ArrayProps = {
   title: string;
-  number: number;
+  number: number | string;
   icon1: React.ReactNode;
   icon2: React.ReactNode;
   percent: number;

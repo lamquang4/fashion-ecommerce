@@ -28,6 +28,8 @@ export default function useGetOrders() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [totalRevenue, setTotalRevenue] = useState(0);
+  const [totalSold, setTotalSold] = useState(0);
   const [keyword, setKeyword] = useState("");
   const [status, setStatus] = useState("");
 
@@ -51,6 +53,8 @@ export default function useGetOrders() {
       setOrders(res.data.orders);
       setTotalPages(res.data.totalPages);
       setTotalItems(res.data.total);
+      setTotalRevenue(res.data.totalRevenue);
+      setTotalSold(res.data.totalSold);
     } catch (err) {
       console.error("Lỗi:", err);
     } finally {
@@ -67,6 +71,8 @@ export default function useGetOrders() {
     fetchOrders,
     totalPages,
     totalItems,
+    totalRevenue,
+    totalSold,
     currentPage: page,
     limit,
     setKeyword,
