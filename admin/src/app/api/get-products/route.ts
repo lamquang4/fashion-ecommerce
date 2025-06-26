@@ -1,4 +1,5 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
+import Order from "@/model/Order";
 import Product from "@/model/Product";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -12,6 +13,7 @@ export async function GET(req: NextRequest) {
     const skip = (page - 1) * limit;
     const keyword = searchParams.get("keyword") || "";
     const status = searchParams.get("status") || "";
+
     const query: any = {};
     if (keyword) {
       query.name = { $regex: keyword, $options: "i" };

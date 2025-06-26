@@ -78,9 +78,7 @@ function Product() {
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Giá
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Số lượng
-              </th>
+
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Ngày thêm
               </th>
@@ -144,13 +142,6 @@ function Product() {
                           {product.discount?.toLocaleString("vi-VN")}₫
                         </span>
                       )}
-                    </div>
-                  </td>
-
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    <div className="flex flex-col gap-[10px]">
-                      <p className="text-[0.9rem]">Còn lại: 480</p>
-                      <p className="text-[0.9rem]">Đã bán: 220</p>
                     </div>
                   </td>
 
