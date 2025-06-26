@@ -12,6 +12,7 @@ import { useAppSelector } from "@/redux/hook";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import useDeleteBanner from "@/hooks/useDeleteBanner";
 import useVisibleBanner from "@/hooks/useVisibleBanner";
+import toast from "react-hot-toast";
 function MainBanner() {
   const loading = useAppSelector((state) => state.loadingSlice);
   const {
@@ -55,6 +56,22 @@ function MainBanner() {
       status: 0,
     },
   ];
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteBanner(id);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
+  const handleVisible = async (_id: string, status: number) => {
+    try {
+      await visibleBanner({ _id, status });
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -142,10 +159,10 @@ function MainBanner() {
                     <div className="flex items-center gap-[15px]">
                       <button
                         onClick={() =>
-                          visibleBanner({
-                            _id: mainBanner._id,
-                            status: mainBanner.status === 1 ? 0 : 1,
-                          })
+                          handleVisible(
+                            mainBanner._id,
+                            mainBanner.status === 1 ? 0 : 1
+                          )
                         }
                       >
                         {mainBanner.status === 1 ? (
@@ -158,7 +175,7 @@ function MainBanner() {
                         )}
                       </button>
 
-                      <button onClick={() => deleteBanner(mainBanner._id)}>
+                      <button onClick={() => handleDelete(mainBanner._id)}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

@@ -13,6 +13,7 @@ import useDeleteUser from "@/hooks/useDeleteUser";
 import { useAppSelector } from "@/redux/hook";
 import Loading from "./Loading";
 import InputSearch from "./InputSearch";
+import toast from "react-hot-toast";
 function Customer() {
   const {
     customers,
@@ -42,6 +43,22 @@ function Customer() {
       status: 0,
     },
   ];
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteUser(id);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
+  const handleBlock = async (_id: string, status: number) => {
+    try {
+      await blockUser({ _id, status });
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -126,10 +143,10 @@ function Customer() {
                     <div className="flex items-center gap-[15px]">
                       <button
                         onClick={() =>
-                          blockUser({
-                            _id: customer._id,
-                            status: customer.status === 1 ? 0 : 1,
-                          })
+                          handleBlock(
+                            customer._id,
+                            customer.status === 1 ? 0 : 1
+                          )
                         }
                       >
                         {customer.status === 1 ? (
@@ -143,7 +160,7 @@ function Customer() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => deleteUser(customer._id)}>
+                      <button onClick={() => handleDelete(customer._id)}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

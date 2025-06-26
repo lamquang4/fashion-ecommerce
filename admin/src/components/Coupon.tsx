@@ -11,6 +11,7 @@ import useDeleteCoupon from "@/hooks/useDeleteCoupon";
 import Loading from "./Loading";
 import Image from "./Image";
 import InputSearch from "./InputSearch";
+import toast from "react-hot-toast";
 function Coupon() {
   const {
     coupons,
@@ -47,6 +48,14 @@ function Coupon() {
       status: 3,
     },
   ];
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteCoupon(id);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -171,7 +180,7 @@ function Coupon() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => deleteCoupon(coupon._id)}>
+                      <button onClick={() => handleDelete(coupon._id)}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

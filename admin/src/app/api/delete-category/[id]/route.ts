@@ -1,5 +1,6 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Category from "@/model/Category";
+import Product from "@/model/Product";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import fs from "node:fs/promises";
@@ -15,6 +16,17 @@ export async function DELETE(
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
+    }
+    const checkCategory = await Product.findOne({ category: id });
+    if (checkCategory) {
+      return NextResponse.json(
+        {
+          msg: "Danh mục này đẫ được sử dụng cho sản phẩm nên không được xóa!",
+        },
+        {
+          status: 404,
+        }
+      );
     }
 
     const category = await Category.findById(id);

@@ -14,6 +14,7 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import useDeleteCategory from "@/hooks/useDeleteCategory";
 import useVisibleCategory from "@/hooks/useVisibleCategory";
 import InputSearch from "./InputSearch";
+import toast from "react-hot-toast";
 function Category() {
   const {
     categories,
@@ -43,6 +44,22 @@ function Category() {
       status: 0,
     },
   ];
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteCategory(id);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
+  const handleVisible = async (_id: string, status: number) => {
+    try {
+      await visibleCategory({ _id, status });
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -133,10 +150,10 @@ function Category() {
                     <div className="flex items-center gap-[15px]">
                       <button
                         onClick={() =>
-                          visibleCategory({
-                            _id: category._id,
-                            status: category.status === 1 ? 0 : 1,
-                          })
+                          handleVisible(
+                            category._id,
+                            category.status === 1 ? 0 : 1
+                          )
                         }
                       >
                         {category.status === 1 ? (
@@ -153,7 +170,7 @@ function Category() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => deleteCategory(category._id)}>
+                      <button onClick={() => handleDelete(category._id)}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

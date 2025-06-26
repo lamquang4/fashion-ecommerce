@@ -1,4 +1,5 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
+import Inventory from "@/model/Inventory";
 import Size from "@/model/Size";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
@@ -13,6 +14,18 @@ export async function DELETE(
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
+    }
+
+    const checkSize = await Inventory.findOne({ size: id });
+    if (checkSize) {
+      return NextResponse.json(
+        {
+          msg: "Kích thước này đẫ được sử dụng cho sản phẩm nên không được xóa!",
+        },
+        {
+          status: 404,
+        }
+      );
     }
 
     const size = await Size.findById(id);

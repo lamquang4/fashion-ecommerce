@@ -1,4 +1,5 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
+import Order from "@/model/Order";
 import User from "@/model/User";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
@@ -13,6 +14,13 @@ export async function DELETE(
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
+    }
+
+    const checkUser = await Order.findOne({ user: id });
+    if (checkUser) {
+      return NextResponse.json({
+        msg: "Người dùng này đẫ mua hàng nên không được xóa!",
+      });
     }
 
     const user = await User.findById(id);

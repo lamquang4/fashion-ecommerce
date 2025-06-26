@@ -1,5 +1,6 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Coupon from "@/model/Coupon";
+import Order from "@/model/Order";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function DELETE(
@@ -13,6 +14,18 @@ export async function DELETE(
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
+    }
+
+    const checkCoupon = await Order.findOne({ coupon: id });
+    if (checkCoupon) {
+      return NextResponse.json(
+        {
+          msg: "Phiếu giảm giá này đẫ được sử dụng cho đơn hàng nên không được xóa!",
+        },
+        {
+          status: 404,
+        }
+      );
     }
 
     const coupon = await Coupon.findById(id);

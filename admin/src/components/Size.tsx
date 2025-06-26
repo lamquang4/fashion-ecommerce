@@ -10,6 +10,7 @@ import Loading from "./Loading";
 import Image from "./Image";
 import useDeleteSize from "@/hooks/useDeleteSize";
 import InputSearch from "./InputSearch";
+import toast from "react-hot-toast";
 function Size() {
   const {
     sizes,
@@ -22,6 +23,14 @@ function Size() {
   } = useGetSizes();
   const loading = useAppSelector((state) => state.loadingSlice);
   const { deleteSize } = useDeleteSize(fetchSizes);
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteSize(id);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
 
   return (
     <>
@@ -85,7 +94,7 @@ function Size() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => deleteSize(size._id)}>
+                      <button onClick={() => handleDelete(size._id)}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

@@ -14,6 +14,7 @@ import useDeleteProduct from "@/hooks/useDeleteProduct";
 import Loading from "./Loading";
 import { useAppSelector } from "@/redux/hook";
 import InputSearch from "./InputSearch";
+import toast from "react-hot-toast";
 function Product() {
   const loading = useAppSelector((state) => state.loadingSlice);
   const {
@@ -46,6 +47,22 @@ function Product() {
       status: 2,
     },
   ];
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteProduct(id);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
+  const handleVisible = async (_id: string, status: number) => {
+    try {
+      await visibleProduct({ _id, status });
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -166,10 +183,10 @@ function Product() {
                     <div className="flex items-center gap-[15px]">
                       <button
                         onClick={() =>
-                          visibleProduct({
-                            _id: product._id,
-                            status: product.status === 1 ? 0 : 1,
-                          })
+                          handleVisible(
+                            product._id,
+                            product.status === 1 ? 0 : 1
+                          )
                         }
                       >
                         {product.status === 1 ? (
@@ -184,7 +201,7 @@ function Product() {
                       <Link href={`/edit-product/${product._id}`}>
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
-                      <button onClick={() => deleteProduct(product._id)}>
+                      <button onClick={() => handleDelete(product._id)}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

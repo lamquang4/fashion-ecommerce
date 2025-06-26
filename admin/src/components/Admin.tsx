@@ -48,21 +48,30 @@ function Admin() {
     },
   ];
 
-  const handleBlockUser = (_id: string, status: number) => {
+  const handleDelete = async (id: string) => {
+    if (id === session?.user.id) {
+      toast.error("Không được xóa chính tài khoản đang đăng nhập");
+      return;
+    }
+    try {
+      await deleteUser(id);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
+  const handleBlock = async (_id: string, status: number) => {
     if (_id === session?.user.id) {
       toast.error("Không được khóa chính tài khoản đang đăng nhập");
       return;
     }
-    blockUser({ _id, status });
+    try {
+      await blockUser({ _id, status });
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
   };
 
-  const handleDeleteUser = (_id: string) => {
-    if (_id === session?.user.id) {
-      toast.error("Không được xóa chính tài khoản đang đăng nhập");
-      return;
-    }
-    deleteUser(_id);
-  };
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -159,7 +168,7 @@ function Admin() {
                     <div className="flex items-center gap-[15px]">
                       <button
                         onClick={() =>
-                          handleBlockUser(admin._id, admin.status === 1 ? 0 : 1)
+                          handleBlock(admin._id, admin.status === 1 ? 0 : 1)
                         }
                       >
                         {admin.status === 1 ? (
@@ -173,7 +182,7 @@ function Admin() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => handleDeleteUser(admin._id)}>
+                      <button onClick={() => handleDelete(admin._id)}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

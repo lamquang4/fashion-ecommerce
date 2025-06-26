@@ -1,5 +1,6 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Inventory from "@/model/Inventory";
+import OrderDetail from "@/model/OrderDetail";
 import Product from "@/model/Product";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
@@ -18,6 +19,17 @@ export async function DELETE(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
+    const checkProduct = await OrderDetail.findOne({ "buy.product": id });
+    if (checkProduct) {
+      return NextResponse.json(
+        {
+          msg: "Sản phẩm này đã có trong đơn hàng nên không thể xóa!",
+        },
+        {
+          status: 400,
+        }
+      );
+    }
     const product = await Product.findById(id);
     if (!product) {
       return NextResponse.json(

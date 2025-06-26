@@ -1,5 +1,4 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
-import Order from "@/model/Order";
 import Product from "@/model/Product";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -38,6 +37,7 @@ export async function GET(req: NextRequest) {
       totalPages: Math.ceil(total / limit),
     });
   } catch (err) {
+    console.log(err);
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

@@ -10,6 +10,7 @@ import Image from "./Image";
 import Loading from "./Loading";
 import useDeleteColor from "@/hooks/useDeleteColor";
 import InputSearch from "./InputSearch";
+import toast from "react-hot-toast";
 function Color() {
   const {
     colors,
@@ -22,6 +23,14 @@ function Color() {
   } = useGetColors();
   const loading = useAppSelector((state) => state.loadingSlice);
   const { deleteColor } = useDeleteColor(fetchColors);
+
+  const handleDelete = async (id: string) => {
+    try {
+      await deleteColor(id);
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -51,10 +60,11 @@ function Color() {
                 Tên màu
               </th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">Mã màu</th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">Ngày thêm</th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Số lượng đang dùng
+                Mã màu
+              </th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Ngày thêm
               </th>
 
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
@@ -89,14 +99,13 @@ function Color() {
                       "vi-VN"
                     )}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">5</td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex items-center gap-[15px]">
                       <Link href={`/edit-color/${color._id}`}>
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => deleteColor(color._id)}>
+                      <button onClick={() => handleDelete(color._id)}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

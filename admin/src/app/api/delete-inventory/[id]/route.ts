@@ -1,5 +1,6 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Inventory from "@/model/Inventory";
+import OrderDetail from "@/model/OrderDetail";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function DELETE(
@@ -20,6 +21,25 @@ export async function DELETE(
       return NextResponse.json(
         { msg: "Không tìm thấy tồn kho" },
         { status: 404 }
+      );
+    }
+
+    const checkInventory = await OrderDetail.findOne({
+      buy: {
+        $elemMatch: {
+          product: inventory.product,
+          size: inventory.size,
+          color: inventory.color,
+        },
+      },
+    });
+
+    if (checkInventory) {
+      return NextResponse.json(
+        {
+          msg: "Tồn kho này đã được mua trong đơn hàng nên không thể xóa!",
+        },
+        { status: 400 }
       );
     }
 
