@@ -26,14 +26,6 @@ function AddProduct() {
     handleRemoveAllInventory,
   } = useInventory();
 
-  const [data, setData] = useState({
-    name: "",
-    price: 1,
-    discount: 0,
-    description: "",
-    category: "",
-  });
-
   const {
     previewImages,
     setPreviewImages,
@@ -42,6 +34,14 @@ function AddProduct() {
     handlePreviewImage,
     handleRemovePreviewImage,
   } = useImageViewer(5);
+
+  const [data, setData] = useState({
+    name: "",
+    price: 1,
+    discount: 0,
+    description: "",
+    category: "",
+  });
 
   console.log(previewImages, selectedFiles);
 
@@ -335,7 +335,7 @@ function AddProduct() {
                         <td className="py-[1rem]">
                           <button
                             type="button"
-                            onClick={(e) => handleRemoveInventory(index)}
+                            onClick={() => handleRemoveInventory(index)}
                             className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_12px] items-center justify-center gap-[5px] text-white"
                           >
                             Xóa
