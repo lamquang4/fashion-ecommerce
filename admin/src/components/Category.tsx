@@ -72,9 +72,12 @@ function Category() {
                 Tên danh mục
               </th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">Giới tính</th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">Số lượng</th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">Ngày thêm</th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Giới tính
+              </th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Ngày thêm
+              </th>
               <th className="text-left text-[#444] text-[0.9rem] relative">
                 <FilterDropDownMenu
                   title="Tình trạng"
@@ -118,8 +121,6 @@ function Category() {
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {category.gender === 1 ? "Nam" : "Nữ"}
                   </td>
-
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">500</td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(category.createdAt as string).toLocaleDateString(
                       "vi-VN"

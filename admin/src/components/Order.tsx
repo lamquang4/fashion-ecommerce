@@ -150,7 +150,7 @@ function Order() {
                 Thanh toán
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Tổng cộng
+                Tổng tiền
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Ngày tạo

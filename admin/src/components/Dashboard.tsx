@@ -12,10 +12,15 @@ import Link from "next/link";
 import StaticCards from "./StaticCards";
 import useGetOrders from "@/hooks/useGetOrders";
 import useGetCustomers from "@/hooks/useGetCustomers";
+import useGetTop5Products from "@/hooks/useGetTop5Product";
+import Loading from "./Loading";
+import { useAppSelector } from "@/redux/hook";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 function Dashboard() {
   const { orders, totalRevenue, totalSold } = useGetOrders();
   const { customers } = useGetCustomers();
+  const { products } = useGetTop5Products();
+  const loading = useAppSelector((state) => state.loadingSlice);
   const array = [
     {
       title: "Doanh thu",
@@ -202,60 +207,83 @@ function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="pl-[1rem] py-[1rem] w-[300px]">
-                <div className="flex gap-[10px] items-center">
-                  <div className="cursor-pointer">
+            {loading ? (
+              <tr>
+                <td colSpan={8} className="w-full">
+                  <Loading height={50} />
+                </td>
+              </tr>
+            ) : products.length > 0 ? (
+              products.map((product, index) => (
+                <tr key={index}>
+                  <td className="pl-[1rem] py-[1rem] w-[300px]">
+                    <div className="flex gap-[10px] items-center">
+                      <div className="cursor-pointer">
+                        <Image
+                          Src={product.image[0]}
+                          Alt={""}
+                          ClassName={"w-[75px] cursor-pointer"}
+                          loadingType="lazy"
+                        />
+                      </div>
+
+                      <div className="flex flex-col gap-[5px]">
+                        <p className="text-[0.9rem] font-medium  text-[#444]">
+                          {product.name}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+
+                  <td className="py-[1rem] text-[0.9rem]  text-[#444]">
+                    <div className="flex flex-col">
+                      <span
+                        className={` ${
+                          product.discount > 0
+                            ? "line-through text-gray-400"
+                            : "text-black"
+                        } `}
+                      >
+                        {product.price?.toLocaleString("vi-VN")}₫
+                      </span>
+                      {product.discount > 0 && (
+                        <span className="text-red-500 font-semibold">
+                          {product.discount?.toLocaleString("vi-VN")}₫
+                        </span>
+                      )}
+                    </div>
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex flex-col gap-[10px]">
+                      <p className="text-[0.9rem]">
+                        Đã bán: {product.totalSold}
+                      </p>
+                    </div>
+                  </td>
+
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex items-center gap-[15px]">
+                      <Link href={`/edit-product${product._id}`}>
+                        <LiaEdit size={22} className="text-[#076ffe]" />
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              ))
+            ) : (
+              <tr>
+                <td colSpan={8} className="w-full h-[70vh]">
+                  <div className="flex flex-col justify-center items-center">
                     <Image
-                      Src={"assets/products/IMGSP0841.png"}
+                      Src={"/assets/other/notfound1.png"}
                       Alt={""}
-                      ClassName={"w-[75px] cursor-pointer"}
+                      ClassName={"w-[180px]"}
                       loadingType="lazy"
                     />
                   </div>
-
-                  <div className="flex flex-col gap-[5px]">
-                    <p className="text-[0.9rem] font-medium  text-[#444]">
-                      Áo sơ mi
-                    </p>
-                    <p className="text-[0.9rem]  text-[#444]">
-                      Kích thước: XL, L, S
-                    </p>
-                  </div>
-                </div>
-              </td>
-
-              <td className="py-[1rem] text-[0.9rem]  text-[#444]">50,000₫</td>
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                <div className="flex flex-col gap-[10px]">
-                  <p className="text-[0.9rem]">Còn lại: 480</p>
-                  <p className="text-[0.9rem]">Đã bán: 220</p>
-                </div>
-              </td>
-
-              <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                <div className="flex items-center gap-[15px]">
-                  <Link href={"/edit-product"}>
-                    <LiaEdit size={22} className="text-[#076ffe]" />
-                  </Link>
-                </div>
-              </td>
-            </tr>
-
-            {/*
-                 <tr>
-                      <td colSpan="8" className="w-full h-[70vh]">
-                        <div className="flex flex-col justify-center items-center">
-                          <Image
-                            Src={"/assets/other/notfound1.png"}
-                            Alt={""}
-                            ClassName={"w-[180px]"}
-                            loadingType="lazy"
-                          />
-                        </div>
-                      </td>
-                    </tr>
-          */}
+                </td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>
