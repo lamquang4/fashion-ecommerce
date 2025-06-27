@@ -1,31 +1,16 @@
 "use client";
-import { useEffect, useState } from "react";
+import React from "react";
 import { ClipLoader } from "react-spinners";
-function Loading() {
-  const [loading, setLoading] = useState(false);
-  useEffect(() => {
-    setLoading(true);
-    setTimeout(() => {
-      setLoading(false);
-    }, 2000);
-  }, []);
-
+type prop = {
+  height: number;
+};
+function Loading({ height }: prop) {
   return (
     <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        height: "50vh",
-      }}
+      className="flex justify-center items-center"
+      style={{ height: `${height}vh` }}
     >
-      <ClipLoader
-        color={"black"}
-        loading={loading}
-        size={55}
-        aria-label="Loading Spinner"
-        data-testid="loader"
-      />
+      <ClipLoader color={"black"} size={55} />
     </div>
   );
 }
