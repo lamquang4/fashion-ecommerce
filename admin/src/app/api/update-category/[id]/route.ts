@@ -48,7 +48,8 @@ export async function PUT(
       );
     }
 
-    const slug = removeVietNamese(namecategory);
+    const slug1 = removeVietNamese(namecategory);
+    const slug2 = removeVietNamese(gender === 0 ? "Nữ" : "Nam");
     let imagePath = category.image;
 
     if (file && file.size > 0) {
@@ -94,7 +95,7 @@ export async function PUT(
       const buffer = Buffer.from(arrayBuffer);
       const ext = file.name.split(".").pop();
       const timestamp = Date.now();
-      const fileName = `${slug}-${timestamp}.${ext}`;
+      const fileName = `${slug1}-${slug2}-${timestamp}.${ext}`;
 
       const uploadDirAdmin = path.join(
         process.cwd(),
@@ -115,7 +116,7 @@ export async function PUT(
 
       imagePath = `/uploads/category/${fileName}`;
     }
-
+    const slug = `${slug1}-${slug2}`;
     const updatedData = {
       namecategory,
       gender,

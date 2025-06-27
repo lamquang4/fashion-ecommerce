@@ -61,17 +61,18 @@ export async function POST(req: NextRequest) {
     await fs.mkdir(uploadDirAdmin, { recursive: true });
     await fs.mkdir(uploadDirClient, { recursive: true });
 
-    const slug = removeVietNamese(namecategory);
+    const slug1 = removeVietNamese(namecategory);
+    const slug2 = removeVietNamese(gender === 0 ? "Nữ" : "Nam");
     const ext = file.name.split(".").pop(); // png, jpg, webp
     const timestamp = Date.now();
-    const fileName = `${slug}-${timestamp}.${ext}`;
+    const fileName = `${slug1}-${slug2}-${timestamp}.${ext}`;
     const filePathAdmin = path.join(uploadDirAdmin, fileName);
     const filePathClient = path.join(uploadDirClient, fileName);
     await fs.writeFile(filePathAdmin, buffer);
     await fs.writeFile(filePathClient, buffer);
 
     const imagePath = `/uploads/category/${fileName}`;
-
+    const slug = `${slug1}-${slug2}`;
     const newCategory = await Category.create({
       namecategory,
       gender,
