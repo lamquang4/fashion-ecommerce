@@ -10,71 +10,110 @@ export async function GET(req: NextRequest) {
     const limit = parseInt(searchParams.get("limit") || "10");
     const skip = (page - 1) * limit;
     const keyword = searchParams.get("keyword") || "";
+    const query: any = {};
+
     // tìm kiếm keyword (name) của Product ngoài Inventory
-    const inventories = await Inventory.aggregate([
-      {
-        $lookup: {
-          from: "products",
-          localField: "product",
-          foreignField: "_id",
-          as: "product",
+    const [inventories, countResult, countQuantity] = await Promise.all([
+      Inventory.aggregate([
+        {
+          $lookup: {
+            from: "products",
+            localField: "product",
+            foreignField: "_id",
+            as: "product",
+          },
         },
-      },
-      { $unwind: "$product" },
-      {
-        $lookup: {
-          from: "sizes",
-          localField: "size",
-          foreignField: "_id",
-          as: "size",
+        { $unwind: "$product" },
+        ...(keyword
+          ? [
+              {
+                $match: {
+                  "product.name": { $regex: keyword, $options: "i" },
+                },
+              },
+            ]
+          : []),
+        {
+          $lookup: {
+            from: "sizes",
+            localField: "size",
+            foreignField: "_id",
+            as: "size",
+          },
         },
-      },
-      { $unwind: "$size" },
-      {
-        $lookup: {
-          from: "colors",
-          localField: "color",
-          foreignField: "_id",
-          as: "color",
+        { $unwind: "$size" },
+        {
+          $lookup: {
+            from: "colors",
+            localField: "color",
+            foreignField: "_id",
+            as: "color",
+          },
         },
-      },
-      { $unwind: "$color" },
-      {
-        $match: keyword
-          ? { "product.name": { $regex: keyword, $options: "i" } }
-          : {},
-      },
-      { $sort: { "product.name": 1, createdAt: -1 } },
-      { $skip: skip },
-      { $limit: limit },
+        { $unwind: "$color" },
+        { $skip: skip },
+        { $limit: limit },
+      ]),
+      Inventory.aggregate([
+        {
+          $lookup: {
+            from: "products",
+            localField: "product",
+            foreignField: "_id",
+            as: "product",
+          },
+        },
+        { $unwind: "$product" },
+        ...(keyword
+          ? [
+              {
+                $match: {
+                  "product.name": { $regex: keyword, $options: "i" },
+                },
+              },
+            ]
+          : []),
+        {
+          $count: "total",
+        },
+      ]),
+      Inventory.aggregate([
+        {
+          $lookup: {
+            from: "products",
+            localField: "product",
+            foreignField: "_id",
+            as: "product",
+          },
+        },
+        { $unwind: "$product" },
+        ...(keyword
+          ? [
+              {
+                $match: {
+                  "product.name": { $regex: keyword, $options: "i" },
+                },
+              },
+            ]
+          : []),
+        {
+          $group: {
+            _id: null,
+            totalQuantity: { $sum: "$quantity" },
+          },
+        },
+      ]),
     ]);
 
-    const total = await Inventory.aggregate([
-      {
-        $lookup: {
-          from: "products",
-          localField: "product",
-          foreignField: "_id",
-          as: "product",
-        },
-      },
-      { $unwind: "$product" },
-      {
-        $match: keyword
-          ? { "product.name": { $regex: keyword, $options: "i" } }
-          : {},
-      },
-      {
-        $count: "total",
-      },
-    ]);
-
+    const total = countResult[0]?.total || 0;
+    const totalQuantity = countQuantity[0]?.totalQuantity || 0;
     return NextResponse.json({
       inventories,
-      total: total[0]?.total || 0,
+      total,
       page,
       limit,
-      totalPages: Math.ceil((total[0]?.total || 0) / limit),
+      totalPages: Math.ceil(total / limit),
+      totalQuantity,
     });
   } catch (err) {
     console.log(err);

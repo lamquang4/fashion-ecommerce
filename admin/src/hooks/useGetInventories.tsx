@@ -30,6 +30,7 @@ export default function useGetInventories() {
   const [inventories, setInventories] = useState<Inventory[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
+  const [totalQuantity, setTotalQuantity] = useState(0);
   const [keyword, setKeyword] = useState("");
 
   const searchParams = useSearchParams();
@@ -51,6 +52,7 @@ export default function useGetInventories() {
       setInventories(res.data.inventories);
       setTotalPages(res.data.totalPages);
       setTotalItems(res.data.total);
+      setTotalQuantity(res.data.totalQuantity);
     } catch (err) {
       console.error("Lỗi:", err);
     } finally {
@@ -70,5 +72,6 @@ export default function useGetInventories() {
     currentPage: page,
     limit,
     setKeyword,
+    totalQuantity,
   };
 }

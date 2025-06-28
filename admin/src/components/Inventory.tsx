@@ -16,13 +16,14 @@ function Inventory() {
     currentPage,
     limit,
     setKeyword,
+    totalQuantity,
   } = useGetInventories();
 
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
-          Hàng trong kho ({totalItems})
+          Hàng trong kho ({totalQuantity})
         </h1>
       </div>
 
@@ -39,17 +40,25 @@ function Inventory() {
               <th className="pl-[1rem] py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Sản phẩm
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">Màu</th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Màu
+              </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Kích thước
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">Số lượng</th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">Ngày tạo</th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Số lượng
+              </th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Ngày tạo
+              </th>
 
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem] relative">
                 Tình trạng
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">Hành động</th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Hành động
+              </th>
             </tr>
           </thead>
           <tbody>

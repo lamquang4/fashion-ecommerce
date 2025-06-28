@@ -5,13 +5,14 @@ import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import Link from "next/link";
 import Overplay from "./Overplay";
+import useGetCategories from "@/hooks/useGetCategories";
 type MenuMobileProps = {
   isOpen: boolean;
   toggleMenu: () => void;
 };
 function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
-
+  const { categoriesMale, categoriesFemale } = useGetCategories();
   const toggleOpen = (menu: string) => {
     setOpenMenus((prev) => ({
       ...prev,
@@ -47,7 +48,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               className="w-full cursor-pointer flex justify-between items-center"
             >
               <p className="text-black text-[0.9rem] font-medium py-4 uppercase">
-                Sản phẩm
+                Nam
               </p>
               <button>
                 {openMenus[`abc`] ? (
@@ -58,29 +59,32 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               </button>
             </div>
 
-            <ul
-              className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out ${
-                openMenus[`abc`] ? "max-h-fit visible" : ""
-              }`}
-            >
-              <li className="my-[10px]">
-                <Link
-                  href={"/"}
-                  className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
-                >
-                  Sản phẩm 1
-                </Link>
-              </li>
-
-              <li className="my-[10px]">
-                <Link
-                  href={"/"}
-                  className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
-                >
-                  Sản phẩm 2
-                </Link>
-              </li>
-            </ul>
+            {categoriesMale.length > 0 && (
+              <ul
+                className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out ${
+                  openMenus[`abc`] ? "max-h-fit visible" : ""
+                }`}
+              >
+                <li className="my-[10px]">
+                  <Link
+                    href={`/collection/nam`}
+                    className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                  >
+                    Đồ nam
+                  </Link>
+                </li>
+                {categoriesMale.map((category, index) => (
+                  <li className="my-[10px]" key={index}>
+                    <Link
+                      href={`/collection/${category.slug}`}
+                      className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                    >
+                      {category.namecategory}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
           </li>
 
           <li className="border-b border-gray-300">
@@ -89,7 +93,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               className="w-full cursor-pointer flex justify-between items-center"
             >
               <p className="text-black text-[0.9rem] font-medium py-4 uppercase">
-                Sản phẩm
+                Nữ
               </p>
               <button>
                 {openMenus[`xyz`] ? (
@@ -100,9 +104,54 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               </button>
             </div>
 
+            {categoriesFemale.length > 0 && (
+              <ul
+                className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out ${
+                  openMenus[`xyz`] ? "max-h-fit visible" : ""
+                }`}
+              >
+                <li className="my-[10px]">
+                  <Link
+                    href={`/collection/nu`}
+                    className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                  >
+                    Đồ nữ
+                  </Link>
+                </li>
+                {categoriesFemale.map((category, index) => (
+                  <li className="my-[10px]" key={index}>
+                    <Link
+                      href={`/collection/${category.slug}`}
+                      className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                    >
+                      {category.namecategory}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </li>
+
+          <li className="border-b border-gray-300">
+            <div
+              onClick={() => toggleOpen(`klo`)}
+              className="w-full cursor-pointer flex justify-between items-center"
+            >
+              <p className="text-black text-[0.9rem] font-medium py-4 uppercase">
+                Giảm giá
+              </p>
+              <button>
+                {openMenus[`klo`] ? (
+                  <FaMinus className="text-[#3b3a3a]" size={15} />
+                ) : (
+                  <FaPlus className="text-[#3b3a3a]" size={15} />
+                )}
+              </button>
+            </div>
+
             <ul
               className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out ${
-                openMenus[`xyz`] ? "max-h-fit visible" : ""
+                openMenus[`klo`] ? "max-h-fit visible" : ""
               }`}
             >
               <li className="my-[10px]">
@@ -110,7 +159,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                   href={"/"}
                   className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
                 >
-                  Sản phẩm 1
+                  Giảm giá đồ nam
                 </Link>
               </li>
 
@@ -119,7 +168,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                   href={"/"}
                   className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
                 >
-                  Sản phẩm 2
+                  Giảm giá đồ nữ
                 </Link>
               </li>
             </ul>

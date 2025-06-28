@@ -311,7 +311,7 @@ function EditProduct() {
                   >
                     {categoriesStatus1.map((category, index) => (
                       <option value={category._id} key={index}>
-                        {category.namecategory} -
+                        {category.namecategory}-
                         {category.gender === 1 ? "Nam" : "Nữ"}
                       </option>
                     ))}

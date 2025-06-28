@@ -5,7 +5,7 @@ import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 
 export interface Product {
-  _id: string;
+  _slug: string;
   name: string;
   price: number;
   discount: number;
@@ -17,15 +17,15 @@ export interface Product {
   createdAt?: string;
 }
 
-export default function useGetProduct(id: string) {
+export default function useGetProduct(slug: string) {
   const [product, setProduct] = useState<Product>();
   const dispatch = useAppDispatch();
 
   const fetchProduct = async () => {
     dispatch(setLoading(true));
-    if (!id) return;
+    if (!slug) return;
     try {
-      const res = await axios.get(`/api/get-product/${id}`);
+      const res = await axios.get(`/api/get-products/${slug}`);
       setProduct(res.data);
     } catch (err) {
       console.error("Lỗi:", err);
@@ -36,7 +36,7 @@ export default function useGetProduct(id: string) {
 
   useEffect(() => {
     fetchProduct();
-  }, [id]);
+  }, [slug]);
 
   return {product, fetchProduct};
 }

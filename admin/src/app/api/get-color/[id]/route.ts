@@ -18,10 +18,7 @@ export async function GET(
     const data = await Color.findById(id);
 
     if (!data) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy màu" },
-        { status: 404 }
-      );
+      return NextResponse.json({ msg: "Không tìm thấy màu" }, { status: 404 });
     }
 
     return NextResponse.json(data);

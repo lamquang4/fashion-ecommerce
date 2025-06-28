@@ -88,18 +88,28 @@ function Header() {
                   >
                     Nam
                   </Link>
-                  <ul className="absolute font-light top-full left-0 w-[200px] bg-white p-2 translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
-                    {categoriesMale.map((category, index) => (
-                      <li className="my-2" key={index}>
+                  {categoriesMale.length > 0 && (
+                    <ul className="absolute font-medium top-full left-0 w-[200px] bg-white p-2 translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
+                      <li className="my-2">
                         <Link
-                          href={`/collection/${category.slug}`}
+                          href={`/collection/nam`}
                           className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
                         >
-                          {category.namecategory}
+                          Đồ nam
                         </Link>
                       </li>
-                    ))}
-                  </ul>
+                      {categoriesMale.map((category, index) => (
+                        <li className="my-2" key={index}>
+                          <Link
+                            href={`/collection/${category.slug}`}
+                            className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
+                          >
+                            {category.namecategory}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
 
                 <li className="relative menu-category">
@@ -109,18 +119,28 @@ function Header() {
                   >
                     Nữ
                   </Link>
-                  <ul className="absolute font-light top-full left-0 w-[200px] bg-white p-2 translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
-                    {categoriesFemale.map((category, index) => (
-                      <li className="my-2" key={index}>
+                  {categoriesFemale.length > 0 && (
+                    <ul className="absolute font-medium top-full left-0 w-[200px] bg-white p-2 translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
+                      <li className="my-2">
                         <Link
-                          href={`/collection/${category.slug}`}
+                          href={`/collection/nu`}
                           className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
                         >
-                          {category.namecategory}
+                          Đồ nữ
                         </Link>
                       </li>
-                    ))}
-                  </ul>
+                      {categoriesFemale.map((category, index) => (
+                        <li className="my-2" key={index}>
+                          <Link
+                            href={`/collection/${category.slug}`}
+                            className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
+                          >
+                            {category.namecategory}
+                          </Link>
+                        </li>
+                      ))}
+                    </ul>
+                  )}
                 </li>
 
                 <li className="relative menu-category">
@@ -130,7 +150,7 @@ function Header() {
                   >
                     Giảm giá
                   </Link>
-                  <ul className="absolute font-light top-full left-0 w-[200px] bg-white p-2 translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
+                  <ul className="absolute font-medium top-full left-0 w-[200px] bg-white p-2 translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
                     <li className="my-2">
                       <Link
                         href={"/"}

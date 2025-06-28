@@ -21,16 +21,28 @@ export async function GET(req: NextRequest) {
       query.status = parseInt(status);
     }
 
-    const [data, total] = await Promise.all([
-      Product.find(query)
-        .populate("category", "namecategory gender")
-        .skip(skip)
-        .limit(limit),
-      Product.countDocuments(query),
+    const [products, countResult] = await Promise.all([
+      Product.aggregate([
+        { $match: query },
+        {
+          $lookup: {
+            from: "categories",
+            localField: "category",
+            foreignField: "_id",
+            as: "category",
+          },
+        },
+        { $unwind: "$category" },
+        { $skip: skip },
+        { $limit: limit },
+      ]),
+      Product.aggregate([{ $match: query }, { $count: "total" }]),
     ]);
 
+    const total = countResult[0]?.total || 0;
+
     return NextResponse.json({
-      products: data,
+      products,
       total,
       page,
       limit,

@@ -6,13 +6,19 @@ export async function GET(req: NextRequest) {
   try {
     await connectMongoDB();
 
-    const [banners1, banners2] = await Promise.all([
-      Banner.find({ type: { $in: [1] } }),
-      Banner.find({ type: { $in: [0] } }),
-    ]);
+    const [banners1, banners2, promotebanners, collections] = await Promise.all(
+      [
+        Banner.find({ type: { $in: [0] } }),
+        Banner.find({ type: { $in: [1] } }),
+        Banner.find({ type: { $in: [2] } }),
+        Banner.find({ type: { $in: [3] } }),
+      ]
+    );
     return NextResponse.json({
       banners1,
       banners2,
+      promotebanners,
+      collections,
     });
   } catch (err) {
     return NextResponse.json(

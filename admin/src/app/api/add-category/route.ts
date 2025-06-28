@@ -19,10 +19,14 @@ export async function POST(req: NextRequest) {
     const gender = Number(formData.get("gender"));
     const file = formData.get("image") as File;
 
-    const checkName = await Category.findOne({ namecategory });
+    const checkName = await Category.findOne({ namecategory, gender });
     if (checkName) {
       return NextResponse.json(
-        { msg: "Tên danh mục đã được sử dụng" },
+        {
+          msg: `Tên danh mục này đã được dùng cho giới tính ${
+            gender === 0 ? "nữ" : "nam"
+          }.`,
+        },
         { status: 400 }
       );
     }
@@ -63,16 +67,17 @@ export async function POST(req: NextRequest) {
 
     const slug1 = removeVietNamese(namecategory);
     const slug2 = removeVietNamese(gender === 0 ? "Nữ" : "Nam");
+    const slug = `${slug1}-${slug2}`;
     const ext = file.name.split(".").pop(); // png, jpg, webp
     const timestamp = Date.now();
-    const fileName = `${slug1}-${slug2}-${timestamp}.${ext}`;
+    const fileName = `${slug}-${timestamp}.${ext}`;
     const filePathAdmin = path.join(uploadDirAdmin, fileName);
     const filePathClient = path.join(uploadDirClient, fileName);
     await fs.writeFile(filePathAdmin, buffer);
     await fs.writeFile(filePathClient, buffer);
 
     const imagePath = `/uploads/category/${fileName}`;
-    const slug = `${slug1}-${slug2}`;
+
     const newCategory = await Category.create({
       namecategory,
       gender,

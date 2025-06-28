@@ -38,5 +38,5 @@ export default function useGetProduct(id: string) {
     fetchProduct();
   }, [id]);
 
-  return {product, fetchProduct};
+  return { product, fetchProduct };
 }

@@ -39,17 +39,23 @@ export async function PUT(
 
     const checkName = await Category.findOne({
       namecategory,
+      gender,
       _id: { $ne: id },
     });
     if (checkName) {
       return NextResponse.json(
-        { msg: "Tên danh mục đã được sử dụng" },
+        {
+          msg: `Tên danh mục này đã được dùng cho giới tính ${
+            gender === 0 ? "nữ" : "nam"
+          }.`,
+        },
         { status: 400 }
       );
     }
 
     const slug1 = removeVietNamese(namecategory);
     const slug2 = removeVietNamese(gender === 0 ? "Nữ" : "Nam");
+    const slug = `${slug1}-${slug2}`;
     let imagePath = category.image;
 
     if (file && file.size > 0) {
@@ -95,7 +101,7 @@ export async function PUT(
       const buffer = Buffer.from(arrayBuffer);
       const ext = file.name.split(".").pop();
       const timestamp = Date.now();
-      const fileName = `${slug1}-${slug2}-${timestamp}.${ext}`;
+      const fileName = `${slug}-${timestamp}.${ext}`;
 
       const uploadDirAdmin = path.join(
         process.cwd(),
@@ -116,7 +122,7 @@ export async function PUT(
 
       imagePath = `/uploads/category/${fileName}`;
     }
-    const slug = `${slug1}-${slug2}`;
+
     const updatedData = {
       namecategory,
       gender,

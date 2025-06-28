@@ -6,32 +6,18 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import { FreeMode } from "swiper/modules";
-
-interface CategoryItem {
-  name: string;
-  count: number;
-  img: string;
-}
-
-const categories: Record<string, CategoryItem[]> = {
-  Nam: [
-    { name: "Áo sơ mi", count: 3, img: "/assets/other/aosomi.png" },
-    { name: "Áo khoác", count: 5, img: "/assets/other/aokhoac.png" },
-  ],
-  Nữ: [
-    { name: "Váy", count: 7, img: "/assets/other/vay.png" },
-    { name: "Đầm", count: 4, img: "/assets/other/dam.png" },
-  ],
-};
+import useGetCategories from "@/hooks/useGetCategories";
 
 function CategoryList() {
-  const [selectedGender, setSelectedGender] = useState<string>("Nam");
+  const [selectedGender, setSelectedGender] = useState<Number>(1);
+  const { categoriesMale, categoriesFemale } = useGetCategories();
 
+  const categories = selectedGender === 1 ? categoriesMale : categoriesFemale;
   return (
     <section className="px-[10px] sm:px-[15px] mt-[40px] sm:mt-[45px]">
       <div className="w-full m-[0_auto] md:max-w-[1000px] lg:max-w-[1240px]">
         <div className="flex justify-center mb-5">
-          {["Nam", "Nữ"].map((gender) => (
+          {[1, 0].map((gender) => (
             <button
               key={gender}
               onClick={() => setSelectedGender(gender)}
@@ -45,7 +31,7 @@ function CategoryList() {
     }
   `}
             >
-              {gender}
+              {gender === 1 ? "Nam" : "Nữ"}
             </button>
           ))}
         </div>
@@ -57,7 +43,7 @@ function CategoryList() {
           modules={[FreeMode]}
           className="mx-auto w-fit"
         >
-          {categories[selectedGender].map((item, index) => (
+          {categories.map((item, index) => (
             <SwiperSlide
               key={index}
               className="!flex !flex-col !items-center !w-[90px] sm:!w-[110px]"
@@ -65,20 +51,17 @@ function CategoryList() {
               <Link href={"/"}>
                 <div className="mb-[8px]">
                   <Image
-                    Src={item.img}
-                    Alt={item.name}
+                    Src={item.image}
+                    Alt={item.namecategory}
                     ClassName="block w-[90px] sm:w-[110px] object-cover"
                     loadingType="eager"
                   />
                 </div>
                 <div className="w-full">
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-center items-center">
                     <h3 className="text-[0.85rem] uppercase font-medium">
-                      {item.name}
+                      {item.namecategory}
                     </h3>
-                    <p className="text-black text-[0.85rem] font-medium">
-                      ({item.count})
-                    </p>
                   </div>
                 </div>
               </Link>

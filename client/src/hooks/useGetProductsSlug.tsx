@@ -22,12 +22,11 @@ export interface Product {
   createdAt: string;
 }
 
-export default function useGetProducts() {
+export default function useGetProducts(slug: string) {
   const [products, setProducts] = useState<Product[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const [keyword, setKeyword] = useState("");
-  const [status, setStatus] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
@@ -38,11 +37,10 @@ export default function useGetProducts() {
     dispatch(setLoading(true));
     try {
       const res = await axios.get(
-        `/api/get-products?page=${page}&limit=${limit}`,
+        `/api/get-products/${slug}?page=${page}&limit=${limit}`,
         {
           params: {
             keyword,
-            status,
           },
         }
       );
@@ -58,7 +56,7 @@ export default function useGetProducts() {
 
   useEffect(() => {
     fetchProducts();
-  }, [page, limit, keyword, status]);
+  }, [page, limit, keyword]);
 
   return {
     products,
@@ -68,6 +66,5 @@ export default function useGetProducts() {
     currentPage: page,
     limit,
     setKeyword,
-    setStatus
   };
 }
