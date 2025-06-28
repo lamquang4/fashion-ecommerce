@@ -5,30 +5,14 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     await connectMongoDB();
-    const searchParams = req.nextUrl.searchParams;
-    const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "10");
-    const skip = (page - 1) * limit;
-    const keyword = searchParams.get("keyword") || "";
-    const status = searchParams.get("status") || "";
-    const query: any = {};
-    if (keyword) {
-      query.namecategory = { $regex: keyword, $options: "i" };
-    }
-    if (status) {
-      query.status = parseInt(status);
-    }
 
-    const [data, total] = await Promise.all([
-      await Category.find(query).skip(skip).limit(limit),
-      Category.countDocuments(query),
+    const [categoriesMale, categoriesFemale] = await Promise.all([
+      Category.find({ status: 1, gender: 1 }),
+      Category.find({ status: 1, gender: 0 }),
     ]);
     return NextResponse.json({
-      categories: data,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
+      categoriesMale,
+      categoriesFemale,
     });
   } catch (err) {
     return NextResponse.json(

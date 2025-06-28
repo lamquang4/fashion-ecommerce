@@ -6,17 +6,10 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
 import Image from "./Image";
+import useGetMainBanners from "@/hooks/useGetMainBanners";
 function BannerCarousel() {
-  const bannerCarousels = [
-    {
-      imgDesktop: "/assets/banner/banner1-desktop.png",
-      imgMobile: "/assets/banner/banner1-mobile.png",
-    },
-    {
-      imgDesktop: "/assets/banner/banner-desktop.png",
-      imgMobile: "/assets/banner/banner-mobile.png",
-    },
-  ];
+  const { banners1, banners2 } = useGetMainBanners();
+
   return (
     <>
       <section className="w-full">
@@ -28,23 +21,22 @@ function BannerCarousel() {
           speed={1000}
           className="w-full"
         >
-          {bannerCarousels.map((banner, index) => (
+          {banners2.map((banner2, index) => (
             <SwiperSlide key={index}>
               <div className="relative block w-full">
                 <div className="w-full">
                   <picture>
                     <source
-                      srcSet={banner.imgMobile}
+                      srcSet={banners1[index].image}
                       media="(max-width: 640px)"
                     />
                     <Image
-                      Src={banner.imgDesktop}
+                      Src={banner2.image}
                       Alt={""}
                       ClassName={"w-full object-cover"}
                       loadingType="eager"
                     />
                   </picture>
-
                   <div className="text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full">
                     <h2 className="text-[1.6rem] md:text-[1.8rem] uppercase font-bold mb-5">
                       Thời trang hiện đại

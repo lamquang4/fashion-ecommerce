@@ -64,7 +64,7 @@ function EditProduct() {
 
   const { product, fetchProduct } = useGetProduct(id);
   const { inventories, fetchInventory } = useGetInventory(id);
-  const { categories } = useGetCategories();
+  const { categoriesStatus1 } = useGetCategories();
   const { colors } = useGetColors();
   const { sizes } = useGetSizes();
   const { updateProduct } = useUpdateProduct(id);
@@ -309,7 +309,7 @@ function EditProduct() {
                     onChange={handleChange}
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   >
-                    {categories.map((category, index) => (
+                    {categoriesStatus1.map((category, index) => (
                       <option value={category._id} key={index}>
                         {category.namecategory} -
                         {category.gender === 1 ? "Nam" : "Nữ"}

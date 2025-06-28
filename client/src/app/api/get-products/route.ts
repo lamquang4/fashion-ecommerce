@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     const keyword = searchParams.get("keyword") || "";
     const status = searchParams.get("status") || "";
 
-    const query: any = {};
+    const query: any = { status: 1 };
     if (keyword) {
       query.name = { $regex: keyword, $options: "i" };
     }
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
 
     const [data, total] = await Promise.all([
       Product.find(query)
-        .populate("category", "namecategory gender")
+        .populate("category", "slug namecategory gender")
         .skip(skip)
         .limit(limit),
       Product.countDocuments(query),

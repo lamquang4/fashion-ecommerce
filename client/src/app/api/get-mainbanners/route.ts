@@ -6,30 +6,13 @@ export async function GET(req: NextRequest) {
   try {
     await connectMongoDB();
 
-    const searchParams = req.nextUrl.searchParams;
-    const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "10");
-    const status = searchParams.get("status") || "";
-    const type = searchParams.get("type") || "";
-    const skip = (page - 1) * limit;
-    const query: any = { type: { $in: [0, 1] } };
-    if (status) {
-      query.status = parseInt(status);
-    }
-    if (type) {
-      query.type = parseInt(type);
-    }
-
-    const [data, total] = await Promise.all([
-      Banner.find(query).skip(skip).limit(limit),
-      Banner.countDocuments(query),
+    const [banners1, banners2] = await Promise.all([
+      Banner.find({ type: { $in: [1] } }),
+      Banner.find({ type: { $in: [0] } }),
     ]);
     return NextResponse.json({
-      mainbanners: data,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
+      banners1,
+      banners2,
     });
   } catch (err) {
     return NextResponse.json(

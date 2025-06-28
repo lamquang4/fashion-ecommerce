@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/redux/hook";
 import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
 
 export interface Category {
   _id: string;
@@ -16,32 +15,16 @@ export interface Category {
 }
 
 export default function useGetCategories() {
-  const [categories, setCategories] = useState<Category[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const [status, setStatus] = useState("");
-
-  const searchParams = useSearchParams();
-  const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "10");
+  const [categoriesMale, setCategoriesMale] = useState<Category[]>([]);
+  const [categoriesFemale, setCategoriesFemale] = useState<Category[]>([]);
   const dispatch = useAppDispatch();
 
   const fetchCategories = async () => {
     dispatch(setLoading(true));
     try {
-      const res = await axios.get(
-        `/api/get-categories?page=${page}&limit=${limit}`,
-        {
-          params: {
-            keyword,
-            status,
-          },
-        }
-      );
-      setCategories(res.data.categories);
-      setTotalPages(res.data.totalPages);
-      setTotalItems(res.data.total);
+      const res = await axios.get(`/api/get-categories`);
+      setCategoriesMale(res.data.categoriesMale);
+      setCategoriesFemale(res.data.categoriesFemale);
     } catch (err) {
       console.error("Lỗi:", err);
     } finally {
@@ -51,16 +34,11 @@ export default function useGetCategories() {
 
   useEffect(() => {
     fetchCategories();
-  }, [page, limit, keyword, status]);
+  }, []);
 
   return {
-    categories,
+    categoriesMale,
+    categoriesFemale,
     fetchCategories,
-    totalPages,
-    totalItems,
-    currentPage: page,
-    limit,
-    setKeyword,
-    setStatus,
   };
 }

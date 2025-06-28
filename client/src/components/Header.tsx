@@ -10,7 +10,10 @@ import Menumobile from "./Menumobile";
 import Overplay from "./Overplay";
 import ProfileMenu from "./ProfileMenu";
 import Image from "./Image";
+import useGetCategories from "@/hooks/useGetCategories";
 function Header() {
+  const { categoriesMale, categoriesFemale } = useGetCategories();
+
   const [openSearch, setOpenSearch] = useState(false);
   const [menuMobileOpen, setMenuMobileOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
@@ -86,32 +89,16 @@ function Header() {
                     Nam
                   </Link>
                   <ul className="absolute font-light top-full left-0 w-[200px] bg-white p-2 translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
-                    <li className="my-2">
-                      <Link
-                        href={"/"}
-                        className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
-                      >
-                        Sản phẩm 1
-                      </Link>
-                    </li>
-
-                    <li className="my-2">
-                      <Link
-                        href={"/"}
-                        className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
-                      >
-                        Sản phẩm 2
-                      </Link>
-                    </li>
-
-                    <li className="my-2">
-                      <Link
-                        href={"/"}
-                        className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
-                      >
-                        Sản phẩm 3
-                      </Link>
-                    </li>
+                    {categoriesMale.map((category, index) => (
+                      <li className="my-2" key={index}>
+                        <Link
+                          href={`/collection/${category.slug}`}
+                          className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
+                        >
+                          {category.namecategory}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </li>
 
@@ -123,32 +110,16 @@ function Header() {
                     Nữ
                   </Link>
                   <ul className="absolute font-light top-full left-0 w-[200px] bg-white p-2 translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
-                    <li className="my-2">
-                      <Link
-                        href={"/"}
-                        className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
-                      >
-                        Sản phẩm 1
-                      </Link>
-                    </li>
-
-                    <li className="my-2">
-                      <Link
-                        href={"/"}
-                        className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
-                      >
-                        Sản phẩm 2
-                      </Link>
-                    </li>
-
-                    <li className="my-2">
-                      <Link
-                        href={"/"}
-                        className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
-                      >
-                        Sản phẩm 3
-                      </Link>
-                    </li>
+                    {categoriesFemale.map((category, index) => (
+                      <li className="my-2" key={index}>
+                        <Link
+                          href={`/collection/${category.slug}`}
+                          className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
+                        >
+                          {category.namecategory}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
                 </li>
 
@@ -175,15 +146,6 @@ function Header() {
                         className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
                       >
                         Giảm giá đồ nữ
-                      </Link>
-                    </li>
-
-                    <li className="my-2">
-                      <Link
-                        href={"/"}
-                        className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
-                      >
-                        Sản phẩm 3
                       </Link>
                     </li>
                   </ul>
