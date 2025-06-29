@@ -19,18 +19,40 @@ export async function GET(req: NextRequest) {
       query.status = parseInt(status);
     }
 
-    const [data, total, data1] = await Promise.all([
-      Category.find(query).skip(skip).limit(limit),
+    const [categories, total, categoriesStatus1] = await Promise.all([
+      Category.aggregate([
+        { $match: query },
+        {
+          $lookup: {
+            from: "products",
+            localField: "_id",
+            foreignField: "category",
+            as: "products",
+          },
+        },
+        {
+          $addFields: {
+            productCount: { $size: "$products" },
+          },
+        },
+        {
+          $project: {
+            products: 0,
+          },
+        },
+        { $skip: skip },
+        { $limit: limit },
+      ]),
       Category.countDocuments(query),
       Category.find({ status: 1 }),
     ]);
     return NextResponse.json({
-      categories: data,
+      categories,
       total,
       page,
       limit,
       totalPages: Math.ceil(total / limit),
-      categoriesStatus1: data1,
+      categoriesStatus1,
     });
   } catch (err) {
     return NextResponse.json(

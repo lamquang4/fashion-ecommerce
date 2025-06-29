@@ -22,12 +22,12 @@ export async function GET(req: NextRequest) {
       query.status = parseInt(status);
     }
 
-    const [data, total] = await Promise.all([
+    const [customers, total] = await Promise.all([
       User.find(query).skip(skip).limit(limit),
       User.countDocuments(query),
     ]);
     return NextResponse.json({
-      customers: data,
+      customers,
       total,
       page,
       limit,

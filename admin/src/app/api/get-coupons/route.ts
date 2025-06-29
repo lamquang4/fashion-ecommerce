@@ -20,12 +20,12 @@ export async function GET(req: NextRequest) {
       query.status = parseInt(status);
     }
 
-    const [data, total] = await Promise.all([
+    const [coupons, total] = await Promise.all([
       Coupon.find(query).skip(skip).limit(limit),
       Coupon.countDocuments(query),
     ]);
     return NextResponse.json({
-      coupons: data,
+      coupons,
       total,
       page,
       limit,

@@ -88,7 +88,7 @@ function OrderHistory() {
             {/*
    <div className="flex justify-center items-center h-[60vh]">
                 <div>
-                  <div className="mb-[25px] flex justify-center">
+                  <div className="mb-[20px] flex justify-center">
                     <Image
                       Src={"/assets/other/empty-order.png"}
                       Alt={""}
@@ -96,7 +96,7 @@ function OrderHistory() {
                     />
                   </div>
 
-                  <div className="flex justify-center flex-col gap-y-3 items-center">
+                  <div className="flex justify-center flex-col gap-3 items-center text-center">
                     <h2 className="text-[1.3rem] font-medium">
                       Không có đơn hàng nào
                     </h2>

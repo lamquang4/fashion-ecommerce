@@ -15,12 +15,12 @@ export async function GET(req: NextRequest) {
       query.$or = [{ namesize: { $regex: keyword, $options: "i" } }];
     }
 
-    const [data, total] = await Promise.all([
+    const [sizes, total] = await Promise.all([
       Size.find(query).skip(skip).limit(limit),
       Size.countDocuments(query),
     ]);
     return NextResponse.json({
-      sizes: data,
+      sizes,
       total,
       page,
       limit,

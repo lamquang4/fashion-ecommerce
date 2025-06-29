@@ -293,7 +293,7 @@ function CartItem() {
           {/*
       <div className="flex justify-center items-center h-[60vh]">
               <div>
-                <div className="mb-[25px] flex justify-center">
+                <div className="mb-[20px] flex justify-center">
                   <Image
                     Src={"/assets/other/empty-cart.png"}
                     Alt={""}
@@ -301,12 +301,12 @@ function CartItem() {
                   />
                 </div>
 
-                <div className="flex justify-center flex-col gap-y-3 items-center">
+                <div className="flex justify-center flex-col gap-3 items-center text-center">
                   <h2 className="text-[1.3rem] font-semibold">
                     Không có gì trong giỏ hết
                   </h2>
                   <button className="text-[1rem] border border-black rounded-md font-medium p-[10px_15px] hover:bg-black hover:text-white">
-                    <Link href={"/shop"}>Mua sắm ngay</Link>
+                    <Link href={"/"}>Mua sắm ngay</Link>
                   </button>
                 </div>
               </div>

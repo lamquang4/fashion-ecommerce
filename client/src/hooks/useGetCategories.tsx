@@ -11,6 +11,7 @@ export interface Category {
   image: string;
   slug: string;
   status: number;
+  productCount: number;
   createdAt: string;
 }
 

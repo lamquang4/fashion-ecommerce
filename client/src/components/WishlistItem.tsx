@@ -111,7 +111,7 @@ function WishlistItem() {
           {/*
   <div className="flex justify-center items-center h-[60vh]">
               <div>
-                <div className="mb-[25px] flex justify-center">
+                <div className="mb-[20px] flex justify-center">
                   <Image
                     Src={"/assets/other/empty-wishlist.png"}
                     Alt={""}
@@ -119,7 +119,7 @@ function WishlistItem() {
                   />
                 </div>
 
-                <div className="flex justify-center flex-col gap-y-3 items-center">
+                <div className="flex justify-center flex-col gap-3 items-center text-center">
                   <h2 className="text-[1.3rem] font-semibold">
                     Không có gì trong yêu thích hết
                   </h2>

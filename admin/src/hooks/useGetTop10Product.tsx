@@ -21,7 +21,7 @@ export default function useGetTop10Products() {
     dispatch(setLoading(true));
     try {
       const res = await axios.get(`/api/get-top10products`);
-      setProducts(res.data.top5Products);
+      setProducts(res.data.top10Products);
     } catch (err) {
       console.error("Lỗi:", err);
     } finally {

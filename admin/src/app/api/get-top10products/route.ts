@@ -10,7 +10,7 @@ export async function GET(req: NextRequest) {
     const successfulOrders = await Order.find({ status: 3 }).select("_id");
     const successfulOrderIds = successfulOrders.map((order) => order._id);
 
-    const top5Products = await OrderDetail.aggregate([
+    const top10Products = await OrderDetail.aggregate([
       {
         $match: {
           order: { $in: successfulOrderIds },
@@ -53,7 +53,7 @@ export async function GET(req: NextRequest) {
     ]);
 
     return NextResponse.json({
-      top5Products,
+      top10Products,
     });
   } catch (err) {
     return NextResponse.json(

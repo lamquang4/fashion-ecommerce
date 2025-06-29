@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     const successfulOrders = await Order.find({ status: 3 }).select("_id");
     const successfulOrderIds = successfulOrders.map((order) => order._id);
 
-    const [data, total, totalRevenue, totalSold] = await Promise.all([
+    const [orders, total, totalRevenue, totalSold] = await Promise.all([
       Order.find(query).skip(skip).limit(limit),
       Order.countDocuments(query),
       Order.aggregate([
@@ -48,7 +48,7 @@ export async function GET(req: NextRequest) {
     const revenue = totalRevenue[0]?.totalSum || 0;
     const sold = totalSold[0]?.totalSold || 0;
     return NextResponse.json({
-      orders: data,
+      orders,
       total,
       page,
       limit,

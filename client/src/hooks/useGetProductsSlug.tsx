@@ -19,10 +19,20 @@ export interface Product {
     namecategory: string;
     gender: number;
   };
+  inventory: {
+    _id: string;
+    quantity: number;
+    size: string;
+    color: {
+      _id: string;
+      namecolor: string;
+      codecolor: string;
+    };
+  }[];
   createdAt: string;
 }
 
-export default function useGetProducts(slug: string) {
+export default function useGetProductsSlug(slug: string) {
   const [products, setProducts] = useState<Product[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);

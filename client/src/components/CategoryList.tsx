@@ -48,7 +48,7 @@ function CategoryList() {
               key={index}
               className="!flex !flex-col !items-center !w-[90px] sm:!w-[110px]"
             >
-              <Link href={"/"}>
+              <Link href={`/collection/${item.slug}`}>
                 <div className="mb-[8px]">
                   <Image
                     Src={item.image}
@@ -60,7 +60,7 @@ function CategoryList() {
                 <div className="w-full">
                   <div className="flex justify-center items-center">
                     <h3 className="text-[0.85rem] uppercase font-medium">
-                      {item.namecategory}
+                      {item.namecategory} ({item.productCount})
                     </h3>
                   </div>
                 </div>

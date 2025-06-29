@@ -1,5 +1,6 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Category from "@/model/Category";
+import Product from "@/model/Product";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function PUT(req: NextRequest) {
@@ -19,6 +20,22 @@ export async function PUT(req: NextRequest) {
       return NextResponse.json(
         { msg: "Không tìm thấy người dùng" },
         { status: 404 }
+      );
+    }
+
+    const hasProduct = await Product.exists({ category: id });
+
+    if (status === 1 && !hasProduct) {
+      return NextResponse.json(
+        { msg: "Danh mục chưa có sản phẩm nên không thể hiện" },
+        { status: 400 }
+      );
+    }
+
+    if (status === 0 && category.status === 1 && hasProduct) {
+      return NextResponse.json(
+        { msg: "Danh mục đã có sản phẩm nên không thể ẩn" },
+        { status: 400 }
       );
     }
 

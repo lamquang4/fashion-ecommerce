@@ -18,12 +18,12 @@ export async function GET(req: NextRequest) {
       ];
     }
 
-    const [data, total] = await Promise.all([
+    const [colors, total] = await Promise.all([
       Color.find(query).skip(skip).limit(limit),
       Color.countDocuments(query),
     ]);
     return NextResponse.json({
-      colors: data,
+      colors,
       total,
       page,
       limit,
