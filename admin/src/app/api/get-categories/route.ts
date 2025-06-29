@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
       query.status = parseInt(status);
     }
 
-    const [categories, total, categoriesStatus1] = await Promise.all([
+    const [categories, total] = await Promise.all([
       Category.aggregate([
         { $match: query },
         {
@@ -44,7 +44,6 @@ export async function GET(req: NextRequest) {
         { $limit: limit },
       ]),
       Category.countDocuments(query),
-      Category.find({ status: 1 }),
     ]);
     return NextResponse.json({
       categories,
@@ -52,7 +51,6 @@ export async function GET(req: NextRequest) {
       page,
       limit,
       totalPages: Math.ceil(total / limit),
-      categoriesStatus1,
     });
   } catch (err) {
     return NextResponse.json(

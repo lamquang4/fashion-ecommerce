@@ -92,6 +92,10 @@ function Category() {
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Giới tính
               </th>
+
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Số lượng dùng
+              </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Ngày thêm
               </th>
@@ -137,6 +141,9 @@ function Category() {
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {category.gender === 1 ? "Nam" : "Nữ"}
+                  </td>
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {category.productCount}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(category.createdAt as string).toLocaleDateString(

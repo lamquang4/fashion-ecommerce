@@ -63,7 +63,9 @@ function ProductSlider({ title, products }: Props) {
                     {product.discount > 0 && (
                       <div className="absolute bottom-[10px] md:top-[10px] left-[10px] z-[3] font-semibold text-center text-black">
                         <p className="uppercase text-[0.75rem] px-[5px] py-[5px] bg-white w-[90px]">
-                          Giảm giá {product.discount}
+                          Giảm giá{" "}
+                          {Math.floor((product.discount / product.price) * 100)}
+                          %
                         </p>
                       </div>
                     )}
@@ -78,12 +80,21 @@ function ProductSlider({ title, products }: Props) {
                     </h2>
                     <div className="flex gap-[10px] text-[0.95rem] sm:text-[1rem] text-black mb-[8px]">
                       {product.discount > 0 && (
-                        <del className="text-[#707072]">{product.price}</del>
+                        <del className="text-[#707072]">
+                          {product.price.toLocaleString("vi-VN")}₫
+                        </del>
                       )}
                       {product.discount > 0 ? (
-                        <p className="font-medium">{product.discount}</p>
+                        <p className="font-medium">
+                          {(product.price - product.discount).toLocaleString(
+                            "vi-VN"
+                          )}
+                          ₫
+                        </p>
                       ) : (
-                        <p className="font-medium">{product.price}</p>
+                        <p className="font-medium">
+                          {product.price.toLocaleString("vi-VN")}₫
+                        </p>
                       )}
                     </div>
 

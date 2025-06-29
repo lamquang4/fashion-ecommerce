@@ -12,12 +12,12 @@ export interface Category {
   image: string;
   slug: string;
   status: number;
+  productCount: number;
   createdAt: string;
 }
 
 export default function useGetCategories() {
   const [categories, setCategories] = useState<Category[]>([]);
-  const [categoriesStatus1, setCategoriesStatus1] = useState<Category[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [totalItems, setTotalItems] = useState(0);
   const [keyword, setKeyword] = useState("");
@@ -43,7 +43,6 @@ export default function useGetCategories() {
       setCategories(res.data.categories);
       setTotalPages(res.data.totalPages);
       setTotalItems(res.data.total);
-      setCategoriesStatus1(res.data.categoriesStatus1);
     } catch (err) {
       console.error("Lỗi:", err);
     } finally {
@@ -57,7 +56,6 @@ export default function useGetCategories() {
 
   return {
     categories,
-    categoriesStatus1,
     fetchCategories,
     totalPages,
     totalItems,

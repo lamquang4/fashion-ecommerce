@@ -155,8 +155,11 @@ function Product() {
                         {product.price?.toLocaleString("vi-VN")}₫
                       </span>
                       {product.discount > 0 && (
-                        <span className="text-red-500 font-semibold">
-                          {product.discount?.toLocaleString("vi-VN")}₫
+                        <span className="text-black font-semibold">
+                          {(product.price - product.discount).toLocaleString(
+                            "vi-VN"
+                          )}
+                          ₫
                         </span>
                       )}
                     </div>

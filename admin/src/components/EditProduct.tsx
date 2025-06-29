@@ -63,7 +63,7 @@ function EditProduct() {
   const id = params.id as string;
 
   const { product, fetchProduct } = useGetProduct(id);
-  const { categoriesStatus1 } = useGetCategories();
+  const { categories } = useGetCategories();
   const { colors } = useGetColors();
   const { sizes } = useGetSizes();
   const { updateProduct } = useUpdateProduct(id);
@@ -319,7 +319,7 @@ function EditProduct() {
                     onChange={handleChange}
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   >
-                    {categoriesStatus1.map((category, index) => (
+                    {categories.map((category, index) => (
                       <option value={category._id} key={index}>
                         {category.namecategory}-
                         {category.gender === 1 ? "Nam" : "Nữ"}
@@ -364,7 +364,7 @@ function EditProduct() {
 
                 <div className="flex flex-col gap-1 w-full">
                   <label htmlFor="" className="text-[0.9rem] text-black">
-                    Giá giảm giá
+                    Số tiền giảm
                   </label>
                   <input
                     type="number"

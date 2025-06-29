@@ -9,7 +9,7 @@ export async function GET(
 ) {
   try {
     await connectMongoDB();
-    const { slug } = await params;
+    const { slug } = params;
 
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
@@ -17,22 +17,31 @@ export async function GET(
     const skip = (page - 1) * limit;
     const keyword = searchParams.get("keyword") || "";
 
-    const category = await Category.findOne({ slug, status: 1 }).select("_id");
+    let categoryQuery: any = { status: 1 };
+    let categoryIds: any[] = [];
 
-    if (!category) {
+    if (slug === "nam") {
+      categoryQuery.gender = 1;
+    } else if (slug === "nu") {
+      categoryQuery.gender = 0;
+    } else {
+      categoryQuery.slug = slug;
+    }
+
+    const categories = await Category.find(categoryQuery).select("_id");
+
+    if (!categories) {
       return NextResponse.json(
-        {
-          msg: "Không tìm thấy category",
-        },
-        {
-          status: 400,
-        }
+        { msg: "Không tìm thấy danh mục" },
+        { status: 400 }
       );
     }
 
+    categoryIds = categories.map((cat) => cat._id);
+
     const query: any = {
       status: 1,
-      category: category._id,
+      category: { $in: categoryIds },
     };
 
     if (keyword) {
