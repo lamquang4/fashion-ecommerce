@@ -40,7 +40,7 @@ function ProductSlider({ title, products }: Props) {
               {products.map((product, index) => (
                 <div key={index} className="keen-slider__slide">
                   <div className="relative group">
-                    <Link href={"/product"}>
+                    <Link href={`/product/${product.slug}`}>
                       <picture>
                         <Image
                           Src={product.image[0]}
@@ -70,7 +70,7 @@ function ProductSlider({ title, products }: Props) {
                   </div>
                   <div className="p-[14px_2px]">
                     <h2 className="text-[#969696] text-[0.9rem] sm:text-[0.95rem] font-medium uppercase mb-[6px]">
-                      {product.category.namecategory} /{" "}
+                      {product.category.namecategory}/
                       {product.category.gender === 1 ? "Nam" : "Nữ"}
                     </h2>
                     <h2 className="text-black text-[0.9rem] sm:text-[0.95rem] font-medium capitalize mb-[6px]">
@@ -93,6 +93,7 @@ function ProductSlider({ title, products }: Props) {
                           <button
                             key={index}
                             type="button"
+                            title={inv.color?.namecolor}
                             className="w-6 h-6 border-gray-500 border"
                             style={{ backgroundColor: inv.color?.codecolor }}
                           ></button>

@@ -12,14 +12,14 @@ import Link from "next/link";
 import StaticCards from "./StaticCards";
 import useGetOrders from "@/hooks/useGetOrders";
 import useGetCustomers from "@/hooks/useGetCustomers";
-import useGetTop5Products from "@/hooks/useGetTop5Product";
+import useGetTop10Products from "@/hooks/useGetTop10Product";
 import Loading from "./Loading";
 import { useAppSelector } from "@/redux/hook";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 function Dashboard() {
   const { orders, totalRevenue, totalSold } = useGetOrders();
   const { customers } = useGetCustomers();
-  const { products } = useGetTop5Products();
+  const { products } = useGetTop10Products();
   const loading = useAppSelector((state) => state.loadingSlice);
   const array = [
     {
@@ -186,7 +186,7 @@ function Dashboard() {
 
       <div className="p-[1.3rem] px-[1.2rem] bg-white">
         <h1 className="font-bold text-[1.5rem] text-[#74767d]">
-          Top 5 bán chạy
+          Top 10 bán chạy
         </h1>
       </div>
 

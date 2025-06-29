@@ -16,7 +16,6 @@ import useGetSizes from "@/hooks/useGetSizes";
 import useGetColors from "@/hooks/useGetColors";
 import { useAppSelector } from "@/redux/hook";
 import Loading from "./Loading";
-import useGetInventory from "@/hooks/useGetInventory";
 import useUpdateProduct from "@/hooks/useUpdateProduct";
 import { useInventory } from "@/hooks/useInventory";
 import { useImageViewer1 } from "@/hooks/useImageViewer1";
@@ -24,6 +23,7 @@ import { useImageViewer } from "@/hooks/useImageViewer";
 import useDeleteImage from "@/hooks/useDeleteImage";
 import useUpdateImage from "@/hooks/useUpdateImage";
 import useDeleteInventory from "@/hooks/useDeleteInventory";
+import Inventory from "./Inventory";
 function EditProduct() {
   const {
     newInventories,
@@ -63,7 +63,6 @@ function EditProduct() {
   const id = params.id as string;
 
   const { product, fetchProduct } = useGetProduct(id);
-  const { inventories, fetchInventory } = useGetInventory(id);
   const { categoriesStatus1 } = useGetCategories();
   const { colors } = useGetColors();
   const { sizes } = useGetSizes();
@@ -78,6 +77,13 @@ function EditProduct() {
     description: "",
     image: [""],
     category: "",
+    Inventory: [
+      {
+        size: "",
+        color: "",
+        quantity: 1,
+      },
+    ],
   });
   const [success, setSuccess] = useState(false);
   const loading = useAppSelector((state) => state.loadingSlice);
@@ -122,13 +128,13 @@ function EditProduct() {
   };
 
   const handleDeleteInventory = async (id: string) => {
-    if (inventories.length === 1) {
+    if (product?.inventory.length === 1) {
       toast.error("Không thể xóa vì sản phẩm chỉ còn 1 tồn kho.");
       return;
     }
     try {
       await deleteInventory(id);
-      await fetchInventory();
+      await fetchProduct();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -143,12 +149,17 @@ function EditProduct() {
         description: product.description,
         image: Array.isArray(product.image) ? product.image : [],
         category: product.category,
+        Inventory: product.inventory.map((i) => ({
+          size: i.size,
+          color: i.color,
+          quantity: i.quantity,
+        })),
       });
     }
-    if (inventories) {
-      handleSendCurrentInventories(inventories);
+    if (product?.inventory) {
+      handleSendCurrentInventories(product?.inventory);
     }
-  }, [product, inventories]);
+  }, [product, product?.inventory]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -187,7 +198,6 @@ function EditProduct() {
       await updateProduct(formData);
       toast.success("Cập nhật thành công!");
       handleReset();
-      fetchInventory();
       fetchProduct();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
@@ -476,7 +486,9 @@ function EditProduct() {
                   <button
                     type="button"
                     onClick={handleAddInventory}
-                    disabled={newInventories.length + inventories.length >= 30}
+                    disabled={
+                      newInventories.length + currentInventories.length >= 30
+                    }
                     className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_10px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
                   >
                     Thêm số lượng

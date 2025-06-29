@@ -14,8 +14,21 @@ export async function GET(
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
+    const objectId = new mongoose.Types.ObjectId(id);
 
-    const data = await Product.findById(id);
+    const data = await Product.aggregate([
+      {
+        $match: { _id: objectId },
+      },
+      {
+        $lookup: {
+          from: "inventories",
+          localField: "_id",
+          foreignField: "product",
+          as: "inventory",
+        },
+      },
+    ]);
 
     if (!data) {
       return NextResponse.json(

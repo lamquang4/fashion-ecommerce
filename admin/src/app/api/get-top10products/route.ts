@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
         $sort: { totalSold: -1 },
       },
       {
-        $limit: 5,
+        $limit: 10,
       },
       {
         $lookup: {

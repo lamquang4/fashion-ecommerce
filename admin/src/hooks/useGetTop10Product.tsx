@@ -13,14 +13,14 @@ export interface Product {
   discount: number;
 }
 
-export default function useGetTop5Products() {
+export default function useGetTop10Products() {
   const [products, setProducts] = useState<Product[]>([]);
   const dispatch = useAppDispatch();
 
   const fetchProducts = async () => {
     dispatch(setLoading(true));
     try {
-      const res = await axios.get(`/api/get-top5products`);
+      const res = await axios.get(`/api/get-top10products`);
       setProducts(res.data.top5Products);
     } catch (err) {
       console.error("Lỗi:", err);

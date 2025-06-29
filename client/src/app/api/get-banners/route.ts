@@ -8,8 +8,8 @@ export async function GET(req: NextRequest) {
 
     const [banners1, banners2, promotebanners, collections] = await Promise.all(
       [
-        Banner.find({ type: { $in: [0] } }),
-        Banner.find({ type: { $in: [1] } }),
+        Banner.find({ type: 0, status: 1 }),
+        Banner.find({ type: 1, status: 1 }),
         Banner.find({ type: { $in: [2] } }),
         Banner.find({ type: { $in: [3] } }),
       ]

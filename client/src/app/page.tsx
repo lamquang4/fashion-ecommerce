@@ -10,8 +10,6 @@ import ServiceFeature from "../components/ServiceFeature";
 
 export default function Home() {
   const { productsMale, productsFemale } = useGetProductsGender();
-  console.log(productsMale);
-
   return (
     <>
       <section>

@@ -14,6 +14,13 @@ export interface Product {
   slug: string;
   status?: number;
   category: string;
+  inventory: {
+    _id: string;
+    product: string;
+    quantity: number;
+    color: string;
+    size: string;
+  }[];
   createdAt?: string;
 }
 
@@ -26,7 +33,7 @@ export default function useGetProduct(id: string) {
     if (!id) return;
     try {
       const res = await axios.get(`/api/get-product/${id}`);
-      setProduct(res.data);
+      setProduct(res.data[0]);
     } catch (err) {
       console.error("Lỗi:", err);
     } finally {
