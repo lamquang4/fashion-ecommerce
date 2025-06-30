@@ -40,7 +40,7 @@ const productSchema = new Schema(
   }
 );
 
-productSchema.index({ name: "text" }); 
+productSchema.index({ name: "text", slug: "text" });
 productSchema.index({ status: 1 });
 
 const Product = models.Product || model("Product", productSchema);
