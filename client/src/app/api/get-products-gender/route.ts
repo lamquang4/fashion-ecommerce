@@ -26,41 +26,24 @@ export async function GET(req: NextRequest) {
             pipeline: [
               { $match: { $expr: { $eq: ["$product", "$$productId"] } } },
               {
-                $sort: { _id: 1 },
-              },
-              {
                 $group: {
                   _id: "$color",
-                  doc: { $first: "$$ROOT" },
                 },
               },
-              { $replaceRoot: { newRoot: "$doc" } },
               {
                 $lookup: {
                   from: "colors",
-                  localField: "color",
+                  localField: "_id",
                   foreignField: "_id",
-                  as: "colorDetails",
+                  as: "color",
                 },
               },
+              { $unwind: "$color" },
               {
-                $unwind: {
-                  path: "$colorDetails",
-                  preserveNullAndEmptyArrays: true,
-                },
+                $replaceRoot: { newRoot: "$color" },
               },
-              {
-                $addFields: {
-                  color: {
-                    _id: "$color",
-                    namecolor: "$colorDetails.namecolor",
-                    codecolor: "$colorDetails.codecolor",
-                  },
-                },
-              },
-              { $project: { colorDetails: 0 } },
             ],
-            as: "inventory",
+            as: "colors",
           },
         },
         { $limit: 10 },
@@ -84,41 +67,24 @@ export async function GET(req: NextRequest) {
             pipeline: [
               { $match: { $expr: { $eq: ["$product", "$$productId"] } } },
               {
-                $sort: { _id: 1 },
-              },
-              {
                 $group: {
                   _id: "$color",
-                  doc: { $first: "$$ROOT" },
                 },
               },
-              { $replaceRoot: { newRoot: "$doc" } },
               {
                 $lookup: {
                   from: "colors",
-                  localField: "color",
+                  localField: "_id",
                   foreignField: "_id",
-                  as: "colorDetails",
+                  as: "color",
                 },
               },
+              { $unwind: "$color" },
               {
-                $unwind: {
-                  path: "$colorDetails",
-                  preserveNullAndEmptyArrays: true,
-                },
+                $replaceRoot: { newRoot: "$color" },
               },
-              {
-                $addFields: {
-                  color: {
-                    _id: "$color",
-                    namecolor: "$colorDetails.namecolor",
-                    codecolor: "$colorDetails.codecolor",
-                  },
-                },
-              },
-              { $project: { colorDetails: 0 } },
             ],
-            as: "inventory",
+            as: "colors",
           },
         },
         { $limit: 10 },

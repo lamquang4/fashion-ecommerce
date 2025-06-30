@@ -72,7 +72,7 @@ function ProductSlider({ title, products }: Props) {
                   </div>
                   <div className="p-[14px_2px]">
                     <h2 className="text-[#969696] text-[0.9rem] sm:text-[0.95rem] font-medium uppercase mb-[6px]">
-                      {product.category.namecategory}/
+                      {product.category.namecategory} /{" "}
                       {product.category.gender === 1 ? "Nam" : "Nữ"}
                     </h2>
                     <h2 className="text-black text-[0.9rem] sm:text-[0.95rem] font-medium capitalize mb-[6px]">
@@ -98,15 +98,15 @@ function ProductSlider({ title, products }: Props) {
                       )}
                     </div>
 
-                    {product.inventory?.length > 0 && (
+                    {product.colors?.length > 0 && (
                       <div className="flex space-x-2">
-                        {product.inventory.map((inv, index) => (
+                        {product.colors.map((color, index) => (
                           <button
                             key={index}
                             type="button"
-                            title={inv.color?.namecolor}
+                            title={color?.namecolor}
                             className="w-6 h-6 border-gray-500 border"
-                            style={{ backgroundColor: inv.color?.codecolor }}
+                            style={{ backgroundColor: color?.codecolor }}
                           ></button>
                         ))}
                       </div>

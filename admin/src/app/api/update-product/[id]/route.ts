@@ -154,7 +154,7 @@ export async function PUT(
         await Inventory.findByIdAndUpdate(inv._id, {
           product: id,
           size: inv.size,
-          color: inv.color,
+          color: inv.color === "" ? null : inv.color,
           quantity: Number(inv.quantity),
         });
       }
@@ -165,11 +165,11 @@ export async function PUT(
 
     for (let i = 0; i < newInventories.length; i++) {
       const newInventory = newInventories[i];
-      if (newInventory.size && newInventory.color) {
+      if (newInventory.size) {
         const exists = await Inventory.findOne({
           product: id,
           size: newInventory.size,
-          color: newInventory.color,
+          color: newInventory.color === "" ? null : newInventory.color,
         });
 
         if (exists) {
@@ -182,7 +182,7 @@ export async function PUT(
         await Inventory.create({
           product: id,
           size: newInventory.size,
-          color: newInventory.color,
+          color: newInventory.color === "" ? null : newInventory.color,
           quantity: Number(newInventory.quantity),
         });
       }

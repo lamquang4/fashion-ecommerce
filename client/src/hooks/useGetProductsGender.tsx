@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/redux/hook";
 import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
-
 export interface Product {
   _id: string;
   name: string;
@@ -18,15 +17,10 @@ export interface Product {
     namecategory: string;
     gender: number;
   };
-  inventory: {
+  colors: {
     _id: string;
-    quantity: number;
-    size: string;
-    color: {
-      _id: string;
-      namecolor: string;
-      codecolor: string;
-    };
+    namecolor: string;
+    codecolor: string;
   }[];
   createdAt: string;
 }

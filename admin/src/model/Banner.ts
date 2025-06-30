@@ -20,7 +20,7 @@ const bannerSchema = new Schema(
   }
 );
 
-bannerSchema.index({ status: 1 });
+bannerSchema.index({ type: 1, status: 1 });
 
 const Banner = models.Banner || model("Banner", bannerSchema);
 export default Banner;

@@ -95,7 +95,7 @@ function AddProduct() {
     const seen = new Set<string>();
     for (let i = 0; i < newInventories.length; i++) {
       const Inventory = newInventories[i];
-      const key = `${Inventory.size}-${Inventory.color}`;
+      const key = `${Inventory.size}-${Inventory.color || "no-color"}`;
       if (seen.has(key)) {
         toast.error(`Sản phẩm này bị trùng size và màu.`);
         return;
@@ -110,6 +110,8 @@ function AddProduct() {
       toast.error(err?.response?.data?.msg);
     }
   };
+
+  const productHasColor = [...newInventories].some((item) => item.color);
 
   return (
     <>
@@ -209,7 +211,7 @@ function AddProduct() {
 
                 <div className="flex flex-col gap-1 w-full">
                   <label htmlFor="" className="text-[0.9rem] text-black">
-                   Số tiền giảm 
+                    Số tiền giảm
                   </label>
                   <input
                     type="number"
@@ -294,7 +296,6 @@ function AddProduct() {
                         <td className="py-[1rem]">
                           <select
                             name="color"
-                            required
                             value={newInventory.color}
                             onChange={(e) =>
                               handleChangeInventory(
@@ -305,7 +306,10 @@ function AddProduct() {
                             }
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
-                            <option value="">Chọn màu</option>
+                            {!productHasColor && !newInventory.color && (
+                              <option value="">Không có màu</option>
+                            )}
+
                             {colors.map((color, index) => (
                               <option value={color._id} key={index}>
                                 {color.namecolor}

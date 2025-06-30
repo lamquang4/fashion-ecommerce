@@ -63,6 +63,8 @@ function EditProduct() {
   const id = params.id as string;
 
   const { product, fetchProduct } = useGetProduct(id);
+  console.log(product);
+
   const { categories } = useGetCategories();
   const { colors } = useGetColors();
   const { sizes } = useGetSizes();
@@ -77,7 +79,7 @@ function EditProduct() {
     description: "",
     image: [""],
     category: "",
-    Inventory: [
+    inventory: [
       {
         size: "",
         color: "",
@@ -149,7 +151,7 @@ function EditProduct() {
         description: product.description,
         image: Array.isArray(product.image) ? product.image : [],
         category: product.category,
-        Inventory: product.inventory.map((i) => ({
+        inventory: product.inventory.map((i) => ({
           size: i.size,
           color: i.color,
           quantity: i.quantity,
@@ -203,6 +205,10 @@ function EditProduct() {
       toast.error(err?.response?.data?.msg);
     }
   };
+
+  const productHasColor = [...currentInventories, ...newInventories].some(
+    (item) => item.color
+  );
 
   return (
     <>
@@ -429,7 +435,6 @@ function EditProduct() {
                         <td className="py-[1rem]">
                           <select
                             name="color"
-                            required
                             value={inventory.color}
                             onChange={(e) =>
                               handleChangeCurrentInventory(
@@ -440,11 +445,16 @@ function EditProduct() {
                             }
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
-                            {colors.map((color, index) => (
-                              <option value={color._id} key={index}>
-                                {color.namecolor}
-                              </option>
-                            ))}
+                            {(!inventory.color || inventory.color === "") && (
+                              <option value="">Không có màu</option>
+                            )}
+
+                            {productHasColor &&
+                              colors.map((color, index) => (
+                                <option value={color._id} key={index}>
+                                  {color.namecolor}
+                                </option>
+                              ))}
                           </select>
                         </td>
 
@@ -537,7 +547,6 @@ function EditProduct() {
                             }
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
-                            <option value="">Chọn kích thước</option>
                             {sizes.map((size, index) => (
                               <option value={size._id} key={index}>
                                 {size.namesize}
@@ -559,12 +568,16 @@ function EditProduct() {
                             }
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
-                            <option value="">Chọn màu</option>
-                            {colors.map((color, index) => (
-                              <option value={color._id} key={index}>
-                                {color.namecolor}
-                              </option>
-                            ))}
+                            {!productHasColor && !newInventory.color && (
+                              <option value="">Không có màu</option>
+                            )}
+
+                            {productHasColor &&
+                              colors.map((color, index) => (
+                                <option value={color._id} key={index}>
+                                  {color.namecolor}
+                                </option>
+                              ))}
                           </select>
                         </td>
 

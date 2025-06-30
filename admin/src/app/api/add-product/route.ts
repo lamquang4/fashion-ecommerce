@@ -118,7 +118,7 @@ export async function POST(req: NextRequest) {
 
     for (let i = 0; i < newInventories.length; i++) {
       const newInventory = newInventories[i];
-      const key = `${newInventory.size}-${newInventory.color}`;
+      const key = `${newInventory.size}-${newInventory.color || "no-color"}`;
 
       if (seen.has(key)) {
         return NextResponse.json(
@@ -132,13 +132,15 @@ export async function POST(req: NextRequest) {
       await Inventory.create({
         product: newProduct._id,
         size: newInventory.size,
-        color: newInventory.color,
+        color: newInventory.color === "" ? null : newInventory.color,
         quantity: Number(newInventory.quantity),
       });
     }
 
     return NextResponse.json({ product: newProduct }, { status: 201 });
   } catch (err) {
+    console.log(err);
+
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

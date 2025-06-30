@@ -7,12 +7,14 @@ import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
 import MenuSideCoupon from "./MenuSideCoupon";
 import ImageViewer from "./ImageViewer";
+import { Product } from "@/hooks/useGetProductSlug";
 
-function ProductDetail() {
+interface Prop {
+  product: Product | undefined;
+}
+function ProductDetail({ product }: Prop) {
   const [selectedSize, setSelectedSize] = useState<string>("S");
-  const [mainImage, setMainImage] = useState<string>(
-    "/assets/products/IMGSP1360.png"
-  );
+  const [mainImage, setMainImage] = useState<string>(product?.image[0] ?? "");
   const [menuOpen, setMenuOpen] = useState(false);
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
@@ -49,7 +51,7 @@ function ProductDetail() {
                     }}
                   >
                     <Image
-                      Src={mainImage}
+                      Src={mainImage || product?.image[0] || ""}
                       Alt={""}
                       ClassName={"w-full h-full object-cover"}
                       loadingType="eager"
@@ -60,48 +62,54 @@ function ProductDetail() {
 
               <div className="md:order-1 flex justify-center">
                 <div className=" max-h-fit flex flex-row md:flex-col gap-[15px] overflow-x-auto md:overflow-x-hidden md:overflow-y-auto">
-                  <div
-                    className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
-                    onMouseEnter={() =>
-                      setMainImage("/assets/products/IMGSP1360.png")
-                    }
-                  >
-                    <Image
-                      Src={"/assets/products/IMGSP1360.png"}
-                      Alt={""}
-                      ClassName={"w-full h-full object-cover"}
-                      loadingType="eager"
-                    />
-                  </div>
-
-                  <div
-                    className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
-                    onMouseEnter={() =>
-                      setMainImage("/assets/products/SECSP13601.png")
-                    }
-                  >
-                    <Image
-                      Src={"/assets/products/SECSP13601.png"}
-                      Alt={""}
-                      ClassName={"w-full h-full object-cover"}
-                      loadingType="eager"
-                    />
-                  </div>
+                  {product?.image?.map((img, index) => (
+                    <div
+                      key={index}
+                      className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
+                      onMouseEnter={() => setMainImage(img)}
+                    >
+                      <Image
+                        Src={img}
+                        Alt=""
+                        ClassName={"w-full h-full object-cover"}
+                        loadingType="eager"
+                      />
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
           </div>
 
-          <div className="relative lg:max-w-[500px] max-w-full px-[15px] sm:px-[20px]">
+          <div className="relative lg:w-[500px] w-full px-[15px] sm:px-[20px]">
             <div className="py-[10px]">
               <div className="mb-[12px]">
-                <p className="text-[1rem] mb-[5px]">Áo sơ mi / Nam</p>
+                <p className="text-[1rem] mb-[5px]">
+                  {product?.category.namecategory} /{" "}
+                  {product?.category.gender === 1 ? "Nam" : "Nữ"}
+                </p>
                 <h2 className="text-[1.3rem] mb-[5px] font-medium">
-                  Áo sơ mi gạch đỏ
+                  {product?.name}
                 </h2>
                 <div className="text-[1.5rem] flex gap-[15px] font-medium">
-                  <del className="text-[#707072] font-light">180,000₫</del>
-                  <span>200,000₫</span>
+                  {product?.discount !== 0 && (
+                    <del className="text-[#707072] font-light">
+                      {product?.price.toLocaleString("vi-VN")}₫
+                    </del>
+                  )}
+
+                  {product?.discount === 0 && (
+                    <span>{(product?.price).toLocaleString("vi-VN")}₫</span>
+                  )}
+
+                  {product?.discount !== 0 && (
+                    <span>
+                      {product &&
+                        (product.price - product.discount).toLocaleString(
+                          "vi-VN"
+                        )}
+                    </span>
+                  )}
                 </div>
               </div>
 
@@ -273,27 +281,12 @@ function ProductDetail() {
 
                   <hr className="border-1 my-[15px]" />
 
-                  <p className="text-[#6c757d] text-[0.95rem]">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Fuga veniam est velit nemo vitae deserunt nobis neque, natus
-                    consequuntur voluptatibus temporibus recusandae porro ab eum
-                    tempore aperiam voluptatum rerum? Nesciunt.
-                  </p>
-                </div>
-
-                <div>
-                  <h2 className="text-[1.2rem] font-medium">
-                    Hướng dẫn bảo quản
-                  </h2>
-
-                  <hr className="border-1 my-[15px]" />
-
-                  <p className="text-[#6c757d] text-[0.95rem]">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                    Fuga veniam est velit nemo vitae deserunt nobis neque, natus
-                    consequuntur voluptatibus temporibus recusandae porro ab eum
-                    tempore aperiam voluptatum rerum? Nesciunt.
-                  </p>
+                  <div
+                    className="text-[#6c757d] text-[0.95rem]"
+                    dangerouslySetInnerHTML={{
+                      __html: product?.description || "",
+                    }}
+                  ></div>
                 </div>
               </div>
             </div>

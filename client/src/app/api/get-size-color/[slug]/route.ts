@@ -14,13 +14,31 @@ export async function GET(
       { $match: { slug } },
       {
         $lookup: {
-          from: "categories",
-          localField: "category",
-          foreignField: "_id",
-          as: "category",
+          from: "inventories",
+          let: { productId: "$_id" },
+          pipeline: [
+            { $match: { $expr: { $eq: ["$product", "$$productId"] } } },
+            {
+              $group: {
+                _id: "$color",
+              },
+            },
+            {
+              $lookup: {
+                from: "colors",
+                localField: "_id",
+                foreignField: "_id",
+                as: "color",
+              },
+            },
+            { $unwind: "$color" },
+            {
+              $replaceRoot: { newRoot: "$color" },
+            },
+          ],
+          as: "colors",
         },
       },
-      { $unwind: { path: "$category", preserveNullAndEmptyArrays: true } },
       {
         $lookup: {
           from: "inventories",
@@ -28,25 +46,24 @@ export async function GET(
           pipeline: [
             { $match: { $expr: { $eq: ["$product", "$$productId"] } } },
             {
+              $group: {
+                _id: "$size",
+              },
+            },
+            {
               $lookup: {
                 from: "sizes",
-                localField: "size",
+                localField: "_id",
                 foreignField: "_id",
                 as: "size",
               },
             },
             { $unwind: "$size" },
             {
-              $lookup: {
-                from: "colors",
-                localField: "color",
-                foreignField: "_id",
-                as: "color",
-              },
+              $replaceRoot: { newRoot: "$size" },
             },
-            { $unwind: "$color" },
           ],
-          as: "inventories",
+          as: "sizes",
         },
       },
     ]);
@@ -58,7 +75,7 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({ product: data[0] });
+    return NextResponse.json(data);
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

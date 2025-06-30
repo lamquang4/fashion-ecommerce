@@ -6,13 +6,14 @@ import AdvancedSearch from "./AdvancedSearch";
 import Image from "./Image";
 import { useParams } from "next/navigation";
 import useGetProductsSlug from "@/hooks/useGetProductsSlug";
-import { useAppSelector } from "@/redux/hook";
 function ProductList() {
   const params = useParams();
   const slug = params.slug as string;
   const { products, totalPages, totalItems, currentPage, limit } =
     useGetProductsSlug(slug);
-  const loading = useAppSelector((state) => state.loadingSlice);
+
+  console.log(products);
+
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const toggleAdvancedSearch = () => {
     setAdvancedSearchOpen(!advancedSearchOpen);
@@ -87,7 +88,7 @@ function ProductList() {
                 </div>
                 <div className="p-[14px_2px]">
                   <h2 className="text-[#969696] text-[0.9rem] sm:text-[0.95rem] font-medium uppercase mb-[6px]">
-                    {product.category.namecategory}/
+                    {product.category.namecategory} /{" "}
                     {product.category.gender === 1 ? "Nam" : "Nữ"}
                   </h2>
                   <h2 className="text-black text-[0.9rem] sm:text-[0.95rem] font-medium capitalize mb-[6px]">
@@ -113,15 +114,15 @@ function ProductList() {
                     )}
                   </div>
 
-                  {product.inventory?.length > 0 && (
+                  {product.colors?.length > 0 && (
                     <div className="flex space-x-2">
-                      {product.inventory.map((inv, index) => (
+                      {product.colors.map((color, index) => (
                         <button
                           key={index}
                           type="button"
-                          title={inv.color?.namecolor}
+                          title={color?.namecolor}
                           className="w-6 h-6 border-gray-500 border"
-                          style={{ backgroundColor: inv.color?.codecolor }}
+                          style={{ backgroundColor: color?.codecolor }}
                         ></button>
                       ))}
                     </div>
@@ -134,7 +135,7 @@ function ProductList() {
               <Image
                 Src={"/assets/other/notfound1.png"}
                 Alt={""}
-                ClassName={"md:w-[200px] w-[180px]"}
+                ClassName={"md:w-[190px] w-[170px]"}
                 loadingType="eager"
               />
             </div>

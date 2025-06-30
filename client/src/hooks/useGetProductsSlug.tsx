@@ -19,15 +19,10 @@ export interface Product {
     namecategory: string;
     gender: number;
   };
-  inventory: {
+  colors: {
     _id: string;
-    quantity: number;
-    size: string;
-    color: {
-      _id: string;
-      namecolor: string;
-      codecolor: string;
-    };
+    namecolor: string;
+    codecolor: string;
   }[];
   createdAt: string;
 }
