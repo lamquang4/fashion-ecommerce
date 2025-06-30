@@ -48,7 +48,7 @@ export async function GET(
       query.name = { $regex: keyword, $options: "i" };
     }
 
-    const [products, countResult] = await Promise.all([
+    const [products, total] = await Promise.all([
       Product.aggregate([
         { $match: query },
         {
@@ -110,10 +110,9 @@ export async function GET(
         { $skip: skip },
         { $limit: limit },
       ]),
-      Product.aggregate([{ $match: query }, { $count: "total" }]),
+      Product.countDocuments(query),
     ]);
 
-    const total = countResult[0]?.total || 0;
     return NextResponse.json({
       products,
       total,
