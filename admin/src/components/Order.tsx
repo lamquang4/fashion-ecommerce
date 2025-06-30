@@ -25,6 +25,9 @@ function Order() {
     limit,
     setKeyword,
     setStatus,
+    totalStatus0,
+    totalStatus3,
+    totalStatus4,
   } = useGetOrders();
   const array = [
     {
@@ -63,21 +66,21 @@ function Order() {
     },
     {
       title: "Đơn giao thành công",
-      number: 5000,
+      number: totalStatus3,
       icon1: <RiTruckLine size={25} />,
       icon2: <IoIosArrowRoundUp size={25} />,
       percent: 2.3,
     },
     {
       title: "Đơn đã hủy",
-      number: 210,
+      number: totalStatus4,
       icon1: <TbCancel size={25} />,
       icon2: <IoIosArrowRoundUp size={25} />,
       percent: 1,
     },
     {
       title: "Đơn chờ xác nhận",
-      number: 100,
+      number: totalStatus0,
       icon1: <LuClock size={25} />,
       icon2: <IoIosArrowRoundUp size={25} />,
       percent: 2.2,

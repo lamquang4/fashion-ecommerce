@@ -16,5 +16,7 @@ const colorSchema = new Schema(
   }
 );
 
+colorSchema.index({ namecolor: "text", codecolor: "text" });
+
 const Color = models.Color || model("Color", colorSchema);
 export default Color;

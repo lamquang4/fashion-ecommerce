@@ -30,6 +30,9 @@ export default function useGetOrders() {
   const [totalItems, setTotalItems] = useState(0);
   const [totalRevenue, setTotalRevenue] = useState(0);
   const [totalSold, setTotalSold] = useState(0);
+  const [totalStatus0, setTotalStatus0] = useState(0);
+  const [totalStatus3, setTotalStatus3] = useState(0);
+  const [totalStatus4, setTotalStatus4] = useState(0);
   const [keyword, setKeyword] = useState("");
   const [status, setStatus] = useState("");
 
@@ -55,6 +58,9 @@ export default function useGetOrders() {
       setTotalItems(res.data.total);
       setTotalRevenue(res.data.totalRevenue);
       setTotalSold(res.data.totalSold);
+      setTotalStatus0(res.data.totalStatus0);
+      setTotalStatus3(res.data.totalStatus3);
+      setTotalStatus4(res.data.totalStatus4);
     } catch (err) {
       console.error("Lỗi:", err);
     } finally {
@@ -77,5 +83,8 @@ export default function useGetOrders() {
     limit,
     setKeyword,
     setStatus,
+    totalStatus0,
+    totalStatus3,
+    totalStatus4,
   };
 }

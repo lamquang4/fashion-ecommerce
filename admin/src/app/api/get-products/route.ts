@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
       query.status = parseInt(status);
     }
 
-    const [products, countResult] = await Promise.all([
+    const [products, total] = await Promise.all([
       Product.aggregate([
         { $match: query },
         {
@@ -36,10 +36,8 @@ export async function GET(req: NextRequest) {
         { $skip: skip },
         { $limit: limit },
       ]),
-      Product.aggregate([{ $match: query }, { $count: "total" }]),
+      Product.countDocuments(query),
     ]);
-
-    const total = countResult[0]?.total || 0;
 
     return NextResponse.json({
       products,

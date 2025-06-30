@@ -13,7 +13,7 @@ export async function GET(req: NextRequest) {
     const query: any = {};
 
     // tìm kiếm keyword (name) của Product ngoài Inventory
-    const [inventories, countResult, countQuantity] = await Promise.all([
+    const [inventories, countTotal, countQuantity] = await Promise.all([
       Inventory.aggregate([
         {
           $lookup: {
@@ -105,8 +105,9 @@ export async function GET(req: NextRequest) {
       ]),
     ]);
 
-    const total = countResult[0]?.total || 0;
+    const total = countTotal[0]?.total || 0;
     const totalQuantity = countQuantity[0]?.totalQuantity || 0;
+
     return NextResponse.json({
       inventories,
       total,

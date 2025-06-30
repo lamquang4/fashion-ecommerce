@@ -12,5 +12,7 @@ const sizeSchema = new Schema(
   }
 );
 
+sizeSchema.index({ namesize: "text" });
+
 const Size = models.Size || model("Size", sizeSchema);
 export default Size;

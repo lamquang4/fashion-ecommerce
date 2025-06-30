@@ -1,6 +1,5 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Product from "@/model/Product";
-import mongoose from "mongoose";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 export async function GET(

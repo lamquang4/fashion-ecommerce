@@ -27,5 +27,9 @@ const inventorySchema = new Schema(
   }
 );
 
+inventorySchema.index({ product: 1 });
+inventorySchema.index({ size: 1 });
+inventorySchema.index({ color: 1 });
+
 const Inventory = models.Inventory || model("Inventory", inventorySchema);
 export default Inventory;
