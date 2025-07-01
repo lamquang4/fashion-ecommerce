@@ -9,7 +9,7 @@ export async function GET(
 ) {
   try {
     await connectMongoDB();
-    const { slug } = params;
+    const { slug } = await params;
 
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
@@ -68,7 +68,7 @@ export async function GET(
               { $match: { $expr: { $eq: ["$product", "$$productId"] } } },
               {
                 $group: {
-                  _id: "$color", 
+                  _id: "$color",
                 },
               },
               {
@@ -81,7 +81,7 @@ export async function GET(
               },
               { $unwind: "$color" },
               {
-                $replaceRoot: { newRoot: "$color" }, 
+                $replaceRoot: { newRoot: "$color" },
               },
             ],
             as: "colors",
@@ -101,7 +101,6 @@ export async function GET(
       limit,
     });
   } catch (err) {
-    console.log(err);
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

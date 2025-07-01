@@ -59,7 +59,7 @@ function ProductList() {
             products.map((product, index) => (
               <div key={index}>
                 <div className="relative group">
-                  <Link href={"/product"}>
+                  <Link href={`/product/${product.slug}`}>
                     <Image
                       Src={product.image[0]}
                       Alt={product.name}

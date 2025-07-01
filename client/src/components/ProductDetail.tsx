@@ -27,7 +27,7 @@ function ProductDetail({ product }: Prop) {
   };
   const [quantity, setQuantity] = useState(1);
   const HandleIncrement = () => {
-    setQuantity((prev) => (prev < 10 ? prev + 1 : prev));
+    setQuantity((prev) => (prev < 30 ? prev + 1 : prev));
   };
 
   const HandleDecrement = () => {
@@ -39,9 +39,9 @@ function ProductDetail({ product }: Prop) {
       <section className="w-full mx-auto mt-0 lg:mt-[20px] mb-[40px]">
         <div className="flex justify-center flex-wrap gap-[40px] w-full">
           <div>
-            <div className="flex flex-col md:flex-row gap-[20px] lg:sticky lg:top-[100px]">
+            <div className="flex flex-col md:flex-col-reverse xl:flex-row flex-wrap gap-[20px] lg:sticky lg:top-[100px]">
               <div className=" md:order-2 relative grow overflow-hidden bg-white">
-                <div className="max-w-full lg:max-w-[450px] flex flex-col gap-[20px]">
+                <div className="w-full xl:w-[450px] flex flex-col gap-[20px]">
                   <div
                     className="cursor-pointer"
                     onClick={(e) => {
@@ -61,7 +61,7 @@ function ProductDetail({ product }: Prop) {
               </div>
 
               <div className="md:order-1 flex justify-center">
-                <div className=" max-h-fit flex flex-row md:flex-col gap-[15px] overflow-x-auto md:overflow-x-hidden md:overflow-y-auto">
+                <div className=" max-h-fit flex flex-row xl:flex-col gap-[15px] overflow-x-auto md:overflow-x-hidden md:overflow-y-auto">
                   {product?.image?.map((img, index) => (
                     <div
                       key={index}
@@ -245,13 +245,13 @@ function ProductDetail({ product }: Prop) {
                     className="h-11 text-center text-black w-11 outline-none placeholder:text-black text-[1rem] font-normal"
                     placeholder="1"
                     min={1}
-                    max={10}
+                    max={30}
                     value={quantity}
                   />
                   <button
                     type="button"
                     onClick={HandleIncrement}
-                    disabled={quantity >= 10}
+                    disabled={quantity >= 30}
                     className=" p-3 h-11 outline-none"
                   >
                     <HiOutlinePlusSmall size={22} />
