@@ -1,7 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
+import useSWR from "swr";
 import axios from "axios";
 export interface Product {
   _id: string;
@@ -25,31 +23,27 @@ export interface Product {
   createdAt: string;
 }
 
+const fetcher = (url: string) =>
+  axios.get(url).then((res) => res.data.products);
+
 export default function useGetProductsCategory(
   category?: string,
   product?: string
 ) {
-  const [productsCateogry, setProductsCateogry] = useState<Product[]>([]);
-  const dispatch = useAppDispatch();
-
-  const fetchProductsCategory = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(`/api/get-products1/${category}/${product}`);
-      setProductsCateogry(res.data.products);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
-
-  useEffect(() => {
-    fetchProductsCategory();
-  }, [category, product]);
+  const {
+    data: productsCateogry,
+    error,
+    isLoading,
+    mutate,
+  } = useSWR<Product[]>(
+    category && product ? `/api/get-products1/${category}/${product}` : null,
+    fetcher
+  );
 
   return {
-    productsCateogry,
-    fetchProductsCategory,
+    productsCateogry: productsCateogry ?? [],
+    isLoading,
+    error,
+    mutate,
   };
 }

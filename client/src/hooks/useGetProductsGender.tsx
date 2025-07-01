@@ -1,8 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
+import useSWR from "swr";
+
 export interface Product {
   _id: string;
   name: string;
@@ -25,31 +24,25 @@ export interface Product {
   createdAt: string;
 }
 
+type ResponseType = {
+  productsMale: Product[];
+  productsFemale: Product[];
+};
+
+const fetcher = (url: string): Promise<ResponseType> =>
+  axios.get(url).then((res) => res.data);
+
 export default function useGetProductsGender() {
-  const [productsMale, setProductsMale] = useState<Product[]>([]);
-  const [productsFemale, setProductsFemale] = useState<Product[]>([]);
-  const dispatch = useAppDispatch();
-
-  const fetchProductsGender = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(`/api/get-products-gender`);
-      setProductsMale(res.data.productsMale);
-      setProductsFemale(res.data.productsFemale);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
-
-  useEffect(() => {
-    fetchProductsGender();
-  }, []);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    "/api/get-products-gender",
+    fetcher
+  );
 
   return {
-    productsMale,
-    productsFemale,
-    fetchProductsGender,
+    productsMale: data?.productsMale ?? [],
+    productsFemale: data?.productsFemale ?? [],
+    error,
+    isLoading,
+    mutate,
   };
 }

@@ -69,13 +69,10 @@ export async function GET(
     ]);
 
     if (!data) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy sản phẩm" },
-        { status: 404 }
-      );
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json(data[0]);
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

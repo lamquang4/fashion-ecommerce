@@ -4,6 +4,7 @@ import { useAppDispatch } from "@/redux/hook";
 import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
 export interface Product {
   _id: string;
@@ -27,49 +28,37 @@ export interface Product {
   createdAt: string;
 }
 
-export default function useGetProductsSlug(slug: string) {
-  const [products, setProducts] = useState<Product[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
-  const [keyword, setKeyword] = useState("");
+interface ResponseType {
+  products: Product[];
+  totalPages: number;
+  total: number;
+}
 
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
+export default function useGetProductsSlug(slug: string) {
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "10");
-  const dispatch = useAppDispatch();
+  const limit = 10;
+  const [keyword, setKeyword] = useState("");
 
-  const fetchProducts = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(
-        `/api/get-products/${slug}?page=${page}&limit=${limit}`,
-        {
-          params: {
-            keyword,
-          },
-        }
-      );
-      setProducts(res.data.products);
-      setTotalPages(res.data.totalPages);
-      setTotalItems(res.data.total);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
+  const query = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    keyword,
+  });
+  const url = `/api/get-products/${slug}?${query.toString()}`;
 
-  useEffect(() => {
-    fetchProducts();
-  }, [page, limit, keyword]);
-
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    products,
-    fetchProducts,
-    totalPages,
-    totalItems,
+    products: data?.products || [],
+    totalPages: data?.totalPages || 1,
+    totalItems: data?.total || 0,
     currentPage: page,
     limit,
     setKeyword,
+    isLoading,
+    error,
+    mutate,
   };
 }

@@ -10,6 +10,10 @@ export async function GET(
   try {
     await connectMongoDB();
     const { category, product } = await params;
+    if (!ObjectId.isValid(category) || !ObjectId.isValid(product)) {
+      return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
+    }
+
     const categoryId = new ObjectId(category);
     const productId = new ObjectId(product);
     const data = await Product.aggregate([
@@ -63,8 +67,6 @@ export async function GET(
 
     return NextResponse.json({ products: data });
   } catch (err) {
-    console.log(err);
-
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

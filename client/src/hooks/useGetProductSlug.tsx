@@ -1,9 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
-
+import useSWR from "swr";
 export interface Product {
   _id: string;
   name: string;
@@ -26,29 +23,20 @@ export interface Product {
   }[];
   createdAt: string;
 }
+const fetcher = (url: string) => axios.get(url).then((res) => res.data.product);
 
 export default function useGetProductSlug(slug: string) {
-  const [product, setProduct] = useState<Product>();
-  const dispatch = useAppDispatch();
-
-  const fetchProduct = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(`/api/get-product/${slug}`);
-      setProduct(res.data.product);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
-
-  useEffect(() => {
-    fetchProduct();
-  }, []);
+  const {
+    data: product,
+    error,
+    isLoading,
+    mutate,
+  } = useSWR<Product>(slug ? `/api/get-product/${slug}` : null, fetcher);
 
   return {
     product,
-    fetchProduct,
+    loading: isLoading,
+    error,
+    mutate,
   };
 }

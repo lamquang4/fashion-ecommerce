@@ -1,8 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
+import useSWR from "swr";
 
 export interface Banner {
   _id: string;
@@ -12,37 +10,29 @@ export interface Banner {
   createdAt: string;
 }
 
+type ResponseType = {
+  banners1: Banner[];
+  banners2: Banner[];
+  promotebanners: Banner[];
+  collections: Banner[];
+};
+
+const fetcher = (url: string): Promise<ResponseType> =>
+  axios.get(url).then((res) => res.data);
+
 export default function useGetMainBanners() {
-  const [banners1, setBanners1] = useState<Banner[]>([]);
-  const [banners2, setBanners2] = useState<Banner[]>([]);
-  const [promotebanners, setPromoteBanners] = useState<Banner[]>([]);
-  const [collections, setCollections] = useState<Banner[]>([]);
-  const dispatch = useAppDispatch();
-
-  const fetchMainBanners = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(`/api/get-banners`);
-      setBanners1(res.data.banners1);
-      setBanners2(res.data.banners2);
-      setPromoteBanners(res.data.promotebanners);
-      setCollections(res.data.collections);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
-
-  useEffect(() => {
-    fetchMainBanners();
-  }, []);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    "/api/get-banners",
+    fetcher
+  );
 
   return {
-    banners1,
-    banners2,
-    promotebanners,
-    collections,
-    fetchMainBanners,
+    banners1: data?.banners1 ?? [],
+    banners2: data?.banners2 ?? [],
+    promotebanners: data?.promotebanners ?? [],
+    collections: data?.collections ?? [],
+    error,
+    isLoading,
+    mutate,
   };
 }

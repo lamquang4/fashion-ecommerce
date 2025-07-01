@@ -50,14 +50,16 @@ function ProductSlider({ title, products }: Props) {
                           }
                           loadingType="lazy"
                         />
-                        <Image
-                          Src={product.image[1]}
-                          Alt={""}
-                          ClassName={
-                            "block w-full h-auto object-cover absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
-                          }
-                          loadingType="lazy"
-                        />
+                        {product.image.length > 1 && (
+                          <Image
+                            Src={product.image[1]}
+                            Alt={""}
+                            ClassName={
+                              "block w-full h-auto object-cover absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
+                            }
+                            loadingType="lazy"
+                          />
+                        )}
                       </picture>
                     </Link>
                     {product.discount > 0 && (

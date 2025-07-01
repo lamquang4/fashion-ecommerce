@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import Image from "./Image";
 import { LiaRulerHorizontalSolid } from "react-icons/lia";
@@ -7,17 +7,27 @@ import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
 import MenuSideCoupon from "./MenuSideCoupon";
 import ImageViewer from "./ImageViewer";
-import { Product } from "@/hooks/useGetProductSlug";
-
-interface Prop {
-  product: Product | undefined;
-}
-function ProductDetail({ product }: Prop) {
-  const [selectedSize, setSelectedSize] = useState<string>("S");
-  const [mainImage, setMainImage] = useState<string>(product?.image[0] ?? "");
+import useGetProductSlug from "@/hooks/useGetProductSlug";
+import { notFound, useParams } from "next/navigation";
+import useGetSizeColorProduct from "@/hooks/useGetSizeColorProduct";
+function ProductDetail() {
+  const params = useParams();
+  const slug = params.slug as string;
+  const { product, loading } = useGetProductSlug(slug);
+  const { sizes, colors } = useGetSizeColorProduct(slug);
+  const [selectedSize, setSelectedSize] = useState<string>("");
+  const [selectedColor, setSelectedColor] = useState<string>("");
+  const [mainImage, setMainImage] = useState<string>("");
   const [menuOpen, setMenuOpen] = useState(false);
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
+
+  useEffect(() => {
+    if (product?.image?.length) {
+      setMainImage(product.image[0]);
+    }
+  }, [product]);
+
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);
     setOpenViewer(true);
@@ -33,6 +43,10 @@ function ProductDetail({ product }: Prop) {
   const HandleDecrement = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
   };
+
+  if (!product && !loading) {
+    return notFound();
+  }
 
   return (
     <>
@@ -51,9 +65,9 @@ function ProductDetail({ product }: Prop) {
                     }}
                   >
                     <Image
-                      Src={mainImage || product?.image[0] || ""}
-                      Alt={""}
-                      ClassName={"w-full h-full object-cover"}
+                      Src={mainImage}
+                      Alt=""
+                      ClassName="w-full h-full object-cover"
                       loadingType="eager"
                     />
                   </div>
@@ -62,7 +76,7 @@ function ProductDetail({ product }: Prop) {
 
               <div className="md:order-1 flex justify-center">
                 <div className=" max-h-fit flex flex-row xl:flex-col gap-[15px] overflow-x-auto md:overflow-x-hidden md:overflow-y-auto">
-                  {product?.image?.map((img, index) => (
+                  {product?.image.map((img, index) => (
                     <div
                       key={index}
                       className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
@@ -71,7 +85,7 @@ function ProductDetail({ product }: Prop) {
                       <Image
                         Src={img}
                         Alt=""
-                        ClassName={"w-full h-full object-cover"}
+                        ClassName="w-full h-full object-cover"
                         loadingType="eager"
                       />
                     </div>
@@ -146,21 +160,24 @@ function ProductDetail({ product }: Prop) {
                 </div>
                 <div className="mb-[15px]">
                   <p className="text-gray-700 font-medium mb-[5px]">
-                    Màu sắc: Đen
+                    Màu sắc: {selectedColor}
                   </p>
                   <div className="flex space-x-2">
-                    <button
-                      type="button"
-                      className="w-8 h-8 bg-black focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black"
-                    ></button>
-                    <button
-                      type="button"
-                      className="w-8 h-8 bg-gray-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-300"
-                    ></button>
-                    <button
-                      type="button"
-                      className="w-8 h-8 bg-blue-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500"
-                    ></button>
+                    {colors?.length > 0 &&
+                      colors?.map((color, index) => (
+                        <button
+                          key={index}
+                          type="button"
+                          title={color?.namecolor}
+                          onClick={() => setSelectedColor(color?.namecolor)}
+                          style={{ backgroundColor: `${color?.codecolor}` }}
+                          className={`w-8 h-8 focus:outline-none  ${
+                            selectedColor === `${color.namecolor}`
+                              ? "border border-red-500"
+                              : "border-gray-300 border"
+                          }`}
+                        ></button>
+                      ))}
                   </div>
                 </div>
 
@@ -183,49 +200,21 @@ function ProductDetail({ product }: Prop) {
                   </div>
 
                   <div className="flex space-x-2">
-                    <button
-                      type="button"
-                      className={`w-[80px] h-[36px] border text-gray-700 font-medium ${
-                        selectedSize === "S"
-                          ? "bg-transparent text-black border-black"
-                          : "border-gray-300 hover:border-gray-400"
-                      }`}
-                      onClick={() => setSelectedSize("S")}
-                    >
-                      S
-                    </button>
-
-                    <button
-                      type="button"
-                      className={`w-[80px] h-[36px] border text-gray-700 font-medium ${
-                        selectedSize === "M"
-                          ? "bg-transparent text-black border-black"
-                          : "border-gray-300 hover:border-gray-400"
-                      }`}
-                      onClick={() => setSelectedSize("M")}
-                    >
-                      M
-                    </button>
-
-                    <button
-                      type="button"
-                      className={`w-[80px] h-[36px] border  text-gray-700 font-medium ${
-                        selectedSize === "L"
-                          ? "bg-transparent text-black border-black"
-                          : "border-gray-300 hover:border-gray-400"
-                      }`}
-                      onClick={() => setSelectedSize("L")}
-                    >
-                      L
-                    </button>
-
-                    <button
-                      type="button"
-                      className="w-[80px] h-[36px] border text-gray-400 border-gray-300 cursor-not-allowed"
-                      disabled
-                    >
-                      XL
-                    </button>
+                    {sizes.length > 0 &&
+                      sizes.map((size, index) => (
+                        <button
+                          key={index}
+                          type="button"
+                          className={`w-[80px] h-[36px] border text-gray-700 font-medium ${
+                            selectedSize === `${size.namesize}`
+                              ? "bg-transparent text-black border-black"
+                              : "border-gray-300 hover:border-gray-400"
+                          }`}
+                          onClick={() => setSelectedSize(size.namesize)}
+                        >
+                          {size.namesize}
+                        </button>
+                      ))}
                   </div>
                 </div>
 
