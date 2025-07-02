@@ -98,7 +98,9 @@ function Product() {
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Giá
               </th>
-
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Số lượng
+              </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Ngày thêm
               </th>
@@ -166,6 +168,10 @@ function Product() {
                         </span>
                       )}
                     </div>
+                  </td>
+
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {product.totalQuantity}
                   </td>
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">

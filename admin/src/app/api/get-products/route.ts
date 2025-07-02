@@ -32,6 +32,19 @@ export async function GET(req: NextRequest) {
             as: "category",
           },
         },
+        {
+          $lookup: {
+            from: "inventories",
+            localField: "_id",
+            foreignField: "product",
+            as: "inventory",
+          },
+        },
+        {
+          $addFields: {
+            totalQuantity: { $sum: "$inventory.quantity" },
+          },
+        },
         { $unwind: "$category" },
         { $skip: skip },
         { $limit: limit },

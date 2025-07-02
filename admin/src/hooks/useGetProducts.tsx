@@ -19,6 +19,7 @@ export interface Product {
     gender: number;
   };
   createdAt: string;
+  totalQuantity: number;
 }
 
 interface ResponseType {
@@ -43,9 +44,9 @@ export default function useGetProducts() {
     keyword,
     status,
   });
-    const url = `/api/get-products?${query.toString()}`;
+  const url = `/api/get-products?${query.toString()}`;
 
-   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
     products: data?.products || [],
     totalPages: data?.totalPages || 1,
