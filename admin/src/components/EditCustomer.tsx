@@ -20,7 +20,7 @@ function EditCustomer() {
   const params = useParams();
   const id = params.id as string;
 
-  const user = useGetUser(id);
+  const { user, mutate } = useGetUser(id);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -70,6 +70,7 @@ function EditCustomer() {
         ...prev,
         password: "",
       }));
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }

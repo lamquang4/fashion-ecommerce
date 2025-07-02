@@ -1,8 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
+import useSWR from "swr";
 
 export interface Coupon {
   _id: string;
@@ -18,26 +16,16 @@ export interface Coupon {
   status: number;
 }
 
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetCoupon(id: string) {
-  const [coupon, setCoupon] = useState<Coupon>();
-  const dispatch = useAppDispatch();
+  const url = `/api/get-coupon/${id}`;
+  const { data, error, isLoading, mutate } = useSWR<Coupon>(url, fetcher);
 
-  const fetchCoupon = async () => {
-    dispatch(setLoading(true));
-    if (!id) return;
-    try {
-      const res = await axios.get(`/api/get-coupon/${id}`);
-      setCoupon(res.data);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
+  return {
+    coupon: data,
+    isLoading,
+    error,
+    mutate,
   };
-
-  useEffect(() => {
-    fetchCoupon();
-  }, [id]);
-
-  return coupon;
 }

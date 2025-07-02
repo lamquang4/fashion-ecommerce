@@ -66,14 +66,16 @@ function ProductList() {
                     }
                     loadingType="lazy"
                   />
-                  <Image
-                    Src={product.image[1]}
-                    Alt={product.name}
-                    ClassName={
-                      "block w-full h-auto object-cover absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
-                    }
-                    loadingType="lazy"
-                  />
+                  {product.image.length > 1 && (
+                    <Image
+                      Src={product.image[1]}
+                      Alt={product.name}
+                      ClassName={
+                        "block w-full h-auto object-cover absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
+                      }
+                      loadingType="lazy"
+                    />
+                  )}
                 </Link>
                 {product.discount > 0 && (
                   <div className="absolute bottom-[10px] md:top-[10px] left-[10px] z-[3] font-semibold text-center text-black">

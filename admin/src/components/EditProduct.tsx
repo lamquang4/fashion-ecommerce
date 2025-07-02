@@ -14,7 +14,6 @@ import toast from "react-hot-toast";
 import useGetCategories from "@/hooks/useGetCategories";
 import useGetSizes from "@/hooks/useGetSizes";
 import useGetColors from "@/hooks/useGetColors";
-import { useAppSelector } from "@/redux/hook";
 import Loading from "./Loading";
 import useUpdateProduct from "@/hooks/useUpdateProduct";
 import { useInventory } from "@/hooks/useInventory";
@@ -23,7 +22,6 @@ import { useImageViewer } from "@/hooks/useImageViewer";
 import useDeleteImage from "@/hooks/useDeleteImage";
 import useUpdateImage from "@/hooks/useUpdateImage";
 import useDeleteInventory from "@/hooks/useDeleteInventory";
-import Inventory from "./Inventory";
 function EditProduct() {
   const {
     newInventories,
@@ -46,8 +44,6 @@ function EditProduct() {
     handleClear,
   } = useImageViewer1(); // cập nhật hình sản phẩm
 
-  console.log(selectedFiles1);
-
   const {
     previewImages,
     setPreviewImages,
@@ -57,12 +53,10 @@ function EditProduct() {
     handleRemovePreviewImage,
   } = useImageViewer(5); // thêm hình sản phẩm
 
-  console.log(selectedFiles);
-
   const params = useParams();
   const id = params.id as string;
 
-  const { product, fetchProduct } = useGetProduct(id);
+  const { product, mutate, isLoading } = useGetProduct(id);
   console.log(product);
 
   const { categories } = useGetCategories();
@@ -88,7 +82,6 @@ function EditProduct() {
     ],
   });
   const [success, setSuccess] = useState(false);
-  const loading = useAppSelector((state) => state.loadingSlice);
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
 
@@ -113,7 +106,7 @@ function EditProduct() {
 
     try {
       await deleteImage(id, img);
-      await fetchProduct();
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -136,7 +129,7 @@ function EditProduct() {
     }
     try {
       await deleteInventory(id);
-      await fetchProduct();
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -151,7 +144,7 @@ function EditProduct() {
         description: product.description,
         image: Array.isArray(product.image) ? product.image : [],
         category: product.category,
-        inventory: product.inventory.map((i) => ({
+        inventory: product.inventory?.map((i) => ({
           size: i.size,
           color: i.color,
           quantity: i.quantity,
@@ -200,15 +193,11 @@ function EditProduct() {
       await updateProduct(formData);
       toast.success("Cập nhật thành công!");
       handleReset();
-      fetchProduct();
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
   };
-
-  const productHasColor = [...currentInventories, ...newInventories].some(
-    (item) => item.color
-  );
 
   return (
     <>
@@ -231,7 +220,7 @@ function EditProduct() {
               />
 
               <div className="flex gap-3 flex-wrap justify-center">
-                {loading ? (
+                {isLoading ? (
                   <Loading height={25} />
                 ) : (
                   data.image.map((img, index) => (
@@ -445,16 +434,11 @@ function EditProduct() {
                             }
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
-                            {(!inventory.color || inventory.color === "") && (
-                              <option value="">Không có màu</option>
-                            )}
-
-                            {productHasColor &&
-                              colors.map((color, index) => (
-                                <option value={color._id} key={index}>
-                                  {color.namecolor}
-                                </option>
-                              ))}
+                            {colors.map((color, index) => (
+                              <option value={color._id} key={index}>
+                                {color.namecolor}
+                              </option>
+                            ))}
                           </select>
                         </td>
 
@@ -547,6 +531,7 @@ function EditProduct() {
                             }
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
+                            <option value="">Chọn kích thước</option>
                             {sizes.map((size, index) => (
                               <option value={size._id} key={index}>
                                 {size.namesize}
@@ -568,16 +553,13 @@ function EditProduct() {
                             }
                             className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                           >
-                            {!productHasColor && !newInventory.color && (
-                              <option value="">Không có màu</option>
-                            )}
+                            <option value="">Chọn màu</option>
 
-                            {productHasColor &&
-                              colors.map((color, index) => (
-                                <option value={color._id} key={index}>
-                                  {color.namecolor}
-                                </option>
-                              ))}
+                            {colors.map((color, index) => (
+                              <option value={color._id} key={index}>
+                                {color.namecolor}
+                              </option>
+                            ))}
                           </select>
                         </td>
 

@@ -13,7 +13,7 @@ export interface Category {
   createdAt?: string;
 }
 
-export default function useVisibleCategory(fetchCategories: () => void) {
+export default function useVisibleCategory() {
   const dispatch = useAppDispatch();
   const visibleCategory = async (data: Category) => {
     const action = data.status === 1 ? "hiện" : "ẩn";
@@ -35,7 +35,6 @@ export default function useVisibleCategory(fetchCategories: () => void) {
         id: data._id,
         status: data.status,
       });
-      fetchCategories();
       return res.data.category;
     } catch (err) {
       console.error("Lỗi:", err);

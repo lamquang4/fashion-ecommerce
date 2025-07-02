@@ -26,7 +26,7 @@ function EditCoupon() {
   const params = useParams();
   const id = params.id as string;
 
-  const coupon = useGetCoupon(id);
+  const { coupon, mutate } = useGetCoupon(id);
   const { updateCoupon } = useUpdateCoupon(id);
 
   const handleChange = (
@@ -131,6 +131,7 @@ function EditCoupon() {
         maxDiscountValue: data.maxDiscountValue,
       });
       toast.success("Cập nhật thành công!");
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }

@@ -17,7 +17,8 @@ import toast from "react-hot-toast";
 function Customer() {
   const {
     customers,
-    fetchCustomers,
+    mutate,
+    isLoading,
     totalPages,
     totalItems,
     currentPage,
@@ -25,8 +26,8 @@ function Customer() {
     setKeyword,
     setStatus,
   } = useGetCustomers();
-  const { blockUser } = useBlockUser(fetchCustomers);
-  const { deleteUser } = useDeleteUser(fetchCustomers);
+  const { blockUser } = useBlockUser();
+  const { deleteUser } = useDeleteUser();
   const loading = useAppSelector((state) => state.loadingSlice);
 
   const array = [
@@ -47,6 +48,7 @@ function Customer() {
   const handleDelete = async (id: string) => {
     try {
       await deleteUser(id);
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -55,6 +57,7 @@ function Customer() {
   const handleBlock = async (_id: string, status: number) => {
     try {
       await blockUser({ _id, status });
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -110,7 +113,7 @@ function Customer() {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
                   <Loading height={50} />

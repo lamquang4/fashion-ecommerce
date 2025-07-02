@@ -1,9 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
+import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
 export interface Banner {
   _id: string;
@@ -13,52 +12,41 @@ export interface Banner {
   createdAt: string;
 }
 
+interface ResponseType {
+  mainbanners: Banner[];
+  totalPages: number;
+  total: number;
+}
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetMainBanners() {
-  const [mainBanners, setMainBanners] = useState<Banner[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
-  const [status, setStatus] = useState("");
   const [type, setType] = useState("");
+  const [status, setStatus] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
-  const dispatch = useAppDispatch();
 
-  const fetchMainBanners = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(
-        `/api/get-mainbanners?page=${page}&limit=${limit}`,
-        {
-          params: {
-            status,
-            type,
-          },
-        }
-      );
-      setMainBanners(res.data.mainbanners);
-      setTotalPages(res.data.totalPages);
-      setTotalItems(res.data.total);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
+  const query = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    type,
+    status,
+  });
+  const url = `/api/get-mainbanners?${query.toString()}`;
 
-  useEffect(() => {
-    fetchMainBanners();
-  }, [page, limit, status, type]);
-
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    mainBanners,
-    fetchMainBanners,
-    totalPages,
-    totalItems,
+    mainbanners: data?.mainbanners || [],
+    totalPages: data?.totalPages || 1,
+    totalItems: data?.total || 0,
     currentPage: page,
     limit,
-    setStatus,
     setType,
+    setStatus,
+    isLoading,
+    error,
+    mutate,
   };
 }

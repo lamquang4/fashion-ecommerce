@@ -4,6 +4,7 @@ import { useAppDispatch } from "@/redux/hook";
 import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
 export interface Order {
   _id: string;
@@ -24,67 +25,50 @@ export interface Order {
   createdAt: string;
 }
 
+interface ResponseType {
+  orders: Order[];
+  totalPages: number;
+  total: number;
+  totalRevenue: number;
+  totalSold: number;
+  totalStatus0: number;
+  totalStatus3: number;
+  totalStatus4: number;
+}
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetOrders() {
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
-  const [totalRevenue, setTotalRevenue] = useState(0);
-  const [totalSold, setTotalSold] = useState(0);
-  const [totalStatus0, setTotalStatus0] = useState(0);
-  const [totalStatus3, setTotalStatus3] = useState(0);
-  const [totalStatus4, setTotalStatus4] = useState(0);
   const [keyword, setKeyword] = useState("");
   const [status, setStatus] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
-  const dispatch = useAppDispatch();
 
-  const fetchOrders = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(
-        `/api/get-orders?page=${page}&limit=${limit}`,
-        {
-          params: {
-            keyword,
-            status,
-          },
-        }
-      );
-      setOrders(res.data.orders);
-      setTotalPages(res.data.totalPages);
-      setTotalItems(res.data.total);
-      setTotalRevenue(res.data.totalRevenue);
-      setTotalSold(res.data.totalSold);
-      setTotalStatus0(res.data.totalStatus0);
-      setTotalStatus3(res.data.totalStatus3);
-      setTotalStatus4(res.data.totalStatus4);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
-
-  useEffect(() => {
-    fetchOrders();
-  }, [page, limit, keyword, status]);
-
+  const query = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    keyword,
+    status,
+  });
+  const url = `/api/get-orders?${query.toString()}`;
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    orders,
-    fetchOrders,
-    totalPages,
-    totalItems,
-    totalRevenue,
-    totalSold,
+    orders: data?.orders || [],
+    totalPages: data?.totalPages || 1,
+    totalItems: data?.total || 0,
+    totalRevenue: data?.totalRevenue || 0,
+    totalSold: data?.totalSold || 0,
+    totalStatus0: data?.totalStatus0 || 0,
+    totalStatus3: data?.totalStatus3 || 0,
+    totalStatus4: data?.totalStatus4 || 0,
     currentPage: page,
     limit,
     setKeyword,
     setStatus,
-    totalStatus0,
-    totalStatus3,
-    totalStatus4,
+    isLoading,
+    error,
+    mutate,
   };
 }

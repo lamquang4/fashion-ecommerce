@@ -1,8 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
+import useSWR from "swr";
 
 export interface Banner {
   _id: string;
@@ -11,25 +9,12 @@ export interface Banner {
   status: number;
 }
 
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetCollections() {
-  const [collections, setCollections] = useState<Banner[]>([]);
-  const dispatch = useAppDispatch();
+  const url = `/api/get-collections`;
 
-  const fetchCollections = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get("/api/get-collections");
-      setCollections(res.data);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
+  const { data, error, isLoading, mutate } = useSWR<Banner[]>(url, fetcher);
 
-  useEffect(() => {
-    fetchCollections();
-  }, []);
-
-  return { collections, fetchCollections };
+  return { collections: data ?? [], error, isLoading, mutate };
 }

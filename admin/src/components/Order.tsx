@@ -12,13 +12,12 @@ import Pagination from "./Pagination";
 import FilterDropDownMenu from "./FilterDropDownMenu";
 import StaticCards from "./StaticCards";
 import InputSearch from "./InputSearch";
-import { useAppSelector } from "@/redux/hook";
 import useGetOrders from "@/hooks/useGetOrders";
 import Loading from "./Loading";
 function Order() {
-  const loading = useAppSelector((state) => state.loadingSlice);
   const {
     orders,
+    isLoading,
     totalPages,
     totalItems,
     currentPage,
@@ -29,6 +28,7 @@ function Order() {
     totalStatus3,
     totalStatus4,
   } = useGetOrders();
+  
   const array = [
     {
       name: "Tất cả",
@@ -171,7 +171,7 @@ function Order() {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
                   <Loading height={50} />

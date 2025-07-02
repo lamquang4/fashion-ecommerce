@@ -8,7 +8,7 @@ import useUpdateBanner from "@/hooks/useUpdateBanner";
 import toast from "react-hot-toast";
 import { useImageViewer1 } from "@/hooks/useImageViewer1";
 function PromoteBanner() {
-  const { promoteBanners, fetchPromoteBanners } = useGetPromoteBanners();
+  const { promotebanners, mutate } = useGetPromoteBanners();
   const { addBanner } = useAddBanner();
   const { updateBanner } = useUpdateBanner();
   const {
@@ -27,22 +27,22 @@ function PromoteBanner() {
       const formData = new FormData();
       selectedFiles1.forEach((file) => file && formData.append("image", file));
 
-      if (promoteBanners.length === 0) {
+      if (promotebanners.length === 0) {
         formData.append("type", "2");
         await addBanner(formData);
       } else {
-        for (let i = 0; i < promoteBanners.length; i++) {
+        for (let i = 0; i < promotebanners.length; i++) {
           const file = selectedFiles1[i];
           if (!file) continue;
 
           const formData = new FormData();
           formData.append("image", file);
-          formData.append("_id", promoteBanners[i]._id);
+          formData.append("_id", promotebanners[i]._id);
           await updateBanner(formData);
         }
       }
 
-      fetchPromoteBanners();
+      mutate();
       toast.success("Cập nhật thành công!");
       setSelectedFiles1([]);
       setPreviewImages1([]);
@@ -61,7 +61,7 @@ function PromoteBanner() {
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
             <div className="flex flex-col gap-[20px] sm:gap-[30px]">
               {[0, 1].map((index) => {
-                const item = promoteBanners[index];
+                const item = promotebanners[index];
                 return (
                   <div className="relative" key={index}>
                     <Image

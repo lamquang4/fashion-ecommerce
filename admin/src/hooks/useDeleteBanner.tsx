@@ -4,7 +4,7 @@ import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export default function useDeleteBanner(fetchBanners: () => void) {
+export default function useDeleteBanner() {
   const dispatch = useAppDispatch();
   const deleteBanner = async (id: string) => {
     const result = await Swal.fire({
@@ -21,7 +21,6 @@ export default function useDeleteBanner(fetchBanners: () => void) {
     try {
       dispatch(setLoading(true));
       await axios.delete(`/api/delete-banner/${id}`);
-      fetchBanners();
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

@@ -25,7 +25,7 @@ function EditAdmin() {
   const params = useParams();
   const id = params.id as string;
 
-  const user = useGetUser(id);
+  const { user, mutate } = useGetUser(id);
   const { updateUser } = useUpdateUser(id);
 
   const handleChange = (
@@ -77,6 +77,7 @@ function EditAdmin() {
         ...prev,
         password: "",
       }));
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }

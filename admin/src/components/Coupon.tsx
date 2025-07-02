@@ -15,7 +15,8 @@ import toast from "react-hot-toast";
 function Coupon() {
   const {
     coupons,
-    fetchCoupons,
+    mutate,
+    isLoading,
     totalPages,
     totalItems,
     currentPage,
@@ -23,8 +24,7 @@ function Coupon() {
     setKeyword,
     setStatus,
   } = useGetCoupons();
-  const { deleteCoupon } = useDeleteCoupon(fetchCoupons);
-  const loading = useAppSelector((state) => state.loadingSlice);
+  const { deleteCoupon } = useDeleteCoupon();
 
   const array = [
     {
@@ -52,6 +52,7 @@ function Coupon() {
   const handleDelete = async (id: string) => {
     try {
       await deleteCoupon(id);
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -111,7 +112,7 @@ function Coupon() {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
                   <Loading height={50} />

@@ -4,7 +4,7 @@ import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export default function useDeleteProduct(fetchProducts: () => void) {
+export default function useDeleteProduct() {
   const dispatch = useAppDispatch();
   const deleteProduct = async (id: string) => {
     const result = await Swal.fire({
@@ -21,7 +21,6 @@ export default function useDeleteProduct(fetchProducts: () => void) {
     try {
       dispatch(setLoading(true));
       await axios.delete(`/api/delete-product/${id}`);
-      fetchProducts();
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

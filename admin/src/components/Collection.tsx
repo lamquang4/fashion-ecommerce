@@ -8,7 +8,7 @@ import useAddBanner from "@/hooks/useAddBanner";
 import useUpdateBanner from "@/hooks/useUpdateBanner";
 import { useImageViewer1 } from "@/hooks/useImageViewer1";
 function Collection() {
-  const { collections, fetchCollections } = useGetCollections();
+  const { collections, mutate } = useGetCollections();
   const { addBanner } = useAddBanner();
   const { updateBanner } = useUpdateBanner();
   const {
@@ -27,11 +27,11 @@ function Collection() {
       const formData = new FormData();
       selectedFiles1.forEach((file) => file && formData.append("image", file));
 
-      if (collections.length === 0) {
+      if (collections?.length === 0) {
         formData.append("type", "3");
         await addBanner(formData);
       } else {
-        for (let i = 0; i < collections.length; i++) {
+        for (let i = 0; i < collections?.length; i++) {
           const file = selectedFiles1[i];
           if (!file) continue;
 
@@ -42,7 +42,7 @@ function Collection() {
         }
       }
 
-      fetchCollections();
+      mutate();
       toast.success("Cập nhật thành công!");
       setSelectedFiles1([]);
       setPreviewImages1([]);

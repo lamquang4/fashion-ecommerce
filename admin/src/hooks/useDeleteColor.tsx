@@ -4,7 +4,7 @@ import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export default function useDeleteColor(fetchColors: () => void) {
+export default function useDeleteColor() {
   const dispatch = useAppDispatch();
   const deleteColor = async (id: string) => {
     const result = await Swal.fire({
@@ -21,7 +21,6 @@ export default function useDeleteColor(fetchColors: () => void) {
     try {
       dispatch(setLoading(true));
       await axios.delete(`/api/delete-color/${id}`);
-      fetchColors();
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

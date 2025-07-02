@@ -2,7 +2,7 @@
 import useGetSize from "@/hooks/useGetSize";
 import useUpdateSize from "@/hooks/useUpdateSize";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -14,7 +14,7 @@ function EditSize() {
   const params = useParams();
   const id = params.id as string;
 
-  const size = useGetSize(id);
+  const { size, mutate } = useGetSize(id);
   const { updateSize } = useUpdateSize(id);
 
   const handleChange = (
@@ -43,6 +43,7 @@ function EditSize() {
         namesize: data.namesize.trim(),
       });
       toast.success("Cập nhật thành công!");
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }

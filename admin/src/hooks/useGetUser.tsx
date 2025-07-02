@@ -1,8 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
+import useSWR from "swr";
 
 export interface User {
   _id: string;
@@ -16,26 +14,16 @@ export interface User {
   createdAt: string;
 }
 
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetUser(id: string) {
-  const [user, setUser] = useState<User>();
-  const dispatch = useAppDispatch();
+  const url = `/api/get-user/${id}`;
+  const { data, error, isLoading, mutate } = useSWR<User>(url, fetcher);
 
-  const fetchUser = async () => {
-    dispatch(setLoading(true));
-    if (!id) return;
-    try {
-      const res = await axios.get(`/api/get-user/${id}`);
-      setUser(res.data);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
+  return {
+    user: data,
+    isLoading,
+    error,
+    mutate,
   };
-
-  useEffect(() => {
-    fetchUser();
-  }, [id]);
-
-  return user;
 }

@@ -4,6 +4,7 @@ import { useAppDispatch } from "@/redux/hook";
 import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
 export interface Color {
   _id: string;
@@ -12,49 +13,39 @@ export interface Color {
   createdAt: string;
 }
 
+interface ResponseType {
+  colors: Color[];
+  totalPages: number;
+  total: number;
+}
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetColors() {
-  const [colors, setColors] = useState<Color[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
   const [keyword, setKeyword] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
-  const dispatch = useAppDispatch();
 
-  const fetchColors = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(
-        `/api/get-colors?page=${page}&limit=${limit}`,
-        {
-          params: {
-            keyword,
-          },
-        }
-      );
-      setColors(res.data.colors);
-      setTotalPages(res.data.totalPages);
-      setTotalItems(res.data.total);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
+  const query = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    keyword,
+  });
 
-  useEffect(() => {
-    fetchColors();
-  }, [page, limit, keyword]);
+  const url = `/api/get-colors?${query.toString()}`;
 
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    colors,
-    fetchColors,
-    totalPages,
-    totalItems,
+    colors: data?.colors || [],
+    totalPages: data?.totalPages || 1,
+    totalItems: data?.total || 0,
     currentPage: page,
     limit,
     setKeyword,
+    isLoading,
+    error,
+    mutate,
   };
 }

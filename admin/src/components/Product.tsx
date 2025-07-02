@@ -19,7 +19,8 @@ function Product() {
   const loading = useAppSelector((state) => state.loadingSlice);
   const {
     products,
-    fetchProducts,
+    mutate,
+    isLoading,
     totalPages,
     totalItems,
     currentPage,
@@ -27,8 +28,8 @@ function Product() {
     setKeyword,
     setStatus,
   } = useGetProducts();
-  const { visibleProduct } = useVisibleProduct(fetchProducts);
-  const { deleteProduct } = useDeleteProduct(fetchProducts);
+  const { visibleProduct } = useVisibleProduct();
+  const { deleteProduct } = useDeleteProduct();
   const array = [
     {
       name: "Tất cả",
@@ -51,6 +52,7 @@ function Product() {
   const handleDelete = async (id: string) => {
     try {
       await deleteProduct(id);
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -59,6 +61,7 @@ function Product() {
   const handleVisible = async (_id: string, status: number) => {
     try {
       await visibleProduct({ _id, status });
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -115,7 +118,7 @@ function Product() {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
                   <Loading height={50} />

@@ -1,8 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
+import useSWR from "swr";
 
 export interface Size {
   _id: string;
@@ -10,26 +8,16 @@ export interface Size {
   createdAt: string;
 }
 
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetSize(id: string) {
-  const [size, setSize] = useState<Size>();
-  const dispatch = useAppDispatch();
+  const url = `/api/get-size/${id}`;
+  const { data, error, isLoading, mutate } = useSWR<Size>(url, fetcher);
 
-  const fetchSize = async () => {
-    dispatch(setLoading(true));
-    if (!id) return;
-    try {
-      const res = await axios.get(`/api/get-size/${id}`);
-      setSize(res.data);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
+  return {
+    size: data,
+    isLoading,
+    error,
+    mutate,
   };
-
-  useEffect(() => {
-    fetchSize();
-  }, [id]);
-
-  return size;
 }

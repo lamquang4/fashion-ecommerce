@@ -4,7 +4,6 @@ import Pagination from "./Pagination";
 import { LiaEdit } from "react-icons/lia";
 import { VscTrash } from "react-icons/vsc";
 import { IoMdAddCircle } from "react-icons/io";
-import { useAppSelector } from "@/redux/hook";
 import useGetSizes from "@/hooks/useGetSizes";
 import Loading from "./Loading";
 import Image from "./Image";
@@ -14,19 +13,20 @@ import toast from "react-hot-toast";
 function Size() {
   const {
     sizes,
-    fetchSizes,
+    mutate,
+    isLoading,
     totalPages,
     totalItems,
     currentPage,
     limit,
     setKeyword,
   } = useGetSizes();
-  const loading = useAppSelector((state) => state.loadingSlice);
-  const { deleteSize } = useDeleteSize(fetchSizes);
+  const { deleteSize } = useDeleteSize();
 
   const handleDelete = async (id: string) => {
     try {
       await deleteSize(id);
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -69,7 +69,7 @@ function Size() {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
                   <Loading height={50} />

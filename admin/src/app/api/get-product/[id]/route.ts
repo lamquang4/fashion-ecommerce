@@ -37,7 +37,7 @@ export async function GET(
       );
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json(data[0]);
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

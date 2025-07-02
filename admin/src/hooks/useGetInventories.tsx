@@ -1,9 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
+import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
 export interface Inventory {
   _id: string;
@@ -26,52 +25,42 @@ export interface Inventory {
   createdAt: string;
 }
 
+interface ResponseType {
+  inventories: Inventory[];
+  totalPages: number;
+  total: number;
+  totalQuantity: number;
+}
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetInventories() {
-  const [inventories, setInventories] = useState<Inventory[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
-  const [totalQuantity, setTotalQuantity] = useState(0);
   const [keyword, setKeyword] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
-  const dispatch = useAppDispatch();
 
-  const fetchInventories = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(
-        `/api/get-inventories?page=${page}&limit=${limit}`,
-        {
-          params: {
-            keyword,
-          },
-        }
-      );
-      setInventories(res.data.inventories);
-      setTotalPages(res.data.totalPages);
-      setTotalItems(res.data.total);
-      setTotalQuantity(res.data.totalQuantity);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
+  const query = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    keyword,
+  });
 
-  useEffect(() => {
-    fetchInventories();
-  }, [page, limit, keyword]);
+  const url = `/api/get-inventories?${query.toString()}`;
+
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    inventories,
-    fetchInventories,
-    totalPages,
-    totalItems,
+    inventories: data?.inventories || [],
+    totalPages: data?.totalPages || 1,
+    totalItems: data?.total || 0,
+    totalQuantity: data?.totalQuantity || 0,
     currentPage: page,
     limit,
     setKeyword,
-    totalQuantity,
+    isLoading,
+    error,
+    mutate,
   };
 }

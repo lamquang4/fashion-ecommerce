@@ -18,17 +18,17 @@ import toast from "react-hot-toast";
 function Category() {
   const {
     categories,
-    fetchCategories,
     totalPages,
     totalItems,
     currentPage,
     limit,
     setKeyword,
     setStatus,
+    mutate,
+    isLoading,
   } = useGetCategories();
-  const loading = useAppSelector((state) => state.loadingSlice);
-  const { deleteCategory } = useDeleteCategory(fetchCategories);
-  const { visibleCategory } = useVisibleCategory(fetchCategories);
+  const { deleteCategory } = useDeleteCategory();
+  const { visibleCategory } = useVisibleCategory();
 
   const array = [
     {
@@ -48,6 +48,7 @@ function Category() {
   const handleDelete = async (id: string) => {
     try {
       await deleteCategory(id);
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -56,6 +57,7 @@ function Category() {
   const handleVisible = async (_id: string, status: number) => {
     try {
       await visibleCategory({ _id, status });
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -112,7 +114,7 @@ function Category() {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
                   <Loading height={50} />

@@ -19,8 +19,7 @@ const inventorySchema = new Schema(
     color: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Color",
-      required: false,
-      default: null,
+      required: true,
     },
   },
   {

@@ -10,7 +10,7 @@ export interface Banner {
   createdAt?: string;
 }
 
-export default function useVisibleBanner(fetchBanners: () => void) {
+export default function useVisibleBanner() {
   const dispatch = useAppDispatch();
   const visibleBanner = async (data: Banner) => {
     const action = data.status === 1 ? "hiện" : "ẩn";
@@ -32,7 +32,6 @@ export default function useVisibleBanner(fetchBanners: () => void) {
         id: data._id,
         status: data.status,
       });
-      fetchBanners();
       return res.data.banner;
     } catch (err) {
       console.error("Lỗi:", err);

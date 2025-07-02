@@ -1,8 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
+import useSWR from "swr";
 
 export interface Banner {
   _id: string;
@@ -11,25 +9,12 @@ export interface Banner {
   status: number;
 }
 
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetPromoteBanners() {
-  const [promoteBanners, setPromoteBanners] = useState<Banner[]>([]);
-  const dispatch = useAppDispatch();
+  const url = `/api/get-promotebanners`;
 
-  const fetchPromoteBanners = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get("/api/get-promotebanners");
-      setPromoteBanners(res.data);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
+  const { data, error, isLoading, mutate } = useSWR<Banner[]>(url, fetcher);
 
-  useEffect(() => {
-    fetchPromoteBanners();
-  }, []);
-
-  return { promoteBanners, fetchPromoteBanners };
+  return { promotebanners: data ?? [], mutate, error, isLoading };
 }

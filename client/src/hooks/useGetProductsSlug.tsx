@@ -1,7 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
+import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
@@ -45,7 +43,7 @@ export default function useGetProductsSlug(slug: string) {
   const query = new URLSearchParams({
     page: page.toString(),
     limit: limit.toString(),
-    keyword,
+    keyword, 
   });
   const url = `/api/get-products/${slug}?${query.toString()}`;
 

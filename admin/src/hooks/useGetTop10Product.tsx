@@ -1,8 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
+import useSWR from "swr";
 
 export interface Product {
   _id: string;
@@ -13,28 +11,19 @@ export interface Product {
   discount: number;
 }
 
+interface ResponseType {
+  top10Products: Product[];
+}
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetTop10Products() {
-  const [products, setProducts] = useState<Product[]>([]);
-  const dispatch = useAppDispatch();
-
-  const fetchProducts = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(`/api/get-top10products`);
-      setProducts(res.data.top10Products);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
-
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
+  const url = `/api/get-top10products`;
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    products,
-    fetchProducts,
+    top10Products: data?.top10Products ?? [],
+    isLoading,
+    error,
+    mutate,
   };
 }

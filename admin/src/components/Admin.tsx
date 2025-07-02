@@ -9,7 +9,6 @@ import FilterDropDownMenu from "./FilterDropDownMenu";
 import useGetAdmins from "@/hooks/useGetAdmins";
 import Image from "./Image";
 import useBlockUser from "@/hooks/useBlockUser";
-import { useAppSelector } from "@/redux/hook";
 import Loading from "./Loading";
 import useDeleteUser from "@/hooks/useDeleteUser";
 import InputSearch from "./InputSearch";
@@ -21,17 +20,17 @@ function Admin() {
   });
   const {
     admins,
-    fetchAdmins,
+    isLoading,
     totalPages,
     totalItems,
     currentPage,
     limit,
     setKeyword,
     setStatus,
+    mutate,
   } = useGetAdmins();
-  const { blockUser } = useBlockUser(fetchAdmins);
-  const { deleteUser } = useDeleteUser(fetchAdmins);
-  const loading = useAppSelector((state) => state.loadingSlice);
+  const { blockUser } = useBlockUser();
+  const { deleteUser } = useDeleteUser();
 
   const array = [
     {
@@ -55,6 +54,7 @@ function Admin() {
     }
     try {
       await deleteUser(id);
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -67,6 +67,7 @@ function Admin() {
     }
     try {
       await blockUser({ _id, status });
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -126,7 +127,7 @@ function Admin() {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
                   <Loading height={50} />

@@ -15,7 +15,7 @@ export interface User {
   createdAt?: string;
 }
 
-export default function useBlockUser(fetchUsers: () => void) {
+export default function useBlockUser() {
   const dispatch = useAppDispatch();
   const blockUser = async (data: User) => {
     const action = data.status === 1 ? "chặn" : "bỏ chặn";
@@ -37,7 +37,6 @@ export default function useBlockUser(fetchUsers: () => void) {
         id: data._id,
         status: data.status,
       });
-      fetchUsers();
       return res.data.user;
     } catch (err) {
       console.error("Lỗi:", err);

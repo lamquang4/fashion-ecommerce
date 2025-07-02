@@ -1,9 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
+import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
 export interface User {
   _id: string;
@@ -17,52 +16,42 @@ export interface User {
   createdAt: string;
 }
 
+interface ResponseType {
+  customers: User[];
+  totalPages: number;
+  total: number;
+}
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetCustomers() {
-  const [customers, setCustomers] = useState<User[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
   const [keyword, setKeyword] = useState("");
   const [status, setStatus] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
-  const dispatch = useAppDispatch();
 
-  const fetchCustomers = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(
-        `/api/get-customers?page=${page}&limit=${limit}`,
-        {
-          params: {
-            keyword,
-            status,
-          },
-        }
-      );
-      setCustomers(res.data.customers);
-      setTotalPages(res.data.totalPages);
-      setTotalItems(res.data.total);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
+  const query = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    keyword,
+    status,
+  });
 
-  useEffect(() => {
-    fetchCustomers();
-  }, [page, limit, keyword, status]);
+  const url = `/api/get-customers?${query.toString()}`;
 
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    customers,
-    fetchCustomers,
-    totalPages,
-    totalItems,
+    customers: data?.customers || [],
+    totalPages: data?.totalPages || 1,
+    totalItems: data?.total || 0,
     currentPage: page,
     limit,
     setKeyword,
     setStatus,
+    isLoading,
+    error,
+    mutate,
   };
 }

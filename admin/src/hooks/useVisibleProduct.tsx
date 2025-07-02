@@ -16,7 +16,7 @@ export interface Product {
   createdAt?: string;
 }
 
-export default function useVisibleProduct(fetchProducts: () => void) {
+export default function useVisibleProduct() {
   const dispatch = useAppDispatch();
   const visibleProduct = async (data: Product) => {
     const action = data.status === 1 ? "hiện" : "ẩn";
@@ -38,7 +38,6 @@ export default function useVisibleProduct(fetchProducts: () => void) {
         id: data._id,
         status: data.status,
       });
-      fetchProducts();
       return res.data.product;
     } catch (err) {
       console.error("Lỗi:", err);

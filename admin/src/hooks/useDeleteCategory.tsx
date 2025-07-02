@@ -4,7 +4,7 @@ import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export default function useDeleteCategory(fetchCategories: () => void) {
+export default function useDeleteCategory() {
   const dispatch = useAppDispatch();
   const deleteCategory = async (id: string) => {
     const result = await Swal.fire({
@@ -21,7 +21,6 @@ export default function useDeleteCategory(fetchCategories: () => void) {
     try {
       dispatch(setLoading(true));
       await axios.delete(`/api/delete-category/${id}`);
-      fetchCategories();
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

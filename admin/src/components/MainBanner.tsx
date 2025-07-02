@@ -8,16 +8,15 @@ import Image from "./Image";
 import FilterDropDownMenu from "./FilterDropDownMenu";
 import useGetMainBanners from "@/hooks/useGetMainBanners";
 import Loading from "./Loading";
-import { useAppSelector } from "@/redux/hook";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import useDeleteBanner from "@/hooks/useDeleteBanner";
 import useVisibleBanner from "@/hooks/useVisibleBanner";
 import toast from "react-hot-toast";
 function MainBanner() {
-  const loading = useAppSelector((state) => state.loadingSlice);
   const {
-    mainBanners,
-    fetchMainBanners,
+    mainbanners,
+    mutate,
+    isLoading,
     totalPages,
     totalItems,
     currentPage,
@@ -25,8 +24,8 @@ function MainBanner() {
     setStatus,
     setType,
   } = useGetMainBanners();
-  const { deleteBanner } = useDeleteBanner(fetchMainBanners);
-  const { visibleBanner } = useVisibleBanner(fetchMainBanners);
+  const { deleteBanner } = useDeleteBanner();
+  const { visibleBanner } = useVisibleBanner();
   const array = [
     {
       name: "Tất cả",
@@ -60,6 +59,7 @@ function MainBanner() {
   const handleDelete = async (id: string) => {
     try {
       await deleteBanner(id);
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -68,6 +68,7 @@ function MainBanner() {
   const handleVisible = async (_id: string, status: number) => {
     try {
       await visibleBanner({ _id, status });
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -121,20 +122,20 @@ function MainBanner() {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
                   <Loading height={30} />
                 </td>
               </tr>
-            ) : mainBanners.length > 0 ? (
-              mainBanners.map((mainBanner, index) => (
+            ) : mainbanners.length > 0 ? (
+              mainbanners.map((mainbanner, index) => (
                 <tr key={index}>
                   <td className="pl-[1rem] py-[1rem]">
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">
                         <Image
-                          Src={mainBanner.image}
+                          Src={mainbanner.image}
                           Alt={""}
                           ClassName={"w-[120px] cursor-pointer"}
                           loadingType="lazy"
@@ -144,28 +145,28 @@ function MainBanner() {
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(
-                      mainBanner.createdAt as string
+                      mainbanner.createdAt as string
                     ).toLocaleDateString("vi-VN")}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {mainBanner.type === 0
+                    {mainbanner.type === 0
                       ? "Banner chính desktop"
                       : "Banner chính mobile"}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {mainBanner.status === 0 ? "Ẩn" : "Hiện"}
+                    {mainbanner.status === 0 ? "Ẩn" : "Hiện"}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex items-center gap-[15px]">
                       <button
                         onClick={() =>
                           handleVisible(
-                            mainBanner._id,
-                            mainBanner.status === 1 ? 0 : 1
+                            mainbanner._id,
+                            mainbanner.status === 1 ? 0 : 1
                           )
                         }
                       >
-                        {mainBanner.status === 1 ? (
+                        {mainbanner.status === 1 ? (
                           <FaRegEyeSlash size={22} className="text-[#74767d]" />
                         ) : (
                           <MdOutlineRemoveRedEye
@@ -175,7 +176,7 @@ function MainBanner() {
                         )}
                       </button>
 
-                      <button onClick={() => handleDelete(mainBanner._id)}>
+                      <button onClick={() => handleDelete(mainbanner._id)}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

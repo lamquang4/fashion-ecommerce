@@ -5,7 +5,6 @@ import { LiaEdit } from "react-icons/lia";
 import { IoMdAddCircle } from "react-icons/io";
 import Pagination from "./Pagination";
 import useGetColors from "@/hooks/useGetColors";
-import { useAppSelector } from "@/redux/hook";
 import Image from "./Image";
 import Loading from "./Loading";
 import useDeleteColor from "@/hooks/useDeleteColor";
@@ -14,19 +13,20 @@ import toast from "react-hot-toast";
 function Color() {
   const {
     colors,
-    fetchColors,
+    mutate,
+    isLoading,
     totalPages,
     totalItems,
     currentPage,
     limit,
     setKeyword,
   } = useGetColors();
-  const loading = useAppSelector((state) => state.loadingSlice);
-  const { deleteColor } = useDeleteColor(fetchColors);
+  const { deleteColor } = useDeleteColor();
 
   const handleDelete = async (id: string) => {
     try {
       await deleteColor(id);
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -73,7 +73,7 @@ function Color() {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
                   <Loading height={50} />

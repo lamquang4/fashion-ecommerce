@@ -5,10 +5,8 @@ import Image from "./Image";
 import Pagination from "./Pagination";
 import useGetInventories from "@/hooks/useGetInventories";
 import Loading from "./Loading";
-import { useAppSelector } from "@/redux/hook";
 import InputSearch from "./InputSearch";
 function Inventory() {
-  const loading = useAppSelector((state) => state.loadingSlice);
   const {
     inventories,
     totalPages,
@@ -17,6 +15,7 @@ function Inventory() {
     limit,
     setKeyword,
     totalQuantity,
+    isLoading,
   } = useGetInventories();
 
   return (
@@ -62,7 +61,7 @@ function Inventory() {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
                   <Loading height={50} />

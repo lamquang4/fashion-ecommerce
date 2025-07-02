@@ -1,9 +1,8 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
-import axios from "axios";
+import { useState } from "react";
 import { useSearchParams } from "next/navigation";
+import axios from "axios";
+import useSWR from "swr";
 
 export interface Size {
   _id: string;
@@ -11,49 +10,39 @@ export interface Size {
   createdAt: string;
 }
 
+interface ResponseType {
+  sizes: Size[];
+  totalPages: number;
+  total: number;
+}
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetSizes() {
-  const [sizes, setSizes] = useState<Size[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
   const [keyword, setKeyword] = useState("");
 
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
-  const dispatch = useAppDispatch();
 
-  const fetchSizes = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(
-        `/api/get-sizes?page=${page}&limit=${limit}`,
-        {
-          params: {
-            keyword,
-          },
-        }
-      );
-      setSizes(res.data.sizes);
-      setTotalPages(res.data.totalPages);
-      setTotalItems(res.data.total);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
+  const query = new URLSearchParams({
+    page: page.toString(),
+    limit: limit.toString(),
+    keyword,
+  });
 
-  useEffect(() => {
-    fetchSizes();
-  }, [page, limit, keyword]);
+  const url = `/api/get-sizes?${query.toString()}`;
 
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    sizes,
-    fetchSizes,
-    totalPages,
-    totalItems,
+    sizes: data?.sizes || [],
+    totalPages: data?.totalPages || 1,
+    totalItems: data?.total || 0,
     currentPage: page,
     limit,
     setKeyword,
+    isLoading,
+    error,
+    mutate,
   };
 }

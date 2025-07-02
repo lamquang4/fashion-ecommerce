@@ -22,7 +22,7 @@ function EditColor() {
   const params = useParams();
   const id = params.id as string;
 
-  const color = useGetColor(id);
+  const { color, mutate } = useGetColor(id);
 
   useEffect(() => {
     if (color) {
@@ -44,6 +44,7 @@ function EditColor() {
         codecolor: data.codecolor,
       });
       toast.success("Cập nhật thành công!");
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }

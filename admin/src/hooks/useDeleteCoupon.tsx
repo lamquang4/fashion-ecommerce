@@ -4,7 +4,7 @@ import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export default function useDeleteCoupon(fetchCoupons: () => void) {
+export default function useDeleteCoupon() {
   const dispatch = useAppDispatch();
   const deleteCoupon = async (id: string) => {
     const result = await Swal.fire({
@@ -21,7 +21,6 @@ export default function useDeleteCoupon(fetchCoupons: () => void) {
     try {
       dispatch(setLoading(true));
      await axios.delete(`/api/delete-coupon/${id}`);
-      fetchCoupons();
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

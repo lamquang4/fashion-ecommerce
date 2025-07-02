@@ -9,6 +9,7 @@ import toast from "react-hot-toast";
 import { useParams } from "next/navigation";
 import useGetCategory from "@/hooks/useGetCategory";
 import { useImageViewer } from "@/hooks/useImageViewer";
+import Loading from "./Loading";
 function EditCategory() {
   const [data, setData] = useState({
     namecategory: "",
@@ -24,7 +25,7 @@ function EditCategory() {
   };
   const params = useParams();
   const id = params.id as string;
-  const category = useGetCategory(id);
+  const { category, mutate, isLoading } = useGetCategory(id);
   const { updateCategory } = useUpdateCategory(id);
 
   const {
@@ -82,6 +83,7 @@ function EditCategory() {
       });
 
       handelReset();
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -107,25 +109,29 @@ function EditCategory() {
               />
 
               <div className="flex gap-3 flex-wrap justify-center">
-                <div className=" relative">
-                  <div
-                    className="cursor-pointer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      e.preventDefault();
-                      if (data.image) handleOpenViewer(data.image);
-                    }}
-                  >
-                    {data.image && (
-                      <Image
-                        Src={data.image}
-                        Alt={data.image}
-                        ClassName="w-full max-w-[140px]"
-                        loadingType="eager"
-                      />
-                    )}
+                {isLoading ? (
+                  <Loading height={25} />
+                ) : (
+                  <div className=" relative">
+                    <div
+                      className="cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        if (data.image) handleOpenViewer(data.image);
+                      }}
+                    >
+                      {data.image && (
+                        <Image
+                          Src={data.image}
+                          Alt={data.image}
+                          ClassName="w-full max-w-[140px]"
+                          loadingType="eager"
+                        />
+                      )}
+                    </div>
                   </div>
-                </div>
+                )}
               </div>
             </div>
 

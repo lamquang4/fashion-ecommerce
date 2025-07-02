@@ -14,13 +14,12 @@ import useGetOrders from "@/hooks/useGetOrders";
 import useGetCustomers from "@/hooks/useGetCustomers";
 import useGetTop10Products from "@/hooks/useGetTop10Product";
 import Loading from "./Loading";
-import { useAppSelector } from "@/redux/hook";
+
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 function Dashboard() {
   const { orders, totalRevenue, totalSold } = useGetOrders();
   const { customers } = useGetCustomers();
-  const { products } = useGetTop10Products();
-  const loading = useAppSelector((state) => state.loadingSlice);
+  const { top10Products, isLoading } = useGetTop10Products();
   const array = [
     {
       title: "Doanh thu",
@@ -207,14 +206,14 @@ function Dashboard() {
             </tr>
           </thead>
           <tbody>
-            {loading ? (
+            {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
                   <Loading height={50} />
                 </td>
               </tr>
-            ) : products.length > 0 ? (
-              products.map((product, index) => (
+            ) : top10Products.length > 0 ? (
+              top10Products.map((product, index) => (
                 <tr key={index}>
                   <td className="pl-[1rem] py-[1rem] w-[300px]">
                     <div className="flex gap-[10px] items-center">

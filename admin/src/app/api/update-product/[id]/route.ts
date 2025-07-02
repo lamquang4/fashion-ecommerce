@@ -129,7 +129,7 @@ export async function PUT(
       new: true,
     });
 
-    // Cập nhật
+    // Cập nhật Inventory
     const updatedInventories = JSON.parse(
       formData.get("currentInventories") as string
     );
@@ -154,22 +154,22 @@ export async function PUT(
         await Inventory.findByIdAndUpdate(inv._id, {
           product: id,
           size: inv.size,
-          color: inv.color === "" ? null : inv.color,
+          color: inv.color,
           quantity: Number(inv.quantity),
         });
       }
     }
 
-    // Thêm mới
+    // Thêm mới Inventory
     const newInventories = JSON.parse(formData.get("newInventories") as string);
 
     for (let i = 0; i < newInventories.length; i++) {
       const newInventory = newInventories[i];
-      if (newInventory.size) {
+      if (newInventory.size && newInventory.color) {
         const exists = await Inventory.findOne({
           product: id,
           size: newInventory.size,
-          color: newInventory.color === "" ? null : newInventory.color,
+          color: newInventory.color,
         });
 
         if (exists) {
@@ -182,7 +182,7 @@ export async function PUT(
         await Inventory.create({
           product: id,
           size: newInventory.size,
-          color: newInventory.color === "" ? null : newInventory.color,
+          color: newInventory.color,
           quantity: Number(newInventory.quantity),
         });
       }

@@ -1,8 +1,7 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
+import Category from "@/model/Category";
 import axios from "axios";
+import useSWR from "swr";
 
 export interface Category {
   _id?: string;
@@ -14,26 +13,16 @@ export interface Category {
   createdAt: string;
 }
 
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetCategory(id: string) {
-  const [category, setCategory] = useState<Category>();
-  const dispatch = useAppDispatch();
+  const url = `/api/get-category/${id}`;
+  const { data, error, isLoading, mutate } = useSWR<Category>(url, fetcher);
 
-  const fetchCategory = async () => {
-    dispatch(setLoading(true));
-    if (!id) return;
-    try {
-      const res = await axios.get(`/api/get-category/${id}`);
-      setCategory(res.data);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
+  return {
+    category: data,
+    isLoading,
+    error,
+    mutate,
   };
-
-  useEffect(() => {
-    fetchCategory();
-  }, [id]);
-
-  return category;
 }
