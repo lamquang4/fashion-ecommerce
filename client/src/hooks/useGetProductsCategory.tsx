@@ -27,21 +27,14 @@ const fetcher = (url: string) =>
   axios.get(url).then((res) => res.data.products);
 
 export default function useGetProductsCategory(
-  category?: string,
-  product?: string
+  category: string,
+  product: string
 ) {
-  const {
-    data: productsCateogry,
-    error,
-    isLoading,
-    mutate,
-  } = useSWR<Product[]>(
-    category && product ? `/api/get-products1/${category}/${product}` : null,
-    fetcher
-  );
+  const url = `/api/get-products1/${category}/${product}`;
+  const { data, error, isLoading, mutate } = useSWR<Product[]>(url, fetcher);
 
   return {
-    productsCateogry: productsCateogry ?? [],
+    productsCateogry: data,
     isLoading,
     error,
     mutate,

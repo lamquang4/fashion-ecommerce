@@ -29,14 +29,11 @@ type ResponseType = {
   productsFemale: Product[];
 };
 
-const fetcher = (url: string): Promise<ResponseType> =>
-  axios.get(url).then((res) => res.data);
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetProductsGender() {
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
-    "/api/get-products-gender",
-    fetcher
-  );
+  const url = `/api/get-products-gender`;
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
     productsMale: data?.productsMale ?? [],

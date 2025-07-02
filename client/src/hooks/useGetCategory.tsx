@@ -13,20 +13,14 @@ export interface Category {
   createdAt: string;
 }
 
-type ResponseType = {
-  categoriesMale: Category[];
-  categoriesFemale: Category[];
-};
-
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
-export default function useGetCategories() {
-  const url = `/api/get-categories`;
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+export default function useGetCategory(slug: string) {
+  const url = `/api/get-category/${slug}`;
+  const { data, error, isLoading, mutate } = useSWR<Category>(url, fetcher);
 
   return {
-    categoriesMale: data?.categoriesMale ?? [],
-    categoriesFemale: data?.categoriesFemale ?? [],
+    category: data,
     error,
     isLoading,
     mutate,

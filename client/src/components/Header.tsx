@@ -71,16 +71,7 @@ function Header() {
             </Link>
 
             <nav className="hidden lg:block">
-              <ul className="flex items-center gap-[30px] text-[1rem] font-[550]">
-                <li className="relative">
-                  <Link
-                    href={"/"}
-                    className="relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100"
-                  >
-                    Trang chủ
-                  </Link>
-                </li>
-
+              <ul className="flex items-center gap-[30px] text-[1rem] font-semibold uppercase">
                 <li className="relative menu-category">
                   <Link
                     href={"/"}

@@ -34,15 +34,6 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
 
         <ul className="mb-[30px]">
           <li className="border-b border-gray-300">
-            <Link
-              href={"/"}
-              className="text-black text-[0.9rem] font-medium py-4 uppercase"
-            >
-              Trang chủ
-            </Link>
-          </li>
-
-          <li className="border-b border-gray-300">
             <div
               onClick={() => toggleOpen(`abc`)}
               className="w-full cursor-pointer flex justify-between items-center"

@@ -13,7 +13,7 @@ import useGetSizeColorProduct from "@/hooks/useGetSizeColorProduct";
 function ProductDetail() {
   const params = useParams();
   const slug = params.slug as string;
-  const { product, loading } = useGetProductSlug(slug);
+  const { product, isLoading } = useGetProductSlug(slug);
   const { sizes, colors } = useGetSizeColorProduct(slug);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedColor, setSelectedColor] = useState<string>("");
@@ -44,7 +44,7 @@ function ProductDetail() {
     setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
   };
 
-  if (!product && !loading) {
+  if (!product && !isLoading) {
     return notFound();
   }
 
@@ -76,7 +76,7 @@ function ProductDetail() {
 
               <div className="md:order-1 flex justify-center">
                 <div className=" max-h-fit flex flex-row xl:flex-col gap-[15px] overflow-x-auto md:overflow-x-hidden md:overflow-y-auto">
-                  {product?.image.map((img, index) => (
+                  {product?.image?.map((img, index) => (
                     <div
                       key={index}
                       className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
@@ -113,13 +113,13 @@ function ProductDetail() {
                   )}
 
                   {product?.discount === 0 && (
-                    <span>{(product?.price).toLocaleString("vi-VN")}₫</span>
+                    <span>{product?.price.toLocaleString("vi-VN")}₫</span>
                   )}
 
                   {product?.discount !== 0 && (
                     <span>
                       {product &&
-                        (product.price - product.discount).toLocaleString(
+                        (product?.price - product?.discount).toLocaleString(
                           "vi-VN"
                         )}
                     </span>

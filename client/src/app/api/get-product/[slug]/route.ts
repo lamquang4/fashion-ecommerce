@@ -8,7 +8,7 @@ export async function GET(
 ) {
   try {
     await connectMongoDB();
-    const { slug } = await params;
+    const { slug } = params;
 
     const data = await Product.aggregate([
       { $match: { slug } },
