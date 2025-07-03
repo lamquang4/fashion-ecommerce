@@ -24,12 +24,6 @@ export async function GET(req: NextRequest) {
         },
       },
       {
-        $sort: { totalSold: -1 },
-      },
-      {
-        $limit: 10,
-      },
-      {
         $lookup: {
           from: "products",
           localField: "_id",
@@ -49,6 +43,12 @@ export async function GET(req: NextRequest) {
         $addFields: {
           totalQuantity: { $sum: "$inventory.quantity" },
         },
+      },
+      {
+        $sort: { totalSold: -1 },
+      },
+      {
+        $limit: 10,
       },
     ]);
 

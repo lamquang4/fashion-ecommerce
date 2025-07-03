@@ -7,6 +7,7 @@ export interface Product {
   name: string;
   image: string[];
   totalSold: number;
+  totalQuantity: number;
   price: number;
   discount: number;
 }

@@ -193,14 +193,19 @@ function Dashboard() {
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
             <tr className="bg-[#E9EDF2]">
-              <th className="pl-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="py-[1rem] pl-[1rem] text-left text-[#444] text-[0.9rem]">
                 Sản phẩm
               </th>
 
-              <th className="text-left text-[#444] text-[0.9rem]">Giá</th>
-              <th className="text-left text-[#444] text-[0.9rem]">Số lượng</th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Giá
+              </th>
 
-              <th className="p-[1rem_0] text-left text-[#444] text-[0.9rem]">
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Số lượng
+              </th>
+
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Hành động
               </th>
             </tr>
@@ -254,9 +259,8 @@ function Dashboard() {
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex flex-col gap-[10px]">
-                      <p className="text-[0.9rem]">
-                        Đã bán: {product.totalSold}
-                      </p>
+                      <p>Còn lại: {product.totalQuantity}</p>
+                      <p>Đã bán: {product.totalSold}</p>
                     </div>
                   </td>
 
