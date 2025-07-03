@@ -11,7 +11,6 @@ import { HiMiniXMark } from "react-icons/hi2";
 import { useParams } from "next/navigation";
 import useGetProduct from "@/hooks/useGetProduct";
 import toast from "react-hot-toast";
-import useGetCategories from "@/hooks/useGetCategories";
 import useGetSizes from "@/hooks/useGetSizes";
 import useGetColors from "@/hooks/useGetColors";
 import Loading from "./Loading";
@@ -22,6 +21,7 @@ import { useImageViewer } from "@/hooks/useImageViewer";
 import useDeleteImage from "@/hooks/useDeleteImage";
 import useUpdateImage from "@/hooks/useUpdateImage";
 import useDeleteInventory from "@/hooks/useDeleteInventory";
+import useGetCategories1 from "@/hooks/useGetCategories1t";
 function EditProduct() {
   const {
     newInventories,
@@ -57,9 +57,8 @@ function EditProduct() {
   const id = params.id as string;
 
   const { product, mutate, isLoading } = useGetProduct(id);
-  console.log(product);
 
-  const { categories } = useGetCategories();
+  const { categoriesStatus1 } = useGetCategories1();
   const { colors } = useGetColors();
   const { sizes } = useGetSizes();
   const { updateProduct } = useUpdateProduct(id);
@@ -314,7 +313,7 @@ function EditProduct() {
                     onChange={handleChange}
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   >
-                    {categories.map((category, index) => (
+                    {categoriesStatus1.map((category, index) => (
                       <option value={category._id} key={index}>
                         {category.namecategory}-
                         {category.gender === 1 ? "Nam" : "Nữ"}

@@ -99,7 +99,7 @@ function Product() {
                 Giá
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Số lượng
+                Số lượng tồn kho
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Ngày thêm

@@ -1,7 +1,5 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
+import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
@@ -13,7 +11,8 @@ export interface Category {
   image: string;
   slug: string;
   status: number;
-  productCount: number;
+  totalProduct: number;
+  totalProductActive: number;
   createdAt: string;
 }
 

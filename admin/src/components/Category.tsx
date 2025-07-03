@@ -96,7 +96,7 @@ function Category() {
               </th>
 
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Số lượng dùng
+                Số lượng sản phẩm
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Ngày thêm
@@ -145,7 +145,10 @@ function Category() {
                     {category.gender === 1 ? "Nam" : "Nữ"}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {category.productCount}
+                    <div className="flex flex-col gap-[10px]">
+                      <p>Tất cả: {category.totalProduct}</p>
+                      <p>Đang hoạt động: {category.totalProductActive}</p>
+                    </div>
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(category.createdAt as string).toLocaleDateString(

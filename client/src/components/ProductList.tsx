@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import Pagination from "./Pagination";
 import AdvancedSearch from "./AdvancedSearch";
 import Image from "./Image";
-import { useParams } from "next/navigation";
+import { notFound, useParams } from "next/navigation";
 import useGetProductsSlug from "@/hooks/useGetProductsSlug";
 import useGetCategory from "@/hooks/useGetCategory";
 import Loading from "./Loading";
@@ -20,6 +20,10 @@ function ProductList() {
   const toggleAdvancedSearch = () => {
     setAdvancedSearchOpen(!advancedSearchOpen);
   };
+
+  if (products.length === 0 && !isLoading) {
+    return notFound();
+  }
 
   useEffect(() => {
     if (advancedSearchOpen) {

@@ -3,16 +3,16 @@ import Link from "next/link";
 import InputImage from "./InputImage";
 import TinyMCEEditor from "./TinyMCEEditor";
 import { useInventory } from "../hooks/useInventory";
-import useGetCategories from "@/hooks/useGetCategories";
 import { useState } from "react";
 import useAddProduct from "@/hooks/useAddProduct";
 import toast from "react-hot-toast";
 import useGetColors from "@/hooks/useGetColors";
 import useGetSizes from "@/hooks/useGetSizes";
 import { useImageViewer } from "@/hooks/useImageViewer";
+import useGetCategories1 from "@/hooks/useGetCategories1t";
 function AddProduct() {
   const [success, setSuccess] = useState(false);
-  const { categories } = useGetCategories();
+  const { categories } = useGetCategories1();
   const { colors } = useGetColors();
   const { sizes } = useGetSizes();
 

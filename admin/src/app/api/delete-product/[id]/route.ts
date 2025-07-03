@@ -1,4 +1,5 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
+import Category from "@/model/Category";
 import Inventory from "@/model/Inventory";
 import OrderDetail from "@/model/OrderDetail";
 import Product from "@/model/Product";
@@ -23,13 +24,14 @@ export async function DELETE(
     if (checkProduct) {
       return NextResponse.json(
         {
-          msg: "Sản phẩm này đã có trong đơn hàng nên không thể xóa!",
+          msg: "Sản phẩm này đã được mua trong đơn hàng nên không thể xóa!",
         },
         {
           status: 400,
         }
       );
     }
+
     const product = await Product.findById(id);
     if (!product) {
       return NextResponse.json(

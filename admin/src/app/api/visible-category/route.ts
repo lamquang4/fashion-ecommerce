@@ -34,12 +34,14 @@ export async function PUT(req: NextRequest) {
       );
     }
 
+    /*
     if (status === 0 && category.status === 1 && hasProduct) {
       return NextResponse.json(
         { msg: "Danh mục đã có sản phẩm đang hiện nên không thể ẩn" },
         { status: 400 }
       );
     }
+      */
 
     const updatedCategory = await Category.findByIdAndUpdate(
       id,

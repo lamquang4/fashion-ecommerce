@@ -32,12 +32,36 @@ export async function GET(req: NextRequest) {
         },
         {
           $addFields: {
-            productCount: { $size: "$products" },
+            totalProduct: { $size: "$products" },
+          },
+        },
+        {
+          $lookup: {
+            from: "products",
+            let: { categoryId: "$_id" },
+            pipeline: [
+              {
+                $match: {
+                  $expr: {
+                    $and: [
+                      { $eq: ["$category", "$$categoryId"] },
+                      { $eq: ["$status", 1] },
+                    ],
+                  },
+                },
+              },
+            ],
+            as: "products",
+          },
+        },
+        {
+          $addFields: {
+            totalProductActive: { $size: "$products" },
           },
         },
         {
           $project: {
-            products: 0,
+            products: 0, // không lấy products
           },
         },
         { $skip: skip },
