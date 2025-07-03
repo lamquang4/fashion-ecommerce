@@ -10,11 +10,13 @@ import ImageViewer from "./ImageViewer";
 import useGetProductSlug from "@/hooks/useGetProductSlug";
 import { notFound, useParams } from "next/navigation";
 import useGetSizeColorProduct from "@/hooks/useGetSizeColorProduct";
+import useGetCoupons from "@/hooks/useGetCoupons";
 function ProductDetail() {
   const params = useParams();
   const slug = params.slug as string;
   const { product, isLoading } = useGetProductSlug(slug);
   const { sizes, colors } = useGetSizeColorProduct(slug);
+  const { coupons } = useGetCoupons();
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [mainImage, setMainImage] = useState<string>("");
@@ -130,34 +132,35 @@ function ProductDetail() {
               <MenuSideCoupon toggleMenu={toggleOpen} isOpen={menuOpen} />
 
               <form action="">
-                <div className="mb-[15px]">
-                  <p className="text-gray-700 font-medium mb-[5px]">
-                    Mã giảm giá
-                  </p>
-                  <div className="flex gap-[12px] flex-wrap w-full">
-                    <div
-                      className="relative flex rounded-none filter-none min-h-0 overflow-hidden px-0 cursor-pointer
+                {coupons.length > 0 && (
+                  <div className="mb-[15px]">
+                    <p className="text-gray-700 font-medium mb-[5px]">
+                      Mã giảm giá
+                    </p>
+                    <div className="flex gap-[12px] flex-wrap w-full">
+                      {coupons.map((coupon, index) => (
+                        <div
+                          key={index}
+                          className="relative flex rounded-none filter-none min-h-0 overflow-hidden px-0 cursor-pointer
     before:content-[''] before:absolute before:rounded-full before:w-[12px] before:h-[12px] before:bg-white before:border before:border-[#197FB6] before:top-1/2 before:translate-y-[-50%] before:left-[-6px] before:z-[10]
     after:content-[''] after:absolute after:rounded-full after:w-[12px] after:h-[12px] after:bg-white after:border after:border-[#197FB6] after:top-1/2 after:translate-y-[-50%] after:right-[-6px] after:z-[10]"
-                      onClick={toggleOpen}
-                    >
-                      <div className="border border-[#197FB6] text-[#197FB6] px-3 py-[7px] relative text-[0.9rem] font-medium uppercase">
-                        Giảm 10%
-                      </div>
-                    </div>
-
-                    <div
-                      className="relative flex rounded-none filter-none min-h-0 overflow-hidden px-0 cursor-pointer
-    before:content-[''] before:absolute before:rounded-full before:w-[12px] before:h-[12px] before:bg-white before:border before:border-[#197FB6] before:top-1/2 before:translate-y-[-50%] before:left-[-6px] before:z-[10]
-    after:content-[''] after:absolute after:rounded-full after:w-[12px] after:h-[12px] after:bg-white after:border after:border-[#197FB6] after:top-1/2 after:translate-y-[-50%] after:right-[-6px] after:z-[10]"
-                      onClick={toggleOpen}
-                    >
-                      <div className="border border-[#197FB6] text-[#197FB6] px-3 py-[7px] relative text-[0.9rem] font-medium uppercase">
-                        Giảm 100K
-                      </div>
+                          onClick={toggleOpen}
+                        >
+                          <div className="border border-[#197FB6] text-[#197FB6] px-3 py-[7px] relative text-[0.9rem] font-medium uppercase">
+                            {coupon.discountType === 2
+                              ? `Giảm ${coupon.discountValue.toLocaleString(
+                                  "vi-VN"
+                                )}₫`
+                              : coupon.discountType === 0
+                              ? `Giảm ${coupon.discountValue}%`
+                              : "Miễn phí giao hàng"}
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                </div>
+                )}
+
                 <div className="mb-[15px]">
                   <p className="text-gray-700 font-medium mb-[5px]">
                     Màu sắc: {selectedColor}

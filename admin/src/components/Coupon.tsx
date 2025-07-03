@@ -126,10 +126,15 @@ function Coupon() {
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {coupon.minOrderValue
-                      ? `Đơn hàng phải ${coupon.minOrderValue.toLocaleString(
+                      ? `Đơn hàng phải từ ${coupon.minOrderValue.toLocaleString(
                           "vi-VN"
-                        )}₫`
+                        )}₫ trở lên`
                       : "Mọi đơn hàng"}
+                    {coupon.discountType === 0 &&
+                      coupon.maxDiscountValue &&
+                      `, giảm tối đa ${coupon.maxDiscountValue.toLocaleString(
+                        "vi-VN"
+                      )}₫`}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {coupon.discountType === 2

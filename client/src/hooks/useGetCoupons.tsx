@@ -1,9 +1,6 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
 export interface Coupon {
   _id: string;
@@ -19,52 +16,20 @@ export interface Coupon {
   status: number;
 }
 
+type ResponseType = {
+  coupons: Coupon[];
+};
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
 export default function useGetCoupons() {
-  const [coupons, setCoupons] = useState<Coupon[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const [status, setStatus] = useState("");
-
-  const searchParams = useSearchParams();
-  const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "10");
-  const dispatch = useAppDispatch();
-
-  const fetchCoupons = async () => {
-    dispatch(setLoading(true));
-    try {
-      const res = await axios.get(
-        `/api/get-coupons?page=${page}&limit=${limit}`,
-        {
-          params: {
-            keyword,
-            status,
-          },
-        }
-      );
-      setCoupons(res.data.coupons);
-      setTotalPages(res.data.totalPages);
-      setTotalItems(res.data.total);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
-  };
-
-  useEffect(() => {
-    fetchCoupons();
-  }, [page, limit, keyword, status]);
+  const url = `/api/get-coupons`;
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    coupons,
-    fetchCoupons,
-    totalPages,
-    totalItems,
-    currentPage: page,
-    limit,
-    setKeyword,
-    setStatus,
+    coupons: data?.coupons ?? [],
+    error,
+    isLoading,
+    mutate,
   };
 }
