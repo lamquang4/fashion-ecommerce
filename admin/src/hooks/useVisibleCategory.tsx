@@ -1,6 +1,4 @@
 "use client";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
 export interface Category {
@@ -14,7 +12,6 @@ export interface Category {
 }
 
 export default function useVisibleCategory() {
-  const dispatch = useAppDispatch();
   const visibleCategory = async (data: Category) => {
     const action = data.status === 1 ? "hiện" : "ẩn";
     const result = await Swal.fire({
@@ -30,7 +27,6 @@ export default function useVisibleCategory() {
       return;
     }
     try {
-      dispatch(setLoading(true));
       const res = await axios.put("/api/visible-category", {
         id: data._id,
         status: data.status,
@@ -39,8 +35,6 @@ export default function useVisibleCategory() {
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 

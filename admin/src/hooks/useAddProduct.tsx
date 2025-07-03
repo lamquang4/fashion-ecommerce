@@ -1,14 +1,10 @@
 "use client";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 
 export default function useAddProduct() {
-  const dispatch = useAppDispatch();
 
   const addProduct = async (formData: FormData) => {
     try {
-      dispatch(setLoading(true));
       const res = await axios.post("/api/add-product", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
@@ -18,9 +14,7 @@ export default function useAddProduct() {
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
-    } finally {
-      dispatch(setLoading(false));
-    }
+    } 
   };
 
   return { addProduct };

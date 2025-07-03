@@ -11,6 +11,8 @@ import useGetProductSlug from "@/hooks/useGetProductSlug";
 import { notFound, useParams } from "next/navigation";
 import useGetSizeColorProduct from "@/hooks/useGetSizeColorProduct";
 import useGetCoupons from "@/hooks/useGetCoupons";
+import { useDispatch } from "react-redux";
+import { addItemToCart } from "@/redux/features/cartSlice";
 function ProductDetail() {
   const params = useParams();
   const slug = params.slug as string;
@@ -49,6 +51,46 @@ function ProductDetail() {
   if (!product && !isLoading) {
     return notFound();
   }
+
+  const dispatch = useDispatch();
+
+  const handleAddToCart = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!selectedSize || !selectedColor || !product) {
+      return;
+    }
+
+    const sizeObj = sizes.find((s) => s.namesize === selectedSize);
+    const colorObj = colors.find((c) => c.namecolor === selectedColor);
+
+    if (!sizeObj || !colorObj) return;
+
+    const productToAdd = {
+      _id: product._id,
+      name: product.name,
+      image: product.image[0],
+      slug: product.slug,
+      price:
+        product.discount !== 0
+          ? (product.price - product.discount).toString()
+          : product.price.toString(),
+      inventory: {
+        size: {
+          _id: sizeObj._id,
+          namesize: sizeObj.namesize,
+        },
+        color: {
+          _id: colorObj._id,
+          namecolor: colorObj.namecolor,
+        },
+        quantity: quantity,
+      },
+    };
+
+    dispatch(addItemToCart(productToAdd));
+    alert("Đã thêm vào giỏ hàng!");
+  };
 
   return (
     <>
@@ -131,7 +173,7 @@ function ProductDetail() {
 
               <MenuSideCoupon toggleMenu={toggleOpen} isOpen={menuOpen} />
 
-              <form action="">
+              <form action="" onSubmit={handleAddToCart}>
                 {coupons.length > 0 && (
                   <div className="mb-[15px]">
                     <p className="text-gray-700 font-medium mb-[5px]">
@@ -274,7 +316,7 @@ function ProductDetail() {
                   <hr className="border-1 my-[15px]" />
 
                   <div
-                    className="text-[#6c757d] text-[0.95rem]"
+                    className="text-black text-[0.95rem]"
                     dangerouslySetInnerHTML={{
                       __html: product?.description || "",
                     }}

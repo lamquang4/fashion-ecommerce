@@ -1,6 +1,4 @@
 "use client";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
 export interface User {
@@ -16,7 +14,6 @@ export interface User {
 }
 
 export default function useBlockUser() {
-  const dispatch = useAppDispatch();
   const blockUser = async (data: User) => {
     const action = data.status === 1 ? "chặn" : "bỏ chặn";
     const result = await Swal.fire({
@@ -32,7 +29,6 @@ export default function useBlockUser() {
       return;
     }
     try {
-      dispatch(setLoading(true));
       const res = await axios.put("/api/block-user", {
         id: data._id,
         status: data.status,
@@ -41,8 +37,6 @@ export default function useBlockUser() {
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 

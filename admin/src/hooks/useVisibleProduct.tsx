@@ -1,6 +1,4 @@
 "use client";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
 export interface Product {
@@ -17,7 +15,6 @@ export interface Product {
 }
 
 export default function useVisibleProduct() {
-  const dispatch = useAppDispatch();
   const visibleProduct = async (data: Product) => {
     const action = data.status === 1 ? "hiện" : "ẩn";
     const result = await Swal.fire({
@@ -33,7 +30,6 @@ export default function useVisibleProduct() {
       return;
     }
     try {
-      dispatch(setLoading(true));
       const res = await axios.put("/api/visible-product", {
         id: data._id,
         status: data.status,
@@ -42,8 +38,6 @@ export default function useVisibleProduct() {
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 

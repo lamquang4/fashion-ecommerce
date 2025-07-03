@@ -5,7 +5,9 @@ function Cart() {
   return (
     <>
       <CartItem />
-      <ProductSlider title={"Có thể bạn sẽ thích"} />
+      {/*
+    <ProductSlider title={"Có thể bạn sẽ thích"} />
+        */}
     </>
   );
 }

@@ -1,11 +1,8 @@
 "use client";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
 
 export default function useDeleteCategory() {
-  const dispatch = useAppDispatch();
   const deleteCategory = async (id: string) => {
     const result = await Swal.fire({
       title: `Xác nhận xóa?`,
@@ -19,13 +16,10 @@ export default function useDeleteCategory() {
     if (!result.isConfirmed || !id) return;
 
     try {
-      dispatch(setLoading(true));
       await axios.delete(`/api/delete-category/${id}`);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 

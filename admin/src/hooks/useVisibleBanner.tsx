@@ -1,6 +1,4 @@
 "use client";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import Swal from "sweetalert2";
 export interface Banner {
@@ -11,7 +9,6 @@ export interface Banner {
 }
 
 export default function useVisibleBanner() {
-  const dispatch = useAppDispatch();
   const visibleBanner = async (data: Banner) => {
     const action = data.status === 1 ? "hiện" : "ẩn";
     const result = await Swal.fire({
@@ -27,7 +24,6 @@ export default function useVisibleBanner() {
       return;
     }
     try {
-      dispatch(setLoading(true));
       const res = await axios.put("/api/visible-banner", {
         id: data._id,
         status: data.status,
@@ -36,9 +32,7 @@ export default function useVisibleBanner() {
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
-    } finally {
-      dispatch(setLoading(false));
-    }
+    } 
   };
 
   return { visibleBanner };

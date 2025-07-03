@@ -9,18 +9,13 @@ export interface Size {
 }
 
 export default function useAddSize() {
-  const dispatch = useAppDispatch();
-
   const addSize = async (data: Size) => {
     try {
-      dispatch(setLoading(true));
       const res = await axios.post("/api/add-size", data);
       return res.data.size;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 

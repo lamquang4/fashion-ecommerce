@@ -24,12 +24,10 @@ function Product() {
         <>
           <ProductDetail />
 
-          {productsCateogry && productsCateogry.length > 0 && (
-            <ProductSlider
-              title={"Có thể bạn sẽ thích"}
-              products={productsCateogry}
-            />
-          )}
+          <ProductSlider
+            title={"Có thể bạn sẽ thích"}
+            products={productsCateogry || []}
+          />
         </>
       )}
     </>

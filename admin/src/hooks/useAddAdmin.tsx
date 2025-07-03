@@ -1,6 +1,4 @@
 "use client";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 
 export interface User {
@@ -16,18 +14,13 @@ export interface User {
 }
 
 export default function useAddAdmin() {
-  const dispatch = useAppDispatch();
-
   const addAdmin = async (data: User) => {
     try {
-      dispatch(setLoading(true));
       const res = await axios.post("/api/add-admin", data);
       return res.data.user;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
-    } finally {
-      dispatch(setLoading(false));
     }
   };
 
