@@ -79,7 +79,7 @@ function Account() {
                 name="role"
                 value={
                   session?.user.role === 0
-                    ? "Siêu quản trị viên"
+                    ? "Quản trị viên"
                     : session?.user.role === 1
                     ? "Nhân viên bán hàng"
                     : session?.user.role === 2

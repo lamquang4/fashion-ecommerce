@@ -140,7 +140,7 @@ function AddAdmin() {
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               >
                 <option value="">Chọn chức vụ</option>
-                <option value="0">Siêu quản trị viên</option>
+                <option value="0">Quản trị viên</option>
                 <option value="1">Nhân viên bán hàng</option>
                 <option value="2">Nhân viên nội dung</option>
               </select>

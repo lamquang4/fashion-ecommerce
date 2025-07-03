@@ -155,7 +155,7 @@ function Admin() {
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {admin.role === 0
-                      ? "Siêu quản trị viên"
+                      ? "Quản trị viên"
                       : admin.role === 1
                       ? "Nhân viên bán hàng"
                       : admin.role === 2
