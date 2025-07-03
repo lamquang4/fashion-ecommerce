@@ -46,11 +46,11 @@ export async function GET(req: NextRequest) {
         },
         { $unwind: "$buy" },
         {
-          $group: {
-            _id: null,
+          $addFields: {
             totalSum: { $sum: "$buy.quantity" },
           },
         },
+        { $sort: { createdAt: -1 } },
       ]),
       Order.countDocuments({ status: 0 }),
       Order.countDocuments({ status: 3 }),

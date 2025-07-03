@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     }
 
     const [admins, total] = await Promise.all([
-      User.find(query).skip(skip).limit(limit),
+      User.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
       User.countDocuments(query),
     ]);
     return NextResponse.json({

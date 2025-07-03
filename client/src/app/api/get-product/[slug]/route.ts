@@ -11,7 +11,7 @@ export async function GET(
     const { slug } = params;
 
     const data = await Product.aggregate([
-      { $match: { slug } },
+      { $match: { slug, status: 1 } },
       {
         $lookup: {
           from: "categories",

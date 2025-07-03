@@ -47,6 +47,7 @@ export async function GET(req: NextRequest) {
           },
         },
         { $limit: 10 },
+        { $sort: { createdAt: -1 } },
       ]),
       Product.aggregate([
         { $match: { status: 1 } },

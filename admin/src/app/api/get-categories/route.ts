@@ -43,7 +43,7 @@ export async function GET(req: NextRequest) {
         { $skip: skip },
         { $limit: limit },
         {
-          $sort: { gender: -1 },
+          $sort: { gender: -1, createdAt: -1 },
         },
       ]),
       Category.countDocuments(query),

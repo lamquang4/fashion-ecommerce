@@ -56,6 +56,7 @@ export async function GET(
         },
       },
       { $limit: 10 },
+      { $sort: { createdAt: -1 } },
     ]);
 
     if (!data) {

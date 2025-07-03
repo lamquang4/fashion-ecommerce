@@ -51,6 +51,7 @@ export async function GET(req: NextRequest) {
           },
         },
         { $unwind: "$color" },
+        { $sort: { "product._id": 1, color: -1 } },
         { $skip: skip },
         { $limit: limit },
       ]),

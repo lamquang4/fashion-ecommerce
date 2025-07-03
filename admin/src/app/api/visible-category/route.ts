@@ -23,18 +23,20 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    const hasProduct = await Product.exists({ category: id });
+    const hasProduct = await Product.exists({ category: id, status: 1 });
 
     if (status === 1 && !hasProduct) {
       return NextResponse.json(
-        { msg: "Danh mục chưa có sản phẩm nên không thể hiện" },
+        {
+          msg: "Danh mục chưa có sản phẩm nào đang là hiện nên không thể hiện",
+        },
         { status: 400 }
       );
     }
 
     if (status === 0 && category.status === 1 && hasProduct) {
       return NextResponse.json(
-        { msg: "Danh mục đã có sản phẩm nên không thể ẩn" },
+        { msg: "Danh mục đã có sản phẩm đang hiện nên không thể ẩn" },
         { status: 400 }
       );
     }
