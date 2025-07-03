@@ -34,20 +34,20 @@ export async function GET(req: NextRequest) {
           from: "products",
           localField: "_id",
           foreignField: "_id",
-          as: "productInfo",
+          as: "products",
         },
       },
       {
-        $unwind: "$productInfo",
+        $lookup: {
+          from: "inventories",
+          localField: "_id",
+          foreignField: "product",
+          as: "inventory",
+        },
       },
       {
-        $project: {
-          productId: "$_id",
-          name: "$productInfo.name",
-          image: "$productInfo.image",
-          totalSold: 1,
-          price: "$productInfo.price",
-          discount: "$productInfo.discount",
+        $addFields: {
+          totalQuantity: { $sum: "$inventory.quantity" },
         },
       },
     ]);
