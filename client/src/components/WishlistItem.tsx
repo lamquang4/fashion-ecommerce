@@ -1,7 +1,32 @@
 "use client";
 import Link from "next/link";
 import Image from "./Image";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/redux/store";
+import { ProductInWishlist } from "@/types/type";
+import { removeItemFromWishlist } from "@/redux/features/wishlistSlice";
+import Loading from "./Loading";
+import React from "react";
 function WishlistItem() {
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const wishlist = useSelector((state: RootState) => state.wishlistSlice);
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      setIsLoading(true);
+    }, 200);
+    return () => clearTimeout(timeout);
+  }, []);
+
+  const handleRemove = (item: ProductInWishlist) => {
+    dispatch(
+      removeItemFromWishlist({
+        _id: item._id,
+      })
+    );
+  };
   return (
     <>
       <section className="max-w-[1230px] mx-auto  mt-[40px] sm:mt-[45px]">
@@ -9,113 +34,78 @@ function WishlistItem() {
           <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
             Yêu thích
           </h2>
+          {!isLoading ? (
+            <Loading height={60} />
+          ) : wishlist.productsInWishlist.length > 0 ? (
+            <div className="grid md:grid-cols-1 gap-8 max-w-xl mx-auto">
+              <div className="md:col-span-2 bg-white px-2.5 sm:px-4 border border-gray-300 rounded-md">
+                {wishlist.productsInWishlist.map((item, index) => (
+                  <React.Fragment key={index}>
+                    <div className="flex gap-4 bg-white py-6">
+                      <div className="flex gap-4.5">
+                        <Link href={`/product/${item.slug}`}>
+                          <div className="w-full max-w-[150px] shrink-0">
+                            <Image
+                              Src={item.image[0]}
+                              Alt={""}
+                              ClassName={"w-full h-full object-cover"}
+                              loadingType="eager"
+                            />
+                          </div>
+                        </Link>
 
-          <div className="grid md:grid-cols-1 gap-8 max-w-xl mx-auto">
-            <div className="md:col-span-2 bg-white px-2.5 sm:px-4 border border-gray-300 rounded-md">
-              <div className="flex gap-4 bg-white py-6">
-                <div className="flex gap-4.5">
-                  <Link href={"/"}>
-                    <div className="w-full max-w-[150px] shrink-0">
-                      <Image
-                        Src={"/assets/products/IMGSP3483.png"}
-                        Alt={""}
-                        ClassName={"w-full h-full object-cover"}
-                        loadingType="eager"
-                      />
+                        <div className="flex flex-col gap-4">
+                          <div>
+                            <p className="text-[0.85rem] sm:text-[0.95rem] font-normal text-slate-900">
+                              {item.name}
+                            </p>
+                            <p className="text-[0.85rem] sm:text-[0.95rem] font-normal mt-2 flex items-center gap-2">
+                              Giá:
+                              <span className="inline-block">
+                                {item.price.toLocaleString("vi-VN")}₫
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                      <div className="ml-auto flex flex-col">
+                        <div className="flex gap-4 justify-end">
+                          <button
+                            onClick={() => handleRemove(item)}
+                            className="p-1 text-black duration-200 hover:scale-115"
+                          >
+                            <svg viewBox="0 0 256 256" width="22" height="22">
+                              <rect fill="none" height="256" width="256" />
+                              <path
+                                d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z"
+                                stroke="currentColor"
+                                strokeWidth="18"
+                                fill="currentColor"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+                      </div>
                     </div>
-                  </Link>
 
-                  <div className="flex flex-col gap-4">
-                    <div>
-                      <Link
-                        href={"/"}
-                        className="text-[0.85rem] sm:text-[0.95rem] font-normal text-slate-900"
-                      >
-                        Áo sơ cổ dài ưewewe
-                      </Link>
-                      <p className="text-[0.85rem] sm:text-[0.95rem] font-normal mt-2 flex items-center gap-2">
-                        Giá:
-                        <span className="inline-block">150,000₫</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="ml-auto flex flex-col">
-                  <div className="flex gap-4 justify-end">
-                    <button>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-4.5 h-4.5 cursor-pointer fill-pink-600 hover:fill-slate-400 inline-block"
-                        viewBox="0 0 64 64"
-                      >
-                        <path
-                          d="M45.5 4A18.53 18.53 0 0 0 32 9.86 18.5 18.5 0 0 0 0 22.5C0 40.92 29.71 59 31 59.71a2 2 0 0 0 2.06 0C34.29 59 64 40.92 64 22.5A18.52 18.52 0 0 0 45.5 4ZM32 55.64C26.83 52.34 4 36.92 4 22.5a14.5 14.5 0 0 1 26.36-8.33 2 2 0 0 0 3.27 0A14.5 14.5 0 0 1 60 22.5c0 14.41-22.83 29.83-28 33.14Z"
-                          data-original="#000000"
-                        ></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <hr className="border-gray-300" />
-
-              <div className="flex gap-4 bg-white py-6">
-                <div className="flex gap-4.5">
-                  <Link href={"/"}>
-                    <div className="w-full max-w-[150px] shrink-0">
-                      <Image
-                        Src={"/assets/products/IMGSP3483.png"}
-                        Alt={""}
-                        ClassName={"w-full h-full object-cover"}
-                        loadingType="eager"
-                      />
-                    </div>
-                  </Link>
-
-                  <div className="flex flex-col gap-4">
-                    <div>
-                      <Link
-                        href={"/"}
-                        className="text-[0.85rem] sm:text-[0.95rem] font-normal text-slate-900"
-                      >
-                        Áo sơ cổ dài ưewewe
-                      </Link>
-                      <p className="text-[0.85rem] sm:text-[0.95rem] font-normal mt-2 flex items-center gap-2">
-                        Giá:
-                        <span className="inline-block">150,000₫</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-                <div className="ml-auto flex flex-col">
-                  <div className="flex gap-4 justify-end">
-                    <button>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        className="w-4.5 h-4.5 cursor-pointer fill-pink-600 hover:fill-slate-400 inline-block"
-                        viewBox="0 0 64 64"
-                      >
-                        <path
-                          d="M45.5 4A18.53 18.53 0 0 0 32 9.86 18.5 18.5 0 0 0 0 22.5C0 40.92 29.71 59 31 59.71a2 2 0 0 0 2.06 0C34.29 59 64 40.92 64 22.5A18.52 18.52 0 0 0 45.5 4ZM32 55.64C26.83 52.34 4 36.92 4 22.5a14.5 14.5 0 0 1 26.36-8.33 2 2 0 0 0 3.27 0A14.5 14.5 0 0 1 60 22.5c0 14.41-22.83 29.83-28 33.14Z"
-                          data-original="#000000"
-                        ></path>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
+                    {wishlist.productsInWishlist.length % 2 === 0 && (
+                      <hr className="border-gray-300" />
+                    )}
+                  </React.Fragment>
+                ))}
               </div>
             </div>
-          </div>
-
-          {/*
-  <div className="flex justify-center items-center h-[60vh]">
+          ) : (
+            <div className="flex justify-center items-center h-[60vh]">
               <div>
                 <div className="mb-[20px] flex justify-center">
                   <Image
                     Src={"/assets/other/empty-wishlist.png"}
                     Alt={""}
                     ClassName={"w-[220px]"}
+                    loadingType="eager"
                   />
                 </div>
 
@@ -123,13 +113,17 @@ function WishlistItem() {
                   <h2 className="text-[1.3rem] font-semibold">
                     Không có gì trong yêu thích hết
                   </h2>
-                  <button className="text-[1rem] border border-black rounded-md font-medium p-[10px_15px] hover:bg-black hover:text-white">
-                    <Link href={"/shop"}>Mua sắm ngay</Link>
-                  </button>
+
+                  <Link
+                    href={"/"}
+                    className="text-[0.95rem] border border-black rounded-md font-medium px-2 py-2.5 hover:bg-black hover:text-white"
+                  >
+                    Mua sắm ngay
+                  </Link>
                 </div>
               </div>
             </div>
-*/}
+          )}
         </div>
       </section>
     </>

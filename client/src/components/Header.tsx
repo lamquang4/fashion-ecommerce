@@ -11,12 +11,26 @@ import Overplay from "./Overplay";
 import ProfileMenu from "./ProfileMenu";
 import Image from "./Image";
 import useGetCategories from "@/hooks/useGetCategories";
+import { RootState } from "@/redux/store";
+import { useSelector } from "react-redux";
 function Header() {
   const { categoriesMale, categoriesFemale } = useGetCategories();
-
   const [openSearch, setOpenSearch] = useState(false);
   const [menuMobileOpen, setMenuMobileOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+
+  const productsInCart = useSelector(
+    (state: RootState) => state.cartSlice.productsInCart
+  );
+
+  const totalQuantity = productsInCart.reduce((sum, item) => {
+    return sum + (item?.inventories?.quantity || 0);
+  }, 0);
+
+  const wishlist = useSelector(
+    (state: RootState) => state.wishlistSlice.productsInWishlist
+  );
+
   const toggleSearch = () => {
     setOpenSearch(!openSearch);
     if (menuMobileOpen) setMenuMobileOpen(false);
@@ -205,7 +219,7 @@ function Header() {
     bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
     rounded-full w-[20px] h-[20px]"
                 >
-                  0
+                  {totalQuantity}
                 </span>
               </Link>
 
@@ -218,7 +232,7 @@ function Header() {
     bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
     rounded-full w-[20px] h-[20px]"
                 >
-                  0
+                  {wishlist.length}
                 </span>
               </Link>
             </div>
@@ -280,7 +294,7 @@ function Header() {
     bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
     rounded-full w-[20px] h-[20px]"
                 >
-                  0
+                  {totalQuantity}
                 </span>
               </Link>
 
@@ -293,7 +307,7 @@ function Header() {
     bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
     rounded-full w-[20px] h-[20px]"
                 >
-                  0
+                  {wishlist.length}
                 </span>
               </Link>
               <button onClick={toggleMobileMenu} title="Mở menu">

@@ -1,6 +1,5 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { CiHeart } from "react-icons/ci";
 import Image from "./Image";
 import { LiaRulerHorizontalSolid } from "react-icons/lia";
 import { HiOutlineMinusSmall } from "react-icons/hi2";
@@ -10,10 +9,15 @@ import ImageViewer from "./ImageViewer";
 import useGetProductSlug from "@/hooks/useGetProductSlug";
 import { notFound, useParams } from "next/navigation";
 import useGetCoupons from "@/hooks/useGetCoupons";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "@/redux/features/cartSlice";
 import toast from "react-hot-toast";
-import { Color, Size } from "@/types/type";
+import { Color, ProductInWishlist, Size } from "@/types/type";
+import {
+  addItemToWishlist,
+  removeItemFromWishlist,
+} from "@/redux/features/wishlistSlice";
+import { RootState } from "@/redux/store";
 function ProductDetail() {
   const params = useParams();
   const slug = params.slug as string;
@@ -29,6 +33,12 @@ function ProductDetail() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
+  const dispatch = useDispatch();
+
+  const wishlist = useSelector(
+    (state: RootState) => state.wishlistSlice.productsInWishlist
+  );
+  const isInWishlist = wishlist.some((item) => item._id === product?._id);
 
   useEffect(() => {
     if (!selectedColor || !selectedSize || !product?.inventories) {
@@ -81,7 +91,7 @@ function ProductDetail() {
   };
 
   const HandleIncrement = () => {
-    setQuantity((prev) => (prev < 30 ? prev + 1 : prev));
+    setQuantity((prev) => (prev < 90 ? prev + 1 : prev));
   };
 
   const HandleDecrement = () => {
@@ -91,8 +101,6 @@ function ProductDetail() {
   if (!product && !isLoading) {
     return notFound();
   }
-
-  const dispatch = useDispatch();
 
   const handleAddToCart = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -124,13 +132,13 @@ function ProductDetail() {
     const productToAdd = {
       _id: product._id,
       name: product.name,
-      image: product.image[0],
+      image: product.image,
       slug: product.slug,
       price:
         product.discount !== 0
-          ? (product.price - product.discount).toString()
-          : product.price.toString(),
-      inventory: {
+          ? product.price - product.discount
+          : product.price,
+      inventories: {
         size: {
           _id: sizeObj._id,
           namesize: sizeObj.namesize,
@@ -138,6 +146,7 @@ function ProductDetail() {
         color: {
           _id: colorObj._id,
           namecolor: colorObj.namecolor,
+          codecolor: colorObj.codecolor,
         },
         quantity: quantity,
       },
@@ -145,6 +154,26 @@ function ProductDetail() {
 
     dispatch(addItemToCart(productToAdd));
     toast.success("Đã thêm vào giỏ hàng!");
+  };
+
+  const handleAddToWishlist = (product: ProductInWishlist) => {
+    const productToAdd = {
+      _id: product._id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      slug: product.slug,
+    };
+
+    dispatch(addItemToWishlist(productToAdd));
+  };
+
+  const handleRemove = (product: ProductInWishlist) => {
+    dispatch(
+      removeItemFromWishlist({
+        _id: product._id,
+      })
+    );
   };
 
   return (
@@ -275,7 +304,7 @@ function ProductDetail() {
                           style={{ backgroundColor: `${color?.codecolor}` }}
                           className={`w-8 h-8 focus:outline-none  ${
                             selectedColor === `${color.namecolor}`
-                              ? "border border-red-500"
+                              ? "border border-red-600"
                               : "border-gray-300 border"
                           }`}
                         ></button>
@@ -336,13 +365,13 @@ function ProductDetail() {
                     className="h-11 text-center text-black w-11 outline-none placeholder:text-black text-[1rem] font-normal"
                     placeholder="1"
                     min={1}
-                    max={30}
+                    max={99}
                     value={quantity}
                   />
                   <button
                     type="button"
                     onClick={HandleIncrement}
-                    disabled={quantity >= 30}
+                    disabled={quantity >= 99}
                     className=" p-3 h-11 outline-none"
                   >
                     <HiOutlinePlusSmall size={22} />
@@ -365,9 +394,31 @@ function ProductDetail() {
 
                   <button
                     type="button"
-                    className="px-[10px] py-[10px] w-full uppercase flex hover:border-black hover:bg-[#F7F7F7] gap-[5px] justify-center items-center text-[0.9rem] bg-transparent border border-[#CACACB]  font-medium"
+                    onClick={() => {
+                      if (product) {
+                        isInWishlist
+                          ? handleRemove(product)
+                          : handleAddToWishlist(product);
+                      }
+                    }}
+                    className={`px-[10px] py-[10px] w-full uppercase flex hover:border-black hover:bg-[#F7F7F7] gap-[5px] justify-center items-center text-[0.9rem] border font-medium  ${
+                      isInWishlist
+                        ? "bg-[#F7F7F7] border-black"
+                        : "bg-transparent border-[#CACACB]"
+                    }`}
                   >
-                    Yêu thích <CiHeart size={18} />
+                    Yêu thích{" "}
+                    <svg viewBox="0 0 256 256" width="18" height="18">
+                      <rect fill="none" height="256" width="256" />
+                      <path
+                        d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z"
+                        stroke="currentColor"
+                        strokeWidth="18"
+                        fill={isInWishlist ? "currentColor" : "none"}
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
                   </button>
                 </div>
               </form>

@@ -5,7 +5,9 @@ function Wishlist() {
   return (
     <>
       <WishlistItem />
-      <ProductSlider title={"Có thể bạn sẽ thích"} />
+      {/*
+            <ProductSlider title={"Có thể bạn sẽ thích"} />
+      */}
     </>
   );
 }

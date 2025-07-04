@@ -3,10 +3,10 @@ import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
-import { Product } from "@/types/type";
+import { ProductWithColors } from "@/types/type";
 
 interface ResponseType {
-  products: Product[];
+  products: ProductWithColors[];
   totalPages: number;
   total: number;
 }
@@ -22,7 +22,7 @@ export default function useGetProductsSlug(slug: string) {
   const query = new URLSearchParams({
     page: page.toString(),
     limit: limit.toString(),
-    keyword, 
+    keyword,
   });
   const url = `/api/get-products/${slug}?${query.toString()}`;
 

@@ -43,7 +43,6 @@ export interface Product {
   status: number;
   category: Category;
   inventories: Inventory[];
-  createdAt: string;
 }
 
 export interface Inventory {
@@ -117,4 +116,38 @@ export interface Banner {
   type: number;
   status: number;
   createdAt: string;
+}
+
+export interface ProductInCart {
+  _id: string;
+  name: string;
+  price: number;
+  image: string[];
+  slug: string;
+  inventories: {
+    size: Size;
+    color: Color;
+    quantity: number;
+  };
+}
+
+export interface Cart {
+  productsInCart: ProductInCart[];
+  total: number;
+}
+
+export interface ProductWithColors extends Product {
+  colors: Color[];
+}
+
+export interface ProductInWishlist {
+  _id: string;
+  name: string;
+  price: number;
+  image: string[];
+  slug: string;
+}
+
+export interface Wishlist {
+  productsInWishlist: ProductInWishlist[];
 }
