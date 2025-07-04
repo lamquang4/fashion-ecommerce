@@ -1,16 +1,7 @@
 "use client";
+import { Product } from "@/types/types";
 import axios from "axios";
 import useSWR from "swr";
-
-export interface Product {
-  _id: string;
-  name: string;
-  image: string[];
-  totalSold: number;
-  totalQuantity: number;
-  price: number;
-  discount: number;
-}
 
 interface ResponseType {
   top10Products: Product[];

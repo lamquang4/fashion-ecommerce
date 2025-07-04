@@ -1,12 +1,7 @@
 "use client";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
+import { Size } from "@/types/types";
 import axios from "axios";
 
-export interface Size {
-  _id?: string;
-  namesize: string;
-}
 
 export default function useAddSize() {
   const addSize = async (data: Size) => {

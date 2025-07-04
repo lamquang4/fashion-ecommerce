@@ -9,22 +9,61 @@ import MenuSideCoupon from "./MenuSideCoupon";
 import ImageViewer from "./ImageViewer";
 import useGetProductSlug from "@/hooks/useGetProductSlug";
 import { notFound, useParams } from "next/navigation";
-import useGetSizeColorProduct from "@/hooks/useGetSizeColorProduct";
 import useGetCoupons from "@/hooks/useGetCoupons";
 import { useDispatch } from "react-redux";
 import { addItemToCart } from "@/redux/features/cartSlice";
+import toast from "react-hot-toast";
+import { Color, Size } from "@/types/type";
 function ProductDetail() {
   const params = useParams();
   const slug = params.slug as string;
   const { product, isLoading } = useGetProductSlug(slug);
-  const { sizes, colors } = useGetSizeColorProduct(slug);
   const { coupons } = useGetCoupons();
+  const [colors, setColors] = useState<Color[]>([]);
+  const [sizes, setSizes] = useState<Size[]>([]);
+  const [quantity, setQuantity] = useState(1);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [mainImage, setMainImage] = useState<string>("");
+  const [isInStock, setIsInStock] = useState<boolean>(true);
   const [menuOpen, setMenuOpen] = useState(false);
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
+
+  useEffect(() => {
+    if (!selectedColor || !selectedSize || !product?.inventories) {
+      setIsInStock(true);
+      return;
+    }
+
+    const matchingInventory = product.inventories.find(
+      (inv) =>
+        inv.color.namecolor === selectedColor &&
+        inv.size.namesize === selectedSize &&
+        inv.quantity > 0
+    );
+
+    setIsInStock(!!matchingInventory);
+  }, [selectedColor, selectedSize, product]);
+
+  useEffect(() => {
+    if (product?.inventories?.length) {
+      const uniqueColors = Array.from(
+        new Map(
+          product.inventories.map((inv) => [inv.color._id, inv.color])
+        ).values()
+      );
+
+      const uniqueSizes = Array.from(
+        new Map(
+          product.inventories.map((inv) => [inv.size._id, inv.size])
+        ).values()
+      );
+
+      setColors(uniqueColors);
+      setSizes(uniqueSizes);
+    }
+  }, [product]);
 
   useEffect(() => {
     if (product?.image?.length) {
@@ -36,10 +75,11 @@ function ProductDetail() {
     setViewerImage(image);
     setOpenViewer(true);
   };
+
   const toggleOpen = () => {
     setMenuOpen(!menuOpen);
   };
-  const [quantity, setQuantity] = useState(1);
+
   const HandleIncrement = () => {
     setQuantity((prev) => (prev < 30 ? prev + 1 : prev));
   };
@@ -57,7 +97,22 @@ function ProductDetail() {
   const handleAddToCart = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!selectedSize || !selectedColor || !product) {
+    if (!selectedSize) {
+      toast.error("Bạn hãy chọn kích thước!");
+      return;
+    }
+
+    if (!selectedColor) {
+      toast.error("Bạn hãy chọn màu!");
+      return;
+    }
+
+    if (!isInStock) {
+      toast.error("Sản phẩm có kích thước và màu này đã hết hàng");
+      return;
+    }
+
+    if (!product) {
       return;
     }
 
@@ -89,7 +144,7 @@ function ProductDetail() {
     };
 
     dispatch(addItemToCart(productToAdd));
-    alert("Đã thêm vào giỏ hàng!");
+    toast.success("Đã thêm vào giỏ hàng!");
   };
 
   return (
@@ -100,21 +155,23 @@ function ProductDetail() {
             <div className="flex flex-col md:flex-col-reverse xl:flex-row flex-wrap gap-[20px] lg:sticky lg:top-[100px]">
               <div className=" md:order-2 relative grow overflow-hidden bg-white">
                 <div className="w-full xl:w-[450px] flex flex-col gap-[20px]">
-                  <div
-                    className="cursor-pointer"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      e.preventDefault();
-                      handleOpenViewer(mainImage);
-                    }}
-                  >
-                    <Image
-                      Src={mainImage}
-                      Alt=""
-                      ClassName="w-full h-full object-cover"
-                      loadingType="eager"
-                    />
-                  </div>
+                  {mainImage && (
+                    <div
+                      className="cursor-pointer"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                        handleOpenViewer(mainImage);
+                      }}
+                    >
+                      <Image
+                        Src={mainImage}
+                        Alt=""
+                        ClassName="w-full h-full object-cover"
+                        loadingType="eager"
+                      />
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -295,9 +352,15 @@ function ProductDetail() {
                 <div className="w-full flex gap-[20px] flex-wrap md:flex-nowrap mb-[30px] items-center">
                   <button
                     type="submit"
-                    className="px-[10px] py-[10px] w-full uppercase text-[0.9rem] bg-black text-white  font-medium hover:bg-[#050708]/80"
+                    disabled={!isInStock}
+                    className={`px-[10px] py-[10px] w-full uppercase text-[0.9rem] font-medium border
+    ${
+      isInStock
+        ? "bg-black text-white hover:bg-[#050708]/80"
+        : "border-[#197FB6]  text-[#197FB6] cursor-not-allowed"
+    }`}
                   >
-                    Thêm vào giỏ
+                    {isInStock ? "Thêm vào giỏ" : "Hết hàng"}
                   </button>
 
                   <button

@@ -1,11 +1,6 @@
 "use client";
+import { Color } from "@/types/types";
 import axios from "axios";
-
-export interface Color {
-  _id?: string;
-  namecolor: string;
-  codecolor: string;
-}
 
 export default function useAddColor() {
   const addColor = async (data: Color) => {

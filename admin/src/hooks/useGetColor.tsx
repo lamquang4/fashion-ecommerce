@@ -1,13 +1,7 @@
 "use client";
+import { Color } from "@/types/types";
 import axios from "axios";
 import useSWR from "swr";
-
-export interface Color {
-  _id: string;
-  namecolor: string;
-  codecolor: string;
-  createdAt: string;
-}
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 

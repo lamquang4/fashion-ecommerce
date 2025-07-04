@@ -1,14 +1,7 @@
 "use client";
+import { Banner } from "@/types/type";
 import axios from "axios";
 import useSWR from "swr";
-
-export interface Banner {
-  _id: string;
-  image: string;
-  type: number;
-  status: number;
-  createdAt: string;
-}
 
 type ResponseType = {
   banners1: Banner[];

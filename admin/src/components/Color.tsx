@@ -24,6 +24,9 @@ function Color() {
   const { deleteColor } = useDeleteColor();
 
   const handleDelete = async (id: string) => {
+    if (!id) {
+      return;
+    }
     try {
       await deleteColor(id);
       mutate();
@@ -105,7 +108,7 @@ function Color() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => handleDelete(color._id)}>
+                      <button onClick={() => handleDelete(color._id || "")}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

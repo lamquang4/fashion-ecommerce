@@ -7,8 +7,9 @@ import toast from "react-hot-toast";
 import useAddBanner from "@/hooks/useAddBanner";
 import useUpdateBanner from "@/hooks/useUpdateBanner";
 import { useImageViewer1 } from "@/hooks/useImageViewer1";
+import Loading from "./Loading";
 function Collection() {
-  const { collections, mutate } = useGetCollections();
+  const { collections, mutate, isLoading } = useGetCollections();
   const { addBanner } = useAddBanner();
   const { updateBanner } = useUpdateBanner();
   const {
@@ -57,43 +58,47 @@ function Collection() {
 
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-[20px]">
-              {[0, 1].map((index) => {
-                const item = collections[index];
-                return (
-                  <div className="relative" key={index}>
-                    <Image
-                      Src={
-                        previewImages1[index] ||
-                        item?.image ||
-                        "/assets/other/default-banner.png"
-                      }
-                      Alt=""
-                      ClassName="w-full object-cover"
-                      loadingType="eager"
-                    />
-
-                    <div className="flex gap-[15px] absolute top-[20px] right-[20px]">
-                      <InputImage1
-                        onFileSelect={(file) => onFileSelect(file, index)}
-                        InputId={`x${index}`}
+            {isLoading ? (
+              <Loading height={70} />
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-[20px]">
+                {[0, 1].map((index) => {
+                  const item = collections[index];
+                  return (
+                    <div className="relative" key={index}>
+                      <Image
+                        Src={
+                          previewImages1[index] ||
+                          item?.image ||
+                          "/assets/other/default-banner.png"
+                        }
+                        Alt=""
+                        ClassName="w-full object-cover"
+                        loadingType="eager"
                       />
-                      {previewImages1[index] && (
-                        <div className="rounded-full border flex justify-center items-center bg-white">
-                          <button
-                            type="button"
-                            className="p-2"
-                            onClick={() => handleClear(index)}
-                          >
-                            <HiMiniXMark size={26} />
-                          </button>
-                        </div>
-                      )}
+
+                      <div className="flex gap-[15px] absolute top-[20px] right-[20px]">
+                        <InputImage1
+                          onFileSelect={(file) => onFileSelect(file, index)}
+                          InputId={`x${index}`}
+                        />
+                        {previewImages1[index] && (
+                          <div className="rounded-full border flex justify-center items-center bg-white">
+                            <button
+                              type="button"
+                              className="p-2"
+                              onClick={() => handleClear(index)}
+                            >
+                              <HiMiniXMark size={26} />
+                            </button>
+                          </div>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                );
-              })}
-            </div>
+                  );
+                })}
+              </div>
+            )}
           </div>
         </div>
 

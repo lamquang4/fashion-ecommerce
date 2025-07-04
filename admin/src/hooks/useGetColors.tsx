@@ -1,17 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
+import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
-
-export interface Color {
-  _id: string;
-  namecolor: string;
-  codecolor: string;
-  createdAt: string;
-}
+import { Color } from "@/types/types";
 
 interface ResponseType {
   colors: Color[];

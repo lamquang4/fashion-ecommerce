@@ -1,22 +1,10 @@
 "use client";
 import axios from "axios";
 import Swal from "sweetalert2";
-export interface Product {
-  _id: string;
-  name?: string;
-  price?: number;
-  discount?: number;
-  description?: string;
-  image?: string[];
-  slug?: string;
-  status: number;
-  Product?: string;
-  createdAt?: string;
-}
 
 export default function useVisibleProduct() {
-  const visibleProduct = async (data: Product) => {
-    const action = data.status === 1 ? "hiện" : "ẩn";
+  const visibleProduct = async (id: string, status: number) => {
+    const action = status === 1 ? "hiện" : "ẩn";
     const result = await Swal.fire({
       title: `Xác nhận ${action}?`,
       text: `Bạn có chắc muốn ${action} sản phẩm này không?`,
@@ -31,8 +19,8 @@ export default function useVisibleProduct() {
     }
     try {
       const res = await axios.put("/api/visible-product", {
-        id: data._id,
-        status: data.status,
+        id: id,
+        status: status,
       });
       return res.data.product;
     } catch (err) {

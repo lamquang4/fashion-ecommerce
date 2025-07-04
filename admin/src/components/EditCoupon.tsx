@@ -1,10 +1,10 @@
 "use client";
 import useGetCoupon from "@/hooks/useGetCoupon";
 import useUpdateCoupon from "@/hooks/useUpdateCoupon";
+import { formatDate } from "@/utils/formatDate";
 import { validateNonNegativeNumber } from "@/utils/validateNonNegativeNumber";
 import { validatePercentNumber } from "@/utils/validatePercentNumber";
 import { validatePositiveNumber } from "@/utils/validatePositiveNumber";
-
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
@@ -38,15 +38,6 @@ function EditCoupon() {
 
   useEffect(() => {
     if (coupon) {
-      const formatDate = (dateStr: string) => {
-        const date = new Date(dateStr);
-        const yyyy = date.getFullYear();
-        const mm = String(date.getMonth() + 1).padStart(2, "0");
-        const dd = String(date.getDate()).padStart(2, "0");
-        const hh = String(date.getHours()).padStart(2, "0");
-        const min = String(date.getMinutes()).padStart(2, "0");
-        return `${yyyy}-${mm}-${dd}T${hh}:${min}`;
-      };
       setData({
         code: coupon.code,
         limit: coupon.limit,
@@ -68,12 +59,12 @@ function EditCoupon() {
     const expiry = new Date(data.expiryDate);
     const now = new Date();
 
-    if (start < now) {
+    if (start < now && coupon?.status != 1) {
       toast.error("Ngày bắt đầu không được sau ngày hiện tại");
       return;
     }
 
-    if (start >= expiry) {
+    if (start >= expiry && coupon?.status != 1) {
       toast.error("Ngày kết thúc phải sau ngày bắt đầu");
       return;
     }
@@ -206,6 +197,7 @@ function EditCoupon() {
               <select
                 name="discountType"
                 value={data.discountType}
+                disabled={coupon?.status === 1}
                 onChange={handleChange}
                 required
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -227,6 +219,7 @@ function EditCoupon() {
                   type="number"
                   name="discountValue"
                   value={data.discountValue}
+                  disabled={coupon?.status === 1}
                   onChange={handleChange}
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full"
@@ -243,6 +236,7 @@ function EditCoupon() {
                 type="number"
                 name="minOrderValue"
                 value={data.minOrderValue}
+                disabled={coupon?.status === 1}
                 onChange={handleChange}
                 required
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -258,6 +252,7 @@ function EditCoupon() {
                   type="number"
                   name="maxDiscountValue"
                   value={data.maxDiscountValue}
+                  disabled={coupon?.status === 1}
                   onChange={handleChange}
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -274,6 +269,7 @@ function EditCoupon() {
                   type="datetime-local"
                   name="startDate"
                   value={data.startDate}
+                  disabled={coupon?.status === 1}
                   onChange={handleChange}
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
@@ -287,6 +283,7 @@ function EditCoupon() {
                   type="datetime-local"
                   name="expiryDate"
                   value={data.expiryDate}
+                  disabled={coupon?.status === 1}
                   onChange={handleChange}
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"

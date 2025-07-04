@@ -1,15 +1,7 @@
 "use client";
+import { Category } from "@/types/types";
 import axios from "axios";
 import useSWR from "swr";
-
-export interface Category {
-  _id: string;
-  namecategory: string;
-  gender: number;
-  image: string;
-  slug: string;
-  status: number;
-}
 
 interface ResponseType {
   categories: Category[];

@@ -225,7 +225,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                         {item.children.map((child, childIndex) => (
                           <li
                             key={childIndex}
-                            className={`rounded-lg p-3 w-full cursor-pointer my-[5px] ${
+                            className={`rounded-lg w-full cursor-pointer my-[5px] ${
                               pathname === child.path
                                 ? "text-[#0AB39C] bg-[#daf4f0]"
                                 : "hover:bg-gray-200"
@@ -233,7 +233,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
                           >
                             <Link
                               href={child.path}
-                              className="text-[0.9rem] font-medium"
+                              className="text-[0.9rem] font-medium p-3"
                             >
                               {child.label}
                             </Link>

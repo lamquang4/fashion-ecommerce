@@ -3,18 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
-
-export interface User {
-  _id: string;
-  fullname: string;
-  email: string;
-  phone: string;
-  birthday: string;
-  password: string;
-  role: number;
-  status: number;
-  createdAt: string;
-}
+import { User } from "@/types/types";
 
 interface ResponseType {
   customers: User[];

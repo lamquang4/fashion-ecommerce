@@ -1,29 +1,9 @@
 "use client";
-import { useEffect, useState } from "react";
-import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
+import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
-
-export interface Order {
-  _id: string;
-  orderCode: string;
-  user: string;
-  address: {
-    fullname: string;
-    phone: string;
-    speaddress: string;
-    city: string;
-    district: string;
-    ward: string;
-  };
-  paymethod: number;
-  coupon?: string;
-  status: number;
-  total: number;
-  createdAt: string;
-}
+import { Order } from "@/types/types";
 
 interface ResponseType {
   orders: Order[];

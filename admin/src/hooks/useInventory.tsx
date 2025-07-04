@@ -73,7 +73,6 @@ export const useInventory = () => {
     setCurrentInventories(updated);
   };
 
-
   return {
     newInventories,
     setNewInventories,

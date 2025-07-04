@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "@/redux/hook";
-import { setLoading } from "@/redux/features/loadingSlice";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 
@@ -36,10 +35,8 @@ export default function useGetOrders() {
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
-  const dispatch = useAppDispatch();
 
   const fetchOrders = async () => {
-    dispatch(setLoading(true));
     try {
       const res = await axios.get(
         `/api/get-orders?page=${page}&limit=${limit}`,
@@ -57,9 +54,7 @@ export default function useGetOrders() {
       setTotalSold(res.data.totalSold);
     } catch (err) {
       console.error("Lỗi:", err);
-    } finally {
-      dispatch(setLoading(false));
-    }
+    } 
   };
 
   useEffect(() => {

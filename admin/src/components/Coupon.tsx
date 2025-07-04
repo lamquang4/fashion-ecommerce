@@ -6,7 +6,6 @@ import { IoMdAddCircle } from "react-icons/io";
 import Pagination from "./Pagination";
 import FilterDropDownMenu from "./FilterDropDownMenu";
 import useGetCoupons from "@/hooks/useGetCoupons";
-import { useAppSelector } from "@/redux/hook";
 import useDeleteCoupon from "@/hooks/useDeleteCoupon";
 import Loading from "./Loading";
 import Image from "./Image";
@@ -50,6 +49,9 @@ function Coupon() {
   ];
 
   const handleDelete = async (id: string) => {
+    if (!id) {
+      return;
+    }
     try {
       await deleteCoupon(id);
       mutate();
@@ -149,27 +151,19 @@ function Coupon() {
                   </td>
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {new Date(coupon.startDate as string).toLocaleDateString(
-                      "vi-VN"
-                    )}{" "}
-                    {new Date(coupon.startDate as string).toLocaleTimeString(
-                      "vi-VN",
-                      {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      }
-                    )}
+                    {new Date(coupon.startDate).toLocaleDateString("vi-VN")}{" "}
+                    {new Date(coupon.startDate).toLocaleTimeString("vi-VN", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                     {" - "}
-                    {new Date(coupon.expiryDate as string).toLocaleDateString(
+                    {new Date(coupon.expiryDate).toLocaleDateString(
                       "vi-VN"
                     )}{" "}
-                    {new Date(coupon.expiryDate as string).toLocaleTimeString(
-                      "vi-VN",
-                      {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      }
-                    )}
+                    {new Date(coupon.expiryDate).toLocaleTimeString("vi-VN", {
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {coupon.status === 0
@@ -186,7 +180,7 @@ function Coupon() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => handleDelete(coupon._id)}>
+                      <button onClick={() => handleDelete(coupon._id || "")}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

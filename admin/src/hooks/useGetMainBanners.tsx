@@ -3,14 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
-
-export interface Banner {
-  _id: string;
-  image: string;
-  type: number;
-  status: number;
-  createdAt: string;
-}
+import { Banner } from "@/types/types";
 
 interface ResponseType {
   mainbanners: Banner[];

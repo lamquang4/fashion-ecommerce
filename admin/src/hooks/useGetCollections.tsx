@@ -1,13 +1,7 @@
 "use client";
+import { Banner } from "@/types/types";
 import axios from "axios";
 import useSWR from "swr";
-
-export interface Banner {
-  _id: string;
-  image: string;
-  type: number;
-  status: number;
-}
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 

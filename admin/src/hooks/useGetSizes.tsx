@@ -3,12 +3,7 @@ import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import useSWR from "swr";
-
-export interface Size {
-  _id: string;
-  namesize: string;
-  createdAt: string;
-}
+import { Size } from "@/types/types";
 
 interface ResponseType {
   sizes: Size[];

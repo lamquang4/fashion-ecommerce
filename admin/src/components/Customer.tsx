@@ -46,6 +46,9 @@ function Customer() {
   ];
 
   const handleDelete = async (id: string) => {
+    if (!id) {
+      return;
+    }
     try {
       await deleteUser(id);
       mutate();
@@ -54,9 +57,12 @@ function Customer() {
     }
   };
 
-  const handleBlock = async (_id: string, status: number) => {
+  const handleBlock = async (id: string, status: number) => {
+    if (!id && !status) {
+      return;
+    }
     try {
-      await blockUser({ _id, status });
+      await blockUser(id, status);
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
@@ -147,7 +153,7 @@ function Customer() {
                       <button
                         onClick={() =>
                           handleBlock(
-                            customer._id,
+                            customer._id || "",
                             customer.status === 1 ? 0 : 1
                           )
                         }
@@ -163,7 +169,7 @@ function Customer() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => handleDelete(customer._id)}>
+                      <button onClick={() => handleDelete(customer._id || "")}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

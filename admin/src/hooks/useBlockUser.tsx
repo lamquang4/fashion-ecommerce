@@ -1,21 +1,10 @@
 "use client";
 import axios from "axios";
 import Swal from "sweetalert2";
-export interface User {
-  _id: string;
-  fullname?: string;
-  email?: string;
-  phone?: string;
-  birthday?: string;
-  password?: string;
-  role?: number;
-  status: number;
-  createdAt?: string;
-}
 
 export default function useBlockUser() {
-  const blockUser = async (data: User) => {
-    const action = data.status === 1 ? "chặn" : "bỏ chặn";
+  const blockUser = async (id: string, status: number) => {
+    const action = status === 1 ? "chặn" : "bỏ chặn";
     const result = await Swal.fire({
       title: `Xác nhận ${action}?`,
       text: `Bạn có chắc muốn ${action} người dùng này không?`,
@@ -30,8 +19,8 @@ export default function useBlockUser() {
     }
     try {
       const res = await axios.put("/api/block-user", {
-        id: data._id,
-        status: data.status,
+        id: id,
+        status: status,
       });
       return res.data.user;
     } catch (err) {

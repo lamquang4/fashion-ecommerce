@@ -50,6 +50,9 @@ function Product() {
   ];
 
   const handleDelete = async (id: string) => {
+    if (!id) {
+      return;
+    }
     try {
       await deleteProduct(id);
       mutate();
@@ -58,9 +61,12 @@ function Product() {
     }
   };
 
-  const handleVisible = async (_id: string, status: number) => {
+  const handleVisible = async (id: string, status: number) => {
+    if (!id && !status) {
+      return;
+    }
     try {
-      await visibleProduct({ _id, status });
+      await visibleProduct(id, status);
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);

@@ -40,6 +40,13 @@ export async function PUT(
       );
     }
 
+    if (coupon.status === 3) {
+      return NextResponse.json(
+        { msg: "Phiếu giảm giá đã hết hạn nên không được cập nhật!" },
+        { status: 404 }
+      );
+    }
+
     const checkCode = await Coupon.findOne({ code, _id: { $ne: id } });
     if (checkCode) {
       return NextResponse.json(
@@ -52,14 +59,14 @@ export async function PUT(
     const expiry = new Date(expiryDate);
     const now = new Date();
 
-    if (start < now) {
+    if (start < now && coupon.status != 1) {
       return NextResponse.json(
         { msg: "Ngày bắt đầu không được sau ngày hiện tại" },
         { status: 400 }
       );
     }
 
-    if (start >= expiry) {
+    if (start >= expiry && coupon.status != 1) {
       return NextResponse.json(
         { msg: "Ngày kết thúc phải sau ngày bắt đầu" },
         { status: 400 }

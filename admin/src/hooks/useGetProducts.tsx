@@ -3,24 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
-
-export interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  discount: number;
-  description: string;
-  image: string[];
-  slug: string;
-  status: number;
-  category: {
-    _id: string;
-    namecategory: string;
-    gender: number;
-  };
-  createdAt: string;
-  totalQuantity: number;
-}
+import { Product } from "@/types/types";
 
 interface ResponseType {
   products: Product[];

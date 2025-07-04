@@ -2,8 +2,8 @@
 import axios from "axios";
 
 export default function useUpdateProduct(id: string) {
-
   const updateProduct = async (formData: FormData) => {
+    if (!id) return;
     try {
       const res = await axios.put(`/api/update-product/${id}`, formData, {
         headers: {
@@ -14,7 +14,7 @@ export default function useUpdateProduct(id: string) {
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
-    } 
+    }
   };
 
   return { updateProduct };

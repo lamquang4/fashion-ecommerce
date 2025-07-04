@@ -24,6 +24,9 @@ function Size() {
   const { deleteSize } = useDeleteSize();
 
   const handleDelete = async (id: string) => {
+    if (!id) {
+      return;
+    }
     try {
       await deleteSize(id);
       mutate();
@@ -94,7 +97,7 @@ function Size() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => handleDelete(size._id)}>
+                      <button onClick={() => handleDelete(size._id || "")}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

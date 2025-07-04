@@ -1,17 +1,7 @@
 "use client";
-import Category from "@/model/Category";
+import { Category } from "@/types/types";
 import axios from "axios";
 import useSWR from "swr";
-
-export interface Category {
-  _id?: string;
-  namecategory: string;
-  gender: number;
-  image: string;
-  slug: string;
-  status: number;
-  createdAt: string;
-}
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 

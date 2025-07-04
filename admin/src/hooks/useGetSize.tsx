@@ -1,12 +1,7 @@
 "use client";
+import { Size } from "@/types/types";
 import axios from "axios";
 import useSWR from "swr";
-
-export interface Size {
-  _id: string;
-  namesize: string;
-  createdAt: string;
-}
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 

@@ -8,7 +8,6 @@ import Pagination from "./Pagination";
 import Image from "./Image";
 import FilterDropDownMenu from "./FilterDropDownMenu";
 import useGetCategories from "@/hooks/useGetCategories";
-import { useAppSelector } from "@/redux/hook";
 import Loading from "./Loading";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import useDeleteCategory from "@/hooks/useDeleteCategory";
@@ -54,9 +53,12 @@ function Category() {
     }
   };
 
-  const handleVisible = async (_id: string, status: number) => {
+  const handleVisible = async (id: string, status: number) => {
+    if (!id && !status) {
+      return;
+    }
     try {
-      await visibleCategory({ _id, status });
+      await visibleCategory(id, status);
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
@@ -163,7 +165,7 @@ function Category() {
                       <button
                         onClick={() =>
                           handleVisible(
-                            category._id,
+                            category._id || "",
                             category.status === 1 ? 0 : 1
                           )
                         }
@@ -182,7 +184,7 @@ function Category() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => handleDelete(category._id)}>
+                      <button onClick={() => handleDelete(category._id || "")}>
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>

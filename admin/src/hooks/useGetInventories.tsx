@@ -3,27 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
-
-export interface Inventory {
-  _id: string;
-  product: {
-    _id: string;
-    name: string;
-    price: number;
-    image: string[];
-  };
-  size: {
-    _id: string;
-    namesize: string;
-  };
-  color: {
-    _id: string;
-    namecolor: string;
-    codecolor: string;
-  };
-  quantity: number;
-  createdAt: string;
-}
+import { Inventory } from "@/types/types";
 
 interface ResponseType {
   inventories: Inventory[];

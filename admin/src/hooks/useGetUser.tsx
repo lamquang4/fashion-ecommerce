@@ -1,18 +1,7 @@
 "use client";
+import { User } from "@/types/types";
 import axios from "axios";
 import useSWR from "swr";
-
-export interface User {
-  _id: string;
-  fullname: string;
-  email: string;
-  phone: string;
-  birthday: string;
-  password: string;
-  role: number;
-  status: number;
-  createdAt: string;
-}
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 

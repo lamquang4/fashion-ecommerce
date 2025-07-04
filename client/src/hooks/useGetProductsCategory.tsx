@@ -1,27 +1,7 @@
 "use client";
 import useSWR from "swr";
 import axios from "axios";
-export interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  discount: number;
-  description: string;
-  image: string[];
-  slug: string;
-  status: number;
-  category: {
-    _id: string;
-    namecategory: string;
-    gender: number;
-  };
-  colors: {
-    _id: string;
-    namecolor: string;
-    codecolor: string;
-  }[];
-  createdAt: string;
-}
+import { Product } from "@/types/type";
 
 const fetcher = (url: string) =>
   axios.get(url).then((res) => res.data.products);

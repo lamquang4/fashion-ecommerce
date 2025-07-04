@@ -3,18 +3,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
-
-export interface Category {
-  _id: string;
-  namecategory: string;
-  gender: number;
-  image: string;
-  slug: string;
-  status: number;
-  totalProduct: number;
-  totalProductActive: number;
-  createdAt: string;
-}
+import { Category } from "@/types/types";
 
 interface ResponseType {
   categories: Category[];
