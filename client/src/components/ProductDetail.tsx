@@ -213,21 +213,23 @@ function ProductDetail() {
                       <GrNext size={28} />
                     </button>
 
-                    <div
-                      className="cursor-pointer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        handleOpenViewer(mainImage);
-                      }}
-                    >
-                      <Image
-                        Src={mainImage}
-                        Alt=""
-                        ClassName="w-full h-full object-cover "
-                        loadingType="eager"
-                      />
-                    </div>
+                    {mainImage && (
+                      <div
+                        className="cursor-pointer"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          e.preventDefault();
+                          handleOpenViewer(mainImage);
+                        }}
+                      >
+                        <Image
+                          Src={mainImage}
+                          Alt=""
+                          ClassName="w-full h-full object-cover "
+                          loadingType="eager"
+                        />
+                      </div>
+                    )}
 
                     <button
                       type="button"
