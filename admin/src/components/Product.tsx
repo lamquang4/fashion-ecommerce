@@ -12,11 +12,9 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import useVisibleProduct from "@/hooks/useVisibleProduct";
 import useDeleteProduct from "@/hooks/useDeleteProduct";
 import Loading from "./Loading";
-import { useAppSelector } from "@/redux/hook";
 import InputSearch from "./InputSearch";
 import toast from "react-hot-toast";
 function Product() {
-  const loading = useAppSelector((state) => state.loadingSlice);
   const {
     products,
     mutate,

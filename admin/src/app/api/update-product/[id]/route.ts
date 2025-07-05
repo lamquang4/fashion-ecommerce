@@ -6,6 +6,7 @@ import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import fs from "node:fs/promises";
 import path from "path";
+import Category from "@/model/Category";
 
 export async function PUT(
   req: NextRequest,
@@ -186,6 +187,16 @@ export async function PUT(
           quantity: Number(newInventory.quantity),
         });
       }
+    }
+
+    const hasProduct = await Product.exists({
+      category: category,
+      status: 1,
+      _id: { $ne: id },
+    });
+
+    if (!hasProduct) {
+      await Category.findByIdAndUpdate(category, { status: 0 });
     }
 
     return NextResponse.json({ product: updatedProduct }, { status: 201 });

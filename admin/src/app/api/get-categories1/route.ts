@@ -6,15 +6,11 @@ export async function GET(req: NextRequest) {
   try {
     await connectMongoDB();
 
-    const [categories, categoriesStatus1] = await Promise.all([
-      Category.find().sort({ gender: -1 }),
-      Category.find({ status: 1 }).sort({ gender: -1 }),
-    ]);
-    return NextResponse.json({
-      categories,
-      categoriesStatus1,
-    });
+    const categories = await Category.find().sort({ gender: -1 });
+
+    return NextResponse.json({ categories });
   } catch (err) {
+    console.log(err);
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

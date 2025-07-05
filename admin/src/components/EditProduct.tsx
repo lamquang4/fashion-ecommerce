@@ -21,7 +21,7 @@ import { useImageViewer } from "@/hooks/useImageViewer";
 import useDeleteImage from "@/hooks/useDeleteImage";
 import useUpdateImage from "@/hooks/useUpdateImage";
 import useDeleteInventory from "@/hooks/useDeleteInventory";
-import useGetCategories1 from "@/hooks/useGetCategories1t";
+import useGetCategories1 from "@/hooks/useGetCategories1";
 function EditProduct() {
   const {
     newInventories,
@@ -58,7 +58,7 @@ function EditProduct() {
 
   const { product, mutate, isLoading } = useGetProduct(id);
 
-  const { categoriesStatus1 } = useGetCategories1();
+  const { categories } = useGetCategories1();
   const { colors } = useGetColors();
   const { sizes } = useGetSizes();
   const { updateProduct } = useUpdateProduct(id);
@@ -313,7 +313,7 @@ function EditProduct() {
                     onChange={handleChange}
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   >
-                    {categoriesStatus1.map((category, index) => (
+                    {categories.map((category, index) => (
                       <option value={category._id} key={index}>
                         {category.namecategory}-
                         {category.gender === 1 ? "Nam" : "Nữ"}

@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import useGetColors from "@/hooks/useGetColors";
 import useGetSizes from "@/hooks/useGetSizes";
 import { useImageViewer } from "@/hooks/useImageViewer";
-import useGetCategories1 from "@/hooks/useGetCategories1t";
+import useGetCategories1 from "@/hooks/useGetCategories1";
 function AddProduct() {
   const [success, setSuccess] = useState(false);
   const { categories } = useGetCategories1();
