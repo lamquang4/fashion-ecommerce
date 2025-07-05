@@ -29,7 +29,6 @@ export interface Category {
   slug: string;
   status: number;
   productCount?: number;
-  createdAt: string;
 }
 
 export interface Product {

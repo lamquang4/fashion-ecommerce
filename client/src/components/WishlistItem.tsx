@@ -110,7 +110,7 @@ function WishlistItem() {
                 </div>
 
                 <div className="flex justify-center flex-col gap-3 items-center text-center">
-                  <h2 className="text-[1.3rem] font-semibold">
+                  <h2 className="text-[1.2rem] font-semibold">
                     Không có gì trong yêu thích hết
                   </h2>
 

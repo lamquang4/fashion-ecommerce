@@ -13,11 +13,24 @@ import Image from "./Image";
 import useGetCategories from "@/hooks/useGetCategories";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 function Header() {
+  const [search, setSearch] = useState("");
   const { categoriesMale, categoriesFemale } = useGetCategories();
   const [openSearch, setOpenSearch] = useState(false);
   const [menuMobileOpen, setMenuMobileOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const router = useRouter();
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (!search.trim()) {
+      return;
+    }
+
+    router.push(`/search?q=${encodeURIComponent(search.trim())}`);
+    setOpenSearch(false);
+    setSearch("");
+  };
 
   const productsInCart = useSelector(
     (state: RootState) => state.cartSlice.productsInCart
@@ -180,16 +193,18 @@ function Header() {
 
             <div className="hidden lg:flex items-center gap-5">
               <div className="relative">
-                <form>
+                <form onSubmit={handleSearch}>
                   <input
                     type="text"
                     className="px-3 py-1.5 w-[145px] border border-gray-300 text-[0.8rem] tracking-[0.9px] bg-transparent outline-none"
                     placeholder="Tìm kiếm..."
                     autoComplete="off"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                   />
                   <button
                     className="absolute top-1/2 right-[7px] transform -translate-y-1/2 text-black flex items-center"
-                    type="button"
+                    type="submit"
                   >
                     <CiSearch size={21} title="Tìm kiếm" />
                   </button>
@@ -246,12 +261,14 @@ function Header() {
               }`}
             >
               <div className="flex items-center">
-                <form className="w-full">
+                <form className="w-full" onSubmit={handleSearch}>
                   <input
                     type="text"
                     placeholder="Tìm kiếm..."
                     autoComplete="off"
                     className="w-full px-2 py-2 rounded outline-none"
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
                   />
                 </form>
                 <button onClick={toggleSearch} title="Đóng">
