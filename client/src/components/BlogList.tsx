@@ -19,7 +19,7 @@ function BlogList() {
                 <div className="flex items-center mb-5 overflow-hidden rounded-lg">
                   <Link href={"/blog"}>
                     <Image
-                      Src={"/assets/banner/banner-new.png"}
+                      Src={"/assets/other/banner-new.png"}
                       Alt={""}
                       ClassName={
                         "rounded-lg w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
