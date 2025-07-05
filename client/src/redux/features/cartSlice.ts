@@ -1,20 +1,10 @@
 import { Cart, ProductInCart } from "@/types/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const cartLocalStorage = (): Cart => {
-  if (typeof window !== "undefined") {
-    const data = localStorage.getItem("cart");
-    if (data) {
-      return JSON.parse(data);
-    }
-  }
-  return {
-    productsInCart: [],
-    total: 0,
-  };
+const initialState: Cart = {
+  productsInCart: [],
+  total: 0,
 };
-
-const initialState: Cart = cartLocalStorage();
 
 export const cartSlice = createSlice({
   name: "cart",

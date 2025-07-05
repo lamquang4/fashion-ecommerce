@@ -18,6 +18,8 @@ import {
   removeItemFromWishlist,
 } from "@/redux/features/wishlistSlice";
 import { RootState } from "@/redux/store";
+import { GrNext, GrPrevious } from "react-icons/gr";
+
 function ProductDetail() {
   const params = useParams();
   const slug = params.slug as string;
@@ -26,6 +28,7 @@ function ProductDetail() {
   const [colors, setColors] = useState<Color[]>([]);
   const [sizes, setSizes] = useState<Size[]>([]);
   const [quantity, setQuantity] = useState(1);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [selectedSize, setSelectedSize] = useState<string>("");
   const [selectedColor, setSelectedColor] = useState<string>("");
   const [mainImage, setMainImage] = useState<string>("");
@@ -34,6 +37,48 @@ function ProductDetail() {
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
   const dispatch = useDispatch();
+
+  const handleNextImage = () => {
+    if (!product?.image) return;
+    const nextIndex =
+      currentImageIndex + 1 >= product.image.length ? 0 : currentImageIndex + 1;
+    setCurrentImageIndex(nextIndex);
+    setMainImage(product.image[nextIndex]);
+  };
+
+  const handlePrevImage = () => {
+    if (!product?.image) return;
+    const prevIndex =
+      currentImageIndex - 1 < 0
+        ? product.image.length - 1
+        : currentImageIndex - 1;
+    setCurrentImageIndex(prevIndex);
+    setMainImage(product.image[prevIndex]);
+  };
+
+  useEffect(() => {
+    if (product?.image?.length) {
+      setMainImage(product.image[0]);
+      setCurrentImageIndex(0);
+    }
+
+    if (product?.inventories?.length) {
+      const uniqueColors = Array.from(
+        new Map(
+          product.inventories.map((inv) => [inv.color._id, inv.color])
+        ).values()
+      );
+
+      const uniqueSizes = Array.from(
+        new Map(
+          product.inventories.map((inv) => [inv.size._id, inv.size])
+        ).values()
+      );
+
+      setColors(uniqueColors);
+      setSizes(uniqueSizes);
+    }
+  }, [product]);
 
   const wishlist = useSelector(
     (state: RootState) => state.wishlistSlice.productsInWishlist
@@ -55,31 +100,6 @@ function ProductDetail() {
 
     setIsInStock(!!matchingInventory);
   }, [selectedColor, selectedSize, product]);
-
-  useEffect(() => {
-    if (product?.inventories?.length) {
-      const uniqueColors = Array.from(
-        new Map(
-          product.inventories.map((inv) => [inv.color._id, inv.color])
-        ).values()
-      );
-
-      const uniqueSizes = Array.from(
-        new Map(
-          product.inventories.map((inv) => [inv.size._id, inv.size])
-        ).values()
-      );
-
-      setColors(uniqueColors);
-      setSizes(uniqueSizes);
-    }
-  }, [product]);
-
-  useEffect(() => {
-    if (product?.image?.length) {
-      setMainImage(product.image[0]);
-    }
-  }, [product]);
 
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);
@@ -184,7 +204,15 @@ function ProductDetail() {
             <div className="flex flex-col md:flex-col-reverse xl:flex-row flex-wrap gap-[20px] lg:sticky lg:top-[100px]">
               <div className=" md:order-2 relative grow overflow-hidden bg-white">
                 <div className="w-full xl:w-[450px] flex flex-col gap-[20px]">
-                  {mainImage && (
+                  <div className="relative group">
+                    <button
+                      type="button"
+                      className="absolute right-1.5 top-1/2 -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300"
+                      onClick={() => handleNextImage()}
+                    >
+                      <GrNext size={28} />
+                    </button>
+
                     <div
                       className="cursor-pointer"
                       onClick={(e) => {
@@ -196,11 +224,19 @@ function ProductDetail() {
                       <Image
                         Src={mainImage}
                         Alt=""
-                        ClassName="w-full h-full object-cover"
+                        ClassName="w-full h-full object-cover "
                         loadingType="eager"
                       />
                     </div>
-                  )}
+
+                    <button
+                      type="button"
+                      className="absolute left-1.5 top-1/2 -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300"
+                      onClick={() => handlePrevImage()}
+                    >
+                      <GrPrevious size={28} />
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -336,7 +372,7 @@ function ProductDetail() {
                         <button
                           key={index}
                           type="button"
-                          className={`w-[80px] h-[36px] border text-gray-700 font-medium ${
+                          className={`w-10 h-10 border text-black font-medium text-[0.95rem] ${
                             selectedSize === `${size.namesize}`
                               ? "bg-transparent text-black border-black"
                               : "border-gray-300 hover:border-gray-400"
