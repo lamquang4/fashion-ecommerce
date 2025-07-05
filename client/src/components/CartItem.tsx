@@ -27,13 +27,15 @@ function CartItem() {
     return () => clearTimeout(timeout);
   }, []);
 
+  useEffect(() => {}, [cart.productsInCart]);
+
   const handleIncrement = (item: ProductInCart) => {
     dispatch(
       changeItemQuantity({
         _id: item._id,
-        sizeId: item.inventories.size._id,
-        colorId: item.inventories.color._id,
-        quantity: item.inventories.quantity + 1,
+        sizeId: item.inventory.size._id,
+        colorId: item.inventory.color._id,
+        quantity: item.inventory.quantity + 1,
       })
     );
   };
@@ -42,9 +44,9 @@ function CartItem() {
     dispatch(
       changeItemQuantity({
         _id: item._id,
-        sizeId: item.inventories.size._id,
-        colorId: item.inventories.color._id,
-        quantity: item.inventories.quantity - 1,
+        sizeId: item.inventory.size._id,
+        colorId: item.inventory.color._id,
+        quantity: item.inventory.quantity - 1,
       })
     );
   };
@@ -53,8 +55,8 @@ function CartItem() {
     dispatch(
       removeItemFromCart({
         _id: item._id,
-        sizeId: item.inventories.size._id,
-        colorId: item.inventories.color._id,
+        sizeId: item.inventory.size._id,
+        colorId: item.inventory.color._id,
       })
     );
   };
@@ -100,8 +102,8 @@ function CartItem() {
                                 {item.name}
                               </Link>
                               <p className="text-[0.85rem] sm:text-[0.95rem]  font-medium text-[#898989] mt-2 flex items-center gap-2">
-                                {item.inventories.size.namesize} /{" "}
-                                {item.inventories.color.namecolor}
+                                {item.inventory.size.namesize} /{" "}
+                                {item.inventory.color.namecolor}
                               </p>
                             </div>
 
@@ -115,7 +117,7 @@ function CartItem() {
                                 <HiOutlineMinusSmall size={20} />
                               </button>
                               <span className="flex items-center justify-center  font-normal w-7 h-7 text-[1.1rem] leading-[18px]">
-                                {item.inventories.quantity}
+                                {item.inventory.quantity}
                               </span>
                               <button
                                 type="button"
@@ -162,7 +164,7 @@ function CartItem() {
                           </div>
                           <h3 className="text-[1rem] font-normal text-slate-900 mt-auto">
                             {(
-                              item.price * item.inventories.quantity
+                              item.price * item.inventory.quantity
                             ).toLocaleString("vi-VN")}
                             ₫
                           </h3>

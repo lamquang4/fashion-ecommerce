@@ -138,7 +138,7 @@ function ProductDetail() {
         product.discount !== 0
           ? product.price - product.discount
           : product.price,
-      inventories: {
+      inventory: {
         size: {
           _id: sizeObj._id,
           namesize: sizeObj.namesize,

@@ -25,21 +25,19 @@ export const cartSlice = createSlice({
       const existingProduct = state.productsInCart.find(
         (product) =>
           product._id === action.payload._id &&
-          product.inventories.size._id ===
-            action.payload.inventories.size._id &&
-          product.inventories.color._id === action.payload.inventories.color._id
+          product.inventory.size._id === action.payload.inventory.size._id &&
+          product.inventory.color._id === action.payload.inventory.color._id
       );
 
       if (existingProduct) {
-        existingProduct.inventories.quantity +=
-          action.payload.inventories.quantity;
+        existingProduct.inventory.quantity += action.payload.inventory.quantity;
       } else {
         state.productsInCart.push(action.payload);
       }
 
       // Cập nhật tổng tiền
       const total = state.productsInCart.reduce((sum, item) => {
-        return sum + item.price * item.inventories.quantity;
+        return sum + item.price * item.inventory.quantity;
       }, 0);
 
       state.total = total;
@@ -54,14 +52,14 @@ export const cartSlice = createSlice({
         (product) =>
           !(
             product._id === action.payload._id &&
-            product.inventories.size._id === action.payload.sizeId &&
-            product.inventories.color._id === action.payload.colorId
+            product.inventory.size._id === action.payload.sizeId &&
+            product.inventory.color._id === action.payload.colorId
           )
       );
 
       // Cập nhật tổng tiền
       state.total = state.productsInCart.reduce((sum, item) => {
-        return sum + item.price * item.inventories.quantity;
+        return sum + item.price * item.inventory.quantity;
       }, 0);
     },
 
@@ -78,21 +76,21 @@ export const cartSlice = createSlice({
       const product = state.productsInCart.find(
         (item) =>
           item._id === action.payload._id &&
-          item.inventories.size._id === action.payload.sizeId &&
-          item.inventories.color._id === action.payload.colorId
+          item.inventory.size._id === action.payload.sizeId &&
+          item.inventory.color._id === action.payload.colorId
       );
 
       if (product) {
-        product.inventories.quantity = action.payload.quantity;
+        product.inventory.quantity = action.payload.quantity;
 
-        if (product.inventories.quantity <= 0) {
+        if (product.inventory.quantity <= 0) {
           // Tự xoá nếu số lượng <= 0
           state.productsInCart = state.productsInCart.filter(
             (item) =>
               !(
                 item._id === action.payload._id &&
-                item.inventories.size._id === action.payload.sizeId &&
-                item.inventories.color._id === action.payload.colorId
+                item.inventory.size._id === action.payload.sizeId &&
+                item.inventory.color._id === action.payload.colorId
               )
           );
         }
@@ -100,7 +98,7 @@ export const cartSlice = createSlice({
 
       // Cập nhật tổng tiền
       state.total = state.productsInCart.reduce((sum, item) => {
-        return sum + item.price * item.inventories.quantity;
+        return sum + item.price * item.inventory.quantity;
       }, 0);
     },
   },

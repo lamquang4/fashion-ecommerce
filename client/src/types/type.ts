@@ -124,7 +124,7 @@ export interface ProductInCart {
   price: number;
   image: string[];
   slug: string;
-  inventories: {
+  inventory: {
     size: Size;
     color: Color;
     quantity: number;
