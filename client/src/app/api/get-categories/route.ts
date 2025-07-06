@@ -28,7 +28,6 @@ export async function GET(req: NextRequest) {
             productCount: { $gt: 0 },
           },
         },
-        { $sort: { createdAt: -1 } },
       ]);
     };
 

@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
     }
 
     const [sizes, total] = await Promise.all([
-      Size.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
+      Size.find(query).skip(skip).limit(limit),
       Size.countDocuments(query),
     ]);
     return NextResponse.json({

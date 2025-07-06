@@ -62,7 +62,6 @@ export async function GET(req: NextRequest) {
         },
         { $skip: skip },
         { $limit: limit },
-        { $sort: { createdAt: -1 } },
       ]),
       Product.countDocuments(query),
     ]);

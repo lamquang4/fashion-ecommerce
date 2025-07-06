@@ -13,10 +13,10 @@ export async function GET(
     if (!ObjectId.isValid(category) || !ObjectId.isValid(product)) {
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
-
+    const limit = 12;
     const categoryId = new ObjectId(category);
     const productId = new ObjectId(product);
-    const data = await Product.aggregate([
+    const productsCateogry = await Product.aggregate([
       { $match: { category: categoryId, _id: { $ne: productId } } },
       {
         $lookup: {
@@ -55,18 +55,18 @@ export async function GET(
           as: "colors",
         },
       },
-      { $limit: 10 },
+      { $limit: limit },
       { $sort: { createdAt: -1 } },
     ]);
 
-    if (!data) {
+    if (!productsCateogry) {
       return NextResponse.json(
         { msg: "Không tìm thấy sản phẩm" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ products: data });
+    return NextResponse.json({ productsCateogry });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

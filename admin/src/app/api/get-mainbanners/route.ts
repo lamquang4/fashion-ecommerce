@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     }
 
     const [data, total] = await Promise.all([
-      Banner.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
+      Banner.find(query).skip(skip).limit(limit),
       Banner.countDocuments(query),
     ]);
     return NextResponse.json({

@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     await connectMongoDB();
-
+    const limit = 12;
     const productsGender = async (gender: number) => {
       return Product.aggregate([
         { $match: { status: 1 } },
@@ -49,7 +49,7 @@ export async function GET(req: NextRequest) {
           },
         },
         { $sort: { createdAt: -1 } },
-        { $limit: 12 },
+        { $limit: limit },
       ]);
     };
 
@@ -63,7 +63,6 @@ export async function GET(req: NextRequest) {
       productsFemale,
     });
   } catch (err) {
-    console.log(err);
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

@@ -48,7 +48,6 @@ export async function GET(req: NextRequest) {
         { $unwind: "$category" },
         { $skip: skip },
         { $limit: limit },
-        { $sort: { createdAt: -1 } },
       ]),
       Product.countDocuments(query),
     ]);
@@ -61,7 +60,6 @@ export async function GET(req: NextRequest) {
       totalPages: Math.ceil(total / limit),
     });
   } catch (err) {
-    console.log(err);
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

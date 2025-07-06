@@ -340,7 +340,7 @@ function ProductDetail() {
                           title={color?.namecolor}
                           onClick={() => setSelectedColor(color?.namecolor)}
                           style={{ backgroundColor: `${color?.codecolor}` }}
-                          className={`w-8 h-8 focus:outline-none  ${
+                          className={`w-8 h-8  ${
                             selectedColor === `${color.namecolor}`
                               ? "border border-red-600"
                               : "border-gray-300 border"
@@ -374,7 +374,7 @@ function ProductDetail() {
                         <button
                           key={index}
                           type="button"
-                          className={`w-10 h-10 border text-black font-medium text-[0.95rem] ${
+                          className={`w-12.5 h-8.5 border text-black font-medium text-[0.95rem] ${
                             selectedSize === `${size.namesize}`
                               ? "bg-transparent text-black border-black"
                               : "border-gray-300 hover:border-gray-400"

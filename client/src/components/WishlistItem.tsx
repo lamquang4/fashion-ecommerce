@@ -72,7 +72,7 @@ function WishlistItem() {
                         <div className="flex gap-4 justify-end">
                           <button
                             onClick={() => handleRemove(item)}
-                            className="p-1 text-black duration-200 hover:scale-115"
+                            className="p-1 text-red-500 duration-200 hover:scale-110"
                           >
                             <svg viewBox="0 0 256 256" width="22" height="22">
                               <rect fill="none" height="256" width="256" />
