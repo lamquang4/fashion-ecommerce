@@ -3,8 +3,17 @@ import Link from "next/link";
 import React, { useState } from "react";
 import Image from "./Image";
 import MenuSideCoupon from "./MenuSideCoupon";
+import useGetProvinces from "@/hooks/useGetProvinceVN";
 function CheckoutForm() {
-  const [menuOpen, setMenuOpen] = useState(false);
+  const { provinces } = useGetProvinces();
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [selectedProvinceName, setSelectedProvinceName] = useState<string>("");
+  const [selectedWard, setSelectedWard] = useState<string>("");
+
+  const selectedProvince = provinces?.find(
+    (province) => province.province === selectedProvinceName
+  );
+
   const toggleOpen = () => {
     setMenuOpen(!menuOpen);
   };
@@ -41,7 +50,8 @@ function CheckoutForm() {
                     name="account_address"
                     className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                   >
-                    <option value="Quận 6">
+                    <option value="">Chọn địa chỉ lưu trữ</option>
+                    <option value="">
                       751 HB, Hồ Chí Minh, Quận 6, Phường 10
                     </option>
                   </select>
@@ -95,34 +105,30 @@ function CheckoutForm() {
                   />
                 </div>
 
-                <div className="grid grid-cols-1 md:grid-cols-3 gap-[14px]">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px]">
                   <div>
                     <label
                       htmlFor="city"
                       className="mt-4 mb-2 block text-[0.9rem] font-medium"
                     >
-                      Thành phố
+                      Tỉnh/thành phố
                     </label>
                     <select
                       name="city"
+                      required
+                      value={selectedProvinceName}
+                      onChange={(e) => {
+                        setSelectedProvinceName(e.target.value);
+                        setSelectedWard("");
+                      }}
                       className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                     >
-                      <option value="Hà nội">Hà nội</option>
-                    </select>
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor="district"
-                      className="mt-4 mb-2 block text-[0.9rem] font-medium"
-                    >
-                      Quận
-                    </label>
-                    <select
-                      name="district"
-                      className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                    >
-                      <option value="Quận 6">Quận 6</option>
+                      <option value="">Chọn tỉnh/thành phố</option>
+                      {provinces?.map((province) => (
+                        <option key={province.id} value={province.province}>
+                          {province.province}
+                        </option>
+                      ))}
                     </select>
                   </div>
 
@@ -131,13 +137,22 @@ function CheckoutForm() {
                       htmlFor="ward"
                       className="mt-4 mb-2 block text-[0.9rem] font-medium"
                     >
-                      Phường
+                      Phường/xã
                     </label>
                     <select
                       name="ward"
+                      required
+                      disabled={!selectedProvince}
+                      value={selectedWard}
+                      onChange={(e) => setSelectedWard(e.target.value)}
                       className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 text-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                     >
-                      <option value="Phường 6">Phường 6</option>
+                      <option value="">Chọn phường/xã</option>
+                      {selectedProvince?.wards.map((ward, idx) => (
+                        <option key={idx} value={ward.name}>
+                          {ward.name}
+                        </option>
+                      ))}
                     </select>
                   </div>
                 </div>

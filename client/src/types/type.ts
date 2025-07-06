@@ -150,3 +150,14 @@ export interface ProductInWishlist {
 export interface Wishlist {
   productsInWishlist: ProductInWishlist[];
 }
+
+export type Ward = {
+  name: string;
+  mergedFrom: string[];
+};
+
+export type Province = {
+  id: string;
+  province: string;
+  wards: Ward[];
+};

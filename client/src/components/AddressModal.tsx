@@ -1,12 +1,23 @@
 "use client";
 import { HiMiniXMark } from "react-icons/hi2";
 import Overplay from "./Overplay";
+import useGetProvinces from "@/hooks/useGetProvinceVN";
+import { useState } from "react";
 
 type AddressModalProps = {
   isOpen: boolean;
   toggleMenu: () => void;
 };
 function AddressModal({ isOpen, toggleMenu }: AddressModalProps) {
+  const { provinces } = useGetProvinces();
+
+  const [selectedProvinceName, setSelectedProvinceName] = useState<string>("");
+  const [selectedWard, setSelectedWard] = useState<string>("");
+
+  const selectedProvince = provinces?.find(
+    (province) => province.province === selectedProvinceName
+  );
+
   return (
     <>
       <div className="flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-20 h-full">
@@ -82,43 +93,48 @@ function AddressModal({ isOpen, toggleMenu }: AddressModalProps) {
                     htmlFor="city"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Thành phố
+                    Tỉnh/thành phố
                   </label>
                   <select
-                    id="city"
+                    name="cỉty"
+                    required
+                    value={selectedProvinceName}
+                    onChange={(e) => {
+                      setSelectedProvinceName(e.target.value);
+                      setSelectedWard("");
+                    }}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
                   >
-                    <option value="">Hà Nội</option>
+                    <option value="">Chọn tỉnh/thành phố</option>
+                    {provinces?.map((province) => (
+                      <option key={province.id} value={province.province}>
+                        {province.province}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
-                <div className="col-span-1 w-full">
-                  <label
-                    htmlFor="district"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Quận
-                  </label>
-                  <select
-                    id="district"
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
-                  >
-                    <option value="">Quận 6</option>
-                  </select>
-                </div>
-
-                <div className="col-span-1 w-full">
+                <div className="col-span-2 w-full">
                   <label
                     htmlFor="ward"
                     className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                   >
-                    Phường
+                    Phường/xã
                   </label>
                   <select
-                    id="ward"
+                    name="ward"
+                    required
+                    disabled={!selectedProvince}
+                    value={selectedWard}
+                    onChange={(e) => setSelectedWard(e.target.value)}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
                   >
-                    <option value="hanoi">Phường 6</option>
+                    <option value="">Chọn phường/xã</option>
+                    {selectedProvince?.wards.map((ward, idx) => (
+                      <option key={idx} value={ward.name}>
+                        {ward.name}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
