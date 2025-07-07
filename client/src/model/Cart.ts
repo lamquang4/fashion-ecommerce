@@ -35,7 +35,7 @@ const cartSchema = new Schema(
   }
 );
 
-cartSchema.index({ status: 1 });
+cartSchema.index({ "items.status": 1 });
 
 const Cart = models.Cart || model("Cart", cartSchema);
 export default Cart;
