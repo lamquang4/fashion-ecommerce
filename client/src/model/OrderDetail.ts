@@ -1,6 +1,6 @@
 import mongoose, { model, models, Schema } from "mongoose";
 
-const orderdetailSchema = new Schema({
+const orderDetailSchema = new Schema({
   order: { type: mongoose.Schema.Types.ObjectId, ref: "Order", required: true },
   buy: [
     {
@@ -26,6 +26,8 @@ const orderdetailSchema = new Schema({
   ],
 });
 
+orderDetailSchema.index({ order: 1 });
+
 const OrderDetail =
-  models.OrderDetail || model("OrderDetail", orderdetailSchema);
+  models.OrderDetail || model("OrderDetail", orderDetailSchema);
 export default OrderDetail;
