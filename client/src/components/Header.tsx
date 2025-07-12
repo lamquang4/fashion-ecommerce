@@ -41,7 +41,7 @@ function Header() {
   );
 
   const totalQuantity = productsInCart.reduce((sum, item) => {
-    return sum + (item?.inventory?.quantity || 0);
+    return sum + (item?.variant?.quantity || 0);
   }, 0);
 
   const wishlist = useSelector(

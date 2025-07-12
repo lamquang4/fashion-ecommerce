@@ -199,9 +199,6 @@ function ProductDetail() {
     ).values(),
   ];
 
-  console.log(product);
-  console.log("inv", selectedInventory);
-
   return (
     <>
       <section className="w-full mx-auto mt-0 lg:mt-[20px] mb-[40px]">

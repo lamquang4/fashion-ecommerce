@@ -71,16 +71,29 @@ function Collection() {
                   const item = collections[index];
                   return (
                     <div className="relative" key={index}>
-                      <Image
-                        Src={
-                          previewImages1[index] ||
-                          item?.image ||
-                          "/assets/other/default-banner.png"
-                        }
-                        Alt=""
-                        ClassName="w-full object-cover"
-                        loadingType="eager"
-                      />
+                      <div>
+                        <Image
+                          Src={
+                            previewImages1[index] ||
+                            item?.image ||
+                            "/assets/other/default-banner.png"
+                          }
+                          Alt=""
+                          ClassName="w-full object-cover"
+                          loadingType="eager"
+                        />
+                        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
+                          <h2 className="text-[2rem] mb-[10px] font-bold">
+                            {index === 0 ? "NAM" : "NỮ"}
+                          </h2>
+                          <button
+                            type="button"
+                            className="text-[0.95rem] border border-white p-2 font-medium hover:scale-105"
+                          >
+                            KHÁM PHÁ NGAY
+                          </button>
+                        </div>
+                      </div>
 
                       <div className="flex gap-[15px] absolute top-[20px] right-[20px]">
                         <InputImage1
