@@ -6,7 +6,7 @@ import TinyMCEEditor from "./TinyMCEEditor";
 import Image from "./Image";
 import { VscTrash } from "react-icons/vsc";
 import ImageViewer from "./ImageViewer";
-import { useImageViewer } from "@/hooks/useImageViewer";
+import { useImageViewer } from "@/hooks/useInputImage";
 function EditBlog() {
   const [data, setData] = useState({
     title: "",

@@ -1,4 +1,5 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
+import Inventory from "@/model/Inventory";
 import Product from "@/model/Product";
 import { removeVietNamese } from "@/utils/removeVietnamese";
 import mongoose from "mongoose";
@@ -28,15 +29,12 @@ export async function PUT(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const product = await Product.findById(id);
-    if (!product) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy sản phẩm" },
-        { status: 404 }
-      );
+    const inventory = await Inventory.findById(id);
+    if (!inventory) {
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
-    let imageList = product.image;
+    let imageList = inventory.images;
     const indexToUpdate = imageList.indexOf(image);
 
     if (file && file.size > 0) {
@@ -105,14 +103,13 @@ export async function PUT(
       imageList[indexToUpdate] = newImagePath;
     }
 
-    // Cập nhật sản phẩm
-    const updatedProduct = await Product.findByIdAndUpdate(
+    // Cập nhật
+    const updatedImage = await Inventory.findByIdAndUpdate(
       id,
-      { image: imageList },
+      { images: imageList },
       { new: true }
     );
-
-    return NextResponse.json({ Product: updatedProduct }, { status: 201 });
+    return NextResponse.json({ inventory: updatedImage }, { status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

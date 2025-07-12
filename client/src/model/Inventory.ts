@@ -7,13 +7,8 @@ const inventorySchema = new Schema(
       ref: "Product",
       required: true,
     },
-    quantity: {
-      type: Number,
-      required: true,
-    },
-    size: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Size",
+    images: {
+      type: [String],
       required: true,
     },
     color: {
@@ -21,6 +16,19 @@ const inventorySchema = new Schema(
       ref: "Color",
       required: true,
     },
+    inventories: [
+      {
+        quantity: {
+          type: Number,
+          required: true,
+        },
+        size: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Size",
+          required: true,
+        },
+      },
+    ],
   },
   {
     timestamps: true,
@@ -28,8 +36,6 @@ const inventorySchema = new Schema(
 );
 
 inventorySchema.index({ product: 1 });
-inventorySchema.index({ size: 1 });
-inventorySchema.index({ color: 1 });
 
 const Inventory = models.Inventory || model("Inventory", inventorySchema);
 export default Inventory;

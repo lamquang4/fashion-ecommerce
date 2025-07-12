@@ -10,11 +10,11 @@ import {
 } from "@/redux/features/wishlistSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
-import { Category, ProductWithColors, ProductInWishlist } from "@/types/type";
+import { Category, Product, ProductInWishlist } from "@/types/type";
 import { useParams, useSearchParams } from "next/navigation";
 interface Props {
   category?: Category;
-  products: ProductWithColors[];
+  products: Product[];
   isLoading: boolean;
   totalItems: number;
 }
@@ -23,7 +23,9 @@ function ProductList({ category, products, isLoading, totalItems }: Props) {
   const slug = params.slug as string;
   const dispatch = useDispatch();
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
-
+  const [selectedInventoryIndexes, setSelectedInventoryIndexes] = useState<{
+    [productId: string]: number;
+  }>({});
   const searchParams = useSearchParams();
   const search = searchParams.get("q");
 
@@ -47,25 +49,42 @@ function ProductList({ category, products, isLoading, totalItems }: Props) {
     (state: RootState) => state.wishlistSlice.productsInWishlist
   );
 
-  const handleAddToWishlist = (product: ProductInWishlist) => {
-    const productToAdd = {
+  const handleAddToWishlist = (product: Product, inventoryIndex: number) => {
+    const variant = product.variants[inventoryIndex];
+
+    const productToAdd: ProductInWishlist = {
       _id: product._id,
       name: product.name,
-      price: product.price,
-      image: product.image,
       slug: product.slug,
+      variant: {
+        _id: variant._id,
+        images: variant.images,
+        color: {
+          _id: variant.color._id,
+          namecolor: variant.color.namecolor,
+          codecolor: variant.color.codecolor,
+        },
+      },
     };
 
     dispatch(addItemToWishlist(productToAdd));
   };
 
-  const handleRemove = (product: ProductInWishlist) => {
+  const handleRemove = (_id: string) => {
     dispatch(
       removeItemFromWishlist({
-        _id: product._id,
+        _id: _id,
       })
     );
   };
+
+  function checkNewProduct(createdAt: string): boolean {
+    const createdDate = new Date(createdAt);
+    const now = new Date();
+    const checkDays =
+      (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24);
+    return checkDays <= 14;
+  }
 
   return (
     <section className="px-[10px] mt-[40px] sm:mt-[45px] sm:px-[15px]">
@@ -109,42 +128,52 @@ function ProductList({ category, products, isLoading, totalItems }: Props) {
                 const isInWishlist = wishlist.some(
                   (item) => item._id === product._id
                 );
+                const selectedIndex =
+                  selectedInventoryIndexes[product._id] || 0;
+                const selectedInventory = product.variants[selectedIndex];
                 return (
                   <div key={index}>
                     <div className="relative group">
                       <Link href={`/product/${product.slug}`}>
                         <Image
-                          Src={product.image[0]}
+                          Src={selectedInventory.images[0]}
                           Alt={product.name}
                           ClassName={
                             "block w-full h-auto object-cover z-[1] relative"
                           }
-                          loadingType="lazy"
+                          loadingType="eager"
                         />
-                        {product.image.length > 1 && (
+                        {selectedInventory.images[1] && (
                           <Image
-                            Src={product.image[1]}
+                            Src={selectedInventory.images[1]}
                             Alt={product.name}
                             ClassName={
                               "block w-full h-auto object-cover absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
                             }
-                            loadingType="lazy"
+                            loadingType="eager"
                           />
                         )}
                       </Link>
                       {product.discount > 0 && (
-                        <div className="absolute bottom-[10px] md:top-[10px] left-[10px] z-[3] font-semibold text-center text-black">
-                          <p className="uppercase text-[0.75rem] p-1 bg-white w-[92px]">
+                        <div className="flex gap-2 flex-col absolute top-[10px] left-[10px] z-[3] font-semibold text-center text-black">
+                          <p className="uppercase text-[0.75rem] py-1 px-1.5 bg-white">
                             Giảm giá{" "}
                             {Math.floor(
                               (product.discount / product.price) * 100
                             )}
                             %
                           </p>
+
+                          {product.createdAt &&
+                            checkNewProduct(product.createdAt) && (
+                              <p className="uppercase text-[0.75rem] py-1 px-1.5 bg-white">
+                                Hàng mới
+                              </p>
+                            )}
                         </div>
                       )}
 
-                      <div className="absolute top-[10px] right-[10px] z-[3] font-semibold text-center text-black">
+                      <div className="absolute top-[12px] right-[12px] z-[3] font-semibold text-center text-black">
                         <button
                           type="button"
                           className={`p-1 transition-colors duration-200 hover:scale-110 ${
@@ -153,9 +182,11 @@ function ProductList({ category, products, isLoading, totalItems }: Props) {
                               : "text-gray-500 hover:text-gray-600"
                           }`}
                           onClick={() => {
+                            const selectedIndex =
+                              selectedInventoryIndexes[product._id] || 0;
                             isInWishlist
-                              ? handleRemove(product)
-                              : handleAddToWishlist(product);
+                              ? handleRemove(product._id)
+                              : handleAddToWishlist(product, selectedIndex);
                           }}
                         >
                           <svg
@@ -190,7 +221,7 @@ function ProductList({ category, products, isLoading, totalItems }: Props) {
                           </del>
                         )}
                         {product.discount > 0 ? (
-                          <p className="font-medium">
+                          <p className="font-medium text-[#c00]">
                             {(product.price - product.discount).toLocaleString(
                               "vi-VN"
                             )}
@@ -203,19 +234,27 @@ function ProductList({ category, products, isLoading, totalItems }: Props) {
                         )}
                       </div>
 
-                      {product.colors?.length > 0 && (
-                        <div className="flex space-x-2">
-                          {product.colors.map((color, index) => (
-                            <button
-                              key={index}
-                              type="button"
-                              title={color?.namecolor}
-                              className="w-6 h-6 border-gray-500 border"
-                              style={{ backgroundColor: color?.codecolor }}
-                            ></button>
-                          ))}
-                        </div>
-                      )}
+                      <div className="flex space-x-2">
+                        {product.variants.map((variant, index) => (
+                          <button
+                            key={index}
+                            onClick={() =>
+                              setSelectedInventoryIndexes((prev) => ({
+                                ...prev,
+                                [product._id]: product.variants.findIndex(
+                                  (i) => i.color?._id === variant.color?._id
+                                ),
+                              }))
+                            }
+                            type="button"
+                            title={variant.color?.namecolor}
+                            className="w-5.5 h-5.5 border-gray-400 border rounded-full"
+                            style={{
+                              backgroundColor: variant.color?.codecolor,
+                            }}
+                          ></button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 );

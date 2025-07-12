@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import {
   changeItemQuantity,
+  hideLoading,
   removeItemFromCart,
 } from "@/redux/features/cartSlice";
 import { ProductInCart } from "@/types/type";
@@ -16,26 +17,20 @@ import Loading from "./Loading";
 
 function CartItem() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const cart = useSelector((state: RootState) => state.cartSlice);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsLoading(true);
-    }, 200);
-    return () => clearTimeout(timeout);
-  }, []);
-
-  useEffect(() => {}, [cart.productsInCart]);
+    dispatch(hideLoading());
+  }, [dispatch]);
 
   const handleIncrement = (item: ProductInCart) => {
     dispatch(
       changeItemQuantity({
         _id: item._id,
-        sizeId: item.inventory.size._id,
-        colorId: item.inventory.color._id,
-        quantity: item.inventory.quantity + 1,
+        sizeId: item.variant.size._id,
+        colorId: item.variant.color._id,
+        quantity: item.variant.quantity + 1,
       })
     );
   };
@@ -44,9 +39,9 @@ function CartItem() {
     dispatch(
       changeItemQuantity({
         _id: item._id,
-        sizeId: item.inventory.size._id,
-        colorId: item.inventory.color._id,
-        quantity: item.inventory.quantity - 1,
+        sizeId: item.variant.size._id,
+        colorId: item.variant.color._id,
+        quantity: item.variant.quantity - 1,
       })
     );
   };
@@ -55,8 +50,8 @@ function CartItem() {
     dispatch(
       removeItemFromCart({
         _id: item._id,
-        sizeId: item.inventory.size._id,
-        colorId: item.inventory.color._id,
+        sizeId: item.variant.size._id,
+        colorId: item.variant.color._id,
       })
     );
   };
@@ -70,14 +65,14 @@ function CartItem() {
       <section className="max-w-[1230px] mx-auto mt-[40px] sm:mt-[45px]">
         <div className="px-[10px] sm:px-[15px]">
           <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
-            Giỏ hàng
+            Giỏ hàng ({cart.productsInCart.length})
           </h2>
-          {!isLoading ? (
+          {!cart.isLoading ? (
             <Loading height={60} />
           ) : cart.productsInCart.length > 0 ? (
             <form action="">
-              <div className="grid lg:grid-cols-3 gap-8">
-                <div className="md:col-span-2 bg-white px-2.5 sm:px-4 border border-gray-300 rounded-md">
+              <div className="flex gap-8 w-full lg:flex-row flex-col">
+                <div className=" bg-white px-2.5 sm:px-4 border border-gray-300 rounded-md basis-[70%]">
                   {cart.productsInCart.map((item, index) => (
                     <React.Fragment key={index}>
                       <div className="flex gap-4 bg-white py-6">
@@ -85,8 +80,8 @@ function CartItem() {
                           <Link href={`/product/${item.slug}`}>
                             <div className="w-full max-w-[150px] shrink-0">
                               <Image
-                                Src={item.image[0]}
-                                Alt={""}
+                                Src={item.variant.images[0]}
+                                Alt={item.name}
                                 ClassName={"w-full h-full object-cover"}
                                 loadingType="eager"
                               />
@@ -99,8 +94,8 @@ function CartItem() {
                                 {item.name}
                               </h2>
                               <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-[#898989] mt-2 flex items-center gap-2">
-                                {item.inventory.size.namesize} /{" "}
-                                {item.inventory.color.namecolor}
+                                {item.variant.size.namesize} /{" "}
+                                {item.variant.color.namecolor}
                               </p>
                             </div>
 
@@ -109,17 +104,19 @@ function CartItem() {
                                 type="button"
                                 name="button-1"
                                 onClick={() => handleDecrement(item)}
+                                disabled={item.variant.quantity <= 1}
                                 className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-slate-300 border"
                               >
                                 <HiOutlineMinusSmall size={20} />
                               </button>
                               <span className="flex items-center justify-center  font-normal w-7 h-7 text-[1.1rem] leading-[18px]">
-                                {item.inventory.quantity}
+                                {item.variant.quantity}
                               </span>
                               <button
                                 type="button"
                                 name="button-1"
                                 onClick={() => handleIncrement(item)}
+                                disabled={item.variant.quantity >= 15}
                                 className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-slate-300 border"
                               >
                                 <HiOutlinePlusSmall size={20} />
@@ -148,7 +145,7 @@ function CartItem() {
                           </div>
                           <h3 className="text-[1rem] font-normal text-slate-900 mt-auto">
                             {(
-                              item.price * item.inventory.quantity
+                              item.price * item.variant.quantity
                             ).toLocaleString("vi-VN")}
                             ₫
                           </h3>
@@ -162,7 +159,7 @@ function CartItem() {
                   ))}
                 </div>
 
-                <div className="bg-[#F7F7F7] rounded-sm px-4 py-6 h-auto">
+                <div className="bg-[#F7F7F7] rounded-sm px-4 py-6 h-auto basis-[30%]">
                   <div className="">
                     <div className="flex justify-between items-center mb-[5px]">
                       <label

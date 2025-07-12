@@ -6,7 +6,7 @@ import useGetPromoteBanners from "@/hooks/useGetPromoteBanners";
 import useAddBanner from "@/hooks/useAddBanner";
 import useUpdateBanner from "@/hooks/useUpdateBanner";
 import toast from "react-hot-toast";
-import { useImageViewer1 } from "@/hooks/useImageViewer1";
+import { useInputImage1 } from "@/hooks/useInputImage1";
 import Loading from "./Loading";
 function PromoteBanner() {
   const { promotebanners, mutate, isLoading } = useGetPromoteBanners();
@@ -19,7 +19,7 @@ function PromoteBanner() {
     setPreviewImages1,
     onFileSelect,
     handleClear,
-  } = useImageViewer1();
+  } = useInputImage1();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

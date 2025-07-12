@@ -3,19 +3,22 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import Link from "next/link";
 import Image from "./Image";
-import { ProductInWishlist, ProductWithColors } from "@/types/type";
+import { ProductInWishlist, Product } from "@/types/type";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addItemToWishlist,
   removeItemFromWishlist,
 } from "@/redux/features/wishlistSlice";
 import { RootState } from "@/redux/store";
-
+import { useState } from "react";
 interface Props {
   title: string;
-  products: ProductWithColors[];
+  products: Product[];
 }
 function ProductSlider({ title, products }: Props) {
+  const [selectedInventoryIndexes, setSelectedInventoryIndexes] = useState<{
+    [productId: string]: number;
+  }>({});
   const dispatch = useDispatch();
   const [sliderRef] = useKeenSlider({
     loop: false,
@@ -40,25 +43,44 @@ function ProductSlider({ title, products }: Props) {
     (state: RootState) => state.wishlistSlice.productsInWishlist
   );
 
-  const handleAddToWishlist = (product: ProductInWishlist) => {
-    const productToAdd = {
+  const handleAddToWishlist = (product: Product, inventoryIndex: number) => {
+    const variant = product.variants[inventoryIndex];
+
+    const productToAdd: ProductInWishlist = {
       _id: product._id,
       name: product.name,
-      price: product.price,
-      image: product.image,
       slug: product.slug,
+      variant: {
+        _id: variant._id,
+        images: variant.images,
+        color: {
+          _id: variant.color._id,
+          namecolor: variant.color.namecolor,
+          codecolor: variant.color.codecolor,
+        },
+      },
     };
 
     dispatch(addItemToWishlist(productToAdd));
   };
 
-  const handleRemove = (product: ProductInWishlist) => {
+  const handleRemove = (_id: string) => {
     dispatch(
       removeItemFromWishlist({
-        _id: product._id,
+        _id: _id,
       })
     );
   };
+
+  function checkNewProduct(createdAt: string): boolean {
+    const createdDate = new Date(createdAt);
+    const now = new Date();
+    const checkDays =
+      (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24);
+    return checkDays <= 14;
+  }
+
+  console.log(products);
 
   return (
     <>
@@ -73,22 +95,26 @@ function ProductSlider({ title, products }: Props) {
                 const isInWishlist = wishlist.some(
                   (item) => item._id === product._id
                 );
+
+                const selectedIndex =
+                  selectedInventoryIndexes[product._id] || 0;
+                const selectedInventory = product.variants[selectedIndex];
                 return (
                   <div key={index} className="keen-slider__slide">
                     <div className="relative group">
                       <Link href={`/product/${product.slug}`}>
                         <picture>
                           <Image
-                            Src={product.image[0]}
+                            Src={selectedInventory.images[0]}
                             Alt={""}
                             ClassName={
                               "block w-full h-auto object-cover z-[1] relative"
                             }
                             loadingType="lazy"
                           />
-                          {product.image.length > 1 && (
+                          {selectedInventory.images[1] && (
                             <Image
-                              Src={product.image[1]}
+                              Src={selectedInventory.images[1]}
                               Alt={""}
                               ClassName={
                                 "block w-full h-auto object-cover absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
@@ -107,6 +133,13 @@ function ProductSlider({ title, products }: Props) {
                             )}
                             %
                           </p>
+
+                          {product.createdAt &&
+                            checkNewProduct(product.createdAt) && (
+                              <p className="uppercase text-[0.75rem] py-1 px-1.5 bg-white">
+                                Hàng mới
+                              </p>
+                            )}
                         </div>
                       )}
 
@@ -119,9 +152,11 @@ function ProductSlider({ title, products }: Props) {
                               : "text-gray-500 hover:text-gray-600"
                           }`}
                           onClick={() => {
+                            const selectedIndex =
+                              selectedInventoryIndexes[product._id] || 0;
                             isInWishlist
-                              ? handleRemove(product)
-                              : handleAddToWishlist(product);
+                              ? handleRemove(product._id)
+                              : handleAddToWishlist(product, selectedIndex);
                           }}
                         >
                           <svg
@@ -156,7 +191,7 @@ function ProductSlider({ title, products }: Props) {
                           </del>
                         )}
                         {product.discount > 0 ? (
-                          <p className="font-medium">
+                          <p className="font-medium text-[#c00]">
                             {(product.price - product.discount).toLocaleString(
                               "vi-VN"
                             )}
@@ -169,19 +204,27 @@ function ProductSlider({ title, products }: Props) {
                         )}
                       </div>
 
-                      {product.colors.length > 0 && (
-                        <div className="flex space-x-2">
-                          {product.colors.map((color, index) => (
-                            <button
-                              key={index}
-                              type="button"
-                              title={color?.namecolor}
-                              className="w-6 h-6 border-gray-500 border"
-                              style={{ backgroundColor: color?.codecolor }}
-                            ></button>
-                          ))}
-                        </div>
-                      )}
+                      <div className="flex space-x-2">
+                        {product.variants.map((variant, index) => (
+                          <button
+                            key={index}
+                            onClick={() =>
+                              setSelectedInventoryIndexes((prev) => ({
+                                ...prev,
+                                [product._id]: product.variants.findIndex(
+                                  (i) => i.color?._id === variant.color?._id
+                                ),
+                              }))
+                            }
+                            type="button"
+                            title={variant.color?.namecolor}
+                            className="w-5.5 h-5.5 rounded-full border-gray-400 border"
+                            style={{
+                              backgroundColor: variant.color?.codecolor,
+                            }}
+                          ></button>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 );

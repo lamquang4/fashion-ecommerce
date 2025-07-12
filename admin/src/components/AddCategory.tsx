@@ -4,13 +4,13 @@ import React, { useState } from "react";
 import InputImage from "./InputImage";
 import useAddCategory from "@/hooks/useAddCategory";
 import toast from "react-hot-toast";
-import { useImageViewer } from "@/hooks/useImageViewer";
+import { useInputImage } from "@/hooks/useInputImage";
+
 function AddCategory() {
   const [data, setData] = useState({
     namecategory: "",
     gender: "",
   });
-  const [success, setSuccess] = useState(false);
   const { addCategory } = useAddCategory();
 
   const {
@@ -20,7 +20,7 @@ function AddCategory() {
     setSelectedFiles,
     handlePreviewImage,
     handleRemovePreviewImage,
-  } = useImageViewer(1);
+  } = useInputImage(1);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -33,12 +33,12 @@ function AddCategory() {
   };
 
   const handelReset = () => {
-    setSuccess(true);
-    setTimeout(() => setSuccess(false), 100);
     setData({
       namecategory: "",
       gender: "",
     });
+    setPreviewImages([]);
+    setSelectedFiles([]);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -77,12 +77,9 @@ function AddCategory() {
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
               <InputImage
                 InputId="img-category"
-                success={success}
                 previewImages={previewImages}
                 handlePreviewImage={handlePreviewImage}
                 handleRemovePreviewImage={handleRemovePreviewImage}
-                setPreviewImages={setPreviewImages}
-                setSelectedFiles={setSelectedFiles}
               />
             </div>
 

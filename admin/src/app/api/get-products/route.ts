@@ -42,7 +42,23 @@ export async function GET(req: NextRequest) {
         },
         {
           $addFields: {
-            totalQuantity: { $sum: "$inventory.quantity" },
+            totalQuantity: {
+              $sum: {
+                $map: {
+                  input: "$inventory",
+                  as: "inv",
+                  in: {
+                    $sum: "$$inv.inventories.quantity",
+                  },
+                },
+              },
+            },
+            firstInventory: { $arrayElemAt: ["$inventory", 0] },
+          },
+        },
+        {
+          $addFields: {
+            images: "$firstInventory.images",
           },
         },
         { $unwind: "$category" },

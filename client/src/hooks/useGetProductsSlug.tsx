@@ -2,10 +2,10 @@
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
-import { ProductWithColors } from "@/types/type";
+import { Product } from "@/types/type";
 
 interface ResponseType {
-  products: ProductWithColors[];
+  products: Product[];
   totalPages: number;
   total: number;
 }

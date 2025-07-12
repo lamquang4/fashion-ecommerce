@@ -10,19 +10,15 @@ type InputImageProps = {
   previewImages: string[];
   handlePreviewImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
   handleRemovePreviewImage: (index: number) => void;
-  setPreviewImages: React.Dispatch<React.SetStateAction<string[]>>;
-  setSelectedFiles: React.Dispatch<React.SetStateAction<File[]>>;
 };
-function InputImage({ InputId, success, previewImages, handlePreviewImage, handleRemovePreviewImage, setPreviewImages, setSelectedFiles }: InputImageProps) {
+function InputImage({
+  InputId,
+  previewImages,
+  handlePreviewImage,
+  handleRemovePreviewImage,
+}: InputImageProps) {
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
-
-  useEffect(() => {
-    if (success) {
-      setPreviewImages([]);
-      setSelectedFiles([]); 
-    }
-  }, [success]);
 
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);

@@ -1,13 +1,12 @@
 export interface User {
-  _id: string;
+  _id?: string;
   fullname: string;
   email: string;
   phone: string;
   birthday: string;
   password: string;
-  role: number;
-  status: number;
-  createdAt: string;
+  role?: number;
+  status?: number;
 }
 
 export interface Color {
@@ -37,19 +36,22 @@ export interface Product {
   price: number;
   discount: number;
   description: string;
-  image: string[];
   slug: string;
   status: number;
   category: Category;
-  inventories: Inventory[];
+  variants: Inventory[];
+  createdAt?: string;
 }
 
 export interface Inventory {
   _id: string;
   product: string;
+  images: string[];
   color: Color;
-  size: Size;
-  quantity: number;
+  inventories: {
+    size: Size;
+    quantity: number;
+  }[];
 }
 
 export interface Coupon {
@@ -121,34 +123,41 @@ export interface ProductInCart {
   _id: string;
   name: string;
   price: number;
-  image: string[];
+  discount: number;
   slug: string;
-  inventory: {
-    size: Size;
+  variant: {
+    _id: string;
+    images: string[];
     color: Color;
+    size: Size;
     quantity: number;
   };
 }
 
 export interface Cart {
+  _id?: string;
+  user?: string;
   productsInCart: ProductInCart[];
   total: number;
-}
-
-export interface ProductWithColors extends Product {
-  colors: Color[];
+  isLoading: boolean;
 }
 
 export interface ProductInWishlist {
   _id: string;
   name: string;
-  price: number;
-  image: string[];
   slug: string;
+  variant: {
+    _id: string;
+    images: string[];
+    color: Color;
+  };
 }
 
 export interface Wishlist {
+  _id?: string;
+  user?: string;
   productsInWishlist: ProductInWishlist[];
+  isLoading: boolean;
 }
 
 export type Ward = {

@@ -137,8 +137,8 @@ function Product() {
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">
                         <Image
-                          Src={product.image[0]}
-                          Alt={""}
+                          Src={product.images[0]}
+                          Alt={product.name}
                           ClassName={"w-[75px] cursor-pointer"}
                           loadingType="lazy"
                         />

@@ -48,6 +48,14 @@ export async function PUT(
       );
     }
 
+    const checkPhone = await User.findOne({ phone, _id: { $ne: id } });
+    if (checkPhone) {
+      return NextResponse.json(
+        { msg: "Số điện thoại đã được sử dụng" },
+        { status: 400 }
+      );
+    }
+
     const updatedData: any = {
       fullname,
       email,

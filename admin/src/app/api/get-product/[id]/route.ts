@@ -25,7 +25,7 @@ export async function GET(
           from: "inventories",
           localField: "_id",
           foreignField: "product",
-          as: "inventory",
+          as: "variants",
         },
       },
     ]);

@@ -1,5 +1,4 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
-import Category from "@/model/Category";
 import Inventory from "@/model/Inventory";
 import OrderDetail from "@/model/OrderDetail";
 import Product from "@/model/Product";
@@ -40,23 +39,24 @@ export async function DELETE(
       );
     }
 
-    if (product.image && Array.isArray(product.image)) {
-      const files = product.image;
+    const inventories = await Inventory.find({ product: id });
 
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const fileName = file.split("/uploads/product/")[1];
-        const filePathAdmin = path.join(
-          process.cwd(),
-          `/public/uploads/product/${fileName}`
-        );
-        const filePathClient = path.join(
-          process.cwd(),
-          `../client/public/uploads/product/${fileName}`
-        );
+    if (inventories) {
+      for (const inventory of inventories) {
+        for (const file of inventory.images) {
+          const fileName = file.split("/uploads/product/")[1];
+          const filePathAdmin = path.join(
+            process.cwd(),
+            `public/uploads/product/${fileName}`
+          );
+          const filePathClient = path.join(
+            process.cwd(),
+            `../client/public/uploads/product/${fileName}`
+          );
 
-        await fs.rm(filePathAdmin, { force: true }).catch(() => {});
-        await fs.rm(filePathClient, { force: true }).catch(() => {});
+          await fs.rm(filePathAdmin, { force: true }).catch(() => {});
+          await fs.rm(filePathClient, { force: true }).catch(() => {});
+        }
       }
     }
 
@@ -65,6 +65,8 @@ export async function DELETE(
 
     return NextResponse.json({ Product: deleteProduct }, { status: 201 });
   } catch (err) {
+    console.log(err);
+
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

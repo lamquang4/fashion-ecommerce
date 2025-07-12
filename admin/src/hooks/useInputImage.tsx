@@ -1,7 +1,7 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-export function useImageViewer(max: number = 1) {
+export function useInputImage(max: number = 1) {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
@@ -31,6 +31,8 @@ export function useImageViewer(max: number = 1) {
     setPreviewImages((prev) => [...prev, ...imageUrls]);
     setSelectedFiles((prev) => [...prev, ...incomingFiles]);
   };
+
+  
 
   return {
     previewImages,

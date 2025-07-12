@@ -31,6 +31,14 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const checkPhone = await User.findOne({ phone });
+    if (checkPhone) {
+      return NextResponse.json(
+        { msg: "Số điện thoại đã được sử dụng" },
+        { status: 400 }
+      );
+    }
+
     const salt = await bcryptjs.genSalt(10);
     const hashpassword = await bcryptjs.hash(password, salt);
     const newUser = await User.create({

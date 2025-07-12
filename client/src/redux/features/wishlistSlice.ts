@@ -1,19 +1,10 @@
 import { ProductInWishlist, Wishlist } from "@/types/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const wishlistLocalStorage = (): Wishlist => {
-  if (typeof window !== "undefined") {
-    const data = localStorage.getItem("wishlist");
-    if (data) {
-      return JSON.parse(data);
-    }
-  }
-  return {
-    productsInWishlist: [],
-  };
+const initialState: Wishlist = {
+  productsInWishlist: [],
+  isLoading: false,
 };
-
-const initialState: Wishlist = wishlistLocalStorage();
 
 export const wishlistSlice = createSlice({
   name: "wishlist",
@@ -34,9 +25,12 @@ export const wishlistSlice = createSlice({
         (product) => product._id !== action.payload._id
       );
     },
+    hideLoading: (state) => {
+      state.isLoading = true;
+    },
   },
 });
 
-export const { addItemToWishlist, removeItemFromWishlist } =
+export const { addItemToWishlist, removeItemFromWishlist, hideLoading } =
   wishlistSlice.actions;
 export default wishlistSlice.reducer;

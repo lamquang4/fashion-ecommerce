@@ -14,8 +14,8 @@ function Inventory() {
     currentPage,
     limit,
     setKeyword,
-    totalQuantity,
     isLoading,
+    totalQuantity,
   } = useGetInventories();
 
   return (
@@ -52,9 +52,6 @@ function Inventory() {
                 Ngày tạo
               </th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem] relative">
-                Tình trạng
-              </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Hành động
               </th>
@@ -68,63 +65,63 @@ function Inventory() {
                 </td>
               </tr>
             ) : inventories.length > 0 ? (
-              inventories.map((inventory, index) => (
-                <tr key={index}>
-                  <td className="pl-[1rem] py-[1rem] w-[300px]">
-                    <div className="flex gap-[10px] items-center">
-                      <div className="cursor-pointer">
-                        <Image
-                          Src={inventory.product.image[0]}
-                          Alt={""}
-                          ClassName={"w-[75px] cursor-pointer"}
-                          loadingType="lazy"
-                        />
+              inventories.map((inventory, index) =>
+                inventory.inventories.map((inv, subIndex) => (
+                  <tr key={`${index}-${subIndex}`}>
+                    <td className="pl-[1rem] py-[1rem] w-[300px]">
+                      <div className="flex gap-[10px] items-center">
+                        <div className="cursor-pointer">
+                          <Image
+                            Src={inventory.images[0]}
+                            Alt={""}
+                            ClassName={"w-[75px] cursor-pointer"}
+                            loadingType="lazy"
+                          />
+                        </div>
+
+                        <div className="flex flex-col gap-[5px]">
+                          <p className="text-[0.9rem] font-medium  text-[#444]">
+                            {inventory.product.name}
+                          </p>
+                        </div>
                       </div>
+                    </td>
 
-                      <div className="flex flex-col gap-[5px]">
-                        <p className="text-[0.9rem] font-medium  text-[#444]">
-                          {inventory.product.name}
-                        </p>
+                    <td className="py-[1rem] text-[0.9rem]  text-[#444]">
+                      <div className="flex gap-[10px] items-center">
+                        <div
+                          className={`w-5 h-5 border-gray-500 border`}
+                          style={{ backgroundColor: inventory.color.codecolor }}
+                        ></div>
+                        {inventory.color.namecolor}
                       </div>
-                    </div>
-                  </td>
+                    </td>
+                    <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                      {inv.size.namesize}
+                    </td>
+                    <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                      {inv.quantity}
+                    </td>
 
-                  <td className="py-[1rem] text-[0.9rem]  text-[#444]">
-                    <div className="flex gap-[10px] items-center">
-                      <div
-                        className={`w-5 h-5 border-gray-500 border`}
-                        style={{ backgroundColor: inventory.color.codecolor }}
-                      ></div>
-                      {inventory.color.namecolor}
-                    </div>
-                  </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {inventory.size.namesize}
-                  </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {inventory.quantity}
-                  </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {new Date(inventory.createdAt as string).toLocaleDateString(
-                      "vi-VN"
-                    )}
-                  </td>
+                    <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                      {new Date(
+                        inventory.createdAt as string
+                      ).toLocaleDateString("vi-VN")}
+                    </td>
 
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {inventory.quantity === 0 ? "Hết hàng" : "Còn hàng"}
-                  </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    <div className="flex items-center gap-[15px]">
-                      <Link href={`/edit-product/${inventory.product._id}`}>
-                        <LiaExternalLinkAltSolid
-                          size={23}
-                          className="text-[#076ffe]"
-                        />
-                      </Link>
-                    </div>
-                  </td>
-                </tr>
-              ))
+                    <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                      <div className="flex items-center gap-[15px]">
+                        <Link href={`/edit-product/${inventory.product._id}`}>
+                          <LiaExternalLinkAltSolid
+                            size={23}
+                            className="text-[#076ffe]"
+                          />
+                        </Link>
+                      </div>
+                    </td>
+                  </tr>
+                ))
+              )
             ) : (
               <tr>
                 <td colSpan={8} className="w-full h-[70vh]">

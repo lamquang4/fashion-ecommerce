@@ -4,7 +4,8 @@ import InputImage from "./InputImage";
 import toast from "react-hot-toast";
 import { useState } from "react";
 import useAddBanner from "@/hooks/useAddBanner";
-import { useImageViewer } from "@/hooks/useImageViewer";
+import { useInputImage } from "@/hooks/useInputImage";
+
 function AddMainBanner() {
   const [success, setSuccess] = useState(false);
 
@@ -17,7 +18,7 @@ function AddMainBanner() {
     setSelectedFiles: setDesktopFiles,
     handlePreviewImage: handleDesktopPreviewImage,
     handleRemovePreviewImage: handleRemoveDesktopPreviewImage,
-  } = useImageViewer(5);
+  } = useInputImage(5);
 
   const {
     previewImages: mobilePreviewImages,
@@ -26,7 +27,7 @@ function AddMainBanner() {
     setSelectedFiles: setMobileFiles,
     handlePreviewImage: handleMobilePreviewImage,
     handleRemovePreviewImage: handleRemoveMobilePreviewImage,
-  } = useImageViewer(5);
+  } = useInputImage(5);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,8 +58,10 @@ function AddMainBanner() {
       }
       toast.success("Thêm thành công!");
 
-      setSuccess(true);
-      setTimeout(() => setSuccess(false), 100);
+      setDesktopPreviewImages([]);
+      setDesktopFiles([]);
+      setMobilePreviewImages([]);
+      setMobileFiles([]);
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -80,12 +83,9 @@ function AddMainBanner() {
 
               <InputImage
                 InputId="desktop-banner"
-                success={success}
                 previewImages={desktopPreviewImages}
                 handlePreviewImage={handleDesktopPreviewImage}
                 handleRemovePreviewImage={handleRemoveDesktopPreviewImage}
-                setPreviewImages={setDesktopPreviewImages}
-                setSelectedFiles={setDesktopFiles}
               />
             </div>
 
@@ -96,12 +96,9 @@ function AddMainBanner() {
 
               <InputImage
                 InputId="mobile-banner"
-                success={success}
                 previewImages={mobilePreviewImages}
                 handlePreviewImage={handleMobilePreviewImage}
                 handleRemovePreviewImage={handleRemoveMobilePreviewImage}
-                setPreviewImages={setMobilePreviewImages}
-                setSelectedFiles={setMobileFiles}
               />
             </div>
           </div>

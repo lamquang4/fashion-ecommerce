@@ -20,22 +20,17 @@ export async function GET(
           as: "category",
         },
       },
-      { $unwind: { path: "$category", preserveNullAndEmptyArrays: true } },
+      { $unwind: "$category" },
       {
         $lookup: {
           from: "inventories",
           let: { productId: "$_id" },
           pipeline: [
-            { $match: { $expr: { $eq: ["$product", "$$productId"] } } },
             {
-              $lookup: {
-                from: "sizes",
-                localField: "size",
-                foreignField: "_id",
-                as: "size",
+              $match: {
+                $expr: { $eq: ["$product", "$$productId"] },
               },
             },
-            { $unwind: "$size" },
             {
               $lookup: {
                 from: "colors",
@@ -45,8 +40,35 @@ export async function GET(
               },
             },
             { $unwind: "$color" },
+            { $unwind: "$inventories" },
+            {
+              $lookup: {
+                from: "sizes",
+                localField: "inventories.size",
+                foreignField: "_id",
+                as: "inventories.size",
+              },
+            },
+            {
+              $unwind: "$inventories.size",
+            },
+            {
+              $group: {
+                _id: "$_id",
+                product: { $first: "$product" },
+                images: { $first: "$images" },
+                color: { $first: "$color" },
+                inventories: {
+                  $push: {
+                    size: "$inventories.size",
+                    quantity: "$inventories.quantity",
+                  },
+                },
+              },
+            },
+            { $sort: { _id: 1 } },
           ],
-          as: "inventories",
+          as: "variants",
         },
       },
     ]);

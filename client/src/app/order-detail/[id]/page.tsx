@@ -1,4 +1,4 @@
-import OrderDetail from "../../components/OrderDetail";
+import OrderDetail from "../../../components/OrderDetail";
 
 function page() {
   return (

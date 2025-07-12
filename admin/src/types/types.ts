@@ -63,42 +63,44 @@ export interface Product {
   price: number;
   discount: number;
   description: string;
-  image: string[];
   slug: string;
   status: number;
   category: Category;
+  images: string[];
   createdAt: string;
   totalSold?: number;
   totalQuantity?: number;
 }
 
 export interface Product1 {
-  _id: string;
   name: string;
   price: number;
   discount: number;
   description: string;
-  image: string[];
-  slug: string;
-  status?: number;
   category: string;
-  inventory: {
-    _id: string;
-    product: string;
-    quantity: number;
-    color: string;
+  variants: InventoryItem[];
+}
+
+export interface InventoryItem {
+  _id: string;
+  images: string[];
+  color: string;
+  inventories: {
     size: string;
+    quantity: number;
   }[];
-  createdAt?: string;
 }
 
 export interface Inventory {
   _id: string;
   product: Product;
+  images: string[];
   color: Color;
-  size: Size;
-  quantity: number;
-  createdAt: string;
+  inventories: {
+    size: Size;
+    quantity: number;
+  }[];
+  createdAt?: string;
 }
 
 export interface Address {

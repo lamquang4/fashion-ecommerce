@@ -20,9 +20,9 @@ export const options: NextAuthOptions = {
         try {
           await connectMongoDB();
           const user = await User.findOne({ email });
-          if (!user) throw new Error("Email hoặc mật khẩu không đúng");
+          if (!user) throw new Error("Email không tồn tại");
 
-          if (![0, 1, 2].includes(user.role)) {
+          if (![4, 5].includes(user.role)) {
             throw new Error("Email hoặc mật khẩu không đúng");
           }
 
@@ -76,6 +76,13 @@ export const options: NextAuthOptions = {
   },
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
-    signIn: "/",
+    signIn: "/login",
   },
 };
+
+/*
+    GoogleProvider({
+      clientId: process.env.GOOGLE_CLIENT_ID!,
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
+    }),
+    */

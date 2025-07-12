@@ -1,12 +1,12 @@
 "use client";
 import useSWR from "swr";
 import axios from "axios";
-import { ProductWithColors } from "@/types/type";
+import { Product } from "@/types/type";
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 type ResponseType = {
-  productsCateogry: ProductWithColors[];
+  productsCateogry: Product[];
 };
 
 export default function useGetProductsCategory(

@@ -33,15 +33,35 @@ export async function GET(req: NextRequest) {
               },
             ]
           : []),
+
+        {
+          $unwind: "$inventories",
+        },
         {
           $lookup: {
             from: "sizes",
-            localField: "size",
+            localField: "inventories.size",
             foreignField: "_id",
-            as: "size",
+            as: "inventories.size",
           },
         },
-        { $unwind: "$size" },
+        {
+          $unwind: "$inventories.size",
+        },
+
+        {
+          $group: {
+            _id: "$_id",
+            product: { $first: "$product" },
+            images: { $first: "$images" },
+            color: { $first: "$color" },
+            createdAt: { $first: "$createdAt" },
+            inventories: {
+              $push: "$inventories",
+            },
+          },
+        },
+
         {
           $lookup: {
             from: "colors",
@@ -50,7 +70,10 @@ export async function GET(req: NextRequest) {
             as: "color",
           },
         },
-        { $unwind: "$color" },
+        {
+          $unwind: "$color",
+        },
+
         { $sort: { "product._id": 1, color: -1 } },
         { $skip: skip },
         { $limit: limit },
@@ -75,7 +98,15 @@ export async function GET(req: NextRequest) {
             ]
           : []),
         {
-          $count: "total",
+          $project: {
+            inventoriesCount: { $size: "$inventories" },
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            total: { $sum: "$inventoriesCount" },
+          },
         },
       ]),
       Inventory.aggregate([
@@ -97,10 +128,11 @@ export async function GET(req: NextRequest) {
               },
             ]
           : []),
+        { $unwind: "$inventories" },
         {
           $group: {
             _id: null,
-            totalQuantity: { $sum: "$quantity" },
+            totalQuantity: { $sum: "$inventories.quantity" },
           },
         },
       ]),

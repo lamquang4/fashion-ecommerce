@@ -1,87 +1,248 @@
 "use client";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export interface Inventory {
-  _id?: string;
   size: string;
-  color: string;
   quantity: number;
 }
 
 export const useInventory = () => {
-  const [newInventories, setNewInventories] = useState<Inventory[]>([
-    { size: "", color: "", quantity: 1 },
-  ]); // mảng chứa object
+  const [newVariants, setNewVariants] = useState<
+    {
+      color: string;
+      inventories: Partial<Inventory>[];
+      previewImages: string[];
+      selectedFiles: File[];
+    }[]
+  >([]);
 
-  const [currentInventories, setCurrentInventories] = useState<Inventory[]>([
-    { size: "", color: "", quantity: 1 },
-  ]);
+  const [currentVariants, setCurrentVariants] = useState<
+    {
+      _id?: string;
+      color: string;
+      inventories: Partial<Inventory>[];
+      previewImages: string[];
+      selectedFiles: File[];
+    }[]
+  >([]);
 
-  const handleSendCurrentInventories = (data: Inventory[]) => {
-    setCurrentInventories(
-      data.map((item) => ({
-        _id: item._id,
-        size: item.size,
-        color: item.color,
-        quantity: item.quantity,
-      }))
-    );
-  };
-
-  const handleAddInventory = () => {
-    if (newInventories.length >= 30) {
+  const handleAddInventoryBlock = () => {
+    if (newVariants.length >= 6) {
       return;
     }
-    setNewInventories((prev) => [
+    setNewVariants((prev) => [
       ...prev,
-      { size: "", color: "", quantity: 1 },
+      {
+        color: "",
+        inventories: [{ size: "", quantity: 1 }],
+        previewImages: [],
+        selectedFiles: [],
+      },
     ]);
   };
 
-  const handleRemoveInventory = (index: number) => {
-    const updated = [...newInventories];
-    updated.splice(index, 1);
-
-    if (updated.length === 0) {
-      updated.push({ size: "", color: "", quantity: 1 });
-    }
-
-    setNewInventories(updated);
+  const handleRemoveNewInventoryBlock = (blockIndex: number) => {
+    const updated = [...newVariants];
+    updated.splice(blockIndex, 1);
+    setNewVariants(updated);
   };
 
-  const handleRemoveAllInventory = () => {
-    setNewInventories([{ size: "", color: "", quantity: 1 }]);
+  const handleAddNewInventory = (blockIndex: number) => {
+    const updated = [...newVariants];
+    if (updated[blockIndex].inventories.length >= 6) return;
+
+    updated[blockIndex].inventories.push({
+      size: "",
+      quantity: 1,
+    });
+    setNewVariants(updated);
   };
 
-  const handleChangeInventory = (
+  const handleAddCurrentInventory = (blockIndex: number) => {
+    const updated = [...currentVariants];
+    if (updated[blockIndex].inventories.length >= 6) return;
+
+    updated[blockIndex].inventories.push({
+      size: "",
+      quantity: 1,
+    });
+    setCurrentVariants(updated);
+  };
+
+  const handleRemoveNewInventory = (blockIndex: number, index: number) => {
+    const updated = [...newVariants];
+
+    if (updated[blockIndex].inventories.length <= 1) return;
+
+    updated[blockIndex].inventories.splice(index, 1);
+
+    setNewVariants(updated);
+  };
+
+  const handleRemoveCurrentInventory = (blockIndex: number, index: number) => {
+    const updated = [...currentVariants];
+
+    if (updated[blockIndex].inventories.length <= 1) return;
+
+    updated[blockIndex].inventories.splice(index, 1);
+
+    setCurrentVariants(updated);
+  };
+
+  const handleRemoveAllNewInventories = (blockIndex: number) => {
+    const updated = [...newVariants];
+    updated[blockIndex].inventories = [{ size: "", quantity: 1 }];
+    setNewVariants(updated);
+  };
+
+  const handleRemoveAllCurrentInventories = (blockIndex: number) => {
+    const updated = [...currentVariants];
+    updated[blockIndex].inventories = [{ size: "", quantity: 1 }];
+    setCurrentVariants(updated);
+  };
+
+  const handleRemoveAllInventoryBlocks = () => {
+    setNewVariants([]);
+  };
+
+  const handleChangeNewInventory = (
+    blockIndex: number,
     index: number,
     field: keyof Inventory,
     value: string | number
   ) => {
-    const updated = [...newInventories];
-    updated[index][field] = value as never;
-    setNewInventories(updated);
+    const updated = [...newVariants];
+    updated[blockIndex].inventories[index][field] = value as never;
+    setNewVariants(updated);
   };
 
   const handleChangeCurrentInventory = (
+    blockIndex: number,
     index: number,
     field: keyof Inventory,
     value: string | number
   ) => {
-    const updated = [...currentInventories];
-    updated[index][field] = value as never;
-    setCurrentInventories(updated);
+    const updated = [...currentVariants];
+    updated[blockIndex].inventories[index][field] = value as never;
+    setCurrentVariants(updated);
+  };
+
+  const handleImage = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    blockIndex: number
+  ) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const incomingFiles = Array.from(files);
+
+    const updated = [...newVariants];
+    const currentPreviewImages = updated[blockIndex].previewImages || [];
+    const currentSelectedFiles = updated[blockIndex].selectedFiles || [];
+
+    const max = 5;
+
+    if (currentPreviewImages.length + incomingFiles.length > max) {
+      toast.error(`Tổng số hình không được vượt quá ${max}.`);
+      return;
+    }
+
+    const imageUrls = incomingFiles.map((file) => URL.createObjectURL(file));
+
+    updated[blockIndex].previewImages = [...currentPreviewImages, ...imageUrls];
+    updated[blockIndex].selectedFiles = [
+      ...currentSelectedFiles,
+      ...incomingFiles,
+    ];
+
+    setNewVariants(updated);
+  };
+
+  const handleRemoveImage = (imageIndex: number, blockIndex: number) => {
+    const updated = [...newVariants];
+    const previewImages = updated[blockIndex].previewImages;
+    const selectedFiles = updated[blockIndex].selectedFiles;
+
+    URL.revokeObjectURL(previewImages[imageIndex]);
+
+    updated[blockIndex].previewImages = previewImages.filter(
+      (_, i) => i !== imageIndex
+    );
+    updated[blockIndex].selectedFiles = selectedFiles.filter(
+      (_, i) => i !== imageIndex
+    );
+
+    setNewVariants(updated);
+  };
+
+  const handleImageCurrent = (
+    e: React.ChangeEvent<HTMLInputElement>,
+    blockIndex: number
+  ) => {
+    const files = e.target.files;
+    if (!files) return;
+
+    const incomingFiles = Array.from(files);
+
+    const updated = [...currentVariants];
+    const currentPreviewImages = updated[blockIndex].previewImages || [];
+    const currentSelectedFiles = updated[blockIndex].selectedFiles || [];
+
+    const max = 5;
+
+    if (currentPreviewImages.length + incomingFiles.length > max) {
+      toast.error(`Tổng số hình không được vượt quá ${max}.`);
+      return;
+    }
+
+    const imageUrls = incomingFiles.map((file) => URL.createObjectURL(file));
+
+    updated[blockIndex].previewImages = [...currentPreviewImages, ...imageUrls];
+    updated[blockIndex].selectedFiles = [
+      ...currentSelectedFiles,
+      ...incomingFiles,
+    ];
+
+    setCurrentVariants(updated);
+  };
+
+  const handleRemoveImageCurrent = (imageIndex: number, blockIndex: number) => {
+    const updated = [...currentVariants];
+    const previewImages = updated[blockIndex].previewImages;
+    const selectedFiles = updated[blockIndex].selectedFiles;
+
+    URL.revokeObjectURL(previewImages[imageIndex]);
+
+    updated[blockIndex].previewImages = previewImages.filter(
+      (_, i) => i !== imageIndex
+    );
+    updated[blockIndex].selectedFiles = selectedFiles.filter(
+      (_, i) => i !== imageIndex
+    );
+
+    setCurrentVariants(updated);
   };
 
   return {
-    newInventories,
-    setNewInventories,
-    currentInventories,
-    handleAddInventory,
-    handleChangeInventory,
+    newVariants,
+    setNewVariants,
+    currentVariants,
+    setCurrentVariants,
+    handleRemoveNewInventoryBlock,
+    handleAddNewInventory,
+    handleAddCurrentInventory,
+    handleChangeNewInventory,
     handleChangeCurrentInventory,
-    handleRemoveInventory,
-    handleRemoveAllInventory,
-    handleSendCurrentInventories,
+    handleRemoveNewInventory,
+    handleRemoveCurrentInventory,
+    handleRemoveAllNewInventories,
+    handleRemoveAllCurrentInventories,
+    handleAddInventoryBlock,
+    handleRemoveAllInventoryBlocks,
+    handleImage,
+    handleRemoveImage,
+    handleImageCurrent,
+    handleRemoveImageCurrent,
   };
 };

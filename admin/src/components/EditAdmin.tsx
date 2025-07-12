@@ -32,7 +32,10 @@ function EditAdmin() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setData((prev) => ({ ...prev, [name]: value }));
+    setData((prev) => ({
+      ...prev,
+      [name]: name === "email" ? value.toLowerCase() : value,
+    }));
   };
 
   useEffect(() => {
@@ -61,7 +64,7 @@ function EditAdmin() {
     try {
       await updateUser({
         fullname: data.fullname.trim(),
-        email: data.email.trim(),
+        email: data.email.toLowerCase().trim(),
         phone: data.phone.trim(),
         birthday: data.birthday,
         password: data.password.trim(),

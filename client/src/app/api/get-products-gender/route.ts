@@ -30,25 +30,45 @@ export async function GET(req: NextRequest) {
                 },
               },
               {
-                $group: {
-                  _id: "$color",
-                },
-              },
-              {
                 $lookup: {
                   from: "colors",
-                  localField: "_id",
+                  localField: "color",
                   foreignField: "_id",
                   as: "color",
                 },
               },
               { $unwind: "$color" },
-              { $replaceRoot: { newRoot: "$color" } },
+              { $unwind: "$inventories" },
+              {
+                $lookup: {
+                  from: "sizes",
+                  localField: "inventories.size",
+                  foreignField: "_id",
+                  as: "inventories.size",
+                },
+              },
+              {
+                $unwind: "$inventories.size",
+              },
+              {
+                $group: {
+                  _id: "$_id",
+                  product: { $first: "$product" },
+                  images: { $first: "$images" },
+                  color: { $first: "$color" },
+                  inventories: {
+                    $push: {
+                      size: "$inventories.size",
+                      quantity: "$inventories.quantity",
+                    },
+                  },
+                },
+              },
+              { $sort: { _id: 1 } },
             ],
-            as: "colors",
+            as: "variants",
           },
         },
-        { $sort: { createdAt: -1 } },
         { $limit: limit },
       ]);
     };

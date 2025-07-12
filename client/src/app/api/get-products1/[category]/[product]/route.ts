@@ -27,36 +27,57 @@ export async function GET(
         },
       },
       { $unwind: "$category" },
-      { $match: { "category.gender": 1 } },
       {
         $lookup: {
           from: "inventories",
           let: { productId: "$_id" },
           pipeline: [
-            { $match: { $expr: { $eq: ["$product", "$$productId"] } } },
             {
-              $group: {
-                _id: "$color",
+              $match: {
+                $expr: { $eq: ["$product", "$$productId"] },
               },
             },
             {
               $lookup: {
                 from: "colors",
-                localField: "_id",
+                localField: "color",
                 foreignField: "_id",
                 as: "color",
               },
             },
             { $unwind: "$color" },
+            { $unwind: "$inventories" },
             {
-              $replaceRoot: { newRoot: "$color" },
+              $lookup: {
+                from: "sizes",
+                localField: "inventories.size",
+                foreignField: "_id",
+                as: "inventories.size",
+              },
             },
+            {
+              $unwind: "$inventories.size",
+            },
+            {
+              $group: {
+                _id: "$_id",
+                product: { $first: "$product" },
+                images: { $first: "$images" },
+                color: { $first: "$color" },
+                inventories: {
+                  $push: {
+                    size: "$inventories.size",
+                    quantity: "$inventories.quantity",
+                  },
+                },
+              },
+            },
+            { $sort: { _id: 1 } },
           ],
-          as: "colors",
+          as: "variants",
         },
       },
       { $limit: limit },
-      { $sort: { createdAt: -1 } },
     ]);
 
     if (!productsCateogry) {

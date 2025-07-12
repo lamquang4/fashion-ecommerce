@@ -12,7 +12,7 @@ import useGetCoupons from "@/hooks/useGetCoupons";
 import { useDispatch, useSelector } from "react-redux";
 import { addItemToCart } from "@/redux/features/cartSlice";
 import toast from "react-hot-toast";
-import { Color, ProductInWishlist, Size } from "@/types/type";
+import { Color, Inventory, Size } from "@/types/type";
 import {
   addItemToWishlist,
   removeItemFromWishlist,
@@ -25,81 +25,61 @@ function ProductDetail() {
   const slug = params.slug as string;
   const { product, isLoading } = useGetProductSlug(slug);
   const { coupons } = useGetCoupons();
-  const [colors, setColors] = useState<Color[]>([]);
-  const [sizes, setSizes] = useState<Size[]>([]);
-  const [quantity, setQuantity] = useState(1);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [selectedSize, setSelectedSize] = useState<string>("");
-  const [selectedColor, setSelectedColor] = useState<string>("");
+  const [quantity, setQuantity] = useState<number>(1);
+  const [selectedInventory, setSelectedInventory] = useState<Inventory>();
+  const [selectedSize, setSelectedSize] = useState<Size>();
+  const [selectedColor, setSelectedColor] = useState<Color>();
   const [mainImage, setMainImage] = useState<string>("");
   const [isInStock, setIsInStock] = useState<boolean>(true);
-  const [menuOpen, setMenuOpen] = useState(false);
-  const [openViewer, setOpenViewer] = useState(false);
+  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
+  const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
   const dispatch = useDispatch();
 
-  const handleNextImage = () => {
-    if (!product?.image) return;
-    const nextIndex =
-      currentImageIndex + 1 >= product.image.length ? 0 : currentImageIndex + 1;
-    setCurrentImageIndex(nextIndex);
-    setMainImage(product.image[nextIndex]);
-  };
-
-  const handlePrevImage = () => {
-    if (!product?.image) return;
-    const prevIndex =
-      currentImageIndex - 1 < 0
-        ? product.image.length - 1
-        : currentImageIndex - 1;
-    setCurrentImageIndex(prevIndex);
-    setMainImage(product.image[prevIndex]);
-  };
-
   useEffect(() => {
-    if (product?.image?.length) {
-      setMainImage(product.image[0]);
-      setCurrentImageIndex(0);
-    }
-
-    if (product?.inventories?.length) {
-      const uniqueColors = Array.from(
-        new Map(
-          product.inventories.map((inv) => [inv.color._id, inv.color])
-        ).values()
-      );
-
-      const uniqueSizes = Array.from(
-        new Map(
-          product.inventories.map((inv) => [inv.size._id, inv.size])
-        ).values()
-      );
-
-      setColors(uniqueColors);
-      setSizes(uniqueSizes);
+    if (product?.variants && product.variants.length > 0) {
+      setMainImage(product.variants[0].images[0]);
+      setSelectedColor(product.variants[0].color);
+      setSelectedInventory(product.variants[0]);
     }
   }, [product]);
+
+  useEffect(() => {
+    if (selectedInventory && selectedSize) {
+      const match = selectedInventory.inventories.find(
+        (inv) => inv.size._id === selectedSize._id
+      );
+      if (match?.quantity) {
+        setIsInStock(true);
+      } else {
+        setIsInStock(false);
+      }
+    }
+  }, [selectedInventory, selectedSize]);
 
   const wishlist = useSelector(
     (state: RootState) => state.wishlistSlice.productsInWishlist
   );
   const isInWishlist = wishlist.some((item) => item._id === product?._id);
 
-  useEffect(() => {
-    if (!selectedColor || !selectedSize || !product?.inventories) {
-      setIsInStock(true);
-      return;
-    }
+  const allImages =
+    product?.variants.flatMap((variant) => variant.images) || [];
 
-    const matchingInventory = product.inventories.find(
-      (inv) =>
-        inv.color.namecolor === selectedColor &&
-        inv.size.namesize === selectedSize &&
-        inv.quantity > 0
-    );
+  const handleNextImage = () => {
+    if (!allImages.length) return;
+    const nextIndex = (currentImageIndex + 1) % allImages.length;
+    setCurrentImageIndex(nextIndex);
+    setMainImage(allImages[nextIndex]);
+  };
 
-    setIsInStock(!!matchingInventory);
-  }, [selectedColor, selectedSize, product]);
+  const handlePrevImage = () => {
+    if (!allImages.length) return;
+    const prevIndex =
+      currentImageIndex - 1 < 0 ? allImages.length - 1 : currentImageIndex - 1;
+    setCurrentImageIndex(prevIndex);
+    setMainImage(allImages[prevIndex]);
+  };
 
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);
@@ -111,7 +91,7 @@ function ProductDetail() {
   };
 
   const HandleIncrement = () => {
-    setQuantity((prev) => (prev < 90 ? prev + 1 : prev));
+    setQuantity((prev) => (prev < 15 ? prev + 1 : prev));
   };
 
   const HandleDecrement = () => {
@@ -144,57 +124,81 @@ function ProductDetail() {
       return;
     }
 
-    const sizeObj = sizes.find((s) => s.namesize === selectedSize);
-    const colorObj = colors.find((c) => c.namecolor === selectedColor);
+    if (!selectedInventory) {
+      return;
+    }
 
-    if (!sizeObj || !colorObj) return;
-
-    const productToAdd = {
+    const productAdd = {
       _id: product._id,
       name: product.name,
-      image: product.image,
       slug: product.slug,
+      discount: product.discount,
       price:
         product.discount !== 0
           ? product.price - product.discount
           : product.price,
-      inventory: {
-        size: {
-          _id: sizeObj._id,
-          namesize: sizeObj.namesize,
-        },
+      variant: {
+        _id: selectedInventory._id,
+        images: selectedInventory.images,
         color: {
-          _id: colorObj._id,
-          namecolor: colorObj.namecolor,
-          codecolor: colorObj.codecolor,
+          _id: selectedInventory.color._id,
+          namecolor: selectedInventory.color.namecolor,
+          codecolor: selectedInventory.color.codecolor,
+        },
+        size: {
+          _id: selectedSize._id,
+          namesize: selectedSize.namesize,
         },
         quantity: quantity,
       },
     };
-
-    dispatch(addItemToCart(productToAdd));
+    dispatch(addItemToCart(productAdd));
     toast.success("Đã thêm vào giỏ hàng!");
   };
 
-  const handleAddToWishlist = (product: ProductInWishlist) => {
+  const handleAddToWishlist = () => {
+    if (!selectedInventory || !product) return;
+
     const productToAdd = {
       _id: product._id,
       name: product.name,
-      price: product.price,
-      image: product.image,
       slug: product.slug,
+      variant: {
+        _id: selectedInventory._id,
+        images: selectedInventory.images,
+        color: {
+          _id: selectedInventory.color._id,
+          namecolor: selectedInventory.color.namecolor,
+          codecolor: selectedInventory.color.codecolor,
+        },
+      },
     };
 
     dispatch(addItemToWishlist(productToAdd));
+    toast.success("Đã thêm vào yêu thích!");
   };
 
-  const handleRemove = (product: ProductInWishlist) => {
+  const handleRemove = () => {
+    if (!product) {
+      return;
+    }
     dispatch(
       removeItemFromWishlist({
         _id: product._id,
       })
     );
   };
+
+  const uniqueSizes = [
+    ...new Map(
+      product?.variants
+        .flatMap((variant) => variant.inventories)
+        .map((inv) => [inv.size._id, inv.size])
+    ).values(),
+  ];
+
+  console.log(product);
+  console.log("inv", selectedInventory);
 
   return (
     <>
@@ -207,8 +211,8 @@ function ProductDetail() {
                   <div className="relative group">
                     <button
                       type="button"
+                      onClick={handleNextImage}
                       className="absolute right-1.5 top-1/2 -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300"
-                      onClick={() => handleNextImage()}
                     >
                       <GrNext size={28} />
                     </button>
@@ -233,8 +237,8 @@ function ProductDetail() {
 
                     <button
                       type="button"
+                      onClick={handlePrevImage}
                       className="absolute left-1.5 top-1/2 -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300"
-                      onClick={() => handlePrevImage()}
                     >
                       <GrPrevious size={28} />
                     </button>
@@ -244,20 +248,22 @@ function ProductDetail() {
 
               <div className="md:order-1 flex justify-center">
                 <div className=" max-h-fit flex flex-row xl:flex-col gap-[15px] overflow-x-auto md:overflow-x-hidden md:overflow-y-auto">
-                  {product?.image?.map((img, index) => (
-                    <div
-                      key={index}
-                      className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
-                      onMouseEnter={() => setMainImage(img)}
-                    >
-                      <Image
-                        Src={img}
-                        Alt=""
-                        ClassName="w-full h-full object-cover"
-                        loadingType="eager"
-                      />
-                    </div>
-                  ))}
+                  {product?.variants.map((variant) =>
+                    variant.images.map((img, index) => (
+                      <div
+                        key={index}
+                        className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
+                        onMouseEnter={() => setMainImage(img)}
+                      >
+                        <Image
+                          Src={img}
+                          Alt=""
+                          ClassName="w-full h-full object-cover"
+                          loadingType="eager"
+                        />
+                      </div>
+                    ))
+                  )}
                 </div>
               </div>
             </div>
@@ -267,29 +273,31 @@ function ProductDetail() {
             <div className="py-[10px]">
               <div className="mb-[12px]">
                 <p className="text-[1rem] mb-[5px]">
-                  {product?.category.namecategory} /{" "}
-                  {product?.category.gender === 1 ? "Nam" : "Nữ"}
+                  {product?.category?.namecategory} /{" "}
+                  {product?.category?.gender === 1 ? "Nam" : "Nữ"}
                 </p>
                 <h2 className="text-[1.3rem] mb-[5px] font-medium">
                   {product?.name}
                 </h2>
-                <div className="text-[1.5rem] flex gap-[15px] font-medium">
+                <div className="text-[1.5rem] flex gap-[15px] font-semibold">
                   {product?.discount !== 0 && (
                     <del className="text-[#707072] font-light">
-                      {product?.price.toLocaleString("vi-VN")}₫
+                      {product?.price.toLocaleString("vi-VN") || 0}₫
                     </del>
                   )}
 
                   {product?.discount === 0 && (
-                    <span>{product?.price.toLocaleString("vi-VN")}₫</span>
+                    <span>{product?.price.toLocaleString("vi-VN") || 0}₫</span>
                   )}
 
                   {product?.discount !== 0 && (
-                    <span>
-                      {product &&
+                    <span className="text-[#c00]">
+                      {(product &&
                         (product?.price - product?.discount).toLocaleString(
                           "vi-VN"
-                        )}
+                        )) ||
+                        0}
+                      ₫
                     </span>
                   )}
                 </div>
@@ -329,31 +337,34 @@ function ProductDetail() {
 
                 <div className="mb-[15px]">
                   <p className="text-gray-700 font-medium mb-[5px]">
-                    Màu sắc: {selectedColor}
+                    Màu sắc: {selectedColor?.namecolor}
                   </p>
                   <div className="flex space-x-2">
-                    {colors?.length > 0 &&
-                      colors?.map((color, index) => (
-                        <button
-                          key={index}
-                          type="button"
-                          title={color?.namecolor}
-                          onClick={() => setSelectedColor(color?.namecolor)}
-                          style={{ backgroundColor: `${color?.codecolor}` }}
-                          className={`w-8 h-8  ${
-                            selectedColor === `${color.namecolor}`
-                              ? "border border-red-600"
-                              : "border-gray-300 border"
-                          }`}
-                        ></button>
-                      ))}
+                    {product?.variants.map((inv, index) => (
+                      <button
+                        key={index}
+                        type="button"
+                        title={inv.color.namecolor}
+                        onClick={() => {
+                          setSelectedColor(inv.color);
+                          setSelectedInventory(inv);
+                          setMainImage(inv.images?.[0]);
+                        }}
+                        style={{ backgroundColor: `${inv.color.codecolor}` }}
+                        className={`w-8 h-8 rounded-full  ${
+                          selectedColor?.namecolor === `${inv.color.namecolor}`
+                            ? "border border-red-800"
+                            : "border-gray-300 border"
+                        }`}
+                      ></button>
+                    ))}
                   </div>
                 </div>
 
                 <div className="flex flex-col space-y-2 mb-[15px]">
                   <div className="flex justify-between">
                     <p className="text-gray-700 font-medium mb-[5px]">
-                      Kích thước: {selectedSize}
+                      Kích thước: {selectedSize?.namesize}
                     </p>
 
                     <button
@@ -369,21 +380,20 @@ function ProductDetail() {
                   </div>
 
                   <div className="flex space-x-2">
-                    {sizes.length > 0 &&
-                      sizes.map((size, index) => (
-                        <button
-                          key={index}
-                          type="button"
-                          className={`w-12.5 h-8.5 border text-black font-medium text-[0.95rem] ${
-                            selectedSize === `${size.namesize}`
-                              ? "bg-transparent text-black border-black"
-                              : "border-gray-300 hover:border-gray-400"
-                          }`}
-                          onClick={() => setSelectedSize(size.namesize)}
-                        >
-                          {size.namesize}
-                        </button>
-                      ))}
+                    {uniqueSizes.map((size, index) => (
+                      <button
+                        key={index}
+                        type="button"
+                        className={`w-13.5 h-8.5 border text-black font-medium text-[0.95rem] ${
+                          selectedSize?.namesize === size.namesize
+                            ? "bg-transparent text-black border-black"
+                            : "border-gray-300 hover:border-gray-400"
+                        }`}
+                        onClick={() => setSelectedSize(size)}
+                      >
+                        {size.namesize}
+                      </button>
+                    ))}
                   </div>
                 </div>
 
@@ -409,7 +419,7 @@ function ProductDetail() {
                   <button
                     type="button"
                     onClick={HandleIncrement}
-                    disabled={quantity >= 99}
+                    disabled={quantity >= 15}
                     className=" p-3 h-11 outline-none"
                   >
                     <HiOutlinePlusSmall size={22} />
@@ -433,10 +443,12 @@ function ProductDetail() {
                   <button
                     type="button"
                     onClick={() => {
-                      if (product) {
-                        isInWishlist
-                          ? handleRemove(product)
-                          : handleAddToWishlist(product);
+                      if (!selectedInventory || !product) return;
+
+                      if (isInWishlist) {
+                        handleRemove();
+                      } else {
+                        handleAddToWishlist();
                       }
                     }}
                     className={`px-[10px] py-[10px] w-full uppercase flex hover:border-black hover:bg-[#F7F7F7] gap-[5px] justify-center items-center text-[0.9rem] border font-medium  ${

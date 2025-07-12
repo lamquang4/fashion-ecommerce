@@ -1,11 +1,11 @@
 "use client";
-import { ProductWithColors } from "@/types/type";
+import { Product } from "@/types/type";
 import axios from "axios";
 import useSWR from "swr";
 
 type ResponseType = {
-  productsMale: ProductWithColors[];
-  productsFemale: ProductWithColors[];
+  productsMale: Product;
+  productsFemale: Product;
 };
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);

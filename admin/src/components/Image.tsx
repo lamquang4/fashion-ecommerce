@@ -12,3 +12,4 @@ function Image({ Src, Alt, ClassName, loadingType }: ImageProps) {
 }
 
 export default Image;
+

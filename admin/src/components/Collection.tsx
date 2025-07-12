@@ -6,8 +6,9 @@ import useGetCollections from "@/hooks/useGetCollections";
 import toast from "react-hot-toast";
 import useAddBanner from "@/hooks/useAddBanner";
 import useUpdateBanner from "@/hooks/useUpdateBanner";
-import { useImageViewer1 } from "@/hooks/useImageViewer1";
+import { useInputImage1 } from "@/hooks/useInputImage1";
 import Loading from "./Loading";
+
 function Collection() {
   const { collections, mutate, isLoading } = useGetCollections();
   const { addBanner } = useAddBanner();
@@ -19,7 +20,12 @@ function Collection() {
     setPreviewImages1,
     onFileSelect,
     handleClear,
-  } = useImageViewer1();
+  } = useInputImage1();
+
+  const handleReset = () => {
+    setSelectedFiles1([]);
+    setPreviewImages1([]);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -45,8 +51,7 @@ function Collection() {
 
       mutate();
       toast.success("Cập nhật thành công!");
-      setSelectedFiles1([]);
-      setPreviewImages1([]);
+      handleReset();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }

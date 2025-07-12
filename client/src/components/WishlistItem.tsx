@@ -5,20 +5,19 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { ProductInWishlist } from "@/types/type";
-import { removeItemFromWishlist } from "@/redux/features/wishlistSlice";
+import {
+  hideLoading,
+  removeItemFromWishlist,
+} from "@/redux/features/wishlistSlice";
 import Loading from "./Loading";
 import React from "react";
 function WishlistItem() {
-  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
   const wishlist = useSelector((state: RootState) => state.wishlistSlice);
 
   useEffect(() => {
-    const timeout = setTimeout(() => {
-      setIsLoading(true);
-    }, 200);
-    return () => clearTimeout(timeout);
-  }, []);
+    dispatch(hideLoading());
+  }, [dispatch]);
 
   const handleRemove = (item: ProductInWishlist) => {
     dispatch(
@@ -32,13 +31,13 @@ function WishlistItem() {
       <section className="max-w-[1230px] mx-auto  mt-[40px] sm:mt-[45px]">
         <div className=" px-[10px] sm:px-[15px]">
           <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
-            Yêu thích
+            Yêu thích ({wishlist.productsInWishlist.length})
           </h2>
-          {!isLoading ? (
+          {!wishlist.isLoading ? (
             <Loading height={60} />
           ) : wishlist.productsInWishlist.length > 0 ? (
-            <div className="grid md:grid-cols-1 gap-8 max-w-xl mx-auto">
-              <div className="md:col-span-2 bg-white px-2.5 sm:px-4 border border-gray-300 rounded-md">
+            <div className="flex gap-8 max-w-xl mx-auto w-full">
+              <div className="basis-[100%] bg-white px-2.5 sm:px-4 border border-gray-300 rounded-md">
                 {wishlist.productsInWishlist.map((item, index) => (
                   <React.Fragment key={index}>
                     <div className="flex gap-4 bg-white py-6">
@@ -46,7 +45,7 @@ function WishlistItem() {
                         <Link href={`/product/${item.slug}`}>
                           <div className="w-full max-w-[150px] shrink-0">
                             <Image
-                              Src={item.image[0]}
+                              Src={item.variant.images[0]}
                               Alt={""}
                               ClassName={"w-full h-full object-cover"}
                               loadingType="eager"
@@ -55,24 +54,19 @@ function WishlistItem() {
                         </Link>
 
                         <div className="flex flex-col gap-4">
-                          <div>
-                            <p className="text-[0.85rem] sm:text-[0.95rem] font-normal text-slate-900">
-                              {item.name}
-                            </p>
-                            <p className="text-[0.85rem] sm:text-[0.95rem] font-normal mt-2 flex items-center gap-2">
-                              Giá:
-                              <span className="inline-block">
-                                {item.price.toLocaleString("vi-VN")}₫
-                              </span>
-                            </p>
-                          </div>
+                          <p className="text-[0.85rem] sm:text-[0.95rem] font-normal text-slate-900">
+                            {item.name}
+                          </p>
+                          <p className="text-[0.85rem] sm:text-[0.95rem] font-normal text-slate-900">
+                            Màu sắc: {item.variant.color.namecolor}
+                          </p>
                         </div>
                       </div>
                       <div className="ml-auto flex flex-col">
                         <div className="flex gap-4 justify-end">
                           <button
                             onClick={() => handleRemove(item)}
-                            className="p-1 text-red-500 duration-200 hover:scale-110"
+                            className="p-1 text-black duration-200 hover:scale-110"
                           >
                             <svg viewBox="0 0 256 256" width="22" height="22">
                               <rect fill="none" height="256" width="256" />

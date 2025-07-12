@@ -1,6 +1,6 @@
 "use client";
 import { useState } from "react";
-export const useImageViewer1 = () => {
+export const useInputImage1 = () => {
   const [previewImages1, setPreviewImages1] = useState<string[]>([]);
   const [selectedFiles1, setSelectedFiles1] = useState<File[]>([]);
   const onFileSelect = (file: File, index: number) => {

@@ -14,6 +14,7 @@ import useGetCategories from "@/hooks/useGetCategories";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 function Header() {
   const [search, setSearch] = useState("");
   const { categoriesMale, categoriesFemale } = useGetCategories();
@@ -21,6 +22,9 @@ function Header() {
   const [menuMobileOpen, setMenuMobileOpen] = useState(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
   const router = useRouter();
+
+  const { data: session } = useSession();
+
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!search.trim()) {
@@ -211,19 +215,20 @@ function Header() {
                 </form>
               </div>
 
-              <div
-                className="relative cursor-pointer group"
-                onMouseOver={toggleProfileMenu}
-                onMouseOut={toggleProfileMenu}
-              >
-                <CiUser size={24} />
-                <ProfileMenu isOpen={profileMenuOpen} />
-              </div>
-              {/*
-      <Link href={"/login"}>
-      <CiUser size={24} />
-    </Link>
-    */}
+              {session?.user.fullname ? (
+                <div
+                  className="relative cursor-pointer group"
+                  onMouseOver={toggleProfileMenu}
+                  onMouseOut={toggleProfileMenu}
+                >
+                  <CiUser size={24} />
+                  <ProfileMenu isOpen={profileMenuOpen} />
+                </div>
+              ) : (
+                <Link href={"/login"}>
+                  <CiUser size={24} />
+                </Link>
+              )}
 
               <Link href={"/cart"} className="relative" title="Giỏ hàng">
                 <CiShoppingCart size={26} title="Giỏ hàng" />
@@ -287,20 +292,20 @@ function Header() {
                 <CiSearch size={24} title="Tìm kiếm" />
               </button>
 
-              <div
-                className="relative cursor-pointer group"
-                onMouseOver={toggleProfileMenu}
-                onMouseOut={toggleProfileMenu}
-              >
-                <CiUser size={24} />
-                <ProfileMenu isOpen={profileMenuOpen} />
-              </div>
-
-              {/*
-  <Link href={"/login"}>
-  <CiUser size={24} />
-</Link>
-*/}
+              {session?.user.fullname ? (
+                <div
+                  className="relative cursor-pointer group"
+                  onMouseOver={toggleProfileMenu}
+                  onMouseOut={toggleProfileMenu}
+                >
+                  <CiUser size={24} />
+                  <ProfileMenu isOpen={profileMenuOpen} />
+                </div>
+              ) : (
+                <Link href={"/login"}>
+                  <CiUser size={24} />
+                </Link>
+              )}
 
               <Link href={"/cart"} className="relative" title="Giỏ hàng">
                 <CiShoppingCart size={26} title="Giỏ hàng" />

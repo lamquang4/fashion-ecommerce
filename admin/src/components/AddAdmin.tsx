@@ -22,9 +22,12 @@ function AddAdmin() {
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setData((prev) => ({ ...prev, [name]: value }));
+    setData((prev) => ({
+      ...prev,
+      [name]: name === "email" ? value.toLowerCase() : value,
+    }));
   };
-
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateEmail(data.email.trim())) {
@@ -38,7 +41,7 @@ function AddAdmin() {
     try {
       await addAdmin({
         fullname: data.fullname.trim(),
-        email: data.email.trim(),
+        email: data.email.toLowerCase().trim(),
         phone: data.phone.trim(),
         birthday: data.birthday,
         password: data.password.trim(),

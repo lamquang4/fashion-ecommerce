@@ -59,7 +59,7 @@ function AddCoupon() {
 
     if (data.discountType === "2") {
       if (!validatePositiveNumber(data.discountValue)) {
-        toast.error("Giá trị cố định giảm giá phải lớn hơn 0");
+        toast.error("Giá trị tiền cố định giảm giá phải lớn hơn 0");
         return;
       }
     }
@@ -215,8 +215,8 @@ function AddCoupon() {
 
             <div className="flex flex-col gap-1">
               <label htmlFor="" className="text-[0.95rem] text-black">
-                Giá trị tối thiểu của đơn hàng để áp dụng phiếu (0 để áp dụng
-                cho mọi đơn hàng)
+                Giá trị tiền cố định tối thiểu của đơn hàng để áp dụng phiếu (0
+                để áp dụng cho mọi đơn hàng)
               </label>
               <input
                 type="number"

@@ -4,6 +4,7 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 const initialState: Cart = {
   productsInCart: [],
   total: 0,
+  isLoading: false,
 };
 
 export const cartSlice = createSlice({
@@ -15,19 +16,19 @@ export const cartSlice = createSlice({
       const existingProduct = state.productsInCart.find(
         (product) =>
           product._id === action.payload._id &&
-          product.inventory.size._id === action.payload.inventory.size._id &&
-          product.inventory.color._id === action.payload.inventory.color._id
+          product.variant.size._id === action.payload.variant.size._id &&
+          product.variant.color._id === action.payload.variant.color._id
       );
 
       if (existingProduct) {
-        existingProduct.inventory.quantity += action.payload.inventory.quantity;
+        existingProduct.variant.quantity += action.payload.variant.quantity;
       } else {
         state.productsInCart.push(action.payload);
       }
 
       // Cập nhật tổng tiền
       const total = state.productsInCart.reduce((sum, item) => {
-        return sum + item.price * item.inventory.quantity;
+        return sum + item.price * item.variant.quantity;
       }, 0);
 
       state.total = total;
@@ -42,14 +43,14 @@ export const cartSlice = createSlice({
         (product) =>
           !(
             product._id === action.payload._id &&
-            product.inventory.size._id === action.payload.sizeId &&
-            product.inventory.color._id === action.payload.colorId
+            product.variant.size._id === action.payload.sizeId &&
+            product.variant.color._id === action.payload.colorId
           )
       );
 
       // Cập nhật tổng tiền
       state.total = state.productsInCart.reduce((sum, item) => {
-        return sum + item.price * item.inventory.quantity;
+        return sum + item.price * item.variant.quantity;
       }, 0);
     },
 
@@ -66,21 +67,21 @@ export const cartSlice = createSlice({
       const product = state.productsInCart.find(
         (item) =>
           item._id === action.payload._id &&
-          item.inventory.size._id === action.payload.sizeId &&
-          item.inventory.color._id === action.payload.colorId
+          item.variant.size._id === action.payload.sizeId &&
+          item.variant.color._id === action.payload.colorId
       );
 
       if (product) {
-        product.inventory.quantity = action.payload.quantity;
+        product.variant.quantity = action.payload.quantity;
 
-        if (product.inventory.quantity <= 0) {
+        if (product.variant.quantity <= 0) {
           // Tự xoá nếu số lượng <= 0
           state.productsInCart = state.productsInCart.filter(
             (item) =>
               !(
                 item._id === action.payload._id &&
-                item.inventory.size._id === action.payload.sizeId &&
-                item.inventory.color._id === action.payload.colorId
+                item.variant.size._id === action.payload.sizeId &&
+                item.variant.color._id === action.payload.colorId
               )
           );
         }
@@ -88,12 +89,19 @@ export const cartSlice = createSlice({
 
       // Cập nhật tổng tiền
       state.total = state.productsInCart.reduce((sum, item) => {
-        return sum + item.price * item.inventory.quantity;
+        return sum + item.price * item.variant.quantity;
       }, 0);
+    },
+    hideLoading: (state) => {
+      state.isLoading = true;
     },
   },
 });
 
-export const { addItemToCart, removeItemFromCart, changeItemQuantity } =
-  cartSlice.actions;
+export const {
+  addItemToCart,
+  removeItemFromCart,
+  changeItemQuantity,
+  hideLoading,
+} = cartSlice.actions;
 export default cartSlice.reducer;

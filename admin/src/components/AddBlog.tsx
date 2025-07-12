@@ -3,7 +3,7 @@ import Link from "next/link";
 import React, { useState } from "react";
 import InputImage from "./InputImage";
 import TinyMCEEditor from "./TinyMCEEditor";
-import { useImageViewer } from "@/hooks/useImageViewer";
+import { useImageViewer } from "@/hooks/useInputImage";
 
 function AddBlog() {
   const [data, setData] = useState({

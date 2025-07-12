@@ -59,7 +59,7 @@ function EditCustomer() {
     try {
       await updateUser({
         fullname: data.fullname.trim(),
-        email: data.email.trim(),
+        email: data.email.toLowerCase().trim(),
         phone: data.phone.trim(),
         birthday: data.birthday,
         password: data.password.trim(),

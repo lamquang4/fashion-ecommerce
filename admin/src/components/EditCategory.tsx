@@ -8,7 +8,7 @@ import useUpdateCategory from "@/hooks/useUpdateCategory";
 import toast from "react-hot-toast";
 import { useParams } from "next/navigation";
 import useGetCategory from "@/hooks/useGetCategory";
-import { useImageViewer } from "@/hooks/useImageViewer";
+import { useInputImage } from "@/hooks/useInputImage";
 import Loading from "./Loading";
 function EditCategory() {
   const [data, setData] = useState({
@@ -18,7 +18,6 @@ function EditCategory() {
   });
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
-  const [success, setSuccess] = useState(false);
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);
     setOpenViewer(true);
@@ -35,7 +34,7 @@ function EditCategory() {
     setSelectedFiles,
     handlePreviewImage,
     handleRemovePreviewImage,
-  } = useImageViewer(1);
+  } = useInputImage(1);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -48,8 +47,8 @@ function EditCategory() {
   };
 
   const handelReset = () => {
-    setSuccess(true);
-    setTimeout(() => setSuccess(false), 100);
+    setPreviewImages([]);
+    setSelectedFiles([]);
   };
 
   useEffect(() => {
@@ -100,12 +99,9 @@ function EditCategory() {
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
               <InputImage
                 InputId="img-category"
-                success={success}
                 previewImages={previewImages}
                 handlePreviewImage={handlePreviewImage}
                 handleRemovePreviewImage={handleRemovePreviewImage}
-                setPreviewImages={setPreviewImages}
-                setSelectedFiles={setSelectedFiles}
               />
 
               <div className="flex gap-3 flex-wrap justify-center">

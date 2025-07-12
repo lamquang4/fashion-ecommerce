@@ -1,7 +1,41 @@
 import Link from "next/link";
 import DifferentLR from "./DifferentLR";
-
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 function LoginForm() {
+  const router = useRouter();
+  const [data, setData] = useState({ email: "", password: "" });
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData((prev) => ({ ...prev, [name]: value }));
+  };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      const res = await signIn("credentials", {
+        email: data.email.trim(),
+        password: data.password.trim(),
+      });
+
+      if (res?.ok) {
+        router.push("/");
+        toast.success("Đăng nhập thành công");
+        setData({
+          email: "",
+          password: "",
+        });
+      } else {
+        const errorMsg = res?.error || "Email hoặc mật khẩu không đúng";
+        toast.error(errorMsg);
+      }
+    } catch (err) {}
+  };
   return (
     <section className="mt-[30px] sm:mt-[45px]">
       <div className="flex flex-col items-center justify-center  px-[10px] sm:px-[15px]">
@@ -10,7 +44,7 @@ function LoginForm() {
             <h2 className="text-[1.5rem] sm:text-[1.7rem] uppercase font-[550] mb-[20px] text-center text-black">
               Đăng nhập
             </h2>
-            <form className="space-y-4 md:space-y-6" action="#">
+            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
               <div className="mb-[15px]">
                 <label
                   htmlFor=""
@@ -21,7 +55,8 @@ function LoginForm() {
                 <input
                   type="text"
                   name="email"
-                  id="email"
+                  value={data.email}
+                  onChange={handleChange}
                   className="text-[0.9rem] block w-full px-3 py-2 border border-[#e5e5e5] text-[#243238]"
                   placeholder="Nhập email"
                   required
@@ -37,7 +72,8 @@ function LoginForm() {
                 <input
                   type="password"
                   name="password"
-                  id="password"
+                  value={data.password}
+                  onChange={handleChange}
                   placeholder="Nhập mật khẩu"
                   className="text-[0.9rem] block w-full px-3 py-2 border border-[#e5e5e5] text-[#243238]"
                   required

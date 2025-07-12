@@ -1,5 +1,5 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
-import Product from "@/model/Product";
+import Inventory from "@/model/Inventory";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import fs from "node:fs/promises";
@@ -19,17 +19,17 @@ export async function DELETE(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const product = await Product.findById(id);
-    if (!product) {
+    const inventory = await Inventory.findById(id);
+    if (!inventory) {
       return NextResponse.json(
-        { msg: "Không tìm thấy sản phẩm" },
+        { msg: "Không tìm thấy" },
         { status: 404 }
       );
     }
 
-    if (product.image.length === 1) {
+    if (inventory.images.length === 1) {
       return NextResponse.json(
-        { msg: "Sản phẩm chỉ còn 1 hình không được xóa" },
+        { msg: "Hình sản phẩm của biến thể này chỉ còn 1 nên không được xóa!" },
         { status: 404 }
       );
     }
@@ -47,13 +47,13 @@ export async function DELETE(
     await fs.rm(filePathAdmin, { force: true }).catch(() => {});
     await fs.rm(filePathClient, { force: true }).catch(() => {});
 
-    const deleteProduct = await Product.findByIdAndUpdate(
+    const deleteImage = await Inventory.findByIdAndUpdate(
       id,
-      { $pull: { image: image } }, // pull xóa hình là image trong mảng image
+      { $pull: { images: image } }, // pull xóa hình là image trong mảng image
       { new: true }
     );
 
-    return NextResponse.json({ product: deleteProduct }, { status: 201 });
+    return NextResponse.json({ inventory: deleteImage }, { status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
