@@ -61,7 +61,10 @@ function ProductDetail() {
   const wishlist = useSelector(
     (state: RootState) => state.wishlistSlice.productsInWishlist
   );
-  const isInWishlist = wishlist.some((item) => item._id === product?._id);
+  const isInWishlist = wishlist.some(
+    (item) =>
+      item._id === product?._id && item.variant._id === selectedInventory?._id
+  );
 
   const allImages =
     product?.variants.flatMap((variant) => variant.images) || [];
@@ -179,12 +182,11 @@ function ProductDetail() {
   };
 
   const handleRemove = () => {
-    if (!product) {
-      return;
-    }
+    if (!selectedInventory || !product) return;
     dispatch(
       removeItemFromWishlist({
         _id: product._id,
+        variantId: selectedInventory._id,
       })
     );
   };

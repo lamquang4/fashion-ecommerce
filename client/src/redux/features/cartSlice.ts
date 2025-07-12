@@ -1,9 +1,12 @@
 import { Cart, ProductInCart } from "@/types/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
+const items = localStorage.getItem("cart");
+const cart = items ? JSON.parse(items) : null;
+
 const initialState: Cart = {
-  productsInCart: [],
-  total: 0,
+  productsInCart: cart?.productsInCart || [],
+  total: cart?.total || 0,
   isLoading: false,
 };
 
@@ -32,6 +35,14 @@ export const cartSlice = createSlice({
       }, 0);
 
       state.total = total;
+
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          productsInCart: state.productsInCart,
+          total: state.total,
+        })
+      );
     },
 
     // xoá sản phẩm khỏi giỏ hàng
@@ -52,6 +63,14 @@ export const cartSlice = createSlice({
       state.total = state.productsInCart.reduce((sum, item) => {
         return sum + item.price * item.variant.quantity;
       }, 0);
+
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          productsInCart: state.productsInCart,
+          total: state.total,
+        })
+      );
     },
 
     // thay đổi số lượng của sản phẩm trong giỏ hàng
@@ -91,6 +110,14 @@ export const cartSlice = createSlice({
       state.total = state.productsInCart.reduce((sum, item) => {
         return sum + item.price * item.variant.quantity;
       }, 0);
+
+      localStorage.setItem(
+        "cart",
+        JSON.stringify({
+          productsInCart: state.productsInCart,
+          total: state.total,
+        })
+      );
     },
     hideLoading: (state) => {
       state.isLoading = true;

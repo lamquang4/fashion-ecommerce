@@ -64,10 +64,11 @@ function ProductSlider({ title, products }: Props) {
     dispatch(addItemToWishlist(productToAdd));
   };
 
-  const handleRemove = (_id: string) => {
+  const handleRemove = (_id: string, variant: string) => {
     dispatch(
       removeItemFromWishlist({
         _id: _id,
+        variantId: variant,
       })
     );
   };
@@ -80,8 +81,6 @@ function ProductSlider({ title, products }: Props) {
     return checkDays <= 14;
   }
 
-  console.log(products);
-
   return (
     <>
       {products.length > 0 && (
@@ -92,13 +91,15 @@ function ProductSlider({ title, products }: Props) {
             </h2>
             <div ref={sliderRef} className="keen-slider">
               {products.map((product, index) => {
-                const isInWishlist = wishlist.some(
-                  (item) => item._id === product._id
-                );
-
                 const selectedIndex =
                   selectedInventoryIndexes[product._id] || 0;
                 const selectedInventory = product.variants[selectedIndex];
+
+                const isInWishlist = wishlist.some(
+                  (item) =>
+                    item._id === product._id &&
+                    item.variant._id === selectedInventory._id
+                );
                 return (
                   <div key={index} className="keen-slider__slide">
                     <div className="relative group">
@@ -143,7 +144,7 @@ function ProductSlider({ title, products }: Props) {
                         </div>
                       )}
 
-                      <div className="absolute top-0 right-0 z-[3] font-semibold text-center text-black">
+                      <div className="absolute top-[12px] right-[10px] z-[3] font-semibold text-center text-black">
                         <button
                           type="button"
                           className={`p-1 transition-colors duration-200 hover:scale-110 ${
@@ -152,10 +153,8 @@ function ProductSlider({ title, products }: Props) {
                               : "text-gray-500 hover:text-gray-600"
                           }`}
                           onClick={() => {
-                            const selectedIndex =
-                              selectedInventoryIndexes[product._id] || 0;
                             isInWishlist
-                              ? handleRemove(product._id)
+                              ? handleRemove(product._id, selectedInventory._id)
                               : handleAddToWishlist(product, selectedIndex);
                           }}
                         >

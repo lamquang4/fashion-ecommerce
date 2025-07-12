@@ -23,6 +23,7 @@ function WishlistItem() {
     dispatch(
       removeItemFromWishlist({
         _id: item._id,
+        variantId: item.variant._id,
       })
     );
   };
