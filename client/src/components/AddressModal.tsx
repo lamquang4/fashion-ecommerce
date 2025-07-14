@@ -60,7 +60,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
       return;
     }
 
-   if (addresses.length === 5 && !addressId) {
+    if (addresses.length === 5 && !addressId) {
       toast.error("Bạn chỉ có thể lưu tối đa 5 địa chỉ cho tài khoản");
       return;
     }
@@ -147,6 +147,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                   </label>
                   <input
                     type="number"
+                    inputMode="numeric"
                     name="phone"
                     onChange={handleChange}
                     value={data.phone}

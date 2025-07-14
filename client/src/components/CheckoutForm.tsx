@@ -41,15 +41,12 @@ function CheckoutForm() {
               <div className="">
                 <div className="mb-[15px]">
                   <label
-                    htmlFor="account_address"
+                    htmlFor=""
                     className="mt-4 mb-2 block text-[0.9rem] font-medium"
                   >
                     Địa chỉ lưu trữ
                   </label>
-                  <select
-                    name="account_address"
-                    className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                  >
+                  <select className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500">
                     <option value="">Chọn địa chỉ lưu trữ</option>
                     <option value="">
                       751 HB, Hồ Chí Minh, Quận 6, Phường 10
@@ -59,14 +56,13 @@ function CheckoutForm() {
 
                 <div>
                   <label
-                    htmlFor="fullname"
+                    htmlFor=""
                     className="mb-2 block text-[0.9rem] font-medium"
                   >
                     Họ và tên
                   </label>
                   <input
                     type="text"
-                    id="fullname"
                     name="fullname"
                     className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                     placeholder="Họ và tên"
@@ -75,14 +71,14 @@ function CheckoutForm() {
 
                 <div>
                   <label
-                    htmlFor="phone"
+                    htmlFor=""
                     className="mt-4 mb-2 block text-[0.9rem] font-medium"
                   >
                     Số điện thoại
                   </label>
                   <input
-                    type="text"
-                    id="phone"
+                    type="number"
+                    inputMode="numeric"
                     name="phone"
                     className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                     placeholder="Số điện thoại"
@@ -91,15 +87,14 @@ function CheckoutForm() {
 
                 <div>
                   <label
-                    htmlFor="address"
+                    htmlFor=""
                     className="mt-4 mb-2 block text-[0.9rem] font-medium"
                   >
                     Địa chỉ cụ thể
                   </label>
                   <input
                     type="text"
-                    id="address"
-                    name="address"
+                    name="speaddress"
                     className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                     placeholder="Địa chỉ cụ thể"
                   />
@@ -108,7 +103,7 @@ function CheckoutForm() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px]">
                   <div>
                     <label
-                      htmlFor="city"
+                      htmlFor=""
                       className="mt-4 mb-2 block text-[0.9rem] font-medium"
                     >
                       Tỉnh/thành phố
@@ -134,7 +129,7 @@ function CheckoutForm() {
 
                   <div>
                     <label
-                      htmlFor="ward"
+                      htmlFor=""
                       className="mt-4 mb-2 block text-[0.9rem] font-medium"
                     >
                       Phường/xã
@@ -165,14 +160,14 @@ function CheckoutForm() {
                     <div className="relative">
                       <input
                         className="peer hidden"
-                        id="radio_1"
+                        id="cod"
                         type="radio"
-                        name="radio"
+                        name="cod"
                       />
                       <span className="peer-checked:border-[#197FB6] absolute right-4 top-1/2 box-content block h-2.5 w-2.5 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
                       <label
                         className="peer-checked:border-1 peer-checked:border-[#197FB6] items-center gap-[10px] peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
-                        htmlFor="radio_1"
+                        htmlFor="cod"
                       >
                         <svg
                           width="26"
@@ -216,14 +211,14 @@ function CheckoutForm() {
                     <div className="relative">
                       <input
                         className="peer hidden"
-                        id="radio_2"
+                        id="ck"
                         type="radio"
-                        name="radio"
+                        name="ck"
                       />
                       <span className="peer-checked:border-[#197FB6] absolute right-4 top-1/2 box-content block h-2.5 w-2.5 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
                       <label
                         className="peer-checked:border-1 peer-checked:border-[#197FB6] items-center gap-[10px] peer-checked:bg-gray-50 flex cursor-pointer select-none rounded-lg border border-gray-300 p-4"
-                        htmlFor="radio_2"
+                        htmlFor="ck"
                       >
                         <svg
                           width="23"

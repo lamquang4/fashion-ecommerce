@@ -91,6 +91,7 @@ function AddCustomer() {
               <input
                 type="text"
                 name="email"
+                inputMode="numeric"
                 value={data.email}
                 onChange={handleChange}
                 required

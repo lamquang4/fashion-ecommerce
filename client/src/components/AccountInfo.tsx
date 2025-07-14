@@ -54,7 +54,7 @@ function AccountInfo() {
       await updateCustomer({
         fullname: data.fullname.trim(),
         email: data.email.toLowerCase().trim(),
-        phone: data.phone.trim(),
+        phone: data.phone,
         birthday: data.birthday,
       });
       toast.success("Cập nhật thành công!");
@@ -104,10 +104,10 @@ function AccountInfo() {
 
                 <span className="block text-left text-[0.9rem]">Phone:</span>
                 <input
-                  type="text"
+                  type="number"
                   name="phone"
+                  inputMode="numeric"
                   className="w-full rounded-[5px] p-[6px_10px] text-[0.9rem] border border-gray-300 mt-[5px] not-last:mb-[15px]"
-                  maxLength={12}
                   value={data.phone}
                   onChange={handleChange}
                 />

@@ -130,6 +130,7 @@ function EditAdmin() {
                 <input
                   type="number"
                   name="phone"
+                  inputMode="numeric"
                   value={data.phone}
                   onChange={handleChange}
                   required

@@ -27,7 +27,7 @@ function AddAdmin() {
       [name]: name === "email" ? value.toLowerCase() : value,
     }));
   };
-  
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validateEmail(data.email.trim())) {
@@ -109,6 +109,7 @@ function AddAdmin() {
                 <input
                   type="number"
                   name="phone"
+                  inputMode="numeric"
                   value={data.phone}
                   onChange={handleChange}
                   required
