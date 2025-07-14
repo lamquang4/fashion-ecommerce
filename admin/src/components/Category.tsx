@@ -48,6 +48,7 @@ function Category() {
     try {
       await deleteCategory(id);
       mutate();
+      toast.error("Xóa thành công");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }

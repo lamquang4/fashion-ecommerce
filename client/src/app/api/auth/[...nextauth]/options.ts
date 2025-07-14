@@ -23,7 +23,7 @@ export const options: NextAuthOptions = {
           if (!user) throw new Error("Email không tồn tại");
 
           if (![4, 5].includes(user.role)) {
-            throw new Error("Email hoặc mật khẩu không đúng");
+            throw new Error("Chỉ tài khoản khách hàng mới được phép đăng nhập");
           }
 
           if (user.status === 0) {
@@ -35,11 +35,6 @@ export const options: NextAuthOptions = {
 
           return {
             id: user._id.toString(),
-            email: user.email,
-            fullname: user.fullname,
-            birthday: user.birthday,
-            phone: user.phone,
-            role: user.role,
           };
         } catch (err: any) {
           throw new Error(err.message);
@@ -54,11 +49,6 @@ export const options: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
-        token.email = user.email;
-        token.fullname = user.fullname;
-        token.birthday = user.birthday;
-        token.phone = user.phone;
-        token.role = user.role;
       }
       return token;
     },
@@ -66,10 +56,6 @@ export const options: NextAuthOptions = {
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id;
-        session.user.fullname = token.fullname;
-        session.user.birthday = token.birthday;
-        session.user.phone = token.phone;
-        session.user.role = token.role;
       }
       return session;
     },

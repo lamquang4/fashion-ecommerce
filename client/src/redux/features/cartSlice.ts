@@ -1,8 +1,10 @@
 import { Cart, ProductInCart } from "@/types/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const items = localStorage.getItem("cart");
-const cart = items ? JSON.parse(items) : null;
+const cart =
+  typeof window !== "undefined"
+    ? JSON.parse(localStorage.getItem("cart") || "null")
+    : null;
 
 const initialState: Cart = {
   productsInCart: cart?.productsInCart || [],

@@ -1,6 +1,6 @@
 import AccountInfo from "../../components/AccountInfo";
 
-function Account() {
+async function Account() {
   return (
     <>
       <AccountInfo />

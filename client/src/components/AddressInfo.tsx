@@ -2,12 +2,40 @@
 import React, { useState } from "react";
 import SideBarMenu from "./SideBarMenu";
 import AddressModal from "./AddressModal";
-import { IoIosCheckmarkCircleOutline } from "react-icons/io";
+import { useSession } from "next-auth/react";
+import useGetAddresses from "@/hooks/useGetAddresses";
+import useDeleteAddress from "@/hooks/useDeleteAddress";
+import toast from "react-hot-toast";
 function AddressInfo() {
-  const [openAddressModal, setOpenAddressModal] = useState(false);
+  const [addressId, setAddressId] = useState<string>("");
+  const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
+  const { data: session } = useSession();
+  const { addresses, mutate } = useGetAddresses(session?.user.id || "");
+  const { deleteAddress } = useDeleteAddress();
   const toggleAddressModal = () => {
-    setOpenAddressModal(!openAddressModal);
+    setOpenAddressModal((prev) => !prev);
+    setAddressId("");
   };
+
+  const handleDelete = async (id: string) => {
+    if (!id) {
+      return;
+    }
+
+    if (addresses.length === 1) {
+      toast.error("Bạn cần giữ lại ít nhất một địa chỉ cho tài khoản");
+      return;
+    }
+
+    try {
+      await deleteAddress(id);
+      toast.success("Xóa địa chỉ thành công");
+      mutate();
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
   return (
     <>
       <section className="w-full mt-[40px] sm:mt-[45px] ">
@@ -21,80 +49,63 @@ function AddressInfo() {
                 <button
                   onClick={toggleAddressModal}
                   type="button"
-                  className="px-[14px] py-[8px] bg-red-600 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-red-700"
+                  className="px-[10px] py-[6px] bg-red-600 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-red-700"
                 >
                   Thêm địa chỉ
                 </button>
               </div>
 
               <div>
-                <hr className="border-slate-300 my-[20px]" />
-                <div className="flex justify-between flex-wrap gap-y-[8px]">
-                  <div className="flex flex-col gap-[8px] max-w-[360px]">
-                    <div className="flex gap-[8px] items-center">
-                      <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
-                        Họ và tên:
-                        <p className="font-normal text-black">Quang Lam</p>
-                      </span>
-                      <span className="text-[#27AE60] font-normal text-[0.8rem] flex items-center gap-[4px]">
-                        <IoIosCheckmarkCircleOutline />
-                        Địa chỉ mặc định
-                      </span>
+                {addresses.map((address, index) => (
+                  <div key={index}>
+                    <hr className="border-slate-300 my-[20px]" />
+                    <div className="flex justify-between flex-wrap gap-y-[8px]">
+                      <div className="flex flex-col gap-[8px] max-w-[360px]">
+                        <div className="flex gap-[8px] items-center">
+                          <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
+                            Họ và tên:
+                            <p className="font-normal text-black">
+                              {address.fullname}
+                            </p>
+                          </span>
+                        </div>
+
+                        <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
+                          Số điện thoại:
+                          <p className="font-normal text-black">
+                            {address.phone}
+                          </p>
+                        </span>
+                        <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
+                          Địa chỉ:
+                          <p className="font-normal text-black">
+                            {address.speaddress}, {address.city}, {address.ward}
+                          </p>
+                        </span>
+                      </div>
+
+                      <div className="flex gap-[25px] items-center">
+                        <button
+                          className="border-0 p-1 outline-0 text-[0.9rem] text-blue-500 font-medium"
+                          type="button"
+                          onClick={() => {
+                            toggleAddressModal();
+                            setAddressId(address._id || "");
+                          }}
+                        >
+                          Chỉnh sửa
+                        </button>
+                        <button
+                          className="border-0 p-1 outline-0 text-[0.9rem] text-red-500 font-medium"
+                          type="button"
+                          onClick={() => handleDelete(address._id || "")}
+                        >
+                          Xóa
+                        </button>
+                      </div>
                     </div>
-
-                    <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
-                      Số điện thoại:
-                      <p className="font-normal text-black">09757575xxx</p>
-                    </span>
-                    <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
-                      Địa chỉ:
-                      <p className="font-normal text-black">
-                        ABC, HWWW, Quận 6, Phường 6
-                      </p>
-                    </span>
                   </div>
-
-                  <div className="flex gap-[25px]">
-                    <button className="border-0 outline-0 text-[0.9rem] text-blue-500 font-medium">
-                      Chỉnh sửa
-                    </button>
-                    <button className="border-0 outline-0 text-[0.9rem] text-red-500 font-medium">
-                      Xóa
-                    </button>
-                  </div>
-                </div>
-
-                <hr className="border-slate-300 my-[20px]" />
-                <div className="flex justify-between flex-wrap gap-y-[8px]">
-                  <div className="flex flex-col gap-[8px] max-w-[360px]">
-                    <div className="flex gap-[8px] items-center">
-                      <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
-                        Họ và tên:
-                        <p className="font-normal text-black">Quang Lam</p>
-                      </span>
-                    </div>
-
-                    <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
-                      Số điện thoại:
-                      <p className="font-normal text-black">09757575xxx</p>
-                    </span>
-                    <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
-                      Địa chỉ:
-                      <p className="font-normal text-black">
-                        ABC, HWWWXYZ, Quận 6, Phường 6
-                      </p>
-                    </span>
-                  </div>
-
-                  <div className="flex gap-[25px]">
-                    <button className="border-0 outline-0 text-[0.9rem] text-blue-500 font-medium">
-                      Chỉnh sửa
-                    </button>
-                    <button className="border-0 outline-0 text-[0.9rem] text-red-500 font-medium">
-                      Xóa
-                    </button>
-                  </div>
-                </div>
+                ))}
               </div>
             </div>
           </div>
@@ -102,6 +113,7 @@ function AddressInfo() {
       </section>
       {openAddressModal && (
         <AddressModal
+          addressId={addressId}
           toggleMenu={toggleAddressModal}
           isOpen={openAddressModal}
         />

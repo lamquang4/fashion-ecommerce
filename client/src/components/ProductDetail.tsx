@@ -58,6 +58,8 @@ function ProductDetail() {
     }
   }, [selectedInventory, selectedSize]);
 
+  const cart = useSelector((state: RootState) => state.cartSlice);
+
   const wishlist = useSelector(
     (state: RootState) => state.wishlistSlice.productsInWishlist
   );
@@ -107,6 +109,11 @@ function ProductDetail() {
 
   const handleAddToCart = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+
+    if (cart.productsInCart.length > 25) {
+      toast.error("Giỏ hàng chỉ chứa tối đa 25 sản phẩm.");
+      return;
+    }
 
     if (!selectedSize) {
       toast.error("Bạn hãy chọn kích thước!");

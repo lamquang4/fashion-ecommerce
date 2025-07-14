@@ -30,6 +30,7 @@ function Size() {
     try {
       await deleteSize(id);
       mutate();
+      toast.error("Xóa thành công");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }

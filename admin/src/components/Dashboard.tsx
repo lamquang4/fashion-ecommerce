@@ -224,7 +224,7 @@ function Dashboard() {
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">
                         <Image
-                          Src={product.image[0]}
+                          Src={""}
                           Alt={""}
                           ClassName={"w-[75px] cursor-pointer"}
                           loadingType="lazy"

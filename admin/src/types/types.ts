@@ -14,7 +14,7 @@ export interface Color {
   _id?: string;
   namecolor: string;
   codecolor: string;
-  createdAt: string;
+  createdAt?: string;
 }
 
 export interface Size {

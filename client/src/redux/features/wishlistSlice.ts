@@ -1,8 +1,10 @@
 import { ProductInWishlist, Wishlist } from "@/types/type";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const items = localStorage.getItem("wishlist");
-const wishlist = items ? JSON.parse(items) : null;
+const wishlist =
+  typeof window !== "undefined"
+    ? JSON.parse(localStorage.getItem("wishlist") || "null")
+    : null;
 
 const initialState: Wishlist = {
   productsInWishlist: wishlist?.productsInWishlist || [],

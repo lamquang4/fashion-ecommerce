@@ -78,9 +78,12 @@ function OrderHistory() {
                     Tổng cộng: 600,000₫
                   </span>
 
-                  <button className="text-[#3b82f6] text-[0.9rem] p-[6px_16px] transition-[0.3s] border border-[#3b82f6] hover:bg-[#3b82f6] hover:text-white">
-                    <Link href="/order_detail">Chi tiết</Link>
-                  </button>
+                  <Link
+                    href="/order-detail"
+                    className="text-[#3b82f6] text-[0.9rem] px-[10px] py-[6px] transition-[0.3s] border border-[#3b82f6] hover:bg-[#3b82f6] hover:text-white"
+                  >
+                    Chi tiết
+                  </Link>
                 </div>
               </div>
             </div>

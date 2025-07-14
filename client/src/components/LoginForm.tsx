@@ -1,3 +1,4 @@
+"use client";
 import Link from "next/link";
 import DifferentLR from "./DifferentLR";
 import { signIn } from "next-auth/react";
@@ -14,6 +15,7 @@ function LoginForm() {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -21,11 +23,11 @@ function LoginForm() {
       const res = await signIn("credentials", {
         email: data.email.trim(),
         password: data.password.trim(),
+        redirect: false,
       });
 
       if (res?.ok) {
         router.push("/");
-        toast.success("Đăng nhập thành công");
         setData({
           email: "",
           password: "",

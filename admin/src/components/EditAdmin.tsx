@@ -71,11 +71,7 @@ function EditAdmin() {
         role: Number(data.role),
       });
       toast.success("Cập nhật thành công!");
-      if (session?.user.id === id) {
-        toast(
-          "Tài khoản bạn đang đăng nhập sẽ được cập nhật sau khi đăng xuất và đăng nhập lại."
-        );
-      }
+
       setData((prev) => ({
         ...prev,
         password: "",

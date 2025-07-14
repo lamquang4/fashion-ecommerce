@@ -2,21 +2,102 @@
 import { HiMiniXMark } from "react-icons/hi2";
 import Overplay from "./Overplay";
 import useGetProvinces from "@/hooks/useGetProvinceVN";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import useGetAddress from "@/hooks/useGetAddress";
+import useUpdateAddress from "@/hooks/useUpdateAddress";
+import { useSession } from "next-auth/react";
+import useAddAddress from "@/hooks/useAddAddress";
+import toast from "react-hot-toast";
+import useGetAddresses from "@/hooks/useGetAddresses";
+import { validatePhone } from "@/utils/validatePhone";
 
 type AddressModalProps = {
   isOpen: boolean;
   toggleMenu: () => void;
+  addressId: string;
 };
-function AddressModal({ isOpen, toggleMenu }: AddressModalProps) {
+function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
+  const { data: session } = useSession();
   const { provinces } = useGetProvinces();
-
+  const { address, mutate } = useGetAddress(addressId);
+  const { addresses, mutate: mutateAddresses } = useGetAddresses(
+    session?.user.id || ""
+  );
+  const { updateAddress } = useUpdateAddress(addressId);
+  const { addAddress } = useAddAddress();
   const [selectedProvinceName, setSelectedProvinceName] = useState<string>("");
   const [selectedWard, setSelectedWard] = useState<string>("");
+  const [data, setData] = useState({ fullname: "", phone: "", speaddress: "" });
+  console.log(address);
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData((prev) => ({ ...prev, [name]: value }));
+  };
   const selectedProvince = provinces?.find(
     (province) => province.province === selectedProvinceName
   );
+
+  useEffect(() => {
+    if (address) {
+      setData({
+        fullname: address.fullname || "",
+        phone: address.phone || "",
+        speaddress: address.speaddress || "",
+      });
+      setSelectedProvinceName(address.city || "");
+      setSelectedWard(address.ward || "");
+    }
+  }, [address]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    if (!validatePhone(data.phone)) {
+      toast.error("Số điện thoại không hợp lệ");
+      return;
+    }
+
+   if (addresses.length === 5 && !addressId) {
+      toast.error("Bạn chỉ có thể lưu tối đa 5 địa chỉ cho tài khoản");
+      return;
+    }
+
+    try {
+      const payload = {
+        fullname: data.fullname.trim(),
+        phone: data.phone,
+        speaddress: data.speaddress.trim(),
+        city: selectedProvinceName,
+        ward: selectedWard,
+        user: session?.user.id,
+      };
+
+      if (addressId) {
+        await updateAddress(payload);
+        toast.success("Cập nhật địa chỉ thành công");
+      } else {
+        await addAddress(payload);
+        toast.success("Thêm địa chỉ thành công");
+      }
+
+      setData({
+        fullname: "",
+        phone: "",
+        speaddress: "",
+      });
+
+      setSelectedProvinceName("");
+      setSelectedWard("");
+
+      mutateAddresses();
+      mutate();
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
 
   return (
     <>
@@ -38,7 +119,7 @@ function AddressModal({ isOpen, toggleMenu }: AddressModalProps) {
 
             <hr className=" border-slate-300 my-[15px]" />
 
-            <form className="">
+            <form onSubmit={handleSubmit}>
               <div className="grid gap-4 mb-[20px] grid-cols-2">
                 <div className="col-span-2 w-full">
                   <label
@@ -50,7 +131,8 @@ function AddressModal({ isOpen, toggleMenu }: AddressModalProps) {
                   <input
                     type="text"
                     name="fullname"
-                    id="fullname"
+                    onChange={handleChange}
+                    value={data.fullname}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
                     placeholder="Họ và tên"
                   />
@@ -64,9 +146,10 @@ function AddressModal({ isOpen, toggleMenu }: AddressModalProps) {
                     Số điện thoại
                   </label>
                   <input
-                    type="text"
+                    type="number"
                     name="phone"
-                    id="phone"
+                    onChange={handleChange}
+                    value={data.phone}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
                     placeholder="Số điện thoại"
                   />
@@ -74,15 +157,16 @@ function AddressModal({ isOpen, toggleMenu }: AddressModalProps) {
 
                 <div className="col-span-2 w-full">
                   <label
-                    htmlFor="address"
+                    htmlFor="speaddress"
                     className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
                   >
                     Địa chỉ cụ thể
                   </label>
                   <input
                     type="text"
-                    name="address"
-                    id="address"
+                    name="speaddress"
+                    onChange={handleChange}
+                    value={data.speaddress}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
                     placeholder="Địa chỉ cụ thể"
                   />
@@ -137,21 +221,6 @@ function AddressModal({ isOpen, toggleMenu }: AddressModalProps) {
                     ))}
                   </select>
                 </div>
-
-                <div className="col-span-2 w-full flex items-center">
-                  <input
-                    id="default-check"
-                    type="checkbox"
-                    value=""
-                    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded-sm"
-                  />
-                  <label
-                    htmlFor="default-check"
-                    className="ms-2 text-[0.9rem] font-medium text-gray-900 dark:text-gray-300"
-                  >
-                    Đặt là địa chỉ mặc định?
-                  </label>
-                </div>
               </div>
 
               <div className="flex gap-[15px]">
@@ -159,7 +228,7 @@ function AddressModal({ isOpen, toggleMenu }: AddressModalProps) {
                   type="submit"
                   className="px-[14px] py-[8px] bg-red-600 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-red-700"
                 >
-                  Thêm địa chỉ
+                  {addressId ? "Cập nhật địa chỉ" : "Thêm địa chỉ"}
                 </button>
 
                 <button

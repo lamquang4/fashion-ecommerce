@@ -249,24 +249,21 @@ export async function PUT(
       }
     }
 
-    const oldCategoryId = new mongoose.Types.ObjectId(oldCategory);
-    const newCategoryId = new mongoose.Types.ObjectId(category);
-
     const hasProductOldCategory = await Product.exists({
-      category: oldCategoryId,
+      category: oldCategory,
       status: 1,
       _id: { $ne: id },
     });
     if (!hasProductOldCategory) {
-      await Category.findByIdAndUpdate(oldCategoryId, { status: 0 });
+      await Category.findByIdAndUpdate(oldCategory, { status: 0 });
     }
 
     const hasProductNewCategory = await Product.exists({
-      category: newCategoryId,
+      category: category,
       status: 1,
     });
     if (hasProductNewCategory) {
-      await Category.findByIdAndUpdate(newCategoryId, { status: 1 });
+      await Category.findByIdAndUpdate(category, { status: 1 });
     }
 
     return NextResponse.json({ product: updatedProduct }, { status: 201 });

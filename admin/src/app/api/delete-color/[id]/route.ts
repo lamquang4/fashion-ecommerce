@@ -19,7 +19,7 @@ export async function DELETE(
     const checkColor = await Inventory.findOne({ color: id });
     if (checkColor) {
       return NextResponse.json(
-        { msg: "Màu này đẫ được sử dụng cho sản phẩm nên không được xóa!" },
+        { msg: "Màu này đẫ được sử dụng cho biến thể của sản phẩm nên không thể xóa!" },
         {
           status: 400,
         }

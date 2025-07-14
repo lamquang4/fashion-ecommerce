@@ -42,7 +42,7 @@ export async function DELETE(
 
     const deleteBanner = await Banner.findByIdAndDelete(id);
 
-    return NextResponse.json({ Banner: deleteBanner }, { status: 201 });
+    return NextResponse.json({ banner: deleteBanner }, { status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

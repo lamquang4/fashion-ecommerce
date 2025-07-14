@@ -215,7 +215,7 @@ function Header() {
                 </form>
               </div>
 
-              {session?.user.fullname ? (
+              {session?.user ? (
                 <div
                   className="relative cursor-pointer group"
                   onMouseOver={toggleProfileMenu}
@@ -292,7 +292,7 @@ function Header() {
                 <CiSearch size={24} title="Tìm kiếm" />
               </button>
 
-              {session?.user.fullname ? (
+              {session?.user ? (
                 <div
                   className="relative cursor-pointer group"
                   onMouseOver={toggleProfileMenu}

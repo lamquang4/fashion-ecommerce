@@ -16,11 +16,11 @@ export async function DELETE(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const checkSize = await Inventory.findOne({ size: id });
+    const checkSize = await Inventory.findOne({ "inventories.size": id });
     if (checkSize) {
       return NextResponse.json(
         {
-          msg: "Kích thước này đẫ được sử dụng cho sản phẩm nên không được xóa!",
+          msg: "Kích thước này đẫ được sử dụng cho biến thể của sản phẩm nên không thể xóa!",
         },
         {
           status: 404,
@@ -38,7 +38,7 @@ export async function DELETE(
 
     const deleteSize = await Size.findByIdAndDelete(id);
 
-    return NextResponse.json({ Size: deleteSize }, { status: 201 });
+    return NextResponse.json({ size: deleteSize }, { status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

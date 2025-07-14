@@ -63,7 +63,7 @@ export async function DELETE(
     const deleteProduct = await Product.findByIdAndDelete(id);
     await Inventory.deleteMany({ product: id });
 
-    return NextResponse.json({ Product: deleteProduct }, { status: 201 });
+    return NextResponse.json({ product: deleteProduct }, { status: 201 });
   } catch (err) {
     console.log(err);
 

@@ -54,6 +54,7 @@ function Product() {
     try {
       await deleteProduct(id);
       mutate();
+      toast.error("Xóa thành công");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }

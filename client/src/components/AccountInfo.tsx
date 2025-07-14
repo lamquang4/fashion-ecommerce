@@ -1,17 +1,71 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBarMenu from "./SideBarMenu";
+import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
+import { validateEmail } from "@/utils/validateEmail";
+import { validatePhone } from "@/utils/validatePhone";
+import useUpdateCustomer from "@/hooks/useUpdateCustomer";
+import useGetCustomer from "@/hooks/useGetCustomer";
 
 function AccountInfo() {
   const [data, setData] = useState({
-    fullname: "quang lam",
-    email: "lamdieuquang0105@gmail.com",
-    phone: "08974563477",
-    birthday: "2004-05-04",
+    fullname: "",
+    email: "",
+    phone: "",
+    birthday: "",
   });
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setData({ ...data, [e.target.name]: e.target.value });
+  const { data: session } = useSession();
+
+  const { updateCustomer } = useUpdateCustomer(session?.user.id || "");
+  const { customer, mutate } = useGetCustomer(session?.user.id || "");
+
+  useEffect(() => {
+    setData({
+      fullname: customer?.fullname || "",
+      email: customer?.email || "",
+      phone: customer?.phone || "",
+      birthday: customer?.birthday?.slice(0, 10) || "",
+    });
+  }, [customer]);
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: name === "email" ? value.toLowerCase() : value,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validateEmail(data.email.trim())) {
+      toast.error("Email không hợp lệ");
+      return;
+    }
+    if (!validatePhone(data.phone.trim())) {
+      toast.error("Số điện thoại không hợp lệ");
+      return;
+    }
+    try {
+      await updateCustomer({
+        fullname: data.fullname.trim(),
+        email: data.email.toLowerCase().trim(),
+        phone: data.phone.trim(),
+        birthday: data.birthday,
+      });
+      toast.success("Cập nhật thành công!");
+      mutate();
+      setData((prev) => ({
+        ...prev,
+        password: "",
+      }));
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
   };
 
   return (
@@ -20,7 +74,11 @@ function AccountInfo() {
         <SideBarMenu />
 
         <div className="w-full max-w-full border-[1.5px] border-double border-gray-300 lg:max-w-[700px] rounded-sm">
-          <form action="" className="p-[25px_15px] sm:p-[30px_20px]">
+          <form
+            action=""
+            className="p-[25px_15px] sm:p-[30px_20px]"
+            onSubmit={handleSubmit}
+          >
             <h2 className="text-[1.5rem] font-semibold mb-[25px]">Tài khoản</h2>
             <div className="mb-[25px]">
               <div className="w-full">
@@ -71,7 +129,7 @@ function AccountInfo() {
               <button
                 type="submit"
                 name="submit"
-                className="px-[14px] py-[10px] bg-blue-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-blue-400"
+                className="px-[10px] py-[6px] bg-blue-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-blue-400"
               >
                 Cập nhật
               </button>

@@ -4,8 +4,8 @@ import axios from "axios";
 import useSWR from "swr";
 
 type ResponseType = {
-  productsMale: Product;
-  productsFemale: Product;
+  productsMale: Product[];
+  productsFemale: Product[];
 };
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);

@@ -10,7 +10,6 @@ import useGetCustomers from "@/hooks/useGetCustomers";
 import Image from "./Image";
 import useBlockUser from "@/hooks/useBlockUser";
 import useDeleteUser from "@/hooks/useDeleteUser";
-import { useAppSelector } from "@/redux/hook";
 import Loading from "./Loading";
 import InputSearch from "./InputSearch";
 import toast from "react-hot-toast";
@@ -28,7 +27,6 @@ function Customer() {
   } = useGetCustomers();
   const { blockUser } = useBlockUser();
   const { deleteUser } = useDeleteUser();
-  const loading = useAppSelector((state) => state.loadingSlice);
 
   const array = [
     {
@@ -52,6 +50,7 @@ function Customer() {
     try {
       await deleteUser(id);
       mutate();
+      toast.error("Xóa thành công");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -101,6 +100,9 @@ function Customer() {
                 Email
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                SĐT
+              </th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Sinh nhật
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
@@ -134,7 +136,9 @@ function Customer() {
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {customer.email}
                   </td>
-
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {customer.phone}
+                  </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(customer.birthday as string).toLocaleDateString(
                       "vi-VN"

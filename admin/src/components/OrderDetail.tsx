@@ -78,7 +78,7 @@ function OrderDetail() {
                       <td className="pl-[15px] sm:pl-[20px] py-[15px]">
                         <div className="flex items-center gap-[10px]">
                           <Image
-                            Src={item.product.image[0]}
+                            Src={""}
                             Alt={""}
                             ClassName={"w-[60px]"}
                             loadingType="eager"

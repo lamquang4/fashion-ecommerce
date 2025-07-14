@@ -155,7 +155,6 @@ function EditCustomer() {
                 name="password"
                 value={data.password}
                 onChange={handleChange}
-                required
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
             </div>

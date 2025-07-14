@@ -4,9 +4,8 @@ export interface User {
   email: string;
   phone: string;
   birthday: string;
-  password: string;
+  password?: string;
   role?: number;
-  status?: number;
 }
 
 export interface Color {
@@ -69,12 +68,13 @@ export interface Coupon {
 }
 
 export interface Address {
+  _id?: string;
   fullname: string;
   phone: string;
   speaddress: string;
   ward: string;
-  district: string;
   city: string;
+  user?: string;
 }
 
 export interface Order {
@@ -139,7 +139,7 @@ export interface Cart {
   user?: string;
   productsInCart: ProductInCart[];
   total: number;
-  isLoading: boolean;
+  isLoading?: boolean;
 }
 
 export interface ProductInWishlist {

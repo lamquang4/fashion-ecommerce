@@ -58,6 +58,7 @@ function Admin() {
     try {
       await deleteUser(id);
       mutate();
+      toast.error("Xóa thành công");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -112,6 +113,9 @@ function Admin() {
                 Email
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                SĐT
+              </th>
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Sinh nhật
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
@@ -148,7 +152,9 @@ function Admin() {
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {admin.email}
                   </td>
-
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {admin.phone}
+                  </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(admin.birthday as string).toLocaleDateString(
                       "vi-VN"
