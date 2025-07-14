@@ -104,7 +104,7 @@ function ProductList({ category, products, isLoading, totalItems }: Props) {
                     `${category?.namecategory} ${
                       category?.gender === 1 ? "nam" : "nữ"
                     }`}{" "}
-                {!category && !slug && search && search} ({totalItems})
+                {!category && !slug && search && search}
               </h2>
 
               <button

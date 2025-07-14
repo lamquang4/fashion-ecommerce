@@ -111,7 +111,7 @@ function ProductDetail() {
     e.preventDefault();
 
     if (cart.productsInCart.length > 25) {
-      toast.error("Giỏ hàng chỉ chứa tối đa 25 sản phẩm.");
+      toast.error("Giỏ hàng chỉ chứa tối đa 25 sản phẩm");
       return;
     }
 
@@ -253,7 +253,7 @@ function ProductDetail() {
               </div>
 
               <div className="md:order-1 flex justify-center">
-                <div className=" max-h-fit flex flex-row xl:flex-col gap-[15px] overflow-x-auto md:overflow-x-hidden md:overflow-y-auto">
+                <div className="max-h-[500px] max-w-[400px] flex flex-row xl:flex-col gap-[15px] overflow-x-auto overflow-y-auto">
                   {product?.variants.map((variant) =>
                     variant.images.map((img, index) => (
                       <div

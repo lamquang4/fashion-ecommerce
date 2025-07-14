@@ -4,7 +4,6 @@ import React, { useEffect, useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
 import { CiUser, CiSearch } from "react-icons/ci";
-import { HiMiniXMark } from "react-icons/hi2";
 import { AiOutlineMenu } from "react-icons/ai";
 import Menumobile from "./Menumobile";
 import Overplay from "./Overplay";
@@ -13,28 +12,16 @@ import Image from "./Image";
 import useGetCategories from "@/hooks/useGetCategories";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
-import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
+import SearchMobile from "./SearchMobile";
+import SearchDesktop from "./SearchDesktop";
 function Header() {
-  const [search, setSearch] = useState("");
   const { categoriesMale, categoriesFemale } = useGetCategories();
-  const [openSearch, setOpenSearch] = useState(false);
-  const [menuMobileOpen, setMenuMobileOpen] = useState(false);
-  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-  const router = useRouter();
+  const [openSearch, setOpenSearch] = useState<boolean>(false);
+  const [menuMobileOpen, setMenuMobileOpen] = useState<boolean>(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
 
   const { data: session } = useSession();
-
-  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (!search.trim()) {
-      return;
-    }
-
-    router.push(`/search?q=${encodeURIComponent(search.trim())}`);
-    setOpenSearch(false);
-    setSearch("");
-  };
 
   const productsInCart = useSelector(
     (state: RootState) => state.cartSlice.productsInCart
@@ -196,24 +183,7 @@ function Header() {
             </nav>
 
             <div className="hidden lg:flex items-center gap-5">
-              <div className="relative">
-                <form onSubmit={handleSearch}>
-                  <input
-                    type="text"
-                    className="px-3 py-1.5 w-[145px] border border-gray-300 text-[0.8rem] tracking-[0.9px] bg-transparent outline-none"
-                    placeholder="Tìm kiếm..."
-                    autoComplete="off"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                  <button
-                    className="absolute top-1/2 right-[7px] transform -translate-y-1/2 text-black flex items-center"
-                    type="submit"
-                  >
-                    <CiSearch size={21} title="Tìm kiếm" />
-                  </button>
-                </form>
-              </div>
+              <SearchDesktop />
 
               {session?.user ? (
                 <div
@@ -258,29 +228,7 @@ function Header() {
             </div>
 
             {/* Mobile Search */}
-            <div
-              className={`absolute left-0 w-full p-[10px_12px] bg-white border-y-[1.2px] border-gray-300 transition-all duration-300 overflow-hidden ${
-                openSearch
-                  ? "opacity-100 visible top-[65px]"
-                  : "opacity-0 invisible top-[90px]"
-              }`}
-            >
-              <div className="flex items-center">
-                <form className="w-full" onSubmit={handleSearch}>
-                  <input
-                    type="text"
-                    placeholder="Tìm kiếm..."
-                    autoComplete="off"
-                    className="w-full px-2 py-2 rounded outline-none"
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                  />
-                </form>
-                <button onClick={toggleSearch} title="Đóng">
-                  <HiMiniXMark size={23} title="Đóng" />
-                </button>
-              </div>
-            </div>
+            <SearchMobile toggleSearch={toggleSearch} openSearch={openSearch} />
 
             {/* Mobile */}
             <div className="flex lg:hidden items-center gap-4 relative">

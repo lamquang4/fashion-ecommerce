@@ -19,16 +19,14 @@ function ProfileMenu({ isOpen }: ProfileMenuProp) {
             isOpen ? "max-h-[400px]" : "max-h-0"
           }`}
         >
-          <div className="px-[15px]">
-            <h2 className="cursor-pointer text-[0.95rem] max-w-[210px] overflow-hidden text-ellipsis whitespace-nowrap text-center my-[15px]">
+          <div>
+            <h2 className="cursor-pointer border-b p-3 border-gray-300 text-[0.95rem] max-w-[210px] overflow-hidden text-ellipsis whitespace-nowrap text-center">
               Xin chào, {customer?.fullname}
             </h2>
 
-            <hr className="border-0 h-[1px] w-full bg-gray-300" />
-
             <Link
               href={"/account"}
-              className="w-full justify-left items-center py-[15px]"
+              className="hover:bg-[#F7F7F7] w-full items-center p-3"
             >
               <div className="!flex items-center gap-[8px] text-[#878a99]">
                 <HiOutlineUser size={20} />
@@ -36,7 +34,7 @@ function ProfileMenu({ isOpen }: ProfileMenuProp) {
               </div>
             </Link>
 
-            <Link href={"/order"} className="w-full justify-left py-[15px]">
+            <Link href={"/order"} className="hover:bg-[#F7F7F7] w-full p-3">
               <div className="!flex items-center gap-[8px] text-[#878a99]">
                 <IoBagHandleOutline size={20} />
                 <p className="text-[0.95rem]">Đơn hàng của bạn</p>
@@ -45,7 +43,7 @@ function ProfileMenu({ isOpen }: ProfileMenuProp) {
 
             <button
               onClick={() => signOut()}
-              className="w-full justify-left py-[15px]"
+              className="hover:bg-[#F7F7F7] w-full p-3"
             >
               <div className="!flex items-center gap-[8px] text-[#878a99]">
                 <LuDoorOpen size={20} />
