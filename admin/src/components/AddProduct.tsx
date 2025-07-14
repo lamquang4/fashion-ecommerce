@@ -195,6 +195,7 @@ function AddProduct() {
                   <input
                     type="number"
                     name="price"
+                    inputMode="numeric"
                     value={data.price}
                     onChange={handleChange}
                     required
@@ -209,6 +210,7 @@ function AddProduct() {
                   <input
                     type="number"
                     name="discount"
+                    inputMode="numeric"
                     value={data.discount}
                     onChange={handleChange}
                     required
@@ -372,6 +374,7 @@ function AddProduct() {
                               type="number"
                               required
                               name="quantity"
+                              inputMode="numeric"
                               value={newInventory.quantity}
                               onChange={(e) =>
                                 handleChangeNewInventory(

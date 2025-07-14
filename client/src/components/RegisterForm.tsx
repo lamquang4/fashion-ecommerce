@@ -108,8 +108,9 @@ function RegisterForm() {
                   Số điện thoại
                 </label>
                 <input
-                  type="text"
+                  type="number"
                   name="phone"
+                  inputMode="numeric"
                   value={data.phone}
                   onChange={handleChange}
                   className="text-[0.9rem] block w-full px-3 py-2 border border-[#e5e5e5] text-[#243238]"

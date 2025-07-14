@@ -165,6 +165,7 @@ function EditCoupon() {
                   <input
                     type="number"
                     name="amount"
+                    inputMode="numeric"
                     value={data.amount}
                     onChange={handleChange}
                     required
@@ -181,6 +182,7 @@ function EditCoupon() {
                   <input
                     type="number"
                     name="limit"
+                    inputMode="numeric"
                     value={data.limit}
                     onChange={handleChange}
                     required
@@ -218,6 +220,7 @@ function EditCoupon() {
                 <input
                   type="number"
                   name="discountValue"
+                  inputMode="numeric"
                   value={data.discountValue}
                   disabled={coupon?.status === 1}
                   onChange={handleChange}
@@ -235,6 +238,7 @@ function EditCoupon() {
               <input
                 type="number"
                 name="minOrderValue"
+                inputMode="numeric"
                 value={data.minOrderValue}
                 disabled={coupon?.status === 1}
                 onChange={handleChange}
@@ -251,6 +255,7 @@ function EditCoupon() {
                 <input
                   type="number"
                   name="maxDiscountValue"
+                  inputMode="numeric"
                   value={data.maxDiscountValue}
                   disabled={coupon?.status === 1}
                   onChange={handleChange}

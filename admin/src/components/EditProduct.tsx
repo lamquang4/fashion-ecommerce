@@ -275,6 +275,7 @@ function EditProduct() {
                   <input
                     type="number"
                     name="price"
+                    inputMode="numeric"
                     value={data.price}
                     onChange={handleChange}
                     required
@@ -289,6 +290,7 @@ function EditProduct() {
                   <input
                     type="number"
                     name="discount"
+                    inputMode="numeric"
                     value={data.discount}
                     onChange={handleChange}
                     required
@@ -509,6 +511,7 @@ function EditProduct() {
                           <td className="py-[1rem]">
                             <input
                               type="number"
+                              inputMode="numeric"
                               required
                               name="quantity"
                               value={inventory.quantity}
@@ -680,6 +683,7 @@ function EditProduct() {
                               <input
                                 type="number"
                                 required
+                                inputMode="numeric"
                                 name="quantity"
                                 value={newInventory.quantity}
                                 onChange={(e) =>
