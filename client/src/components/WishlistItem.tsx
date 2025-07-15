@@ -41,7 +41,7 @@ function WishlistItem() {
               <div className="basis-[100%] bg-white px-2.5 sm:px-4 border border-gray-300 rounded-md">
                 {wishlist.productsInWishlist.map((item, index) => (
                   <React.Fragment key={index}>
-                    <div className="flex gap-4 bg-white py-6">
+                    <div className="flex gap-4 bg-white py-5">
                       <div className="flex gap-4.5">
                         <Link href={`/product/${item.slug}`}>
                           <div className="w-full max-w-[150px] shrink-0">
@@ -67,7 +67,7 @@ function WishlistItem() {
                         <div className="flex gap-4 justify-end">
                           <button
                             onClick={() => handleRemove(item)}
-                            className="p-1 text-black duration-200 hover:scale-110"
+                            className="p-1 text-black duration-200 hover:scale-112"
                           >
                             <svg viewBox="0 0 256 256" width="22" height="22">
                               <rect fill="none" height="256" width="256" />
@@ -110,7 +110,7 @@ function WishlistItem() {
                   </h2>
 
                   <Link
-                    href={"/"}
+                    href={"/search?q="}
                     className="text-[0.95rem] border border-black rounded-md font-medium px-2 py-2.5 hover:bg-black hover:text-white"
                   >
                     Mua sắm ngay

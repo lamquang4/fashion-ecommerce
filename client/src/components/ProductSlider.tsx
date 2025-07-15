@@ -147,9 +147,9 @@ function ProductSlider({ title, products }: Props) {
                       <div className="absolute top-[12px] right-[10px] z-[3] font-semibold text-center text-black">
                         <button
                           type="button"
-                          className={`p-1 transition-colors duration-200 hover:scale-110 ${
+                          className={`p-1 transition-colors duration-200 hover:scale-112 ${
                             isInWishlist
-                              ? "text-red-500"
+                              ? "text-black"
                               : "text-gray-500 hover:text-gray-600"
                           }`}
                           onClick={() => {
@@ -158,19 +158,16 @@ function ProductSlider({ title, products }: Props) {
                               : handleAddToWishlist(product, selectedIndex);
                           }}
                         >
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="30"
-                            height="30"
-                            fill="currentColor"
-                            viewBox="0 0 16 16"
-                            className="bi bi-bookmark-heart"
-                          >
+                          <svg viewBox="0 0 256 256" width="22" height="22">
+                            <rect fill="none" height="256" width="256" />
                             <path
-                              fillRule="evenodd"
-                              d="M8 4.41c1.387-1.425 4.854 1.07 0 4.277C3.146 5.48 6.613 2.986 8 4.412z"
+                              d="M224.6,51.9a59.5,59.5,0,0,0-43-19.9,60.5,60.5,0,0,0-44,17.6L128,59.1l-7.5-7.4C97.2,28.3,59.2,26.3,35.9,47.4a59.9,59.9,0,0,0-2.3,87l83.1,83.1a15.9,15.9,0,0,0,22.6,0l81-81C243.7,113.2,245.6,75.2,224.6,51.9Z"
+                              stroke="currentColor"
+                              strokeWidth="16"
+                              fill={isInWishlist ? "currentColor" : "none"}
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
                             />
-                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z" />
                           </svg>
                         </button>
                       </div>

@@ -216,7 +216,7 @@ function CartItem() {
 
                     <Link
                       className="text-[0.9rem] px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-gray-200 text-slate-900 border border-gray-300 rounded-md text-center"
-                      href={"/"}
+                      href={"/search?q="}
                     >
                       Tiếp tục mua sắm
                     </Link>
