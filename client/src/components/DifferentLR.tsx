@@ -13,7 +13,10 @@ function DifferentLR({ title }: TitleProp) {
       </div>
 
       <div className="flex justify-center">
-        <button className="px-[12px] py-[7px] border border-[rgba(0,0,0,0.26)]">
+        <button
+          type="button"
+          className="px-[12px] py-[7px] border border-[rgba(0,0,0,0.26)]"
+        >
           <div className="text-[0.9rem] flex items-center gap-[10px] font-medium">
             <Image
               Src={"/assets/other/google.png"}

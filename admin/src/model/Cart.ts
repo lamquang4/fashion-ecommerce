@@ -14,17 +14,11 @@ const cartSchema = new Schema(
           ref: "Product",
           required: true,
         },
-        size: {
+        variant: {
           type: mongoose.Schema.Types.ObjectId,
-          ref: "Size",
+          ref: "Inventory",
           required: true,
         },
-        color: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Color",
-          required: true,
-        },
-        quantity: { type: Number, required: true },
       },
     ],
     total: { type: Number, required: true },
@@ -34,7 +28,6 @@ const cartSchema = new Schema(
   }
 );
 
-cartSchema.index({ "items.status": 1 });
 cartSchema.index({ user: 1 });
 
 const Cart = models.Cart || model("Cart", cartSchema);

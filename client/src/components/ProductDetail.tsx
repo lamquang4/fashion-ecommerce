@@ -198,14 +198,6 @@ function ProductDetail() {
     );
   };
 
-  const uniqueSizes = [
-    ...new Map(
-      product?.variants
-        .flatMap((variant) => variant.inventories)
-        .map((inv) => [inv.size._id, inv.size])
-    ).values(),
-  ];
-
   return (
     <>
       <section className="w-full mx-auto mt-0 lg:mt-[20px] mb-[40px]">
@@ -386,20 +378,30 @@ function ProductDetail() {
                   </div>
 
                   <div className="flex space-x-2">
-                    {uniqueSizes.map((size, index) => (
-                      <button
-                        key={index}
-                        type="button"
-                        className={`w-13.5 h-8.5 border text-black font-medium text-[0.95rem] ${
-                          selectedSize?.namesize === size.namesize
-                            ? "bg-transparent text-black border-black"
-                            : "border-gray-300 hover:border-gray-400"
-                        }`}
-                        onClick={() => setSelectedSize(size)}
-                      >
-                        {size.namesize}
-                      </button>
-                    ))}
+                    {selectedInventory?.inventories.map((inv, index) => {
+                      const isSelected = selectedSize?._id === inv.size._id;
+                      const isOutOfStock = inv.quantity === 0;
+
+                      return (
+                        <button
+                          key={index}
+                          type="button"
+                          onClick={() => setSelectedSize(inv.size)}
+                          className={`relative w-[70px] h-[35px] border text-black font-medium text-[0.95rem] ${
+                            isSelected
+                              ? "border-black"
+                              : "border-gray-300 hover:border-gray-400"
+                          }`}
+                        >
+                          {isOutOfStock && (
+                            <span className="absolute inset-0 before:content-[''] before:absolute before:top-1/2 before:left-0 before:border-t before:border-black before:w-full before:rotate-[26.5deg] before:origin-center pointer-events-none"></span>
+                          )}
+                          <span className="relative z-10">
+                            {inv.size.namesize}
+                          </span>
+                        </button>
+                      );
+                    })}
                   </div>
                 </div>
 

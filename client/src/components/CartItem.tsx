@@ -242,7 +242,7 @@ function CartItem() {
                   </h2>
 
                   <Link
-                    href={"/"}
+                    href={"/search?q="}
                     className="text-[0.95rem] border border-black rounded-md font-medium px-2 py-2.5 hover:bg-black hover:text-white"
                   >
                     Mua sắm ngay
