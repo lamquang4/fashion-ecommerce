@@ -6,10 +6,10 @@ import Image from "./Image";
 function OrderHistory() {
   return (
     <section className="w-full mt-[40px] sm:mt-[45px]">
-      <div className="flex justify-center flex-wrap gap-[15px] px-[10px] sm:px-[15px]">
+      <div className="flex justify-center flex-wrap px-[10px] sm:px-[15px]">
         <SideBarMenu />
 
-        <div className="w-full max-w-full border-[1.5px] border-double border-gray-300 lg:max-w-[700px] rounded-sm">
+        <div className="w-full max-w-full border border-gray-300 lg:max-w-[700px]">
           <div className="p-[25px_15px] sm:p-[30px_20px]">
             <h2 className="text-[1.5rem] font-semibold mb-[25px]">Đơn hàng</h2>
 
@@ -69,12 +69,12 @@ function OrderHistory() {
               </div>
 
               <div>
-                <p className="text-gray-500 mt-[15px] text-[1rem] font-medium">
+                <p className="text-gray-500 mt-[15px] text-[0.95rem] font-medium">
                   Đang xử lí
                 </p>
 
                 <div className="flex justify-between items-center mt-[15px]">
-                  <span className="text-black text-[1.1rem] font-medium">
+                  <span className="text-black text-[1rem] font-medium">
                     Tổng cộng: 600,000₫
                   </span>
 

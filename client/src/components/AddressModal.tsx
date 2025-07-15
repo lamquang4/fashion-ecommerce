@@ -103,10 +103,10 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
     <>
       <div className="flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-20 h-full">
         <div className="relative w-full max-w-lg max-h-full">
-          <div className="relative  p-[25px_15px] bg-white z-20">
+          <div className="relative p-[25px_15px] bg-white z-20">
             <div className="flex items-center justify-between">
               <h2 className="text-[1.2rem] font-semibold text-gray-900  uppercase">
-                Địa chỉ mới
+                Địa chỉ của bạn
               </h2>
               <button
                 type="button"

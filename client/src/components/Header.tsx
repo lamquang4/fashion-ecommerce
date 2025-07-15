@@ -12,7 +12,6 @@ import Image from "./Image";
 import useGetCategories from "@/hooks/useGetCategories";
 import { RootState } from "@/redux/store";
 import { useSelector } from "react-redux";
-import { useSession } from "next-auth/react";
 import SearchMobile from "./SearchMobile";
 import SearchDesktop from "./SearchDesktop";
 function Header() {
@@ -20,8 +19,6 @@ function Header() {
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [menuMobileOpen, setMenuMobileOpen] = useState<boolean>(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
-
-  const { data: session } = useSession();
 
   const productsInCart = useSelector(
     (state: RootState) => state.cartSlice.productsInCart
@@ -98,11 +95,11 @@ function Header() {
                     Nam
                   </Link>
                   {categoriesMale.length > 0 && (
-                    <ul className="absolute font-medium top-full left-0 w-[200px] bg-white p-2 translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
+                    <ul className="absolute font-medium top-5 left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
                       <li className="my-2">
                         <Link
                           href={`/collection/nam`}
-                          className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
+                          className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                         >
                           Đồ nam
                         </Link>
@@ -111,7 +108,7 @@ function Header() {
                         <li className="my-2" key={index}>
                           <Link
                             href={`/collection/${category.slug}`}
-                            className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
+                            className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                           >
                             {category.namecategory}
                           </Link>
@@ -129,11 +126,11 @@ function Header() {
                     Nữ
                   </Link>
                   {categoriesFemale.length > 0 && (
-                    <ul className="absolute font-medium top-full left-0 w-[200px] bg-white p-2 translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
+                    <ul className="absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
                       <li className="my-2">
                         <Link
                           href={`/collection/nu`}
-                          className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
+                          className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                         >
                           Đồ nữ
                         </Link>
@@ -142,7 +139,7 @@ function Header() {
                         <li className="my-2" key={index}>
                           <Link
                             href={`/collection/${category.slug}`}
-                            className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
+                            className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                           >
                             {category.namecategory}
                           </Link>
@@ -159,11 +156,11 @@ function Header() {
                   >
                     Giảm giá
                   </Link>
-                  <ul className="absolute font-medium top-full left-0 w-[200px] bg-white p-2 translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
+                  <ul className="absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
                     <li className="my-2">
                       <Link
                         href={"/"}
-                        className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
+                        className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                       >
                         Giảm giá đồ nam
                       </Link>
@@ -172,7 +169,7 @@ function Header() {
                     <li className="my-2">
                       <Link
                         href={"/"}
-                        className="text-black text-[0.9rem] py-1 px-5 transition-all duration-200"
+                        className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                       >
                         Giảm giá đồ nữ
                       </Link>
@@ -185,20 +182,14 @@ function Header() {
             <div className="hidden lg:flex items-center gap-5">
               <SearchDesktop />
 
-              {session?.user ? (
-                <div
-                  className="relative cursor-pointer group"
-                  onMouseOver={toggleProfileMenu}
-                  onMouseOut={toggleProfileMenu}
-                >
-                  <CiUser size={24} />
-                  <ProfileMenu isOpen={profileMenuOpen} />
-                </div>
-              ) : (
-                <Link href={"/login"}>
-                  <CiUser size={24} />
-                </Link>
-              )}
+              <div
+                className="relative cursor-pointer group"
+                onMouseEnter={() => setProfileMenuOpen(true)}
+                onMouseLeave={() => setProfileMenuOpen(false)}
+              >
+                <CiUser size={24} />
+                <ProfileMenu isOpen={profileMenuOpen} />
+              </div>
 
               <Link href={"/cart"} className="relative" title="Giỏ hàng">
                 <CiShoppingCart size={26} title="Giỏ hàng" />
@@ -240,20 +231,14 @@ function Header() {
                 <CiSearch size={24} title="Tìm kiếm" />
               </button>
 
-              {session?.user ? (
-                <div
-                  className="relative cursor-pointer group"
-                  onMouseOver={toggleProfileMenu}
-                  onMouseOut={toggleProfileMenu}
-                >
-                  <CiUser size={24} />
-                  <ProfileMenu isOpen={profileMenuOpen} />
-                </div>
-              ) : (
-                <Link href={"/login"}>
-                  <CiUser size={24} />
-                </Link>
-              )}
+              <div
+                className="relative cursor-pointer group"
+                onMouseOver={toggleProfileMenu}
+                onMouseOut={toggleProfileMenu}
+              >
+                <CiUser size={24} />
+                <ProfileMenu isOpen={profileMenuOpen} />
+              </div>
 
               <Link href={"/cart"} className="relative" title="Giỏ hàng">
                 <CiShoppingCart size={26} title="Giỏ hàng" />

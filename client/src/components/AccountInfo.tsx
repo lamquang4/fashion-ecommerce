@@ -70,10 +70,10 @@ function AccountInfo() {
 
   return (
     <section className="w-full mt-[40px] sm:mt-[45px] ">
-      <div className="px-[10px] flex justify-center flex-wrap gap-[15px] sm:px-[15px]">
+      <div className="px-[10px] flex justify-center flex-wrap sm:px-[15px]">
         <SideBarMenu />
 
-        <div className="w-full max-w-full border-[1.5px] border-double border-gray-300 lg:max-w-[700px] rounded-sm">
+        <div className="w-full max-w-full border border-gray-300 lg:max-w-[700px]">
           <form
             action=""
             className="p-[25px_15px] sm:p-[30px_20px]"

@@ -385,6 +385,7 @@ function ProductDetail() {
                       return (
                         <button
                           key={index}
+                          disabled={isOutOfStock}
                           type="button"
                           onClick={() => setSelectedSize(inv.size)}
                           className={`relative w-[70px] h-[35px] border text-black font-medium text-[0.95rem] ${
@@ -421,7 +422,7 @@ function ProductDetail() {
                     className="h-11 text-center text-black w-11 outline-none placeholder:text-black text-[1rem] font-normal"
                     placeholder="1"
                     min={1}
-                    max={99}
+                    max={15}
                     value={quantity}
                   />
                   <button

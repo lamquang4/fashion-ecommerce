@@ -1,61 +1,41 @@
 "use client";
 import Link from "next/link";
-import { FiChevronRight } from "react-icons/fi";
-import { IoBagHandleOutline } from "react-icons/io5";
-import { LuDoorOpen } from "react-icons/lu";
-import { HiOutlineUser } from "react-icons/hi";
-import { TbTruckDelivery } from "react-icons/tb";
+import { signOut } from "next-auth/react";
+import { usePathname } from "next/navigation";
 function SideBarMenu() {
+  const pathname = usePathname();
+  const activeClass = "font-medium";
   return (
-    <div className="w-full max-w-full lg:max-w-[320px] border-[1.5px] border-double border-gray-300 rounded-sm">
-      <div className="p-[25px_15px] sm:p-[30px_20px]">
-        <Link href="/account">
-          <div className="flex justify-between items-center p-[13px] text-[15px] border border-gray-300 my-[12px] text-[#262626]">
-            <div className="flex items-center gap-2.5 text-[0.95rem]">
-              <HiOutlineUser size={20} />
-              <span>Thông tin toàn khoản</span>
-            </div>
-            <div>
-              <FiChevronRight size={18} />
-            </div>
-          </div>
+    <div className="w-full max-w-full lg:max-w-[250px] border border-gray-300">
+      <div className="p-[25px_15px] sm:p-[30px_20px] text-[0.95rem] text-black font-normal flex flex-col gap-1">
+        <Link
+          href="/account"
+          className={`py-2.5 ${pathname === "/account" ? activeClass : ""}`}
+        >
+          <span>Thông tin tài khoản</span>
         </Link>
 
-        <Link href="/address">
-          <div className="flex justify-between items-center p-[13px] text-[15px] border border-gray-300 my-[12px] text-[#262626]">
-            <div className="flex items-center gap-2.5 text-[0.95rem]">
-              <TbTruckDelivery size={22} />
-              <span>Địa chỉ giao hàng</span>
-            </div>
-            <div>
-              <FiChevronRight size={18} />
-            </div>
-          </div>
+        <Link
+          href="/address"
+          className={`py-2.5 ${pathname === "/address" ? activeClass : ""}`}
+        >
+          <span>Sổ địa chỉ</span>
         </Link>
 
-        <Link href="/order">
-          <div className="flex justify-between items-center p-[13px] text-[15px] border border-gray-300 my-[12px] text-[#262626]">
-            <div className="flex items-center gap-2.5 text-[0.95rem]">
-              <IoBagHandleOutline size={20} />
-              <span>Đơn hàng của bạn</span>
-            </div>
-            <div>
-              <FiChevronRight size={18} />
-            </div>
-          </div>
+        <Link
+          href="/order"
+          className={`py-2.5 ${pathname === "/order" ? activeClass : ""}`}
+        >
+          <span>Đơn hàng của bạn</span>
         </Link>
 
-        <Link href="/">
-          <div className="flex justify-between items-center p-[13px] text-[15px] border border-gray-300 my-[12px] text-[#262626]">
-            <div className="flex items-center gap-2.5 text-[0.95rem]">
-              <LuDoorOpen size={22} />
-              <span>Đăng xuất</span>
-            </div>
-            <div>
-              <FiChevronRight size={18} />
-            </div>
-          </div>
-        </Link>
+        <button
+          type="button"
+          onClick={() => signOut()}
+          className="py-2.5 text-left text-[1rem] text-red-500 font-semibold"
+        >
+          Đăng xuất
+        </button>
       </div>
     </div>
   );

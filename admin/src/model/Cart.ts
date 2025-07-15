@@ -19,6 +19,15 @@ const cartSchema = new Schema(
           ref: "Inventory",
           required: true,
         },
+        size: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Size",
+          required: true,
+        },
+        quantity: {
+          type: Number,
+          required: true,
+        },
       },
     ],
     total: { type: Number, required: true },

@@ -50,7 +50,7 @@ function SearchDesktop() {
       </form>
 
       {focused && search && (
-        <div className="fixed top-15 right-12 z-[12] mt-3 w-96 max-w-[calc(100%-30px)] bg-white shadow-lg border-gray-200 border">
+        <div className="fixed top-12 right-12 z-[12] mt-3 w-96 max-w-[calc(100%-30px)] bg-white shadow-lg border-gray-200 border">
           <div className="p-2.5">
             <p className="text-black font-medium">
               Kết quả tìm kiếm cho{" "}
