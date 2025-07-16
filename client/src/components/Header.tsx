@@ -159,7 +159,7 @@ function Header() {
                   <ul className="absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
                     <li className="my-2">
                       <Link
-                        href={"/"}
+                        href={"/sale/nam"}
                         className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                       >
                         Giảm giá đồ nam
@@ -168,7 +168,7 @@ function Header() {
 
                     <li className="my-2">
                       <Link
-                        href={"/"}
+                        href={"/sale/nu"}
                         className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                       >
                         Giảm giá đồ nữ

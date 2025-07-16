@@ -19,6 +19,7 @@ function AccountInfo() {
   const { data: session } = useSession();
 
   const { updateCustomer } = useUpdateCustomer(session?.user.id || "");
+
   const { customer, mutate } = useGetCustomer(session?.user.id || "");
 
   useEffect(() => {

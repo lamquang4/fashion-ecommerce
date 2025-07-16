@@ -29,9 +29,6 @@ const protectedRoutesByRole: Record<string, number[]> = {
   "/add-color": [0, 1],
   "/edit-color": [0, 1],
 
-  "/blog": [0, 2],
-  "/add-blog": [0, 2],
-  "/edit-blog": [0, 2],
   "/category": [0, 2],
   "/add-category": [0, 2],
   "/edit-category": [0, 2],
@@ -42,7 +39,11 @@ const protectedRoutesByRole: Record<string, number[]> = {
 };
 
 export async function middleware(req: NextRequest) {
-  const token = await getToken({ req, secret: process.env.NEXTAUTH_SECRET });
+  const token = await getToken({
+    req,
+    secret: process.env.NEXTAUTH_SECRET,
+    cookieName: "next-auth.admin-session-token",
+  });
 
   const { pathname } = req.nextUrl;
 
@@ -73,7 +74,6 @@ export const config = {
     "/color",
     "/product",
     "/inventory",
-    "/blog",
     "/category",
     "/coupon",
     "/customer",
@@ -85,7 +85,6 @@ export const config = {
     "/account",
     "/add-admin",
     "/add-category",
-    "/add-blog",
     "/add-color",
     "/add-coupon",
     "/add-customer",
@@ -94,7 +93,6 @@ export const config = {
     "/add-size",
     "/edit-product/:path*",
     "/edit-admin/:path*",
-    "/edit-blog/:path*",
     "/edit-category/:path*",
     "/edit-color/:path*",
     "/edit-coupon/:path*",

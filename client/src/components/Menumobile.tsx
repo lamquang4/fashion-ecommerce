@@ -147,7 +147,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
             >
               <li className="my-[10px]">
                 <Link
-                  href={"/"}
+                  href={"/sale/nam"}
                   className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
                 >
                   Giảm giá đồ nam
@@ -156,7 +156,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
 
               <li className="my-[10px]">
                 <Link
-                  href={"/"}
+                  href={"/sale/nu"}
                   className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
                 >
                   Giảm giá đồ nữ

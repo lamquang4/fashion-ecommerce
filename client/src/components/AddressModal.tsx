@@ -19,7 +19,7 @@ type AddressModalProps = {
 function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
   const { data: session } = useSession();
   const { provinces } = useGetProvinces();
-  const { address, mutate } = useGetAddress(addressId);
+  const { address, mutate, isLoading } = useGetAddress(addressId);
   const { addresses, mutate: mutateAddresses } = useGetAddresses(
     session?.user.id || ""
   );
@@ -28,7 +28,6 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
   const [selectedProvinceName, setSelectedProvinceName] = useState<string>("");
   const [selectedWard, setSelectedWard] = useState<string>("");
   const [data, setData] = useState({ fullname: "", phone: "", speaddress: "" });
-  console.log(address);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -41,7 +40,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
   );
 
   useEffect(() => {
-    if (address) {
+    if (address && !isLoading) {
       setData({
         fullname: address.fullname || "",
         phone: address.phone || "",
@@ -131,6 +130,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                   <input
                     type="text"
                     name="fullname"
+                    required
                     onChange={handleChange}
                     value={data.fullname}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
@@ -148,6 +148,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                   <input
                     type="number"
                     inputMode="numeric"
+                    required
                     name="phone"
                     onChange={handleChange}
                     value={data.phone}
@@ -166,6 +167,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                   <input
                     type="text"
                     name="speaddress"
+                    required
                     onChange={handleChange}
                     value={data.speaddress}
                     className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
@@ -224,20 +226,12 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                 </div>
               </div>
 
-              <div className="flex gap-[15px]">
+              <div className="flex gap-[15px] justify-center">
                 <button
                   type="submit"
                   className="px-[14px] py-[8px] bg-red-600 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-red-700"
                 >
-                  {addressId ? "Cập nhật địa chỉ" : "Thêm địa chỉ"}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={toggleMenu}
-                  className="px-[14px] py-[8px] bg-transparent text-black border border-gray-300 text-[0.9rem] font-medium text-center rounded-sm hover:bg-gray-100"
-                >
-                  Hủy
+                  {addressId ? "Cập nhật" : "Thêm"}
                 </button>
               </div>
             </form>

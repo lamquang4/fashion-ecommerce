@@ -125,33 +125,29 @@ function ProductSlider({ title, products }: Props) {
                           )}
                         </picture>
                       </Link>
-                      {product.discount > 0 && (
-                        <div className="absolute bottom-[10px] md:top-[10px] left-[10px] z-[3] font-semibold text-center text-black">
-                          <p className="uppercase text-[0.75rem] p-1 bg-white w-[92px]">
+                      <div className="flex gap-2 flex-col absolute top-[12px] left-[12px] z-[3] font-semibold text-center text-black">
+                        {product.discount > 0 && (
+                          <p className="uppercase text-[0.75rem] py-1 px-1.5 bg-white">
                             Giảm giá{" "}
                             {Math.floor(
                               (product.discount / product.price) * 100
                             )}
                             %
                           </p>
+                        )}
 
-                          {product.createdAt &&
-                            checkNewProduct(product.createdAt) && (
-                              <p className="uppercase text-[0.75rem] py-1 px-1.5 bg-white">
-                                Hàng mới
-                              </p>
-                            )}
-                        </div>
-                      )}
+                        {product.createdAt &&
+                          checkNewProduct(product.createdAt) && (
+                            <p className="uppercase text-[0.75rem] py-1 px-1.5 bg-white">
+                              Hàng mới
+                            </p>
+                          )}
+                      </div>
 
                       <div className="absolute top-[12px] right-[10px] z-[3] font-semibold text-center text-black">
                         <button
                           type="button"
-                          className={`p-1 transition-colors duration-200 hover:scale-112 ${
-                            isInWishlist
-                              ? "text-black"
-                              : "text-gray-500 hover:text-gray-600"
-                          }`}
+                          className="p-1 transition-colors duration-200 hover:scale-112 text-black"
                           onClick={() => {
                             isInWishlist
                               ? handleRemove(product._id, selectedInventory._id)

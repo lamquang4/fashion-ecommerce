@@ -1,29 +1,45 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
+import Category from "@/model/Category";
 import Product from "@/model/Product";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(req: NextRequest) {
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { slug: string } }
+) {
   try {
     await connectMongoDB();
-    // lấy các sản phẩm bằng tìm kiếm
+    const { slug } = await params;
+
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
     const limit = 12;
     const skip = (page - 1) * limit;
-    const keyword = searchParams.get("keyword") || "";
 
-    if (!keyword) {
-      return NextResponse.json({
-        products: [],
-        total: 0,
-        totalPages: 0,
-        page,
-      });
+    let categoryQuery: any = { status: 1 };
+    let categoryIds: any[] = [];
+
+    if (slug === "nam") {
+      categoryQuery.gender = 1;
+    } else if (slug === "nu") {
+      categoryQuery.gender = 0;
     }
+
+    const categories = await Category.find(categoryQuery).select("_id");
+
+    if (!categories) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy danh mục" },
+        { status: 400 }
+      );
+    }
+
+    categoryIds = categories.map((cat) => cat._id);
 
     const query: any = {
       status: 1,
-      name: { $regex: keyword, $options: "i" },
+      discount: { $gt: 0 },
+      category: { $in: categoryIds },
     };
 
     const [products, total] = await Promise.all([
@@ -95,7 +111,7 @@ export async function GET(req: NextRequest) {
     ]);
 
     return NextResponse.json({
-      products: products,
+      products,
       total,
       totalPages: Math.ceil(total / limit),
       page,

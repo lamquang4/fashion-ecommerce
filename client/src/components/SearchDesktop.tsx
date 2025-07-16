@@ -32,6 +32,7 @@ function SearchDesktop() {
         <input
           type="text"
           className="px-3 py-1.5 w-[145px] border border-gray-300 text-[0.8rem] tracking-[0.9px] bg-transparent outline-none"
+          required
           placeholder="Tìm kiếm..."
           autoComplete="off"
           value={search}

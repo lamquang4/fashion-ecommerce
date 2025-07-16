@@ -16,7 +16,6 @@ import { IoColorPaletteOutline } from "react-icons/io5";
 import { RiCoupon2Line } from "react-icons/ri";
 import { usePathname } from "next/navigation";
 import { PiHouseLineBold } from "react-icons/pi";
-import { IoNewspaperOutline } from "react-icons/io5";
 import { MdOutlineContentPasteSearch } from "react-icons/md";
 import { RxSize } from "react-icons/rx";
 type MenuSideProps = {
@@ -144,15 +143,6 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
           icon: <MdOutlineContentPasteSearch size={20} />,
           label: "Bộ sưu tập",
           path: "/collection",
-        },
-        {
-          icon: <IoNewspaperOutline size={20} />,
-          label: "Tin tức",
-          key: "16a",
-          children: [
-            { label: "Danh sách tin tức", path: "/blog" },
-            { label: "Thêm tin tức", path: "/add-blog" },
-          ],
         },
       ],
     },

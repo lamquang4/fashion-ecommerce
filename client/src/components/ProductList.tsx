@@ -11,7 +11,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/redux/store";
 import { Category, Product, ProductInWishlist } from "@/types/type";
-import { useParams, useSearchParams } from "next/navigation";
+import { useParams, usePathname, useSearchParams } from "next/navigation";
 interface Props {
   category?: Category;
   products: Product[];
@@ -27,6 +27,7 @@ function ProductList({ category, products, isLoading, totalItems }: Props) {
     [productId: string]: number;
   }>({});
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const search = searchParams.get("q");
 
   const toggleAdvancedSearch = () => {
@@ -96,15 +97,25 @@ function ProductList({ category, products, isLoading, totalItems }: Props) {
           <>
             <div className="flex justify-between items-center flex-wrap my-[10px] mb-[35px]">
               <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550]">
-                {!search && slug === "nam"
+                {pathname === "/collection/nam"
                   ? "Đồ nam"
-                  : slug === "nu"
+                  : pathname === "/collection/nu"
                   ? "Đồ nữ"
-                  : category &&
-                    `${category?.namecategory} ${
-                      category?.gender === 1 ? "nam" : "nữ"
-                    }`}{" "}
-                {!category && !slug && search && search}
+                  : pathname === "/collection/all"
+                  ? "Tất cả sản phẩm"
+                  : category
+                  ? `${category.namecategory} ${
+                      category.gender === 1 ? "nam" : "nữ"
+                    }`
+                  : ""}
+
+                {pathname === "/search" && search && search}
+
+                {pathname === "/sale/nam"
+                  ? "Giảm giá đồ nam"
+                  : pathname === "/sale/nu"
+                  ? "Giảm giá đồ nữ"
+                  : ""}
               </h2>
 
               <button
@@ -159,8 +170,9 @@ function ProductList({ category, products, isLoading, totalItems }: Props) {
                           />
                         )}
                       </Link>
-                      {product.discount > 0 && (
-                        <div className="flex gap-2 flex-col absolute top-[10px] left-[10px] z-[3] font-semibold text-center text-black">
+
+                      <div className="flex gap-2 flex-col absolute top-[12px] left-[12px] z-[3] font-semibold text-center text-black">
+                        {product.discount > 0 && (
                           <p className="uppercase text-[0.75rem] py-1 px-1.5 bg-white">
                             Giảm giá{" "}
                             {Math.floor(
@@ -168,24 +180,20 @@ function ProductList({ category, products, isLoading, totalItems }: Props) {
                             )}
                             %
                           </p>
+                        )}
 
-                          {product.createdAt &&
-                            checkNewProduct(product.createdAt) && (
-                              <p className="uppercase text-[0.75rem] py-1 px-1.5 bg-white">
-                                Hàng mới
-                              </p>
-                            )}
-                        </div>
-                      )}
+                        {product.createdAt &&
+                          checkNewProduct(product.createdAt) && (
+                            <p className="uppercase text-[0.75rem] py-1 px-1.5 bg-white">
+                              Hàng mới
+                            </p>
+                          )}
+                      </div>
 
                       <div className="absolute top-[12px] right-[10px] z-[3] font-semibold text-center text-black">
                         <button
                           type="button"
-                          className={`p-1 transition-colors duration-200 hover:scale-112 ${
-                            isInWishlist
-                              ? "text-black"
-                              : "text-gray-500 hover:text-gray-600"
-                          }`}
+                          className="p-1 transition-colors duration-200 hover:scale-112 text-black"
                           onClick={() => {
                             isInWishlist
                               ? handleRemove(product._id, selectedInventory._id)

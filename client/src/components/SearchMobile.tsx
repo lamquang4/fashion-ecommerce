@@ -44,6 +44,7 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
           <form className="w-full" onSubmit={handleSearch}>
             <input
               type="text"
+              required
               placeholder="Tìm kiếm..."
               autoComplete="off"
               className="w-full px-2 py-2 rounded outline-none"

@@ -23,7 +23,7 @@ export async function GET(
       categoryQuery.gender = 1;
     } else if (slug === "nu") {
       categoryQuery.gender = 0;
-    } else {
+    } else if (slug !== "all") {
       categoryQuery.slug = slug;
     }
 

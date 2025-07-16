@@ -6,7 +6,9 @@ import useSWR from "swr";
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetCustomer(id: string) {
-  const url = `/api/get-customer/${id}`;
+  const shouldFetch = !!id;
+  const url = shouldFetch ? `/api/get-customer/${id}` : null;
+
   const { data, error, isLoading, mutate } = useSWR<User>(url, fetcher);
 
   return {

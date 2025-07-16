@@ -2,46 +2,21 @@
 import Link from "next/link";
 import { FaInstagram, FaFacebookSquare } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
+import Image from "./Image";
 function Footer() {
   return (
     <footer className="bg-gray-50 border-t border-gray-200 mt-[40px] sm:mt-[45px]">
       <div className="mx-auto w-full max-w-screen-xl">
-        <div className="grid grid-cols-2 gap-8 px-[10px] sm:px-[15px] md:grid-cols-4 sm:py-[80px] py-[70px]">
+        <div className="grid grid-cols-2 gap-8 px-[10px] sm:px-[15px] md:grid-cols-3 sm:py-[80px] py-[70px]">
           <div>
-            <ul>
-              <li>
-                <h2 className="relative font-bold text-black text-[0.935rem] uppercase mb-3 pb-1.5 after:content-[''] after:absolute after:bottom-0 after:left-0 after:bg-black after:w-[60px] after:h-[1.5px]">
-                  Chính sách
-                </h2>
-              </li>
-
-              <li className="py-[8px]">
-                <Link
-                  href="/"
-                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
-                >
-                  Smtewewrwrw
-                </Link>
-              </li>
-
-              <li className="py-[8px]">
-                <Link
-                  href="/"
-                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
-                >
-                  Smtewewrwrw
-                </Link>
-              </li>
-
-              <li className="py-[8px]">
-                <Link
-                  href="/"
-                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
-                >
-                  Smtewewrwrwr
-                </Link>
-              </li>
-            </ul>
+            <Link href={"/"}>
+              <Image
+                Src={"/assets/other/logo.png"}
+                Alt={"logo"}
+                ClassName={"w-[80px]"}
+                loadingType="eager"
+              />
+            </Link>
           </div>
 
           <div>
@@ -55,64 +30,18 @@ function Footer() {
               <li className="py-[8px]">
                 <Link
                   href="/"
-                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
+                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem] hover:text-black"
                 >
-                  Smtewewrwrwr
+                  Trang chủ
                 </Link>
               </li>
 
               <li className="py-[8px]">
                 <Link
-                  href="/"
-                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
+                  href="/collection/all"
+                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem] hover:text-black"
                 >
-                  Smtewewrwrwr
-                </Link>
-              </li>
-
-              <li className="py-[8px]">
-                <Link
-                  href="/"
-                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
-                >
-                  Smtewewrwrwr
-                </Link>
-              </li>
-            </ul>
-          </div>
-
-          <div>
-            <ul>
-              <li>
-                <h2 className="relative font-bold text-black text-[0.935rem] uppercase mb-3 pb-1.5 after:content-[''] after:absolute after:bottom-0 after:left-0 after:bg-black after:w-[60px] after:h-[1.5px]">
-                  Chính sách
-                </h2>
-              </li>
-
-              <li className="py-[8px]">
-                <Link
-                  href="/"
-                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
-                >
-                  Smtewewrwrwr
-                </Link>
-              </li>
-
-              <li className="py-[8px]">
-                <Link
-                  href="/"
-                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
-                >
-                  Smtewewrwrwr
-                </Link>
-              </li>
-
-              <li className="py-[8px]">
-                <Link
-                  href="/"
-                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
-                >
-                  Smtewewrwrwr
+                  Sản phẩm
                 </Link>
               </li>
             </ul>
@@ -163,7 +92,7 @@ function Footer() {
 
         <div className="text-center py-[15px] mx-auto">
           <p className="text-[hsl(0,0%,47%)] text-[0.9375rem] font-medium capitalize">
-            © 2024 Aura - Lam Dieu Quang
+            © 2025 Aura
           </p>
         </div>
       </div>

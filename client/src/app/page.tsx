@@ -1,7 +1,6 @@
 "use client";
 import useGetProductsGender from "@/hooks/useGetProductsGender";
 import BannerCarousel from "../components/BannerCarousel";
-import BlogList from "../components/BlogList";
 import CategoryList from "../components/CategoryList";
 import Collection from "../components/Collection";
 import ProductSlider from "../components/ProductSlider";
@@ -28,8 +27,6 @@ export default function Home() {
             <PromoteBanner gender={0} />
             <ProductSlider title={"Nữ"} products={productsFemale} />
             <Collection />
-
-            <BlogList />
           </>
         )}
       </section>
