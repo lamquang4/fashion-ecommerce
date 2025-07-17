@@ -23,6 +23,7 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
 
     router.push(`/search?q=${encodeURIComponent(search.trim())}`);
     setSearch("");
+    toggleSearch();
   };
 
   useEffect(() => {
