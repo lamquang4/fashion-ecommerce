@@ -39,7 +39,9 @@ function SearchDesktop() {
           onChange={(e) => setSearch(e.target.value)}
           onFocus={() => setFocused(true)}
           onBlur={() => {
-            setFocused(false);
+            setTimeout(() => {
+              setFocused(false);
+            }, 200);
           }}
         />
         <button

@@ -1,50 +1,33 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
-import Category from "@/model/Category";
 import Product from "@/model/Product";
 import { NextRequest, NextResponse } from "next/server";
 
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { slug: string } }
-) {
+export async function GET(req: NextRequest) {
   try {
     await connectMongoDB();
-    const { slug } = await params;
-
+    // lấy các sản phẩm bằng tìm kiếm
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
     const limit = 12;
     const skip = (page - 1) * limit;
+    const keyword = searchParams.get("keyword") || "";
 
     const min = parseFloat(searchParams.get("min") || "0");
     const max = parseFloat(searchParams.get("max") || "1000000000");
     const sort = searchParams.get("sort") || "";
 
-    let categoryQuery: any = { status: 1 };
-    let categoryIds: any[] = [];
-
-    if (slug === "nam") {
-      categoryQuery.gender = 1;
-    } else if (slug === "nu") {
-      categoryQuery.gender = 0;
-    } else if (slug !== "all") {
-      categoryQuery.slug = slug;
+    if (!keyword) {
+      return NextResponse.json({
+        products: [],
+        total: 0,
+        totalPages: 0,
+        page,
+      });
     }
-
-    const categories = await Category.find(categoryQuery).select("_id");
-
-    if (!categories) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy danh mục" },
-        { status: 400 }
-      );
-    }
-
-    categoryIds = categories.map((cat) => cat._id);
 
     const query: any = {
       status: 1,
-      category: { $in: categoryIds },
+      name: { $regex: keyword, $options: "i" },
     };
 
     const pipeline: any[] = [
@@ -155,7 +138,7 @@ export async function GET(
     ]);
 
     return NextResponse.json({
-      products,
+      products: products,
       total,
       totalPages: Math.ceil(total / limit),
       page,

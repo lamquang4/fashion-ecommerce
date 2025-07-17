@@ -28,7 +28,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ address: newAddress }, { status: 201 });
   } catch (err) {
-    console.log("ERROR ADDING ADDRESS:", err);
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

@@ -166,7 +166,9 @@ function RegisterForm() {
                 </Link>
               </p>
 
+              {/*
               <DifferentLR title={"đăng kí"} />
+  */}
             </form>
           </div>
         </div>

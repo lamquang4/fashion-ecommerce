@@ -15,6 +15,7 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
   const [focused, setFocused] = useState<boolean>(false);
   const { products, setKeyword } = useGetProductsSearch();
   const router = useRouter();
+
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (!search.trim()) {
@@ -53,7 +54,9 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
               onChange={(e) => setSearch(e.target.value)}
               onFocus={() => setFocused(true)}
               onBlur={() => {
-                setFocused(false);
+                setTimeout(() => {
+                  setFocused(false);
+                }, 200);
               }}
             />
           </form>
@@ -75,7 +78,11 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
               {products.length > 0 ? (
                 products.map((product, index) => (
                   <div className="flex w-full" key={index}>
-                    <Link href={`/product/${product.slug}`} className="w-full">
+                    <Link
+                      href={`/product/${product.slug}`}
+                      className="w-full"
+                      onClick={toggleSearch}
+                    >
                       <div className="hover:bg-[#F7F7F7] p-2.5 w-full flex gap-3.5 border-t border-gray-200">
                         <div>
                           <Image

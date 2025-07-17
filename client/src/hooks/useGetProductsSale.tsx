@@ -15,6 +15,9 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 export default function useGetProductsSlug(slug: string) {
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
+  const min = searchParams.get("min");
+  const max = searchParams.get("max");
+  const sort = searchParams.get("sort");
 
   if (slug !== "nam" && slug !== "nu") {
     return {
@@ -28,10 +31,15 @@ export default function useGetProductsSlug(slug: string) {
     };
   }
 
-  const query = new URLSearchParams({
-    page: page.toString(),
-  });
-  const url = `/api/get-products3/${slug}?${query.toString()}`;
+  const query = new URLSearchParams();
+
+  query.set("page", page.toString());
+
+  if (min) query.set("min", min);
+  if (max) query.set("max", max);
+  if (sort) query.set("sort", sort);
+
+  const url = `/api/get-products-sale/${slug}?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {

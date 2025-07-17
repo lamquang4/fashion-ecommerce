@@ -11,6 +11,8 @@ export async function GET(
     await connectMongoDB();
     const { slug } = await params;
 
+    //lấy những sp có giảm giá theo giới tính
+
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
     const limit = 12;
@@ -27,8 +29,6 @@ export async function GET(
       categoryQuery.gender = 1;
     } else if (slug === "nu") {
       categoryQuery.gender = 0;
-    } else if (slug !== "all") {
-      categoryQuery.slug = slug;
     }
 
     const categories = await Category.find(categoryQuery).select("_id");
@@ -44,6 +44,7 @@ export async function GET(
 
     const query: any = {
       status: 1,
+      discount: { $gt: 0 },
       category: { $in: categoryIds },
     };
 

@@ -102,7 +102,9 @@ function LoginForm() {
                 </Link>
               </p>
 
+              {/*
               <DifferentLR title={"đăng nhập"} />
+  */}
             </form>
           </div>
         </div>

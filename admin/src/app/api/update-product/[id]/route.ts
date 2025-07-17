@@ -249,21 +249,23 @@ export async function PUT(
       }
     }
 
-    const hasProductOldCategory = await Product.exists({
-      category: oldCategory,
-      status: 1,
-      _id: { $ne: id },
-    });
-    if (!hasProductOldCategory) {
-      await Category.findByIdAndUpdate(oldCategory, { status: 0 });
-    }
+    if (oldCategory !== category) {
+      const hasProductOldCategory = await Product.exists({
+        category: oldCategory,
+        status: 1,
+        _id: { $ne: id },
+      });
+      if (!hasProductOldCategory) {
+        await Category.findByIdAndUpdate(oldCategory, { status: 0 });
+      }
 
-    const hasProductNewCategory = await Product.exists({
-      category: category,
-      status: 1,
-    });
-    if (hasProductNewCategory) {
-      await Category.findByIdAndUpdate(category, { status: 1 });
+      const hasProductNewCategory = await Product.exists({
+        category: category,
+        status: 1,
+      });
+      if (hasProductNewCategory) {
+        await Category.findByIdAndUpdate(category, { status: 1 });
+      }
     }
 
     return NextResponse.json({ product: updatedProduct }, { status: 201 });

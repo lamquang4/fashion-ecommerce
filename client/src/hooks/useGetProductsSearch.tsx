@@ -17,12 +17,20 @@ export default function useGetProductsSearch() {
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const [keyword, setKeyword] = useState("");
+  const min = searchParams.get("min");
+  const max = searchParams.get("max");
+  const sort = searchParams.get("sort");
 
-  const query = new URLSearchParams({
-    page: page.toString(),
-    keyword,
-  });
-  const url = `/api/get-products2?${query.toString()}`;
+  const query = new URLSearchParams();
+
+  query.set("page", page.toString());
+
+  if (min) query.set("min", min);
+  if (max) query.set("max", max);
+  if (sort) query.set("sort", sort);
+  if (keyword) query.set("keyword", keyword);
+
+  const url = `/api/get-products-search?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
