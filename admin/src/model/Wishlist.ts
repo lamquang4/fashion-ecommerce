@@ -5,15 +5,10 @@ const wishlistSchema = new Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: false,
     },
     items: [
       {
-        product: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: "Product",
-          required: true,
-        },
         variant: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Inventory",
@@ -28,6 +23,15 @@ const wishlistSchema = new Schema(
 );
 
 wishlistSchema.index({ user: 1 });
+
+// Xóa các wishlist sau 7 ngày nếu không có user
+wishlistSchema.index(
+  { updatedAt: 1 },
+  {
+    expireAfterSeconds: 60 * 60 * 24 * 7, // 7 ngày
+    partialFilterExpression: { user: { $eq: null } },
+  }
+);
 
 const Wishlist = models.Wishlist || model("Wishlist", wishlistSchema);
 export default Wishlist;

@@ -1,45 +1,34 @@
 "use client";
 import Link from "next/link";
 import Image from "./Image";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import { ProductInWishlist } from "@/types/type";
-import {
-  hideLoading,
-  removeItemFromWishlist,
-} from "@/redux/features/wishlistSlice";
 import Loading from "./Loading";
 import React from "react";
+import useGetWishlist from "@/hooks/useGetWishlist";
+import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
 function WishlistItem() {
-  const dispatch = useDispatch();
-  const wishlist = useSelector((state: RootState) => state.wishlistSlice);
+  const { wishlist, isLoading, mutate } = useGetWishlist();
+  const { removeItem } = useRemoveItemWishlist();
 
-  useEffect(() => {
-    dispatch(hideLoading());
-  }, [dispatch]);
-
-  const handleRemove = (item: ProductInWishlist) => {
-    dispatch(
-      removeItemFromWishlist({
-        _id: item._id,
-        variantId: item.variant._id,
-      })
-    );
+  const handleRemoveItem = async (wishlistId: string, variant: string) => {
+    await removeItem({
+      wishlistId: wishlistId,
+      variant: variant,
+    });
+    mutate(undefined, true);
   };
   return (
     <>
       <section className="max-w-[1230px] mx-auto  mt-[40px] sm:mt-[45px]">
         <div className=" px-[10px] sm:px-[15px]">
           <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
-            Yêu thích ({wishlist.productsInWishlist.length})
+            Yêu thích ({wishlist?.productsInWishlist.length || 0})
           </h2>
-          {!wishlist.isLoading ? (
+          {isLoading ? (
             <Loading height={60} />
-          ) : wishlist.productsInWishlist.length > 0 ? (
+          ) : wishlist?.productsInWishlist.length ? (
             <div className="flex gap-8 max-w-xl mx-auto w-full">
               <div className="basis-[100%] bg-white px-2.5 sm:px-4 border border-gray-300 rounded-md">
-                {wishlist.productsInWishlist.map((item, index) => (
+                {wishlist?.productsInWishlist.map((item, index) => (
                   <React.Fragment key={index}>
                     <div className="flex gap-4 bg-white py-5">
                       <div className="flex gap-4.5">
@@ -66,7 +55,12 @@ function WishlistItem() {
                       <div className="ml-auto flex flex-col">
                         <div className="flex gap-4 justify-end">
                           <button
-                            onClick={() => handleRemove(item)}
+                            onClick={() =>
+                              handleRemoveItem(
+                                wishlist?._id || "",
+                                item.variant._id
+                              )
+                            }
                             className="p-1 text-black duration-200 hover:scale-112"
                           >
                             <svg viewBox="0 0 256 256" width="22" height="22">
@@ -110,7 +104,7 @@ function WishlistItem() {
                   </h2>
 
                   <Link
-                    href={"/search?q="}
+                    href={"/collection/all"}
                     className="text-[0.95rem] border border-black rounded-md font-medium px-2 py-2.5 hover:bg-black hover:text-white"
                   >
                     Mua sắm ngay

@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 export async function GET(req: NextRequest) {
   try {
     await connectMongoDB();
-    // lấy các sản phẩm bằng tìm kiếm
+    // lấy các sản phẩm tìm kiếm name sản phẩm
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
     const limit = 12;

@@ -70,7 +70,7 @@ export const options: NextAuthOptions = {
       options: {
         httpOnly: true,
         sameSite: "lax",
-        path: "/", 
+        path: "/",
         secure: process.env.NODE_ENV === "production",
       },
     },

@@ -3,7 +3,6 @@ import { Quicksand } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import LayoutPage from "../components/LayoutPage";
-import App from "./App";
 import { AuthProvider } from "./AuthProvider";
 
 const quicksand = Quicksand({
@@ -32,9 +31,7 @@ export default function RootLayout({
           }}
         />
         <AuthProvider>
-          <App>
-            <LayoutPage>{children}</LayoutPage>
-          </App>
+          <LayoutPage>{children}</LayoutPage>
         </AuthProvider>
       </body>
     </html>

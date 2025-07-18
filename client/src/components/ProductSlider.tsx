@@ -3,14 +3,12 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import Link from "next/link";
 import Image from "./Image";
-import { ProductInWishlist, Product } from "@/types/type";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  addItemToWishlist,
-  removeItemFromWishlist,
-} from "@/redux/features/wishlistSlice";
-import { RootState } from "@/redux/store";
 import { useState } from "react";
+import { Product } from "@/types/type";
+import useAddWishlist from "@/hooks/useAddWishlist";
+import useGetWishlist from "@/hooks/useGetWishlist";
+import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
+
 interface Props {
   title: string;
   products: Product[];
@@ -19,7 +17,10 @@ function ProductSlider({ title, products }: Props) {
   const [selectedInventoryIndexes, setSelectedInventoryIndexes] = useState<{
     [productId: string]: number;
   }>({});
-  const dispatch = useDispatch();
+  const { addWishlist } = useAddWishlist();
+  const { wishlist, mutate } = useGetWishlist();
+  const { removeItem } = useRemoveItemWishlist();
+
   const [sliderRef] = useKeenSlider({
     loop: false,
     slides: { perView: 4, spacing: 12 },
@@ -39,38 +40,27 @@ function ProductSlider({ title, products }: Props) {
     },
   });
 
-  const wishlist = useSelector(
-    (state: RootState) => state.wishlistSlice.productsInWishlist
-  );
-
-  const handleAddToWishlist = (product: Product, inventoryIndex: number) => {
+  const handleAddToWishlist = async (
+    product: Product,
+    inventoryIndex: number
+  ) => {
     const variant = product.variants[inventoryIndex];
 
-    const productToAdd: ProductInWishlist = {
-      _id: product._id,
-      name: product.name,
-      slug: product.slug,
-      variant: {
-        _id: variant._id,
-        images: variant.images,
-        color: {
-          _id: variant.color._id,
-          namecolor: variant.color.namecolor,
-          codecolor: variant.color.codecolor,
-        },
-      },
+    const payload = {
+      variant: variant._id,
     };
 
-    dispatch(addItemToWishlist(productToAdd));
+    await addWishlist(payload);
+    mutate();
   };
 
-  const handleRemove = (_id: string, variant: string) => {
-    dispatch(
-      removeItemFromWishlist({
-        _id: _id,
-        variantId: variant,
-      })
-    );
+  const handleRemove = async (product: Product, inventoryIndex: number) => {
+    const variant = product.variants[inventoryIndex];
+    await removeItem({
+      wishlistId: wishlist?._id || "",
+      variant: variant._id,
+    });
+    mutate();
   };
 
   function checkNewProduct(createdAt: string): boolean {
@@ -95,10 +85,8 @@ function ProductSlider({ title, products }: Props) {
                   selectedInventoryIndexes[product._id] || 0;
                 const selectedInventory = product.variants[selectedIndex];
 
-                const isInWishlist = wishlist.some(
-                  (item) =>
-                    item._id === product._id &&
-                    item.variant._id === selectedInventory._id
+                const isInWishlist = wishlist?.productsInWishlist.some(
+                  (item: any) => item.variant._id === selectedInventory._id
                 );
                 return (
                   <div key={index} className="keen-slider__slide">
@@ -150,7 +138,7 @@ function ProductSlider({ title, products }: Props) {
                           className="p-1 transition-colors duration-200 hover:scale-112 text-black"
                           onClick={() => {
                             isInWishlist
-                              ? handleRemove(product._id, selectedInventory._id)
+                              ? handleRemove(product, selectedIndex)
                               : handleAddToWishlist(product, selectedIndex);
                           }}
                         >

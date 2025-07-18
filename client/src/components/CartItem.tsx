@@ -1,59 +1,77 @@
 "use client";
 import Link from "next/link";
 import Image from "./Image";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
 import MenuSideCoupon from "./MenuSideCoupon";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
-import {
-  changeItemQuantity,
-  hideLoading,
-  removeItemFromCart,
-} from "@/redux/features/cartSlice";
-import { ProductInCart } from "@/types/type";
 import Loading from "./Loading";
+import useGetCart from "@/hooks/useGetCart";
+import { useRemoveItemCart } from "@/hooks/useRemoveItemCart";
+import { useChangeQuantityItemCart } from "@/hooks/useChangeQuantityItemCart";
 
 function CartItem() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const dispatch = useDispatch();
-  const cart = useSelector((state: RootState) => state.cartSlice);
+  const { cart, isLoading, mutate } = useGetCart();
+  const { removeItem } = useRemoveItemCart();
+  const { changeQuantity } = useChangeQuantityItemCart();
 
-  useEffect(() => {
-    dispatch(hideLoading());
-  }, [dispatch]);
+  const totalQuantity =
+    cart?.productsInCart.reduce((sum, item) => {
+      return sum + (item?.variant?.quantity || 0);
+    }, 0) || 0;
 
-  const handleIncrement = (item: ProductInCart) => {
-    dispatch(
-      changeItemQuantity({
-        _id: item._id,
-        sizeId: item.variant.size._id,
-        colorId: item.variant.color._id,
-        quantity: item.variant.quantity + 1,
-      })
-    );
+  const totalPrice =
+    cart?.productsInCart.reduce((sum, item) => {
+      return sum + item.price * item.variant.quantity;
+    }, 0) || 0;
+
+  const handleChangeQuantity = (
+    cartId: string,
+    variant: string,
+    size: string,
+    quantity: number
+  ) => {
+    changeQuantity({
+      cartId: cartId,
+      variant: variant,
+      size: size,
+      quantity: quantity,
+    });
+    mutate();
   };
 
-  const handleDecrement = (item: ProductInCart) => {
-    dispatch(
-      changeItemQuantity({
-        _id: item._id,
-        sizeId: item.variant.size._id,
-        colorId: item.variant.color._id,
-        quantity: item.variant.quantity - 1,
-      })
-    );
+  const handleIncrement = (
+    cartId: string,
+    variantId: string,
+    sizeId: string,
+    currentQuantity: number
+  ) => {
+    if (currentQuantity >= 15) return;
+
+    handleChangeQuantity(cartId, variantId, sizeId, currentQuantity + 1);
+    mutate();
   };
 
-  const handleRemove = (item: ProductInCart) => {
-    dispatch(
-      removeItemFromCart({
-        _id: item._id,
-        sizeId: item.variant.size._id,
-        colorId: item.variant.color._id,
-      })
-    );
+  const handleDecrement = (
+    cartId: string,
+    variantId: string,
+    sizeId: string,
+    currentQuantity: number
+  ) => {
+    if (currentQuantity <= 1) return;
+
+    handleChangeQuantity(cartId, variantId, sizeId, currentQuantity - 1);
+    mutate();
+  };
+
+  const handleRemoveItem = (cartId: string, variant: string, size: string) => {
+    removeItem({
+      cartId: cartId,
+      variant: variant,
+      size: size,
+    });
+    mutate();
   };
 
   const toggleOpen = () => {
@@ -65,15 +83,15 @@ function CartItem() {
       <section className="max-w-[1230px] mx-auto mt-[40px] sm:mt-[45px]">
         <div className="px-[10px] sm:px-[15px]">
           <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
-            Giỏ hàng ({cart.productsInCart.length})
+            Giỏ hàng ({totalQuantity})
           </h2>
-          {!cart.isLoading ? (
+          {isLoading ? (
             <Loading height={60} />
-          ) : cart.productsInCart.length > 0 ? (
+          ) : cart?.productsInCart.length ? (
             <form action="">
               <div className="flex gap-8 w-full lg:flex-row flex-col">
                 <div className=" bg-white px-2.5 sm:px-4 border border-gray-300 rounded-md basis-[70%]">
-                  {cart.productsInCart.map((item, index) => (
+                  {cart?.productsInCart.map((item, index) => (
                     <React.Fragment key={index}>
                       <div className="flex gap-4 bg-white py-6">
                         <div className="flex gap-4.5">
@@ -103,7 +121,14 @@ function CartItem() {
                               <button
                                 type="button"
                                 name="button-1"
-                                onClick={() => handleDecrement(item)}
+                                onClick={() =>
+                                  handleDecrement(
+                                    cart?._id || "",
+                                    item.variant._id,
+                                    item.variant.size._id,
+                                    item.variant.quantity
+                                  )
+                                }
                                 disabled={item.variant.quantity <= 1}
                                 className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-slate-300 border"
                               >
@@ -115,7 +140,14 @@ function CartItem() {
                               <button
                                 type="button"
                                 name="button-1"
-                                onClick={() => handleIncrement(item)}
+                                onClick={() =>
+                                  handleIncrement(
+                                    cart?._id || "",
+                                    item.variant._id,
+                                    item.variant.size._id,
+                                    item.variant.quantity
+                                  )
+                                }
                                 disabled={item.variant.quantity >= 15}
                                 className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-slate-300 border"
                               >
@@ -126,7 +158,15 @@ function CartItem() {
                         </div>
                         <div className="ml-auto flex flex-col">
                           <div className="flex gap-4 justify-end">
-                            <button onClick={() => handleRemove(item)}>
+                            <button
+                              onClick={() =>
+                                handleRemoveItem(
+                                  cart?._id || "",
+                                  item.variant._id,
+                                  item.variant.size._id
+                                )
+                              }
+                            >
                               <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 className="w-5 h-5 cursor-pointer fill-black hover:fill-red-600 inline-block"
@@ -199,7 +239,7 @@ function CartItem() {
                     <li className="flex flex-wrap gap-4 text-[1.1rem] font-semibold">
                       Tổng cộng{" "}
                       <span className="ml-auto">
-                        {cart.total.toLocaleString("vi-VN")}₫
+                        {totalPrice.toLocaleString("vi-VN")} ₫
                       </span>
                     </li>
                   </ul>
@@ -216,7 +256,7 @@ function CartItem() {
 
                     <Link
                       className="text-[0.9rem] px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-gray-200 text-slate-900 border border-gray-300 rounded-md text-center"
-                      href={"/search?q="}
+                      href={"/collection/all"}
                     >
                       Tiếp tục mua sắm
                     </Link>
@@ -242,7 +282,7 @@ function CartItem() {
                   </h2>
 
                   <Link
-                    href={"/search?q="}
+                    href={"/collection/all"}
                     className="text-[0.95rem] border border-black rounded-md font-medium px-2 py-2.5 hover:bg-black hover:text-white"
                   >
                     Mua sắm ngay

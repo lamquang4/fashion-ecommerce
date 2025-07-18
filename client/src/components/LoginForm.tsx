@@ -1,13 +1,18 @@
 "use client";
 import Link from "next/link";
-import DifferentLR from "./DifferentLR";
 import { signIn } from "next-auth/react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import useGetCart from "@/hooks/useGetCart";
+import { useSyncCart } from "@/hooks/useSyncCart";
+import { useSyncWishlist } from "@/hooks/useSyncWishlist";
 function LoginForm() {
   const router = useRouter();
   const [data, setData] = useState({ email: "", password: "" });
+  const { mutate } = useGetCart();
+  const { syncCart } = useSyncCart();
+  const { syncWishlist } = useSyncWishlist();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -32,6 +37,11 @@ function LoginForm() {
           email: "",
           password: "",
         });
+
+        syncCart();
+        syncWishlist();
+
+        mutate();
       } else {
         const errorMsg = res?.error || "Email hoặc mật khẩu không đúng";
         toast.error(errorMsg);

@@ -5,8 +5,8 @@ import useSWR from "swr";
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
-export default function useGetCart(user: string) {
-  const url = `/api/get-cart/${user}`;
+export default function useGetCart() {
+  const url = `/api/get-cart`;
   const { data, error, isLoading, mutate } = useSWR<Cart>(url, fetcher);
 
   return {

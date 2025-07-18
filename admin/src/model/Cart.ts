@@ -5,11 +5,15 @@ const cartSchema = new Schema(
     user: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
-      required: true,
+      required: false,
     },
     items: [
       {
-        inventory: { type: mongoose.Schema.Types.ObjectId, ref: "Inventory" },
+        variant: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Inventory",
+          required: true,
+        },
         size: {
           type: mongoose.Schema.Types.ObjectId,
           ref: "Size",
@@ -21,7 +25,6 @@ const cartSchema = new Schema(
         },
       },
     ],
-    total: { type: Number, required: true },
   },
   {
     timestamps: true,
@@ -29,6 +32,15 @@ const cartSchema = new Schema(
 );
 
 cartSchema.index({ user: 1 });
+
+// Xóa các cart sau 7 ngày nếu không có user
+cartSchema.index(
+  { updatedAt: 1 },
+  {
+    expireAfterSeconds: 60 * 60 * 24 * 7, // 7 ngày
+    partialFilterExpression: { user: { $eq: null } },
+  }
+);
 
 const Cart = models.Cart || model("Cart", cartSchema);
 export default Cart;

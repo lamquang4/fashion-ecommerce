@@ -1,48 +1,110 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
+import { getServerSession } from "next-auth";
+import { NextRequest, NextResponse } from "next/server";
 import Cart from "@/model/Cart";
-import { NextResponse } from "next/server";
+import { options } from "../auth/[...nextauth]/options";
+import mongoose from "mongoose";
 
-export async function POST(req: Request) {
+export async function POST(req: NextRequest) {
   try {
     await connectMongoDB();
-    const body = await req.json();
-    const { cartId, productId, variantId, sizeId, quantity } = body;
 
-    const cart = await Cart.findById(cartId);
-    if (!cart)
-      return NextResponse.json(
-        { msg: "Giỏ hàng không tồn tại" },
-        { status: 404 }
-      );
+    const session = await getServerSession(options);
+    const userId = session?.user?.id || null;
+
+    const { variant, size, quantity } = await req.json();
+    const cartId = req.cookies.get("cart")?.value;
+
+    let cart = null;
+
+    if (userId && cartId && mongoose.Types.ObjectId.isValid(cartId)) {
+      const guestCart = await Cart.findById(cartId);
+      const userCart = await Cart.findOne({ user: userId });
+
+      if (guestCart && guestCart.user == null) {
+        if (userCart) {
+          for (const item of guestCart.items) {
+            const existingItem = userCart.items.find(
+              (it: any) =>
+                it.variant.toString() === item.variant.toString() &&
+                it.size.toString() === item.size.toString()
+            );
+
+            if (existingItem) {
+              existingItem.quantity += item.quantity;
+            } else {
+              userCart.items.push(item);
+            }
+          }
+          await userCart.save();
+
+          await Cart.findByIdAndDelete(guestCart._id);
+
+          cart = userCart;
+        } else {
+          guestCart.user = userId;
+          await guestCart.save();
+          cart = guestCart;
+        }
+      }
+    }
+
+    if (!cart) {
+      if (cartId && mongoose.Types.ObjectId.isValid(cartId)) {
+        cart = await Cart.findById(cartId);
+      }
+
+      if (!cart) {
+        cart = await Cart.create({
+          user: userId,
+          items: [],
+        });
+      }
+    }
 
     const existingItem = cart.items.find(
       (item: any) =>
-        item.product.toString() === productId &&
-        item.variant.toString() === variantId &&
-        item.size.toString() === sizeId
+        item.variant.toString() === variant && item.size.toString() === size
     );
 
     if (existingItem) {
-      existingItem.quantity += quantity;
+      const newQuantity = existingItem.quantity + quantity;
+      existingItem.quantity = newQuantity > 15 ? 15 : newQuantity;
     } else {
       cart.items.push({
-        product: productId,
-        variant: variantId,
-        size: sizeId,
-        quantity,
+        variant: variant,
+        size: size,
+        quantity: quantity > 15 ? 15 : quantity,
       });
     }
 
-    // Cập nhật tổng tiền (nếu muốn)
-    // cart.total = ... (tuỳ logic)
-
     await cart.save();
 
-    return NextResponse.json({ msg: "Thêm thành công" });
+    const response = NextResponse.json({ status: 200 });
+
+    if (!userId && !cartId) {
+      response.cookies.set({
+        name: "cart",
+        value: String(cart._id),
+        httpOnly: true,
+        path: "/",
+        sameSite: "strict",
+        secure: process.env.NODE_ENV === "production",
+      });
+    }
+
+    if (userId && cartId) {
+      response.cookies.set({
+        name: "cart",
+        value: "",
+        path: "/",
+        expires: new Date(0),
+      });
+    }
+
+    return response;
+
   } catch (err) {
-    return NextResponse.json(
-      { error: err, msg: "Lỗi thêm sản phẩm" },
-      { status: 500 }
-    );
+    return NextResponse.json({ msg: "Lỗi", err }, { status: 500 });
   }
 }

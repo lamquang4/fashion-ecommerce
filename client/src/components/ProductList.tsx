@@ -4,21 +4,18 @@ import React, { useEffect, useState } from "react";
 import AdvancedSearch from "./AdvancedSearch";
 import Image from "./Image";
 import Loading from "./Loading";
-import {
-  addItemToWishlist,
-  removeItemFromWishlist,
-} from "@/redux/features/wishlistSlice";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/redux/store";
 import { Category, Product, ProductInWishlist } from "@/types/type";
 import { usePathname, useSearchParams } from "next/navigation";
+import useGetWishlist from "@/hooks/useGetWishlist";
+import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
+import useAddWishlist from "@/hooks/useAddWishlist";
+
 interface Props {
   category?: Category;
   products: Product[];
   isLoading: boolean;
 }
 function ProductList({ category, products, isLoading }: Props) {
-  const dispatch = useDispatch();
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [selectedInventoryIndexes, setSelectedInventoryIndexes] = useState<{
     [productId: string]: number;
@@ -26,6 +23,9 @@ function ProductList({ category, products, isLoading }: Props) {
   const searchParams = useSearchParams();
   const pathname = usePathname();
   const search = searchParams.get("q");
+  const { addWishlist } = useAddWishlist();
+  const { wishlist, mutate } = useGetWishlist();
+  const { removeItem } = useRemoveItemWishlist();
 
   const toggleAdvancedSearch = () => {
     setAdvancedSearchOpen(!advancedSearchOpen);
@@ -43,38 +43,27 @@ function ProductList({ category, products, isLoading }: Props) {
     };
   }, [advancedSearchOpen]);
 
-  const wishlist = useSelector(
-    (state: RootState) => state.wishlistSlice.productsInWishlist
-  );
-
-  const handleAddToWishlist = (product: Product, inventoryIndex: number) => {
+  const handleAddToWishlist = async (
+    product: Product,
+    inventoryIndex: number
+  ) => {
     const variant = product.variants[inventoryIndex];
 
-    const productToAdd: ProductInWishlist = {
-      _id: product._id,
-      name: product.name,
-      slug: product.slug,
-      variant: {
-        _id: variant._id,
-        images: variant.images,
-        color: {
-          _id: variant.color._id,
-          namecolor: variant.color.namecolor,
-          codecolor: variant.color.codecolor,
-        },
-      },
+    const payload = {
+      variant: variant._id,
     };
 
-    dispatch(addItemToWishlist(productToAdd));
+    await addWishlist(payload);
+    mutate();
   };
 
-  const handleRemove = (_id: string, variantId: string) => {
-    dispatch(
-      removeItemFromWishlist({
-        _id: _id,
-        variantId: variantId,
-      })
-    );
+  const handleRemove = async (product: Product, inventoryIndex: number) => {
+    const variant = product.variants[inventoryIndex];
+    await removeItem({
+      wishlistId: wishlist?._id || "",
+      variant: variant._id,
+    });
+    mutate();
   };
 
   function checkNewProduct(createdAt: string): boolean {
@@ -136,10 +125,8 @@ function ProductList({ category, products, isLoading }: Props) {
               const selectedIndex = selectedInventoryIndexes[product._id] || 0;
               const selectedInventory = product.variants[selectedIndex];
 
-              const isInWishlist = wishlist.some(
-                (item) =>
-                  item._id === product._id &&
-                  item.variant._id === selectedInventory._id
+              const isInWishlist = wishlist?.productsInWishlist.some(
+                (item: any) => item.variant._id === selectedInventory._id
               );
 
               return (
@@ -189,7 +176,7 @@ function ProductList({ category, products, isLoading }: Props) {
                         className="p-1 transition-colors duration-200 hover:scale-112 text-black"
                         onClick={() => {
                           isInWishlist
-                            ? handleRemove(product._id, selectedInventory._id)
+                            ? handleRemove(product, selectedIndex)
                             : handleAddToWishlist(product, selectedIndex);
                         }}
                       >

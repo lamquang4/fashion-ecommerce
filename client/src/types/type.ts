@@ -138,8 +138,6 @@ export interface Cart {
   _id?: string;
   user?: string;
   productsInCart: ProductInCart[];
-  total: number;
-  isLoading?: boolean;
 }
 
 export interface ProductInWishlist {
@@ -157,7 +155,6 @@ export interface Wishlist {
   _id?: string;
   user?: string;
   productsInWishlist: ProductInWishlist[];
-  isLoading: boolean;
 }
 
 export type Ward = {

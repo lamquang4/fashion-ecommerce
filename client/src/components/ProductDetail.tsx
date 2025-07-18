@@ -9,16 +9,14 @@ import ImageViewer from "./ImageViewer";
 import useGetProductSlug from "@/hooks/useGetProductSlug";
 import { notFound, useParams } from "next/navigation";
 import useGetCoupons from "@/hooks/useGetCoupons";
-import { useDispatch, useSelector } from "react-redux";
-import { addItemToCart } from "@/redux/features/cartSlice";
 import toast from "react-hot-toast";
 import { Color, Inventory, Size } from "@/types/type";
-import {
-  addItemToWishlist,
-  removeItemFromWishlist,
-} from "@/redux/features/wishlistSlice";
-import { RootState } from "@/redux/store";
 import { GrNext, GrPrevious } from "react-icons/gr";
+import useAddCart from "@/hooks/useAddCart";
+import useGetCart from "@/hooks/useGetCart";
+import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
+import useGetWishlist from "@/hooks/useGetWishlist";
+import useAddWishlist from "@/hooks/useAddWishlist";
 
 function ProductDetail() {
   const params = useParams();
@@ -35,7 +33,15 @@ function ProductDetail() {
   const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
-  const dispatch = useDispatch();
+  const { addCart } = useAddCart();
+  const { addWishlist } = useAddWishlist();
+  const { mutate: mutateCart } = useGetCart();
+  const { wishlist, mutate: mutateWishlist } = useGetWishlist();
+  const { removeItem } = useRemoveItemWishlist();
+
+  const isInWishlist = wishlist?.productsInWishlist?.some(
+    (item) => item.variant._id === selectedInventory?._id
+  );
 
   useEffect(() => {
     if (product?.variants && product.variants.length > 0) {
@@ -46,7 +52,7 @@ function ProductDetail() {
   }, [product]);
 
   useEffect(() => {
-    if (selectedInventory && selectedSize) {
+    if (selectedInventory && selectedSize && selectedColor) {
       const match = selectedInventory.inventories.find(
         (inv) => inv.size._id === selectedSize._id
       );
@@ -56,17 +62,11 @@ function ProductDetail() {
         setIsInStock(false);
       }
     }
-  }, [selectedInventory, selectedSize]);
+  }, [selectedInventory, selectedSize, selectedColor]);
 
-  const cart = useSelector((state: RootState) => state.cartSlice);
-
-  const wishlist = useSelector(
-    (state: RootState) => state.wishlistSlice.productsInWishlist
-  );
-  const isInWishlist = wishlist.some(
-    (item) =>
-      item._id === product?._id && item.variant._id === selectedInventory?._id
-  );
+  useEffect(() => {
+    setSelectedSize(undefined);
+  }, [selectedColor]);
 
   const allImages =
     product?.variants.flatMap((variant) => variant.images) || [];
@@ -107,13 +107,8 @@ function ProductDetail() {
     return notFound();
   }
 
-  const handleAddToCart = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAddToCart = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
-    if (cart.productsInCart.length > 25) {
-      toast.error("Giỏ hàng chỉ chứa tối đa 25 sản phẩm");
-      return;
-    }
 
     if (!selectedSize) {
       toast.error("Bạn hãy chọn kích thước!");
@@ -138,64 +133,36 @@ function ProductDetail() {
       return;
     }
 
-    const productAdd = {
-      _id: product._id,
-      name: product.name,
-      slug: product.slug,
-      discount: product.discount,
-      price:
-        product.discount !== 0
-          ? product.price - product.discount
-          : product.price,
-      variant: {
-        _id: selectedInventory._id,
-        images: selectedInventory.images,
-        color: {
-          _id: selectedInventory.color._id,
-          namecolor: selectedInventory.color.namecolor,
-          codecolor: selectedInventory.color.codecolor,
-        },
-        size: {
-          _id: selectedSize._id,
-          namesize: selectedSize.namesize,
-        },
-        quantity: quantity,
-      },
+    const payload = {
+      variant: selectedInventory._id,
+      size: selectedSize._id,
+      quantity: quantity,
     };
-    dispatch(addItemToCart(productAdd));
+
+    await addCart(payload);
+    mutateCart();
     toast.success("Đã thêm vào giỏ hàng!");
   };
 
-  const handleAddToWishlist = () => {
+  const handleAddToWishlist = async () => {
     if (!selectedInventory || !product) return;
 
-    const productToAdd = {
-      _id: product._id,
-      name: product.name,
-      slug: product.slug,
-      variant: {
-        _id: selectedInventory._id,
-        images: selectedInventory.images,
-        color: {
-          _id: selectedInventory.color._id,
-          namecolor: selectedInventory.color.namecolor,
-          codecolor: selectedInventory.color.codecolor,
-        },
-      },
+    const payload = {
+      variant: selectedInventory._id,
     };
 
-    dispatch(addItemToWishlist(productToAdd));
+    await addWishlist(payload);
+    mutateWishlist();
     toast.success("Đã thêm vào yêu thích!");
   };
 
-  const handleRemove = () => {
+  const handleRemove = async () => {
     if (!selectedInventory || !product) return;
-    dispatch(
-      removeItemFromWishlist({
-        _id: product._id,
-        variantId: selectedInventory._id,
-      })
-    );
+    await removeItem({
+      wishlistId: wishlist?._id || "",
+      variant: selectedInventory._id,
+    });
+    mutateWishlist();
   };
 
   return (
@@ -438,15 +405,9 @@ function ProductDetail() {
                 <div className="w-full flex gap-[20px] flex-wrap md:flex-nowrap mb-[30px] items-center">
                   <button
                     type="submit"
-                    disabled={!isInStock}
-                    className={`px-[10px] py-[10px] w-full uppercase text-[0.9rem] font-medium border
-    ${
-      isInStock
-        ? "bg-black text-white hover:bg-[#050708]/80"
-        : "border-[#197FB6]  text-[#197FB6] cursor-not-allowed"
-    }`}
+                    className="px-[10px] py-[10px] w-full uppercase text-[0.9rem] font-medium border bg-black text-white hover:bg-[#050708]/80"
                   >
-                    {isInStock ? "Thêm vào giỏ" : "Hết hàng"}
+                    Thêm vào giỏ
                   </button>
 
                   <button

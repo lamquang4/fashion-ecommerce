@@ -10,27 +10,23 @@ import Overplay from "./Overplay";
 import ProfileMenu from "./ProfileMenu";
 import Image from "./Image";
 import useGetCategories from "@/hooks/useGetCategories";
-import { RootState } from "@/redux/store";
-import { useSelector } from "react-redux";
 import SearchMobile from "./SearchMobile";
 import SearchDesktop from "./SearchDesktop";
+import useGetCart from "@/hooks/useGetCart";
+import useGetWishlist from "@/hooks/useGetWishlist";
 function Header() {
   const { categoriesMale, categoriesFemale } = useGetCategories();
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [menuMobileOpen, setMenuMobileOpen] = useState<boolean>(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
 
-  const productsInCart = useSelector(
-    (state: RootState) => state.cartSlice.productsInCart
-  );
+  const { cart } = useGetCart();
+  const { wishlist } = useGetWishlist();
 
-  const totalQuantity = productsInCart.reduce((sum, item) => {
-    return sum + (item?.variant?.quantity || 0);
-  }, 0);
-
-  const wishlist = useSelector(
-    (state: RootState) => state.wishlistSlice.productsInWishlist
-  );
+  const totalQuantity =
+    cart?.productsInCart.reduce((sum, item) => {
+      return sum + (item?.variant?.quantity || 0);
+    }, 0) || 0;
 
   const toggleSearch = () => {
     setOpenSearch(!openSearch);
@@ -213,7 +209,7 @@ function Header() {
     bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
     rounded-full w-[20px] h-[20px]"
                 >
-                  {wishlist.length}
+                  {wishlist?.productsInWishlist.length || 0}
                 </span>
               </Link>
             </div>
@@ -262,7 +258,7 @@ function Header() {
     bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
     rounded-full w-[20px] h-[20px]"
                 >
-                  {wishlist.length}
+                  {wishlist?.productsInWishlist.length || 0}
                 </span>
               </Link>
               <button onClick={toggleMobileMenu} title="Mở menu">

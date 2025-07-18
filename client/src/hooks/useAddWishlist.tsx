@@ -1,14 +1,12 @@
 "use client";
 import axios from "axios";
 
-export default function useAddCart() {
-  const addCart = async (data: {
+export default function useAddWishlist() {
+  const addWishlist = async (data: {
     variant: string;
-    size: string;
-    quantity: number;
   }) => {
     try {
-      const res = await axios.post("/api/add-cart", data);
+      const res = await axios.post("/api/add-wishlist", data);
       return res.data;
     } catch (err) {
       console.error("Lỗi:", err);
@@ -16,5 +14,5 @@ export default function useAddCart() {
     }
   };
 
-  return { addCart };
+  return { addWishlist };
 }
