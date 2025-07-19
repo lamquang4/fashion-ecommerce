@@ -9,12 +9,17 @@ import Loading from "./Loading";
 import useGetCart from "@/hooks/useGetCart";
 import { useRemoveItemCart } from "@/hooks/useRemoveItemCart";
 import { useChangeQuantityItemCart } from "@/hooks/useChangeQuantityItemCart";
+import { useSession } from "next-auth/react";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 function CartItem() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { cart, isLoading, mutate } = useGetCart();
   const { removeItem } = useRemoveItemCart();
   const { changeQuantity } = useChangeQuantityItemCart();
+  const { data: session } = useSession();
+  const router = useRouter();
 
   const totalQuantity =
     cart?.productsInCart.reduce((sum, item) => {
@@ -74,6 +79,14 @@ function CartItem() {
     mutate();
   };
 
+  const handleCoupon = () => {
+    if (!session?.user) {
+      toast.error("Vui lòng đăng nhập");
+    }
+
+    router.push(`/login`);
+  };
+
   const toggleOpen = () => {
     setMenuOpen(!menuOpen);
   };
@@ -88,15 +101,15 @@ function CartItem() {
           {isLoading ? (
             <Loading height={60} />
           ) : cart?.productsInCart.length ? (
-            <form action="">
+            <form>
               <div className="flex gap-8 w-full lg:flex-row flex-col">
-                <div className=" bg-white px-2.5 sm:px-4 border border-gray-300 rounded-md basis-[70%]">
+                <div className=" bg-white basis-[70%]">
                   {cart?.productsInCart.map((item, index) => (
                     <React.Fragment key={index}>
-                      <div className="flex gap-4 bg-white py-6">
+                      <div className="flex gap-4 py-6">
                         <div className="flex gap-4.5">
                           <Link href={`/product/${item.slug}`}>
-                            <div className="w-full max-w-[150px] shrink-0">
+                            <div className="w-full max-w-[200px] shrink-0">
                               <Image
                                 Src={item.variant.images[0]}
                                 Alt={item.name}
@@ -108,12 +121,14 @@ function CartItem() {
 
                           <div className="flex flex-col gap-4">
                             <div>
-                              <h2 className="text-[0.85rem] sm:text-[0.95rem] font-medium text-slate-900">
+                              <h2 className="text-[0.9rem] sm:text-[1.1rem] font-semibold text-black">
                                 {item.name}
                               </h2>
-                              <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-[#898989] mt-2 flex items-center gap-2">
-                                {item.variant.size.namesize} /{" "}
-                                {item.variant.color.namecolor}
+                              <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black mt-2">
+                                Màu sắc: {item.variant.color.namecolor}
+                              </p>
+                              <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black mt-2">
+                                Kích thước: {item.variant.size.namesize}
                               </p>
                             </div>
 
@@ -200,43 +215,8 @@ function CartItem() {
                 </div>
 
                 <div className="bg-[#F7F7F7] rounded-sm px-4 py-6 h-auto basis-[30%]">
-                  <div className="">
-                    <div className="flex justify-between items-center mb-[5px]">
-                      <label
-                        htmlFor="discount"
-                        className="block text-[1rem] font-semibold"
-                      >
-                        Mã giảm giá
-                      </label>
-
-                      <button
-                        type="button"
-                        className="underline text-[0.9rem]"
-                        onClick={toggleOpen}
-                      >
-                        Xem tất cả
-                      </button>
-                    </div>
-
-                    <div className="flex gap-[15px] items-center">
-                      <input
-                        type="text"
-                        id="discount"
-                        name="discount"
-                        className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:border-blue-500 focus:ring-blue-500"
-                        placeholder="Nhập mã"
-                      />
-
-                      <button className="w-[120px] text-[0.9rem] rounded-md bg-[#197FB6] py-2 font-medium text-white">
-                        Sử dụng
-                      </button>
-                    </div>
-                  </div>
-
-                  <hr className="border-gray-300 my-[20px]" />
-
                   <ul className="text-slate-900 font-medium space-y-4">
-                    <li className="flex flex-wrap gap-4 text-[1.1rem] font-semibold">
+                    <li className="flex flex-wrap gap-4 text-[1.1rem] font-semibold uppercase">
                       Tổng cộng{" "}
                       <span className="ml-auto">
                         {totalPrice.toLocaleString("vi-VN")} ₫

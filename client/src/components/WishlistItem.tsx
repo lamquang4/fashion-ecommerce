@@ -27,13 +27,13 @@ function WishlistItem() {
             <Loading height={60} />
           ) : wishlist?.productsInWishlist.length ? (
             <div className="flex gap-8 max-w-xl mx-auto w-full">
-              <div className="basis-[100%] bg-white px-2.5 sm:px-4 border border-gray-300 rounded-md">
+              <div className="basis-[100%]">
                 {wishlist?.productsInWishlist.map((item, index) => (
                   <React.Fragment key={index}>
                     <div className="flex gap-4 bg-white py-5">
                       <div className="flex gap-4.5">
                         <Link href={`/product/${item.slug}`}>
-                          <div className="w-full max-w-[150px] shrink-0">
+                          <div className="w-full max-w-[200px] shrink-0">
                             <Image
                               Src={item.variant.images[0]}
                               Alt={""}
@@ -44,10 +44,10 @@ function WishlistItem() {
                         </Link>
 
                         <div className="flex flex-col gap-4">
-                          <p className="text-[0.85rem] sm:text-[0.95rem] font-normal text-slate-900">
+                          <h2 className="text-[0.9rem] sm:text-[1.1rem] font-semibold text-black">
                             {item.name}
-                          </p>
-                          <p className="text-[0.85rem] sm:text-[0.95rem] font-normal text-slate-900">
+                          </h2>
+                          <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black">
                             Màu sắc: {item.variant.color.namecolor}
                           </p>
                         </div>
