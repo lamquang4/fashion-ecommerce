@@ -6,8 +6,7 @@ export async function POST(req: NextRequest) {
   try {
     await connectMongoDB();
 
-    const body = await req.json();
-    const { user, address, paymethod, coupon, total } = body;
+    const {  } = await req.json();
 
     const newOrder = await Order.create({});
 

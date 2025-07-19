@@ -1,18 +1,89 @@
 "use client";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "./Image";
 import MenuSideCoupon from "./MenuSideCoupon";
 import useGetProvinces from "@/hooks/useGetProvinceVN";
+import useGetCart from "@/hooks/useGetCart";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
+import useGetAddresses from "@/hooks/useGetAddresses";
+import { Address } from "@/types/type";
+
 function CheckoutForm() {
   const { provinces } = useGetProvinces();
+  const [data, setData] = useState({
+    fullname: "",
+    phone: "",
+    speaddress: "",
+  });
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [selectedProvinceName, setSelectedProvinceName] = useState<string>("");
   const [selectedWard, setSelectedWard] = useState<string>("");
+  const { cart, isLoading: isLoadingCart } = useGetCart();
+  const { data: session } = useSession();
+  const { addresses, isLoading: isLoadingAddresses } = useGetAddresses(
+    session?.user.id || ""
+  );
+  const router = useRouter();
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+
+  const handleGetAddress = (address: Address | null) => {
+    if (address) {
+      setData({
+        fullname: address.fullname,
+        phone: address.phone,
+        speaddress: address.speaddress,
+      });
+      setSelectedProvinceName(address.city);
+      setSelectedWard(address.ward);
+    } else {
+      setData({
+        fullname: "",
+        phone: "",
+        speaddress: "",
+      });
+      setSelectedProvinceName("");
+      setSelectedWard("");
+    }
+  };
+
+  const totalPrice =
+    cart?.productsInCart.reduce((sum, item) => {
+      const finalPrice =
+        item.discount > 0 ? item.price - item.discount : item.price;
+
+      return sum + finalPrice * item.variant.quantity;
+    }, 0) || 0;
+
+  useEffect(() => {
+    if (
+      !isLoadingCart &&
+      !isLoadingAddresses &&
+      !cart?.productsInCart?.length &&
+      !session?.user &&
+      addresses.length
+    ) {
+      router.push("/cart");
+    }
+  }, [cart, session?.user, addresses, isLoadingCart, isLoadingAddresses]);
 
   const selectedProvince = provinces?.find(
     (province) => province.province === selectedProvinceName
   );
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+  };
 
   const toggleOpen = () => {
     setMenuOpen(!menuOpen);
@@ -31,7 +102,7 @@ function CheckoutForm() {
 
         <hr className="border-slate-300 my-[15px]" />
 
-        <form action="">
+        <form onSubmit={handleSubmit}>
           <div className="grid lg:grid-cols-2 gap-[50px]">
             <div className=" bg-gray-50 order-last lg:order-first">
               <p className="text-xl font-medium mb-[15px]">
@@ -46,11 +117,26 @@ function CheckoutForm() {
                   >
                     Địa chỉ lưu trữ
                   </label>
-                  <select className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500">
+                  <select
+                    onChange={(e) => {
+                      const value = e.target.value;
+                      if (value === "") {
+                        handleGetAddress(null);
+                      } else {
+                        const selected = addresses.find(
+                          (addr) => addr._id === value
+                        );
+                        if (selected) handleGetAddress(selected);
+                      }
+                    }}
+                    className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                  >
                     <option value="">Chọn địa chỉ lưu trữ</option>
-                    <option value="">
-                      751 HB, Hồ Chí Minh, Quận 6, Phường 10
-                    </option>
+                    {addresses.map((address, index) => (
+                      <option value={address._id} key={index}>
+                        {address.speaddress}, {address.city}, {address.ward}
+                      </option>
+                    ))}
                   </select>
                 </div>
 
@@ -64,6 +150,9 @@ function CheckoutForm() {
                   <input
                     type="text"
                     name="fullname"
+                    value={data.fullname}
+                    onChange={handleChange}
+                    required
                     className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                     placeholder="Họ và tên"
                   />
@@ -80,6 +169,9 @@ function CheckoutForm() {
                     type="number"
                     inputMode="numeric"
                     name="phone"
+                    value={data.phone}
+                    onChange={handleChange}
+                    required
                     className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                     placeholder="Số điện thoại"
                   />
@@ -95,6 +187,9 @@ function CheckoutForm() {
                   <input
                     type="text"
                     name="speaddress"
+                    value={data.speaddress}
+                    onChange={handleChange}
+                    required
                     className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                     placeholder="Địa chỉ cụ thể"
                   />
@@ -162,7 +257,7 @@ function CheckoutForm() {
                         className="peer hidden"
                         id="cod"
                         type="radio"
-                        name="cod"
+                        name="paymethod"
                       />
                       <span className="peer-checked:border-[#197FB6] absolute right-4 top-1/2 box-content block h-2.5 w-2.5 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
                       <label
@@ -213,7 +308,7 @@ function CheckoutForm() {
                         className="peer hidden"
                         id="ck"
                         type="radio"
-                        name="ck"
+                        name="paymethod"
                       />
                       <span className="peer-checked:border-[#197FB6] absolute right-4 top-1/2 box-content block h-2.5 w-2.5 -translate-y-1/2 rounded-full border-8 border-gray-300 bg-white"></span>
                       <label
@@ -263,54 +358,46 @@ function CheckoutForm() {
               <div>
                 <p className="text-xl font-medium  mb-[15px]">Đơn hàng</p>
                 <div className="space-y-5.5 bg-white">
-                  <div className="flex rounded-lg bg-white gap-[15px]">
-                    <div className="relative">
-                      <Image
-                        Src={"/assets/products/IMGSP3483.png"}
-                        Alt={""}
-                        ClassName={"w-[120px] object-cover"}
-                        loadingType="eager"
-                      />
+                  {cart?.productsInCart.map((item, index) => (
+                    <div
+                      className="flex rounded-lg bg-white gap-[15px]"
+                      key={index}
+                    >
+                      <div className="relative">
+                        <Image
+                          Src={item.variant.images[0]}
+                          Alt={""}
+                          ClassName={"w-[120px] object-cover"}
+                          loadingType="eager"
+                        />
 
-                      <span className="absolute flex items-center justify-center    top-[-9px] right-[-11px]    bg-[#197FB6] text-white text-[0.85rem] font-medium leading-none    rounded-full w-[25px] h-[25px]">
-                        3
-                      </span>
-                    </div>
+                        <span className="absolute flex items-center justify-center    top-[-9px] right-[-11px]    bg-[#197FB6] text-white text-[0.85rem] font-medium leading-none    rounded-full w-[25px] h-[25px]">
+                          {item.variant.quantity}
+                        </span>
+                      </div>
 
-                    <div className="flex w-full flex-col my-auto gap-[5px]">
-                      <span className="font-semibold text-[0.9rem]">
-                        Áo sơ mi ewhiehiwhiheiw
-                      </span>
-                      <span className="float-right text-[0.9rem] text-gray-500">
-                        M / Đen
-                      </span>
-                      <p className="text-[0.95rem] font-medium">150,000₫</p>
+                      <div className="flex w-full flex-col my-auto gap-[5px]">
+                        <span className="font-semibold text-[0.9rem]">
+                          {item.name}
+                        </span>
+                        <span className="float-right text-[0.9rem] text-gray-500">
+                          {item.variant.size.namesize} /{" "}
+                          {item.variant.color.namecolor}
+                        </span>
+                        {item.discount > 0 && (
+                          <del className="text-[#707072]">
+                            {item.price.toLocaleString("vi-VN")}₫
+                          </del>
+                        )}
+                        <p className="font-medium text-[#c00]">
+                          {(
+                            item.price - item.discount || item.price
+                          ).toLocaleString("vi-VN")}
+                          ₫
+                        </p>
+                      </div>
                     </div>
-                  </div>
-
-                  <div className="flex rounded-lg bg-white gap-[15px]">
-                    <div className="relative">
-                      <Image
-                        Src={"/assets/products/IMGSP3483.png"}
-                        Alt={""}
-                        ClassName={"w-[120px] object-cover"}
-                        loadingType="eager"
-                      />
-                      <span className="absolute flex items-center justify-center    top-[-9px] right-[-11px]    bg-[#197FB6] text-white text-[0.85rem] font-medium leading-none    rounded-full w-[25px] h-[25px]">
-                        3
-                      </span>
-                    </div>
-
-                    <div className="flex w-full flex-col my-auto gap-[5px]">
-                      <span className="font-semibold text-[0.9rem]">
-                        Áo sơ mi ewhiehiwhiheiw
-                      </span>
-                      <span className="float-right text-[0.9rem] text-gray-500">
-                        M / Đen
-                      </span>
-                      <p className="text-[0.95rem] font-medium">150,000₫</p>
-                    </div>
-                  </div>
+                  ))}
                 </div>
               </div>
 
@@ -342,7 +429,10 @@ function CheckoutForm() {
                     placeholder="Mã giảm giá"
                   />
 
-                  <button className="w-[120px] text-[0.9rem] rounded-md bg-[#197FB6] py-2 font-medium text-white">
+                  <button
+                    type="button"
+                    className="w-[120px] text-[0.9rem] rounded-md bg-[#197FB6] py-2 font-medium text-white"
+                  >
                     Sử dụng
                   </button>
                 </div>
@@ -353,12 +443,15 @@ function CheckoutForm() {
               <div>
                 <div className="flex flex-col">
                   <div className="flex items-center justify-between text-[1rem] font-medium mb-[15px]">
-                    <p className=" text-gray-600">Thành tiền</p>
-                    <p className=" text-gray-600">150,000₫</p>
+                    <p className=" text-gray-600">Tổng</p>
+                    <p className=" text-gray-600">
+                      {totalPrice.toLocaleString("vi-VN")}₫
+                    </p>
                   </div>
+
                   <div className="flex items-center justify-between text-[1rem] font-medium">
-                    <p className=" text-gray-600">Phí ship</p>
-                    <p className=" text-gray-600">20,000₫</p>
+                    <p className=" text-gray-600">Phiếu giảm giá</p>
+                    <p className=" text-gray-600">-20,000₫</p>
                   </div>
 
                   <hr className="border-slate-300 my-[20px]" />

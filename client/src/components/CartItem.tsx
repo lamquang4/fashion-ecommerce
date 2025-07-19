@@ -12,6 +12,7 @@ import { useChangeQuantityItemCart } from "@/hooks/useChangeQuantityItemCart";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import useGetAddresses from "@/hooks/useGetAddresses";
 
 function CartItem() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -19,6 +20,7 @@ function CartItem() {
   const { removeItem } = useRemoveItemCart();
   const { changeQuantity } = useChangeQuantityItemCart();
   const { data: session } = useSession();
+  const { addresses } = useGetAddresses(session?.user.id || "");
   const router = useRouter();
 
   const totalQuantity =
@@ -28,7 +30,10 @@ function CartItem() {
 
   const totalPrice =
     cart?.productsInCart.reduce((sum, item) => {
-      return sum + item.price * item.variant.quantity;
+      const finalPrice =
+        item.discount > 0 ? item.price - item.discount : item.price;
+
+      return sum + finalPrice * item.variant.quantity;
     }, 0) || 0;
 
   const handleChangeQuantity = async (
@@ -81,12 +86,29 @@ function CartItem() {
     mutate();
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
     if (!session?.user) {
       toast.error("Vui lòng đăng nhập");
+      router.push(`/login`);
+      return;
     }
 
-    router.push(`/login`);
+    if (!cart?.productsInCart.length) {
+      toast.error("Vui lòng thêm sản phẩm vào giỏ hàng");
+      router.push(`/collection/all`);
+      return;
+    }
+
+    if (addresses.length <= 0) {
+      toast.error("Vui lòng thêm địa chỉ");
+      router.push(`/address`);
+      return;
+    }
+
+    try {
+      router.push(`/checkout`);
+    } catch (err) {}
   };
 
   const toggleOpen = () => {
@@ -103,7 +125,7 @@ function CartItem() {
           {isLoading ? (
             <Loading height={60} />
           ) : cart?.productsInCart.length ? (
-            <form>
+            <form onSubmit={handleSubmit}>
               <div className="flex gap-8 w-full lg:flex-row flex-col">
                 <div className=" bg-white basis-[70%]">
                   {cart?.productsInCart.map((item, index) => (
@@ -132,6 +154,19 @@ function CartItem() {
                               <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black mt-2">
                                 Kích thước: {item.variant.size.namesize}
                               </p>
+                              {item.discount > 0 ? (
+                                <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-[#c00] mt-2">
+                                  Giá giảm còn:{" "}
+                                  {(item.price - item.discount).toLocaleString(
+                                    "vi-VN"
+                                  )}
+                                  ₫
+                                </p>
+                              ) : (
+                                <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black mt-2">
+                                  Giá: {item.price.toLocaleString("vi-VN")}₫
+                                </p>
+                              )}
                             </div>
 
                             <div className="mt-auto flex items-center gap-1">
@@ -200,11 +235,16 @@ function CartItem() {
                               </svg>
                             </button>
                           </div>
-                          <h3 className="text-[1rem] font-normal text-slate-900 mt-auto">
-                            {(
-                              item.price * item.variant.quantity
-                            ).toLocaleString("vi-VN")}
-                            ₫
+                          <h3 className="text-[1rem] font-medium text-black mt-auto">
+                            Tổng:{" "}
+                            {item.discount > 0
+                              ? (
+                                  (item.price - item.discount) *
+                                  item.variant.quantity
+                                ).toLocaleString("vi-VN") + " ₫"
+                              : (
+                                  item.price * item.variant.quantity
+                                ).toLocaleString("vi-VN") + " ₫"}
                           </h3>
                         </div>
                       </div>
@@ -230,7 +270,7 @@ function CartItem() {
 
                   <div className="space-y-[20px]">
                     <button
-                      type="button"
+                      type="submit"
                       className="text-[0.9rem] px-4 py-2.5 w-full font-semibold tracking-wide bg-slate-900 hover:bg-slate-700 text-white rounded-md"
                     >
                       Thanh toán
