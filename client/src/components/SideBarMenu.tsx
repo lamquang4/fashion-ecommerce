@@ -2,39 +2,54 @@
 import Link from "next/link";
 import { signOut } from "next-auth/react";
 import { usePathname } from "next/navigation";
+import { HiOutlineBuildingOffice, HiOutlineUser } from "react-icons/hi2";
+import { IoBagHandleOutline } from "react-icons/io5";
+import { LuDoorOpen } from "react-icons/lu";
 function SideBarMenu() {
   const pathname = usePathname();
-  const activeClass = "font-medium";
+  const activeClass = "border-l-2 font-medium";
   return (
     <div className="w-full max-w-full lg:max-w-[250px] border border-gray-300">
-      <div className="p-[25px_15px] sm:p-[30px_20px] text-[0.95rem] text-black font-normal flex flex-col gap-1">
+      <div className="py-[15px] sm:py-[20px] text-[0.95rem] text-black font-normal flex flex-col gap-2">
         <Link
           href="/account"
-          className={`py-2.5 ${pathname === "/account" ? activeClass : ""}`}
+          className={`p-2.5 ${pathname === "/account" ? activeClass : ""}`}
         >
-          <span>Thông tin tài khoản</span>
+          <div className="flex items-center gap-2.5 text-[0.95rem]">
+            <HiOutlineUser size={20} />
+            <span>Thông tin toàn khoản</span>
+          </div>
         </Link>
 
         <Link
           href="/address"
-          className={`py-2.5 ${pathname === "/address" ? activeClass : ""}`}
+          className={`p-2.5 ${pathname === "/address" ? activeClass : ""}`}
         >
-          <span>Sổ địa chỉ</span>
+          <div className="flex items-center gap-2.5 text-[0.95rem]">
+            <HiOutlineBuildingOffice size={20} />
+            <span>Sổ địa chỉ</span>
+          </div>
         </Link>
 
         <Link
           href="/order"
-          className={`py-2.5 ${pathname === "/order" ? activeClass : ""}`}
+          className={`p-2.5 ${pathname === "/order" ? activeClass : ""}`}
         >
-          <span>Đơn hàng của bạn</span>
+          <div className="flex items-center gap-2.5 text-[0.95rem]">
+            <IoBagHandleOutline size={20} />
+            <span>Đơn hàng</span>
+          </div>
         </Link>
 
         <button
           type="button"
           onClick={() => signOut()}
-          className="py-2.5 text-left text-[1rem] text-red-500 font-semibold"
+          className="p-2.5 text-left text-[0.95rem] text-red-500 font-medium"
         >
-          Đăng xuất
+          <div className="flex items-center gap-2.5 text-[0.95rem]">
+            <LuDoorOpen size={22} />
+            <span>Đăng xuất</span>
+          </div>
         </button>
       </div>
     </div>

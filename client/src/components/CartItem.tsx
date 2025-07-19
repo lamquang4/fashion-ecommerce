@@ -31,13 +31,13 @@ function CartItem() {
       return sum + item.price * item.variant.quantity;
     }, 0) || 0;
 
-  const handleChangeQuantity = (
+  const handleChangeQuantity = async (
     cartId: string,
     variant: string,
     size: string,
     quantity: number
   ) => {
-    changeQuantity({
+    await changeQuantity({
       cartId: cartId,
       variant: variant,
       size: size,
@@ -55,7 +55,6 @@ function CartItem() {
     if (currentQuantity >= 15) return;
 
     handleChangeQuantity(cartId, variantId, sizeId, currentQuantity + 1);
-    mutate();
   };
 
   const handleDecrement = (
@@ -67,11 +66,14 @@ function CartItem() {
     if (currentQuantity <= 1) return;
 
     handleChangeQuantity(cartId, variantId, sizeId, currentQuantity - 1);
-    mutate();
   };
 
-  const handleRemoveItem = (cartId: string, variant: string, size: string) => {
-    removeItem({
+  const handleRemoveItem = async (
+    cartId: string,
+    variant: string,
+    size: string
+  ) => {
+    await removeItem({
       cartId: cartId,
       variant: variant,
       size: size,
@@ -79,7 +81,7 @@ function CartItem() {
     mutate();
   };
 
-  const handleCoupon = () => {
+  const handleSubmit = () => {
     if (!session?.user) {
       toast.error("Vui lòng đăng nhập");
     }

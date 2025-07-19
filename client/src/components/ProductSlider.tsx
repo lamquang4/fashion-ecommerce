@@ -51,7 +51,7 @@ function ProductSlider({ title, products }: Props) {
     };
 
     await addWishlist(payload);
-    mutate();
+    mutate(undefined, true);
   };
 
   const handleRemove = async (product: Product, inventoryIndex: number) => {
@@ -60,7 +60,7 @@ function ProductSlider({ title, products }: Props) {
       wishlistId: wishlist?._id || "",
       variant: variant._id,
     });
-    mutate();
+    mutate(undefined, true);
   };
 
   function checkNewProduct(createdAt: string): boolean {
