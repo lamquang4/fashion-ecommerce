@@ -202,7 +202,9 @@ function EditCoupon() {
                 disabled={coupon?.status === 1}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
+                  coupon?.status === 1 ? "cursor-not-allowed" : ""
+                }`}
               >
                 <option value="1">Miễn phí giao hàng</option>
                 <option value="0">Phần trăm %</option>
@@ -225,7 +227,9 @@ function EditCoupon() {
                   disabled={coupon?.status === 1}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full"
+                  className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
+                    coupon?.status === 1 ? "cursor-not-allowed" : ""
+                  }`}
                 />
               </div>
             )}
@@ -243,7 +247,9 @@ function EditCoupon() {
                 disabled={coupon?.status === 1}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
+                  coupon?.status === 1 ? "cursor-not-allowed" : ""
+                }`}
               />
             </div>
 
@@ -260,7 +266,9 @@ function EditCoupon() {
                   disabled={coupon?.status === 1}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
+                    coupon?.status === 1 ? "cursor-not-allowed" : ""
+                  }`}
                 />
               </div>
             )}
@@ -277,7 +285,9 @@ function EditCoupon() {
                   disabled={coupon?.status === 1}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className={`border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
+                    coupon?.status === 1 ? "cursor-not-allowed" : ""
+                  }`}
                 />
               </div>
               <div className="w-full flex flex-col gap-1">
@@ -291,7 +301,9 @@ function EditCoupon() {
                   disabled={coupon?.status === 1}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
+                    coupon?.status === 1 ? "cursor-not-allowed" : ""
+                  }`}
                 />
               </div>
             </div>

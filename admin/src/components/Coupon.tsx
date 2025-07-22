@@ -148,7 +148,7 @@ function Coupon() {
                   </td>
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    Tối đa: {coupon.amount} / Đã dùng: 10
+                    Tối đa: {coupon.amount}
                   </td>
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">

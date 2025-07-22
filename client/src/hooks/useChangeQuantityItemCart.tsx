@@ -11,7 +11,10 @@ export function useChangeQuantityItemCart() {
       const response = await axios.post("/api/change-quantity-item-cart", data);
 
       return response.data;
-    } catch (err: any) {}
+    } catch (err: any) {
+      console.error("Lỗi:", err);
+      throw err;
+    }
   };
 
   return { changeQuantity };

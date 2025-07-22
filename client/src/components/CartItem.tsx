@@ -55,9 +55,10 @@ function CartItem() {
     cartId: string,
     variantId: string,
     sizeId: string,
-    currentQuantity: number
+    currentQuantity: number,
+    stock: number
   ) => {
-    if (currentQuantity >= 15) return;
+    if (currentQuantity >= (stock > 15 ? 15 : stock)) return;
 
     handleChangeQuantity(cartId, variantId, sizeId, currentQuantity + 1);
   };
@@ -83,7 +84,7 @@ function CartItem() {
       variant: variant,
       size: size,
     });
-    mutate();
+    mutate(undefined, true);
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -106,9 +107,23 @@ function CartItem() {
       return;
     }
 
-    try {
-      router.push(`/checkout`);
-    } catch (err) {}
+    const outOfStockItems = cart?.productsInCart.filter(
+      (item) => item.variant.quantity > item.variant.stock
+    ); // lấy những sản phẩm không đủ số lượng mua (số lượng mua > số lượng tồn kho)
+
+    if (outOfStockItems.length > 0) {
+      const errorMessage = outOfStockItems
+        .map(
+          (item) =>
+            `Sản phẩm ${item.name} (${item.variant.size.namesize}, ${item.variant.color.namecolor}) chỉ còn ${item.variant.stock} sản phẩm.`
+        )
+        .join("\n");
+      toast.error(`Không đủ tồn kho:\n${errorMessage}`);
+      router.push(`/cart`);
+      return;
+    }
+
+    router.push(`/checkout`);
   };
 
   const toggleOpen = () => {
@@ -197,10 +212,16 @@ function CartItem() {
                                     cart?._id || "",
                                     item.variant._id,
                                     item.variant.size._id,
-                                    item.variant.quantity
+                                    item.variant.quantity,
+                                    item.variant.stock
                                   )
                                 }
-                                disabled={item.variant.quantity >= 15}
+                                disabled={
+                                  item.variant.quantity >=
+                                  (item.variant.stock < 15
+                                    ? item.variant.stock
+                                    : 15)
+                                }
                                 className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-slate-300 border"
                               >
                                 <HiOutlinePlusSmall size={20} />
@@ -211,6 +232,7 @@ function CartItem() {
                         <div className="ml-auto flex flex-col">
                           <div className="flex gap-4 justify-end">
                             <button
+                              type="button"
                               onClick={() =>
                                 handleRemoveItem(
                                   cart?._id || "",
@@ -248,6 +270,15 @@ function CartItem() {
                           </h3>
                         </div>
                       </div>
+
+                      {item.variant.stock < item.variant.quantity && (
+                        <div className="my-1">
+                          <p className="text-[0.95rem] text-red-500 font-semibold text-center">
+                            Sản phẩm hiện tại không đủ số lượng. Vui lòng giảm
+                            số lượng hoặc xóa sản phẩm khỏi giỏ hàng
+                          </p>
+                        </div>
+                      )}
 
                       {cart.productsInCart.length % 2 === 0 && (
                         <hr className="border-gray-300" />

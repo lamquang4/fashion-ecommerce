@@ -72,7 +72,7 @@ export interface Product {
   totalQuantity?: number;
 }
 
-export interface Product1 {
+export interface ProductFull {
   name: string;
   price: number;
   discount: number;
@@ -116,14 +116,11 @@ export interface Order {
   _id: string;
   orderCode: string;
   user: string;
-  address: {
-    fullname: string;
-    phone: string;
-    speaddress: string;
-    city: string;
-    district: string;
-    ward: string;
-  };
+  fullname: string;
+  phone: string;
+  speaddress: string;
+  city: string;
+  ward: string;
   paymethod: number;
   coupon?: string;
   status: number;
@@ -131,17 +128,50 @@ export interface Order {
   createdAt: string;
 }
 
-export interface BuyItems {
-  product: Product;
-  size: Size;
-  color: Color;
-  quantity: number;
-  price: number;
-  subtotal: number;
-}
-
-export interface OrderDetail {
+export interface OrderFull {
   _id: string;
-  order: Order;
-  buy: BuyItems[];
+  orderCode: string;
+  user: string;
+  fullname: string;
+  phone: string;
+  speaddress: string;
+  city: string;
+  ward: string;
+  paymethod: number;
+  coupon?: {
+    _id: string;
+    code: string;
+    discountValue: number;
+    discountType: number;
+    amount: number;
+    limit: number;
+    startDate: Date;
+    expiryDate: Date;
+    maxDiscountValue?: number;
+    minOrderValue: number;
+  };
+  productsBuy: {
+    product: {
+      _id: string;
+      name: string;
+    };
+    variant: {
+      images: string[];
+      size: {
+        _id: string;
+        namesize: string;
+      };
+      color: {
+        _id: string;
+        namecolor: string;
+        codecolor: string;
+      };
+    };
+    quantity: number;
+    price: number;
+    discount: number;
+  }[];
+  status: number;
+  total: number;
+  createdAt?: string;
 }

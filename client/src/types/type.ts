@@ -77,38 +77,73 @@ export interface Address {
   user?: string;
 }
 
-export interface Order {
+export interface OrderFull {
   _id: string;
   orderCode: string;
   user: string;
-  address: {
-    fullname: string;
-    phone: string;
-    speaddress: string;
-    city: string;
-    district: string;
-    ward: string;
-  };
+  fullname: string;
+  phone: string;
+  speaddress: string;
+  city: string;
+  ward: string;
   paymethod: number;
-  coupon?: string;
+  coupon?: {
+    _id: string;
+    code: string;
+    discountValue: number;
+    discountType: number;
+    amount: number;
+    limit: number;
+    startDate: Date;
+    expiryDate: Date;
+    maxDiscountValue?: number;
+    minOrderValue: number;
+  };
+  productsBuy: {
+    product: {
+      _id: string;
+      name: string;
+      price: number;
+      discount: number;
+    };
+    variant: {
+      images: string[];
+      size: {
+        _id: string;
+        namesize: string;
+      };
+      color: {
+        _id: string;
+        namecolor: string;
+        codecolor: string;
+      };
+    };
+    quantity: number;
+    price: number;
+    discount: number;
+  }[];
   status: number;
   total: number;
   createdAt: string;
 }
 
-export interface BuyItems {
-  product: Product;
-  size: Size;
-  color: Color;
-  quantity: number;
-  price: number;
-  subtotal: number;
-}
-
-export interface OrderDetail {
-  _id: string;
-  order: Order;
-  buy: BuyItems[];
+export interface OrderAdd {
+  fullname: string;
+  phone: string;
+  speaddress: string;
+  city: string;
+  ward: string;
+  paymethod: number;
+  coupon?: string;
+  productsBuy: {
+    product: string;
+    size: string;
+    color: string;
+    quantity: number;
+    price: number;
+    discount?: number;
+  }[];
+  total: number;
 }
 
 export interface Banner {
@@ -128,6 +163,7 @@ export interface ProductInCart {
   variant: {
     _id: string;
     images: string[];
+    stock: number;
     color: Color;
     size: Size;
     quantity: number;

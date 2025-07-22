@@ -28,7 +28,7 @@ function Order() {
     totalStatus3,
     totalStatus4,
   } = useGetOrders();
-  
+
   const array = [
     {
       name: "Tất cả",
@@ -152,6 +152,7 @@ function Order() {
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Thanh toán
               </th>
+
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Tổng tiền
               </th>
@@ -184,10 +185,10 @@ function Order() {
                     {order.orderCode}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {order.address.fullname}
+                    {order.fullname}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {order.paymethod === 1 ? "Chuyển khoản" : "COD"}
+                    {order.paymethod === 1 ? "MoMo" : "COD"}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {order.total.toLocaleString("vi-VN")}₫

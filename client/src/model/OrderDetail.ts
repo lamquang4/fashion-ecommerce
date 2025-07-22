@@ -2,7 +2,7 @@ import mongoose, { model, models, Schema } from "mongoose";
 
 const orderDetailSchema = new Schema({
   order: { type: mongoose.Schema.Types.ObjectId, ref: "Order", required: true },
-  buy: [
+  items: [
     {
       product: {
         type: mongoose.Schema.Types.ObjectId,
@@ -19,8 +19,9 @@ const orderDetailSchema = new Schema({
         ref: "Color",
         required: true,
       },
+      discount: { type: Number, required: true }, // số tiền giảm giá tại lúc đặt hàng sản phẩm đó
+      price: { type: Number, required: true }, // giá tại lúc đặt hàng sản phẩm đó
       quantity: { type: Number, required: true },
-      subtotal: { type: Number, required: true },
     },
   ],
 });

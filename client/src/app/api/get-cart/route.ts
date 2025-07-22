@@ -41,6 +41,24 @@ export async function GET(req: NextRequest) {
         },
       },
       { $unwind: "$variantData" },
+      {
+        $addFields: {
+          inventoriesMatched: {
+            $filter: {
+              input: "$variantData.inventories",
+              as: "inv",
+              cond: {
+                $eq: ["$$inv.size", "$items.size"],
+              },
+            },
+          },
+        },
+      },
+      {
+        $addFields: {
+          matchedInventory: { $arrayElemAt: ["$inventoriesMatched", 0] },
+        },
+      },
 
       {
         $lookup: {
@@ -86,6 +104,7 @@ export async function GET(req: NextRequest) {
               variant: {
                 _id: "$variantData._id",
                 images: "$variantData.images",
+                stock: "$matchedInventory.quantity",
                 color: {
                   _id: "$colorData._id",
                   namecolor: "$colorData.namecolor",
@@ -95,7 +114,7 @@ export async function GET(req: NextRequest) {
                   _id: "$sizeData._id",
                   namesize: "$sizeData.namesize",
                 },
-                quantity: "$items.quantity",
+                quantity: "$items.quantity", // số lượng mua
               },
             },
           },

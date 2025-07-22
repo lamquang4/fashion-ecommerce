@@ -4,6 +4,7 @@ import { NextRequest, NextResponse } from "next/server";
 import Cart from "@/model/Cart";
 import { options } from "../auth/[...nextauth]/options";
 import mongoose from "mongoose";
+import Inventory from "@/model/Inventory";
 
 export async function POST(req: NextRequest) {
   try {
@@ -14,6 +15,40 @@ export async function POST(req: NextRequest) {
 
     const { variant, size, quantity } = await req.json();
     const cartId = req.cookies.get("cart")?.value;
+
+    const inventory = await Inventory.aggregate([
+      { $match: { _id: new mongoose.Types.ObjectId(variant) } },
+      { $unwind: "$inventories" },
+      { $match: { "inventories.size": new mongoose.Types.ObjectId(size) } },
+      {
+        $lookup: {
+          from: "sizes",
+          localField: "inventories.size",
+          foreignField: "_id",
+          as: "inventories.sizeDetail",
+        },
+      },
+      {
+        $unwind: "$inventories.sizeDetail",
+      },
+      {
+        $group: {
+          _id: "$_id",
+          inventories: { $push: "$inventories" },
+          color: { $first: "$color" },
+          product: { $first: "$product" },
+        },
+      },
+    ]);
+
+    const stock = inventory[0]?.inventories[0]?.quantity || 0;
+
+    if (stock === 0) {
+      return NextResponse.json(
+        { msg: "Sản phẩm đã hết hàng" },
+        { status: 400 }
+      );
+    }
 
     let cart = null;
 
@@ -50,7 +85,11 @@ export async function POST(req: NextRequest) {
     }
 
     if (!cart) {
-      if (cartId && mongoose.Types.ObjectId.isValid(cartId)) {
+      if (userId) {
+        cart = await Cart.findOne({ user: userId });
+      }
+
+      if (!cart && cartId && mongoose.Types.ObjectId.isValid(cartId)) {
         cart = await Cart.findById(cartId);
       }
 
@@ -68,9 +107,24 @@ export async function POST(req: NextRequest) {
     );
 
     if (existingItem) {
-      const newQuantity = existingItem.quantity + quantity;
-      existingItem.quantity = newQuantity > 15 ? 15 : newQuantity;
+      const totalQuantity = existingItem.quantity + quantity;
+
+      if (totalQuantity > stock) {
+        return NextResponse.json(
+          { msg: `Bạn chỉ có thể mua tối đa ${stock} sản phẩm này.` },
+          { status: 400 }
+        );
+      }
+
+      existingItem.quantity = totalQuantity > 15 ? 15 : totalQuantity;
     } else {
+      if (quantity > stock) {
+        return NextResponse.json(
+          { msg: `Sản phẩm chỉ còn ${stock} cái.` },
+          { status: 400 }
+        );
+      }
+
       cart.items.push({
         variant: variant,
         size: size,
@@ -103,8 +157,9 @@ export async function POST(req: NextRequest) {
     }
 
     return response;
-
   } catch (err) {
+    console.log(err);
+
     return NextResponse.json({ msg: "Lỗi", err }, { status: 500 });
   }
 }

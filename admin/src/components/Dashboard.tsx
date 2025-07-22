@@ -17,13 +17,13 @@ import Loading from "./Loading";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 function Dashboard() {
-  const { orders, totalRevenue, totalSold } = useGetOrders();
+  const { orders, totalSold } = useGetOrders();
   const { customers } = useGetCustomers();
   const { top10Products, isLoading } = useGetTop10Products();
   const array = [
     {
       title: "Doanh thu",
-      number: `${totalRevenue.toLocaleString("vi-VN")}₫`,
+      number: `5555₫`,
       icon1: <FaRegMoneyBillAlt size={25} />,
       icon2: <IoIosArrowRoundDown size={25} />,
       percent: -1.3,
@@ -189,6 +189,8 @@ function Dashboard() {
         </h1>
       </div>
 
+      {/*
+
       <div className="shadow-sm bg-white rounded-[3px] w-full overflow-auto">
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
@@ -290,6 +292,7 @@ function Dashboard() {
           </tbody>
         </table>
       </div>
+  */}
     </>
   );
 }

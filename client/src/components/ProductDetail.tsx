@@ -51,12 +51,13 @@ function ProductDetail() {
     }
   }, [product]);
 
+  const currentInventory = selectedInventory?.inventories.find(
+    (inv) => inv.size._id === selectedSize?._id
+  );
+
   useEffect(() => {
     if (selectedInventory && selectedSize && selectedColor) {
-      const match = selectedInventory.inventories.find(
-        (inv) => inv.size._id === selectedSize._id
-      );
-      if (match?.quantity) {
+      if (currentInventory?.quantity) {
         setIsInStock(true);
       } else {
         setIsInStock(false);
@@ -96,7 +97,9 @@ function ProductDetail() {
   };
 
   const HandleIncrement = () => {
-    setQuantity((prev) => (prev < 15 ? prev + 1 : prev));
+    const maxQuantity =
+      currentInventory?.quantity! > 15 ? 15 : currentInventory?.quantity!;
+    setQuantity((prev) => (prev < maxQuantity ? prev + 1 : prev));
   };
 
   const HandleDecrement = () => {
@@ -138,10 +141,13 @@ function ProductDetail() {
       size: selectedSize._id,
       quantity: quantity,
     };
-
-    await addCart(payload);
-    mutateCart();
-    toast.success("Đã thêm vào giỏ hàng!");
+    try {
+      await addCart(payload);
+      mutateCart();
+      toast.success("Đã thêm vào giỏ hàng!");
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
   };
 
   const handleAddToWishlist = async () => {
@@ -389,13 +395,22 @@ function ProductDetail() {
                     className="h-11 text-center text-black w-11 outline-none placeholder:text-black text-[1rem] font-normal"
                     placeholder="1"
                     min={1}
-                    max={15}
+                    max={
+                      currentInventory?.quantity! > 15
+                        ? 15
+                        : currentInventory?.quantity!
+                    }
                     value={quantity}
                   />
                   <button
                     type="button"
                     onClick={HandleIncrement}
-                    disabled={quantity >= 15}
+                    disabled={
+                      quantity >=
+                      (currentInventory?.quantity! > 15
+                        ? 15
+                        : currentInventory?.quantity!)
+                    }
                     className=" p-3 h-11 outline-none"
                   >
                     <HiOutlinePlusSmall size={22} />
