@@ -26,11 +26,9 @@ function CheckoutForm() {
   const [selectedWard, setSelectedWard] = useState<string>("");
   const [couponCode, setCouponCode] = useState<string>("");
   const [paymethod, setPaymethod] = useState<number>();
-  const { cart, isLoading: isLoadingCart, mutate: mutateCart } = useGetCart();
+  const { cart, mutate: mutateCart } = useGetCart();
   const { data: session } = useSession();
-  const { addresses, isLoading: isLoadingAddresses } = useGetAddresses(
-    session?.user.id || ""
-  );
+  const { addresses } = useGetAddresses();
   const { addOrder } = useAddOrder();
   const { deleteCart } = useDeleteCart();
   const router = useRouter();
@@ -182,7 +180,7 @@ function CheckoutForm() {
       });
 
       await deleteCart(cart?._id!);
-      mutateCart();
+      mutateCart(undefined, true);
 
       toast.success("Đặt hàng thành công");
       router.push("/");

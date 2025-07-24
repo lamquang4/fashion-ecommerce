@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { signOut, useSession } from "next-auth/react";
-import useGetCustomer from "@/hooks/useGetCustomer";
+import useGetCustomer from "@/hooks/useGetAccount";
 
 type ProfileMenuProp = {
   isOpen: boolean;

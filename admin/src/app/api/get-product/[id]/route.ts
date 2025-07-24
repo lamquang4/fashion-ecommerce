@@ -22,9 +22,60 @@ export async function GET(
       },
       {
         $lookup: {
+          from: "categories",
+          localField: "category",
+          foreignField: "_id",
+          as: "category",
+        },
+      },
+      { $unwind: "$category" },
+      {
+        $lookup: {
           from: "inventories",
-          localField: "_id",
-          foreignField: "product",
+          let: { productId: "$_id" },
+          pipeline: [
+            {
+              $match: {
+                $expr: { $eq: ["$product", "$$productId"] },
+              },
+            },
+            {
+              $lookup: {
+                from: "colors",
+                localField: "color",
+                foreignField: "_id",
+                as: "color",
+              },
+            },
+            { $unwind: "$color" },
+            { $unwind: "$inventories" },
+            {
+              $lookup: {
+                from: "sizes",
+                localField: "inventories.size",
+                foreignField: "_id",
+                as: "inventories.size",
+              },
+            },
+            {
+              $unwind: "$inventories.size",
+            },
+            {
+              $group: {
+                _id: "$_id",
+                product: { $first: "$product" },
+                images: { $first: "$images" },
+                color: { $first: "$color" },
+                inventories: {
+                  $push: {
+                    size: "$inventories.size",
+                    quantity: "$inventories.quantity",
+                  },
+                },
+              },
+            },
+            { $sort: { _id: 1 } },
+          ],
           as: "variants",
         },
       },

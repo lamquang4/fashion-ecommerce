@@ -103,9 +103,15 @@ function Product() {
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Giá
               </th>
+
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Số lượng tồn kho
+                Số lượng
               </th>
+
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Màu sắc
+              </th>
+
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Ngày thêm
               </th>
@@ -138,7 +144,7 @@ function Product() {
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">
                         <Image
-                          Src={product.images[0]}
+                          Src={product.variants[0].images[0]}
                           Alt={product.name}
                           ClassName={"w-[75px] cursor-pointer"}
                           loadingType="lazy"
@@ -176,7 +182,24 @@ function Product() {
                   </td>
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {product.totalQuantity}
+                    <div className="flex flex-col gap-1.5">
+                      <p>Tồn kho: {product.totalQuantity}</p>
+                      <p>Đã bán: {product.totalSold}</p>
+                    </div>
+                  </td>
+
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex gap-1.5">
+                      {product.variants.map((variant, index) => (
+                        <div
+                          className="w-5 h-5 border-gray-400 border rounded-full"
+                          style={{
+                            backgroundColor: variant.color?.codecolor,
+                          }}
+                          key={index}
+                        ></div>
+                      ))}
+                    </div>
                   </td>
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">

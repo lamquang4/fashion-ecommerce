@@ -66,29 +66,10 @@ export interface Product {
   slug: string;
   status: number;
   category: Category;
-  images: string[];
+  variants: Inventory[];
   createdAt: string;
   totalSold?: number;
   totalQuantity?: number;
-}
-
-export interface ProductFull {
-  name: string;
-  price: number;
-  discount: number;
-  description: string;
-  category: string;
-  variants: InventoryItem[];
-}
-
-export interface InventoryItem {
-  _id: string;
-  images: string[];
-  color: string;
-  inventories: {
-    size: string;
-    quantity: number;
-  }[];
 }
 
 export interface Inventory {
@@ -108,7 +89,6 @@ export interface Address {
   phone: string;
   speaddress: string;
   ward: string;
-  district: string;
   city: string;
 }
 

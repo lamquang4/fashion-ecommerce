@@ -1,0 +1,18 @@
+"use client";
+import { OrderFull } from "@/types/type";
+import axios from "axios";
+import useSWR from "swr";
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
+export default function useGetCategory(code: string) {
+  const url = `/api/get-order/${code}`;
+  const { data, error, isLoading, mutate } = useSWR<OrderFull>(url, fetcher);
+
+  return {
+    order: data,
+    error,
+    isLoading,
+    mutate,
+  };
+}

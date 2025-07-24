@@ -18,8 +18,7 @@ export default function useVisibleCategory() {
       return;
     }
     try {
-      const res = await axios.put("/api/visible-category", {
-        id: id,
+      const res = await axios.put(`/api/visible-category/${id}`, {
         status: status,
       });
       return res.data.category;

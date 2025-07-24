@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 import { validateEmail } from "@/utils/validateEmail";
 import { validatePhone } from "@/utils/validatePhone";
 import useUpdateCustomer from "@/hooks/useUpdateCustomer";
-import useGetCustomer from "@/hooks/useGetCustomer";
+import useGetAccount from "@/hooks/useGetAccount";
 
 function AccountInfo() {
   const [data, setData] = useState({
@@ -20,7 +20,7 @@ function AccountInfo() {
 
   const { updateCustomer } = useUpdateCustomer(session?.user.id || "");
 
-  const { customer, mutate } = useGetCustomer(session?.user.id || "");
+  const { customer, mutate } = useGetAccount();
 
   useEffect(() => {
     setData({

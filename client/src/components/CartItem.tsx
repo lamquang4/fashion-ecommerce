@@ -20,7 +20,7 @@ function CartItem() {
   const { removeItem } = useRemoveItemCart();
   const { changeQuantity } = useChangeQuantityItemCart();
   const { data: session } = useSession();
-  const { addresses } = useGetAddresses(session?.user.id || "");
+  const { addresses } = useGetAddresses();
   const router = useRouter();
 
   const totalQuantity =
@@ -263,10 +263,10 @@ function CartItem() {
                               ? (
                                   (item.price - item.discount) *
                                   item.variant.quantity
-                                ).toLocaleString("vi-VN") + " ₫"
+                                ).toLocaleString("vi-VN") + "₫"
                               : (
                                   item.price * item.variant.quantity
-                                ).toLocaleString("vi-VN") + " ₫"}
+                                ).toLocaleString("vi-VN") + "₫"}
                           </h3>
                         </div>
                       </div>
@@ -292,7 +292,7 @@ function CartItem() {
                     <li className="flex flex-wrap gap-4 text-[1.1rem] font-semibold uppercase">
                       Tổng cộng{" "}
                       <span className="ml-auto">
-                        {totalPrice.toLocaleString("vi-VN")} ₫
+                        {totalPrice.toLocaleString("vi-VN")}₫
                       </span>
                     </li>
                   </ul>

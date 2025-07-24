@@ -2,7 +2,6 @@
 import React, { useState } from "react";
 import SideBarMenu from "./SideBarMenu";
 import AddressModal from "./AddressModal";
-import { useSession } from "next-auth/react";
 import useGetAddresses from "@/hooks/useGetAddresses";
 import useDeleteAddress from "@/hooks/useDeleteAddress";
 import toast from "react-hot-toast";
@@ -10,10 +9,7 @@ import Loading from "./Loading";
 function AddressInfo() {
   const [addressId, setAddressId] = useState<string>("");
   const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
-  const { data: session } = useSession();
-  const { addresses, isLoading, mutate } = useGetAddresses(
-    session?.user.id || ""
-  );
+  const { addresses, isLoading, mutate } = useGetAddresses();
   const { deleteAddress } = useDeleteAddress();
   const toggleAddressModal = () => {
     setOpenAddressModal((prev) => !prev);

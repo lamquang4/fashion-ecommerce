@@ -32,12 +32,55 @@ export async function GET(req: NextRequest) {
             as: "category",
           },
         },
+        { $unwind: "$category" },
         {
           $lookup: {
             from: "inventories",
-            localField: "_id",
-            foreignField: "product",
-            as: "inventory",
+            let: { productId: "$_id" },
+            pipeline: [
+              {
+                $match: {
+                  $expr: { $eq: ["$product", "$$productId"] },
+                },
+              },
+              {
+                $lookup: {
+                  from: "colors",
+                  localField: "color",
+                  foreignField: "_id",
+                  as: "color",
+                },
+              },
+              { $unwind: "$color" },
+              { $unwind: "$inventories" },
+              {
+                $lookup: {
+                  from: "sizes",
+                  localField: "inventories.size",
+                  foreignField: "_id",
+                  as: "inventories.size",
+                },
+              },
+              {
+                $unwind: "$inventories.size",
+              },
+              {
+                $group: {
+                  _id: "$_id",
+                  product: { $first: "$product" },
+                  images: { $first: "$images" },
+                  color: { $first: "$color" },
+                  inventories: {
+                    $push: {
+                      size: "$inventories.size",
+                      quantity: "$inventories.quantity",
+                    },
+                  },
+                },
+              },
+              { $sort: { _id: 1 } },
+            ],
+            as: "variants",
           },
         },
         {
@@ -45,23 +88,73 @@ export async function GET(req: NextRequest) {
             totalQuantity: {
               $sum: {
                 $map: {
-                  input: "$inventory",
-                  as: "inv",
+                  input: "$variants",
+                  as: "variant",
                   in: {
-                    $sum: "$$inv.inventories.quantity",
+                    $sum: {
+                      $map: {
+                        input: "$$variant.inventories",
+                        as: "inv",
+                        in: "$$inv.quantity",
+                      },
+                    },
                   },
                 },
               },
             },
-            firstInventory: { $arrayElemAt: ["$inventory", 0] },
+          },
+        },
+        {
+          $lookup: {
+            from: "orderdetails",
+            let: { productId: "$_id" },
+            pipeline: [
+              {
+                $unwind: "$items",
+              },
+              {
+                $match: {
+                  $expr: { $eq: ["$items.product", "$$productId"] },
+                },
+              },
+              {
+                $lookup: {
+                  from: "orders",
+                  localField: "order",
+                  foreignField: "_id",
+                  as: "order",
+                },
+              },
+              {
+                $unwind: "$order",
+              },
+              {
+                $match: {
+                  "order.status": 3,
+                },
+              },
+              {
+                $group: {
+                  _id: "$items.product",
+                  totalSold: { $sum: "$items.quantity" },
+                },
+              },
+            ],
+            as: "sold",
           },
         },
         {
           $addFields: {
-            images: "$firstInventory.images",
+            totalSold: {
+              $ifNull: [{ $arrayElemAt: ["$sold.totalSold", 0] }, 0],
+            },
           },
         },
-        { $unwind: "$category" },
+        {
+          $project: {
+            sold: 0,
+          },
+        },
         { $skip: skip },
         { $limit: limit },
       ]),

@@ -1,12 +1,7 @@
 "use client";
-import useGetUser from "@/hooks/useGetUser";
-import { useSession } from "next-auth/react";
+import useGetAccount from "@/hooks/useGetAccount";
 function Account() {
-  const { data: session } = useSession({
-    required: true,
-  });
-
-  const { user } = useGetUser(session?.user.id || "");
+  const { admin } = useGetAccount();
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
       <form className="flex flex-col gap-7 w-full">
@@ -25,7 +20,7 @@ function Account() {
               <input
                 type="text"
                 name="fullname"
-                value={user?.fullname || ""}
+                value={admin?.fullname || ""}
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
@@ -38,7 +33,7 @@ function Account() {
               <input
                 type="text"
                 name="email"
-                value={user?.email || ""}
+                value={admin?.email || ""}
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               />
@@ -53,7 +48,7 @@ function Account() {
                   type="text"
                   name="phone"
                   inputMode="numeric"
-                  value={user?.phone || ""}
+                  value={admin?.phone || ""}
                   readOnly
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
@@ -66,7 +61,7 @@ function Account() {
                 <input
                   type="date"
                   name="birthday"
-                  value={user?.birthday.slice(0, 10) || ""}
+                  value={admin?.birthday.slice(0, 10) || ""}
                   readOnly
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                 />
@@ -81,11 +76,11 @@ function Account() {
                 type="text"
                 name="role"
                 value={
-                  user?.role === 0
+                  admin?.role === 0
                     ? "Quản trị viên"
-                    : user?.role === 1
+                    : admin?.role === 1
                     ? "Nhân viên bán hàng"
-                    : user?.role === 2
+                    : admin?.role === 2
                     ? "Nhân viên nội dung"
                     : ""
                 }

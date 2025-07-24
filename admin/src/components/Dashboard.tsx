@@ -2,8 +2,6 @@
 import { FaRegMoneyBillAlt } from "react-icons/fa";
 import { RiShoppingBag4Line } from "react-icons/ri";
 import { IoPeopleOutline } from "react-icons/io5";
-import { IoIosArrowRoundUp } from "react-icons/io";
-import { IoIosArrowRoundDown } from "react-icons/io";
 import { PiTShirtBold } from "react-icons/pi";
 import Image from "./Image";
 import dynamic from "next/dynamic";
@@ -12,44 +10,39 @@ import Link from "next/link";
 import StaticCards from "./StaticCards";
 import useGetOrders from "@/hooks/useGetOrders";
 import useGetCustomers from "@/hooks/useGetCustomers";
-import useGetTop10Products from "@/hooks/useGetTop10Product";
 import Loading from "./Loading";
+import useGetTop10Products from "@/hooks/useGetTop10Products";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 function Dashboard() {
-  const { orders, totalSold } = useGetOrders();
+  const { orders, totalRevenue, totalSold } = useGetOrders();
   const { customers } = useGetCustomers();
-  const { top10Products, isLoading } = useGetTop10Products();
+  const { topProducts, isLoading } = useGetTop10Products();
   const array = [
     {
       title: "Doanh thu",
-      number: `5555₫`,
+      number: `${totalRevenue.toLocaleString("vi-VN")}₫`,
       icon1: <FaRegMoneyBillAlt size={25} />,
-      icon2: <IoIosArrowRoundDown size={25} />,
-      percent: -1.3,
     },
     {
       title: "Tổng đơn",
       number: orders.length,
       icon1: <RiShoppingBag4Line size={25} />,
-      icon2: <IoIosArrowRoundUp size={25} />,
-      percent: 2.3,
     },
     {
       title: "Khách hàng",
       number: customers.length,
       icon1: <IoPeopleOutline size={25} />,
-      icon2: <IoIosArrowRoundUp size={25} />,
-      percent: 1,
     },
     {
       title: "Số lượng đã bán",
       number: totalSold,
       icon1: <PiTShirtBold size={25} />,
-      icon2: <IoIosArrowRoundUp size={25} />,
-      percent: 2.2,
     },
   ];
+
+  console.log(topProducts);
+
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -185,11 +178,9 @@ function Dashboard() {
 
       <div className="p-[1.3rem] px-[1.2rem] bg-white">
         <h1 className="font-bold text-[1.5rem] text-[#74767d]">
-          Top 10 bán chạy
+          Top 10 bán chạy nhất
         </h1>
       </div>
-
-      {/*
 
       <div className="shadow-sm bg-white rounded-[3px] w-full overflow-auto">
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
@@ -208,6 +199,14 @@ function Dashboard() {
               </th>
 
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Màu sắc
+              </th>
+
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                Danh mục
+              </th>
+
+              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Hành động
               </th>
             </tr>
@@ -219,14 +218,14 @@ function Dashboard() {
                   <Loading height={50} />
                 </td>
               </tr>
-            ) : top10Products.length > 0 ? (
-              top10Products.map((product, index) => (
+            ) : topProducts.length > 0 ? (
+              topProducts.map((product, index) => (
                 <tr key={index}>
                   <td className="pl-[1rem] py-[1rem] w-[300px]">
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">
                         <Image
-                          Src={""}
+                          Src={product.variants[0].images[0]}
                           Alt={""}
                           ClassName={"w-[75px] cursor-pointer"}
                           loadingType="lazy"
@@ -260,10 +259,29 @@ function Dashboard() {
                     </div>
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    <div className="flex flex-col gap-[10px]">
+                    <div className="flex flex-col gap-1.5">
                       <p>Còn lại: {product.totalQuantity}</p>
                       <p>Đã bán: {product.totalSold}</p>
                     </div>
+                  </td>
+
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <div className="flex gap-1.5">
+                      {product.variants.map((variant, index) => (
+                        <div
+                          className="w-5 h-5 border-gray-400 border rounded-full"
+                          style={{
+                            backgroundColor: variant.color?.codecolor,
+                          }}
+                          key={index}
+                        ></div>
+                      ))}
+                    </div>
+                  </td>
+
+                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    {product.category.namecategory}/
+                    {product.category.gender === 1 ? "Nam" : "Nữ"}
                   </td>
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
@@ -292,7 +310,6 @@ function Dashboard() {
           </tbody>
         </table>
       </div>
-  */}
     </>
   );
 }

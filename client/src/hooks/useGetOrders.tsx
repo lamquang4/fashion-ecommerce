@@ -1,69 +1,23 @@
 "use client";
-import { useEffect, useState } from "react";
+import { OrderFull } from "@/types/type";
 import axios from "axios";
-import { useSearchParams } from "next/navigation";
+import useSWR from "swr";
 
-export interface Order {
-  _id: string;
-  orderCode: string;
-  user: string;
-  address: {
-    fullname: string;
-    phone: string;
-    speaddress: string;
-    city: string;
-    district: string;
-    ward: string;
-  };
-  paymethod: number;
-  coupon?: string;
-  status: number;
-  total: number;
-  createdAt: string;
-}
+type ResponseType = {
+  orders: OrderFull[];
+};
+
+const fetcher = (url: string): Promise<ResponseType> =>
+  axios.get(url).then((res) => res.data);
 
 export default function useGetOrders() {
-  const [orders, setOrders] = useState<Order[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [totalItems, setTotalItems] = useState(0);
-  const [keyword, setKeyword] = useState("");
-  const [status, setStatus] = useState("");
-
-  const searchParams = useSearchParams();
-  const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "10");
-
-  const fetchOrders = async () => {
-    try {
-      const res = await axios.get(
-        `/api/get-orders?page=${page}&limit=${limit}`,
-        {
-          params: {
-            keyword,
-            status,
-          },
-        }
-      );
-      setOrders(res.data.orders);
-      setTotalPages(res.data.totalPages);
-      setTotalItems(res.data.total);
-    } catch (err) {
-      console.error("Lỗi:", err);
-    }
-  };
-
-  useEffect(() => {
-    fetchOrders();
-  }, [page, limit, keyword, status]);
+  const url = `/api/get-orders`;
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    orders,
-    fetchOrders,
-    totalPages,
-    totalItems,
-    currentPage: page,
-    limit,
-    setKeyword,
-    setStatus,
+    orders: data?.orders ?? [],
+    error,
+    isLoading,
+    mutate,
   };
 }

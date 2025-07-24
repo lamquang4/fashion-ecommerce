@@ -11,7 +11,7 @@ export const useInventory = () => {
   const [newVariants, setNewVariants] = useState<
     {
       color: string;
-      inventories: Partial<Inventory>[];
+      inventories: { size: string; quantity: number }[];
       previewImages: string[];
       selectedFiles: File[];
     }[]
@@ -21,7 +21,7 @@ export const useInventory = () => {
     {
       _id?: string;
       color: string;
-      inventories: Partial<Inventory>[];
+      inventories: { size: string; quantity: number }[];
       previewImages: string[];
       selectedFiles: File[];
     }[]

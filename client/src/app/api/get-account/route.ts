@@ -1,16 +1,16 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import User from "@/model/User";
+import { getServerSession } from "next-auth";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-export async function GET(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+import { options } from "../auth/[...nextauth]/options";
+export async function GET(req: NextRequest) {
   try {
     await connectMongoDB();
-    const { id } = await params;
+    const session = await getServerSession(options);
+    const userId = session?.user?.id;
 
-    const customer = await User.findById(id);
+    const customer = await User.findById(userId);
 
     if (!customer) {
       return NextResponse.json(
@@ -21,8 +21,6 @@ export async function GET(
 
     return NextResponse.json(customer);
   } catch (err) {
-    console.log(err);
-
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

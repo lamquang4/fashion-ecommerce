@@ -1,8 +1,6 @@
 "use client";
 import Link from "next/link";
 import { LiaExternalLinkAltSolid } from "react-icons/lia";
-import { IoIosArrowRoundUp } from "react-icons/io";
-import { IoIosArrowRoundDown } from "react-icons/io";
 import { RiShoppingBag4Line } from "react-icons/ri";
 import { RiTruckLine } from "react-icons/ri";
 import { LuClock } from "react-icons/lu";
@@ -13,10 +11,13 @@ import FilterDropDownMenu from "./FilterDropDownMenu";
 import StaticCards from "./StaticCards";
 import InputSearch from "./InputSearch";
 import useGetOrders from "@/hooks/useGetOrders";
+import useUpdateStatusOrder from "@/hooks/useUpdateStatusOrder";
 import Loading from "./Loading";
+
 function Order() {
   const {
     orders,
+    mutate,
     isLoading,
     totalPages,
     totalItems,
@@ -28,6 +29,13 @@ function Order() {
     totalStatus3,
     totalStatus4,
   } = useGetOrders();
+
+  const { updateStatusOrder } = useUpdateStatusOrder();
+
+  const handleUpdateStatus = async (id: string, status: number) => {
+    await updateStatusOrder(id, status);
+    mutate();
+  };
 
   const array = [
     {
@@ -61,29 +69,21 @@ function Order() {
       title: "Tổng đơn",
       number: orders.length,
       icon1: <RiShoppingBag4Line size={25} />,
-      icon2: <IoIosArrowRoundDown size={25} />,
-      percent: -1.3,
     },
     {
       title: "Đơn giao thành công",
       number: totalStatus3,
       icon1: <RiTruckLine size={25} />,
-      icon2: <IoIosArrowRoundUp size={25} />,
-      percent: 2.3,
     },
     {
       title: "Đơn đã hủy",
       number: totalStatus4,
       icon1: <TbCancel size={25} />,
-      icon2: <IoIosArrowRoundUp size={25} />,
-      percent: 1,
     },
     {
       title: "Đơn chờ xác nhận",
       number: totalStatus0,
       icon1: <LuClock size={25} />,
-      icon2: <IoIosArrowRoundUp size={25} />,
-      percent: 2.2,
     },
   ];
   return (
@@ -200,11 +200,39 @@ function Order() {
                     <select
                       name="status"
                       value={order.status}
+                      onChange={(e) =>
+                        handleUpdateStatus(order._id, parseInt(e.target.value))
+                      }
                       className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                     >
-                      <option value="0">Chờ xác nhận</option>
-                      <option value="1">Xác nhận</option>
-                      <option value="4">Hủy</option>
+                      {order.status === 0 && (
+                        <>
+                          <option value="0">Chờ xác nhận</option>
+                          <option value="1">Xác nhận</option>
+                          <option value="4">Hủy</option>
+                        </>
+                      )}
+                      {order.status === 1 && (
+                        <>
+                          <option value="1">Xác nhận</option>
+                          <option value="2">Đang giao</option>
+                          <option value="4">Hủy</option>
+                        </>
+                      )}
+                      {order.status === 2 && (
+                        <>
+                          <option value="2">Đang giao</option>
+                          <option value="3">Giao thành công</option>
+                        </>
+                      )}
+                      {order.status === 3 && (
+                        <option value="3">Giao thành công</option>
+                      )}
+                      {order.status === 4 && (
+                        <>
+                          <option value="4">Hủy</option>
+                        </>
+                      )}
                     </select>
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">

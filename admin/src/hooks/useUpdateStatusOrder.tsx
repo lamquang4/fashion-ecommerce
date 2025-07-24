@@ -2,12 +2,11 @@
 import axios from "axios";
 import Swal from "sweetalert2";
 
-export default function useVisibleBanner() {
-  const visibleBanner = async (id: string, status: number) => {
-    const action = status === 1 ? "hiện" : "ẩn";
+export default function useUpdateStatusOrder() {
+  const updateStatusOrder = async (id: string, status: number) => {
     const result = await Swal.fire({
-      title: `Xác nhận ${action}?`,
-      text: `Bạn có chắc muốn ${action} banner này không?`,
+      title: `Xác nhận?`,
+      text: `Bạn có chắc muốn thay đổi tình trạng đơn hàng này không?`,
       icon: "warning",
       showCancelButton: true,
       confirmButtonText: "Đồng ý",
@@ -18,7 +17,7 @@ export default function useVisibleBanner() {
       return;
     }
     try {
-      const res = await axios.put(`/api/visible-banner/${id}`, {
+      const res = await axios.put(`/api/update-status-order/${id}`, {
         status: status,
       });
       return res.data.banner;
@@ -28,5 +27,5 @@ export default function useVisibleBanner() {
     }
   };
 
-  return { visibleBanner };
+  return { updateStatusOrder };
 }

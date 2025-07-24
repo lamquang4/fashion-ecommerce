@@ -13,7 +13,6 @@ import useGetProduct from "@/hooks/useGetProduct";
 import toast from "react-hot-toast";
 import useGetSizes from "@/hooks/useGetSizes";
 import useGetColors from "@/hooks/useGetColors";
-import Loading from "./Loading";
 import useUpdateProduct from "@/hooks/useUpdateProduct";
 import { useInventory } from "@/hooks/useInventory";
 import useDeleteImage from "@/hooks/useDeleteImage";
@@ -111,14 +110,17 @@ function EditProduct() {
         price: product.price,
         discount: product.discount,
         description: product.description,
-        category: product.category,
+        category: product.category._id!,
       });
 
       setCurrentVariants(
-        product.variants.map((variant) => ({
+        product.variants.map((variant: any) => ({
           _id: variant._id,
-          color: variant.color,
-          inventories: variant.inventories,
+          color: variant.color._id,
+          inventories: variant.inventories.map((inv: any) => ({
+            size: inv.size._id,
+            quantity: inv.quantity,
+          })),
           previewImages: [],
           selectedFiles: [],
         }))
@@ -515,6 +517,7 @@ function EditProduct() {
                               required
                               name="quantity"
                               value={inventory.quantity}
+                              min={0}
                               onChange={(e) =>
                                 handleChangeCurrentInventory(
                                   index,
@@ -523,7 +526,6 @@ function EditProduct() {
                                   e.target.value
                                 )
                               }
-                              min={1}
                               className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
                             />
                           </td>

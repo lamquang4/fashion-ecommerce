@@ -26,12 +26,37 @@ export async function GET(req: NextRequest) {
       totalStatus0,
       totalStatus3,
       totalStatus4,
+      totalRevenue,
+      totalSold,
     ] = await Promise.all([
       Order.find(query).skip(skip).limit(limit),
       Order.countDocuments(query),
       Order.countDocuments({ status: 0 }),
       Order.countDocuments({ status: 3 }),
       Order.countDocuments({ status: 4 }),
+      Order.aggregate([
+        { $match: { status: 3 } },
+        { $group: { _id: null, total: { $sum: "$total" } } },
+      ]),
+      OrderDetail.aggregate([
+        {
+          $lookup: {
+            from: "orders",
+            localField: "order",
+            foreignField: "_id",
+            as: "orderInfo",
+          },
+        },
+        { $unwind: "$orderInfo" },
+        { $match: { "orderInfo.status": 3 } },
+        { $unwind: "$items" },
+        {
+          $group: {
+            _id: null,
+            total1: { $sum: "$items.quantity" },
+          },
+        },
+      ]),
     ]);
 
     return NextResponse.json({
@@ -43,6 +68,8 @@ export async function GET(req: NextRequest) {
       totalStatus0,
       totalStatus3,
       totalStatus4,
+      totalRevenue: totalRevenue[0]?.total || 0,
+      totalSold: totalSold[0]?.total1 || 0,
     });
   } catch (err) {
     return NextResponse.json(

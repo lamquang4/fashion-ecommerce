@@ -1,19 +1,18 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Order from "@/model/Order";
-import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
-import { options } from "../auth/[...nextauth]/options";
-import mongoose from "mongoose";
-
-export async function GET(req: NextRequest) {
+import { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+export async function GET(
+  req: NextRequest,
+  { params }: { params: { code: string } }
+) {
   try {
     await connectMongoDB();
-    const session = await getServerSession(options);
-    const userId = session?.user?.id;
+    const { code } = await params;
 
-    const orders = await Order.aggregate([
+    const data = await Order.aggregate([
       {
-        $match: { user: new mongoose.Types.ObjectId(userId) },
+        $match: { orderCode: code },
       },
       {
         $lookup: {
@@ -97,12 +96,6 @@ export async function GET(req: NextRequest) {
         },
       },
       {
-        $sort: { createdAt: -1 },
-      },
-      {
-        $limit: 10,
-      },
-      {
         $group: {
           _id: "$_id",
           orderCode: { $first: "$orderCode" },
@@ -144,9 +137,14 @@ export async function GET(req: NextRequest) {
       },
     ]);
 
-    return NextResponse.json({
-      orders,
-    });
+    if (!data) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy đơn hàng" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(data[0]);
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

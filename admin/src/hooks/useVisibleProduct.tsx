@@ -18,8 +18,7 @@ export default function useVisibleProduct() {
       return;
     }
     try {
-      const res = await axios.put("/api/visible-product", {
-        id: id,
+      const res = await axios.put(`/api/visible-product/${id}`, {
         status: status,
       });
       return res.data.product;

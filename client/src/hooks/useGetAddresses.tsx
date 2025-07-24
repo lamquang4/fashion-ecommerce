@@ -10,11 +10,9 @@ type ResponseType = {
 const fetcher = (url: string): Promise<ResponseType> =>
   axios.get(url).then((res) => res.data);
 
-export default function useGetAddresses(id: string) {
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
-    `/api/get-addresses/${id}`,
-    fetcher
-  );
+export default function useGetAddresses() {
+  const url = `/api/get-addresses`;
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
     addresses: data?.addresses ?? [],
