@@ -57,6 +57,7 @@ function Product() {
       toast.error("Xóa thành công");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
+      mutate();
     }
   };
 
@@ -69,6 +70,7 @@ function Product() {
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
+      mutate();
     }
   };
   return (
@@ -197,6 +199,7 @@ function Product() {
                             backgroundColor: variant.color?.codecolor,
                           }}
                           key={index}
+                          title={variant.color?.namecolor}
                         ></div>
                       ))}
                     </div>

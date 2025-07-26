@@ -54,6 +54,7 @@ function Collection() {
       handleReset();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
+      mutate();
     }
   };
   return (

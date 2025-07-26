@@ -198,6 +198,7 @@ function EditProduct() {
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
+      mutate();
     }
   };
 
@@ -419,14 +420,6 @@ function EditProduct() {
                     className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
                   >
                     Thêm số lượng
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveAllCurrentInventories(index)}
-                    className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_12px] items-center justify-center gap-[5px] text-white"
-                  >
-                    Xóa tất cả
                   </button>
                 </div>
 

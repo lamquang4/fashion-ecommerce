@@ -6,6 +6,7 @@ import useGetAddresses from "@/hooks/useGetAddresses";
 import useDeleteAddress from "@/hooks/useDeleteAddress";
 import toast from "react-hot-toast";
 import Loading from "./Loading";
+import Image from "./Image";
 function AddressInfo() {
   const [addressId, setAddressId] = useState<string>("");
   const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
@@ -38,11 +39,11 @@ function AddressInfo() {
   return (
     <>
       <section className="w-full mt-[40px] sm:mt-[45px] ">
-        <div className="px-[10px] flex justify-center flex-wrap sm:px-[15px]">
+        <div className="flex justify-center flex-wrap">
           <SideBarMenu />
 
           <div className="w-full max-w-full border border-gray-300 lg:max-w-[700px]">
-            <div className="p-[25px_15px] sm:p-[30px_20px]">
+            <div className="p-[25px_15px]">
               <h2 className="text-[1.5rem] font-semibold mb-[15px]">Địa chỉ</h2>
               <div className="mb-[30px]">
                 <button
@@ -56,8 +57,8 @@ function AddressInfo() {
 
               <div>
                 {isLoading ? (
-                  <Loading height={40} />
-                ) : (
+                  <Loading height={70} />
+                ) : addresses.length > 0 ? (
                   addresses.map((address, index) => (
                     <div key={index}>
                       <hr className="border-gray-300 my-[20px]" />
@@ -109,6 +110,25 @@ function AddressInfo() {
                       </div>
                     </div>
                   ))
+                ) : (
+                  <div className="flex justify-center items-center h-[70vh]">
+                    <div>
+                      <div className="mb-[15px] flex justify-center">
+                        <Image
+                          Src={"/assets/other/address.png"}
+                          Alt={""}
+                          ClassName={"w-[80px]"}
+                          loadingType="eager"
+                        />
+                      </div>
+
+                      <div className="flex justify-center flex-col gap-3 items-center text-center">
+                        <h2 className="text-[1.1rem] font-semibold">
+                          Không có đơn hàng nào
+                        </h2>
+                      </div>
+                    </div>
+                  </div>
                 )}
               </div>
             </div>

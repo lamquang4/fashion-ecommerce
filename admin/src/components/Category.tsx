@@ -51,6 +51,7 @@ function Category() {
       toast.error("Xóa thành công");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
+      mutate();
     }
   };
 
@@ -63,6 +64,7 @@ function Category() {
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
+      mutate();
     }
   };
   return (

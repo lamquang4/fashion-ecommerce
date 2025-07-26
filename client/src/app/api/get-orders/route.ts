@@ -10,10 +10,16 @@ export async function GET(req: NextRequest) {
     await connectMongoDB();
     const session = await getServerSession(options);
     const userId = session?.user?.id;
+    const searchParams = req.nextUrl.searchParams;
+    const status = searchParams.get("status");
 
+    const query: any = { user: new mongoose.Types.ObjectId(userId) };
+    if (status) {
+      query.status = parseInt(status);
+    }
     const orders = await Order.aggregate([
       {
-        $match: { user: new mongoose.Types.ObjectId(userId) },
+        $match: { ...query },
       },
       {
         $lookup: {
@@ -97,12 +103,6 @@ export async function GET(req: NextRequest) {
         },
       },
       {
-        $sort: { createdAt: -1 },
-      },
-      {
-        $limit: 10,
-      },
-      {
         $group: {
           _id: "$_id",
           orderCode: { $first: "$orderCode" },
@@ -141,6 +141,9 @@ export async function GET(req: NextRequest) {
             },
           },
         },
+      },
+      {
+        $sort: { createdAt: -1 },
       },
     ]);
 

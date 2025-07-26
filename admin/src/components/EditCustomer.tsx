@@ -73,6 +73,7 @@ function EditCustomer() {
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
+      mutate();
     }
   };
 

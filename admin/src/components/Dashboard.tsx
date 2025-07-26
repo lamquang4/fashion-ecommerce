@@ -5,7 +5,7 @@ import { IoPeopleOutline } from "react-icons/io5";
 import { PiTShirtBold } from "react-icons/pi";
 import Image from "./Image";
 import dynamic from "next/dynamic";
-import { LiaEdit } from "react-icons/lia";
+import { LiaExternalLinkAltSolid } from "react-icons/lia";
 import Link from "next/link";
 import StaticCards from "./StaticCards";
 import useGetOrders from "@/hooks/useGetOrders";
@@ -274,6 +274,7 @@ function Dashboard() {
                             backgroundColor: variant.color?.codecolor,
                           }}
                           key={index}
+                          title={variant.color?.namecolor}
                         ></div>
                       ))}
                     </div>
@@ -286,8 +287,11 @@ function Dashboard() {
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex items-center gap-[15px]">
-                      <Link href={`/edit-product${product._id}`}>
-                        <LiaEdit size={22} className="text-[#076ffe]" />
+                      <Link href={`/edit-product/${product._id}`}>
+                        <LiaExternalLinkAltSolid
+                          size={23}
+                          className="text-[#076ffe]"
+                        />
                       </Link>
                     </div>
                   </td>

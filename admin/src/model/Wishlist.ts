@@ -24,11 +24,11 @@ const wishlistSchema = new Schema(
 
 wishlistSchema.index({ user: 1 });
 
-// Xóa các wishlist sau 7 ngày nếu không có user
+// Xóa các wishlist sau 2 ngày nếu không có user
 wishlistSchema.index(
   { updatedAt: 1 },
   {
-    expireAfterSeconds: 60 * 60 * 24 * 7, // 7 ngày
+    expireAfterSeconds: 60 * 60 * 24 * 2, // 2 ngày
     partialFilterExpression: { user: { $eq: null } },
   }
 );

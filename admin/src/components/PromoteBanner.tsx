@@ -49,6 +49,7 @@ function PromoteBanner() {
       setPreviewImages1([]);
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
+      mutate();
     }
   };
   return (

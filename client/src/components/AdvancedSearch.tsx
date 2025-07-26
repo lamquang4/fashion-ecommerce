@@ -102,7 +102,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
 
               <button
                 type="button"
-                onClick={() => handleSort("newest")}
+                onClick={() => handleSort("bestseller")}
                 className="uppercase text-[0.9rem] p-3.5 border-t border-gray-300 text-left"
               >
                 Bán chạy nhất

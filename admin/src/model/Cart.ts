@@ -33,11 +33,11 @@ const cartSchema = new Schema(
 
 cartSchema.index({ user: 1 });
 
-// Xóa các cart sau 7 ngày nếu không có user
+// Xóa các cart sau 2 ngày nếu không có user
 cartSchema.index(
   { updatedAt: 1 },
   {
-    expireAfterSeconds: 60 * 60 * 24 * 7, // 7 ngày
+    expireAfterSeconds: 60 * 60 * 24 * 2, // 2 ngày
     partialFilterExpression: { user: { $eq: null } },
   }
 );

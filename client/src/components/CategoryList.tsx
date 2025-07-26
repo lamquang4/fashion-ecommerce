@@ -21,7 +21,7 @@ function CategoryList() {
             <button
               key={gender}
               onClick={() => setSelectedGender(gender)}
-              className={`relative w-[120px] text-[1.2rem] uppercase font-medium pb-1 transition-all duration-300 ease-in-out
+              className={`relative w-[150px] py-3.5 text-[1.2rem] uppercase font-medium transition-all duration-300 ease-in-out
     after:content-[''] after:absolute after:bottom-0 after:left-0 after:h-[2px]
     after:bg-red-500 after:transition-all after:duration-300 after:ease-in-out
     ${

@@ -4,44 +4,101 @@ import Link from "next/link";
 import Image from "./Image";
 import useGetOrders from "@/hooks/useGetOrders";
 import Loading from "./Loading";
+import { useRouter, useSearchParams } from "next/navigation";
 
 function OrderHistory() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const { orders, isLoading } = useGetOrders();
+
+  const array = [
+    {
+      status: "",
+      name: "Tất cả",
+    },
+    {
+      status: 0,
+      name: "Chờ xác nhận",
+    },
+    {
+      status: 1,
+      name: "Xác nhận",
+    },
+    {
+      status: 2,
+      name: "Đang giao",
+    },
+    {
+      status: 3,
+      name: "Giao thành công",
+    },
+    {
+      status: 4,
+      name: "Đã hủy",
+    },
+  ];
+
+  const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const status = e.target.value;
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (status) {
+      params.set("status", status);
+    } else {
+      params.delete("status");
+    }
+
+    router.push(`?${params.toString()}`);
+  };
   return (
     <section className="w-full mt-[40px] sm:mt-[45px]">
-      <div className="flex justify-center flex-wrap px-[10px] sm:px-[15px]">
+      <div className="flex justify-center flex-wrap">
         <SideBarMenu />
 
         <div className="w-full max-w-full border border-gray-300 lg:max-w-[700px]">
-          <div className="p-[25px_15px] sm:p-[30px_20px]">
-            <h2 className="text-[1.5rem] font-semibold mb-[25px]">Đơn hàng</h2>
+          <div className="p-[25px_15px]">
+            <div className="flex justify-between items-center mb-[25px]">
+              <h2 className="text-[1.5rem] font-semibold">Đơn hàng</h2>
 
-            <div className="flex gap-3.5 flex-col">
+              <select
+                onChange={handleStatusChange}
+                value={searchParams.get("status") ?? ""}
+                className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block p-2 outline-0"
+              >
+                {array.map((item, index) => (
+                  <option value={item.status} key={index}>
+                    {item.name}
+                  </option>
+                ))}
+              </select>
+            </div>
+
+            <div className="flex gap-4.5 flex-col">
               {isLoading ? (
                 <Loading height={70} />
               ) : orders.length > 0 ? (
                 orders.map((order, index) => (
-                  <div
-                    className="border-[1.5px] border-double border-gray-300 p-[15px] pt-0"
-                    key={index}
-                  >
+                  <div className="border border-gray-300 p-[12px]" key={index}>
                     {order.productsBuy.map((item, index) => (
-                      <div className="relative flex items-center py-[15px] border-b-[1.5px] border-b-double border-gray-300 gap-[10px]">
-                        <div>
+                      <div
+                        key={index}
+                        className="relative flex items-center pb-[12px] border-b border-gray-300 gap-[10px]"
+                      >
+                        <Link href={`/order-detail/${order.orderCode}`}>
                           <Image
                             Src={item.variant.images[0]}
                             Alt={item.product.name}
                             ClassName={"max-w-[120px] round-[5px] object-cover"}
                             loadingType="eager"
                           />
-                        </div>
+                        </Link>
 
                         <div>
-                          <h2 className="text-[0.85rem] sm:text-[0.95rem] font-medium mb-[10px]">
+                          <h2 className="text-[0.9rem] font-medium mb-[10px]">
                             {item.product.name}
                           </h2>
                           <div className="flex gap-[15px] items-center flex-wrap">
-                            <div className="flex gap-[15px] text-[0.85rem] sm:text-[0.95rem]">
+                            <div className="flex gap-[15px] text-[0.9rem]">
                               <span>x{item.quantity}</span>
                               <span>
                                 {item.variant.size.namesize} /{" "}
@@ -93,9 +150,9 @@ function OrderHistory() {
 
                         <Link
                           href={`/order-detail/${order.orderCode}`}
-                          className="text-[#3b82f6] text-[0.9rem] px-[10px] py-[6px] transition-[0.3s] border border-[#3b82f6] hover:bg-[#3b82f6] hover:text-white"
+                          className="text-white text-[0.9rem] font-medium px-[10px] py-[6px] transition-[0.3s] bg-[#ee4d2d] hover:text-white"
                         >
-                          Chi tiết
+                          Xem chi tiết
                         </Link>
                       </div>
                     </div>
@@ -104,17 +161,17 @@ function OrderHistory() {
               ) : (
                 <div className="flex justify-center items-center h-[70vh]">
                   <div>
-                    <div className="mb-[20px] flex justify-center">
+                    <div className="mb-[15px] flex justify-center">
                       <Image
                         Src={"/assets/other/empty-order.png"}
                         Alt={""}
-                        ClassName={"w-[150px]"}
+                        ClassName={"w-[130px]"}
                         loadingType="eager"
                       />
                     </div>
 
                     <div className="flex justify-center flex-col gap-3 items-center text-center">
-                      <h2 className="text-[1.2rem] font-semibold">
+                      <h2 className="text-[1.1rem] font-semibold">
                         Không có đơn hàng nào
                       </h2>
                     </div>

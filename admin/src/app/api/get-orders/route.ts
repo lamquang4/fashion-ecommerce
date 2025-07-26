@@ -9,6 +9,8 @@ export async function GET(req: NextRequest) {
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
+    const start = searchParams.get("start");
+    const end = searchParams.get("end");
     const skip = (page - 1) * limit;
     const keyword = searchParams.get("keyword") || "";
     const status = searchParams.get("status") || "";
@@ -18,6 +20,12 @@ export async function GET(req: NextRequest) {
     }
     if (status) {
       query.status = parseInt(status);
+    }
+    if (start && end) {
+      query.createdAt = {
+        $gte: new Date(start),
+        $lte: new Date(`${end}T23:59:59.999Z`),
+      };
     }
 
     const [

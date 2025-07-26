@@ -13,6 +13,7 @@ import InputSearch from "./InputSearch";
 import useGetOrders from "@/hooks/useGetOrders";
 import useUpdateStatusOrder from "@/hooks/useUpdateStatusOrder";
 import Loading from "./Loading";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 function Order() {
   const {
@@ -31,6 +32,10 @@ function Order() {
   } = useGetOrders();
 
   const { updateStatusOrder } = useUpdateStatusOrder();
+
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
 
   const handleUpdateStatus = async (id: string, status: number) => {
     await updateStatusOrder(id, status);
@@ -86,6 +91,27 @@ function Order() {
       icon1: <LuClock size={25} />,
     },
   ];
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+
+    const start = formData.get("start") as string;
+    const end = formData.get("end") as string;
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", "1");
+
+    if (start) params.set("start", start);
+    else params.delete("start");
+
+    if (end) params.set("end", end);
+    else params.delete("end");
+
+    router.push(`${pathname}?${params.toString()}`);
+  };
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -98,14 +124,14 @@ function Order() {
         </div>
 
         <div>
-          <form action="">
+          <form onSubmit={handleSubmit}>
             <div className="flex gap-[15px] mb-[25px] flex-wrap">
               <div className="relative flex gap-1.5 items-center">
                 <label htmlFor="" className="text-[0.9rem] text-black">
                   Từ:
                 </label>
                 <input
-                  name="startDate"
+                  name="start"
                   type="date"
                   className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400 text-gray-900"
                 />
@@ -116,17 +142,15 @@ function Order() {
                   Đến:
                 </label>
                 <input
-                  name="endDate"
+                  name="end"
                   type="date"
                   className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400 text-gray-900"
                 />
               </div>
 
-              <div>
-                <button className="p-[6px_10px] text-[0.9rem] bg-[#22BAA0] text-white">
-                  Tìm kiếm
-                </button>
-              </div>
+              <button className="p-[6px_10px] text-[0.9rem] bg-[#22BAA0] text-white">
+                Tìm kiếm
+              </button>
             </div>
           </form>
         </div>
@@ -223,6 +247,7 @@ function Order() {
                         <>
                           <option value="2">Đang giao</option>
                           <option value="3">Giao thành công</option>
+                          <option value="4">Hủy</option>
                         </>
                       )}
                       {order.status === 3 && (

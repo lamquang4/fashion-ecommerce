@@ -10,7 +10,7 @@ function SideBarMenu() {
   const activeClass = "border-l-2 font-medium";
   return (
     <div className="w-full max-w-full lg:max-w-[250px] border border-gray-300">
-      <div className="py-[15px] sm:py-[20px] text-[0.95rem] text-black font-normal flex flex-col gap-2">
+      <div className="py-[25px] text-[0.95rem] text-black font-normal flex flex-col gap-2">
         <Link
           href="/account"
           className={`p-2.5 ${pathname === "/account" ? activeClass : ""}`}

@@ -139,7 +139,7 @@ function CartItem() {
           </h2>
           {isLoading ? (
             <Loading height={60} />
-          ) : cart?.productsInCart.length ? (
+          ) : cart?.productsInCart.length! > 0 ? (
             <form onSubmit={handleSubmit}>
               <div className="flex gap-8 w-full lg:flex-row flex-col">
                 <div className=" bg-white basis-[70%]">
@@ -320,11 +320,11 @@ function CartItem() {
           ) : (
             <div className="flex justify-center items-center h-[60vh]">
               <div>
-                <div className="mb-[20px] flex justify-center">
+                <div className="mb-[15px] flex justify-center">
                   <Image
                     Src={"/assets/other/empty-cart.png"}
                     Alt={""}
-                    ClassName={"w-[190px]"}
+                    ClassName={"w-[150px]"}
                     loadingType="eager"
                   />
                 </div>

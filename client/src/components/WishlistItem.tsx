@@ -25,7 +25,7 @@ function WishlistItem() {
           </h2>
           {isLoading ? (
             <Loading height={60} />
-          ) : wishlist?.productsInWishlist.length ? (
+          ) : wishlist?.productsInWishlist.length! > 0 ? (
             <div className="flex gap-8 max-w-xl mx-auto w-full">
               <div className="basis-[100%]">
                 {wishlist?.productsInWishlist.map((item, index) => (
@@ -89,11 +89,11 @@ function WishlistItem() {
           ) : (
             <div className="flex justify-center items-center h-[60vh]">
               <div>
-                <div className="mb-[20px] flex justify-center">
+                <div className="mb-[15px] flex justify-center">
                   <Image
                     Src={"/assets/other/empty-wishlist.png"}
                     Alt={""}
-                    ClassName={"w-[220px]"}
+                    ClassName={"w-[170px]"}
                     loadingType="eager"
                   />
                 </div>

@@ -25,10 +25,13 @@ export default function useGetOrders() {
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
-
+  const start = searchParams.get("start") || "";
+  const end = searchParams.get("end") || "";
   const query = new URLSearchParams({
     page: page.toString(),
     limit: limit.toString(),
+    start,
+    end,
     keyword,
     status,
   });

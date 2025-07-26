@@ -127,6 +127,70 @@ export async function GET(
       pipeline.push({ $sort: { finalPrice: 1 } });
     } else if (sort === "price-desc") {
       pipeline.push({ $sort: { finalPrice: -1 } });
+    } else if (sort === "bestseller") {
+      pipeline.push(
+        {
+          $lookup: {
+            from: "orderdetails",
+            let: { productId: "$_id" },
+            pipeline: [
+              {
+                $unwind: "$items",
+              },
+              {
+                $match: {
+                  $expr: { $eq: ["$items.product", "$$productId"] },
+                },
+              },
+              {
+                $lookup: {
+                  from: "orders",
+                  localField: "order",
+                  foreignField: "_id",
+                  as: "order",
+                },
+              },
+              {
+                $unwind: "$order",
+              },
+              {
+                $match: {
+                  "order.status": 3,
+                },
+              },
+              {
+                $group: {
+                  _id: "$items.product",
+                  totalSold: { $sum: "$items.quantity" },
+                },
+              },
+            ],
+            as: "sold",
+          },
+        },
+        {
+          $addFields: {
+            totalSold: {
+              $ifNull: [{ $arrayElemAt: ["$sold.totalSold", 0] }, 0],
+            },
+          },
+        },
+        {
+          $match: {
+            totalSold: { $gt: 0 },
+          },
+        },
+        {
+          $sort: {
+            totalSold: -1,
+          },
+        },
+        {
+          $project: {
+            sold: 0,
+          },
+        }
+      );
     }
 
     pipeline.push({ $skip: skip }, { $limit: limit });

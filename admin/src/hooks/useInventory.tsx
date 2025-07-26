@@ -2,11 +2,6 @@
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-export interface Inventory {
-  size: string;
-  quantity: number;
-}
-
 export const useInventory = () => {
   const [newVariants, setNewVariants] = useState<
     {
@@ -109,7 +104,10 @@ export const useInventory = () => {
   const handleChangeNewInventory = (
     blockIndex: number,
     index: number,
-    field: keyof Inventory,
+    field: keyof {
+      size: string;
+      quantity: number;
+    },
     value: string | number
   ) => {
     const updated = [...newVariants];
@@ -120,7 +118,10 @@ export const useInventory = () => {
   const handleChangeCurrentInventory = (
     blockIndex: number,
     index: number,
-    field: keyof Inventory,
+    field: keyof {
+      size: string;
+      quantity: number;
+    },
     value: string | number
   ) => {
     const updated = [...currentVariants];

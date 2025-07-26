@@ -7,6 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 import fs from "node:fs/promises";
 import path from "path";
 import Category from "@/model/Category";
+import OrderDetail from "@/model/OrderDetail";
 
 export async function PUT(
   req: NextRequest,
@@ -65,7 +66,7 @@ export async function PUT(
       new: true,
     });
 
-    // thêm inventory
+    // Thêm Inventory mới
     const newInventoryBlocks = JSON.parse(
       formData.get("newInventories") as string
     );
@@ -157,7 +158,7 @@ export async function PUT(
       }
     }
 
-    // Cập nhật Inventory
+    // Cập nhật Inventory đã có
 
     const currentInventories = JSON.parse(
       formData.get("currentInventories") as string
@@ -175,6 +176,51 @@ export async function PUT(
         const inventory = await Inventory.findById(block._id);
         if (!inventory) {
           return NextResponse.json({ msg: `Không tìm thấy` }, { status: 404 });
+        }
+
+        // Kiểm tra đơn hàng có status là 0, 1, 2 nào có order detail chứa biến thể chỉ lấy 1 cái
+        const orderDetail = await OrderDetail.findOne({
+          "items.product": id,
+          "items.color": inventory.color,
+          "items.size": {
+            $in: inventory.inventories.map((inv: any) => inv.size),
+          },
+        }).populate({
+          path: "order",
+          match: { status: { $in: [0, 1, 2] } },
+        });
+
+        // !! là cho giá trị undified, null, 0 sẽ thành kiểu boolean ở đây là false
+        const hasOrder = !!orderDetail?.order;
+
+        if (hasOrder) {
+          // Kiểm tra cập nhật màu sắc
+          if (block.color !== inventory.color.toString()) {
+            return NextResponse.json(
+              {
+                msg: `Không thể cập nhật màu sắc của biến thể này vì đã được sử dụng trong đơn hàng.`,
+              },
+              { status: 400 }
+            );
+          }
+
+          // Kiểm tra cập nhật kích thước
+          const newSizes = block.inventories.map((inv: any) => inv.size);
+          const currentSizes = inventory.inventories.map((inv: any) =>
+            inv.size.toString()
+          );
+          const sizesChanged =
+            newSizes.some((size: string) => !currentSizes.includes(size)) ||
+            currentSizes.some((size: string) => !newSizes.includes(size));
+
+          if (sizesChanged) {
+            return NextResponse.json(
+              {
+                msg: `Không thể cập nhật kích thước của biến thể này vì đã được sử dụng trong đơn hàng.`,
+              },
+              { status: 400 }
+            );
+          }
         }
 
         if (inventory.images.length + files.length > 5) {
@@ -242,7 +288,10 @@ export async function PUT(
 
         await Inventory.findByIdAndUpdate(block._id, {
           $push: { images: { $each: imagePaths } },
-          inventories: block.inventories,
+          inventories: block.inventories.map((inv: any) => ({
+            quantity: inv.quantity,
+            size: inv.size,
+          })),
           color: block.color,
           product: id,
         });

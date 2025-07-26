@@ -20,9 +20,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
   const { data: session } = useSession();
   const { provinces } = useGetProvinces();
   const { address, mutate, isLoading } = useGetAddress(addressId);
-  const { addresses, mutate: mutateAddresses } = useGetAddresses(
-    session?.user.id || ""
-  );
+  const { addresses, mutate: mutateAddresses } = useGetAddresses();
   const { updateAddress } = useUpdateAddress(addressId);
   const { addAddress } = useAddAddress();
   const [selectedProvinceName, setSelectedProvinceName] = useState<string>("");
@@ -95,6 +93,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
+      mutate();
     }
   };
 

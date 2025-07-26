@@ -66,20 +66,17 @@ function AccountInfo() {
       }));
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
+      mutate();
     }
   };
 
   return (
     <section className="w-full mt-[40px] sm:mt-[45px] ">
-      <div className="px-[10px] flex justify-center flex-wrap sm:px-[15px]">
+      <div className="flex justify-center flex-wrap">
         <SideBarMenu />
 
         <div className="w-full max-w-full border border-gray-300 lg:max-w-[700px]">
-          <form
-            action=""
-            className="p-[25px_15px] sm:p-[30px_20px]"
-            onSubmit={handleSubmit}
-          >
+          <form action="" className="p-[25px_15px]" onSubmit={handleSubmit}>
             <h2 className="text-[1.5rem] font-semibold mb-[25px]">Tài khoản</h2>
             <div className="mb-[25px]">
               <div className="w-full">
