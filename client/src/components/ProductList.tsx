@@ -4,8 +4,9 @@ import React, { useEffect, useState } from "react";
 import AdvancedSearch from "./AdvancedSearch";
 import Image from "./Image";
 import Loading from "./Loading";
-import { Category, Product, ProductInWishlist } from "@/types/type";
-import { usePathname, useSearchParams } from "next/navigation";
+import { VscSettings } from "react-icons/vsc";
+import { Category, Product } from "@/types/type";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
 import useAddWishlist from "@/hooks/useAddWishlist";
@@ -21,8 +22,10 @@ function ProductList({ category, products, isLoading }: Props) {
     [productId: string]: number;
   }>({});
   const searchParams = useSearchParams();
+  const router = useRouter();
   const pathname = usePathname();
   const search = searchParams.get("q");
+
   const { addWishlist } = useAddWishlist();
   const { wishlist, mutate } = useGetWishlist();
   const { removeItem } = useRemoveItemWishlist();
@@ -66,46 +69,82 @@ function ProductList({ category, products, isLoading }: Props) {
     mutate(undefined, true);
   };
 
-  function checkNewProduct(createdAt: string): boolean {
-    const createdDate = new Date(createdAt);
-    const now = new Date();
-    const checkDays =
-      (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24);
-    return checkDays <= 14;
-  }
+  const sortArray = [
+    {
+      name: "Hàng mới",
+      sort: "newest",
+    },
+    {
+      name: "Giá (thấp-cao)",
+      sort: "price-asc",
+    },
+    {
+      name: "Giá (cao-thấp)",
+      sort: "price-desc",
+    },
+    {
+      name: "Bán chạy nhất",
+      sort: "bestseller",
+    },
+  ];
+
+  const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const sort = e.target.value;
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (sort) {
+      params.set("sort", sort);
+    } else {
+      params.delete("sort");
+    }
+
+    router.push(`?${params.toString()}`);
+  };
 
   return (
     <section className="px-[10px] mt-[40px] sm:mt-[45px] sm:px-[15px]">
       <div className="w-full mx-auto md:max-w-[1000px] lg:max-w-[1240px]">
-        <div className="flex justify-between items-center flex-wrap my-[10px] mb-[35px]">
-          <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550]">
-            {pathname === "/collection/nam"
-              ? "Đồ nam"
-              : pathname === "/collection/nu"
-              ? "Đồ nữ"
-              : pathname === "/collection/all"
-              ? "Tất cả sản phẩm"
-              : category
-              ? `${category.namecategory} ${
-                  category.gender === 1 ? "nam" : "nữ"
-                }`
-              : ""}
+        <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550]  mb-[20px]">
+          {pathname === "/collection/nam"
+            ? "Đồ nam"
+            : pathname === "/collection/nu"
+            ? "Đồ nữ"
+            : pathname === "/collection/all"
+            ? "Tất cả sản phẩm"
+            : category
+            ? `${category.namecategory} ${category.gender === 1 ? "nam" : "nữ"}`
+            : ""}
 
-            {pathname === "/search" && search && search}
+          {pathname === "/search" && search && search}
 
-            {pathname === "/sale/nam"
-              ? "Giảm giá đồ nam"
-              : pathname === "/sale/nu"
-              ? "Giảm giá đồ nữ"
-              : ""}
-          </h2>
+          {pathname === "/sale/nam"
+            ? "Giảm giá đồ nam"
+            : pathname === "/sale/nu"
+            ? "Giảm giá đồ nữ"
+            : ""}
+        </h2>
 
+        <div className="flex justify-between items-center flex-wrap mb-[35px]">
           <button
-            className="px-2 py-2 border border-black text-[0.85rem] text-black"
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block p-2 outline-0"
             onClick={toggleAdvancedSearch}
           >
-            Bộ lọc & Sắp xếp
+            <span className="flex gap-2 items-center text-[0.9rem] font-medium">
+              <VscSettings size={20} /> Bộ lọc
+            </span>
           </button>
+
+          <select
+            onChange={handleSortChange}
+            value={searchParams.get("sort") ?? ""}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block p-2 outline-0"
+          >
+            {sortArray.map((item, index) => (
+              <option value={item.sort} key={index}>
+                {item.name}
+              </option>
+            ))}
+          </select>
         </div>
 
         <AdvancedSearch
@@ -161,13 +200,6 @@ function ProductList({ category, products, isLoading }: Props) {
                           %
                         </p>
                       )}
-
-                      {product.createdAt &&
-                        checkNewProduct(product.createdAt) && (
-                          <p className="uppercase text-[0.75rem] py-1 px-1.5 bg-white">
-                            Hàng mới
-                          </p>
-                        )}
                     </div>
 
                     <div className="absolute top-[12px] right-[10px] z-[3] font-semibold text-center text-black">

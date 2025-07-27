@@ -13,14 +13,6 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const handleSort = (sortValue: string) => {
-    const params = new URLSearchParams(searchParams.toString());
-    params.set("sort", sortValue);
-    params.set("page", "1");
-
-    router.push(`${pathname}?${params.toString()}`);
-  };
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -54,8 +46,8 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
   return (
     <>
       <div
-        className={`fixed top-0 right-0 w-[320px] h-full overflow-y-scroll overflow-x-hidden bg-white z-[25] transform transition-transform duration-300 ease-in-out ${
-          isOpen ? "translate-x-[0px]" : "translate-x-[320px]"
+        className={`fixed top-0 left-0 w-[320px] h-full overflow-y-scroll overflow-x-hidden bg-white z-[25] transform transition-transform duration-300 ease-in-out ${
+          isOpen ? "translate-x-[0px]" : "translate-x-[-320px]"
         }`}
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
@@ -66,50 +58,35 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
           </button>
         </div>
 
-        <form action="" onSubmit={handleSubmit}>
-          <div>
-            <div className="flex items-center justify-between p-3.5 border-t border-gray-200">
-              <h2 className="block font-semibold text-[1rem] uppercase">
-                Sắp xếp theo
-              </h2>
-              <IoIosArrowDown size={18} />
+        <div className=" p-3.5 border-t border-gray-200">
+          <h2 className="block font-semibold text-[1rem] mb-2.5">
+            Bộ lọc đã chọn
+          </h2>
+          <div className="flex items-center flex-wrap gap-3">
+            <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
+              <button>
+                <HiMiniXMark size={18} color="black" />
+              </button>
+              <span className="text-[0.9rem]">Bán chạy</span>
             </div>
 
-            <div className="flex flex-col">
-              <button
-                type="button"
-                onClick={() => handleSort("price-asc")}
-                className="uppercase text-[0.9rem] p-3.5 border-t border-gray-300 text-left"
-              >
-                Giá (thấp-cao)
+            <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
+              <button>
+                <HiMiniXMark size={18} color="black" />
               </button>
+              <span className="text-[0.9rem]">Đang giảm giá</span>
+            </div>
 
-              <button
-                type="button"
-                onClick={() => handleSort("price-desc")}
-                className="uppercase text-[0.9rem] p-3.5 border-t border-gray-300 text-left"
-              >
-                Giá (cao-thấp)
+            <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
+              <button>
+                <HiMiniXMark size={18} color="black" />
               </button>
-
-              <button
-                type="button"
-                onClick={() => handleSort("newest")}
-                className="uppercase text-[0.9rem] p-3.5 border-t border-gray-300 text-left"
-              >
-                Mới nhất
-              </button>
-
-              <button
-                type="button"
-                onClick={() => handleSort("bestseller")}
-                className="uppercase text-[0.9rem] p-3.5 border-t border-gray-300 text-left"
-              >
-                Bán chạy nhất
-              </button>
+              <span className="text-[0.9rem]">Áo sơ mi</span>
             </div>
           </div>
+        </div>
 
+        <form action="" onSubmit={handleSubmit}>
           <div>
             <div className="flex items-center justify-between p-3.5 border-t border-gray-200">
               <h2 className="block font-semibold text-[1rem] uppercase">Giá</h2>

@@ -165,13 +165,13 @@ function OrderHistory() {
                       <Image
                         Src={"/assets/other/empty-order.png"}
                         Alt={""}
-                        ClassName={"w-[130px]"}
+                        ClassName={"w-[120px]"}
                         loadingType="eager"
                       />
                     </div>
 
                     <div className="flex justify-center flex-col gap-3 items-center text-center">
-                      <h2 className="text-[1.1rem] font-semibold">
+                      <h2 className="text-[1.1rem] font-medium">
                         Không có đơn hàng nào
                       </h2>
                     </div>

@@ -63,7 +63,7 @@ function OrderDetail() {
                 </div>
 
                 <Link href={"/order"} className="text-center">
-                  <span className="flex items-center font-semibold text-[0.95rem] text-gray-400">
+                  <span className="flex items-center font-semibold text-[0.95rem] text-gray-500">
                     <RiArrowLeftSLine size={20} /> Trở về
                   </span>
                 </Link>

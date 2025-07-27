@@ -63,14 +63,6 @@ function ProductSlider({ title, products }: Props) {
     mutate(undefined, true);
   };
 
-  function checkNewProduct(createdAt: string): boolean {
-    const createdDate = new Date(createdAt);
-    const now = new Date();
-    const checkDays =
-      (now.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24);
-    return checkDays <= 14;
-  }
-
   return (
     <>
       {products.length > 0 && (
@@ -123,13 +115,6 @@ function ProductSlider({ title, products }: Props) {
                             %
                           </p>
                         )}
-
-                        {product.createdAt &&
-                          checkNewProduct(product.createdAt) && (
-                            <p className="uppercase text-[0.75rem] py-1 px-1.5 bg-white">
-                              Hàng mới
-                            </p>
-                          )}
                       </div>
 
                       <div className="absolute top-[12px] right-[10px] z-[3] font-semibold text-center text-black">

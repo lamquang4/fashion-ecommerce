@@ -123,8 +123,8 @@ function AddressInfo() {
                       </div>
 
                       <div className="flex justify-center flex-col gap-3 items-center text-center">
-                        <h2 className="text-[1.1rem] font-semibold">
-                          Không có đơn hàng nào
+                        <h2 className="text-[1.1rem] font-medium">
+                          Không có địa chỉ nào
                         </h2>
                       </div>
                     </div>
