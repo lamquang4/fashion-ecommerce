@@ -12,13 +12,6 @@ export async function GET(req: NextRequest) {
 
     const admin = await User.findById(userId);
 
-    if (!admin) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy quản trị viên" },
-        { status: 404 }
-      );
-    }
-
     return NextResponse.json(admin);
   } catch (err) {
     return NextResponse.json(
