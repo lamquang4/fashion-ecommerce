@@ -16,8 +16,9 @@ export async function GET(
     const limit = 12;
     const skip = (page - 1) * limit;
 
-    const min = parseFloat(searchParams.get("min") || "0");
-    const max = parseFloat(searchParams.get("max") || "1000000000");
+    const min = parseInt(searchParams.get("min") || "");
+    const max = parseInt(searchParams.get("max") || "");
+    const colors = searchParams.getAll("color");
     const sort = searchParams.get("sort") || "";
 
     let categoryQuery: any = { status: 1 };
@@ -52,16 +53,6 @@ export async function GET(
       {
         $addFields: {
           finalPrice: { $subtract: ["$price", "$discount"] },
-        },
-      },
-      {
-        $match: {
-          $expr: {
-            $and: [
-              { $gte: ["$finalPrice", min] },
-              { $lte: ["$finalPrice", max] },
-            ],
-          },
         },
       },
       {
@@ -122,6 +113,35 @@ export async function GET(
         },
       },
     ];
+
+    if (!isNaN(min) && !isNaN(max)) {
+      pipeline.push({
+        $match: {
+          $expr: {
+            $and: [
+              { $gte: ["$finalPrice", min] },
+              { $lte: ["$finalPrice", max] },
+            ],
+          },
+        },
+      });
+    } else if (!isNaN(min)) {
+      pipeline.push({
+        $match: {
+          $expr: {
+            $gte: ["$finalPrice", min],
+          },
+        },
+      });
+    } else if (!isNaN(max)) {
+      pipeline.push({
+        $match: {
+          $expr: {
+            $lte: ["$finalPrice", max],
+          },
+        },
+      });
+    }
 
     if (sort === "price-asc") {
       pipeline.push({ $sort: { finalPrice: 1 } });
@@ -191,6 +211,14 @@ export async function GET(
           },
         }
       );
+    }
+
+    if (colors.length > 0) {
+      pipeline.push({
+        $match: {
+          "variants.color.namecolor": { $in: colors },
+        },
+      });
     }
 
     pipeline.push({ $skip: skip }, { $limit: limit });

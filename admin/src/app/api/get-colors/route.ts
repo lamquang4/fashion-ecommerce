@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
     }
 
     const [colors, total] = await Promise.all([
-      Color.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
+      Color.find(query).skip(skip).limit(limit),
       Color.countDocuments(query),
     ]);
     return NextResponse.json({

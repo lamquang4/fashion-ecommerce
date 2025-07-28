@@ -19,6 +19,7 @@ export default function useGetProductsSlug(slug: string) {
   const min = searchParams.get("min");
   const max = searchParams.get("max");
   const sort = searchParams.get("sort");
+  const color = searchParams.get("color");
 
   const query = new URLSearchParams();
 
@@ -27,6 +28,7 @@ export default function useGetProductsSlug(slug: string) {
   if (min) query.set("min", min);
   if (max) query.set("max", max);
   if (sort) query.set("sort", sort);
+  if (color) query.set("color", color);
 
   const url = `/api/get-products/${slug}?${query.toString()}`;
 

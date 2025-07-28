@@ -4,11 +4,13 @@ import { IoIosArrowDown } from "react-icons/io";
 import { FaArrowRightLong } from "react-icons/fa6";
 import Overplay from "./Overplay";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import useGetColors from "@/hooks/useGetColors";
 type AdvancedSearchProps = {
   isOpen: boolean;
   toggleMenu: () => void;
 };
 function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
+  const { colors } = useGetColors();
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -22,11 +24,10 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
     const minRaw = formData.get("min") as string;
     const maxRaw = formData.get("max") as string;
 
-    const min = parseInt(minRaw || "0", 10);
-    const max = parseInt(maxRaw || "10000000", 10);
+    const min = parseInt(minRaw, 10);
+    const max = parseInt(maxRaw, 10);
 
     const params = new URLSearchParams(searchParams.toString());
-    params.set("page", "1");
 
     if (!isNaN(min) && !isNaN(max) && min > max) {
       params.delete("min");
@@ -39,9 +40,25 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
       else params.delete("max");
     }
 
+    const colorValues = formData.getAll("color[]") as string[];
+
+    params.delete("color");
+
+    if (colorValues.length > 0) {
+      colorValues.forEach((color) => params.append("color", color));
+    }
+
     router.push(`${pathname}?${params.toString()}`);
     toggleMenu();
   };
+
+  function checkColor(code: string) {
+    const r = parseInt(code.slice(1, 3), 16);
+    const g = parseInt(code.slice(3, 5), 16);
+    const b = parseInt(code.slice(5, 7), 16);
+    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
+    return brightness < 128;
+  }
 
   return (
     <>
@@ -51,49 +68,124 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
         }`}
         style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        <div className="sticky top-0 overflow-hidden p-3.5 bg-white z-[25] flex justify-between items-center">
-          <h2 className="text-[1.2rem] font-semibold">Bộ lọc & Sắp xếp</h2>
+        <div className="sticky top-0 overflow-hidden p-4 bg-white z-[25] flex justify-between items-center border-b border-gray-200">
+          <h2 className="text-[1.25rem] font-semibold">Bộ lọc</h2>
           <button onClick={toggleMenu}>
             <HiMiniXMark size={30} color="black" />
           </button>
         </div>
 
-        <div className=" p-3.5 border-t border-gray-200">
-          <h2 className="block font-semibold text-[1rem] mb-2.5">
-            Bộ lọc đã chọn
-          </h2>
-          <div className="flex items-center flex-wrap gap-3">
-            <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
-              <button>
-                <HiMiniXMark size={18} color="black" />
-              </button>
-              <span className="text-[0.9rem]">Bán chạy</span>
-            </div>
+        {(searchParams.get("min") ||
+          searchParams.get("max") ||
+          searchParams.get("color")) && (
+          <div className="p-4 border-b border-gray-200">
+            <h2 className="block font-semibold text-[1rem] mb-2.5">
+              Bộ lọc đã chọn
+            </h2>
+            <div className="flex items-center flex-wrap gap-3">
+              {searchParams.get("min") && searchParams.get("max") && (
+                <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
+                  <button
+                    onClick={() => {
+                      const params = new URLSearchParams(
+                        searchParams.toString()
+                      );
+                      params.delete("min");
+                      params.delete("max");
+                      router.push(`${pathname}?${params.toString()}`);
+                    }}
+                  >
+                    <HiMiniXMark size={20} color="black" />
+                  </button>
+                  <span className="text-[0.9rem]">
+                    {searchParams.get("min") &&
+                      Number(searchParams.get("min")).toLocaleString("vi-VN") +
+                        "₫"}
+                    {" - "}
+                    {searchParams.get("max") &&
+                      Number(searchParams.get("max")).toLocaleString("vi-VN") +
+                        "₫"}
+                  </span>
+                </div>
+              )}
 
-            <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
-              <button>
-                <HiMiniXMark size={18} color="black" />
-              </button>
-              <span className="text-[0.9rem]">Đang giảm giá</span>
-            </div>
+              {searchParams.get("min") && (
+                <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
+                  <button
+                    onClick={() => {
+                      const params = new URLSearchParams(
+                        searchParams.toString()
+                      );
+                      params.delete("min");
+                      router.push(`${pathname}?${params.toString()}`);
+                    }}
+                  >
+                    <HiMiniXMark size={20} color="black" />
+                  </button>
+                  <span className="text-[0.9rem]">
+                    {searchParams.get("min") &&
+                      Number(searchParams.get("min")).toLocaleString("vi-VN") +
+                        "₫ trở lên"}
+                  </span>
+                </div>
+              )}
 
-            <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
-              <button>
-                <HiMiniXMark size={18} color="black" />
-              </button>
-              <span className="text-[0.9rem]">Áo sơ mi</span>
+              {searchParams.get("max") && (
+                <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
+                  <button
+                    onClick={() => {
+                      const params = new URLSearchParams(
+                        searchParams.toString()
+                      );
+                      params.delete("max");
+                      router.push(`${pathname}?${params.toString()}`);
+                    }}
+                  >
+                    <HiMiniXMark size={20} color="black" />
+                  </button>
+                  <span className="text-[0.9rem]">
+                    {searchParams.get("max") &&
+                      Number(searchParams.get("max")).toLocaleString("vi-VN") +
+                        "₫ trở xuống"}
+                  </span>
+                </div>
+              )}
+
+              {searchParams.getAll("color").map((color) => (
+                <div
+                  key={color}
+                  className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer"
+                >
+                  <button
+                    onClick={() => {
+                      const params = new URLSearchParams(
+                        searchParams.toString()
+                      );
+                      const updatedColors = params
+                        .getAll("color")
+                        .filter((c) => c !== color);
+                      params.delete("color");
+                      updatedColors.forEach((c) => params.append("color", c));
+                      router.push(`${pathname}?${params.toString()}`);
+                    }}
+                  >
+                    <HiMiniXMark size={20} color="black" />
+                  </button>
+                  <span className="text-[0.9rem]">{color}</span>
+                </div>
+              ))}
             </div>
           </div>
-        </div>
+        )}
 
         <form action="" onSubmit={handleSubmit}>
-          <div>
-            <div className="flex items-center justify-between p-3.5 border-t border-gray-200">
+          <div className="border-b border-gray-200 p-4 flex flex-col gap-4">
+            <div className="flex items-center justify-between">
               <h2 className="block font-semibold text-[1rem] uppercase">Giá</h2>
               <IoIosArrowDown size={18} />
             </div>
 
-            <div className="w-full flex justify-center items-center gap-[10px] p-3.5 border-t border-gray-200">
+            <div className="w-full flex justify-center items-center gap-[10px]">
               <div className="border border-gray-300 p-2.5 w-full">
                 <label className="text-sm text-gray-600 block mb-1">
                   Tối thiểu
@@ -128,7 +220,43 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
             </div>
           </div>
 
-          <div className="fixed bottom-0 overflow-hidden bg-white z-[25] p-3.5 borer-t border-gray-200 flex justify-center w-full">
+          <div className="border-b border-gray-200 p-4 flex flex-col gap-4">
+            <div className="flex items-center justify-between">
+              <h2 className="block font-semibold text-[1rem] uppercase">
+                Màu sắc
+              </h2>
+              <IoIosArrowDown size={18} />
+            </div>
+
+            <div className="w-full flex flex-wrap justify-between gap-2.5">
+              {colors.map((color, index) => {
+                const checked = checkColor(color.codecolor);
+                const tickColor = checked ? "text-white" : "text-black";
+                return (
+                  <div className="flex gap-2.5 items-center" key={index}>
+                    <input
+                      type="checkbox"
+                      className={`peer relative w-[22px] h-[22px] appearance-none border border-gray-300 cursor-pointer 
+              flex items-center justify-center
+              checked:after:content-['✔'] checked:after:absolute 
+              checked:after:inset-0 checked:after:flex checked:after:items-center 
+              checked:after:justify-center checked:after:text-[0.9rem] 
+              checked:after:font-bold checked:after:${tickColor}`}
+                      name="color[]"
+                      id={`color-${index}`}
+                      value={color.namecolor}
+                      style={{ backgroundColor: color.codecolor }}
+                    />
+                    <label className="text-[0.9rem]" htmlFor={`color-${index}`}>
+                      {color.namecolor}
+                    </label>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+
+          <div className="fixed bottom-0 overflow-hidden bg-white z-[25] p-4 borer-t border-gray-200 flex justify-center w-full">
             <button
               type="submit"
               className="bg-black text-white px-[18px] py-[10px] text-[0.95rem] flex justify-center items-center gap-2.5 font-semibold"

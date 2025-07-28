@@ -18,9 +18,10 @@ export async function GET(
     const limit = 12;
     const skip = (page - 1) * limit;
 
-    const min = parseFloat(searchParams.get("min") || "0");
-    const max = parseFloat(searchParams.get("max") || "1000000000");
-    const sort = searchParams.get("sort") || "";
+    const min = parseInt(searchParams.get("min") || "");
+    const max = parseInt(searchParams.get("max") || "");
+    const colors = searchParams.getAll("color");
+    const sort = searchParams.get("sort");
 
     let categoryQuery: any = { status: 1 };
     let categoryIds: any[] = [];
@@ -53,16 +54,6 @@ export async function GET(
       {
         $addFields: {
           finalPrice: { $subtract: ["$price", "$discount"] },
-        },
-      },
-      {
-        $match: {
-          $expr: {
-            $and: [
-              { $gte: ["$finalPrice", min] },
-              { $lte: ["$finalPrice", max] },
-            ],
-          },
         },
       },
       {
@@ -124,10 +115,111 @@ export async function GET(
       },
     ];
 
+    if (!isNaN(min) && !isNaN(max)) {
+      pipeline.push({
+        $match: {
+          $expr: {
+            $and: [
+              { $gte: ["$finalPrice", min] },
+              { $lte: ["$finalPrice", max] },
+            ],
+          },
+        },
+      });
+    } else if (!isNaN(min)) {
+      pipeline.push({
+        $match: {
+          $expr: {
+            $gte: ["$finalPrice", min],
+          },
+        },
+      });
+    } else if (!isNaN(max)) {
+      pipeline.push({
+        $match: {
+          $expr: {
+            $lte: ["$finalPrice", max],
+          },
+        },
+      });
+    }
+
     if (sort === "price-asc") {
       pipeline.push({ $sort: { finalPrice: 1 } });
     } else if (sort === "price-desc") {
       pipeline.push({ $sort: { finalPrice: -1 } });
+    } else if (sort === "bestseller") {
+      pipeline.push(
+        {
+          $lookup: {
+            from: "orderdetails",
+            let: { productId: "$_id" },
+            pipeline: [
+              {
+                $unwind: "$items",
+              },
+              {
+                $match: {
+                  $expr: { $eq: ["$items.product", "$$productId"] },
+                },
+              },
+              {
+                $lookup: {
+                  from: "orders",
+                  localField: "order",
+                  foreignField: "_id",
+                  as: "order",
+                },
+              },
+              {
+                $unwind: "$order",
+              },
+              {
+                $match: {
+                  "order.status": 3,
+                },
+              },
+              {
+                $group: {
+                  _id: "$items.product",
+                  totalSold: { $sum: "$items.quantity" },
+                },
+              },
+            ],
+            as: "sold",
+          },
+        },
+        {
+          $addFields: {
+            totalSold: {
+              $ifNull: [{ $arrayElemAt: ["$sold.totalSold", 0] }, 0],
+            },
+          },
+        },
+        {
+          $match: {
+            totalSold: { $gt: 0 },
+          },
+        },
+        {
+          $sort: {
+            totalSold: -1,
+          },
+        },
+        {
+          $project: {
+            sold: 0,
+          },
+        }
+      );
+    }
+
+    if (colors.length > 0) {
+      pipeline.push({
+        $match: {
+          "variants.color.namecolor": { $in: colors },
+        },
+      });
     }
 
     pipeline.push({ $skip: skip }, { $limit: limit });
