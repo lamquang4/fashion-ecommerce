@@ -20,11 +20,10 @@ export async function GET(req: NextRequest) {
       matchCondition = { _id: new mongoose.Types.ObjectId(cartId) };
     } else if (userId && mongoose.Types.ObjectId.isValid(userId)) {
       matchCondition = { user: new mongoose.Types.ObjectId(userId) };
-    } else {
-      return NextResponse.json(
-        { msg: "Không tìm thấy giỏ hàng" },
-        { status: 404 }
-      );
+    }
+
+    if (!matchCondition) {
+      return NextResponse.json({ productsInCart: [] });
     }
 
     const cartData = await Cart.aggregate([
@@ -122,7 +121,7 @@ export async function GET(req: NextRequest) {
       },
     ]);
 
-    if (!cartData || cartData.length === 0) {
+    if (!cartData) {
       return NextResponse.json(
         { msg: "Không tìm thấy giỏ hàng" },
         { status: 404 }

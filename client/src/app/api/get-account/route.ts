@@ -12,13 +12,6 @@ export async function GET(req: NextRequest) {
 
     const customer = await User.findById(userId);
 
-    if (!customer) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy khách hàng" },
-        { status: 404 }
-      );
-    }
-
     return NextResponse.json(customer);
   } catch (err) {
     return NextResponse.json(

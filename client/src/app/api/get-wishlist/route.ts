@@ -20,11 +20,10 @@ export async function GET(req: NextRequest) {
       matchCondition = { _id: new mongoose.Types.ObjectId(wishlistId) };
     } else if (userId && mongoose.Types.ObjectId.isValid(userId)) {
       matchCondition = { user: new mongoose.Types.ObjectId(userId) };
-    } else {
-      return NextResponse.json(
-        { msg: "Không tìm thấy yêu thích" },
-        { status: 404 }
-      );
+    }
+
+    if (!matchCondition) {
+      return NextResponse.json({ productsInWishlist: [] });
     }
 
     const wishlistData = await Wishlist.aggregate([
@@ -85,7 +84,7 @@ export async function GET(req: NextRequest) {
       },
     ]);
 
-    if (!wishlistData || wishlistData.length === 0) {
+    if (!wishlistData) {
       return NextResponse.json(
         { msg: "Không tìm thấy yêu thích" },
         { status: 404 }

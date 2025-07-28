@@ -11,10 +11,6 @@ export async function GET(req: NextRequest) {
     const session = await getServerSession(options);
     const userId = session?.user?.id;
 
-    if (!userId) {
-      return NextResponse.json({ msg: "Chưa đăng nhập" }, { status: 401 });
-    }
-
     const coupons = await Coupon.aggregate([
       {
         $match: {
@@ -52,14 +48,13 @@ export async function GET(req: NextRequest) {
       },
       {
         $project: {
-          usedOrders: 0, 
+          usedOrders: 0,
         },
       },
     ]);
 
     return NextResponse.json({ coupons });
   } catch (err) {
-    console.error("Error fetching coupons:", err);
-    return NextResponse.json({ err, msg: "Lỗi" }, { status: 400 });
+    return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
   }
 }
