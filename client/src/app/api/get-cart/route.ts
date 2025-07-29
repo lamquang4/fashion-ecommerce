@@ -16,17 +16,21 @@ export async function GET(req: NextRequest) {
 
     let matchCondition: any = null;
 
-    if (cartId && mongoose.Types.ObjectId.isValid(cartId)) {
+    if (cartId) {
       matchCondition = { _id: new mongoose.Types.ObjectId(cartId) };
-    } else if (userId && mongoose.Types.ObjectId.isValid(userId)) {
+    } else if (userId) {
       matchCondition = { user: new mongoose.Types.ObjectId(userId) };
     }
 
     if (!matchCondition) {
-      return NextResponse.json({ productsInCart: [] });
+      return NextResponse.json({
+        _id: null,
+        user: null,
+        productsInCart: [],
+      });
     }
 
-    const cartData = await Cart.aggregate([
+    const cart = await Cart.aggregate([
       { $match: matchCondition },
 
       { $unwind: "$items" },
@@ -121,14 +125,15 @@ export async function GET(req: NextRequest) {
       },
     ]);
 
-    if (!cartData) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy giỏ hàng" },
-        { status: 404 }
-      );
+    if (!cart || cart.length === 0) {
+      return NextResponse.json({
+        _id: null,
+        user: null,
+        productsInCart: [],
+      });
     }
 
-    return NextResponse.json(cartData[0]);
+    return NextResponse.json(cart[0]);
   } catch (err) {
     return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
   }

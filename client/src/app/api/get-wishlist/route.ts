@@ -16,17 +16,21 @@ export async function GET(req: NextRequest) {
 
     let matchCondition: any = null;
 
-    if (wishlistId && mongoose.Types.ObjectId.isValid(wishlistId)) {
+    if (wishlistId) {
       matchCondition = { _id: new mongoose.Types.ObjectId(wishlistId) };
-    } else if (userId && mongoose.Types.ObjectId.isValid(userId)) {
+    } else if (userId) {
       matchCondition = { user: new mongoose.Types.ObjectId(userId) };
     }
 
     if (!matchCondition) {
-      return NextResponse.json({ productsInWishlist: [] });
+      return NextResponse.json({
+        _id: null,
+        user: null,
+        productsInWishlist: [],
+      });
     }
 
-    const wishlistData = await Wishlist.aggregate([
+    const wishlist = await Wishlist.aggregate([
       { $match: matchCondition },
       { $unwind: "$items" },
 
@@ -84,17 +88,16 @@ export async function GET(req: NextRequest) {
       },
     ]);
 
-    if (!wishlistData) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy yêu thích" },
-        { status: 404 }
-      );
+    if (!wishlist || wishlist.length === 0) {
+      return NextResponse.json({
+        _id: null,
+        user: null,
+        productsInWishlist: [],
+      });
     }
 
-    return NextResponse.json(wishlistData[0]);
+    return NextResponse.json(wishlist[0]);
   } catch (err) {
-    console.log(err);
-
     return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
   }
 }
