@@ -155,6 +155,9 @@ export async function GET(req: NextRequest) {
             sold: 0,
           },
         },
+        {
+          $sort: { createdAt: -1 },
+        },
         { $skip: skip },
         { $limit: limit },
       ]),

@@ -64,11 +64,11 @@ export async function GET(req: NextRequest) {
             products: 0, // không lấy products
           },
         },
+        {
+          $sort: { createdAt: -1 },
+        },
         { $skip: skip },
         { $limit: limit },
-        {
-          $sort: { gender: -1 },
-        },
       ]),
       Category.countDocuments(query),
     ]);

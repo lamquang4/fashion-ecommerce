@@ -12,12 +12,29 @@ import useGetOrders from "@/hooks/useGetOrders";
 import useGetCustomers from "@/hooks/useGetCustomers";
 import Loading from "./Loading";
 import useGetTop10Products from "@/hooks/useGetTop10Products";
+import { useState } from "react";
+import useGetRevenues from "@/hooks/useGetRevenues";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 function Dashboard() {
+  const [year, setYear] = useState<number>(2025);
+  const { revenues } = useGetRevenues(year);
   const { orders, totalRevenue, totalSold } = useGetOrders();
   const { customers } = useGetCustomers();
   const { topProducts, isLoading } = useGetTop10Products();
+
+  console.log(revenues);
+
+  const monthlyRevenueData = Array.from({ length: 12 }, (_, i) => {
+    const monthData = revenues?.revenues?.find((r) => r.month === i + 1);
+    return monthData ? monthData.totalRevenue : 0;
+  });
+
+  const monthlySoldData = Array.from({ length: 12 }, (_, i) => {
+    const monthData = revenues?.revenues?.find((r) => r.month === i + 1);
+    return monthData ? monthData.totalQuantity : 0;
+  });
+
   const array = [
     {
       title: "Doanh thu",
@@ -41,8 +58,6 @@ function Dashboard() {
     },
   ];
 
-  console.log(topProducts);
-
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -51,37 +66,26 @@ function Dashboard() {
 
       <div className="bg-[#f1f4f9]">
         <div className="px-[1.2rem] pb-[1.3rem]">
-          <form action="">
-            <div className="flex gap-[15px] flex-wrap">
-              <div className="relative flex gap-1.5 items-center">
-                <label htmlFor="" className="text-[0.9rem] text-black">
-                  Từ:
-                </label>
-                <input
-                  name="startDate"
-                  type="date"
-                  className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400 text-gray-900"
-                />
-              </div>
-
-              <div className="relative flex gap-1.5 items-center">
-                <label htmlFor="" className="text-[0.9rem] text-black">
-                  Đến:
-                </label>
-                <input
-                  name="endDate"
-                  type="date"
-                  className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400 text-gray-900"
-                />
-              </div>
-
-              <div>
-                <button className="p-[6px_10px] text-[0.9rem] bg-[#22BAA0] text-white">
-                  Tìm kiếm
-                </button>
-              </div>
-            </div>
-          </form>
+          <div className="flex items-center gap-2">
+            <label htmlFor="" className="text-[0.9rem] text-black">
+              Năm
+            </label>
+            <select
+              onChange={(e) => setYear(Number(e.target.value))}
+              value={year}
+              className="border border-gray-300 p-[6px_10px] text-[0.9rem] bg-white outline-none focus:border-gray-400 text-gray-900"
+            >
+              <option value={2025}>{2025}</option>
+              {Array.from({ length: 2 }, (_, i) => {
+                const year = new Date().getFullYear() + i + 1;
+                return (
+                  <option key={year} value={year}>
+                    {year}
+                  </option>
+                );
+              })}
+            </select>
+          </div>
         </div>
 
         <Chart
@@ -157,17 +161,12 @@ function Dashboard() {
             {
               name: "Doanh thu",
               type: "column",
-              data: [
-                30200000, 49520000, 35250000, 54000000, 67800000, 75800000,
-                86800000, 67800000, 35080000, 58780000, 67800000, 75900000,
-              ],
+              data: monthlyRevenueData,
             },
             {
               name: "Số lượng bán ra",
               type: "line",
-              data: [
-                120, 200, 150, 230, 300, 350, 390, 310, 140, 260, 280, 360,
-              ],
+              data: monthlySoldData,
             },
           ]}
           type="line"

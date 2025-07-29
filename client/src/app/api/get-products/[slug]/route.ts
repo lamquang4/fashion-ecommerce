@@ -221,7 +221,13 @@ export async function GET(
       });
     }
 
-    pipeline.push({ $skip: skip }, { $limit: limit });
+    pipeline.push(
+      {
+        $sort: { createdAt: -1 },
+      },
+      { $skip: skip },
+      { $limit: limit }
+    );
 
     const [products, total] = await Promise.all([
       Product.aggregate(pipeline),

@@ -102,7 +102,6 @@ function Order() {
     const end = formData.get("end") as string;
 
     const params = new URLSearchParams(searchParams.toString());
-    params.set("page", "1");
 
     if (start) params.set("start", start);
     else params.delete("start");

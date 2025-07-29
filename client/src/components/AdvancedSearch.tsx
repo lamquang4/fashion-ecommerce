@@ -52,14 +52,6 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
     toggleMenu();
   };
 
-  function checkColor(code: string) {
-    const r = parseInt(code.slice(1, 3), 16);
-    const g = parseInt(code.slice(3, 5), 16);
-    const b = parseInt(code.slice(5, 7), 16);
-    const brightness = (r * 299 + g * 587 + b * 114) / 1000;
-    return brightness < 128;
-  }
-
   return (
     <>
       <div
@@ -230,8 +222,6 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
 
             <div className="w-full flex flex-wrap justify-between gap-2.5">
               {colors.map((color, index) => {
-                const checked = checkColor(color.codecolor);
-                const tickColor = checked ? "text-white" : "text-black";
                 return (
                   <div className="flex gap-2.5 items-center" key={index}>
                     <input
@@ -241,7 +231,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
               checked:after:content-['✔'] checked:after:absolute 
               checked:after:inset-0 checked:after:flex checked:after:items-center 
               checked:after:justify-center checked:after:text-[0.9rem] 
-              checked:after:font-bold checked:after:${tickColor}`}
+              checked:after:font-bold checked:after:text-[#ffa585]`}
                       name="color[]"
                       id={`color-${index}`}
                       value={color.namecolor}

@@ -155,3 +155,9 @@ export interface OrderFull {
   total: number;
   createdAt?: string;
 }
+
+export interface Revenue {
+  month: number;
+  totalRevenue: number;
+  totalQuantity: number;
+}

@@ -77,6 +77,9 @@ export async function GET(
           as: "variants",
         },
       },
+      {
+        $sort: { createdAt: -1 },
+      },
       { $limit: limit },
     ]);
 

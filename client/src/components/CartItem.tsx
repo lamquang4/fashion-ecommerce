@@ -336,7 +336,7 @@ function CartItem() {
 
                   <Link
                     href={"/collection/all"}
-                    className="text-[0.95rem] border border-black rounded-md font-medium px-2 py-2.5 hover:bg-black hover:text-white"
+                    className="text-[0.95rem] border border-black rounded-md font-medium px-3 py-2 hover:bg-black hover:text-white"
                   >
                     Mua sắm ngay
                   </Link>

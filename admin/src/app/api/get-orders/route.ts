@@ -37,7 +37,7 @@ export async function GET(req: NextRequest) {
       totalRevenue,
       totalSold,
     ] = await Promise.all([
-      Order.find(query).skip(skip).limit(limit),
+      Order.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
       Order.countDocuments(query),
       Order.countDocuments({ status: 0 }),
       Order.countDocuments({ status: 3 }),

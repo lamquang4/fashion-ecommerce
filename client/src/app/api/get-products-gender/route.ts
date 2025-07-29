@@ -69,6 +69,9 @@ export async function GET(req: NextRequest) {
             as: "variants",
           },
         },
+        {
+          $sort: { createdAt: -1 },
+        },
         { $limit: limit },
       ]);
     };

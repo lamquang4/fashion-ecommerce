@@ -1,5 +1,5 @@
 "use client";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 interface Props {
   totalPages: number;
@@ -8,10 +8,15 @@ interface Props {
   totalItems: number;
 }
 function Pagination({ totalPages, currentPage, limit, totalItems }: Props) {
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
   const router = useRouter();
 
   const goToPage = (page: number) => {
-    router.push(`?page=${page}&limit=${limit}`);
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", page.toString());
+
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   const getPageNumbers = () => {
