@@ -70,6 +70,12 @@ function EditAdmin() {
         password: data.password.trim(),
         role: Number(data.role),
       });
+
+      if (session?.user.id === id) {
+        toast(
+          "Tài khoản hiện đang đăng nhập nên sẽ không thấy thông tin thay đổi chỉ khi đăng nhập lại!"
+        );
+      }
       toast.success("Cập nhật thành công!");
 
       setData((prev) => ({

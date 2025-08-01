@@ -35,6 +35,10 @@ export const options: NextAuthOptions = {
 
           return {
             id: user._id.toString(),
+            email: user.email,
+            fullname: user.fullname,
+            birthday: user.birthday,
+            phone: user.phone,
           };
         } catch (err: any) {
           throw new Error(err.message);
@@ -49,6 +53,10 @@ export const options: NextAuthOptions = {
     async jwt({ token, user }) {
       if (user) {
         token.id = user.id;
+        token.email = user.email;
+        token.fullname = user.fullname;
+        token.birthday = user.birthday;
+        token.phone = user.phone;
       }
       return token;
     },
@@ -56,6 +64,10 @@ export const options: NextAuthOptions = {
     async session({ session, token }) {
       if (token) {
         session.user.id = token.id;
+        session.user.email = token.email;
+        session.user.fullname = token.fullname;
+        session.user.birthday = token.birthday;
+        session.user.phone = token.phone;
       }
       return session;
     },

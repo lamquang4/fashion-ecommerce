@@ -7,6 +7,7 @@ import { NextRequest } from "next/server";
 import { options } from "../auth/[...nextauth]/options";
 import OrderDetail from "@/model/OrderDetail";
 import Inventory from "@/model/Inventory";
+
 export async function POST(req: NextRequest) {
   try {
     await connectMongoDB();

@@ -34,7 +34,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
       items: [
         {
           icon: <MdOutlineDashboard size={20} />,
-          label: "Bảng điều khiển",
+          label: "Thống kê",
           path: "/dashboard",
         },
         {

@@ -12,6 +12,7 @@ function AddressInfo() {
   const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
   const { addresses, isLoading, mutate } = useGetAddresses();
   const { deleteAddress } = useDeleteAddress();
+  
   const toggleAddressModal = () => {
     setOpenAddressModal((prev) => !prev);
     setAddressId("");

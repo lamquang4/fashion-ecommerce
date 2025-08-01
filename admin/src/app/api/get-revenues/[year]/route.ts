@@ -9,15 +9,17 @@ export async function GET(
 ) {
   try {
     await connectMongoDB();
-    const year = await parseInt(params.year);
+    const { year } = await params;
+
+    const yearNumber = parseInt(year);
 
     const revenues = await Order.aggregate([
       {
         $match: {
           status: 3,
           createdAt: {
-            $gte: new Date(`${year}-01-01T00:00:00.000Z`),
-            $lt: new Date(`${year + 1}-01-01T00:00:00.000Z`),
+            $gte: new Date(`${yearNumber}-01-01T00:00:00.000Z`),
+            $lt: new Date(`${yearNumber + 1}-01-01T00:00:00.000Z`),
           },
         },
       },

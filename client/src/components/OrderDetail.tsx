@@ -70,7 +70,7 @@ function OrderDetail() {
               </div>
 
               {order?.status !== 4 ? (
-                <div className="relative flex items-center justify-between py-[30px] px-[15px] sm:px-[20px] border-b border-gray-300">
+                <div className="relative gap-y-5 grid grid-cols-2 md:grid-cols-4 py-[30px] px-[15px] sm:px-[20px] border-b border-gray-300">
                   {steps.map((step, index) => {
                     const isActive = order?.status! >= index;
                     return (
@@ -126,7 +126,7 @@ function OrderDetail() {
                 </span>
                 <span className="text-[0.95rem]">
                   Phương thức thanh toán:{" "}
-                  {order?.paymethod === 1 ? "MoMo" : "COD"}
+                  {order?.paymethod === 1 ? "Momo" : "COD"}
                 </span>
               </div>
 

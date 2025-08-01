@@ -23,7 +23,9 @@ function Dashboard() {
   const { customers } = useGetCustomers();
   const { topProducts, isLoading } = useGetTop10Products();
 
-  console.log(revenues);
+  const currentYear = new Date().getFullYear();
+  const startYear = 2025;
+  const endYear = currentYear + 2;
 
   const monthlyRevenueData = Array.from({ length: 12 }, (_, i) => {
     const monthData = revenues?.revenues?.find((r) => r.month === i + 1);
@@ -70,21 +72,22 @@ function Dashboard() {
             <label htmlFor="" className="text-[0.9rem] text-black">
               Năm
             </label>
-            <select
-              onChange={(e) => setYear(Number(e.target.value))}
-              value={year}
-              className="border border-gray-300 p-[6px_10px] text-[0.9rem] bg-white outline-none focus:border-gray-400 text-gray-900"
-            >
-              <option value={2025}>{2025}</option>
-              {Array.from({ length: 2 }, (_, i) => {
-                const year = new Date().getFullYear() + i + 1;
-                return (
-                  <option key={year} value={year}>
-                    {year}
-                  </option>
-                );
-              })}
-            </select>
+            {
+              <select
+                onChange={(e) => setYear(Number(e.target.value))}
+                value={year}
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] bg-white outline-none focus:border-gray-400 text-gray-900"
+              >
+                {Array.from({ length: endYear - startYear + 1 }, (_, i) => {
+                  const y = startYear + i;
+                  return (
+                    <option key={y} value={y}>
+                      {y}
+                    </option>
+                  );
+                })}
+              </select>
+            }
           </div>
         </div>
 
@@ -125,7 +128,7 @@ function Dashboard() {
               text: "Doanh thu & số lượng bán ra năm 2024",
               align: "left",
               style: {
-                fontSize: "16px",
+                fontSize: "18px",
                 fontWeight: "bold",
                 fontFamily: "Quicksand",
               },

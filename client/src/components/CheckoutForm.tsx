@@ -13,6 +13,8 @@ import useAddOrder from "@/hooks/useAddOrder";
 import toast from "react-hot-toast";
 import useGetCoupon from "@/hooks/useGetCoupon";
 import useDeleteCart from "@/hooks/useDeleteCart";
+import usePaymentMomo from "@/hooks/usePaymentMomo";
+import useStatusMomo from "@/hooks/useStatusMomo";
 
 function CheckoutForm() {
   const { provinces } = useGetProvinces();
@@ -31,6 +33,8 @@ function CheckoutForm() {
   const { addresses } = useGetAddresses();
   const { addOrder } = useAddOrder();
   const { deleteCart } = useDeleteCart();
+  const { createPaymentMomo } = usePaymentMomo();
+  const { checkPaymentStatusMomo } = useStatusMomo();
   const router = useRouter();
 
   const totalPrice =
@@ -167,6 +171,18 @@ function CheckoutForm() {
     });
 
     try {
+      if (paymethod === 1) {
+        const momoResponse = await createPaymentMomo({
+          total: finalTotal,
+          paymethod,
+        });
+
+        // localStorage.setItem("momoOrderId", momoResponse.orderId);
+
+        window.location.href = momoResponse.payUrl;
+
+        // trả về thanh toán thành công?   const res = await checkPaymentStatusMomo(momoResponse.orderId);
+      }
       await addOrder({
         fullname: data.fullname,
         phone: data.phone,
@@ -406,7 +422,7 @@ function CheckoutForm() {
                         />
                         <div>
                           <span className="font-medium text-[0.9rem]">
-                            Thanh toán MoMo
+                            Thanh toán Momo
                           </span>
                         </div>
                       </label>
