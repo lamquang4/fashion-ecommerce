@@ -58,7 +58,7 @@ function AddressInfo() {
 
               <div>
                 {isLoading ? (
-                  <Loading height={70} />
+                  <Loading height={60} size={50} color="black" />
                 ) : addresses.length > 0 ? (
                   addresses.map((address, index) => (
                     <div key={index}>

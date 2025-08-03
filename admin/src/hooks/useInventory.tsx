@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import toast from "react-hot-toast";
+import Swal from "sweetalert2";
 
 export const useInventory = () => {
   const [newVariants, setNewVariants] = useState<
@@ -75,7 +76,21 @@ export const useInventory = () => {
     setNewVariants(updated);
   };
 
-  const handleRemoveCurrentInventory = (blockIndex: number, index: number) => {
+  const handleRemoveCurrentInventory = async (
+    blockIndex: number,
+    index: number
+  ) => {
+    const result = await Swal.fire({
+      title: `Xác nhận xóa?`,
+      text: `Bạn có chắc muốn xóa không?`,
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonText: "Đồng ý",
+      cancelButtonText: "Hủy",
+    });
+
+    if (!result.isConfirmed) return;
+
     const updated = [...currentVariants];
 
     if (updated[blockIndex].inventories.length <= 1) return;
@@ -225,6 +240,24 @@ export const useInventory = () => {
     setCurrentVariants(updated);
   };
 
+  const handleSortNewInventory = (
+    blockIndex: number,
+    newList: { size: string; quantity: number }[]
+  ) => {
+    const updated = [...newVariants];
+    updated[blockIndex].inventories = newList;
+    setNewVariants(updated);
+  };
+
+  const handleSortCurrentInventory = (
+    blockIndex: number,
+    newList: { size: string; quantity: number }[]
+  ) => {
+    const updated = [...currentVariants];
+    updated[blockIndex].inventories = newList;
+    setCurrentVariants(updated);
+  };
+
   return {
     newVariants,
     setNewVariants,
@@ -245,5 +278,7 @@ export const useInventory = () => {
     handleRemoveImage,
     handleImageCurrent,
     handleRemoveImageCurrent,
+    handleSortNewInventory,
+    handleSortCurrentInventory,
   };
 };

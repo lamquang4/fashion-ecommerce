@@ -8,6 +8,7 @@ import fs from "node:fs/promises";
 import path from "path";
 import Category from "@/model/Category";
 import OrderDetail from "@/model/OrderDetail";
+import Cart from "@/model/Cart";
 
 export async function PUT(
   req: NextRequest,
@@ -178,45 +179,79 @@ export async function PUT(
           return NextResponse.json({ msg: `Không tìm thấy` }, { status: 404 });
         }
 
+        // không cho thay đổi biến thể có color, size đã có trong order, cart
         // Kiểm tra đơn hàng có status là 0, 1, 2 nào có order detail chứa biến thể chỉ lấy 1 cái
-        const orderDetail = await OrderDetail.findOne({
-          "items.product": id,
-          "items.color": inventory.color,
-          "items.size": {
-            $in: inventory.inventories.map((inv: any) => inv.size),
+        const variantId = inventory._id;
+
+        const currentSizes = inventory.inventories.map((inv: any) =>
+          inv.size.toString()
+        );
+        const currentColor = inventory.color.toString();
+
+        const usedInOrders = await OrderDetail.aggregate([
+          {
+            $match: {
+              "items.product": new mongoose.Types.ObjectId(id),
+              "items.color": new mongoose.Types.ObjectId(currentColor),
+              "items.size": {
+                $in: currentSizes.map(
+                  (sizeId: string) => new mongoose.Types.ObjectId(sizeId)
+                ),
+              },
+            },
           },
-        }).populate({
-          path: "order",
-          match: { status: { $in: [0, 1, 2] } },
-        });
+          {
+            $lookup: {
+              from: "orders",
+              localField: "order",
+              foreignField: "_id",
+              as: "orderInfo",
+            },
+          },
+          {
+            $unwind: "$orderInfo",
+          },
+          {
+            $match: {
+              "orderInfo.status": { $in: [0, 1, 2] },
+            },
+          },
+          { $limit: 1 },
+        ]);
 
-        // !! là cho giá trị undified, null, 0 sẽ thành kiểu boolean ở đây là false
-        const hasOrder = !!orderDetail?.order;
+        const usedInCart = await Cart.aggregate([
+          {
+            $match: {
+              "items.variant": new mongoose.Types.ObjectId(variantId),
+            },
+          },
+          { $limit: 1 },
+        ]);
 
-        if (hasOrder) {
-          // Kiểm tra cập nhật màu sắc
-          if (block.color !== inventory.color.toString()) {
+        const isUsed = usedInOrders.length > 0 || usedInCart.length > 0;
+
+        if (isUsed) {
+          if (block.color !== currentColor) {
             return NextResponse.json(
               {
-                msg: `Không thể cập nhật màu sắc của biến thể này vì đã được sử dụng trong đơn hàng.`,
+                msg: "Không thể thay đổi màu sắc vì biến thể đã được sử dụng trong đơn hàng hoặc giỏ hàng.",
               },
               { status: 400 }
             );
           }
 
-          // Kiểm tra cập nhật kích thước
-          const newSizes = block.inventories.map((inv: any) => inv.size);
-          const currentSizes = inventory.inventories.map((inv: any) =>
+          const newSizes = block.inventories.map((inv: any) =>
             inv.size.toString()
           );
-          const sizesChanged =
+
+          const sizeChanged =
             newSizes.some((size: string) => !currentSizes.includes(size)) ||
             currentSizes.some((size: string) => !newSizes.includes(size));
 
-          if (sizesChanged) {
+          if (sizeChanged) {
             return NextResponse.json(
               {
-                msg: `Không thể cập nhật kích thước của biến thể này vì đã được sử dụng trong đơn hàng.`,
+                msg: "Không thể thay đổi kích thước vì biến thể đã được sử dụng trong đơn hàng hoặc giỏ hàng.",
               },
               { status: 400 }
             );

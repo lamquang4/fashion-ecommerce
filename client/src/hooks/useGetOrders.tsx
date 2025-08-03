@@ -7,6 +7,8 @@ import useSWR from "swr";
 
 type ResponseType = {
   orders: OrderFull[];
+  totalPages: number;
+  total: number;
 };
 
 const fetcher = (url: string): Promise<ResponseType> =>
@@ -14,11 +16,21 @@ const fetcher = (url: string): Promise<ResponseType> =>
 
 export default function useGetOrders() {
   const searchParams = useSearchParams();
-  const status = searchParams.get("status");
+  const page = parseInt(searchParams.get("page") || "1");
+  const status = parseInt(searchParams.get("status") || "");
+  const limit = 12;
   const query = new URLSearchParams();
 
   if (status) {
-    query.set("status", status);
+    query.set("status", status.toString());
+  }
+
+  if (page) {
+    query.set("page", page.toString());
+  }
+
+  if (limit) {
+    query.set("limit", limit.toString());
   }
 
   const url = `/api/get-orders?${query.toString()}`;
@@ -26,8 +38,12 @@ export default function useGetOrders() {
 
   return {
     orders: data?.orders ?? [],
+    totalItems: data?.total || 0,
     error,
     isLoading,
     mutate,
+    limit,
+    totalPages: data?.totalPages || 1,
+    currentPage: page,
   };
 }

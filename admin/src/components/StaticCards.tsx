@@ -14,7 +14,7 @@ function StaticCards({ array }: StaticCardsProp) {
       {array.map((item, index) => (
         <div
           key={index}
-          className="relative break-words rounded-lg border border-gray-200 dark:border-dark-600 h-[18vh] flex justify-between p-5 bg-white"
+          className="relative break-words rounded-lg border border-gray-200 dark:border-dark-600 h-[18vh] flex items-center justify-between px-4 bg-white"
         >
           <div>
             <p>{item.title}</p>
@@ -22,9 +22,7 @@ function StaticCards({ array }: StaticCardsProp) {
           </div>
 
           <div className="relative inline-flex shrink-0">
-            <div className="flex h-full w-full select-none items-center justify-center font-medium uppercase  rounded-none">
-              {item.icon1}
-            </div>
+            <div className="h-full w-full">{item.icon1}</div>
           </div>
         </div>
       ))}

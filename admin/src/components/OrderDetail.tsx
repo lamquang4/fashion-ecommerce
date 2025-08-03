@@ -164,12 +164,14 @@ function OrderDetail() {
                           {item.discount > 0 && (
                             <del>{item.price.toLocaleString("vi-VN")}₫</del>
                           )}
-                          {item.discount > 0
-                            ? (item.price - item.discount).toLocaleString(
-                                "vi-VN"
-                              )
-                            : item.price.toLocaleString("vi-VN")}
-                          ₫
+                          <span>
+                            {item.discount > 0
+                              ? (item.price - item.discount).toLocaleString(
+                                  "vi-VN"
+                                )
+                              : item.price.toLocaleString("vi-VN")}
+                            ₫
+                          </span>
                         </div>
                       </td>
                       <td className="p-[15px]">x{item.quantity}</td>

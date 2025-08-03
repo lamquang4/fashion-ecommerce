@@ -4,12 +4,13 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import Image from "./Image";
-import useGetProductsSearch from "@/hooks/useGetProductsSearch";
+import useGetProductsSuggest from "@/hooks/useGetProductsSuggest";
+import Loading from "./Loading";
 function SearchDesktop() {
   const [search, setSearch] = useState<string>("");
   const [focused, setFocused] = useState<boolean>(false);
   const router = useRouter();
-  const { products, setKeyword } = useGetProductsSearch();
+  const { products, setKeyword, isLoading } = useGetProductsSuggest();
 
   useEffect(() => {
     if (search) {
@@ -62,7 +63,9 @@ function SearchDesktop() {
           </div>
 
           <div className="overflow-y-auto max-h-96 flex flex-col">
-            {products.length > 0 ? (
+            {isLoading ? (
+              <Loading height={25} size={35} color={"#c00"} />
+            ) : products.length > 0 ? (
               products.map((product, index) => (
                 <div className="flex w-full" key={index}>
                   <Link href={`/product/${product.slug}`} className="w-full">

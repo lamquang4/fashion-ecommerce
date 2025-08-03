@@ -5,11 +5,13 @@ import Image from "./Image";
 import useGetOrders from "@/hooks/useGetOrders";
 import Loading from "./Loading";
 import { useRouter, useSearchParams } from "next/navigation";
+import Pagination from "./Pagination";
 
 function OrderHistory() {
   const router = useRouter();
   const searchParams = useSearchParams();
-  const { orders, isLoading } = useGetOrders();
+  const { orders, isLoading, totalPages, totalItems, currentPage } =
+    useGetOrders();
 
   const array = [
     {
@@ -41,8 +43,9 @@ function OrderHistory() {
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const status = e.target.value;
     const params = new URLSearchParams(searchParams.toString());
+    params.set("page", "1");
 
-    if (status) {
+    if (!isNaN(Number(status))) {
       params.set("status", status);
     } else {
       params.delete("status");
@@ -50,6 +53,7 @@ function OrderHistory() {
 
     router.push(`?${params.toString()}`);
   };
+
   return (
     <section className="w-full mt-[40px] sm:mt-[45px]">
       <div className="flex justify-center flex-wrap">
@@ -75,10 +79,13 @@ function OrderHistory() {
 
             <div className="flex gap-4.5 flex-col">
               {isLoading ? (
-                <Loading height={70} />
+                <Loading height={60} size={50} color="black" />
               ) : orders.length > 0 ? (
                 orders.map((order, index) => (
-                  <div className="border border-gray-300 p-[12px]" key={index}>
+                  <div
+                    className="border border-gray-300 p-[12px] flex gap-[10px] flex-col"
+                    key={index}
+                  >
                     {order.productsBuy.map((item, index) => (
                       <div
                         key={index}
@@ -93,22 +100,31 @@ function OrderHistory() {
                           />
                         </Link>
 
-                        <div>
-                          <h2 className="text-[0.9rem] font-medium mb-[10px]">
+                        <div className="flex flex-col gap-[10px]">
+                          <h2 className="text-[0.9rem] font-medium">
                             {item.product.name}
                           </h2>
-                          <div className="flex gap-[15px] items-center flex-wrap">
-                            <div className="flex gap-[15px] text-[0.9rem]">
-                              <span>x{item.quantity}</span>
-                              <span>
-                                {item.variant.size.namesize} /{" "}
-                                {item.variant.color.namecolor}
-                              </span>
-                            </div>
 
-                            <div className="">
-                              <span>{item.price.toLocaleString("vi-VN")}₫</span>
-                            </div>
+                          <div className="flex gap-[12px] text-[0.9rem] flex-wrap">
+                            <span>x{item.quantity}</span>
+                            <span>
+                              {item.variant.size.namesize} /{" "}
+                              {item.variant.color.namecolor}
+                            </span>
+                          </div>
+
+                          <div className="flex gap-[12px] flex-wrap">
+                            {item.discount > 0 && (
+                              <del>{item.price.toLocaleString("vi-VN")}₫</del>
+                            )}
+                            <span>
+                              {item.discount > 0
+                                ? (item.price - item.discount).toLocaleString(
+                                    "vi-VN"
+                                  )
+                                : item.price.toLocaleString("vi-VN")}
+                              ₫
+                            </span>
                           </div>
                         </div>
                       </div>
@@ -179,6 +195,12 @@ function OrderHistory() {
                 </div>
               )}
             </div>
+
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              totalItems={totalItems}
+            />
           </div>
         </div>
       </div>

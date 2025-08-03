@@ -15,7 +15,7 @@ export async function GET(
 
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
-    const limit = 12;
+    const limit = parseInt(searchParams.get("limit") || "12");
     const skip = (page - 1) * limit;
 
     const min = parseInt(searchParams.get("min") || "");
@@ -212,6 +212,8 @@ export async function GET(
           },
         }
       );
+    } else {
+      pipeline.push({ $sort: { createdAt: -1 } });
     }
 
     if (colors.length > 0) {
@@ -222,36 +224,16 @@ export async function GET(
       });
     }
 
-    pipeline.push(
-      {
-        $sort: { createdAt: -1 },
-      },
-      { $skip: skip },
-      { $limit: limit }
-    );
+    const countPipeline = [...pipeline, { $count: "total" }];
 
-    const [products, total] = await Promise.all([
+    pipeline.push({ $skip: skip }, { $limit: limit });
+
+    const [products, totalCount] = await Promise.all([
       Product.aggregate(pipeline),
-      Product.aggregate([
-        { $match: query },
-        {
-          $addFields: {
-            finalPrice: { $subtract: ["$price", "$discount"] },
-          },
-        },
-        {
-          $match: {
-            $expr: {
-              $and: [
-                { $gte: ["$finalPrice", min] },
-                { $lte: ["$finalPrice", max] },
-              ],
-            },
-          },
-        },
-        { $count: "total" },
-      ]).then((res) => res[0]?.total || 0),
+      Product.aggregate(countPipeline),
     ]);
+
+    const total = totalCount[0]?.total || 0;
 
     return NextResponse.json({
       products,

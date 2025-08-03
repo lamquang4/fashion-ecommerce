@@ -4,10 +4,9 @@ import { GrFormNext, GrFormPrevious } from "react-icons/gr";
 interface Props {
   totalPages: number;
   currentPage: number;
-  limit: number;
   totalItems: number;
 }
-function Pagination({ totalPages, currentPage, limit, totalItems }: Props) {
+function Pagination({ totalPages, currentPage, totalItems }: Props) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();

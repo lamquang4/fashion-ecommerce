@@ -20,13 +20,11 @@ function page() {
         products={products}
         category={category}
         isLoading={isLoading}
-        totalItems={totalItems}
       />
 
       <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
-        limit={12}
         totalItems={totalItems}
       />
     </>

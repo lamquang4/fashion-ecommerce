@@ -1,10 +1,11 @@
 "use client";
-import useGetProductsSearch from "@/hooks/useGetProductsSearch";
 import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import Image from "./Image";
 import Link from "next/link";
+import useGetProductsSuggest from "@/hooks/useGetProductsSuggest";
+import Loading from "./Loading";
 type Props = {
   toggleSearch: () => void;
   openSearch: boolean;
@@ -13,7 +14,7 @@ type Props = {
 function SearchMobile({ toggleSearch, openSearch }: Props) {
   const [search, setSearch] = useState<string>("");
   const [focused, setFocused] = useState<boolean>(false);
-  const { products, setKeyword } = useGetProductsSearch();
+  const { products, setKeyword, isLoading } = useGetProductsSuggest();
   const router = useRouter();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -75,7 +76,9 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
             </div>
 
             <div className="overflow-y-auto max-h-96 flex flex-col">
-              {products.length > 0 ? (
+              {isLoading ? (
+                <Loading height={35} size={45} color={"#c00"} />
+              ) : products.length > 0 ? (
                 products.map((product, index) => (
                   <div className="flex w-full" key={index}>
                     <Link

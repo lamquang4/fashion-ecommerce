@@ -19,23 +19,12 @@ export default function useGetProductsSlug(slug: string) {
   const max = searchParams.get("max");
   const sort = searchParams.get("sort");
   const color = searchParams.get("color");
-
-  if (slug !== "nam" && slug !== "nu") {
-    return {
-      products: [],
-      totalPages: 1,
-      totalItems: 0,
-      currentPage: 1,
-      isLoading: false,
-      error: null,
-      mutate: () => {},
-    };
-  }
+  const limit = 12;
 
   const query = new URLSearchParams();
 
-  query.set("page", page.toString());
-
+  if (page) query.set("page", page.toString());
+  if (limit) query.set("limit", limit.toString());
   if (min) query.set("min", min);
   if (max) query.set("max", max);
   if (sort) query.set("sort", sort);
@@ -49,6 +38,7 @@ export default function useGetProductsSlug(slug: string) {
     totalPages: data?.totalPages || 1,
     totalItems: data?.total || 0,
     currentPage: page,
+    limit,
     isLoading,
     error,
     mutate,

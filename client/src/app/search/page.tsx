@@ -14,8 +14,10 @@ function page() {
     isLoading,
     setKeyword,
   } = useGetProductsSearch();
+
   const searchParams = useSearchParams();
   const search = searchParams.get("q");
+
   useEffect(() => {
     if (search) {
       setKeyword(search);
@@ -24,16 +26,11 @@ function page() {
 
   return (
     <>
-      <ProductList
-        products={products}
-        isLoading={isLoading}
-        totalItems={totalItems}
-      />
+      <ProductList products={products} isLoading={isLoading} />
 
       <Pagination
         totalPages={totalPages}
         currentPage={currentPage}
-        limit={12}
         totalItems={totalItems}
       />
     </>

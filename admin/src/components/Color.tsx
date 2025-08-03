@@ -38,7 +38,7 @@ function Color() {
   };
   return (
     <>
-      <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
+      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
           Màu ({totalItems})
         </h1>
@@ -51,7 +51,7 @@ function Color() {
         </Link>
       </div>
 
-      <div className="shadow-sm bg-white rounded-[3px] w-full overflow-auto">
+      <div className=" bg-white w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
             <InputSearch onSearchChange={(val) => setKeyword(val)} />

@@ -153,7 +153,7 @@ function ProductList({ category, products, isLoading }: Props) {
         />
 
         {isLoading ? (
-          <Loading height={70} />
+          <Loading height={60} size={50} color="black" />
         ) : products.length > 0 ? (
           <div
             className={`grid grid-cols-2 gap-x-[12px] gap-y-[35px] lg:grid-cols-3 2xl:grid-cols-4 sm:grid-cols-2 ${
@@ -283,17 +283,17 @@ function ProductList({ category, products, isLoading }: Props) {
         ) : (
           <div className="flex justify-center items-center h-[60vh]">
             <div>
-              <div className="mb-[20px] flex justify-center">
+              <div className="mb-[15px] flex justify-center">
                 <Image
                   Src={"/assets/other/notfound1.png"}
                   Alt={""}
-                  ClassName={"w-[180px]"}
+                  ClassName={"w-[150px]"}
                   loadingType="eager"
                 />
               </div>
 
               <div className="flex justify-center flex-col gap-3 items-center text-center">
-                <h2 className="text-[1.2rem] font-semibold">
+                <h2 className="text-[1.1rem] font-medium">
                   Không tìm thấy sản phẩm nào
                 </h2>
               </div>

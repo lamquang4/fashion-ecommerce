@@ -75,7 +75,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
               Bộ lọc đã chọn
             </h2>
             <div className="flex items-center flex-wrap gap-3">
-              {searchParams.get("min") && searchParams.get("max") && (
+              {(searchParams.get("min") || searchParams.get("max")) && (
                 <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
                   <button
                     onClick={() => {
@@ -93,52 +93,19 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
                     {searchParams.get("min") &&
                       Number(searchParams.get("min")).toLocaleString("vi-VN") +
                         "₫"}
-                    {" - "}
+                    {searchParams.get("min") &&
+                      searchParams.get("max") &&
+                      " - "}
+                    {!searchParams.get("min") && searchParams.get("max") && " "}
                     {searchParams.get("max") &&
                       Number(searchParams.get("max")).toLocaleString("vi-VN") +
                         "₫"}
-                  </span>
-                </div>
-              )}
-
-              {searchParams.get("min") && (
-                <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
-                  <button
-                    onClick={() => {
-                      const params = new URLSearchParams(
-                        searchParams.toString()
-                      );
-                      params.delete("min");
-                      router.push(`${pathname}?${params.toString()}`);
-                    }}
-                  >
-                    <HiMiniXMark size={20} color="black" />
-                  </button>
-                  <span className="text-[0.9rem]">
                     {searchParams.get("min") &&
-                      Number(searchParams.get("min")).toLocaleString("vi-VN") +
-                        "₫ trở lên"}
-                  </span>
-                </div>
-              )}
-
-              {searchParams.get("max") && (
-                <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
-                  <button
-                    onClick={() => {
-                      const params = new URLSearchParams(
-                        searchParams.toString()
-                      );
-                      params.delete("max");
-                      router.push(`${pathname}?${params.toString()}`);
-                    }}
-                  >
-                    <HiMiniXMark size={20} color="black" />
-                  </button>
-                  <span className="text-[0.9rem]">
-                    {searchParams.get("max") &&
-                      Number(searchParams.get("max")).toLocaleString("vi-VN") +
-                        "₫ trở xuống"}
+                      !searchParams.get("max") &&
+                      " trở lên"}
+                    {!searchParams.get("min") &&
+                      searchParams.get("max") &&
+                      " trở xuống"}
                   </span>
                 </div>
               )}

@@ -113,20 +113,23 @@ function Order() {
   };
   return (
     <>
-      <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
+      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
           Đơn hàng
         </h1>
 
-        <div className="mb-[25px]">
+        <div className="mb-[20px]">
           <StaticCards array={array1} />
         </div>
 
         <div>
           <form onSubmit={handleSubmit}>
-            <div className="flex gap-[15px] mb-[25px] flex-wrap">
+            <div className="flex gap-[15px] flex-wrap">
               <div className="relative flex gap-1.5 items-center">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label
+                  htmlFor=""
+                  className="text-[0.9rem] text-black font-medium"
+                >
                   Từ:
                 </label>
                 <input
@@ -137,7 +140,10 @@ function Order() {
               </div>
 
               <div className="relative flex gap-1.5 items-center">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label
+                  htmlFor=""
+                  className="text-[0.9rem] text-black font-medium"
+                >
                   Đến:
                 </label>
                 <input
@@ -155,7 +161,7 @@ function Order() {
         </div>
       </div>
 
-      <div className="shadow-sm bg-white rounded-[3px] w-full overflow-auto">
+      <div className=" bg-white  w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
             <InputSearch onSearchChange={(val) => setKeyword(val)} />

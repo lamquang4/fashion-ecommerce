@@ -10,7 +10,14 @@ import toast from "react-hot-toast";
 import useGetColors from "@/hooks/useGetColors";
 import useGetSizes from "@/hooks/useGetSizes";
 import useGetCategories1 from "@/hooks/useGetCategories1";
+import dynamic from "next/dynamic";
 
+const Sortable = dynamic(
+  () => import("react-sortablejs").then((mod) => mod.ReactSortable),
+  {
+    ssr: false,
+  }
+);
 function AddProduct() {
   const { categories } = useGetCategories1();
   const { colors } = useGetColors();
@@ -30,6 +37,7 @@ function AddProduct() {
     handleRemoveAllInventoryBlocks,
     handleImage,
     handleRemoveImage,
+    handleSortNewInventory,
   } = useInventory();
 
   const [data, setData] = useState({
@@ -115,8 +123,6 @@ function AddProduct() {
       toast.error(err?.response?.data?.msg);
     }
   };
-
-  console.log(newVariants);
 
   return (
     <>
@@ -245,7 +251,7 @@ function AddProduct() {
 
             {newVariants.map((block, index) => (
               <div
-                className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full"
+                className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[25px] w-full"
                 key={index}
               >
                 <div className="flex items-center justify-between">
@@ -262,7 +268,7 @@ function AddProduct() {
                   </button>
                 </div>
 
-                <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
+                <div className=" bg-white rounded-md flex flex-col gap-[25px] w-full">
                   <InputImage
                     InputId={`img-products-${index}`}
                     previewImages={block.previewImages}
@@ -273,7 +279,7 @@ function AddProduct() {
                   />
                 </div>
 
-                <div className="flex gap-[15px] mb-[1rem] justify-between items-center">
+                <div className="flex gap-[15px] justify-between items-center">
                   <button
                     type="button"
                     onClick={() => handleAddNewInventory(index)}
@@ -336,9 +342,15 @@ function AddProduct() {
                       </tr>
                     </thead>
 
-                    <tbody>
+                    <Sortable
+                      tag="tbody"
+                      list={block.inventories}
+                      setList={(newList) =>
+                        handleSortNewInventory(index, newList)
+                      }
+                    >
                       {block.inventories.map((newInventory, i) => (
-                        <tr key={i}>
+                        <tr key={i} className=" cursor-move">
                           <td className="py-[1rem]">
                             <select
                               name="size"
@@ -400,7 +412,7 @@ function AddProduct() {
                           </td>
                         </tr>
                       ))}
-                    </tbody>
+                    </Sortable>
                   </table>
                 </div>
               </div>

@@ -20,6 +20,14 @@ import useUpdateImage from "@/hooks/useUpdateImage";
 import useGetCategories1 from "@/hooks/useGetCategories1";
 import { GoTrash } from "react-icons/go";
 import { useInputImage2 } from "@/hooks/useInputImage2";
+import dynamic from "next/dynamic";
+
+const Sortable = dynamic(
+  () => import("react-sortablejs").then((mod) => mod.ReactSortable),
+  {
+    ssr: false,
+  }
+);
 function EditProduct() {
   const {
     previewImages2,
@@ -43,13 +51,14 @@ function EditProduct() {
     handleRemoveNewInventory,
     handleRemoveCurrentInventory,
     handleRemoveAllNewInventories,
-    handleRemoveAllCurrentInventories,
     handleAddInventoryBlock,
     handleRemoveAllInventoryBlocks,
     handleImage,
     handleRemoveImage,
     handleImageCurrent,
     handleRemoveImageCurrent,
+    handleSortNewInventory,
+    handleSortCurrentInventory,
   } = useInventory();
 
   const params = useParams();
@@ -328,14 +337,14 @@ function EditProduct() {
 
             {currentVariants.map((block, index) => (
               <div
-                className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full"
+                className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[25px] w-full"
                 key={index}
               >
                 <p className="font-bold text-[1rem] text-[#74767d]">
                   Biến thể {index + 1}
                 </p>
 
-                <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
+                <div className=" bg-white rounded-md flex flex-col gap-[25px] w-full">
                   <InputImage
                     InputId={`img-products-a${index}`}
                     previewImages={block.previewImages}
@@ -412,7 +421,7 @@ function EditProduct() {
                   </div>
                 </div>
 
-                <div className="flex gap-[15px] mb-[1rem] justify-between items-center">
+                <div className="flex gap-[15px] justify-between items-center">
                   <button
                     type="button"
                     onClick={() => handleAddCurrentInventory(index)}
@@ -470,9 +479,15 @@ function EditProduct() {
                       </tr>
                     </thead>
 
-                    <tbody>
+                    <Sortable
+                      tag="tbody"
+                      list={block.inventories}
+                      setList={(newList) =>
+                        handleSortCurrentInventory(index, newList)
+                      }
+                    >
                       {block.inventories.map((inventory, i) => (
-                        <tr key={i}>
+                        <tr key={i} className=" cursor-move">
                           <td className="py-[1rem]">
                             <select
                               name="size"
@@ -536,7 +551,7 @@ function EditProduct() {
                           </td>
                         </tr>
                       ))}
-                    </tbody>
+                    </Sortable>
                   </table>
                 </div>
               </div>
@@ -545,7 +560,7 @@ function EditProduct() {
             {newVariants.length > 0 &&
               newVariants.map((block, index) => (
                 <div
-                  className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full"
+                  className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[25px] w-full"
                   key={index}
                 >
                   <div className="flex items-center justify-between">
@@ -562,7 +577,7 @@ function EditProduct() {
                     </button>
                   </div>
 
-                  <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
+                  <div className=" bg-white rounded-md flex flex-col gap-[25px] w-full">
                     <InputImage
                       InputId={`img-products-${index}`}
                       previewImages={block.previewImages}
@@ -573,7 +588,7 @@ function EditProduct() {
                     />
                   </div>
 
-                  <div className="flex gap-[15px] mb-[1rem] justify-between items-center">
+                  <div className="flex gap-[15px] justify-between items-center">
                     <button
                       type="button"
                       onClick={() => handleAddNewInventory(index)}
@@ -624,7 +639,7 @@ function EditProduct() {
                   </div>
 
                   <div className="bg-white w-full overflow-auto">
-                    <table className="border-collapse w-[250%] sm:w-[130%] lg:w-full">
+                    <table className="border-collapse w-[250%] sm:w-[130%] lg:w-full border-t border-gray-200">
                       <thead>
                         <tr>
                           <th className=" text-left text-[#444] text-[0.9rem] py-[1rem]">
@@ -640,9 +655,15 @@ function EditProduct() {
                         </tr>
                       </thead>
 
-                      <tbody>
+                      <Sortable
+                        tag="tbody"
+                        list={block.inventories}
+                        setList={(newList) =>
+                          handleSortNewInventory(index, newList)
+                        }
+                      >
                         {block.inventories.map((newInventory, i) => (
-                          <tr key={i}>
+                          <tr key={i} className=" cursor-move">
                             <td className="py-[1rem]">
                               <select
                                 name="size"
@@ -707,7 +728,7 @@ function EditProduct() {
                             </td>
                           </tr>
                         ))}
-                      </tbody>
+                      </Sortable>
                     </table>
                   </div>
                 </div>
