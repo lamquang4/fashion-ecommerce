@@ -2,7 +2,7 @@
 import useGetColor from "@/hooks/useGetColor";
 import useUpdateColor from "@/hooks/useUpdateColor";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -19,10 +19,21 @@ function EditColor() {
       [name]: value,
     });
   };
+  const router = useRouter();
   const params = useParams();
   const id = params.id as string;
 
-  const { color, mutate } = useGetColor(id);
+  const { color, mutate, isLoading } = useGetColor(id);
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (!color) {
+      toast.error("Không tìm thấy màu");
+      router.push("/color");
+      return;
+    }
+  }, [color, isLoading, router]);
 
   useEffect(() => {
     if (color) {

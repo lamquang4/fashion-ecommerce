@@ -6,7 +6,7 @@ import { validateNonNegativeNumber } from "@/utils/validateNonNegativeNumber";
 import { validatePercentNumber } from "@/utils/validatePercentNumber";
 import { validatePositiveNumber } from "@/utils/validatePositiveNumber";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -22,11 +22,11 @@ function EditCoupon() {
     minOrderValue: 0,
     maxDiscountValue: 1,
   });
-
+  const router = useRouter();
   const params = useParams();
   const id = params.id as string;
 
-  const { coupon, mutate } = useGetCoupon(id);
+  const { coupon, mutate, isLoading } = useGetCoupon(id);
   const { updateCoupon } = useUpdateCoupon(id);
 
   const handleChange = (
@@ -35,6 +35,16 @@ function EditCoupon() {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (!coupon) {
+      toast.error("Không tìm thấy phiếu giảm giá");
+      router.push("/coupon");
+      return;
+    }
+  }, [coupon, isLoading, router]);
 
   useEffect(() => {
     if (coupon) {

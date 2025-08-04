@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
       var requestId = partnerCode! + new Date().getTime();
       var orderId = requestId;
       var orderInfo = "Thanh toán bằng Momo"; // nội dung giao dịch
-      var redirectUrl = `${process.env.NEXTAUTH_URL}`;
+      var redirectUrl = `${process.env.NEXTAUTH_URL}/checkout`;
       var ipnUrl = `${process.env.NEXTAUTH_URL}/api/momo/notify`;
       var amount = total;
       var requestType = "captureWallet";
@@ -77,6 +77,8 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: 404 });
     }
   } catch (err) {
+    console.log(err);
+
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

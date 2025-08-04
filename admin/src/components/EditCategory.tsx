@@ -6,7 +6,7 @@ import Image from "./Image";
 import ImageViewer from "./ImageViewer";
 import useUpdateCategory from "@/hooks/useUpdateCategory";
 import toast from "react-hot-toast";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import useGetCategory from "@/hooks/useGetCategory";
 import { useInputImage } from "@/hooks/useInputImage";
 import Loading from "./Loading";
@@ -22,6 +22,7 @@ function EditCategory() {
     setViewerImage(image);
     setOpenViewer(true);
   };
+  const router = useRouter();
   const params = useParams();
   const id = params.id as string;
   const { category, mutate, isLoading } = useGetCategory(id);
@@ -50,6 +51,16 @@ function EditCategory() {
     setPreviewImages([]);
     setSelectedFiles([]);
   };
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (!category) {
+      toast.error("Không tìm thấy danh mục");
+      router.push("/category");
+      return;
+    }
+  }, [category, isLoading, router]);
 
   useEffect(() => {
     if (category) {

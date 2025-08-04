@@ -8,7 +8,7 @@ import { VscTrash } from "react-icons/vsc";
 import ImageViewer from "./ImageViewer";
 import InputImage1 from "./InputImage1";
 import { HiMiniXMark } from "react-icons/hi2";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import useGetProduct from "@/hooks/useGetProduct";
 import toast from "react-hot-toast";
 import useGetSizes from "@/hooks/useGetSizes";
@@ -60,11 +60,11 @@ function EditProduct() {
     handleSortNewInventory,
     handleSortCurrentInventory,
   } = useInventory();
-
+  const router = useRouter();
   const params = useParams();
   const id = params.id as string;
 
-  const { product, mutate } = useGetProduct(id);
+  const { product, mutate, isLoading } = useGetProduct(id);
 
   const { categories } = useGetCategories1();
   const { colors } = useGetColors();
@@ -111,6 +111,16 @@ function EditProduct() {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (!product) {
+      toast.error("Không tìm thấy sản phẩm");
+      router.push("/product");
+      return;
+    }
+  }, [product, isLoading, router]);
 
   useEffect(() => {
     if (product) {

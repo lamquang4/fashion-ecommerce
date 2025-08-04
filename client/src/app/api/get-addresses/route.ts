@@ -9,6 +9,7 @@ export async function GET(req: NextRequest) {
     await connectMongoDB();
     const session = await getServerSession(options);
     const userId = session?.user?.id;
+
     const addresses = await Address.find({ user: userId });
 
     return NextResponse.json({

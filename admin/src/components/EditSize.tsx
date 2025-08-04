@@ -2,7 +2,7 @@
 import useGetSize from "@/hooks/useGetSize";
 import useUpdateSize from "@/hooks/useUpdateSize";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -10,11 +10,11 @@ function EditSize() {
   const [data, setData] = useState({
     namesize: "",
   });
-
+  const router = useRouter();
   const params = useParams();
   const id = params.id as string;
 
-  const { size, mutate } = useGetSize(id);
+  const { size, mutate, isLoading } = useGetSize(id);
   const { updateSize } = useUpdateSize(id);
 
   const handleChange = (
@@ -26,6 +26,16 @@ function EditSize() {
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (!size) {
+      toast.error("Không tìm thấy kích thước");
+      router.push("/size");
+      return;
+    }
+  }, [size, isLoading, router]);
 
   useEffect(() => {
     if (size) {

@@ -3,11 +3,14 @@ import { NextRequest, NextResponse } from "next/server";
 import crypto from "crypto";
 import axios from "axios";
 
-export async function POST(req: NextRequest) {
+export async function POST(
+  req: NextRequest,
+  { params }: { params: { orderId: string } }
+) {
   try {
     await connectMongoDB();
 
-    const { orderId } = await req.json();
+    const { orderId } = await params;
 
     var partnerCode = process.env.MOMO_PARTNERCODE;
     var accessKey = process.env.MOMO_ACCESSKEY;

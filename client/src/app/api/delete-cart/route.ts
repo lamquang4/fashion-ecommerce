@@ -1,21 +1,14 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Cart from "@/model/Cart";
-import mongoose from "mongoose";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-export async function DELETE(
-  req: NextRequest,
-  { params }: { params: { id: string } }
-) {
+import { options } from "../auth/[...nextauth]/options";
+export async function DELETE(req: NextRequest) {
   try {
     await connectMongoDB();
-
-    const { id } = await params;
-
-    if (!mongoose.Types.ObjectId.isValid(id)) {
-      return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
-    }
-
-    const cart = await Cart.findById(id);
+    const session = await getServerSession(options);
+    const userId = session?.user?.id;
+    const cart = await Cart.find({ user: userId });
     if (!cart) {
       return NextResponse.json(
         { msg: "Không tìm thấy giỏ hàng" },
@@ -23,7 +16,7 @@ export async function DELETE(
       );
     }
 
-    const deleteCart = await Cart.findByIdAndDelete(id);
+    const deleteCart = await Cart.findOneAndDelete({ user: userId });
 
     return NextResponse.json({ cart: deleteCart }, { status: 201 });
   } catch (err) {

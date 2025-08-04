@@ -217,7 +217,7 @@ function Order() {
                     {order.fullname}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {order.paymethod === 1 ? "MoMo" : "COD"}
+                    {order.paymethod === 1 ? "Momo" : "COD"}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {order.total.toLocaleString("vi-VN")}₫

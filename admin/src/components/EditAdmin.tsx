@@ -5,7 +5,7 @@ import { validateEmail } from "@/utils/validateEmail";
 import { validatePhone } from "@/utils/validatePhone";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
@@ -21,11 +21,11 @@ function EditAdmin() {
     birthday: "",
     role: "",
   });
-
+  const router = useRouter();
   const params = useParams();
   const id = params.id as string;
 
-  const { user, mutate } = useGetUser(id);
+  const { user, mutate, isLoading } = useGetUser(id);
   const { updateUser } = useUpdateUser(id);
 
   const handleChange = (
@@ -37,6 +37,16 @@ function EditAdmin() {
       [name]: name === "email" ? value.toLowerCase() : value,
     }));
   };
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (!user) {
+      toast.error("Không tìm thấy quản trị viên");
+      router.push("/admin");
+      return;
+    }
+  }, [user, isLoading, router]);
 
   useEffect(() => {
     if (user) {

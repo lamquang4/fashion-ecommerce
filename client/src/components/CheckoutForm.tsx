@@ -12,9 +12,9 @@ import { Address } from "@/types/type";
 import useAddOrder from "@/hooks/useAddOrder";
 import toast from "react-hot-toast";
 import useGetCoupon from "@/hooks/useGetCoupon";
-import useDeleteCart from "@/hooks/useDeleteCart";
 import usePaymentMomo from "@/hooks/usePaymentMomo";
 import useStatusMomo from "@/hooks/useStatusMomo";
+import useDeleteCart from "@/hooks/useDeleteCart";
 
 function CheckoutForm() {
   const { provinces } = useGetProvinces();
@@ -28,9 +28,9 @@ function CheckoutForm() {
   const [selectedWard, setSelectedWard] = useState<string>("");
   const [couponCode, setCouponCode] = useState<string>("");
   const [paymethod, setPaymethod] = useState<number>();
-  const { cart, mutate: mutateCart } = useGetCart();
+  const { cart, mutate: mutateCart, isLoading: isLoadingCart } = useGetCart();
   const { data: session } = useSession();
-  const { addresses } = useGetAddresses();
+  const { addresses, isLoading: isLoadingAddresses } = useGetAddresses();
   const { addOrder } = useAddOrder();
   const { deleteCart } = useDeleteCart();
   const { createPaymentMomo } = usePaymentMomo();
@@ -84,6 +84,8 @@ function CheckoutForm() {
   };
 
   useEffect(() => {
+    if (isLoadingCart || isLoadingAddresses) return;
+
     if (!session?.user) {
       router.push("/login");
       return;
@@ -114,7 +116,63 @@ function CheckoutForm() {
       router.push(`/cart`);
       return;
     }
-  }, [session, cart, addresses, router]);
+  }, [session, cart, addresses, router, isLoadingCart, isLoadingAddresses]);
+
+  useEffect(() => {
+    const orderId = localStorage.getItem("orderId");
+
+    const handleOrderMomoPayment = async () => {
+      if (!orderId) return;
+
+      try {
+        const res = await checkPaymentStatusMomo(orderId);
+        const checkoutData = localStorage.getItem("checkoutData");
+
+        console.log(res);
+
+        if (!checkoutData) return;
+
+        const {
+          fullname,
+          phone,
+          speaddress,
+          city,
+          ward,
+          paymethod,
+          productsBuy,
+          total,
+          coupon,
+        } = JSON.parse(checkoutData);
+
+        if (res.resultCode === 0) {
+          await addOrder({
+            fullname,
+            phone,
+            speaddress,
+            city,
+            ward,
+            paymethod,
+            productsBuy,
+            total,
+            coupon,
+          });
+
+          await deleteCart();
+          mutateCart(undefined, true);
+
+          toast.success("Đặt hàng thành công");
+
+          localStorage.removeItem("checkoutData");
+          localStorage.removeItem("orderId");
+          router.push("/");
+        }
+      } catch (err) {
+        toast.error("Lỗi khi thanh toán bằng Momo");
+      }
+    };
+
+    handleOrderMomoPayment();
+  }, []);
 
   const selectedProvince = provinces?.find(
     (province) => province.province === selectedProvinceName
@@ -177,29 +235,45 @@ function CheckoutForm() {
           paymethod,
         });
 
-        // localStorage.setItem("momoOrderId", momoResponse.orderId);
+        localStorage.setItem("orderId", momoResponse.orderId);
+
+        localStorage.setItem(
+          "checkoutData",
+          JSON.stringify({
+            fullname: data.fullname,
+            phone: data.phone,
+            speaddress: data.speaddress,
+            city: selectedProvinceName,
+            ward: selectedWard,
+            paymethod,
+            productsBuy: items,
+            total: finalTotal,
+            coupon: coupon?._id,
+          })
+        );
 
         window.location.href = momoResponse.payUrl;
 
-        // trả về thanh toán thành công?   const res = await checkPaymentStatusMomo(momoResponse.orderId);
+        return;
+      } else {
+        await addOrder({
+          fullname: data.fullname,
+          phone: data.phone,
+          speaddress: data.speaddress,
+          city: selectedProvinceName,
+          ward: selectedWard,
+          paymethod: paymethod!,
+          productsBuy: items!,
+          total: finalTotal,
+          coupon: coupon?._id,
+        });
+
+        await deleteCart();
+        mutateCart(undefined, true);
+
+        toast.success("Đặt hàng thành công");
+        router.push("/");
       }
-      await addOrder({
-        fullname: data.fullname,
-        phone: data.phone,
-        speaddress: data.speaddress,
-        city: selectedProvinceName,
-        ward: selectedWard,
-        paymethod: paymethod!,
-        productsBuy: items!,
-        total: finalTotal,
-        coupon: coupon?._id,
-      });
-
-      await deleteCart(cart?._id!);
-      mutateCart(undefined, true);
-
-      toast.success("Đặt hàng thành công");
-      router.push("/");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
