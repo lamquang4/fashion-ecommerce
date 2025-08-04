@@ -30,7 +30,7 @@ function OrderDetail() {
   return (
     <div className="w-full px-[15px] py-[30px]">
       {isLoading ? (
-        <Loading height={50} />
+        <Loading height={50} size={55} color="black" />
       ) : (
         <div className="w-full max-w-full border-[1.5px] border-double border-gray-300 lg:max-w-[750px] rounded-sm mx-auto">
           <div>

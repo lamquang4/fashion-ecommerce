@@ -103,6 +103,7 @@ function Coupon() {
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Thời gian
               </th>
+
               <th className="text-left text-[#444] text-[0.9rem] relative">
                 <FilterDropDownMenu
                   title="Tình trạng"
@@ -110,6 +111,7 @@ function Coupon() {
                   onFilterChange={(val) => setStatus(val)}
                 />
               </th>
+              
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Hành động
               </th>
@@ -119,7 +121,7 @@ function Coupon() {
             {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
-                  <Loading height={50} />
+                  <Loading height={50} size={55} color="black" />
                 </td>
               </tr>
             ) : coupons.length > 0 ? (

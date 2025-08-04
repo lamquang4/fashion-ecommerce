@@ -77,7 +77,7 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
 
             <div className="overflow-y-auto max-h-96 flex flex-col">
               {isLoading ? (
-                <Loading height={35} size={45} color={"#c00"} />
+                <Loading height={30} size={40} color={"#c00"} />
               ) : products.length > 0 ? (
                 products.map((product, index) => (
                   <div className="flex w-full" key={index}>

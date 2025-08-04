@@ -19,7 +19,7 @@ function Product() {
   return (
     <>
       {isLoading ? (
-        <Loading height={70} />
+        <Loading height={60} size={50} color="black" />
       ) : (
         <>
           <ProductDetail />

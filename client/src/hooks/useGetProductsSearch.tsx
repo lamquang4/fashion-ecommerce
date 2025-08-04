@@ -21,12 +21,10 @@ export default function useGetProductsSearch() {
   const max = searchParams.get("max");
   const color = searchParams.get("color");
   const sort = searchParams.get("sort");
-  const limit = 12;
 
   const query = new URLSearchParams();
 
   if (page) query.set("page", page.toString());
-  if (limit) query.set("limit", limit.toString());
   if (min) query.set("min", min);
   if (max) query.set("max", max);
   if (sort) query.set("sort", sort);
@@ -41,7 +39,6 @@ export default function useGetProductsSearch() {
     totalPages: data?.totalPages || 1,
     totalItems: data?.total || 0,
     currentPage: page,
-    limit,
     setKeyword,
     isLoading,
     error,

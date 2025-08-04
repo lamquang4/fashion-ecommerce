@@ -223,8 +223,18 @@ function ProductDetail() {
                     variant.images.map((img, index) => (
                       <div
                         key={index}
-                        className="shrink-0 border border-gray-200 overflow-hidden cursor-pointer w-[70px]"
-                        onMouseEnter={() => setMainImage(img)}
+                        className={`shrink-0 border  overflow-hidden cursor-pointer w-[70px] ${
+                          mainImage === img
+                            ? "border-gray-500"
+                            : "border-gray-300"
+                        }`}
+                        onMouseEnter={() => {
+                          setMainImage(img);
+                          const indexInAll = allImages.indexOf(img);
+                          if (indexInAll !== -1) {
+                            setCurrentImageIndex(indexInAll);
+                          }
+                        }}
                       >
                         <Image
                           Src={img}

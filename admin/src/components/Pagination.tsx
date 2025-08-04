@@ -102,7 +102,7 @@ function Pagination({ totalPages, currentPage, limit, totalItems }: Props) {
                       type="button"
                       disabled
                       key={`ellipsis-${index}`}
-                      className="group h-8.5 w-8.5 flex justify-center items-center text-gray-600 dark:text-neutral-500 text-[0.85rem] border border-gray-300"
+                      className="group h-8.5 w-8.5 flex justify-center items-center text-gray-800 text-[0.9rem] border border-gray-300"
                     >
                       ...
                     </button>
@@ -113,10 +113,10 @@ function Pagination({ totalPages, currentPage, limit, totalItems }: Props) {
                   <button
                     key={page}
                     onClick={() => goToPage(page as number)}
-                    className={`h-8.5 w-8.5 flex justify-center items-center text-gray-800 text-[0.85rem] border border-gray-300 ${
+                    className={`h-8.5 w-8.5 flex justify-center items-center font-medium text-[0.9rem] border border-gray-300 ${
                       currentPage === page
                         ? "bg-[#22BAA0] text-white"
-                        : "text-gray-900 hover:bg-gray-50"
+                        : "text-gray-800 hover:bg-gray-50"
                     }`}
                   >
                     {page}

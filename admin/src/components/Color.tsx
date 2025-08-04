@@ -81,7 +81,7 @@ function Color() {
             {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
-                  <Loading height={50} />
+                  <Loading height={50} size={55} color="black" />
                 </td>
               </tr>
             ) : colors.length > 0 ? (

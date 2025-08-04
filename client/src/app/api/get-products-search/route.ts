@@ -8,7 +8,7 @@ export async function GET(req: NextRequest) {
     // lấy các sản phẩm tìm kiếm name sản phẩm
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "12");
+    const limit = 12;
     const skip = (page - 1) * limit;
     const keyword = searchParams.get("keyword") || "";
 

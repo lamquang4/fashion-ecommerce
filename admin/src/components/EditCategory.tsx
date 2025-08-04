@@ -107,7 +107,7 @@ function EditCategory() {
 
               <div className="flex gap-3 flex-wrap justify-center">
                 {isLoading ? (
-                  <Loading height={25} />
+                  <Loading height={25} size={55} color="black" />
                 ) : (
                   <div className=" relative">
                     <div
