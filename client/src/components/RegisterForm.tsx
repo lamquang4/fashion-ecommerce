@@ -37,6 +37,10 @@ function RegisterForm() {
       toast.error("Số điện thoại không hợp lệ");
       return;
     }
+    if (data.password.length < 6) {
+      toast.error("Mật khẩu phải có ít nhất 6 ký tự");
+      return;
+    }
     try {
       await addCustomer({
         fullname: data.fullname.trim(),

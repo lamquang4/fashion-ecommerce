@@ -21,6 +21,7 @@ function EditCustomer() {
   const id = params.id as string;
 
   const { user, mutate, isLoading } = useGetUser(id);
+  const { updateUser, isLoading: isLoadingUpdateUser } = useUpdateUser(id);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -53,8 +54,6 @@ function EditCustomer() {
       });
     }
   }, [user]);
-
-  const { updateUser } = useUpdateUser(id);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -178,7 +177,7 @@ function EditCustomer() {
             type="submit"
             className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
           >
-            Cập nhật
+            {isLoadingUpdateUser ? "Đang cập nhật..." : "Cập nhật"}
           </button>
           <Link
             href="/customer"

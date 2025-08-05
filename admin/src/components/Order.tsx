@@ -31,7 +31,8 @@ function Order() {
     totalStatus4,
   } = useGetOrders();
 
-  const { updateStatusOrder } = useUpdateStatusOrder();
+  const { updateStatusOrder, isLoading: isLoadingUpdateStatusOrder } =
+    useUpdateStatusOrder();
 
   const pathname = usePathname();
   const router = useRouter();
@@ -204,7 +205,7 @@ function Order() {
             {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
-                  <Loading height={50} size={55} color="black" thickness={6} />
+                  <Loading height={50} size={55} color="black" thickness={3} />
                 </td>
               </tr>
             ) : orders.length > 0 ? (
@@ -220,13 +221,14 @@ function Order() {
                     {order.paymethod === 1 ? "Momo" : "COD"}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {order.total.toLocaleString("vi-VN")}₫
+                    {order.total!.toLocaleString("vi-VN")}₫
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(order.createdAt).toLocaleDateString("vi-VN")}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     <select
+                      disabled={isLoadingUpdateStatusOrder}
                       name="status"
                       value={order.status}
                       onChange={(e) =>
@@ -284,7 +286,7 @@ function Order() {
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
-                      ClassName={"w-[180px]"}
+                      ClassName={"w-[135px]"}
                       loadingType="lazy"
                     />
                   </div>

@@ -1,17 +1,21 @@
 "use client";
 import { Coupon } from "@/types/types";
 import axios from "axios";
+import { useState } from "react";
 
 export default function useAddCoupon() {
+  const [isLoading, setIsLoading] = useState(false);
   const addCoupon = async (data: Coupon) => {
+    setIsLoading(true);
     try {
-      const res = await axios.post("/api/add-coupon", data);
-      return res.data.coupon;
+      await axios.post("/api/add-coupon", data);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { addCoupon };
+  return { addCoupon, isLoading };
 }

@@ -69,8 +69,9 @@ function EditProduct() {
   const { categories } = useGetCategories1();
   const { colors } = useGetColors();
   const { sizes } = useGetSizes();
-  const { updateProduct } = useUpdateProduct(id);
-  const { deleteImage } = useDeleteImage();
+  const { updateProduct, isLoading: isLoadingUpdateProduct } =
+    useUpdateProduct(id);
+  const { deleteImage, isLoading: isLoadingDeleteImage } = useDeleteImage();
   const { updateImage } = useUpdateImage();
   const [data, setData] = useState({
     name: "",
@@ -393,6 +394,7 @@ function EditProduct() {
                               {!previewImages2?.[index]?.[imgIndex] ? (
                                 <>
                                   <button
+                                    disabled={isLoadingDeleteImage}
                                     type="button"
                                     onClick={() =>
                                       handleDeleteImage(
@@ -747,10 +749,11 @@ function EditProduct() {
 
           <div className="flex justify-center gap-6">
             <button
+              disabled={isLoadingUpdateProduct}
               type="submit"
               className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
             >
-              Cập nhật
+              {isLoadingUpdateProduct ? "Đang cập nhật..." : "Cập nhật"}
             </button>
             <Link
               href="/product"

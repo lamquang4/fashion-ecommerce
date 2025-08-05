@@ -36,8 +36,7 @@ const productSchema = new Schema(
   }
 );
 
-productSchema.index({ name: "text", slug: "text" });
-productSchema.index({ status: 1 });
+productSchema.index({ status: 1, slug: 1 });
 
 const Product = models.Product || model("Product", productSchema);
 export default Product;

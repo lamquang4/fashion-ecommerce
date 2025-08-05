@@ -16,7 +16,7 @@ function AddAdmin() {
     role: "",
   });
 
-  const { addAdmin } = useAddAdmin();
+  const { addAdmin, isLoading } = useAddAdmin();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -36,6 +36,10 @@ function AddAdmin() {
     }
     if (!validatePhone(data.phone.trim())) {
       toast.error("Số điện thoại không hợp lệ");
+      return;
+    }
+    if (data.password.trim().length < 6) {
+      toast.error("Mật khẩu phải có ít nhất 6 ký tự");
       return;
     }
     try {
@@ -168,10 +172,11 @@ function AddAdmin() {
 
         <div className="flex justify-center gap-6">
           <button
+            disabled={isLoading}
             type="submit"
             className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem]"
           >
-            Thêm
+            {isLoading ? "Đang thêm..." : "Thêm"}
           </button>
           <Link
             href="/admin"

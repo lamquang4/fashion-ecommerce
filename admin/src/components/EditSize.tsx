@@ -15,7 +15,7 @@ function EditSize() {
   const id = params.id as string;
 
   const { size, mutate, isLoading } = useGetSize(id);
-  const { updateSize } = useUpdateSize(id);
+  const { updateSize, isLoading: isLoadingUpdateSize } = useUpdateSize(id);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -91,10 +91,11 @@ function EditSize() {
 
         <div className="flex justify-center gap-6">
           <button
+            disabled={isLoadingUpdateSize}
             type="submit"
             className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
           >
-            Cập nhật
+            {isLoadingUpdateSize ? "Đang cập nhật..." : "Cập nhật"}
           </button>
           <Link
             href="/size"

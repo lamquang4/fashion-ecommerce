@@ -1,8 +1,10 @@
 "use client";
 import axios from "axios";
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 export default function useBlockUser() {
+  const [isLoading, setIsLoading] = useState(false);
   const blockUser = async (id: string, status: number) => {
     const action = status === 1 ? "chặn" : "bỏ chặn";
     const result = await Swal.fire({
@@ -17,17 +19,21 @@ export default function useBlockUser() {
     if (!result.isConfirmed) {
       return;
     }
+
+    setIsLoading(true);
+
     try {
-      const res = await axios.put("/api/block-user", {
+      await axios.put("/api/block-user", {
         id: id,
         status: status,
       });
-      return res.data.user;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { blockUser };
+  return { blockUser, isLoading };
 }

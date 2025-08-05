@@ -1,19 +1,19 @@
 import axios from "axios";
+import { useState } from "react";
 
 export function useRemoveItemWishlist() {
-  const removeItem = async (data: {
-    wishlistId: string;
-    variant: string;
-  }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const removeItem = async (data: { wishlistId: string; variant: string }) => {
+    setIsLoading(true);
     try {
-      const response = await axios.put("/api/remove-item-wishlist", data);
-
-      return response.data;
+      await axios.put("/api/remove-item-wishlist", data);
     } catch (err: any) {
       console.error("Lỗi:", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { removeItem };
+  return { removeItem, isLoading };
 }

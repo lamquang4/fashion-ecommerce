@@ -27,7 +27,8 @@ function EditCoupon() {
   const id = params.id as string;
 
   const { coupon, mutate, isLoading } = useGetCoupon(id);
-  const { updateCoupon } = useUpdateCoupon(id);
+  const { updateCoupon, isLoading: isLoadingUpdateCoupon } =
+    useUpdateCoupon(id);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -323,10 +324,11 @@ function EditCoupon() {
 
         <div className="flex justify-center gap-6">
           <button
+            disabled={isLoadingUpdateCoupon}
             type="submit"
             className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
           >
-            Cập nhật
+            {isLoadingUpdateCoupon ? "Đang cập nhật..." : "Cập nhật"}
           </button>
           <Link
             href="/coupon"

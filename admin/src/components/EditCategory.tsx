@@ -26,7 +26,8 @@ function EditCategory() {
   const params = useParams();
   const id = params.id as string;
   const { category, mutate, isLoading } = useGetCategory(id);
-  const { updateCategory } = useUpdateCategory(id);
+  const { updateCategory, isLoading: isLoadingUpdatedCategory } =
+    useUpdateCategory(id);
 
   const {
     previewImages,
@@ -83,14 +84,8 @@ function EditCategory() {
     }
 
     try {
-      const updated = await updateCategory(formData);
+      await updateCategory(formData);
       toast.success("Cập nhật thành công!");
-
-      setData({
-        namecategory: updated.namecategory,
-        gender: String(updated.gender),
-        image: `${updated.image}?t=${new Date().getTime()}`,
-      });
 
       handelReset();
       mutate();
@@ -118,7 +113,7 @@ function EditCategory() {
 
               <div className="flex gap-3 flex-wrap justify-center">
                 {isLoading ? (
-                  <Loading height={25} size={55} color="black" thickness={6} />
+                  <Loading height={25} size={55} color="black" thickness={3} />
                 ) : (
                   <div className=" relative">
                     <div
@@ -182,10 +177,11 @@ function EditCategory() {
 
           <div className="flex justify-center gap-6">
             <button
+              disabled={isLoadingUpdatedCategory}
               type="submit"
               className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
             >
-              Cập nhật
+              {isLoadingUpdatedCategory ? "Đang cập nhật..." : "Cập nhật"}
             </button>
             <Link
               href="/category"

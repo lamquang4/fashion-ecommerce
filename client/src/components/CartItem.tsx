@@ -17,8 +17,9 @@ import useGetAddresses from "@/hooks/useGetAddresses";
 function CartItem() {
   const [menuOpen, setMenuOpen] = useState(false);
   const { cart, isLoading, mutate } = useGetCart();
-  const { removeItem } = useRemoveItemCart();
-  const { changeQuantity } = useChangeQuantityItemCart();
+  const { removeItem, isLoading: isLoadingRemoveItem } = useRemoveItemCart();
+  const { changeQuantity, isLoading: isLoadingChangeQuantity } =
+    useChangeQuantityItemCart();
   const { data: session } = useSession();
   const { addresses } = useGetAddresses();
   const router = useRouter();
@@ -196,7 +197,10 @@ function CartItem() {
                                     item.variant.quantity
                                   )
                                 }
-                                disabled={item.variant.quantity <= 1}
+                                disabled={
+                                  item.variant.quantity <= 1 ||
+                                  isLoadingChangeQuantity
+                                }
                                 className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-slate-300 border"
                               >
                                 <HiOutlineMinusSmall size={20} />
@@ -218,9 +222,9 @@ function CartItem() {
                                 }
                                 disabled={
                                   item.variant.quantity >=
-                                  (item.variant.stock < 15
-                                    ? item.variant.stock
-                                    : 15)
+                                    (item.variant.stock < 15
+                                      ? item.variant.stock
+                                      : 15) || isLoadingChangeQuantity
                                 }
                                 className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-slate-300 border"
                               >
@@ -233,6 +237,7 @@ function CartItem() {
                           <div className="flex gap-4 justify-end">
                             <button
                               type="button"
+                              disabled={isLoadingRemoveItem}
                               onClick={() =>
                                 handleRemoveItem(
                                   cart?._id || "",

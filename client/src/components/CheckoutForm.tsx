@@ -514,7 +514,10 @@ function CheckoutForm() {
                 </div>
 
                 <div className="mt-[30px] flex justify-between">
-                  <button className="text-[0.9rem] rounded-md bg-[#197FB6] px-4 py-2 font-medium text-white">
+                  <button
+                    disabled={isLoadingAddOrder}
+                    className="text-[0.9rem] rounded-md bg-[#197FB6] px-4 py-2 font-medium text-white"
+                  >
                     Đặt hàng
                   </button>
 

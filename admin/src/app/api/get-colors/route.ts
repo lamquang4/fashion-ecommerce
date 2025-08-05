@@ -22,6 +22,7 @@ export async function GET(req: NextRequest) {
       Color.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
       Color.countDocuments(query),
     ]);
+
     return NextResponse.json({
       colors,
       total,

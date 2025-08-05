@@ -24,8 +24,9 @@ function MainBanner() {
     setStatus,
     setType,
   } = useGetMainBanners();
-  const { deleteBanner } = useDeleteBanner();
-  const { visibleBanner } = useVisibleBanner();
+  const { deleteBanner, isLoading: isLoadingDeleteBanner } = useDeleteBanner();
+  const { visibleBanner, isLoading: isLoadingVisibleBanner } =
+    useVisibleBanner();
   const array = [
     {
       name: "Tất cả",
@@ -126,7 +127,7 @@ function MainBanner() {
             {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
-                  <Loading height={50} size={55} color="black" thickness={6} />
+                  <Loading height={50} size={55} color="black" thickness={3} />
                 </td>
               </tr>
             ) : mainbanners.length > 0 ? (
@@ -160,6 +161,7 @@ function MainBanner() {
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex items-center gap-[15px]">
                       <button
+                        disabled={isLoadingVisibleBanner}
                         onClick={() =>
                           handleVisible(
                             mainbanner._id,
@@ -177,7 +179,10 @@ function MainBanner() {
                         )}
                       </button>
 
-                      <button onClick={() => handleDelete(mainbanner._id)}>
+                      <button
+                        disabled={isLoadingDeleteBanner}
+                        onClick={() => handleDelete(mainbanner._id)}
+                      >
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>
@@ -191,7 +196,7 @@ function MainBanner() {
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
-                      ClassName={"w-[180px]"}
+                      ClassName={"w-[135px]"}
                       loadingType="lazy"
                     />
                   </div>

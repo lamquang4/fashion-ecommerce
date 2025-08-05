@@ -33,11 +33,12 @@ function ProductDetail() {
   const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
-  const { addCart } = useAddCart();
-  const { addWishlist } = useAddWishlist();
+  const { addCart, isLoading: isLoadingAddCart } = useAddCart();
+  const { addWishlist, isLoading: isLoadingAddWishlist } = useAddWishlist();
   const { mutate: mutateCart } = useGetCart();
   const { wishlist, mutate: mutateWishlist } = useGetWishlist();
-  const { removeItem } = useRemoveItemWishlist();
+  const { removeItem, isLoading: isLoadingRemoveItem } =
+    useRemoveItemWishlist();
 
   const isInWishlist = wishlist?.productsInWishlist?.some(
     (item) => item.variant._id === selectedInventory?._id
@@ -429,6 +430,7 @@ function ProductDetail() {
 
                 <div className="w-full flex gap-[20px] flex-wrap md:flex-nowrap mb-[30px] items-center">
                   <button
+                    disabled={isLoadingAddCart}
                     type="submit"
                     className="px-[10px] py-[10px] w-full uppercase text-[0.9rem] font-medium border bg-black text-white hover:bg-[#050708]/80"
                   >
@@ -436,6 +438,7 @@ function ProductDetail() {
                   </button>
 
                   <button
+                    disabled={isLoadingAddWishlist || isLoadingRemoveItem}
                     type="button"
                     onClick={() => {
                       if (!selectedInventory || !product) return;

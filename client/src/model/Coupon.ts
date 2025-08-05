@@ -54,7 +54,6 @@ const couponSchema = new Schema(
   }
 );
 
-couponSchema.index({ code: "text" });
 couponSchema.index({ status: 1 });
 
 const Coupon = models.Coupon || model("Coupon", couponSchema);

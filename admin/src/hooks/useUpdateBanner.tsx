@@ -1,21 +1,24 @@
 "use client";
 import axios from "axios";
+import { useState } from "react";
 
 export default function useUpdateBanner() {
-
+  const [isLoading, setIsLoading] = useState(false);
   const updateBanner = async (formData: FormData) => {
+    setIsLoading(true);
     try {
-      const res = await axios.put("/api/update-banner", formData, {
+      await axios.put("/api/update-banner", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      return res.data.banner;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { updateBanner };
+  return { updateBanner, isLoading };
 }

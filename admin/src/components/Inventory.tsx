@@ -61,7 +61,7 @@ function Inventory() {
             {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
-                  <Loading height={50} size={55} color="black" thickness={6} />
+                  <Loading height={50} size={55} color="black" thickness={3} />
                 </td>
               </tr>
             ) : inventories.length > 0 ? (
@@ -129,7 +129,7 @@ function Inventory() {
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
-                      ClassName={"w-[180px]"}
+                      ClassName={"w-[135px]"}
                       loadingType="lazy"
                     />
                   </div>

@@ -1,20 +1,24 @@
 "use client";
 import axios from "axios";
+import { useState } from "react";
 
 export default function useAddCategory() {
+  const [isLoading, setIsLoading] = useState(false);
   const addCategory = async (formData: FormData) => {
+    setIsLoading(true);
     try {
-      const res = await axios.post("/api/add-category", formData, {
+      await axios.post("/api/add-category", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      return res.data.category;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { addCategory };
+  return { addCategory, isLoading };
 }

@@ -23,7 +23,7 @@ function AddProduct() {
   const { colors } = useGetColors();
   const { sizes } = useGetSizes();
 
-  const { addProduct } = useAddProduct();
+  const { addProduct, isLoading } = useAddProduct();
 
   const {
     newVariants,
@@ -421,10 +421,11 @@ function AddProduct() {
 
           <div className="flex justify-center gap-6">
             <button
+              disabled={isLoading}
               type="submit"
-              className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
+              className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem]"
             >
-              Thêm
+              {isLoading ? "Đang thêm..." : "Thêm"}
             </button>
             <Link
               href="/product"

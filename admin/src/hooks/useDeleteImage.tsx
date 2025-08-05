@@ -1,8 +1,10 @@
 "use client";
 import axios from "axios";
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 export default function useDeleteImage() {
+  const [isLoading, setIsLoading] = useState(false);
   const deleteImage = async (id: string, image: string) => {
     const result = await Swal.fire({
       title: `Xác nhận xóa?`,
@@ -15,6 +17,8 @@ export default function useDeleteImage() {
 
     if (!result.isConfirmed || !id || !image) return;
 
+    setIsLoading(true);
+
     try {
       await axios.delete(`/api/delete-image/${id}`, {
         params: { image },
@@ -22,8 +26,10 @@ export default function useDeleteImage() {
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { deleteImage };
+  return { deleteImage, isLoading };
 }

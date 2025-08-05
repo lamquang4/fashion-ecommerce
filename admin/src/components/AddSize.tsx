@@ -9,7 +9,7 @@ function AddSize() {
     namesize: "",
   });
 
-  const { addSize } = useAddSize();
+  const { addSize, isLoading } = useAddSize();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -68,10 +68,11 @@ function AddSize() {
 
         <div className="flex justify-center gap-6">
           <button
+            disabled={isLoading}
             type="submit"
-            className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
+            className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem]"
           >
-            Thêm
+            {isLoading ? "Đang thêm..." : "Thêm"}
           </button>
           <Link
             href="/size"

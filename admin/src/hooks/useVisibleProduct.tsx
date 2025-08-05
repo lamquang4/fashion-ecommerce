@@ -1,8 +1,10 @@
 "use client";
 import axios from "axios";
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 export default function useVisibleProduct() {
+  const [isLoading, setIsLoading] = useState(false);
   const visibleProduct = async (id: string, status: number) => {
     const action = status === 1 ? "hiện" : "ẩn";
     const result = await Swal.fire({
@@ -17,16 +19,19 @@ export default function useVisibleProduct() {
     if (!result.isConfirmed) {
       return;
     }
+
+    setIsLoading(true);
     try {
-      const res = await axios.put(`/api/visible-product/${id}`, {
+      await axios.put(`/api/visible-product/${id}`, {
         status: status,
       });
-      return res.data.product;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { visibleProduct };
+  return { visibleProduct, isLoading };
 }

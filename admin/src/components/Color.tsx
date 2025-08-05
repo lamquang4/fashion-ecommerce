@@ -21,7 +21,7 @@ function Color() {
     limit,
     setKeyword,
   } = useGetColors();
-  const { deleteColor } = useDeleteColor();
+  const { deleteColor, isLoading: isLoadingDeleteColor } = useDeleteColor();
 
   const handleDelete = async (id: string) => {
     if (!id) {
@@ -30,7 +30,7 @@ function Color() {
     try {
       await deleteColor(id);
       mutate();
-      toast.error("Xóa thành công");
+      toast.success("Xóa thành công");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
       mutate();
@@ -81,7 +81,7 @@ function Color() {
             {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
-                  <Loading height={50} size={55} color="black" thickness={6} />
+                  <Loading height={50} size={55} color="black" thickness={3} />
                 </td>
               </tr>
             ) : colors.length > 0 ? (
@@ -110,7 +110,10 @@ function Color() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => handleDelete(color._id || "")}>
+                      <button
+                        disabled={isLoadingDeleteColor}
+                        onClick={() => handleDelete(color._id || "")}
+                      >
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>
@@ -124,7 +127,7 @@ function Color() {
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
-                      ClassName={"w-[180px]"}
+                      ClassName={"w-[135px]"}
                       loadingType="lazy"
                     />
                   </div>

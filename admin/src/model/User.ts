@@ -36,9 +36,7 @@ const userSchema = new Schema(
   }
 );
 
-userSchema.index({ fullname: "text", email: "text" });
-userSchema.index({ status: 1 });
-userSchema.index({ role: 1 });
+userSchema.index({ status: 1, role: 1 });
 
 const User = models.User || model("User", userSchema);
 export default User;

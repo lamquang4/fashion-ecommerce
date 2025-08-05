@@ -11,8 +11,8 @@ import Loading from "./Loading";
 
 function Collection() {
   const { collections, mutate, isLoading } = useGetCollections();
-  const { addBanner } = useAddBanner();
-  const { updateBanner } = useUpdateBanner();
+  const { addBanner, isLoading: isLoadingAddBanner } = useAddBanner();
+  const { updateBanner, isLoading: isLoadingUpdateBanner } = useUpdateBanner();
   const {
     selectedFiles1,
     setSelectedFiles1,
@@ -29,6 +29,11 @@ function Collection() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (selectedFiles1.length < 2 && collections.length === 0) {
+      toast.error("Vui lòng thêm đủ 2 hình");
+      return;
+    }
 
     try {
       const formData = new FormData();
@@ -65,7 +70,7 @@ function Collection() {
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
             {isLoading ? (
-              <Loading height={70} size={55} color="black" thickness={6} />
+              <Loading height={70} size={55} color="black" thickness={3} />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-[20px]">
                 {[0, 1].map((index) => {
@@ -123,10 +128,13 @@ function Collection() {
 
         <div className="flex justify-center gap-6">
           <button
+            disabled={isLoadingAddBanner || isLoadingUpdateBanner}
             type="submit"
             className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
           >
-            Cập nhật
+            {isLoadingAddBanner || isLoadingUpdateBanner
+              ? "Đang lưu..."
+              : "Lưu"}
           </button>
         </div>
       </form>

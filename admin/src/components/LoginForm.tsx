@@ -28,7 +28,7 @@ function LoginForm() {
       });
 
       if (res?.ok) {
-        router.push("/dashboard");
+        router.replace("/dashboard");
         toast.success("Đăng nhập thành công");
       } else {
         const errorMsg = res?.error || "Email hoặc mật khẩu không đúng";

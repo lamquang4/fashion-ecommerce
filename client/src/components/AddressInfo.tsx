@@ -11,7 +11,8 @@ function AddressInfo() {
   const [addressId, setAddressId] = useState<string>("");
   const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
   const { addresses, isLoading, mutate } = useGetAddresses();
-  const { deleteAddress } = useDeleteAddress();
+  const { deleteAddress, isLoading: isLoadingDeleteAddress } =
+    useDeleteAddress();
 
   const toggleAddressModal = () => {
     setOpenAddressModal((prev) => !prev);
@@ -103,6 +104,7 @@ function AddressInfo() {
                           <button
                             className="border-0 p-1 outline-0 text-[0.9rem] text-red-500 font-medium"
                             type="button"
+                            disabled={isLoadingDeleteAddress}
                             onClick={() => handleDelete(address._id || "")}
                           >
                             Xóa

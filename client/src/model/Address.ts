@@ -33,5 +33,7 @@ const addressSchema = new Schema(
   }
 );
 
+addressSchema.index({ user: 1 });
+
 const Address = models.Address || model("Address", addressSchema);
 export default Address;

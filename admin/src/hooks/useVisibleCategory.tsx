@@ -1,8 +1,10 @@
 "use client";
 import axios from "axios";
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 export default function useVisibleCategory() {
+  const [isLoading, setIsLoading] = useState(false);
   const visibleCategory = async (id: string, status: number) => {
     const action = status === 1 ? "hiện" : "ẩn";
     const result = await Swal.fire({
@@ -17,16 +19,20 @@ export default function useVisibleCategory() {
     if (!result.isConfirmed) {
       return;
     }
+
+    setIsLoading(true);
+
     try {
-      const res = await axios.put(`/api/visible-category/${id}`, {
+      await axios.put(`/api/visible-category/${id}`, {
         status: status,
       });
-      return res.data.category;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { visibleCategory };
+  return { visibleCategory, isLoading };
 }

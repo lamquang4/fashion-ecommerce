@@ -23,7 +23,7 @@ function Coupon() {
     setKeyword,
     setStatus,
   } = useGetCoupons();
-  const { deleteCoupon } = useDeleteCoupon();
+  const { deleteCoupon, isLoading: isLoadingDeleteCoupon } = useDeleteCoupon();
 
   const array = [
     {
@@ -55,7 +55,7 @@ function Coupon() {
     try {
       await deleteCoupon(id);
       mutate();
-      toast.error("Xóa thành công");
+      toast.success("Xóa thành công");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
       mutate();
@@ -121,7 +121,7 @@ function Coupon() {
             {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
-                  <Loading height={50} size={55} color="black" thickness={6} />
+                  <Loading height={50} size={55} color="black" thickness={3} />
                 </td>
               </tr>
             ) : coupons.length > 0 ? (
@@ -184,7 +184,10 @@ function Coupon() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => handleDelete(coupon._id || "")}>
+                      <button
+                        disabled={isLoadingDeleteCoupon}
+                        onClick={() => handleDelete(coupon._id || "")}
+                      >
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>
@@ -198,7 +201,7 @@ function Coupon() {
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
-                      ClassName={"w-[180px]"}
+                      ClassName={"w-[135px]"}
                       loadingType="lazy"
                     />
                   </div>

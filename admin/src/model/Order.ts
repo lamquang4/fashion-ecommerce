@@ -30,7 +30,6 @@ const orderSchema = new Schema(
   { timestamps: true }
 );
 
-orderSchema.index({ orderCode: "text" });
 orderSchema.index({ status: 1 });
 
 const Order = models.Order || model("Order", orderSchema);

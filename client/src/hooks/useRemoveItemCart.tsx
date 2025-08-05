@@ -1,20 +1,23 @@
 import axios from "axios";
+import { useState } from "react";
 
 export function useRemoveItemCart() {
+  const [isLoading, setIsLoading] = useState(false);
   const removeItem = async (data: {
     cartId: string;
     variant: string;
     size: string;
   }) => {
+    setIsLoading(true);
     try {
-      const response = await axios.put("/api/remove-item-cart", data);
-
-      return response.data;
+      await axios.put("/api/remove-item-cart", data);
     } catch (err: any) {
       console.error("Lỗi:", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { removeItem };
+  return { removeItem, isLoading };
 }

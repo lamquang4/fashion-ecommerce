@@ -28,10 +28,6 @@ const categorySchema = new Schema(
   }
 );
 
-categorySchema.index({
-  namecategory: "text",
-  slug: "text",
-});
 categorySchema.index({ status: 1 });
 
 const Category = models.Category || model("Category", categorySchema);

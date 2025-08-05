@@ -1,8 +1,10 @@
 "use client";
 import axios from "axios";
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 export default function useDeleteSize() {
+  const [isLoading, setIsLoading] = useState(false);
   const deleteSize = async (id: string) => {
     const result = await Swal.fire({
       title: `Xác nhận xóa?`,
@@ -15,13 +17,17 @@ export default function useDeleteSize() {
 
     if (!result.isConfirmed || !id) return;
 
+    setIsLoading(true);
+
     try {
       await axios.delete(`/api/delete-size/${id}`);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { deleteSize };
+  return { deleteSize, isLoading };
 }

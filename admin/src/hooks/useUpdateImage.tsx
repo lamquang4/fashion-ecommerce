@@ -1,21 +1,25 @@
 "use client";
 import axios from "axios";
+import { useState } from "react";
 
 export default function useUpdateImage() {
+  const [isLoading, setIsLoading] = useState(false);
   const updateImage = async (formData: FormData, id: string) => {
     if (!id) return;
+    setIsLoading(true);
     try {
-      const res = await axios.put(`/api/update-image/${id}`, formData, {
+      await axios.put(`/api/update-image/${id}`, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      return res.data.image;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { updateImage };
+  return { updateImage, isLoading };
 }

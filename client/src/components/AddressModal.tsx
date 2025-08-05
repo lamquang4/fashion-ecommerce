@@ -10,6 +10,7 @@ import useAddAddress from "@/hooks/useAddAddress";
 import toast from "react-hot-toast";
 import useGetAddresses from "@/hooks/useGetAddresses";
 import { validatePhone } from "@/utils/validatePhone";
+import { useRouter } from "next/navigation";
 
 type AddressModalProps = {
   isOpen: boolean;
@@ -21,11 +22,13 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
   const { provinces } = useGetProvinces();
   const { address, mutate, isLoading } = useGetAddress(addressId);
   const { addresses, mutate: mutateAddresses } = useGetAddresses();
-  const { updateAddress } = useUpdateAddress(addressId);
-  const { addAddress } = useAddAddress();
+  const { updateAddress, isLoading: isLoadingUpdateAddress } =
+    useUpdateAddress(addressId);
+  const { addAddress, isLoading: isLoadingAddAddress } = useAddAddress();
   const [selectedProvinceName, setSelectedProvinceName] = useState<string>("");
   const [selectedWard, setSelectedWard] = useState<string>("");
   const [data, setData] = useState({ fullname: "", phone: "", speaddress: "" });
+  const router = useRouter();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -36,6 +39,16 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
   const selectedProvince = provinces?.find(
     (province) => province.province === selectedProvinceName
   );
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (!address && addressId) {
+      toast.error("Không tìm thấy địa chỉ");
+      router.push("/address");
+      return;
+    }
+  }, [address, isLoading, router]);
 
   useEffect(() => {
     if (address && !isLoading) {
@@ -227,10 +240,13 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
 
               <div className="flex gap-[15px] justify-center">
                 <button
+                  disabled={isLoadingUpdateAddress || isLoadingAddAddress}
                   type="submit"
                   className="px-[14px] py-[8px] bg-red-600 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-red-700"
                 >
-                  {addressId ? "Cập nhật" : "Thêm"}
+                  {isLoadingAddAddress || isLoadingUpdateAddress
+                    ? "Đang lưu..."
+                    : "Lưu"}
                 </button>
               </div>
             </form>

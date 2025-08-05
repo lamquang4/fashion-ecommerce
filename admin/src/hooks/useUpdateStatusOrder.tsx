@@ -1,8 +1,10 @@
 "use client";
 import axios from "axios";
+import { useState } from "react";
 import Swal from "sweetalert2";
 
 export default function useUpdateStatusOrder() {
+  const [isLoading, setIsLoading] = useState(false);
   const updateStatusOrder = async (id: string, status: number) => {
     const result = await Swal.fire({
       title: `Xác nhận?`,
@@ -16,16 +18,20 @@ export default function useUpdateStatusOrder() {
     if (!result.isConfirmed) {
       return;
     }
+
+    setIsLoading(true);
+
     try {
-      const res = await axios.put(`/api/update-status-order/${id}`, {
+      await axios.put(`/api/update-status-order/${id}`, {
         status: status,
       });
-      return res.data.banner;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { updateStatusOrder };
+  return { updateStatusOrder, isLoading };
 }

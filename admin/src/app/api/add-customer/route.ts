@@ -23,6 +23,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    if (password.length < 6) {
+      return NextResponse.json(
+        { msg: "Mật khẩu phải có ít nhất 6 ký tự" },
+        { status: 400 }
+      );
+    }
+
     const checkEmail = await User.findOne({ email });
     if (checkEmail) {
       return NextResponse.json(

@@ -10,7 +10,7 @@ function AddColor() {
     codecolor: "#000000",
   });
 
-  const { addColor } = useAddColor();
+  const { addColor, isLoading } = useAddColor();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,7 +31,7 @@ function AddColor() {
       toast.success("Thêm thành công!");
       setData({
         namecolor: "",
-        codecolor: "",
+        codecolor: "#000000",
       });
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
@@ -82,10 +82,11 @@ function AddColor() {
 
         <div className="flex justify-center gap-6">
           <button
+            disabled={isLoading}
             type="submit"
-            className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
+            className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem]"
           >
-            Thêm
+            {isLoading ? "Đang thêm..." : "Thêm"}
           </button>
           <Link
             href="/color"

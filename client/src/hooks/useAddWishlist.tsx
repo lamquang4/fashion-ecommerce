@@ -1,18 +1,20 @@
 "use client";
 import axios from "axios";
+import { useState } from "react";
 
 export default function useAddWishlist() {
-  const addWishlist = async (data: {
-    variant: string;
-  }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const addWishlist = async (data: { variant: string }) => {
+    setIsLoading(true);
     try {
-      const res = await axios.post("/api/add-wishlist", data);
-      return res.data;
+      await axios.post("/api/add-wishlist", data);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { addWishlist };
+  return { addWishlist, isLoading };
 }

@@ -24,6 +24,7 @@ function EditColor() {
   const id = params.id as string;
 
   const { color, mutate, isLoading } = useGetColor(id);
+  const { updateColor, isLoading: isLoadingUpdateColor } = useUpdateColor(id);
 
   useEffect(() => {
     if (isLoading) return;
@@ -43,8 +44,6 @@ function EditColor() {
       });
     }
   }, [color]);
-
-  const { updateColor } = useUpdateColor(id);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -107,10 +106,11 @@ function EditColor() {
 
         <div className="flex justify-center gap-6">
           <button
+            disabled={isLoadingUpdateColor}
             type="submit"
             className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
           >
-            Cập nhật
+            {isLoadingUpdateColor ? "Đang cập nhật..." : "Cập nhật"}
           </button>
           <Link
             href="/color"

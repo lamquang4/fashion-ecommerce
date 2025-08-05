@@ -5,12 +5,10 @@ import axios from "axios";
 
 export default function useAddOrder() {
   const [isLoading, setIsLoading] = useState(false);
-
   const addOrder = async (data: OrderAdd) => {
     setIsLoading(true);
     try {
-      const res = await axios.post("/api/add-order", data);
-      return res.data.order;
+      await axios.post("/api/add-order", data);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

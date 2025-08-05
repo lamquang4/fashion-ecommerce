@@ -29,8 +29,8 @@ function Admin() {
     setStatus,
     mutate,
   } = useGetAdmins();
-  const { blockUser } = useBlockUser();
-  const { deleteUser } = useDeleteUser();
+  const { blockUser, isLoading: isLoadingBlockUser } = useBlockUser();
+  const { deleteUser, isLoading: isLoadingDeleteUser } = useDeleteUser();
 
   const array = [
     {
@@ -58,7 +58,7 @@ function Admin() {
     try {
       await deleteUser(id);
       mutate();
-      toast.error("Xóa thành công");
+      toast.success("Xóa thành công");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -141,7 +141,7 @@ function Admin() {
             {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
-                  <Loading height={50} size={55} color="black" thickness={6} />
+                  <Loading height={50} size={55} color="black" thickness={3} />
                 </td>
               </tr>
             ) : admins.length > 0 ? (
@@ -181,6 +181,7 @@ function Admin() {
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex items-center gap-[15px]">
                       <button
+                        disabled={isLoadingBlockUser}
                         onClick={() =>
                           handleBlock(
                             admin._id || "",
@@ -199,7 +200,10 @@ function Admin() {
                         <LiaEdit size={22} className="text-[#076ffe]" />
                       </Link>
 
-                      <button onClick={() => handleDelete(admin._id || "")}>
+                      <button
+                        disabled={isLoadingDeleteUser}
+                        onClick={() => handleDelete(admin._id || "")}
+                      >
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
                     </div>
@@ -213,7 +217,7 @@ function Admin() {
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}
-                      ClassName={"w-[180px]"}
+                      ClassName={"w-[135px]"}
                       loadingType="lazy"
                     />
                   </div>

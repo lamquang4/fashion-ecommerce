@@ -2,14 +2,11 @@
 import Link from "next/link";
 import InputImage from "./InputImage";
 import toast from "react-hot-toast";
-import { useState } from "react";
 import useAddBanner from "@/hooks/useAddBanner";
 import { useInputImage } from "@/hooks/useInputImage";
 
 function AddMainBanner() {
-  const [success, setSuccess] = useState(false);
-
-  const { addBanner } = useAddBanner();
+  const { addBanner, isLoading } = useAddBanner();
 
   const {
     previewImages: desktopPreviewImages,
@@ -105,10 +102,11 @@ function AddMainBanner() {
 
           <div className="flex justify-center gap-6">
             <button
+              disabled={isLoading}
               type="submit"
-              className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
+              className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem]"
             >
-              Thêm
+              {isLoading ? "Đang thêm..." : "Thêm"}
             </button>
             <Link
               href="/mainbanner"

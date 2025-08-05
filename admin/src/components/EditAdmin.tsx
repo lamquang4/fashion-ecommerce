@@ -26,7 +26,7 @@ function EditAdmin() {
   const id = params.id as string;
 
   const { user, mutate, isLoading } = useGetUser(id);
-  const { updateUser } = useUpdateUser(id);
+  const { updateUser, isLoading: isLoadingUpdateUser } = useUpdateUser(id);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -204,10 +204,11 @@ function EditAdmin() {
 
         <div className="flex justify-center gap-6">
           <button
+            disabled={isLoadingUpdateUser}
             type="submit"
             className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
           >
-            Cập nhật
+            {isLoadingUpdateUser ? "Đang cập nhật..." : "Cập nhật"}
           </button>
           <Link
             href="/admin"
