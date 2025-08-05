@@ -12,7 +12,7 @@ function AddressInfo() {
   const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
   const { addresses, isLoading, mutate } = useGetAddresses();
   const { deleteAddress } = useDeleteAddress();
-  
+
   const toggleAddressModal = () => {
     setOpenAddressModal((prev) => !prev);
     setAddressId("");
@@ -58,7 +58,7 @@ function AddressInfo() {
 
               <div>
                 {isLoading ? (
-                  <Loading height={60} size={50} color="black" />
+                  <Loading height={70} size={50} color="black" thickness={2} />
                 ) : addresses.length > 0 ? (
                   addresses.map((address, index) => (
                     <div key={index}>

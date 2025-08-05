@@ -138,7 +138,7 @@ function CartItem() {
             Giỏ hàng ({totalQuantity})
           </h2>
           {isLoading ? (
-            <Loading height={60} />
+            <Loading height={70} size={50} color="black" thickness={2} />
           ) : cart?.productsInCart.length! > 0 ? (
             <form onSubmit={handleSubmit}>
               <div className="flex gap-8 w-full lg:flex-row flex-col">

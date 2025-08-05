@@ -111,7 +111,7 @@ function Coupon() {
                   onFilterChange={(val) => setStatus(val)}
                 />
               </th>
-              
+
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Hành động
               </th>
@@ -121,7 +121,7 @@ function Coupon() {
             {isLoading ? (
               <tr>
                 <td colSpan={8} className="w-full">
-                  <Loading height={50} size={55} color="black" />
+                  <Loading height={50} size={55} color="black" thickness={6} />
                 </td>
               </tr>
             ) : coupons.length > 0 ? (

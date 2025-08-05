@@ -16,7 +16,7 @@ export default function Home() {
     <>
       <section>
         {isLoading ? (
-          <Loading height={60} size={50} color="black" />
+          <Loading height={60} size={50} color="black" thickness={2} />
         ) : (
           <>
             <BannerCarousel />

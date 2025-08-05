@@ -24,7 +24,7 @@ function WishlistItem() {
             Yêu thích ({wishlist?.productsInWishlist.length || 0})
           </h2>
           {isLoading ? (
-            <Loading height={60} />
+            <Loading height={70} size={50} color="black" thickness={2} />
           ) : wishlist?.productsInWishlist.length! > 0 ? (
             <div className="flex gap-8 max-w-xl mx-auto w-full">
               <div className="basis-[100%]">

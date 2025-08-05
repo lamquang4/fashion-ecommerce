@@ -32,7 +32,7 @@ function LoginForm() {
       });
 
       if (res?.ok) {
-        router.push("/");
+        router.replace("/");
         setData({
           email: "",
           password: "",

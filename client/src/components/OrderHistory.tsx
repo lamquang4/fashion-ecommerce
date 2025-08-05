@@ -79,7 +79,7 @@ function OrderHistory() {
 
             <div className="flex gap-4.5 flex-col">
               {isLoading ? (
-                <Loading height={60} size={50} color="black" />
+                <Loading height={70} size={50} color="black" thickness={2} />
               ) : orders.length > 0 ? (
                 orders.map((order, index) => (
                   <div
