@@ -16,6 +16,13 @@ export async function GET(req: NextRequest) {
     const userId = session?.user?.id;
     const status = searchParams.get("status");
 
+    if (!userId) {
+      return NextResponse.json(
+        { msg: "Tài khoản chưa đăng nhập" },
+        { status: 404 }
+      );
+    }
+
     const query: any = { user: new mongoose.Types.ObjectId(userId) };
     if (status) {
       query.status = parseInt(status);

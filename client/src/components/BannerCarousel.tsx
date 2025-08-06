@@ -12,7 +12,7 @@ function BannerCarousel() {
 
   return (
     <>
-      {banners1.length > 0 && banners2.length > 0 && (
+      {(banners1.length > 0 || banners2.length > 0) && (
         <section className="w-full">
           <Swiper
             modules={[Autoplay, Pagination]}
@@ -27,10 +27,14 @@ function BannerCarousel() {
                 <div className="relative block w-full">
                   <div className="w-full">
                     <picture>
-                      <source
-                        srcSet={banners2[index].image}
-                        media="(max-width: 640px)"
-                      />
+                      {banners2.map((banner2, index) => (
+                        <source
+                          key={index}
+                          srcSet={banner2.image}
+                          media="(max-width: 640px)"
+                        />
+                      ))}
+
                       <Image
                         Src={banner1.image}
                         Alt={"banner"}

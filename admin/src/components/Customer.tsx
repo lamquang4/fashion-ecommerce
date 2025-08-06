@@ -63,10 +63,10 @@ function Customer() {
     }
     try {
       await blockUser(id, status);
-      mutate();
+      mutate(undefined, true);
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
-      mutate();
+      mutate(undefined, true);
     }
   };
   return (

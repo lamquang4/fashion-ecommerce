@@ -87,10 +87,10 @@ export async function PUT(
       );
     }
 
-    if (discountType === "2") {
+    if (discountType === "1") {
       if (!validatePositiveNumber(discountValue)) {
         return NextResponse.json(
-          { msg: "Giá trị giảm giá phải lớn hơn 0" },
+          { msg: "Giá trị tiền cố định giảm giá phải lớn hơn 0" },
           { status: 400 }
         );
       }
@@ -137,7 +137,7 @@ export async function PUT(
 
     const couponData: any = {
       code,
-      discountValue: discountType === 1 ? 0 : discountValue,
+      discountValue: discountValue,
       discountType,
       amount,
       limit,

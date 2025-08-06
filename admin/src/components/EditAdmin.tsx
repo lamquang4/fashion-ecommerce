@@ -65,12 +65,21 @@ function EditAdmin() {
     e.preventDefault();
     if (!validateEmail(data.email)) {
       toast.error("Email không hợp lệ");
+      mutate(undefined, true);
       return;
     }
     if (!validatePhone(data.phone)) {
       toast.error("Số điện thoại không hợp lệ");
+      mutate(undefined, true);
       return;
     }
+
+    if (session?.user.id === id) {
+      toast(
+        "Tài khoản hiện đang đăng nhập nên sẽ không thấy thông tin thay đổi chỉ khi đăng nhập lại!"
+      );
+    }
+
     try {
       await updateUser({
         fullname: data.fullname.trim(),
@@ -81,11 +90,6 @@ function EditAdmin() {
         role: Number(data.role),
       });
 
-      if (session?.user.id === id) {
-        toast(
-          "Tài khoản hiện đang đăng nhập nên sẽ không thấy thông tin thay đổi chỉ khi đăng nhập lại!"
-        );
-      }
       toast.success("Cập nhật thành công!");
 
       setData((prev) => ({

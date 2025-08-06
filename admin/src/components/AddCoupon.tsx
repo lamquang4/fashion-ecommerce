@@ -57,7 +57,7 @@ function AddCoupon() {
       return;
     }
 
-    if (data.discountType === "2") {
+    if (data.discountType === "1") {
       if (!validatePositiveNumber(data.discountValue)) {
         toast.error("Giá trị tiền cố định giảm giá phải lớn hơn 0");
         return;
@@ -93,7 +93,7 @@ function AddCoupon() {
         limit: data.limit,
         amount: data.amount,
         discountType: parseInt(data.discountType),
-        discountValue: data.discountType === "1" ? 0 : data.discountValue,
+        discountValue: data.discountValue,
         startDate: new Date(data.startDate),
         expiryDate: new Date(data.expiryDate),
         minOrderValue: data.minOrderValue,
@@ -191,17 +191,20 @@ function AddCoupon() {
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
               >
                 <option value="">Chọn loại giảm giá</option>
-                <option value="1">Miễn phí giao hàng</option>
                 <option value="0">Phần trăm %</option>
-                <option value="2">Số tiền cố định</option>
+                <option value="1">Số tiền cố định</option>
               </select>
             </div>
 
-            {data.discountType != "" && data.discountType != "1" && (
+            {data.discountType !== "" && (
               <div className="flex flex-col gap-1 w-full">
                 <label htmlFor="" className="text-[0.95rem] text-black">
                   {`Giá trị ${
-                    data.discountType === "0" ? "phần trăm" : "tiền cố định"
+                    data.discountType === "0"
+                      ? "phần trăm"
+                      : data.discountType === "1"
+                      ? "tiền cố định"
+                      : ""
                   } giảm giá `}
                 </label>
                 <input

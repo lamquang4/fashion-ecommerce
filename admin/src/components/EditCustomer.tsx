@@ -59,10 +59,12 @@ function EditCustomer() {
     e.preventDefault();
     if (!validateEmail(data.email.trim())) {
       toast.error("Email không hợp lệ");
+      mutate(undefined, true);
       return;
     }
     if (!validatePhone(data.phone.trim())) {
       toast.error("Số điện thoại không hợp lệ");
+      mutate(undefined, true);
       return;
     }
     try {

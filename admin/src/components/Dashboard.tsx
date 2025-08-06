@@ -230,7 +230,12 @@ function Dashboard() {
               {isLoading ? (
                 <tr>
                   <td colSpan={8} className="w-full">
-                    <Loading height={50} />
+                    <Loading
+                      height={50}
+                      size={55}
+                      color="black"
+                      thickness={3}
+                    />
                   </td>
                 </tr>
               ) : topProducts.length > 0 ? (

@@ -10,6 +10,13 @@ export async function GET(req: NextRequest) {
     const session = await getServerSession(options);
     const userId = session?.user?.id;
 
+    if (!userId) {
+      return NextResponse.json(
+        { msg: "Tài khoản chưa đăng nhập" },
+        { status: 404 }
+      );
+    }
+
     const addresses = await Address.find({ user: userId });
 
     return NextResponse.json({

@@ -100,6 +100,7 @@ function EditProduct() {
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
+      mutate();
     }
   };
 
@@ -193,6 +194,7 @@ function EditProduct() {
 
     if (Number(data.price) < Number(data.discount)) {
       toast.error("Giá sản phẩm phải lớn hơn giá giảm");
+      mutate(undefined, true);
       return;
     }
 

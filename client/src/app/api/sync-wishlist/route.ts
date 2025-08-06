@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
 
     if (!userId)
       return NextResponse.json(
-        { msg: "Người dùng chưa đăng nhập" },
+        { msg: "Tài khoản chưa đăng nhập" },
         { status: 401 }
       );
 

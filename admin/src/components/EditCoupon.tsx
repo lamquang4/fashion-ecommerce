@@ -70,29 +70,40 @@ function EditCoupon() {
     const expiry = new Date(data.expiryDate);
     const now = new Date();
 
+    if (coupon?.status === 3) {
+      toast.error("Phiếu giảm giá đã hết hạn nên không được cập nhật!");
+      mutate(undefined, true);
+      return;
+    }
+
     if (start < now && coupon?.status != 1) {
       toast.error("Ngày bắt đầu không được sau ngày hiện tại");
+      mutate(undefined, true);
       return;
     }
 
     if (start >= expiry && coupon?.status != 1) {
       toast.error("Ngày kết thúc phải sau ngày bắt đầu");
+      mutate(undefined, true);
       return;
     }
 
     if (!validatePositiveNumber(data.amount)) {
       toast.error("Số lượng phải lớn hơn 0");
+      mutate(undefined, true);
       return;
     }
 
     if (!validatePositiveNumber(data.limit)) {
       toast.error("Số lần dùng phải lớn hơn 0");
+      mutate(undefined, true);
       return;
     }
 
     if (data.discountType === "2") {
       if (!validatePositiveNumber(data.discountValue)) {
         toast.error("Giá trị cố định giảm giá phải lớn hơn 0");
+        mutate(undefined, true);
         return;
       }
     }
@@ -100,6 +111,7 @@ function EditCoupon() {
     if (data.discountType === "0") {
       if (!validatePercentNumber(data.discountValue)) {
         toast.error("Giá trị % giảm giá từ 1 đến 100");
+        mutate(undefined, true);
         return;
       }
     }
@@ -108,6 +120,7 @@ function EditCoupon() {
       toast.error(
         "Giá trị tiền cố định đơn hàng tối thiểu phải lớn hơn hoặc bằng 0"
       );
+      mutate(undefined, true);
       return;
     }
 
@@ -116,6 +129,7 @@ function EditCoupon() {
         toast.error(
           "Giá trị tiền cố định giảm tối đa (chỉ áp dụng loại phiếu %) phải lớn hơn 0"
         );
+        mutate(undefined, true);
         return;
       }
     }
@@ -218,33 +232,34 @@ function EditCoupon() {
                   coupon?.status === 1 ? "cursor-not-allowed" : ""
                 }`}
               >
-                <option value="1">Miễn phí giao hàng</option>
                 <option value="0">Phần trăm %</option>
-                <option value="2">Số tiền cố định</option>
+                <option value="1">Số tiền cố định</option>
               </select>
             </div>
 
-            {data.discountType !== "1" && (
-              <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="" className="text-[0.95rem] text-black">
-                  {`Giá trị ${
-                    data.discountType === "0" ? "phần trăm" : "tiền cố định"
-                  } giảm giá `}
-                </label>
-                <input
-                  type="number"
-                  name="discountValue"
-                  inputMode="numeric"
-                  value={data.discountValue}
-                  disabled={coupon?.status === 1}
-                  onChange={handleChange}
-                  required
-                  className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
-                    coupon?.status === 1 ? "cursor-not-allowed" : ""
-                  }`}
-                />
-              </div>
-            )}
+            <div className="flex flex-col gap-1 w-full">
+              <label htmlFor="" className="text-[0.95rem] text-black">
+                {`Giá trị ${
+                  data.discountType === "0"
+                    ? "phần trăm"
+                    : data.discountType === "1"
+                    ? "tiền cố định"
+                    : ""
+                } giảm giá `}
+              </label>
+              <input
+                type="number"
+                name="discountValue"
+                inputMode="numeric"
+                value={data.discountValue}
+                disabled={coupon?.status === 1}
+                onChange={handleChange}
+                required
+                className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
+                  coupon?.status === 1 ? "cursor-not-allowed" : ""
+                }`}
+              />
+            </div>
 
             <div className="flex flex-col gap-1">
               <label htmlFor="" className="text-[0.95rem] text-black">

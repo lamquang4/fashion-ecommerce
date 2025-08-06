@@ -64,7 +64,7 @@ function SearchDesktop() {
 
           <div className="overflow-y-auto max-h-96 flex flex-col">
             {isLoading ? (
-              <Loading height={25} size={35} color={"#c00"} />
+              <Loading height={25} size={35} color={"#c00"} thickness={3} />
             ) : products.length > 0 ? (
               products.map((product, index) => (
                 <div className="flex w-full" key={index}>

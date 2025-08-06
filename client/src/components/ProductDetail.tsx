@@ -21,8 +21,6 @@ import useAddWishlist from "@/hooks/useAddWishlist";
 function ProductDetail() {
   const params = useParams();
   const slug = params.slug as string;
-  const { product, isLoading } = useGetProductSlug(slug);
-  const { coupons } = useGetCoupons();
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedInventory, setSelectedInventory] = useState<Inventory>();
   const [selectedSize, setSelectedSize] = useState<Size>();
@@ -33,6 +31,8 @@ function ProductDetail() {
   const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const { product, isLoading } = useGetProductSlug(slug);
+  const { coupons } = useGetCoupons();
   const { addCart, isLoading: isLoadingAddCart } = useAddCart();
   const { addWishlist, isLoading: isLoadingAddWishlist } = useAddWishlist();
   const { mutate: mutateCart } = useGetCart();
@@ -303,13 +303,13 @@ function ProductDetail() {
                           onClick={toggleOpen}
                         >
                           <div className="border border-[#197FB6] text-[#197FB6] px-3 py-[7px] relative text-[0.9rem] font-medium uppercase">
-                            {coupon.discountType === 2
+                            {coupon.discountType === 1
                               ? `Giảm ${coupon.discountValue.toLocaleString(
                                   "vi-VN"
                                 )}₫`
                               : coupon.discountType === 0
                               ? `Giảm ${coupon.discountValue}%`
-                              : "Miễn phí giao hàng"}
+                              : ""}
                           </div>
                         </div>
                       ))}

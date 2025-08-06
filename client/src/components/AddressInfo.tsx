@@ -35,6 +35,7 @@ function AddressInfo() {
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
+      mutate();
     }
   };
 
@@ -59,7 +60,7 @@ function AddressInfo() {
 
               <div>
                 {isLoading ? (
-                  <Loading height={70} size={50} color="black" thickness={2} />
+                  <Loading height={70} size={50} color="black" thickness={3} />
                 ) : addresses.length > 0 ? (
                   addresses.map((address, index) => (
                     <div key={index}>

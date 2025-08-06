@@ -143,11 +143,11 @@ function Coupon() {
                       )}₫`}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {coupon.discountType === 2
+                    {coupon.discountType === 1
                       ? `${coupon.discountValue.toLocaleString("vi-VN")}₫`
                       : coupon.discountType === 0
                       ? `${coupon.discountValue}%`
-                      : "Miễn phí giao hàng"}
+                      : ""}
                   </td>
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">

@@ -52,13 +52,13 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
                   <div className="flex items-center border-l border-r px-3 py-4 border-[#197FB6] w-full bg-white">
                     <div className="flex gap-2 flex-col w-full">
                       <h2 className="text-[1.35rem] font-semibold uppercase">
-                        {coupon.discountType === 2
+                        {coupon.discountType === 1
                           ? `Giảm ${coupon.discountValue.toLocaleString(
                               "vi-VN"
                             )}₫`
                           : coupon.discountType === 0
                           ? `Giảm ${coupon.discountValue}%`
-                          : "Miễn phí giao hàng"}
+                          : ""}
                       </h2>
                       <p className="text-[0.9rem] font-medium text-black">
                         {coupon.minOrderValue

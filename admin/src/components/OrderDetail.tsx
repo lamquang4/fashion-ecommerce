@@ -208,7 +208,7 @@ function OrderDetail() {
                         Phiếu giảm giá:
                       </td>
                       <td className="p-[15px]">
-                        {order?.coupon?.discountType === 2 ? (
+                        {order?.coupon?.discountType === 1 ? (
                           <p className=" text-gray-600">
                             -
                             {order?.coupon?.discountValue.toLocaleString(
@@ -224,8 +224,6 @@ function OrderDetail() {
                               order?.coupon?.maxDiscountValue!
                             )}
                           </p>
-                        ) : order?.coupon?.discountType === 1 ? (
-                          <p className=" text-gray-600">Miễn phí giao hàng</p>
                         ) : (
                           ""
                         )}

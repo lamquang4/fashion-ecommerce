@@ -34,7 +34,7 @@ function OrderDetail() {
         <SideBarMenu />
         <div className="w-full max-w-full border border-gray-300 lg:max-w-[700px]">
           {isLoading ? (
-            <Loading height={80} />
+            <Loading height={70} size={50} color="black" thickness={3} />
           ) : (
             <div>
               <div className="flex justify-between px-[15px] sm:px-[20px] py-[30px] border-b border-gray-300">
@@ -118,11 +118,9 @@ function OrderDetail() {
                   Số điện thoại: {order?.phone}
                 </span>
                 <span className="text-[0.95rem]">
-                  Địa chỉ: {order?.speaddress}
-                  {", "}
-                  {order?.city}
-                  {", "}
-                  {order?.ward}
+                  Địa chỉ: {order?.speaddress + ", "}
+                  {order?.city + ", "}
+                  {order?.ward + ", "}
                 </span>
                 <span className="text-[0.95rem]">
                   Phương thức thanh toán:{" "}
@@ -210,8 +208,8 @@ function OrderDetail() {
                           Phiếu giảm giá:
                         </td>
                         <td className="p-[15px]">
-                          {order?.coupon?.discountType === 2 ? (
-                            <p className=" text-gray-600">
+                          {order?.coupon?.discountType === 1 ? (
+                            <p className=" text-black">
                               -
                               {order?.coupon?.discountValue.toLocaleString(
                                 "vi-VN"
@@ -219,7 +217,7 @@ function OrderDetail() {
                               ₫
                             </p>
                           ) : order?.coupon?.discountType === 0 ? (
-                            <p className=" text-gray-600">
+                            <p className=" text-black">
                               -
                               {Math.min(
                                 (totalPrice * order?.coupon?.discountValue) /
@@ -227,8 +225,6 @@ function OrderDetail() {
                                 order?.coupon?.maxDiscountValue!
                               )}
                             </p>
-                          ) : order?.coupon?.discountType === 1 ? (
-                            <p className=" text-gray-600">Miễn phí giao hàng</p>
                           ) : (
                             ""
                           )}

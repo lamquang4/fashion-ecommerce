@@ -35,7 +35,8 @@ function CheckoutForm() {
   const { addOrder, isLoading: isLoadingAddOrder } = useAddOrder();
   const { deleteCart, isLoading: isLoadingDeleteCart } = useDeleteCart();
   const { createPaymentMomo } = usePaymentMomo();
-  const { checkPaymentStatusMomo } = useStatusMomo();
+  const { checkPaymentStatusMomo, isLoading: isLoadingCheckPaymentStatusMomo } =
+    useStatusMomo();
   const router = useRouter();
 
   const totalPrice =
@@ -188,7 +189,7 @@ function CheckoutForm() {
   let finalTotal = totalPrice;
 
   if (coupon) {
-    if (coupon.discountType === 2) {
+    if (coupon.discountType === 1) {
       finalTotal -= coupon.discountValue;
     } else if (coupon.discountType === 0) {
       const discount = Math.min(
@@ -207,7 +208,7 @@ function CheckoutForm() {
       return;
     }
 
-    getCoupon(couponCode, totalPrice);
+    getCoupon(couponCode.trim(), totalPrice);
 
     mutate();
 
@@ -221,6 +222,13 @@ function CheckoutForm() {
 
     if (paymethod === undefined) {
       toast.error("Vui lòng chọn phương thức thanh toán");
+      return;
+    }
+
+    if (paymethod === 1 && finalTotal === 0) {
+      toast.error(
+        "Vui lòng chọn thanh toán COD vì đơn hàng có tổng tiền bằng 0"
+      );
       return;
     }
 
@@ -610,6 +618,7 @@ function CheckoutForm() {
 
                     <button
                       type="button"
+                      disabled={isLoadingCoupon}
                       onClick={() => handleCoupon()}
                       className="w-[120px] text-[0.9rem] rounded-md bg-[#197FB6] py-2 font-medium text-white"
                     >
@@ -632,7 +641,7 @@ function CheckoutForm() {
                     {coupon && (
                       <div className="flex items-center justify-between text-[1rem] font-medium">
                         <p className=" text-gray-600">Phiếu giảm giá</p>
-                        {coupon.discountType === 2 ? (
+                        {coupon.discountType === 1 ? (
                           <p className=" text-gray-600">
                             -{coupon.discountValue.toLocaleString("vi-VN")}₫
                           </p>
@@ -642,10 +651,11 @@ function CheckoutForm() {
                             {Math.min(
                               (totalPrice * coupon.discountValue) / 100,
                               coupon.maxDiscountValue!
-                            )}
+                            ).toLocaleString("vi-VN")}
+                            ₫
                           </p>
                         ) : (
-                          <p className=" text-gray-600">Miễn phí giao hàng</p>
+                          <p className=" text-gray-600"></p>
                         )}
                       </div>
                     )}
@@ -666,7 +676,9 @@ function CheckoutForm() {
           <MenuSideCoupon toggleMenu={toggleOpen} isOpen={menuOpen} />
         </div>
 
-        {(isLoadingAddOrder || isLoadingDeleteCart) && (
+        {(isLoadingAddOrder ||
+          isLoadingDeleteCart ||
+          isLoadingCheckPaymentStatusMomo) && (
           <div className="fixed inset-0 z-50 flex flex-col items-center gap-8 justify-center text-center bg-black/50">
             <Loading height={0} size={55} color="white" thickness={8} />
             <h2 className="text-[1.2rem] font-semibold text-white">
