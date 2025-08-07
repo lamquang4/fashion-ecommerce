@@ -67,7 +67,7 @@ function PromoteBanner() {
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
             {isLoading ? (
-              <Loading height={70} size={55} color="black" thickness={3} />
+              <Loading height={60} size={50} color="black" thickness={2} />
             ) : (
               <div className="flex flex-col gap-[20px] sm:gap-[30px]">
                 {[0, 1].map((index) => {

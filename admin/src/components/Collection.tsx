@@ -70,7 +70,7 @@ function Collection() {
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
             {isLoading ? (
-              <Loading height={70} size={55} color="black" thickness={3} />
+              <Loading height={70} size={50} color="black" thickness={2} />
             ) : (
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-[20px]">
                 {[0, 1].map((index) => {

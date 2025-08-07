@@ -231,10 +231,10 @@ function Dashboard() {
                 <tr>
                   <td colSpan={8} className="w-full">
                     <Loading
-                      height={50}
-                      size={55}
+                      height={60}
+                      size={50}
                       color="black"
-                      thickness={3}
+                      thickness={2}
                     />
                   </td>
                 </tr>
@@ -302,7 +302,11 @@ function Dashboard() {
 
                     <td className="py-[1rem] text-[0.9rem] text-[#444]">
                       {product.category.namecategory}/
-                      {product.category.gender === 1 ? "Nam" : "Nữ"}
+                      {product.category.gender === 1
+                        ? "Nam"
+                        : product.category.gender === 0
+                        ? "Nữ"
+                        : ""}
                     </td>
 
                     <td className="py-[1rem] text-[0.9rem] text-[#444]">
