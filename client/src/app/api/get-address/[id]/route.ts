@@ -4,7 +4,7 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 export async function GET(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectMongoDB();

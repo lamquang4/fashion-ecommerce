@@ -9,7 +9,7 @@ import { FreeMode } from "swiper/modules";
 import useGetCategories from "@/hooks/useGetCategories";
 
 function CategoryList() {
-  const [selectedGender, setSelectedGender] = useState<Number>(1);
+  const [selectedGender, setSelectedGender] = useState<number>(1);
   const { categoriesMale, categoriesFemale } = useGetCategories();
 
   const categories = selectedGender === 1 ? categoriesMale : categoriesFemale;

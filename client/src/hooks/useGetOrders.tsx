@@ -2,7 +2,6 @@
 import { OrderFull } from "@/types/type";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
-import { useState } from "react";
 import useSWR from "swr";
 
 type ResponseType = {

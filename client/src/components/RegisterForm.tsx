@@ -1,6 +1,5 @@
 "use client";
 import Link from "next/link";
-import DifferentLR from "./DifferentLR";
 import { useState } from "react";
 import { validateEmail } from "@/utils/validateEmail";
 import { validatePhone } from "@/utils/validatePhone";

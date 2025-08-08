@@ -3,7 +3,7 @@ import Cart from "@/model/Cart";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
 import { options } from "../auth/[...nextauth]/options";
-export async function DELETE(req: NextRequest) {
+export async function DELETE(_req: NextRequest) {
   try {
     await connectMongoDB();
     const session = await getServerSession(options);

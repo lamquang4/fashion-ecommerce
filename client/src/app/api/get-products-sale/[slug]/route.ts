@@ -5,7 +5,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   req: NextRequest,
-  { params }: { params: { slug: string } }
+  { params }: { params: Promise<{ slug: string }> }
 ) {
   try {
     await connectMongoDB();
@@ -23,7 +23,7 @@ export async function GET(
     const colors = searchParams.getAll("color");
     const sort = searchParams.get("sort");
 
-    let categoryQuery: any = { status: 1 };
+    const categoryQuery: any = { status: 1 };
     let categoryIds: any[] = [];
 
     if (slug === "nam") {

@@ -5,16 +5,16 @@ import axios from "axios";
 
 export async function POST(
   _req: NextRequest,
-  { params }: { params: { orderId: string } }
+  { params }: { params: Promise<{ orderId: string }> }
 ) {
   try {
     await connectMongoDB();
 
     const { orderId } = await params;
 
-    var partnerCode = process.env.MOMO_PARTNERCODE;
-    var accessKey = process.env.MOMO_ACCESSKEY;
-    var secretKey = process.env.MOMO_SECRETKEY;
+    const partnerCode = process.env.MOMO_PARTNERCODE;
+    const accessKey = process.env.MOMO_ACCESSKEY;
+    const secretKey = process.env.MOMO_SECRETKEY;
     const requestId = orderId;
 
     const rawSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=${partnerCode}&requestId=${requestId}`;
