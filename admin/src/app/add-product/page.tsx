@@ -1,10 +1,13 @@
+import { Suspense } from "react";
 import LayoutPage from "../../components/LayoutPage";
 import AddProduct from "../../components/AddProduct";
 
-export default async function page() {
+export default function Page() {
   return (
     <LayoutPage>
-      <AddProduct />
+      <Suspense>
+        <AddProduct />
+      </Suspense>
     </LayoutPage>
   );
 }
