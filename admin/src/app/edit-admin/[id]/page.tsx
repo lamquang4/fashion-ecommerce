@@ -1,10 +1,13 @@
 import EditAdmin from "@/components/EditAdmin";
 import LayoutPage from "@/components/LayoutPage";
+import { Suspense } from "react";
 
 export default async function page() {
   return (
     <LayoutPage>
-      <EditAdmin />
+      <Suspense>
+        <EditAdmin />
+      </Suspense>
     </LayoutPage>
   );
 }

@@ -1,10 +1,13 @@
 import LayoutPage from "../../components/LayoutPage";
 import AddMainBanner from "../../components/AddMainBanner";
+import { Suspense } from "react";
 
 export default async function page() {
   return (
     <LayoutPage>
-      <AddMainBanner />
+      <Suspense>
+        <AddMainBanner />
+      </Suspense>
     </LayoutPage>
   );
 }
