@@ -7,7 +7,8 @@ export default function useAddCategory() {
   const addCategory = async (formData: FormData) => {
     setIsLoading(true);
     try {
-      await axios.post("/api/add-category", formData, {
+      const url = `/api/add-category`;
+      await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

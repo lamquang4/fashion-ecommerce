@@ -9,7 +9,8 @@ export default function useUpdateCoupon(id: string) {
     if (!id) return;
     setIsLoading(true);
     try {
-      await axios.put(`/api/update-coupon/${id}`, data);
+      const url = `/api/update-coupon/${id}`;
+      await axios.put(url, data);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

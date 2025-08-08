@@ -1,12 +1,12 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Banner from "@/model/Banner";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export async function GET(_req: NextRequest) {
+export async function GET() {
   try {
     await connectMongoDB();
-    const data = await Banner.find({ type: { $in: 3 } });
-    return NextResponse.json(data);
+    const collections = await Banner.find({ type: { $in: 3 } });
+    return NextResponse.json({ collections });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 export async function GET(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -15,13 +15,13 @@ export async function GET(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const data = await Color.findById(id);
+    const color = await Color.findById(id);
 
-    if (!data) {
+    if (!color) {
       return NextResponse.json({ msg: "Không tìm thấy màu" }, { status: 404 });
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json({ color });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

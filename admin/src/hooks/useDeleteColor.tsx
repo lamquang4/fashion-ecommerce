@@ -20,7 +20,8 @@ export default function useDeleteColor() {
     setIsLoading(true);
 
     try {
-      await axios.delete(`/api/delete-color/${id}`);
+      const url = `/api/delete-color/${id}`;
+      await axios.delete(url);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

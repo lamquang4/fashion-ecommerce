@@ -23,7 +23,8 @@ export default function useVisibleCategory() {
     setIsLoading(true);
 
     try {
-      await axios.put(`/api/visible-category/${id}`, {
+      const url = `/api/visible-category/${id}`;
+      await axios.put(url, {
         status: status,
       });
     } catch (err) {

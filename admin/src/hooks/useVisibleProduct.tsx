@@ -22,7 +22,8 @@ export default function useVisibleProduct() {
 
     setIsLoading(true);
     try {
-      await axios.put(`/api/visible-product/${id}`, {
+      const url = `/api/visible-product/${id}`;
+      await axios.put(url, {
         status: status,
       });
     } catch (err) {

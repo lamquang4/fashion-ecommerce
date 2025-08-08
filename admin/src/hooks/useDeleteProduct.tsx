@@ -20,7 +20,8 @@ export default function useDeleteProduct() {
     setIsLoading(true);
 
     try {
-      await axios.delete(`/api/delete-product/${id}`);
+      const url = `/api/delete-product/${id}`;
+      await axios.delete(url);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

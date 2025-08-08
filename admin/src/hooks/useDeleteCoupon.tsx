@@ -20,7 +20,8 @@ export default function useDeleteCoupon() {
     setIsLoading(true);
 
     try {
-      await axios.delete(`/api/delete-coupon/${id}`);
+      const url = `/api/delete-coupon/${id}`;
+      await axios.delete(url);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

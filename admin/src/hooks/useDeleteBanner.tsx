@@ -20,7 +20,8 @@ export default function useDeleteBanner() {
     setIsLoading(true);
 
     try {
-      await axios.delete(`/api/delete-banner/${id}`);
+      const url = `/api/delete-banner/${id}`;
+      await axios.delete(url);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

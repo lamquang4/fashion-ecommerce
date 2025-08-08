@@ -23,7 +23,8 @@ export default function useVisibleBanner() {
     setIsLoading(true);
 
     try {
-      await axios.put(`/api/visible-banner/${id}`, {
+      const url = `/api/visible-banner/${id}`;
+      await axios.put(url, {
         status: status,
       });
     } catch (err) {

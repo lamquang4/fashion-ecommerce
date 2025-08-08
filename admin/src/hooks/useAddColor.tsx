@@ -8,8 +8,8 @@ export default function useAddColor() {
   const addColor = async (data: Color) => {
     setIsLoading(true);
     try {
-      const res = await axios.post("/api/add-color", data);
-      return res.data.color;
+      const url = `/api/add-color`;
+      await axios.post(url, data);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

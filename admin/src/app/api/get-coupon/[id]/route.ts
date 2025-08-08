@@ -15,16 +15,16 @@ export async function GET(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const data = await Coupon.findById(id);
+    const coupon = await Coupon.findById(id);
 
-    if (!data) {
+    if (!coupon) {
       return NextResponse.json(
         { msg: "Không tìm thấy phiếu giảm giá" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json({ coupon });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

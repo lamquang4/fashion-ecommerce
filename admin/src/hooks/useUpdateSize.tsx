@@ -9,7 +9,8 @@ export default function useUpdateSize(id: string) {
     if (!id) return;
     setIsLoading(true);
     try {
-      await axios.put(`/api/update-size/${id}`, data);
+      const url = `/api/update-size/${id}`;
+      await axios.put(url, data);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

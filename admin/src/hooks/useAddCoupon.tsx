@@ -8,7 +8,8 @@ export default function useAddCoupon() {
   const addCoupon = async (data: Coupon) => {
     setIsLoading(true);
     try {
-      await axios.post("/api/add-coupon", data);
+      const url = `/api/add-coupon`;
+      await axios.post(url, data);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

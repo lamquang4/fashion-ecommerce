@@ -20,7 +20,8 @@ export default function useDeleteUser() {
     setIsLoading(true);
 
     try {
-      await axios.delete(`/api/delete-user/${id}`);
+      const url = `/api/delete-user/${id}`;
+      await axios.delete(url);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

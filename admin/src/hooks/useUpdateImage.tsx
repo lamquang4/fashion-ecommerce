@@ -8,7 +8,8 @@ export default function useUpdateImage() {
     if (!id) return;
     setIsLoading(true);
     try {
-      await axios.put(`/api/update-image/${id}`, formData, {
+      const url = `/api/update-image/${id}`;
+      await axios.put(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

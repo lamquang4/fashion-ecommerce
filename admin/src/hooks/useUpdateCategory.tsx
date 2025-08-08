@@ -8,7 +8,8 @@ export default function useUpdateCategory(id: string) {
     if (!id) return;
     setIsLoading(true);
     try {
-      await axios.put(`/api/update-category/${id}`, formData, {
+      const url = `/api/update-category/${id}`;
+      await axios.put(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

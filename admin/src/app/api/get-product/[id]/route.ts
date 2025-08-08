@@ -16,7 +16,7 @@ export async function GET(
     }
     const objectId = new mongoose.Types.ObjectId(id);
 
-    const data = await Product.aggregate([
+    const product = await Product.aggregate([
       {
         $match: { _id: objectId },
       },
@@ -81,14 +81,14 @@ export async function GET(
       },
     ]);
 
-    if (!data) {
+    if (!product) {
       return NextResponse.json(
         { msg: "Không tìm thấy sản phẩm" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(data[0]);
+    return NextResponse.json({ product: product[0] });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

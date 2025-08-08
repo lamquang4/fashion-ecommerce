@@ -9,8 +9,8 @@ export default function useUpdateUser(id: string) {
     if (!id) return;
     setIsLoading(true);
     try {
-      const res = await axios.put(`/api/update-user/${id}`, data);
-      return res.data.user;
+      const url = `/api/update-user/${id}`;
+      await axios.put(url, data);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

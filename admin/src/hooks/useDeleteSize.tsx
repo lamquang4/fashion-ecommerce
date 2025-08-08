@@ -20,7 +20,8 @@ export default function useDeleteSize() {
     setIsLoading(true);
 
     try {
-      await axios.delete(`/api/delete-size/${id}`);
+      const url = `/api/delete-size/${id}`;
+      await axios.delete(url);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

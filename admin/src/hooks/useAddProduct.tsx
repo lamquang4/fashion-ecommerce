@@ -7,7 +7,8 @@ export default function useAddProduct() {
   const addProduct = async (formData: FormData) => {
     setIsLoading(true);
     try {
-      await axios.post("/api/add-product", formData, {
+      const url = `/api/add-product`;
+      await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

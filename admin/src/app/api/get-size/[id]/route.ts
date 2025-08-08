@@ -15,16 +15,16 @@ export async function GET(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const data = await Size.findById(id);
+    const size = await Size.findById(id);
 
-    if (!data) {
+    if (!size) {
       return NextResponse.json(
         { msg: "Không tìm thấy kích thước" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json({ size });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

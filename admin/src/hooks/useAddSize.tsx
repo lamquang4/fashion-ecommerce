@@ -8,7 +8,8 @@ export default function useAddSize() {
   const addSize = async (data: Size) => {
     setIsLoading(true);
     try {
-      await axios.post("/api/add-size", data);
+      const url = `/api/add-size`;
+      await axios.post(url, data);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

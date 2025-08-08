@@ -7,7 +7,8 @@ export default function useAddBanner() {
   const addBanner = async (formData: FormData) => {
     setIsLoading(true);
     try {
-      await axios.post("/api/add-banner", formData, {
+      const url = `/api/add-banner`;
+      await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

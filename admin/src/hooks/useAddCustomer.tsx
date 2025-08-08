@@ -8,7 +8,8 @@ export default function useAddCustomer() {
   const addCustomer = async (data: User) => {
     setIsLoading(true);
     try {
-      await axios.post("/api/add-customer", data);
+      const url = `/api/add-customer`;
+      await axios.post(url, data);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

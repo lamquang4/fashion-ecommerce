@@ -8,7 +8,8 @@ export default function useAddAdmin() {
   const addAdmin = async (data: User) => {
     setIsLoading(true);
     try {
-      await axios.post("/api/add-admin", data);
+      const url = `/api/add-admin`;
+      await axios.post(url, data);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

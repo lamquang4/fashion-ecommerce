@@ -15,16 +15,16 @@ export async function GET(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const data = await Category.findById(id);
+    const category = await Category.findById(id);
 
-    if (!data) {
+    if (!category) {
       return NextResponse.json(
         { msg: "Không tìm thấy danh mục" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json({ category });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

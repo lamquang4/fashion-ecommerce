@@ -15,7 +15,7 @@ export async function GET(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const data = await Order.aggregate([
+    const order = await Order.aggregate([
       {
         $match: { _id: new mongoose.Types.ObjectId(id) },
       },
@@ -142,14 +142,14 @@ export async function GET(
       },
     ]);
 
-    if (!data) {
+    if (!order) {
       return NextResponse.json(
         { msg: "Không tìm thấy đơn hàng" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(data[0]);
+    return NextResponse.json({ order: order[0] });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

@@ -23,7 +23,8 @@ export default function useBlockUser() {
     setIsLoading(true);
 
     try {
-      await axios.put("/api/block-user", {
+      const url = `/api/block-user`;
+      await axios.put(url, {
         id: id,
         status: status,
       });

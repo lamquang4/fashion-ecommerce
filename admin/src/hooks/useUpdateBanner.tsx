@@ -7,7 +7,8 @@ export default function useUpdateBanner() {
   const updateBanner = async (formData: FormData) => {
     setIsLoading(true);
     try {
-      await axios.put("/api/update-banner", formData, {
+      const url = `/api/update-banner`;
+      await axios.put(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },

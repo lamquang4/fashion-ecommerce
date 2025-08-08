@@ -8,12 +8,12 @@ export default function useUpdateProduct(id: string) {
     if (!id) return;
     setIsLoading(true);
     try {
-      const res = await axios.put(`/api/update-product/${id}`, formData, {
+      const url = `/api/update-product/${id}`;
+      await axios.put(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      return res.data.product;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

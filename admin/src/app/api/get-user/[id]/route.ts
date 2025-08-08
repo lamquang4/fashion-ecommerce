@@ -15,16 +15,16 @@ export async function GET(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const data = await User.findById(id);
+    const user = await User.findById(id);
 
-    if (!data) {
+    if (!user) {
       return NextResponse.json(
         { msg: "Không tìm thấy người dùng" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(data);
+    return NextResponse.json({ user });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

@@ -20,7 +20,8 @@ export default function useDeleteCategory() {
     setIsLoading(true);
 
     try {
-      await axios.delete(`/api/delete-category/${id}`);
+      const url = `/api/delete-category/${id}`;
+      await axios.delete(url);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;
