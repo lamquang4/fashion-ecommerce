@@ -3,7 +3,7 @@ import Product from "@/model/Product";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 export async function GET(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: { slug: string } }
 ) {
   try {

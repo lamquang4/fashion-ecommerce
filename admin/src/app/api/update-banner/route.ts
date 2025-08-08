@@ -26,7 +26,7 @@ export async function PUT(req: NextRequest) {
     await fs.mkdir(uploadDirAdmin, { recursive: true });
     await fs.mkdir(uploadDirClient, { recursive: true });
 
-    const updatedBanners = [];
+    const updatedBanners: any = [];
 
     if (files.length > 0 && files[0].size > 0) {
       for (let i = 0; i < ids.length; i++) {

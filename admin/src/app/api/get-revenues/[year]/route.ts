@@ -1,10 +1,9 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Order from "@/model/Order";
-import OrderDetail from "@/model/OrderDetail";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: { year: string } }
 ) {
   try {

@@ -4,7 +4,7 @@ import crypto from "crypto";
 import axios from "axios";
 
 export async function POST(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: { orderId: string } }
 ) {
   try {

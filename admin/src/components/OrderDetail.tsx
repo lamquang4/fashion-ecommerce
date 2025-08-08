@@ -70,7 +70,7 @@ function OrderDetail() {
             {order?.status !== 4 ? (
               <div className="relative gap-y-5 grid grid-cols-2 md:grid-cols-4 py-[30px] px-[15px] sm:px-[20px] border-b border-gray-300">
                 {steps.map((step, index) => {
-                  const isActive = order?.status! >= index;
+                  const isActive = (order?.status ?? -1) >= index;
                   return (
                     <div
                       key={index}
@@ -221,7 +221,7 @@ function OrderDetail() {
                             -
                             {Math.min(
                               (totalPrice * order?.coupon?.discountValue) / 100,
-                              order?.coupon?.maxDiscountValue!
+                              order?.coupon?.maxDiscountValue ?? 0
                             )}
                           </p>
                         ) : (

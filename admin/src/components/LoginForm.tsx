@@ -34,7 +34,9 @@ function LoginForm() {
         const errorMsg = res?.error || "Email hoặc mật khẩu không đúng";
         toast.error(errorMsg);
       }
-    } catch (err) {}
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
   };
 
   return (

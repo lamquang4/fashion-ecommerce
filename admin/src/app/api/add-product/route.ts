@@ -140,8 +140,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ product: newProduct }, { status: 201 });
   } catch (err) {
-    console.log(err);
-
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

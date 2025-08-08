@@ -3,7 +3,7 @@ import Coupon from "@/model/Coupon";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 export async function GET(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: { code: string; totalPrice: number } }
 ) {
   try {

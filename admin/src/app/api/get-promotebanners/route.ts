@@ -1,8 +1,8 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Banner from "@/model/Banner";
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function GET() {
+export async function GET(_req: NextRequest) {
   try {
     await connectMongoDB();
     const data = await Banner.find({ type: { $in: 2 } });

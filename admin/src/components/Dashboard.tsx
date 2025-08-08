@@ -328,7 +328,7 @@ function Dashboard() {
                       <Image
                         Src={"/assets/other/notfound1.png"}
                         Alt={""}
-                        ClassName={"w-[180px]"}
+                        ClassName={"w-[135px]"}
                         loadingType="lazy"
                       />
                     </div>

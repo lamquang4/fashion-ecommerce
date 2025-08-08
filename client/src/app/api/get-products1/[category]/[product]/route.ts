@@ -4,7 +4,7 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 import { ObjectId } from "mongodb";
 export async function GET(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: { category: string; product: string } }
 ) {
   try {

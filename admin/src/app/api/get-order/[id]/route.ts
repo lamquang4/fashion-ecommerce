@@ -1,11 +1,10 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Order from "@/model/Order";
-import OrderDetail from "@/model/OrderDetail";
 import mongoose from "mongoose";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 export async function GET(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
