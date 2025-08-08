@@ -4,7 +4,7 @@ import Inventory from "@/model/Inventory";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function DELETE(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
@@ -19,7 +19,9 @@ export async function DELETE(
     const checkColor = await Inventory.findOne({ color: id });
     if (checkColor) {
       return NextResponse.json(
-        { msg: "Màu này đẫ được sử dụng cho biến thể của sản phẩm nên không thể xóa!" },
+        {
+          msg: "Màu này đẫ được sử dụng cho biến thể của sản phẩm nên không thể xóa!",
+        },
         {
           status: 400,
         }

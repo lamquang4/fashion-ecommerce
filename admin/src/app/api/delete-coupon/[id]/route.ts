@@ -4,7 +4,7 @@ import Order from "@/model/Order";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function DELETE(
-  req: NextRequest,
+  _req: NextRequest,
   { params }: { params: { id: string } }
 ) {
   try {
