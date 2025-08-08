@@ -147,7 +147,7 @@ function EditProduct() {
         }))
       );
     }
-  }, [product]);
+  }, [product, setCurrentVariants]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

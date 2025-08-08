@@ -33,7 +33,7 @@ export async function PUT(
       return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
-    let imageList = inventory.images;
+    const imageList = inventory.images;
     const indexToUpdate = imageList.indexOf(image);
 
     if (file && file.size > 0) {
