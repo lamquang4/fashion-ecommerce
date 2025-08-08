@@ -6,12 +6,12 @@ import fs from "node:fs/promises";
 import path from "path";
 export async function DELETE(
   _req: NextRequest,
-  context: Promise<{ params: { id: string } }>
+  context: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectMongoDB();
 
-    const { params } = await context;
+    const params = await context.params;
     const id = params.id;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
