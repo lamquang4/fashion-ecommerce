@@ -6,7 +6,7 @@ import fs from "node:fs/promises";
 import path from "path";
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectMongoDB();
@@ -21,10 +21,7 @@ export async function DELETE(
 
     const inventory = await Inventory.findById(id);
     if (!inventory) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy" },
-        { status: 404 }
-      );
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
     if (inventory.images.length === 1) {

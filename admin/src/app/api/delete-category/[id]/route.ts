@@ -7,7 +7,7 @@ import fs from "node:fs/promises";
 import path from "path";
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     await connectMongoDB();
