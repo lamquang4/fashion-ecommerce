@@ -1,3 +1,6 @@
+import "next-auth";
+import "next-auth/jwt";
+
 declare module "next-auth" {
   interface Session {
     user: {
@@ -7,7 +10,7 @@ declare module "next-auth" {
       birthday: string;
       phone: string;
       role: number;
-    }
+    };
   }
 
   interface User {
