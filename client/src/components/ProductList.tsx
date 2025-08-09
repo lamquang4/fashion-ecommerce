@@ -178,7 +178,7 @@ function ProductList({ category, products, isLoading }: Props) {
                         ClassName={
                           "block w-full h-auto object-cover z-[1] relative"
                         }
-                        loadingType="eager"
+                        loadingType="lazy"
                       />
                       {selectedInventory.images[1] && (
                         <Image
