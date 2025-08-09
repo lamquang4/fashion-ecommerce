@@ -27,13 +27,12 @@ function MainBanner() {
                 <div className="relative block w-full">
                   <div className="w-full">
                     <picture>
-                      {banners2.map((banner2, index) => (
+                      {banners2[index] && (
                         <source
-                          key={index}
-                          srcSet={banner2.image}
+                          srcSet={banners2[index].image}
                           media="(max-width: 640px)"
                         />
-                      ))}
+                      )}
 
                       <Image
                         Src={banner1.image}

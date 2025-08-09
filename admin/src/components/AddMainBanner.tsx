@@ -39,6 +39,14 @@ function AddMainBanner() {
       return;
     }
 
+    if (
+      desktopFiles.length > mobileFiles.length ||
+      mobileFiles.length > desktopFiles.length
+    ) {
+      toast.error("Số lượng ảnh banner desktop và mobile phải bằng nhau");
+      return;
+    }
+
     try {
       if (desktopFiles.length > 0) {
         const formData = new FormData();
