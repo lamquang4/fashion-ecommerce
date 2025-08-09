@@ -1,10 +1,10 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Address from "@/model/Address";
 import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { options } from "../auth/[...nextauth]/options";
 
-export async function GET(_req: NextRequest) {
+export async function GET() {
   try {
     await connectMongoDB();
     const session = await getServerSession(options);

@@ -16,7 +16,7 @@ function SearchDesktop() {
     if (search) {
       setKeyword(search);
     }
-  }, [search]);
+  }, [search, setKeyword]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

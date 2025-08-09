@@ -1,5 +1,4 @@
 import CartItem from "../../components/CartItem";
-import ProductSlider from "../../components/ProductSlider";
 
 function Cart() {
   return (

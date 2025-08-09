@@ -68,7 +68,7 @@ function ProductDetail() {
 
   useEffect(() => {
     setSelectedSize(undefined);
-  }, [selectedColor]);
+  }, [selectedColor, currentInventory?.quantity]);
 
   const allImages =
     product?.variants.flatMap((variant) => variant.images) || [];

@@ -1,5 +1,4 @@
 import WishlistItem from "../../components/WishlistItem";
-import ProductSlider from "../../components/ProductSlider";
 
 function Wishlist() {
   return (

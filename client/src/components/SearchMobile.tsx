@@ -32,7 +32,7 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
     if (search) {
       setKeyword(search);
     }
-  }, [search]);
+  }, [search, setKeyword]);
 
   return (
     <div

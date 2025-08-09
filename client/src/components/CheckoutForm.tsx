@@ -289,8 +289,8 @@ function CheckoutForm() {
         await deleteCart();
         mutateCart(undefined, true);
       }
-    } catch (err: any) {
-      toast.error(err?.response?.data?.msg);
+    } catch (err) {
+      toast.error("Lỗi đặt hàng");
     }
   };
 
