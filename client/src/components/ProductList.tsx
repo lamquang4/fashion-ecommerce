@@ -57,7 +57,7 @@ function ProductList({ category, products, isLoading }: Props) {
     };
 
     await addWishlist(payload);
-    mutate(undefined, true);
+    mutate();
   };
 
   const handleRemove = async (product: Product, inventoryIndex: number) => {
@@ -66,7 +66,7 @@ function ProductList({ category, products, isLoading }: Props) {
       wishlistId: wishlist?._id || "",
       variant: variant._id,
     });
-    mutate(undefined, true);
+    mutate();
   };
 
   const sortArray = [

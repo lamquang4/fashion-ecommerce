@@ -174,7 +174,7 @@ function ProductDetail() {
       wishlistId: wishlist?._id || "",
       variant: selectedInventory._id,
     });
-    mutateWishlist(undefined, true);
+    mutateWishlist();
   };
 
   return (

@@ -14,7 +14,7 @@ function WishlistItem() {
       wishlistId: wishlistId,
       variant: variant,
     });
-    mutate(undefined, true);
+    mutate();
   };
   return (
     <>

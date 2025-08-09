@@ -67,13 +67,13 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
 
     if (!validatePhone(data.phone)) {
       toast.error("Số điện thoại không hợp lệ");
-      mutate(undefined, true);
+      mutate();
       return;
     }
 
     if (addresses.length === 5 && !addressId) {
       toast.error("Bạn chỉ có thể lưu tối đa 5 địa chỉ cho tài khoản");
-      mutate(undefined, true);
+      mutate();
       return;
     }
 

@@ -51,7 +51,7 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
                 <div className="border border-[#197FB6] text-[#197FB6] px-[26px] relative w-full">
                   <div className="flex items-center border-l border-r px-3 py-4 border-[#197FB6] w-full bg-white">
                     <div className="flex gap-2 flex-col w-full">
-                      <h2 className="text-[1.35rem] font-semibold uppercase">
+                      <h2 className="text-[1.3rem] font-semibold uppercase">
                         {coupon.discountType === 1
                           ? `Giảm ${coupon.discountValue.toLocaleString(
                               "vi-VN"

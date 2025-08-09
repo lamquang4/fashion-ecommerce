@@ -311,7 +311,7 @@ function EditProduct() {
                 <div className="flex flex-col gap-1 w-full">
                   <label htmlFor="" className="text-[0.9rem] text-black">
                     Số tiền giảm (Giảm giá{" "}
-                    {Math.floor((data.discount / data.price) * 100) || 0}%)
+                    {Math.floor((data.discount / data.price) * 100)}%)
                   </label>
                   <input
                     type="number"
