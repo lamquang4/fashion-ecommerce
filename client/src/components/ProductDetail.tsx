@@ -64,11 +64,16 @@ function ProductDetail() {
         setIsInStock(false);
       }
     }
-  }, [selectedInventory, selectedSize, selectedColor]);
+  }, [
+    selectedInventory,
+    selectedSize,
+    selectedColor,
+    currentInventory?.quantity,
+  ]);
 
   useEffect(() => {
     setSelectedSize(undefined);
-  }, [selectedColor, currentInventory?.quantity]);
+  }, [selectedColor]);
 
   const allImages =
     product?.variants.flatMap((variant) => variant.images) || [];

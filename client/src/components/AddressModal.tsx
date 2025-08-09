@@ -48,7 +48,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
       router.push("/address");
       return;
     }
-  }, [address, isLoading, router]);
+  }, [address, addressId, isLoading, router]);
 
   useEffect(() => {
     if (address && !isLoading) {
@@ -60,7 +60,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
       setSelectedProvinceName(address.city || "");
       setSelectedWard(address.ward || "");
     }
-  }, [address]);
+  }, [address, isLoading]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
