@@ -1,11 +1,11 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Coupon from "@/model/Coupon";
 import { getServerSession } from "next-auth";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 import { options } from "../auth/[...nextauth]/options";
 import mongoose from "mongoose";
 
-export async function GET(_req: NextRequest) {
+export async function GET() {
   try {
     await connectMongoDB();
     const session = await getServerSession(options);

@@ -5,7 +5,7 @@ import React from "react";
 import useGetProductsSale from "@/hooks/useGetProductsSale";
 import Pagination from "@/components/Pagination";
 
-function page() {
+function Page() {
   const params = useParams();
   const slug = params.slug as string;
 
@@ -25,4 +25,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

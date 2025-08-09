@@ -140,7 +140,7 @@ function CartItem() {
           </h2>
           {isLoading ? (
             <Loading height={70} size={50} color="black" thickness={3} />
-          ) : cart?.productsInCart.length! > 0 ? (
+          ) : cart?.productsInCart && cart.productsInCart.length > 0 ? (
             <form onSubmit={handleSubmit}>
               <div className="flex gap-8 w-full lg:flex-row flex-col">
                 <div className=" bg-white basis-[70%]">

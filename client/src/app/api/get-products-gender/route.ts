@@ -1,8 +1,8 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Product from "@/model/Product";
-import { NextRequest, NextResponse } from "next/server";
+import {  NextResponse } from "next/server";
 
-export async function GET(_req: NextRequest) {
+export async function GET() {
   try {
     await connectMongoDB();
     const limit = 12;

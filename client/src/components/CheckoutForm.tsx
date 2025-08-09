@@ -135,13 +135,25 @@ function CheckoutForm() {
     const handleOrderMomoPayment = async () => {
       if (!orderId) return;
 
-      try {
-        const res = await checkPaymentStatusMomo(orderId);
-        const checkoutData = localStorage.getItem("checkoutData");
+      const res = await checkPaymentStatusMomo(orderId);
+      const checkoutData = localStorage.getItem("checkoutData");
 
-        if (!checkoutData) return;
+      if (!checkoutData) return;
 
-        const {
+      const {
+        fullname,
+        phone,
+        speaddress,
+        city,
+        ward,
+        paymethod,
+        productsBuy,
+        total,
+        coupon,
+      } = JSON.parse(checkoutData);
+
+      if (res.resultCode === 0) {
+        await addOrder({
           fullname,
           phone,
           speaddress,
@@ -151,36 +163,20 @@ function CheckoutForm() {
           productsBuy,
           total,
           coupon,
-        } = JSON.parse(checkoutData);
+        });
 
-        if (res.resultCode === 0) {
-          await addOrder({
-            fullname,
-            phone,
-            speaddress,
-            city,
-            ward,
-            paymethod,
-            productsBuy,
-            total,
-            coupon,
-          });
+        toast.success(`Đặt hàng thành công!`);
+        router.replace("/");
 
-          toast.success(`Đặt hàng thành công!`);
-          router.replace("/");
-
-          localStorage.removeItem("checkoutData");
-          localStorage.removeItem("orderId");
-          await deleteCart();
-          mutateCart(undefined, true);
-        }
-      } catch (err) {
-        toast.error("Lỗi khi thanh toán bằng Momo");
+        localStorage.removeItem("checkoutData");
+        localStorage.removeItem("orderId");
+        await deleteCart();
+        mutateCart(undefined, true);
       }
     };
 
     handleOrderMomoPayment();
-  }, []);
+  }, [addOrder, checkPaymentStatusMomo, deleteCart, mutateCart]);
 
   const selectedProvince = provinces?.find(
     (province) => province.province === selectedProvinceName
@@ -243,54 +239,50 @@ function CheckoutForm() {
       };
     });
 
-    try {
-      if (paymethod === 1) {
-        const momoResponse = await createPaymentMomo({
-          total: finalTotal,
-          paymethod,
-        });
+    if (paymethod === 1) {
+      const momoResponse = await createPaymentMomo({
+        total: finalTotal,
+        paymethod,
+      });
 
-        localStorage.setItem("orderId", momoResponse.orderId);
+      localStorage.setItem("orderId", momoResponse.orderId);
 
-        localStorage.setItem(
-          "checkoutData",
-          JSON.stringify({
-            fullname: data.fullname,
-            phone: data.phone,
-            speaddress: data.speaddress,
-            city: selectedProvinceName,
-            ward: selectedWard,
-            paymethod,
-            productsBuy: items,
-            total: finalTotal,
-            coupon: coupon?._id,
-          })
-        );
-
-        window.location.href = momoResponse.payUrl;
-
-        return;
-      } else {
-        await addOrder({
+      localStorage.setItem(
+        "checkoutData",
+        JSON.stringify({
           fullname: data.fullname,
           phone: data.phone,
           speaddress: data.speaddress,
           city: selectedProvinceName,
           ward: selectedWard,
-          paymethod: paymethod!,
-          productsBuy: items!,
+          paymethod,
+          productsBuy: items,
           total: finalTotal,
           coupon: coupon?._id,
-        });
+        })
+      );
 
-        toast.success(`Đặt hàng thành công!`);
-        router.replace("/");
+      window.location.href = momoResponse.payUrl;
 
-        await deleteCart();
-        mutateCart(undefined, true);
-      }
-    } catch (err) {
-      toast.error("Lỗi đặt hàng");
+      return;
+    } else {
+      await addOrder({
+        fullname: data.fullname,
+        phone: data.phone,
+        speaddress: data.speaddress,
+        city: selectedProvinceName,
+        ward: selectedWard,
+        paymethod: paymethod!,
+        productsBuy: items!,
+        total: finalTotal,
+        coupon: coupon?._id,
+      });
+
+      toast.success(`Đặt hàng thành công!`);
+      router.replace("/");
+
+      await deleteCart();
+      mutateCart(undefined, true);
     }
   };
 

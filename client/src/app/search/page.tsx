@@ -5,7 +5,7 @@ import useGetProductsSearch from "@/hooks/useGetProductsSearch";
 import { useSearchParams } from "next/navigation";
 import React, { useEffect } from "react";
 
-function page() {
+function Page() {
   const {
     products,
     totalPages,
@@ -22,7 +22,7 @@ function page() {
     if (search) {
       setKeyword(search);
     }
-  }, [search]);
+  }, [search, setKeyword]);
 
   return (
     <>
@@ -37,4 +37,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;

@@ -1,4 +1,6 @@
 "use client";
+import ImageNext from "next/image";
+
 type ImageProps = {
   Src: string;
   Alt: string;
@@ -7,7 +9,16 @@ type ImageProps = {
 };
 function Image({ Src, Alt, ClassName, loadingType }: ImageProps) {
   return (
-    <img src={Src} alt={Alt} className={ClassName} loading={loadingType} />
+    <ImageNext
+      src={Src}
+      alt={Alt}
+      unoptimized
+      width={0}
+      height={0}
+      sizes="100vw"
+      className={ClassName}
+      loading={loadingType}
+    />
   );
 }
 

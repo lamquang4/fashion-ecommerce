@@ -6,7 +6,7 @@ import { useParams } from "next/navigation";
 import Pagination from "../../../components/Pagination";
 import React from "react";
 
-function page() {
+function Page() {
   const params = useParams();
   const slug = params.slug as string;
   const { category } = useGetCategory(slug);
@@ -31,4 +31,4 @@ function page() {
   );
 }
 
-export default page;
+export default Page;
