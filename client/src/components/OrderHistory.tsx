@@ -95,7 +95,9 @@ function OrderHistory() {
                           <Image
                             Src={item.variant.images[0]}
                             Alt={item.product.name}
-                            ClassName={"max-w-[120px] round-[5px] object-cover"}
+                            ClassName={
+                              "w-full max-w-[120px] round-[5px] object-cover"
+                            }
                             loadingType="eager"
                           />
                         </Link>

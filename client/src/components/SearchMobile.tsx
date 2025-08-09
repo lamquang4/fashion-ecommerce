@@ -30,7 +30,7 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
 
   useEffect(() => {
     if (search) {
-      setKeyword(search);
+      setKeyword(search.trim());
     }
   }, [search, setKeyword]);
 
@@ -49,6 +49,7 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
               type="text"
               required
               placeholder="Tìm kiếm..."
+              maxLength={50}
               autoComplete="off"
               className="w-full px-2 py-2 rounded outline-none"
               value={search}

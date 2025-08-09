@@ -1,7 +1,7 @@
 import { Suspense } from "react";
 import CheckoutForm from "../../components/CheckoutForm";
 
-function Checkout() {
+function page() {
   return (
     <Suspense>
       <CheckoutForm />
@@ -9,4 +9,4 @@ function Checkout() {
   );
 }
 
-export default Checkout;
+export default page;

@@ -14,7 +14,7 @@ function SearchDesktop() {
 
   useEffect(() => {
     if (search) {
-      setKeyword(search);
+      setKeyword(search.trim());
     }
   }, [search, setKeyword]);
 
@@ -32,8 +32,9 @@ function SearchDesktop() {
       <form onSubmit={handleSearch}>
         <input
           type="text"
-          className="px-3 py-1.5 w-[145px] border border-gray-300 text-[0.8rem] tracking-[0.9px] bg-transparent outline-none"
+          className="px-3 py-1.5 pr-7 w-[145px] border border-gray-300 text-[0.8rem] tracking-[0.9px] bg-transparent outline-none"
           required
+          maxLength={50}
           placeholder="Tìm kiếm..."
           autoComplete="off"
           value={search}
@@ -56,7 +57,7 @@ function SearchDesktop() {
       {focused && search && (
         <div className="fixed top-12 right-12 z-[12] mt-3 w-96 max-w-[calc(100%-30px)] bg-white shadow-lg border-gray-200 border">
           <div className="p-2.5">
-            <p className="text-black font-medium">
+            <p className="text-black font-medium text-balance">
               Kết quả tìm kiếm cho{" "}
               <span className="text-red-600">{search}</span>
             </p>

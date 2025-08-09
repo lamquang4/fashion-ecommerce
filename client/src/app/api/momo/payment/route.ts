@@ -17,7 +17,7 @@ export async function POST(req: NextRequest) {
       const orderId = requestId;
       const orderInfo = "Thanh toán bằng Momo"; // nội dung giao dịch
       const redirectUrl = `${process.env.NEXTAUTH_URL}/checkout`;
-      const ipnUrl = `${process.env.NEXTAUTH_URL}/api/momo/notify`;
+      const ipnUrl = `${process.env.NEXTAUTH_URL}/api/momo/notify/${orderId}`;
       const amount = total;
       const requestType = "captureWallet";
       const extraData = "";
