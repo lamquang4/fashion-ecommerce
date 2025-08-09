@@ -17,7 +17,7 @@ function Gallery() {
                 <Image
                   Src={collections[0].image}
                   Alt={""}
-                  ClassName={"h-auto max-w-full"}
+                  ClassName={"w-full"}
                   loadingType="lazy"
                 />
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
@@ -34,7 +34,7 @@ function Gallery() {
                 <Image
                   Src={collections[1].image}
                   Alt={""}
-                  ClassName={"h-auto max-w-full"}
+                  ClassName={"w-full"}
                   loadingType="lazy"
                 />
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">

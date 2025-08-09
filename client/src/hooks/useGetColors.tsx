@@ -14,7 +14,7 @@ export default function useGetColors() {
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    colors: data?.colors ?? [],
+    colors: data?.colors || [],
     error,
     isLoading,
     mutate,

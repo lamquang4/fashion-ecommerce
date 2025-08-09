@@ -15,8 +15,8 @@ export default function useGetProductsGender() {
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    productsMale: data?.productsMale ?? [],
-    productsFemale: data?.productsFemale ?? [],
+    productsMale: data?.productsMale || [],
+    productsFemale: data?.productsFemale || [],
     error,
     isLoading,
     mutate,

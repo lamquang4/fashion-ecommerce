@@ -7,7 +7,8 @@ export default function useStatusMomo() {
   const checkPaymentStatusMomo = async (orderId: string) => {
     setIsLoading(true);
     try {
-      const res = await axios.post(`/api/momo/notify/${orderId}`);
+      const url = `/api/momo/notify/${orderId}`;
+      const res = await axios.post(url);
       return res.data;
     } catch (err) {
       console.error("Lỗi:", err);

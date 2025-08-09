@@ -13,10 +13,9 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 export default function useGetCategories() {
   const url = `/api/get-categories`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
-
   return {
-    categoriesMale: data?.categoriesMale ?? [],
-    categoriesFemale: data?.categoriesFemale ?? [],
+    categoriesMale: data?.categoriesMale || [],
+    categoriesFemale: data?.categoriesFemale || [],
     error,
     isLoading,
     mutate,

@@ -12,7 +12,8 @@ export function useChangeQuantityItemCart() {
   }) => {
     setIsLoading(true);
     try {
-      await axios.post("/api/change-quantity-item-cart", data);
+      const url = `/api/change-quantity-item-cart`;
+      await axios.post(url, data);
     } catch (err: any) {
       console.error("Lỗi:", err);
       throw err;

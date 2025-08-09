@@ -7,7 +7,8 @@ export default function useAddWishlist() {
   const addWishlist = async (data: { variant: string }) => {
     setIsLoading(true);
     try {
-      await axios.post("/api/add-wishlist", data);
+      const url = `/api/add-wishlist`;
+      await axios.post(url, data);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

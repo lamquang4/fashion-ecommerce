@@ -7,7 +7,8 @@ export default function usePaymentMomo() {
     paymethod: number;
   }) => {
     try {
-      const res = await axios.post("/api/momo/payment", data);
+      const url = `/api/momo/payment`;
+      const res = await axios.post(url, data);
       return res.data;
     } catch (err) {
       console.error("Lỗi", err);

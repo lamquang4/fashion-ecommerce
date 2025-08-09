@@ -36,7 +36,7 @@ export default function useGetOrders() {
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    orders: data?.orders ?? [],
+    orders: data?.orders || [],
     totalItems: data?.total || 0,
     error,
     isLoading,

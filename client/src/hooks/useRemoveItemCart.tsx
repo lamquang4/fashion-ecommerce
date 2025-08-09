@@ -10,7 +10,8 @@ export function useRemoveItemCart() {
   }) => {
     setIsLoading(true);
     try {
-      await axios.put("/api/remove-item-cart", data);
+      const url = `/api/remove-item-cart`;
+      await axios.put(url, data);
     } catch (err: any) {
       console.error("Lỗi:", err);
       throw err;

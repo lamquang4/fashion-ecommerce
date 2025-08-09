@@ -3,7 +3,8 @@ import axios from "axios";
 export function useSyncWishlist() {
   const syncWishlist = async () => {
     try {
-      await axios.post("/api/sync-wishlist");
+      const url = `/api/get-promotebanners`;
+      await axios.post(url);
     } catch (err: any) {
       console.error("Lỗi:", err);
       throw err;

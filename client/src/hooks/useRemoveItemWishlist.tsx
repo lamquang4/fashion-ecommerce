@@ -6,7 +6,8 @@ export function useRemoveItemWishlist() {
   const removeItem = async (data: { wishlistId: string; variant: string }) => {
     setIsLoading(true);
     try {
-      await axios.put("/api/remove-item-wishlist", data);
+      const url = `/api/remove-item-wishlist`;
+      await axios.put(url, data);
     } catch (err: any) {
       console.error("Lỗi:", err);
       throw err;
