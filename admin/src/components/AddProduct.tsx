@@ -211,7 +211,8 @@ function AddProduct() {
 
                 <div className="flex flex-col gap-1 w-full">
                   <label htmlFor="" className="text-[0.9rem] text-black">
-                    Số tiền giảm
+                    Số tiền giảm (Giảm giá{" "}
+                    {Math.floor((data.discount / data.price) * 100) || 0}%)
                   </label>
                   <input
                     type="number"
