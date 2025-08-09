@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import Link from "next/link";
 import Image from "./Image";
 import useGetMainBanners from "@/hooks/useGetBanners";
-function BannerCarousel() {
+function MainBanner() {
   const { banners1, banners2 } = useGetMainBanners();
 
   return (
@@ -72,4 +72,4 @@ function BannerCarousel() {
   );
 }
 
-export default BannerCarousel;
+export default MainBanner;

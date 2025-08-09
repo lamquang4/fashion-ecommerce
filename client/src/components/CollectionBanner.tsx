@@ -2,7 +2,7 @@
 import useGetMainBanners from "@/hooks/useGetBanners";
 import Image from "./Image";
 import Link from "next/link";
-function Gallery() {
+function CollectionBanner() {
   const { collections } = useGetMainBanners();
   return (
     <>
@@ -55,4 +55,4 @@ function Gallery() {
   );
 }
 
-export default Gallery;
+export default CollectionBanner;

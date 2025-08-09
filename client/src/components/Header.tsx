@@ -84,12 +84,9 @@ function Header() {
             <nav className="hidden lg:block">
               <ul className="flex items-center gap-[30px] text-[1rem] font-semibold uppercase">
                 <li className="relative menu-category">
-                  <Link
-                    href={"/"}
-                    className="relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100"
-                  >
+                  <p className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
                     Nam
-                  </Link>
+                  </p>
                   {categoriesMale.length > 0 && (
                     <ul className="absolute font-medium top-5 left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
                       <li className="my-2">
@@ -115,12 +112,9 @@ function Header() {
                 </li>
 
                 <li className="relative menu-category">
-                  <Link
-                    href={"/"}
-                    className="relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100"
-                  >
+                  <p className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
                     Nữ
-                  </Link>
+                  </p>
                   {categoriesFemale.length > 0 && (
                     <ul className="absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
                       <li className="my-2">
@@ -146,12 +140,10 @@ function Header() {
                 </li>
 
                 <li className="relative menu-category">
-                  <Link
-                    href={"/"}
-                    className="relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100"
-                  >
+                  <p className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
                     Giảm giá
-                  </Link>
+                  </p>
+
                   <ul className="absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
                     <li className="my-2">
                       <Link
