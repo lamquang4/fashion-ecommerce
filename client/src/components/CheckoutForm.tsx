@@ -176,7 +176,7 @@ function CheckoutForm() {
     };
 
     handleOrderMomoPayment();
-  }, [addOrder, checkPaymentStatusMomo, deleteCart, mutateCart]);
+  }, [addOrder, checkPaymentStatusMomo, deleteCart, mutateCart, router]);
 
   const selectedProvince = provinces?.find(
     (province) => province.province === selectedProvinceName

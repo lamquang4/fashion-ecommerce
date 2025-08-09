@@ -21,7 +21,7 @@ export async function GET(
     const colors = searchParams.getAll("color");
     const sort = searchParams.get("sort") || "";
 
-    let categoryQuery: any = { status: 1 };
+    const categoryQuery: any = { status: 1 };
     let categoryIds: any[] = [];
 
     if (slug === "nam") {
