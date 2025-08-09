@@ -5,6 +5,7 @@ import useGetProductSlug from "@/hooks/useGetProductSlug";
 import { useParams } from "next/navigation";
 import useGetProductsCategory from "@/hooks/useGetProductsCategory";
 import Loading from "@/components/Loading";
+import { Suspense } from "react";
 
 function Product() {
   const params = useParams();
@@ -17,7 +18,7 @@ function Product() {
   );
 
   return (
-    <>
+    <Suspense>
       {isLoading ? (
         <Loading height={70} size={50} color="black" thickness={2} />
       ) : (
@@ -30,7 +31,7 @@ function Product() {
           />
         </>
       )}
-    </>
+    </Suspense>
   );
 }
 

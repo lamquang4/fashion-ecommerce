@@ -4,7 +4,7 @@ import useGetCategory from "@/hooks/useGetCategory";
 import useGetProductsSlug from "@/hooks/useGetProductsSlug";
 import { useParams } from "next/navigation";
 import Pagination from "../../../components/Pagination";
-import React from "react";
+import React, { Suspense } from "react";
 
 function Page() {
   const params = useParams();
@@ -15,7 +15,7 @@ function Page() {
     useGetProductsSlug(slug);
 
   return (
-    <>
+    <Suspense>
       <ProductList
         products={products}
         category={category}
@@ -27,7 +27,7 @@ function Page() {
         currentPage={currentPage}
         totalItems={totalItems}
       />
-    </>
+    </Suspense>
   );
 }
 

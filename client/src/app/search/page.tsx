@@ -3,7 +3,7 @@ import Pagination from "@/components/Pagination";
 import ProductList from "@/components/ProductList";
 import useGetProductsSearch from "@/hooks/useGetProductsSearch";
 import { useSearchParams } from "next/navigation";
-import React, { useEffect } from "react";
+import React, { Suspense, useEffect } from "react";
 
 function Page() {
   const {
@@ -25,7 +25,7 @@ function Page() {
   }, [search, setKeyword]);
 
   return (
-    <>
+    <Suspense>
       <ProductList products={products} isLoading={isLoading} />
 
       <Pagination
@@ -33,7 +33,7 @@ function Page() {
         currentPage={currentPage}
         totalItems={totalItems}
       />
-    </>
+    </Suspense>
   );
 }
 

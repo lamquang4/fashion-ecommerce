@@ -1,7 +1,7 @@
 "use client";
 import ProductList from "@/components/ProductList";
 import { useParams } from "next/navigation";
-import React from "react";
+import React, { Suspense } from "react";
 import useGetProductsSale from "@/hooks/useGetProductsSale";
 import Pagination from "@/components/Pagination";
 
@@ -13,7 +13,7 @@ function Page() {
     useGetProductsSale(slug);
 
   return (
-    <>
+    <Suspense>
       <ProductList products={products} isLoading={isLoading} />
 
       <Pagination
@@ -21,7 +21,7 @@ function Page() {
         currentPage={currentPage}
         totalItems={totalItems}
       />
-    </>
+    </Suspense>
   );
 }
 
