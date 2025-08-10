@@ -1,9 +1,10 @@
+import cloudinary from "@/lib/cloudinary";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Inventory from "@/model/Inventory";
+import { extractPublicId } from "@/utils/extractPublicId";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "node:fs/promises";
-import path from "path";
+
 export async function DELETE(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }
@@ -31,18 +32,11 @@ export async function DELETE(
       );
     }
 
-    const fileName = image.split("/uploads/product/")[1];
-    const filePathAdmin = path.join(
-      process.cwd(),
-      `/public/uploads/product/${fileName}`
-    );
-    const filePathClient = path.join(
-      process.cwd(),
-      `../client/public/uploads/product/${fileName}`
-    );
-
-    await fs.rm(filePathAdmin, { force: true }).catch(() => {});
-    await fs.rm(filePathClient, { force: true }).catch(() => {});
+    // Xóa ảnh trên Cloudinary
+    if (image) {
+      const publicId = extractPublicId(image);
+      await cloudinary.uploader.destroy(publicId);
+    }
 
     const deleteImage = await Inventory.findByIdAndUpdate(
       id,

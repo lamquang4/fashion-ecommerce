@@ -1,3 +1,4 @@
+import cloudinary from "@/lib/cloudinary";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Category from "@/model/Category";
 import { removeVietNamese } from "@/utils/removeVietnamese";
@@ -55,28 +56,28 @@ export async function POST(req: NextRequest) {
     }
 
     // thư mục của hình
-    const arrayBuffer = await file.arrayBuffer();
-    const buffer = new Uint8Array(arrayBuffer);
-    const uploadDirAdmin = path.join(process.cwd(), "/public/uploads/category");
-    const uploadDirClient = path.join(
-      process.cwd(),
-      `../client/public/uploads/category`
-    );
-    await fs.mkdir(uploadDirAdmin, { recursive: true });
-    await fs.mkdir(uploadDirClient, { recursive: true });
-
     const slug1 = removeVietNamese(namecategory);
     const slug2 = removeVietNamese(gender === 0 ? "Nữ" : "Nam");
     const slug = `${slug1}-${slug2}`;
-    const ext = file.name.split(".").pop(); // png, jpg, webp
-    const timestamp = Date.now();
-    const fileName = `${slug}-${timestamp}.${ext}`;
-    const filePathAdmin = path.join(uploadDirAdmin, fileName);
-    const filePathClient = path.join(uploadDirClient, fileName);
-    await fs.writeFile(filePathAdmin, buffer);
-    await fs.writeFile(filePathClient, buffer);
+    const arrayBuffer = await file.arrayBuffer();
+    const buffer = Buffer.from(arrayBuffer);
 
-    const imagePath = `/uploads/category/${fileName}`;
+    const result: any = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: "aura-fashion/category",
+          public_id: `${slug}-${Date.now()}`,
+          resource_type: "image",
+        },
+        (error, uploadResult) => {
+          if (error) reject(error);
+          else resolve(uploadResult);
+        }
+      );
+      stream.end(buffer);
+    });
+
+    const imagePath = result.secure_url;
 
     const newCategory = await Category.create({
       namecategory,

@@ -1,5 +1,7 @@
+import cloudinary from "@/lib/cloudinary";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Inventory from "@/model/Inventory";
+import { extractPublicId } from "@/utils/extractPublicId";
 import { removeVietNamese } from "@/utils/removeVietnamese";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
@@ -60,46 +62,30 @@ export async function PUT(
       }
 
       // Xoá hình cũ
-      const fileNameOld = image.split("/uploads/product/")[1];
-      const oldPathAdmin = path.join(
-        process.cwd(),
-        "public/uploads/product",
-        fileNameOld
-      );
-      const oldPathClient = path.join(
-        process.cwd(),
-        "../client/public/uploads/product",
-        fileNameOld
-      );
-      await fs.rm(oldPathAdmin, { force: true }).catch(() => {});
-      await fs.rm(oldPathClient, { force: true }).catch(() => {});
+      const publicId = extractPublicId(image);
+      await cloudinary.uploader.destroy(publicId);
 
-      // Lưu hình mới
+      // Thêm hình mới
       const slug = removeVietNamese(file.name.split(".")[0]);
-      const ext = file.name.split(".").pop();
-      const timestamp = Date.now();
-      const fileName = `${slug}-${timestamp}.${ext}`;
-
-      const uploadDirAdmin = path.join(process.cwd(), "public/uploads/product");
-      const uploadDirClient = path.join(
-        process.cwd(),
-        "../client/public/uploads/product"
-      );
-      await fs.mkdir(uploadDirAdmin, { recursive: true });
-      await fs.mkdir(uploadDirClient, { recursive: true });
-
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      const filePathAdmin = path.join(uploadDirAdmin, fileName);
-      const filePathClient = path.join(uploadDirClient, fileName);
 
-      await fs.writeFile(filePathAdmin, buffer);
-      await fs.writeFile(filePathClient, buffer);
+      const result: any = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            folder: "aura-fashion/product",
+            public_id: `${slug}-${Date.now()}`,
+            resource_type: "image",
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+        stream.end(buffer);
+      });
 
-      const newImagePath = `/uploads/product/${fileName}`;
-
-      // Cập nhật trong mảng
-      imageList[indexToUpdate] = newImagePath;
+      imageList[indexToUpdate] = result.secure_url;
     }
 
     // Cập nhật
@@ -108,6 +94,7 @@ export async function PUT(
       { images: imageList },
       { new: true }
     );
+
     return NextResponse.json({ inventory: updatedImage }, { status: 201 });
   } catch (err) {
     return NextResponse.json(

@@ -1,5 +1,7 @@
+import cloudinary from "@/lib/cloudinary";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Banner from "@/model/Banner";
+import { extractPublicId } from "@/utils/extractPublicId";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import fs from "node:fs/promises";
@@ -69,26 +71,31 @@ export async function PUT(req: NextRequest) {
         let imagePath = banner.image;
 
         // Xóa ảnh cũ nếu có
-        if (imagePath) {
-          const fileNameOld = imagePath.split("/uploads/banner/")[1];
-          const oldPathAdmin = path.join(uploadDirAdmin, fileNameOld);
-          const oldPathClient = path.join(uploadDirClient, fileNameOld);
-          await fs.rm(oldPathAdmin, { force: true }).catch(() => {});
-          await fs.rm(oldPathClient, { force: true }).catch(() => {});
+        if (banner.image) {
+          const publicId = extractPublicId(banner.image);
+          await cloudinary.uploader.destroy(publicId);
         }
 
         // Thêm ảnh mới
-        const buffer = new Uint8Array(await file.arrayBuffer());
-        const ext = file.name.split(".").pop();
-        const originalName = file.name.split(".").slice(0, -1).join(".");
-        const timestamp = Date.now();
-        const fileName = `${originalName}-${timestamp}.${ext}`;
-        const filePathAdmin = path.join(uploadDirAdmin, fileName);
-        const filePathClient = path.join(uploadDirClient, fileName);
-        await fs.writeFile(filePathAdmin, buffer);
-        await fs.writeFile(filePathClient, buffer);
+        const arrayBuffer = await file.arrayBuffer();
+        const buffer = Buffer.from(arrayBuffer);
 
-        imagePath = `/uploads/banner/${fileName}`;
+        const result: any = await new Promise((resolve, reject) => {
+          const stream = cloudinary.uploader.upload_stream(
+            {
+              folder: `aura-fashion/banner`, // thư mục
+              public_id: `${file.name.split(".")[0]}-${Date.now()}`,
+              resource_type: "image",
+            },
+            (error, result) => {
+              if (error) reject(error);
+              else resolve(result);
+            }
+          );
+          stream.end(buffer);
+        });
+
+        imagePath = result.secure_url;
 
         const updatedBanner = await Banner.findByIdAndUpdate(
           id,

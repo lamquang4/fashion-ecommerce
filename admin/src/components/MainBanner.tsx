@@ -58,6 +58,9 @@ function MainBanner() {
   ];
 
   const handleDelete = async (id: string) => {
+    if (!id) {
+      return;
+    }
     try {
       await deleteBanner(id);
       mutate();

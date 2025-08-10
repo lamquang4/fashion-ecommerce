@@ -1,7 +1,9 @@
+import cloudinary from "@/lib/cloudinary";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Inventory from "@/model/Inventory";
 import OrderDetail from "@/model/OrderDetail";
 import Product from "@/model/Product";
+import { extractPublicId } from "@/utils/extractPublicId";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import fs from "node:fs/promises";
@@ -41,23 +43,16 @@ export async function DELETE(
 
     const inventories = await Inventory.find({ product: id });
 
-    if (inventories) {
-      for (const inventory of inventories) {
-        for (const file of inventory.images) {
-          const fileName = file.split("/uploads/product/")[1];
-          const filePathAdmin = path.join(
-            process.cwd(),
-            `public/uploads/product/${fileName}`
-          );
-          const filePathClient = path.join(
-            process.cwd(),
-            `../client/public/uploads/product/${fileName}`
-          );
+    if (inventories.length > 0) {
+      const allImages = inventories.flatMap((inv) => inv.images);
 
-          await fs.rm(filePathAdmin, { force: true }).catch(() => {});
-          await fs.rm(filePathClient, { force: true }).catch(() => {});
-        }
-      }
+      const publicIds = allImages
+        .map((img) => extractPublicId(img))
+        .filter(Boolean) as string[];
+
+      await Promise.all(
+        publicIds.map((pid) => cloudinary.uploader.destroy(pid))
+      );
     }
 
     const deleteProduct = await Product.findByIdAndDelete(id);

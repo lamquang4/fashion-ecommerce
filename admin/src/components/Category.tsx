@@ -47,10 +47,12 @@ function Category() {
   ];
 
   const handleDelete = async (id: string) => {
+    if (!id) {
+      return;
+    }
     try {
       await deleteCategory(id);
       mutate();
-      toast.success("Xóa thành công");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
       mutate();

@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 export default function useVisibleBanner() {
@@ -20,6 +21,8 @@ export default function useVisibleBanner() {
       return;
     }
 
+    const loadingToast = toast.loading("Đang cập nhật...");
+
     setIsLoading(true);
 
     try {
@@ -27,6 +30,8 @@ export default function useVisibleBanner() {
       await axios.put(url, {
         status: status,
       });
+      toast.dismiss(loadingToast);
+      toast.success("Cập nhật thành công");
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

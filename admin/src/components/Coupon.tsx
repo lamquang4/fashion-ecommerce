@@ -55,7 +55,6 @@ function Coupon() {
     try {
       await deleteCoupon(id);
       mutate();
-      toast.success("Xóa thành công");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
       mutate();

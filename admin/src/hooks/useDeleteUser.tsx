@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 export default function useDeleteUser() {
@@ -17,11 +18,15 @@ export default function useDeleteUser() {
 
     if (!result.isConfirmed || !id) return;
 
+    const loadingToast = toast.loading("Đang xóa...");
+
     setIsLoading(true);
 
     try {
       const url = `/api/delete-user/${id}`;
       await axios.delete(url);
+      toast.dismiss(loadingToast);
+      toast.success("Xóa thành công");
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

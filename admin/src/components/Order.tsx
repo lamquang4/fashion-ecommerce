@@ -39,6 +39,9 @@ function Order() {
   const searchParams = useSearchParams();
 
   const handleUpdateStatus = async (id: string, status: number) => {
+    if (!id && !status) {
+      return;
+    }
     await updateStatusOrder(id, status);
     mutate();
   };

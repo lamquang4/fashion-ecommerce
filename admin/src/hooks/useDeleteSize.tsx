@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 export default function useDeleteSize() {
@@ -17,11 +18,15 @@ export default function useDeleteSize() {
 
     if (!result.isConfirmed || !id) return;
 
+    const loadingToast = toast.loading("Đang xóa...");
+
     setIsLoading(true);
 
     try {
       const url = `/api/delete-size/${id}`;
       await axios.delete(url);
+      toast.dismiss(loadingToast);
+      toast.success("Xóa thành công");
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

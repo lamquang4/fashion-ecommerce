@@ -1,8 +1,7 @@
+import cloudinary from "@/lib/cloudinary";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Banner from "@/model/Banner";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "node:fs/promises";
-import path from "path";
 export const config = {
   api: {
     bodyParser: false,
@@ -18,14 +17,6 @@ export async function POST(req: NextRequest) {
     const type = formData.get("type") as string;
 
     const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
-    const uploadDirAdmin = path.join(process.cwd(), "/public/uploads/banner");
-    const uploadDirClient = path.join(
-      process.cwd(),
-      "../client/public/uploads/banner"
-    );
-
-    await fs.mkdir(uploadDirAdmin, { recursive: true });
-    await fs.mkdir(uploadDirClient, { recursive: true });
 
     const createdBanners = [];
 
@@ -48,17 +39,25 @@ export async function POST(req: NextRequest) {
         );
       }
 
-      const buffer = new Uint8Array(await file.arrayBuffer());
-      const ext = file.name.split(".").pop();
-      const originalName = file.name.split(".").slice(0, -1).join(".");
-      const timestamp = Date.now();
-      const fileName = `${originalName}-${timestamp}.${ext}`;
-      const filePathAdmin = path.join(uploadDirAdmin, fileName);
-      const filePathClient = path.join(uploadDirClient, fileName);
-      await fs.writeFile(filePathAdmin, buffer);
-      await fs.writeFile(filePathClient, buffer);
+      const arrayBuffer = await file.arrayBuffer();
+      const buffer = Buffer.from(arrayBuffer);
 
-      const imagePath = `/uploads/banner/${fileName}`;
+      const result: any = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            folder: "aura-fashion/banner",
+            public_id: `${file.name.split(".")[0]}-${Date.now()}`,
+            resource_type: "image",
+          },
+          (error, uploadResult) => {
+            if (error) reject(error);
+            else resolve(uploadResult);
+          }
+        );
+        stream.end(buffer);
+      });
+
+      const imagePath = result.secure_url;
 
       const newBanner = await Banner.create({
         image: imagePath,

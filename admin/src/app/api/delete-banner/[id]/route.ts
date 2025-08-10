@@ -1,5 +1,7 @@
+import cloudinary from "@/lib/cloudinary";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Banner from "@/model/Banner";
+import { extractPublicId } from "@/utils/extractPublicId";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 import fs from "node:fs/promises";
@@ -26,18 +28,8 @@ export async function DELETE(
     }
 
     if (banner.image) {
-      const fileName = banner.image.split("/uploads/banner/")[1];
-      const filePathAdmin = path.join(
-        process.cwd(),
-        `/public/uploads/banner/${fileName}`
-      );
-      const filePathClient = path.join(
-        process.cwd(),
-        `../client/public/uploads/banner/${fileName}`
-      );
-
-      await fs.rm(filePathAdmin, { force: true }).catch(() => {});
-      await fs.rm(filePathClient, { force: true }).catch(() => {});
+      const publicId = extractPublicId(banner.image);
+      await cloudinary.uploader.destroy(publicId);
     }
 
     const deleteBanner = await Banner.findByIdAndDelete(id);

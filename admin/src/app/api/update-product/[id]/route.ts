@@ -4,11 +4,10 @@ import Inventory from "@/model/Inventory";
 import { removeVietNamese } from "@/utils/removeVietnamese";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "node:fs/promises";
-import path from "path";
 import Category from "@/model/Category";
 import OrderDetail from "@/model/OrderDetail";
 import Cart from "@/model/Cart";
+import cloudinary from "@/lib/cloudinary";
 
 export async function PUT(
   req: NextRequest,
@@ -67,6 +66,8 @@ export async function PUT(
       new: true,
     });
 
+    const imagePaths = [];
+
     // Thêm Inventory mới
     const newInventoryBlocks = JSON.parse(
       formData.get("newInventories") as string
@@ -98,27 +99,15 @@ export async function PUT(
         const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
         const maxSizeKB = 1000;
 
-        const uploadDirAdmin = path.join(
-          process.cwd(),
-          "/public/uploads/product"
-        );
-        const uploadDirClient = path.join(
-          process.cwd(),
-          `../client/public/uploads/product`
-        );
-
-        await fs.mkdir(uploadDirAdmin, { recursive: true });
-        await fs.mkdir(uploadDirClient, { recursive: true });
-
-        const imagePaths: string[] = [];
-
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
 
           if (!allowedTypes.includes(file.type)) {
             return NextResponse.json(
               {
-                msg: `Hình "${file.name}" ở biến thể này không đúng định dạng PNG, JPG hoặc WEBP.`,
+                msg: `Hình "${file.name}" ở biến thể thứ ${
+                  blockIndex + 1
+                } không đúng định dạng PNG, JPG hoặc WEBP.`,
               },
               { status: 404 }
             );
@@ -127,24 +116,33 @@ export async function PUT(
           if (file.size / 1024 > maxSizeKB) {
             return NextResponse.json(
               {
-                msg: `Hình "${file.name}" ở biến thể này vượt quá dung lượng ${maxSizeKB}KB.`,
+                msg: `Hình "${file.name}" ở biến thể thứ ${
+                  blockIndex + 1
+                } vượt quá dung lượng ${maxSizeKB}KB.`,
               },
               { status: 404 }
             );
           }
 
           const arrayBuffer = await file.arrayBuffer();
-          const buffer = new Uint8Array(arrayBuffer);
-          const ext = file.name.split(".").pop();
-          const timestamp = Date.now();
-          const fileName = `${slug}-${timestamp}-${i}.${ext}`;
-          const filePathAdmin = path.join(uploadDirAdmin, fileName);
-          const filePathClient = path.join(uploadDirClient, fileName);
+          const buffer = Buffer.from(arrayBuffer);
 
-          await fs.writeFile(filePathAdmin, buffer);
-          await fs.writeFile(filePathClient, buffer);
+          const result: any = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+              {
+                folder: `aura-fashion/product`, // tên thư mục
+                public_id: `${slug}-${Date.now()}`, // tên hình
+                resource_type: "image",
+              },
+              (error, result) => {
+                if (error) reject(error);
+                else resolve(result);
+              }
+            );
+            stream.end(buffer);
+          });
 
-          imagePaths.push(`/uploads/product/${fileName}`);
+          imagePaths.push(result.secure_url);
         }
 
         await Inventory.create({
@@ -160,7 +158,6 @@ export async function PUT(
     }
 
     // Cập nhật Inventory đã có
-
     const currentInventories = JSON.parse(
       formData.get("currentInventories") as string
     );
@@ -272,27 +269,15 @@ export async function PUT(
         const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
         const maxSizeKB = 1000;
 
-        const uploadDirAdmin = path.join(
-          process.cwd(),
-          "/public/uploads/product"
-        );
-        const uploadDirClient = path.join(
-          process.cwd(),
-          `../client/public/uploads/product`
-        );
-
-        await fs.mkdir(uploadDirAdmin, { recursive: true });
-        await fs.mkdir(uploadDirClient, { recursive: true });
-
-        const imagePaths: string[] = [];
-
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
 
           if (!allowedTypes.includes(file.type)) {
             return NextResponse.json(
               {
-                msg: `Hình "${file.name}" ở biến thể thứ i không đúng định dạng PNG, JPG hoặc WEBP.`,
+                msg: `Hình "${file.name}" ở biến thể thứ ${
+                  blockIndex + 1
+                } không đúng định dạng PNG, JPG hoặc WEBP.`,
               },
               { status: 404 }
             );
@@ -301,24 +286,33 @@ export async function PUT(
           if (file.size / 1024 > maxSizeKB) {
             return NextResponse.json(
               {
-                msg: `Hình "${file.name}" ở biến thể thứ i vượt quá dung lượng ${maxSizeKB}KB.`,
+                msg: `Hình "${file.name}" ở biến thể thứ ${
+                  blockIndex + 1
+                } vượt quá dung lượng ${maxSizeKB}KB.`,
               },
               { status: 404 }
             );
           }
 
           const arrayBuffer = await file.arrayBuffer();
-          const buffer = new Uint8Array(arrayBuffer);
-          const ext = file.name.split(".").pop();
-          const timestamp = Date.now();
-          const fileName = `${slug}-${timestamp}-${i}.${ext}`;
-          const filePathAdmin = path.join(uploadDirAdmin, fileName);
-          const filePathClient = path.join(uploadDirClient, fileName);
+          const buffer = Buffer.from(arrayBuffer);
 
-          await fs.writeFile(filePathAdmin, buffer);
-          await fs.writeFile(filePathClient, buffer);
+          const result: any = await new Promise((resolve, reject) => {
+            const stream = cloudinary.uploader.upload_stream(
+              {
+                folder: `aura-fashion/product`, // thư mục
+                public_id: `${slug}-${Date.now()}`, // tên file
+                resource_type: "image",
+              },
+              (error, result) => {
+                if (error) reject(error);
+                else resolve(result);
+              }
+            );
+            stream.end(buffer);
+          });
 
-          imagePaths.push(`/uploads/product/${fileName}`);
+          imagePaths.push(result.secure_url);
         }
 
         await Inventory.findByIdAndUpdate(block._id, {

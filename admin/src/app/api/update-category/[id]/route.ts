@@ -1,5 +1,7 @@
+import cloudinary from "@/lib/cloudinary";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Category from "@/model/Category";
+import { extractPublicId } from "@/utils/extractPublicId";
 import { removeVietNamese } from "@/utils/removeVietnamese";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
@@ -79,48 +81,30 @@ export async function PUT(
         );
       }
 
-      // Xoá Hình cũ
-      if (imagePath) {
-        const fileNameOld = imagePath.split("/uploads/category/")[1];
-        const oldPathAdmin = path.join(
-          process.cwd(),
-          "public/uploads/category",
-          fileNameOld
-        );
-        const oldPathClient = path.join(
-          process.cwd(),
-          "../client/public/uploads/category",
-          fileNameOld
-        );
-        await fs.rm(oldPathAdmin, { force: true }).catch(() => {});
-        await fs.rm(oldPathClient, { force: true }).catch(() => {});
-      }
+      // Xóa ảnh cũ
+      const publicId = extractPublicId(category.image);
+      await cloudinary.uploader.destroy(publicId);
 
-      // Lưu hình mới
+      // Thêm ảnh mới
       const arrayBuffer = await file.arrayBuffer();
       const buffer = Buffer.from(arrayBuffer);
-      const ext = file.name.split(".").pop();
-      const timestamp = Date.now();
-      const fileName = `${slug}-${timestamp}.${ext}`;
 
-      const uploadDirAdmin = path.join(
-        process.cwd(),
-        "public/uploads/category"
-      );
-      const uploadDirClient = path.join(
-        process.cwd(),
-        "../client/public/uploads/category"
-      );
-      await fs.mkdir(uploadDirAdmin, { recursive: true });
-      await fs.mkdir(uploadDirClient, { recursive: true });
+      const result: any = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          {
+            folder: `aura-fashion/category`, // thư mục
+            public_id: `${slug}-${Date.now()}`, // tên file
+            resource_type: "image",
+          },
+          (error, result) => {
+            if (error) reject(error);
+            else resolve(result);
+          }
+        );
+        stream.end(buffer);
+      });
 
-      const filePathAdmin = path.join(uploadDirAdmin, fileName);
-      const filePathClient = path.join(uploadDirClient, fileName);
-
-      await fs.writeFile(filePathAdmin, buffer);
-      await fs.writeFile(filePathClient, buffer);
-
-      imagePath = `/uploads/category/${fileName}`;
+      imagePath = result.secure_url;
     }
 
     const updatedData = {

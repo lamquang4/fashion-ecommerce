@@ -1,6 +1,7 @@
 "use client";
 import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
 export default function useDeleteImage() {
@@ -17,6 +18,8 @@ export default function useDeleteImage() {
 
     if (!result.isConfirmed || !id || !image) return;
 
+    const loadingToast = toast.loading("Đang xóa...");
+
     setIsLoading(true);
 
     try {
@@ -24,6 +27,8 @@ export default function useDeleteImage() {
       await axios.delete(url, {
         params: { image },
       });
+      toast.dismiss(loadingToast);
+      toast.success("Xóa thành công");
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

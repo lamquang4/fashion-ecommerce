@@ -50,7 +50,6 @@ function Customer() {
     try {
       await deleteUser(id);
       mutate();
-      toast.success("Xóa thành công");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
       mutate();
@@ -63,10 +62,10 @@ function Customer() {
     }
     try {
       await blockUser(id, status);
-      mutate(undefined, true);
+      mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
-      mutate(undefined, true);
+      mutate();
     }
   };
   return (

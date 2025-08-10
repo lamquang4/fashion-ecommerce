@@ -72,7 +72,7 @@ function EditProduct() {
   const { updateProduct, isLoading: isLoadingUpdateProduct } =
     useUpdateProduct(id);
   const { deleteImage, isLoading: isLoadingDeleteImage } = useDeleteImage();
-  const { updateImage } = useUpdateImage();
+  const { updateImage, isLoading: isLoadingSUpdateImage } = useUpdateImage();
   const [data, setData] = useState({
     name: "",
     price: 1,
@@ -756,7 +756,9 @@ function EditProduct() {
               type="submit"
               className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
             >
-              {isLoadingUpdateProduct ? "Đang cập nhật..." : "Cập nhật"}
+              {isLoadingUpdateProduct || isLoadingSUpdateImage
+                ? "Đang cập nhật..."
+                : "Cập nhật"}
             </button>
             <Link
               href="/product"
