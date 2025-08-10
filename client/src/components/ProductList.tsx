@@ -3,7 +3,6 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import AdvancedSearch from "./AdvancedSearch";
 import Image from "./Image";
-import Loading from "./Loading";
 import { VscSettings } from "react-icons/vsc";
 import { Category, Product } from "@/types/type";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";

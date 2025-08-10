@@ -12,14 +12,14 @@ export async function POST(
 
     const { orderId } = await params;
 
-    var partnerCode = process.env.MOMO_PARTNERCODE;
-    var accessKey = process.env.MOMO_ACCESSKEY;
-    var secretKey = process.env.MOMO_SECRETKEY;
-    var requestId = orderId;
+    const partnerCode = process.env.MOMO_PARTNERCODE;
+    const accessKey = process.env.MOMO_ACCESSKEY;
+    const secretKey = process.env.MOMO_SECRETKEY;
+    const requestId = orderId;
 
-    var rawSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=${partnerCode}&requestId=${requestId}`;
+    const rawSignature = `accessKey=${accessKey}&orderId=${orderId}&partnerCode=${partnerCode}&requestId=${requestId}`;
 
-    var signature = crypto
+    const signature = crypto
       .createHmac("sha256", secretKey!)
       .update(rawSignature)
       .digest("hex");
