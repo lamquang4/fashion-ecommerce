@@ -9,16 +9,14 @@ import ProductSlider from "./ProductSlider";
 function ProductSlug() {
   const params = useParams();
   const slug = params.slug as string;
-  const { product, isLoading } = useGetProductSlug(slug);
+  const { product, isLoading: isLoadingProductSlug } = useGetProductSlug(slug);
 
-  const { productsCateogry } = useGetProductsCategory(
-    product?.category?._id || "",
-    product?._id || ""
-  );
+  const { productsCateogry, isLoading: isLoadingProductsCategory } =
+    useGetProductsCategory(product?.category?._id || "", product?._id || "");
 
   return (
     <>
-      {isLoading ? (
+      {isLoadingProductSlug || isLoadingProductsCategory ? (
         <Loading height={70} size={50} color="black" thickness={2} />
       ) : (
         <>

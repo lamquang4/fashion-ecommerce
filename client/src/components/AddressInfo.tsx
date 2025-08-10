@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import SideBarMenu from "./SideBarMenu";
 import AddressModal from "./AddressModal";
 import useGetAddresses from "@/hooks/useGetAddresses";
@@ -7,12 +7,22 @@ import useDeleteAddress from "@/hooks/useDeleteAddress";
 import toast from "react-hot-toast";
 import Loading from "./Loading";
 import Image from "./Image";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 function AddressInfo() {
   const [addressId, setAddressId] = useState<string>("");
   const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
   const { addresses, isLoading, mutate } = useGetAddresses();
   const { deleteAddress, isLoading: isLoadingDeleteAddress } =
     useDeleteAddress();
+  const { status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/");
+    }
+  }, [status, router]);
 
   const toggleAddressModal = () => {
     setOpenAddressModal((prev) => !prev);

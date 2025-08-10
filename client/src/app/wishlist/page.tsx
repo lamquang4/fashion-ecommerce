@@ -1,14 +1,7 @@
-import WishlistItem from "../../components/WishlistItem";
+import Wishlist from "@/components/Wishlist";
 
-function Wishlist() {
-  return (
-    <>
-      <WishlistItem />
-      {/*
-            <ProductSlider title={"Có thể bạn sẽ thích"} />
-      */}
-    </>
-  );
+function page() {
+  return <Wishlist />;
 }
 
-export default Wishlist;
+export default page;

@@ -1,14 +1,7 @@
-import CartItem from "../../components/CartItem";
+import Cart from "@/components/Cart";
 
-function Cart() {
-  return (
-    <>
-      <CartItem />
-      {/*
-    <ProductSlider title={"Có thể bạn sẽ thích"} />
-        */}
-    </>
-  );
+function page() {
+  return <Cart />;
 }
 
-export default Cart;
+export default page;

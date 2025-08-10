@@ -1,11 +1,10 @@
-"use client";
 import { Suspense } from "react";
-import SaleSlug from "@/components/SaleSlug";
+import ProductSale from "@/components/ProductSale";
 
 function page() {
   return (
     <Suspense>
-      <SaleSlug />
+      <ProductSale />
     </Suspense>
   );
 }

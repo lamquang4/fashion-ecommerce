@@ -1,17 +1,30 @@
 "use client";
 import Image from "./Image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import useGetOrder from "@/hooks/useGetOrder";
 import { LuArchive, LuCheck, LuStar, LuTruck } from "react-icons/lu";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { TbCancel } from "react-icons/tb";
 import Loading from "./Loading";
 import Link from "next/link";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 
 function OrderDetail() {
+  const router = useRouter();
   const params = useParams();
   const id = params.id as string;
   const { order, isLoading } = useGetOrder(id);
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (!order) {
+      toast.error("Không tìm thấy đơn hàng");
+      router.push("/order");
+      return;
+    }
+  }, [order, isLoading, router]);
 
   const totalPrice =
     order?.productsBuy.reduce((sum, item) => {

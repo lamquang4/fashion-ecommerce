@@ -3,8 +3,9 @@ import ProductList from "@/components/ProductList";
 import { useParams } from "next/navigation";
 import useGetProductsSale from "@/hooks/useGetProductsSale";
 import Pagination from "@/components/Pagination";
+import Loading from "./Loading";
 
-function SaleSlug() {
+function ProductSale() {
   const params = useParams();
   const slug = params.slug as string;
 
@@ -13,15 +14,21 @@ function SaleSlug() {
 
   return (
     <>
-      <ProductList products={products} isLoading={isLoading} />
+      {isLoading ? (
+        <Loading height={70} size={50} color="black" thickness={2} />
+      ) : (
+        <>
+          <ProductList products={products} />
 
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        totalItems={totalItems}
-      />
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            totalItems={totalItems}
+          />
+        </>
+      )}
     </>
   );
 }
 
-export default SaleSlug;
+export default ProductSale;

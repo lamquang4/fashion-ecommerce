@@ -7,6 +7,12 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 function EditColor() {
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+  const { color, mutate, isLoading } = useGetColor(id);
+  const { updateColor, isLoading: isLoadingUpdateColor } = useUpdateColor(id);
+
   const [data, setData] = useState({
     namecolor: "",
     codecolor: "#000000",
@@ -19,12 +25,6 @@ function EditColor() {
       [name]: value,
     });
   };
-  const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
-
-  const { color, mutate, isLoading } = useGetColor(id);
-  const { updateColor, isLoading: isLoadingUpdateColor } = useUpdateColor(id);
 
   useEffect(() => {
     if (isLoading) return;

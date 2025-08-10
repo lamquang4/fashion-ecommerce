@@ -3,9 +3,10 @@ import Pagination from "@/components/Pagination";
 import ProductList from "@/components/ProductList";
 import useGetProductsSearch from "@/hooks/useGetProductsSearch";
 import { useSearchParams } from "next/navigation";
-import {useEffect } from "react";
+import { useEffect } from "react";
+import Loading from "./Loading";
 
-function Search() {
+function ProductSearch() {
   const {
     products,
     totalPages,
@@ -26,15 +27,21 @@ function Search() {
 
   return (
     <>
-      <ProductList products={products} isLoading={isLoading} />
+      {isLoading ? (
+        <Loading height={70} size={50} color="black" thickness={2} />
+      ) : (
+        <>
+          <ProductList products={products} />
 
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        totalItems={totalItems}
-      />
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            totalItems={totalItems}
+          />
+        </>
+      )}
     </>
   );
 }
 
-export default Search;
+export default ProductSearch;

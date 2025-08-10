@@ -1,17 +1,38 @@
 "use client";
 import SideBarMenu from "./SideBarMenu";
 import Image from "./Image";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import useGetOrder from "@/hooks/useGetOrder";
 import Loading from "./Loading";
 import { LuArchive, LuCheck, LuStar, LuTruck } from "react-icons/lu";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { TbCancel } from "react-icons/tb";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
+import toast from "react-hot-toast";
 function OrderDetail() {
   const params = useParams();
   const code = params.code as string;
   const { order, isLoading } = useGetOrder(code);
+  const { status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/");
+    }
+  }, [status, router]);
+
+  useEffect(() => {
+    if (isLoading) return;
+
+    if (!order) {
+      toast.error("Không tìm thấy đơn hàng");
+      router.push("/order");
+      return;
+    }
+  }, [order, isLoading, router]);
 
   const totalPrice =
     order?.productsBuy.reduce((sum, item) => {

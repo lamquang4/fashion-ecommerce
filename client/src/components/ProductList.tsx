@@ -14,9 +14,8 @@ import useAddWishlist from "@/hooks/useAddWishlist";
 interface Props {
   category?: Category;
   products: Product[];
-  isLoading: boolean;
 }
-function ProductList({ category, products, isLoading }: Props) {
+function ProductList({ category, products }: Props) {
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
   const [selectedInventoryIndexes, setSelectedInventoryIndexes] = useState<{
     [productId: string]: number;
@@ -152,9 +151,7 @@ function ProductList({ category, products, isLoading }: Props) {
           toggleMenu={toggleAdvancedSearch}
         />
 
-        {isLoading ? (
-          <Loading height={70} size={50} color="black" thickness={3} />
-        ) : products.length > 0 ? (
+        {products.length > 0 ? (
           <div
             className={`grid grid-cols-2 gap-x-[12px] gap-y-[35px] lg:grid-cols-3 2xl:grid-cols-4 sm:grid-cols-2 ${
               products.length <= 0 ? "h-[50vh]" : ""

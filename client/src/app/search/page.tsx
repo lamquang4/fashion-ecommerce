@@ -1,11 +1,10 @@
-"use client";
-import Search from "@/components/Search";
+import ProductSearch from "@/components/ProductSearch";
 import { Suspense } from "react";
 
 function page() {
   return (
     <Suspense>
-      <Search />
+      <ProductSearch />
     </Suspense>
   );
 }

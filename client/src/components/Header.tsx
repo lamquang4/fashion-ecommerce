@@ -14,8 +14,7 @@ import SearchMobile from "./SearchMobile";
 import SearchDesktop from "./SearchDesktop";
 import useGetCart from "@/hooks/useGetCart";
 import useGetWishlist from "@/hooks/useGetWishlist";
-import { useRouter } from "next/navigation";
-import { useSession } from "next-auth/react";
+
 function Header() {
   const { categoriesMale, categoriesFemale } = useGetCategories();
   const [openSearch, setOpenSearch] = useState<boolean>(false);
@@ -23,14 +22,6 @@ function Header() {
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
   const { cart } = useGetCart();
   const { wishlist } = useGetWishlist();
-  const { status } = useSession();
-  const router = useRouter();
-
-  useEffect(() => {
-    if (status === "unauthenticated") {
-      router.replace("/");
-    }
-  }, [status, router]);
 
   const totalQuantity =
     cart?.productsInCart.reduce((sum, item) => {

@@ -5,7 +5,6 @@ import React, { useState } from "react";
 import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
 import MenuSideCoupon from "./MenuSideCoupon";
-import Loading from "./Loading";
 import useGetCart from "@/hooks/useGetCart";
 import { useRemoveItemCart } from "@/hooks/useRemoveItemCart";
 import { useChangeQuantityItemCart } from "@/hooks/useChangeQuantityItemCart";
@@ -16,7 +15,7 @@ import useGetAddresses from "@/hooks/useGetAddresses";
 
 function CartItem() {
   const [menuOpen, setMenuOpen] = useState(false);
-  const { cart, isLoading, mutate } = useGetCart();
+  const { cart, mutate } = useGetCart();
   const { removeItem, isLoading: isLoadingRemoveItem } = useRemoveItemCart();
   const { changeQuantity, isLoading: isLoadingChangeQuantity } =
     useChangeQuantityItemCart();
@@ -138,9 +137,7 @@ function CartItem() {
           <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
             Giỏ hàng ({totalQuantity})
           </h2>
-          {isLoading ? (
-            <Loading height={70} size={50} color="black" thickness={3} />
-          ) : cart?.productsInCart && cart.productsInCart.length > 0 ? (
+          {cart?.productsInCart && cart.productsInCart.length > 0 ? (
             <form onSubmit={handleSubmit}>
               <div className="flex gap-8 w-full lg:flex-row flex-col">
                 <div className=" bg-white basis-[70%]">

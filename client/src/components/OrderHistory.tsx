@@ -6,12 +6,21 @@ import useGetOrders from "@/hooks/useGetOrders";
 import Loading from "./Loading";
 import { useRouter, useSearchParams } from "next/navigation";
 import Pagination from "./Pagination";
+import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 function OrderHistory() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const { orders, isLoading, totalPages, totalItems, currentPage } =
     useGetOrders();
+  const { status } = useSession();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/");
+    }
+  }, [status, router]);
 
   const array = [
     {

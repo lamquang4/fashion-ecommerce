@@ -1,10 +1,18 @@
 "use client";
+import { useRouter } from "next/navigation";
 import SideBarMenu from "./SideBarMenu";
 import { useSession } from "next-auth/react";
+import { useEffect } from "react";
 
 function AccountInfo() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
+  const router = useRouter();
 
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/");
+    }
+  }, [status, router]);
   return (
     <section className="w-full mt-[40px] sm:mt-[45px] ">
       <div className="flex justify-center flex-wrap">

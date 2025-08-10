@@ -1,8 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import ProfileMenu from "./ProfileMenu";
 import Notification from "./Notification";
+import { useSession } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 type HeaderProps = {
   toggleMenu: () => void;
@@ -10,6 +12,15 @@ type HeaderProps = {
 
 function Header({ toggleMenu }: HeaderProps) {
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const { status } = useSession();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (status === "unauthenticated") {
+      router.replace("/");
+    }
+  }, [status, router]);
+
   const toggleProfileMenu = () => {
     setProfileMenuOpen((prev) => !prev);
   };

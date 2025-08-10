@@ -1,34 +1,12 @@
-"use client";
-import ProductList from "@/components/ProductList";
-import useGetCategory from "@/hooks/useGetCategory";
-import useGetProductsSlug from "@/hooks/useGetProductsSlug";
-import { useParams } from "next/navigation";
-import Pagination from "../../../components/Pagination";
-import React, { Suspense } from "react";
+import { Suspense } from "react";
+import ProductCollection from "@/components/ProductCollection";
 
-function Page() {
-  const params = useParams();
-  const slug = params.slug as string;
-  const { category } = useGetCategory(slug);
-
-  const { products, totalPages, totalItems, currentPage, isLoading } =
-    useGetProductsSlug(slug);
-
+function page() {
   return (
     <Suspense>
-      <ProductList
-        products={products}
-        category={category}
-        isLoading={isLoading}
-      />
-
-      <Pagination
-        totalPages={totalPages}
-        currentPage={currentPage}
-        totalItems={totalItems}
-      />
+      <ProductCollection />
     </Suspense>
   );
 }
 
-export default Page;
+export default page;
