@@ -6,8 +6,7 @@ import Product from "@/model/Product";
 import { extractPublicId } from "@/utils/extractPublicId";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "node:fs/promises";
-import path from "path";
+
 export async function DELETE(
   _req: NextRequest,
   { params }: { params: Promise<{ id: string }> }

@@ -4,8 +4,7 @@ import Banner from "@/model/Banner";
 import { extractPublicId } from "@/utils/extractPublicId";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "node:fs/promises";
-import path from "path";
+
 export const config = {
   api: {
     bodyParser: false,
@@ -18,15 +17,6 @@ export async function PUT(req: NextRequest) {
     const formData = await req.formData();
     const ids = formData.getAll("_id") as string[];
     const files = formData.getAll("image") as File[];
-
-    const uploadDirAdmin = path.join(process.cwd(), "/public/uploads/banner");
-    const uploadDirClient = path.join(
-      process.cwd(),
-      "../client/public/uploads/banner"
-    );
-
-    await fs.mkdir(uploadDirAdmin, { recursive: true });
-    await fs.mkdir(uploadDirClient, { recursive: true });
 
     const updatedBanners: any = [];
 

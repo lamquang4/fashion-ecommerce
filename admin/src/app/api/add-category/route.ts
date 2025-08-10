@@ -3,8 +3,7 @@ import { connectMongoDB } from "@/lib/MongoConnect";
 import Category from "@/model/Category";
 import { removeVietNamese } from "@/utils/removeVietnamese";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "node:fs/promises";
-import path from "path";
+
 export const config = {
   api: {
     bodyParser: false,

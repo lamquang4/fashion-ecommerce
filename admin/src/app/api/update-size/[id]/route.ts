@@ -2,6 +2,7 @@ import { connectMongoDB } from "@/lib/MongoConnect";
 import Size from "@/model/Size";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
+
 export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }

@@ -3,9 +3,9 @@ import Coupon from "@/model/Coupon";
 import { validateNonNegativeNumber } from "@/utils/validateNonNegativeNumber";
 import { validatePercentNumber } from "@/utils/validatePercentNumber";
 import { validatePositiveNumber } from "@/utils/validatePositiveNumber";
-
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
+
 export async function PUT(
   req: NextRequest,
   { params }: { params: Promise<{ id: string }> }

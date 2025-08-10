@@ -5,8 +5,6 @@ import { extractPublicId } from "@/utils/extractPublicId";
 import { removeVietNamese } from "@/utils/removeVietnamese";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
-import fs from "node:fs/promises";
-import path from "path";
 
 export const config = {
   api: {
