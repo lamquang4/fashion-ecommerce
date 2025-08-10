@@ -30,7 +30,7 @@ function CheckoutForm() {
   const [couponCode, setCouponCode] = useState<string>("");
   const [paymethod, setPaymethod] = useState<number>();
   const { cart, mutate: mutateCart, isLoading: isLoadingCart } = useGetCart();
-  const { data: session, status } = useSession();
+  const { status } = useSession();
   const { addresses, isLoading: isLoadingAddresses } = useGetAddresses();
   const { addOrder, isLoading: isLoadingAddOrder } = useAddOrder();
   const { deleteCart, isLoading: isLoadingDeleteCart } = useDeleteCart();
@@ -88,16 +88,19 @@ function CheckoutForm() {
   useEffect(() => {
     if (isLoadingCart || isLoadingAddresses || status === "loading") return;
 
-    if (!session?.user) {
+    // kiểm tra đăng nhập chưa
+    if (status === "unauthenticated") {
       router.replace("/login");
       return;
     }
 
+    // kiểm tra giỏ hàng
     if (!cart || !cart.productsInCart?.length) {
       router.replace("/cart");
       return;
     }
 
+    // kiểm tra tài khoản đã có địa chỉ chưa
     if (!addresses || !addresses.length) {
       router.replace("/address");
       return;
@@ -107,6 +110,7 @@ function CheckoutForm() {
       (item) => item.variant.quantity > item.variant.stock
     );
 
+    // kiểm tra tồn kho sản phẩm
     if (outOfStockItems.length > 0) {
       const errorMessage = outOfStockItems
         .map(
@@ -118,15 +122,7 @@ function CheckoutForm() {
       router.replace(`/cart`);
       return;
     }
-  }, [
-    session,
-    cart,
-    addresses,
-    router,
-    isLoadingCart,
-    isLoadingAddresses,
-    status,
-  ]);
+  }, [cart, addresses, router, isLoadingCart, isLoadingAddresses, status]);
 
   // tạo đơn hàng khi thanh toán Momo thành công
   useEffect(() => {

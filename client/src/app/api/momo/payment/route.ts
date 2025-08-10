@@ -10,19 +10,19 @@ export async function POST(req: NextRequest) {
     const { total, paymethod } = await req.json();
 
     if (paymethod === 1) {
-      const partnerCode = process.env.MOMO_PARTNERCODE;
-      const accessKey = process.env.MOMO_ACCESSKEY;
-      const secretKey = process.env.MOMO_SECRETKEY;
-      const requestId = partnerCode! + new Date().getTime();
-      const orderId = requestId;
-      const orderInfo = "Thanh toán bằng Momo"; // nội dung giao dịch
-      const redirectUrl = `${process.env.NEXTAUTH_URL}/checkout`;
-      const ipnUrl = `${process.env.NEXTAUTH_URL}/api/momo/notify/${orderId}`;
-      const amount = total;
-      const requestType = "captureWallet";
-      const extraData = "";
+      var partnerCode = process.env.MOMO_PARTNERCODE;
+      var accessKey = process.env.MOMO_ACCESSKEY;
+      var secretKey = process.env.MOMO_SECRETKEY;
+      var requestId = partnerCode! + new Date().getTime();
+      var orderId = requestId;
+      var orderInfo = "Thanh toán bằng Momo"; // nội dung giao dịch
+      var redirectUrl = `${process.env.NEXTAUTH_URL}/checkout`;
+      var ipnUrl = `${process.env.NEXTAUTH_URL}/api/momo/notify/${orderId}`;
+      var amount = total;
+      var requestType = "captureWallet";
+      var extraData = "";
 
-      const rawSignature =
+      var rawSignature =
         "accessKey=" +
         accessKey +
         "&amount=" +
@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
         "&requestType=" +
         requestType;
 
-      const signature = crypto
+      var signature = crypto
         .createHmac("sha256", secretKey!)
         .update(rawSignature)
         .digest("hex");
@@ -77,8 +77,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ status: 404 });
     }
   } catch (err) {
-    console.log(err);
-
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

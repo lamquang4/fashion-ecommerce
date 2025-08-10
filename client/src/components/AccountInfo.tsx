@@ -22,7 +22,7 @@ function AccountInfo() {
                   type="text"
                   name="fullname"
                   className="w-full rounded-[5px] p-[6px_10px] text-[0.9rem] border border-gray-300 mt-[5px] not-last:mb-[15px] focus:outline-0"
-                  value={session?.user.fullname}
+                  value={session?.user.fullname || ""}
                   readOnly
                 />
 
@@ -31,7 +31,7 @@ function AccountInfo() {
                   type="text"
                   name="email"
                   className="w-full rounded-[5px] p-[6px_10px] text-[0.9rem] border border-gray-300 mt-[5px] not-last:mb-[15px] focus:outline-0"
-                  value={session?.user.email}
+                  value={session?.user.email || ""}
                   readOnly
                 />
 
@@ -41,7 +41,7 @@ function AccountInfo() {
                   name="phone"
                   inputMode="numeric"
                   className="w-full rounded-[5px] p-[6px_10px] text-[0.9rem] border border-gray-300 mt-[5px] not-last:mb-[15px] focus:outline-0"
-                  value={session?.user.phone}
+                  value={session?.user.phone || ""}
                   readOnly
                 />
 
@@ -52,7 +52,7 @@ function AccountInfo() {
                   type="date"
                   name="birthday"
                   className="w-full rounded-[5px] p-[6px_10px] text-[0.9rem] border border-gray-300 mt-[5px] not-last:mb-[15px] focus:outline-0"
-                  value={session?.user.birthday}
+                  value={session?.user.birthday || ""}
                   readOnly
                 />
               </div>
