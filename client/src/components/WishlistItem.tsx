@@ -29,8 +29,10 @@ function WishlistItem() {
             wishlist?.productsInWishlist.length > 0 ? (
             <div className="flex gap-8 max-w-xl mx-auto w-full">
               <div className="basis-[100%]">
-                {wishlist?.productsInWishlist.map((item, index) => (
-                  <React.Fragment key={index}>
+                {wishlist?.productsInWishlist.map((item) => (
+                  <React.Fragment
+                    key={`${item._id}-${item.variant._id}-${item.variant.color._id}`}
+                  >
                     <div className="flex gap-4 bg-white py-5">
                       <div className="flex gap-4.5">
                         <Link href={`/product/${item.slug}`}>

@@ -190,7 +190,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
             <div className="w-full flex flex-wrap justify-between gap-2.5">
               {colors.map((color, index) => {
                 return (
-                  <div className="flex gap-2.5 items-center" key={index}>
+                  <div className="flex gap-2.5 items-center" key={color._id}>
                     <input
                       type="checkbox"
                       className={`peer relative w-[22px] h-[22px] appearance-none border border-gray-300 cursor-pointer 

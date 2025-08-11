@@ -33,10 +33,10 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
 
         <div className="flex gap-[25px] flex-col items-center h-full w-full mt-[30px]">
           {coupons.length > 0 &&
-            coupons.map((coupon, index) => (
+            coupons.map((coupon) => (
               <div
                 className="relative w-full flex rounded-none filter-none min-h-0 overflow-hidden px-0 bg-[#197FB6]"
-                key={index}
+                key={coupon._id}
               >
                 <div className="absolute left-[-6px] top-[16.6%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
                 <div className="absolute left-[-6px] top-[38%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>

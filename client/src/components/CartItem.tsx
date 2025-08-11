@@ -141,8 +141,10 @@ function CartItem() {
             <form onSubmit={handleSubmit}>
               <div className="flex gap-8 w-full lg:flex-row flex-col">
                 <div className=" bg-white basis-[70%]">
-                  {cart?.productsInCart.map((item, index) => (
-                    <React.Fragment key={index}>
+                  {cart?.productsInCart.map((item) => (
+                    <React.Fragment
+                      key={`${item._id}-${item.variant._id}-${item.variant.color._id}-${item.variant.size._id}`}
+                    >
                       <div className="flex gap-4 py-6">
                         <div className="flex gap-4.5">
                           <Link href={`/product/${item.slug}`}>

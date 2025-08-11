@@ -264,8 +264,8 @@ function EditProduct() {
                     onChange={handleChange}
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   >
-                    {categories.map((category, index) => (
-                      <option value={category._id} key={index}>
+                    {categories.map((category) => (
+                      <option value={category._id} key={category._id}>
                         {category.namecategory}-
                         {category.gender === 1 ? "Nam" : "Nữ"}
                       </option>
@@ -352,7 +352,7 @@ function EditProduct() {
             {currentVariants.map((block, index) => (
               <div
                 className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[25px] w-full"
-                key={index}
+                key={block._id}
               >
                 <p className="font-bold text-[1rem] text-[#74767d]">
                   Biến thể {index + 1}
@@ -469,8 +469,8 @@ function EditProduct() {
                         );
                         return !checkColorInCurrent && !checkColorInNew;
                       })
-                      .map((color, idx) => (
-                        <option value={color._id} key={idx}>
+                      .map((color) => (
+                        <option value={color._id} key={color._id}>
                           {color.namecolor} ({color.codecolor})
                         </option>
                       ))}
@@ -525,8 +525,8 @@ function EditProduct() {
                                     (inv, j) => j !== i && inv.size === size._id
                                   );
                                 })
-                                .map((size, idx) => (
-                                  <option value={size._id} key={idx}>
+                                .map((size) => (
+                                  <option value={size._id} key={size._id}>
                                     {size.namesize}
                                   </option>
                                 ))}
@@ -645,8 +645,8 @@ function EditProduct() {
                           );
                           return !checkColorInNew && !checkColorInCurrent;
                         })
-                        .map((color, idx) => (
-                          <option value={color._id} key={idx}>
+                        .map((color) => (
+                          <option value={color._id} key={color._id}>
                             {color.namecolor} ({color.codecolor})
                           </option>
                         ))}
@@ -702,8 +702,8 @@ function EditProduct() {
                                         j !== i && inv.size === size._id
                                     );
                                   })
-                                  .map((size, idx) => (
-                                    <option value={size._id} key={idx}>
+                                  .map((size) => (
+                                    <option value={size._id} key={size._id}>
                                       {size.namesize}
                                     </option>
                                   ))}

@@ -80,8 +80,8 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
               {isLoading ? (
                 <Loading height={30} size={40} color={"#c00"} thickness={3} />
               ) : products.length > 0 ? (
-                products.map((product, index) => (
-                  <div className="flex w-full" key={index}>
+                products.map((product) => (
+                  <div className="flex w-full" key={product._id}>
                     <Link
                       href={`/product/${product.slug}`}
                       className="w-full"

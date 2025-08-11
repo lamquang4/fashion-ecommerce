@@ -130,8 +130,8 @@ function Category() {
                 </td>
               </tr>
             ) : categories.length > 0 ? (
-              categories.map((category, index) => (
-                <tr key={index}>
+              categories.map((category) => (
+                <tr key={category._id}>
                   <td className="pl-[1rem] py-[1rem]">
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">

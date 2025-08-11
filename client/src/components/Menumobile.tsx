@@ -64,8 +64,8 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                     Đồ nam
                   </Link>
                 </li>
-                {categoriesMale.map((category, index) => (
-                  <li className="my-[10px]" key={index}>
+                {categoriesMale.map((category) => (
+                  <li className="my-[10px]" key={category._id}>
                     <Link
                       href={`/collection/${category.slug}`}
                       className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
@@ -109,8 +109,8 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                     Đồ nữ
                   </Link>
                 </li>
-                {categoriesFemale.map((category, index) => (
-                  <li className="my-[10px]" key={index}>
+                {categoriesFemale.map((category) => (
+                  <li className="my-[10px]" key={category._id}>
                     <Link
                       href={`/collection/${category.slug}`}
                       className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"

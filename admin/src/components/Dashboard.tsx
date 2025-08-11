@@ -239,8 +239,8 @@ function Dashboard() {
                   </td>
                 </tr>
               ) : topProducts.length > 0 ? (
-                topProducts.map((product, index) => (
-                  <tr key={index}>
+                topProducts.map((product) => (
+                  <tr key={product._id}>
                     <td className="pl-[1rem] py-[1rem] w-[300px]">
                       <div className="flex gap-[10px] items-center">
                         <div className="cursor-pointer">
@@ -287,13 +287,13 @@ function Dashboard() {
 
                     <td className="py-[1rem] text-[0.9rem] text-[#444]">
                       <div className="flex gap-1.5">
-                        {product.variants.map((variant, index) => (
+                        {product.variants.map((variant) => (
                           <div
                             className="w-5 h-5 border-gray-400 border rounded-full"
                             style={{
                               backgroundColor: variant.color?.codecolor,
                             }}
-                            key={index}
+                            key={variant._id}
                             title={variant.color?.namecolor}
                           ></div>
                         ))}

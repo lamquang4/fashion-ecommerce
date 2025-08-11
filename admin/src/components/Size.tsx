@@ -80,8 +80,8 @@ function Size() {
                 </td>
               </tr>
             ) : sizes.length > 0 ? (
-              sizes.map((size, index) => (
-                <tr key={index}>
+              sizes.map((size) => (
+                <tr key={size._id}>
                   <td className="pl-[1rem] py-[1rem] w-[300px]">
                     {size.namesize}
                   </td>

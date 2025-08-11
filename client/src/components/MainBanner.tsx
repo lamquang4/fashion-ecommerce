@@ -23,7 +23,7 @@ function MainBanner() {
             className="w-full"
           >
             {banners1.map((banner1, index) => (
-              <SwiperSlide key={index}>
+              <SwiperSlide key={banner1._id}>
                 <div className="relative block w-full">
                   <div className="w-full">
                     <picture>
@@ -47,13 +47,13 @@ function MainBanner() {
                       </h2>
                       <div className="flex gap-7 justify-center items-center">
                         <Link
-                          href={"/shop"}
+                          href={"/collection/nam"}
                           className="w-[85px] py-[7.5px] md:w-[90px]  bg-white text-black text-[0.95rem] font-bold uppercase hover:scale-105"
                         >
                           Nữ
                         </Link>
                         <Link
-                          href={"/shop"}
+                          href={"/collection/nu"}
                           className="w-[85px] py-[7.5px] md:w-[90px]  bg-white text-black text-[0.95rem] font-bold uppercase hover:scale-105"
                         >
                           Nam

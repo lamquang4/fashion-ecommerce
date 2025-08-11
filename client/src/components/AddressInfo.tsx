@@ -72,8 +72,8 @@ function AddressInfo() {
                 {isLoading ? (
                   <Loading height={70} size={50} color="black" thickness={3} />
                 ) : addresses.length > 0 ? (
-                  addresses.map((address, index) => (
-                    <div key={index}>
+                  addresses.map((address) => (
+                    <div key={address._id}>
                       <hr className="border-gray-300 my-[20px]" />
                       <div className="flex justify-between flex-wrap gap-y-[8px]">
                         <div className="flex flex-col gap-[8px] max-w-[360px]">

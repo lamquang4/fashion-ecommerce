@@ -165,8 +165,8 @@ function AddProduct() {
                     className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
                   >
                     <option value="">Chọn danh mục</option>
-                    {categories.map((category, index) => (
-                      <option value={category._id} key={index}>
+                    {categories.map((category) => (
+                      <option value={category._id} key={category._id}>
                         {category.namecategory}-
                         {category.gender === 1 ? "Nam" : "Nữ"}
                       </option>
@@ -318,8 +318,8 @@ function AddProduct() {
                           (b, i) => i !== index && b.color === color._id
                         );
                       })
-                      .map((color, idx) => (
-                        <option value={color._id} key={idx}>
+                      .map((color) => (
+                        <option value={color._id} key={color._id}>
                           {color.namecolor} ({color.codecolor})
                         </option>
                       ))}
@@ -374,8 +374,8 @@ function AddProduct() {
                                     (inv, j) => j !== i && inv.size === size._id
                                   );
                                 })
-                                .map((size, idx) => (
-                                  <option value={size._id} key={idx}>
+                                .map((size) => (
+                                  <option value={size._id} key={size._id}>
                                     {size.namesize}
                                   </option>
                                 ))}

@@ -43,16 +43,16 @@ function CategoryList() {
           modules={[FreeMode]}
           className="mx-auto w-fit"
         >
-          {categories.map((item, index) => (
+          {categories.map((category) => (
             <SwiperSlide
-              key={index}
+              key={category._id}
               className="!flex !flex-col !items-center !w-[90px] sm:!w-[110px]"
             >
-              <Link href={`/collection/${item.slug}`}>
+              <Link href={`/collection/${category.slug}`}>
                 <div className="mb-[8px]">
                   <Image
-                    Src={item.image}
-                    Alt={item.namecategory}
+                    Src={category.image}
+                    Alt={category.namecategory}
                     ClassName="block w-[90px] sm:w-[110px] object-cover"
                     loadingType="lazy"
                   />
@@ -60,7 +60,7 @@ function CategoryList() {
                 <div className="w-full">
                   <div className="flex justify-center items-center">
                     <h3 className="text-[0.85rem] uppercase font-medium">
-                      {item.namecategory} ({item.productCount})
+                      {category.namecategory} ({category.productCount})
                     </h3>
                   </div>
                 </div>

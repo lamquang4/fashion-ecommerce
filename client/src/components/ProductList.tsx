@@ -156,7 +156,7 @@ function ProductList({ category, products }: Props) {
               products.length <= 0 ? "h-[50vh]" : ""
             }`}
           >
-            {products.map((product, index) => {
+            {products.map((product) => {
               const selectedIndex = selectedInventoryIndexes[product._id] || 0;
               const selectedInventory = product.variants[selectedIndex];
 
@@ -165,7 +165,7 @@ function ProductList({ category, products }: Props) {
               );
 
               return (
-                <div key={index}>
+                <div key={product._id}>
                   <div className="relative group">
                     <Link href={`/product/${product.slug}`}>
                       <Image

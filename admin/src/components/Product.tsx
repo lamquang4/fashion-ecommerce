@@ -142,8 +142,8 @@ function Product() {
                 </td>
               </tr>
             ) : products.length > 0 ? (
-              products.map((product, index) => (
-                <tr key={index}>
+              products.map((product) => (
+                <tr key={product._id}>
                   <td className="pl-[1rem] py-[1rem] w-[300px]">
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">

@@ -212,8 +212,8 @@ function Order() {
                 </td>
               </tr>
             ) : orders.length > 0 ? (
-              orders.map((order, index) => (
-                <tr key={index}>
+              orders.map((order) => (
+                <tr key={order._id}>
                   <td className="pl-[1rem] py-[1rem] text-[#22BAA0] font-semibold">
                     {order.orderCode}
                   </td>

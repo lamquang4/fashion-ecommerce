@@ -78,8 +78,8 @@ function OrderHistory() {
                 value={searchParams.get("status") ?? ""}
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block p-2 outline-0"
               >
-                {array.map((item, index) => (
-                  <option value={item.status} key={index}>
+                {array.map((item) => (
+                  <option value={item.status} key={item.status}>
                     {item.name}
                   </option>
                 ))}
@@ -90,10 +90,10 @@ function OrderHistory() {
               {isLoading ? (
                 <Loading height={70} size={50} color="black" thickness={3} />
               ) : orders.length > 0 ? (
-                orders.map((order, index) => (
+                orders.map((order) => (
                   <div
                     className="border border-gray-300 p-[12px] flex gap-[10px] flex-col"
-                    key={index}
+                    key={order._id}
                   >
                     {order.productsBuy.map((item, index) => (
                       <div

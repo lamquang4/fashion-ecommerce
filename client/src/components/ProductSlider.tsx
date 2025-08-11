@@ -72,7 +72,7 @@ function ProductSlider({ title, products }: Props) {
               {title}
             </h2>
             <div ref={sliderRef} className="keen-slider">
-              {products.map((product, index) => {
+              {products.map((product) => {
                 const selectedIndex =
                   selectedInventoryIndexes[product._id] || 0;
                 const selectedInventory = product.variants[selectedIndex];
@@ -81,7 +81,7 @@ function ProductSlider({ title, products }: Props) {
                   (item: any) => item.variant._id === selectedInventory._id
                 );
                 return (
-                  <div key={index} className="keen-slider__slide">
+                  <div key={product._id} className="keen-slider__slide">
                     <div className="relative group">
                       <Link href={`/product/${product.slug}`}>
                         <picture>

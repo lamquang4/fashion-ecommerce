@@ -145,8 +145,8 @@ function Admin() {
                 </td>
               </tr>
             ) : admins.length > 0 ? (
-              admins.map((admin, index) => (
-                <tr key={index}>
+              admins.map((admin) => (
+                <tr key={admin._id}>
                   <td className="pl-[1rem] text-[0.9rem] py-[1rem] w-[300px]">
                     {admin.fullname}
                   </td>

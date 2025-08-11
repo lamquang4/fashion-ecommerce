@@ -129,8 +129,8 @@ function Customer() {
                 </td>
               </tr>
             ) : customers.length > 0 ? (
-              customers.map((customer, index) => (
-                <tr key={index}>
+              customers.map((customer) => (
+                <tr key={customer._id}>
                   <td className="pl-[1rem] py-[1rem] text-[0.9rem]">
                     {customer.fullname}
                   </td>

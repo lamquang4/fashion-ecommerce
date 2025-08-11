@@ -226,9 +226,9 @@ function ProductDetail() {
               <div className="md:order-1 flex justify-center">
                 <div className="max-h-[500px] max-w-[400px] flex flex-row xl:flex-col gap-[15px] overflow-x-auto overflow-y-auto">
                   {product?.variants.map((variant) =>
-                    variant.images.map((img, index) => (
+                    variant.images.map((img) => (
                       <div
-                        key={index}
+                        key={`${variant._id}-${img}`}
                         className={`shrink-0 border  overflow-hidden cursor-pointer w-[70px] ${
                           mainImage === img
                             ? "border-gray-500"
@@ -299,9 +299,9 @@ function ProductDetail() {
                       Mã giảm giá
                     </p>
                     <div className="flex gap-[12px] flex-wrap w-full">
-                      {coupons.map((coupon, index) => (
+                      {coupons.map((coupon) => (
                         <div
-                          key={index}
+                          key={coupon._id}
                           className="relative flex rounded-none filter-none min-h-0 overflow-hidden px-0 cursor-pointer
     before:content-[''] before:absolute before:rounded-full before:w-[12px] before:h-[12px] before:bg-white before:border before:border-[#197FB6] before:top-1/2 before:translate-y-[-50%] before:left-[-6px] before:z-[10]
     after:content-[''] after:absolute after:rounded-full after:w-[12px] after:h-[12px] after:bg-white after:border after:border-[#197FB6] after:top-1/2 after:translate-y-[-50%] after:right-[-6px] after:z-[10]"
@@ -329,7 +329,7 @@ function ProductDetail() {
                   <div className="flex space-x-2">
                     {product?.variants.map((inv, index) => (
                       <button
-                        key={index}
+                        key={inv.color._id}
                         type="button"
                         title={inv.color.namecolor}
                         onClick={() => {

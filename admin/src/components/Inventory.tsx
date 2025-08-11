@@ -65,9 +65,11 @@ function Inventory() {
                 </td>
               </tr>
             ) : inventories.length > 0 ? (
-              inventories.map((inventory, index) =>
-                inventory.inventories.map((inv, subIndex) => (
-                  <tr key={`${index}-${subIndex}`}>
+              inventories.map((inventory) =>
+                inventory.inventories.map((inv) => (
+                  <tr
+                    key={`${inventory._id}-${inventory.color._id}-${inv.size._id}`}
+                  >
                     <td className="pl-[1rem] py-[1rem] w-[300px]">
                       <div className="flex gap-[10px] items-center">
                         <div className="cursor-pointer">

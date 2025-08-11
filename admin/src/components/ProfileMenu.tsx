@@ -23,12 +23,15 @@ function ProfileMenu({ menuOpen, toggleMenu }: menuProps) {
           onMouseOver={toggleMenu}
           onMouseOut={toggleMenu}
         >
-          <Image
-            Src={"/assets/other/owner.png"}
-            Alt={""}
-            ClassName="w-[30px] rounded-full border border-gray-30 p-1"
-            loadingType="eager"
-          />
+          <div className="w-[30px] rounded-full border border-gray-30 p-1">
+            <Image
+              Src={"/assets/other/owner.png"}
+              Alt={""}
+              ClassName="w-full"
+              loadingType="eager"
+            />
+          </div>
+
           {session?.user.fullname || ""}
           <div
             className={`absolute top-[40px] right-[15px] w-[170px] overflow-hidden z-20 transition-max-height duration-400 ease-in-out bg-white group-hover:max-h-[400px] shadow-md rounded-[6px] ${

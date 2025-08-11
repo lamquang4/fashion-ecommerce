@@ -67,8 +67,8 @@ function SearchDesktop() {
             {isLoading ? (
               <Loading height={25} size={35} color={"#c00"} thickness={3} />
             ) : products.length > 0 ? (
-              products.map((product, index) => (
-                <div className="flex w-full" key={index}>
+              products.map((product) => (
+                <div className="flex w-full" key={product._id}>
                   <Link href={`/product/${product.slug}`} className="w-full">
                     <div className="hover:bg-[#F7F7F7] p-2.5 w-full flex gap-3.5 border-t border-gray-200">
                       <div>
