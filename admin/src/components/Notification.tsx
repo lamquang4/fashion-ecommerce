@@ -42,15 +42,12 @@ function Notification({ menuOpen, toggleMenu }: menuProps) {
                         </span>
 
                         <small className="text-[#22BAA0] text-[0.8rem] font-medium">
-                          Lúc{" "}
+                          Hôm nay{" "}
                           {new Date(order.createdAt as string).toLocaleString(
                             "vi-VN",
                             {
                               hour: "2-digit",
                               minute: "2-digit",
-                              day: "2-digit",
-                              month: "2-digit",
-                              year: "numeric",
                             }
                           )}
                         </small>
