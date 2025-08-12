@@ -50,13 +50,13 @@ export default function TextBoxEditor({ content, onChange }: Props) {
     },
   });
 
-  if (!editor) return null;
-
   useEffect(() => {
     if (editor && content !== editor.getHTML()) {
       editor.commands.setContent(content);
     }
   }, [content, editor]);
+
+  if (!editor) return null;
 
   const tools = [
     {
