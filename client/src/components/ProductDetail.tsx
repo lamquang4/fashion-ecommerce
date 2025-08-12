@@ -229,7 +229,7 @@ function ProductDetail() {
                     variant.images.map((img) => (
                       <div
                         key={`${variant._id}-${img}`}
-                        className={`shrink-0 border  overflow-hidden cursor-pointer w-[70px] ${
+                        className={`shrink-0 border  overflow-hidden cursor-pointer w-[60px] ${
                           mainImage === img
                             ? "border-gray-500"
                             : "border-gray-300"

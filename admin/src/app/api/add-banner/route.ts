@@ -48,6 +48,10 @@ export async function POST(req: NextRequest) {
             folder: "aura-fashion/banner",
             public_id: `${file.name.split(".")[0]}-${Date.now()}`,
             resource_type: "image",
+            transformation: [
+              { quality: "auto" },
+              { fetch_format: "auto" },
+            ],
           },
           (error, uploadResult) => {
             if (error) reject(error);

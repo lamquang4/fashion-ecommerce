@@ -100,8 +100,6 @@ export async function PUT(
 
     return NextResponse.json({ inventory: updatedImage }, { status: 201 });
   } catch (err) {
-    console.log(err);
-
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

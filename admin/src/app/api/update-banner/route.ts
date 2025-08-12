@@ -76,6 +76,7 @@ export async function PUT(req: NextRequest) {
               folder: `aura-fashion/banner`, // thư mục
               public_id: `${file.name.split(".")[0]}-${Date.now()}`,
               resource_type: "image",
+              transformation: [{ quality: "auto" }, { fetch_format: "auto" }],
             },
             (error, result) => {
               if (error) reject(error);

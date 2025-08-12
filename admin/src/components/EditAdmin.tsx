@@ -90,8 +90,6 @@ function EditAdmin() {
         role: Number(data.role),
       });
 
-      toast.success("Cập nhật thành công!");
-
       setData((prev) => ({
         ...prev,
         password: "",

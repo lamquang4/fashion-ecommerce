@@ -85,7 +85,6 @@ function EditCategory() {
 
     try {
       await updateCategory(formData);
-      toast.success("Cập nhật thành công!");
 
       handelReset();
       mutate();

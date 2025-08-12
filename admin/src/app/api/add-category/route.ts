@@ -67,6 +67,11 @@ export async function POST(req: NextRequest) {
           folder: "aura-fashion/category",
           public_id: `${slug}-${Date.now()}`,
           resource_type: "image",
+          transformation: [
+            { width: 800, height: 1000, crop: "fill" },
+            { quality: "auto" },
+            { fetch_format: "auto" },
+          ],
         },
         (error, uploadResult) => {
           if (error) reject(error);

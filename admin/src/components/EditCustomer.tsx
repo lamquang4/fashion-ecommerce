@@ -75,7 +75,6 @@ function EditCustomer() {
         birthday: data.birthday,
         password: data.password.trim(),
       });
-      toast.success("Cập nhật thành công!");
 
       setData((prev) => ({
         ...prev,

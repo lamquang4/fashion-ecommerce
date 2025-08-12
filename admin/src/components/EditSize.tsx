@@ -52,7 +52,7 @@ function EditSize() {
       await updateSize({
         namesize: data.namesize.trim(),
       });
-      toast.success("Cập nhật thành công!");
+
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
