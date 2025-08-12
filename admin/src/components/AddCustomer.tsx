@@ -49,7 +49,7 @@ function AddCustomer() {
         birthday: data.birthday,
         password: data.password.trim(),
       });
-      toast.success("Thêm thành công!");
+
       setData({
         fullname: "",
         email: "",

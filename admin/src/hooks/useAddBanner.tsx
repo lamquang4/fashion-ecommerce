@@ -1,10 +1,12 @@
 "use client";
 import axios from "axios";
 import { useState } from "react";
+import toast from "react-hot-toast";
 
 export default function useAddBanner() {
   const [isLoading, setIsLoading] = useState(false);
   const addBanner = async (formData: FormData) => {
+    const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {
       const url = `/api/add-banner`;
@@ -13,6 +15,8 @@ export default function useAddBanner() {
           "Content-Type": "multipart/form-data",
         },
       });
+      toast.dismiss(loadingToast);
+      toast.success("Thêm thành công");
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

@@ -327,7 +327,7 @@ function ProductDetail() {
                     Màu sắc: {selectedColor?.namecolor}
                   </p>
                   <div className="flex space-x-2">
-                    {product?.variants.map((inv, index) => (
+                    {product?.variants.map((inv) => (
                       <button
                         key={inv.color._id}
                         type="button"
@@ -483,7 +483,7 @@ function ProductDetail() {
                   <hr className="border-1 my-[15px]" />
 
                   <div
-                    className="text-black text-[0.95rem]"
+                    className="text-black text-[0.95rem] textbox-editor"
                     dangerouslySetInnerHTML={{
                       __html: product?.description || "",
                     }}

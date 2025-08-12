@@ -2,7 +2,6 @@
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import InputImage from "./InputImage";
-import TinyMCEEditor from "./TinyMCEEditor";
 import Image from "./Image";
 import { VscTrash } from "react-icons/vsc";
 import ImageViewer from "./ImageViewer";
@@ -21,6 +20,7 @@ import useGetCategories1 from "@/hooks/useGetCategories1";
 import { GoTrash } from "react-icons/go";
 import { useInputImage2 } from "@/hooks/useInputImage2";
 import dynamic from "next/dynamic";
+import TextBoxEditor from "./TextBoxEditor";
 
 const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),
@@ -100,7 +100,6 @@ function EditProduct() {
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
-      mutate();
     }
   };
 
@@ -208,19 +207,22 @@ function EditProduct() {
           const formData = new FormData();
           formData.append("imageUpdate", file);
           formData.append("imageNeedUpdate", imageNeedUpdate);
-          await updateImage(formData, inventoryId);
+          try {
+            await updateImage(formData, inventoryId);
+          } catch (err: any) {
+            toast.error(err?.response?.data?.msg);
+            return;
+          }
         }
       }
     }
 
     try {
       await updateProduct(formData);
-      toast.success("Cập nhật thành công!");
       handleReset();
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
-      mutate();
     }
   };
 
@@ -274,12 +276,12 @@ function EditProduct() {
                 </div>
               </div>
 
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-1 w-full">
                 <label htmlFor="" className="text-[0.9rem] text-black">
                   Mô tả
                 </label>
-                <TinyMCEEditor
-                  text={data.description}
+                <TextBoxEditor
+                  content={data.description}
                   onChange={(value) =>
                     setData((prev) => ({ ...prev, description: value }))
                   }
@@ -397,6 +399,7 @@ function EditProduct() {
                               {!previewImages2?.[index]?.[imgIndex] ? (
                                 <>
                                   <button
+                                    className="bg-white rounded-full p-1 border border-gray-300"
                                     disabled={isLoadingDeleteImage}
                                     type="button"
                                     onClick={() =>
@@ -417,6 +420,7 @@ function EditProduct() {
                                       onFileSelect(file, index, imgIndex)
                                     }
                                     InputId={`c${index}-${imgIndex}`}
+                                    sizeIcon={22}
                                   />
                                 </>
                               ) : (

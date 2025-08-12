@@ -86,7 +86,7 @@ function Color() {
             ) : colors.length > 0 ? (
               colors.map((color) => (
                 <tr key={color._id}>
-                  <td className="pl-[1rem] py-[1rem] text-[0.9rem] font-medium">
+                  <td className="p-[1rem] text-[0.9rem] font-semibold">
                     <div className="flex gap-[10px] items-center">
                       <div
                         className={`w-5 h-5 border-gray-500 border`}

@@ -55,7 +55,6 @@ function Collection() {
       }
 
       mutate();
-      toast.success("Cập nhật thành công!");
       handleReset();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
@@ -105,6 +104,7 @@ function Collection() {
                         <InputImage1
                           onFileSelect={(file) => onFileSelect(file, index)}
                           InputId={`x${index}`}
+                          sizeIcon={30}
                         />
                         {previewImages1[index] && (
                           <div className="rounded-full border flex justify-center items-center bg-white">

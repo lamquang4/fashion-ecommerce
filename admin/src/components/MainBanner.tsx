@@ -136,7 +136,7 @@ function MainBanner() {
             ) : mainbanners.length > 0 ? (
               mainbanners.map((mainbanner) => (
                 <tr key={mainbanner._id}>
-                  <td className="pl-[1rem] py-[1rem]">
+                  <td className="p-[1rem]">
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">
                         <Image

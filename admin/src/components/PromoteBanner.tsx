@@ -49,7 +49,6 @@ function PromoteBanner() {
       }
 
       mutate();
-      toast.success("Cập nhật thành công!");
       setSelectedFiles1([]);
       setPreviewImages1([]);
     } catch (err: any) {
@@ -89,6 +88,7 @@ function PromoteBanner() {
                         <InputImage1
                           onFileSelect={(file) => onFileSelect(file, index)}
                           InputId={`b${index}`}
+                          sizeIcon={30}
                         />
                         {previewImages1[index] && (
                           <div className="rounded-full border flex justify-center items-center bg-white">

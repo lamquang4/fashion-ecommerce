@@ -126,7 +126,7 @@ function Coupon() {
             ) : coupons.length > 0 ? (
               coupons.map((coupon) => (
                 <tr key={coupon._id}>
-                  <td className="pl-[1rem] py-[1rem] text-[#22BAA0] font-semibold uppercase">
+                  <td className="p-[1rem] text-[0.9rem] text-[#22BAA0] font-semibold uppercase">
                     {coupon.code}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">

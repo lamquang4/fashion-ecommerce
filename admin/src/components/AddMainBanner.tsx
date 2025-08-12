@@ -61,7 +61,6 @@ function AddMainBanner() {
         formData.append("type", "1");
         await addBanner(formData);
       }
-      toast.success("Thêm thành công!");
 
       setDesktopPreviewImages([]);
       setDesktopFiles([]);

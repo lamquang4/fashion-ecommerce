@@ -82,7 +82,7 @@ function Size() {
             ) : sizes.length > 0 ? (
               sizes.map((size) => (
                 <tr key={size._id}>
-                  <td className="pl-[1rem] py-[1rem] w-[300px]">
+                  <td className="p-[1rem] text-[0.9rem] font-semibold">
                     {size.namesize}
                   </td>
 

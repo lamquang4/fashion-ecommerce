@@ -99,7 +99,7 @@ function AddCoupon() {
         minOrderValue: data.minOrderValue,
         maxDiscountValue: data.maxDiscountValue,
       });
-      toast.success("Thêm thành công!");
+
       setData({
         code: "",
         limit: 1,

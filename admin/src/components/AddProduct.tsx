@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import InputImage from "./InputImage";
-import TinyMCEEditor from "./TinyMCEEditor";
 import { GoTrash } from "react-icons/go";
 import { useInventory } from "../hooks/useInventory";
 import { useState } from "react";
@@ -11,6 +10,7 @@ import useGetColors from "@/hooks/useGetColors";
 import useGetSizes from "@/hooks/useGetSizes";
 import useGetCategories1 from "@/hooks/useGetCategories1";
 import dynamic from "next/dynamic";
+import TextBoxEditor from "./TextBoxEditor";
 
 const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),
@@ -118,7 +118,6 @@ function AddProduct() {
     try {
       await addProduct(formData);
       handleReset();
-      toast.success("Thêm thành công!");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -179,8 +178,8 @@ function AddProduct() {
                 <label htmlFor="" className="text-[0.9rem] text-black">
                   Mô tả
                 </label>
-                <TinyMCEEditor
-                  text={data.description}
+                <TextBoxEditor
+                  content={data.description}
                   onChange={(value) =>
                     setData((prev) => ({ ...prev, description: value }))
                   }

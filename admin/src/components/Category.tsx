@@ -132,7 +132,7 @@ function Category() {
             ) : categories.length > 0 ? (
               categories.map((category) => (
                 <tr key={category._id}>
-                  <td className="pl-[1rem] py-[1rem]">
+                  <td className="p-[1rem] ">
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">
                         <Image
@@ -143,15 +143,17 @@ function Category() {
                         />
                       </div>
 
-                      <div className="flex flex-col gap-[5px]">
-                        <p className="text-[0.9rem] font-medium  text-[#444]">
-                          {category.namecategory}
-                        </p>
-                      </div>
+                      <p className="text-[0.9rem] font-semibold">
+                        {category.namecategory}
+                      </p>
                     </div>
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
-                    {category.gender === 1 ? "Nam" : "Nữ"}
+                    {category.gender === 1
+                      ? "Nam"
+                      : category.gender === 0
+                      ? "Nữ"
+                      : ""}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex flex-col gap-[10px]">

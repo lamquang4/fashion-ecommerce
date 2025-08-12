@@ -3,9 +3,10 @@ import { RiImageEditFill } from "react-icons/ri";
 type InputImageProp = {
   InputId: string;
   onFileSelect: (file: File) => void;
+  sizeIcon: number;
 };
 
-function InputImage1({ InputId, onFileSelect }: InputImageProp) {
+function InputImage1({ InputId, onFileSelect, sizeIcon }: InputImageProp) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
 
@@ -14,9 +15,9 @@ function InputImage1({ InputId, onFileSelect }: InputImageProp) {
     }
   };
   return (
-    <div className="rounded-full border flex justify-center items-center bg-white">
-      <label htmlFor={InputId} className="cursor-pointer  p-2">
-        <RiImageEditFill size={22} />
+    <div className="flex justify-center items-center bg-white rounded-full p-1.5 border border-gray-300">
+      <label htmlFor={InputId} className="cursor-pointer">
+        <RiImageEditFill size={sizeIcon} color="black" />
       </label>
 
       <input

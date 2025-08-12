@@ -58,7 +58,7 @@ function AddCategory() {
 
     try {
       await addCategory(formData);
-      toast.success("Thêm thành công!");
+
       handelReset();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);

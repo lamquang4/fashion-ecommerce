@@ -144,7 +144,7 @@ function Product() {
             ) : products.length > 0 ? (
               products.map((product) => (
                 <tr key={product._id}>
-                  <td className="pl-[1rem] py-[1rem] w-[300px]">
+                  <td className="p-[1rem]">
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">
                         <Image
@@ -155,11 +155,9 @@ function Product() {
                         />
                       </div>
 
-                      <div className="flex flex-col gap-[5px]">
-                        <p className="text-[0.9rem] font-medium  text-[#444]">
-                          {product.name}
-                        </p>
-                      </div>
+                      <p className="text-[0.9rem] font-medium  text-[#444]">
+                        {product.name}
+                      </p>
                     </div>
                   </td>
 
@@ -213,7 +211,11 @@ function Product() {
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">
                     {product.category.namecategory}/
-                    {product.category.gender === 1 ? "Nam" : "Nữ"}
+                    {product.category.gender === 1
+                      ? "Nam"
+                      : product.category.gender === 0
+                      ? "Nữ"
+                      : ""}
                   </td>
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">

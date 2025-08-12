@@ -28,7 +28,7 @@ function AddColor() {
         namecolor: data.namecolor.trim(),
         codecolor: data.codecolor,
       });
-      toast.success("Thêm thành công!");
+
       setData({
         namecolor: "",
         codecolor: "#000000",

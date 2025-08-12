@@ -28,7 +28,7 @@ function AddSize() {
       await addSize({
         namesize: data.namesize.trim(),
       });
-      toast.success("Thêm thành công!");
+
       setData({
         namesize: "",
       });

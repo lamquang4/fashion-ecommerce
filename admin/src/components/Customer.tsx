@@ -131,7 +131,7 @@ function Customer() {
             ) : customers.length > 0 ? (
               customers.map((customer) => (
                 <tr key={customer._id}>
-                  <td className="pl-[1rem] py-[1rem] text-[0.9rem]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#22BAA0] font-semibold">
                     {customer.fullname}
                   </td>
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">

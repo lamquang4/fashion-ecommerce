@@ -70,7 +70,7 @@ function Inventory() {
                   <tr
                     key={`${inventory._id}-${inventory.color._id}-${inv.size._id}`}
                   >
-                    <td className="pl-[1rem] py-[1rem] w-[300px]">
+                    <td className="p-[1rem]">
                       <div className="flex gap-[10px] items-center">
                         <div className="cursor-pointer">
                           <Image
@@ -81,11 +81,9 @@ function Inventory() {
                           />
                         </div>
 
-                        <div className="flex flex-col gap-[5px]">
-                          <p className="text-[0.9rem] font-medium  text-[#444]">
-                            {inventory.product.name}
-                          </p>
-                        </div>
+                        <p className="text-[0.9rem] font-semibold">
+                          {inventory.product.name}
+                        </p>
                       </div>
                     </td>
 

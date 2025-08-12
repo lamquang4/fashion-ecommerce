@@ -51,7 +51,7 @@ function AddAdmin() {
         password: data.password.trim(),
         role: parseInt(data.role),
       });
-      toast.success("Thêm thành công!");
+
       setData({
         fullname: "",
         email: "",
