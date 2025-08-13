@@ -15,6 +15,7 @@ export async function GET() {
       .sort({ createdAt: -1 })
       .limit(limit)
       .lean();
+      
     return NextResponse.json({ orders });
   } catch (err) {
     return NextResponse.json(
