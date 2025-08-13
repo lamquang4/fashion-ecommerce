@@ -467,7 +467,7 @@ function CheckoutForm() {
                         >
                           <Image
                             Src={"/assets/other/cod.png"}
-                            ClassName="w-[60px]"
+                            ClassName="w-[60px] rounded-lg border border-gray-300"
                             loadingType="eager"
                             Alt=""
                           />
@@ -494,7 +494,7 @@ function CheckoutForm() {
                         >
                           <Image
                             Src={"/assets/other/momo.png"}
-                            ClassName="w-[60px] rounded-lg"
+                            ClassName="w-[60px] rounded-lg border border-gray-300"
                             loadingType="eager"
                             Alt=""
                           />
