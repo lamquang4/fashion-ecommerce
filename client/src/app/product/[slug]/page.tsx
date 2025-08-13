@@ -1,11 +1,11 @@
 "use client";
-import ProductSlug from "@/components/ProductSlug";
+import ProductDetailSlug from "@/components/ProductDetailSlug";
 import { Suspense } from "react";
 
 function page() {
   return (
     <Suspense>
-      <ProductSlug />
+      <ProductDetailSlug />
     </Suspense>
   );
 }

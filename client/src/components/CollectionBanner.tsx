@@ -1,9 +1,10 @@
 "use client";
-import useGetMainBanners from "@/hooks/useGetBanners";
+
+import useGetCollectionBanners from "@/hooks/useGetCollectionBanners";
 import Image from "./Image";
 import Link from "next/link";
 function CollectionBanner() {
-  const { collections } = useGetMainBanners();
+  const { collections } = useGetCollectionBanners();
   return (
     <>
       {collections.length > 0 && (

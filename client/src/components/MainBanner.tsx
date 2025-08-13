@@ -6,7 +6,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
 import Image from "./Image";
-import useGetMainBanners from "@/hooks/useGetBanners";
+import useGetMainBanners from "@/hooks/useGetMainBanners";
+
 function MainBanner() {
   const { banners1, banners2 } = useGetMainBanners();
 

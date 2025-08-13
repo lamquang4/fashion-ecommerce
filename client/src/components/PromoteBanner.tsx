@@ -1,11 +1,11 @@
-import useGetMainBanners from "@/hooks/useGetBanners";
+import useGetPromoteBanners from "@/hooks/useGetPromoteBanners";
 import Image from "./Image";
 import Link from "next/link";
 interface PromoteBannerProp {
   gender: number;
 }
 function PromoteBanner({ gender }: PromoteBannerProp) {
-  const { promotebanners } = useGetMainBanners();
+  const { promotebanners } = useGetPromoteBanners();
 
   return (
     <>

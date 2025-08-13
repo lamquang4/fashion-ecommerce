@@ -4,14 +4,14 @@ import CategoryList from "../components/CategoryList";
 import ProductSlider from "../components/ProductSlider";
 import PromoteBanner from "../components/PromoteBanner";
 import ServiceFeature from "../components/ServiceFeature";
-import useGetMainBanners from "@/hooks/useGetBanners";
 import Loading from "@/components/Loading";
 import MainBanner from "../components/MainBanner";
 import CollectionBanner from "../components/CollectionBanner";
+import useGetMainBanners from "@/hooks/useGetMainBanners";
 
 export default function Home() {
-  const { productsMale, productsFemale } = useGetProductsGender();
   const { isLoading } = useGetMainBanners();
+  const { productsMale, productsFemale } = useGetProductsGender();
   return (
     <>
       {isLoading ? (

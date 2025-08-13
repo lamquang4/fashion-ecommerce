@@ -6,7 +6,7 @@ import Loading from "@/components/Loading";
 import ProductDetail from "./ProductDetail";
 import ProductSlider from "./ProductSlider";
 
-function ProductSlug() {
+function ProductDetailSlug() {
   const params = useParams();
   const slug = params.slug as string;
   const { product, isLoading: isLoadingProductSlug } = useGetProductSlug(slug);
@@ -32,4 +32,4 @@ function ProductSlug() {
   );
 }
 
-export default ProductSlug;
+export default ProductDetailSlug;

@@ -14,10 +14,14 @@ export async function GET(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
     const limit = 12;
-    const categoryId = new ObjectId(category);
-    const productId = new ObjectId(product);
+
     const productsCateogry = await Product.aggregate([
-      { $match: { category: categoryId, _id: { $ne: productId } } },
+      {
+        $match: {
+          category: new ObjectId(category),
+          _id: { $ne: new ObjectId(product) },
+        },
+      },
       {
         $lookup: {
           from: "categories",

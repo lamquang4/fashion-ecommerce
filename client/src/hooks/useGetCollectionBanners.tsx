@@ -4,22 +4,16 @@ import axios from "axios";
 import useSWR from "swr";
 
 type ResponseType = {
-  banners1: Banner[];
-  banners2: Banner[];
-  promotebanners: Banner[];
   collections: Banner[];
 };
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
-export default function useGetMainBanners() {
-  const url = `/api/get-banners`;
+export default function useGetCollectionBanners() {
+  const url = `/api/get-collectionbanners`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    banners1: data?.banners1 || [],
-    banners2: data?.banners2 || [],
-    promotebanners: data?.promotebanners || [],
     collections: data?.collections || [],
     error,
     isLoading,
