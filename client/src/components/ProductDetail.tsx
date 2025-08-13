@@ -1,7 +1,6 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import Image from "./Image";
-import { LiaRulerHorizontalSolid } from "react-icons/lia";
 import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
 import MenuSideCoupon from "./MenuSideCoupon";
