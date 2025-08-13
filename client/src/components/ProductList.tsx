@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import {  useState } from "react";
 import AdvancedSearch from "./AdvancedSearch";
 import Image from "./Image";
 import { VscSettings } from "react-icons/vsc";
