@@ -1,10 +1,9 @@
 "use client";
 import Link from "next/link";
 import Image from "./Image";
-import React, { useState } from "react";
+import React from "react";
 import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
-import MenuSideCoupon from "./MenuSideCoupon";
 import useGetCart from "@/hooks/useGetCart";
 import { useRemoveItemCart } from "@/hooks/useRemoveItemCart";
 import { useChangeQuantityItemCart } from "@/hooks/useChangeQuantityItemCart";
@@ -14,7 +13,6 @@ import { useRouter } from "next/navigation";
 import useGetAddresses from "@/hooks/useGetAddresses";
 
 function CartItem() {
-  const [menuOpen, setMenuOpen] = useState(false);
   const { cart, mutate } = useGetCart();
   const { removeItem, isLoading: isLoadingRemoveItem } = useRemoveItemCart();
   const { changeQuantity, isLoading: isLoadingChangeQuantity } =
@@ -124,10 +122,6 @@ function CartItem() {
     }
 
     router.push(`/checkout`);
-  };
-
-  const toggleOpen = () => {
-    setMenuOpen(!menuOpen);
   };
 
   return (
@@ -348,8 +342,6 @@ function CartItem() {
               </div>
             </div>
           )}
-
-          <MenuSideCoupon toggleMenu={toggleOpen} isOpen={menuOpen} />
         </div>
       </section>
     </>

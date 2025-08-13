@@ -43,7 +43,9 @@ function AccountInfo() {
                   readOnly
                 />
 
-                <span className="block text-left text-[0.9rem]">Phone:</span>
+                <span className="block text-left text-[0.9rem]">
+                  Số điện thoại:
+                </span>
                 <input
                   type="number"
                   name="phone"

@@ -146,12 +146,16 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
 
             <div className="w-full flex justify-center items-center gap-[10px]">
               <div className="border border-gray-300 p-2.5 w-full">
-                <label className="text-sm text-gray-600 block mb-1">
+                <label
+                  htmlFor="min"
+                  className="text-sm text-gray-600 block mb-1"
+                >
                   Tối thiểu
                 </label>
                 <div className="flex items-center">
                   <input
                     type="number"
+                    id="min"
                     className="w-full text-[0.9rem] outline-none border-none p-0"
                     name="min"
                     inputMode="numeric"
@@ -162,12 +166,16 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
               </div>
 
               <div className="border border-gray-300 p-2.5 w-full">
-                <label className="text-sm text-gray-600 block mb-1">
+                <label
+                  htmlFor="max"
+                  className="text-sm text-gray-600 block mb-1"
+                >
                   Tối đa
                 </label>
                 <div className="flex items-center">
                   <input
                     type="number"
+                    id="max"
                     className="w-full text-[0.9rem] outline-none border-none p-0"
                     name="max"
                     inputMode="numeric"
