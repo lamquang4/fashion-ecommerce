@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function GET() {
   try {
     await connectMongoDB();
-    const promotebanners = await Banner.find({ type: { $in: 2 } });
+    const promotebanners = await Banner.find({ type: { $in: 2 } }).lean();
     return NextResponse.json({ promotebanners });
   } catch (err) {
     return NextResponse.json(

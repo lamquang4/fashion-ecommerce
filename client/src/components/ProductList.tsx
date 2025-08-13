@@ -32,18 +32,6 @@ function ProductList({ category, products }: Props) {
     setAdvancedSearchOpen(!advancedSearchOpen);
   };
 
-  useEffect(() => {
-    if (advancedSearchOpen) {
-      document.body.style.overflowY = "hidden";
-    } else {
-      document.body.style.overflowY = "auto";
-    }
-
-    return () => {
-      document.body.style.overflowY = "auto";
-    };
-  }, [advancedSearchOpen]);
-
   const handleAddToWishlist = async (
     product: Product,
     inventoryIndex: number
@@ -103,14 +91,14 @@ function ProductList({ category, products }: Props) {
     <section className="px-[10px] mt-[40px] sm:mt-[45px] sm:px-[15px]">
       <div className="w-full mx-auto md:max-w-[1000px] lg:max-w-[1240px]">
         <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550]  mb-[20px]">
-          {pathname === "/collection/nam"
-            ? "Đồ nam"
-            : pathname === "/collection/nu"
-            ? "Đồ nữ"
-            : pathname === "/collection/all"
-            ? "Tất cả sản phẩm"
-            : category
-            ? `${category.namecategory} ${category.gender === 1 ? "nam" : "nữ"}`
+          {category
+            ? `${category.namecategory} ${
+                category.gender === 1
+                  ? "nam"
+                  : category.gender === 0
+                  ? "nữ"
+                  : ""
+              }`
             : ""}
 
           {pathname === "/search" && search && search}
@@ -168,14 +156,16 @@ function ProductList({ category, products }: Props) {
                 <div key={product._id}>
                   <div className="relative group">
                     <Link href={`/product/${product.slug}`}>
-                      <Image
-                        Src={selectedInventory.images[0]}
-                        Alt={product.name}
-                        ClassName={
-                          "block w-full h-auto object-cover z-[1] relative"
-                        }
-                        loadingType="lazy"
-                      />
+                      {selectedInventory.images[0] && (
+                        <Image
+                          Src={selectedInventory.images[0]}
+                          Alt={product.name}
+                          ClassName={
+                            "block w-full h-auto object-cover z-[1] relative"
+                          }
+                          loadingType="lazy"
+                        />
+                      )}
                       {selectedInventory.images[1] && (
                         <Image
                           Src={selectedInventory.images[1]}
@@ -225,7 +215,11 @@ function ProductList({ category, products }: Props) {
                   <div className="p-[14px_2px]">
                     <h2 className="text-[#969696] text-[0.9rem] sm:text-[0.95rem] font-medium uppercase mb-[6px]">
                       {product.category.namecategory} /{" "}
-                      {product.category.gender === 1 ? "Nam" : "Nữ"}
+                      {product.category.gender === 1
+                        ? "Nam"
+                        : product.category.gender === 0
+                        ? "Nữ"
+                        : ""}
                     </h2>
                     <h2 className="text-black text-[0.9rem] sm:text-[0.95rem] font-medium capitalize mb-[6px]">
                       {product.name}

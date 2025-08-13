@@ -15,7 +15,7 @@ export async function GET(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const category = await Category.findById(id);
+    const category = await Category.findById(id).lean();
 
     if (!category) {
       return NextResponse.json(

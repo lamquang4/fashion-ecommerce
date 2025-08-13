@@ -56,6 +56,19 @@ export async function GET(
           finalPrice: { $subtract: ["$price", "$discount"] },
         },
       },
+    ];
+
+    if (!isNaN(min) || !isNaN(max)) {
+      const conditions = [];
+      if (!isNaN(min)) conditions.push({ $gte: ["$finalPrice", min] });
+      if (!isNaN(max)) conditions.push({ $lte: ["$finalPrice", max] });
+
+      pipeline.push({
+        $match: { $expr: { $and: conditions } },
+      });
+    }
+
+    pipeline.push(
       {
         $lookup: {
           from: "categories",
@@ -112,34 +125,13 @@ export async function GET(
           ],
           as: "variants",
         },
-      },
-    ];
+      }
+    );
 
-    if (!isNaN(min) && !isNaN(max)) {
+    if (colors.length > 0) {
       pipeline.push({
         $match: {
-          $expr: {
-            $and: [
-              { $gte: ["$finalPrice", min] },
-              { $lte: ["$finalPrice", max] },
-            ],
-          },
-        },
-      });
-    } else if (!isNaN(min)) {
-      pipeline.push({
-        $match: {
-          $expr: {
-            $gte: ["$finalPrice", min],
-          },
-        },
-      });
-    } else if (!isNaN(max)) {
-      pipeline.push({
-        $match: {
-          $expr: {
-            $lte: ["$finalPrice", max],
-          },
+          "variants.color.namecolor": { $in: colors },
         },
       });
     }
@@ -214,14 +206,6 @@ export async function GET(
       );
     } else {
       pipeline.push({ $sort: { createdAt: -1 } });
-    }
-
-    if (colors.length > 0) {
-      pipeline.push({
-        $match: {
-          "variants.color.namecolor": { $in: colors },
-        },
-      });
     }
 
     const countPipeline = [...pipeline, { $count: "total" }];

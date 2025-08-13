@@ -21,7 +21,7 @@ export async function GET(req: NextRequest) {
     }
 
     const [coupons, total] = await Promise.all([
-      Coupon.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
+      Coupon.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }).lean(),
       Coupon.countDocuments(query),
     ]);
     return NextResponse.json({

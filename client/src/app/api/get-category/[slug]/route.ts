@@ -10,13 +10,22 @@ export async function GET(
     await connectMongoDB();
     const { slug } = await params;
 
-    const category = await Category.findOne({ slug });
+    let category;
 
-    if (!category) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy danh mục" },
-        { status: 404 }
-      );
+    if (slug === "all") {
+      category = { namecategory: "Tất cả sản phẩm" };
+    } else if (slug === "nam") {
+      category = { namecategory: "Đồ nam", gender: 1 };
+    } else if (slug === "nu") {
+      category = { namecategory: "Đồ nữ", gender: 0 };
+    } else {
+      category = await Category.findOne({ slug }).lean();
+      if (!category) {
+        return NextResponse.json(
+          { msg: "Không tìm thấy danh mục" },
+          { status: 404 }
+        );
+      }
     }
 
     return NextResponse.json(category);

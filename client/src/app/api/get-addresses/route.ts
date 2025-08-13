@@ -17,7 +17,7 @@ export async function GET() {
       );
     }
 
-    const addresses = await Address.find({ user: userId });
+    const addresses = await Address.find({ user: userId }).lean();
 
     return NextResponse.json({
       addresses,

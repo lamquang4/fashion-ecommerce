@@ -41,7 +41,6 @@ export async function GET() {
       categoriesFemale,
     });
   } catch (err) {
-    console.log(err);
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

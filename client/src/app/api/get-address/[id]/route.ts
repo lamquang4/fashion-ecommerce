@@ -10,7 +10,7 @@ export async function GET(
     await connectMongoDB();
     const { id } = await params;
 
-    const address = await Address.findById(id);
+    const address = await Address.findById(id).lean();
 
     if (!address) {
       return NextResponse.json(

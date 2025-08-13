@@ -15,7 +15,7 @@ export async function GET(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const size = await Size.findById(id);
+    const size = await Size.findById(id).lean();
 
     if (!size) {
       return NextResponse.json(

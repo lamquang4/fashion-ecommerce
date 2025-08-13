@@ -15,7 +15,7 @@ export async function GET(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const coupon = await Coupon.findById(id);
+    const coupon = await Coupon.findById(id).lean();
 
     if (!coupon) {
       return NextResponse.json(

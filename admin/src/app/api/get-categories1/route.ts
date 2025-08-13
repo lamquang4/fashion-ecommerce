@@ -6,7 +6,7 @@ export async function GET() {
   try {
     await connectMongoDB();
 
-    const categories = await Category.find().sort({ gender: -1 });
+    const categories = await Category.find().sort({ gender: -1 }).lean();
 
     return NextResponse.json({ categories });
   } catch (err) {

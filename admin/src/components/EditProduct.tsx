@@ -269,7 +269,11 @@ function EditProduct() {
                     {categories.map((category) => (
                       <option value={category._id} key={category._id}>
                         {category.namecategory}-
-                        {category.gender === 1 ? "Nam" : "Nữ"}
+                        {category.gender === 1
+                          ? "Nam"
+                          : category.gender === 0
+                          ? "Nữ"
+                          : ""}
                       </option>
                     ))}
                   </select>

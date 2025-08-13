@@ -15,7 +15,7 @@ export async function GET(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const color = await Color.findById(id);
+    const color = await Color.findById(id).lean();
 
     if (!color) {
       return NextResponse.json({ msg: "Không tìm thấy màu" }, { status: 404 });

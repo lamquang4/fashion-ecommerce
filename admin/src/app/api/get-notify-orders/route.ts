@@ -13,7 +13,8 @@ export async function GET() {
       createdAt: { $gte: startOfToday },
     })
       .sort({ createdAt: -1 })
-      .limit(limit);
+      .limit(limit)
+      .lean();
     return NextResponse.json({ orders });
   } catch (err) {
     return NextResponse.json(

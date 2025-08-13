@@ -31,7 +31,7 @@ function CategoryList() {
     }
   `}
             >
-              {gender === 1 ? "Nam" : "Nữ"}
+              {gender === 1 ? "Nam" : gender === 0 ? "Nữ" : ""}
             </button>
           ))}
         </div>

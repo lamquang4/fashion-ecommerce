@@ -19,7 +19,7 @@ export default function useGetProductsSearch() {
   const [keyword, setKeyword] = useState("");
   const min = searchParams.get("min");
   const max = searchParams.get("max");
-  const color = searchParams.get("color");
+  const colors = searchParams.getAll("color");
   const sort = searchParams.get("sort");
 
   const query = new URLSearchParams();
@@ -28,7 +28,9 @@ export default function useGetProductsSearch() {
   if (min) query.set("min", min);
   if (max) query.set("max", max);
   if (sort) query.set("sort", sort);
-  if (color) query.set("color", color);
+  if (colors.length > 0) {
+    colors.forEach((c) => query.append("color", c));
+  }
   if (keyword) query.set("keyword", keyword);
 
   const url = `/api/get-products-search?${query.toString()}`;

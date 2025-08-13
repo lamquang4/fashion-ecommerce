@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     }
 
     const [customers, total] = await Promise.all([
-      User.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
+      User.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }).lean(),
       User.countDocuments(query),
     ]);
     return NextResponse.json({
