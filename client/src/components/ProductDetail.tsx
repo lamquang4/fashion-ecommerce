@@ -349,22 +349,9 @@ function ProductDetail() {
                 </div>
 
                 <div className="flex flex-col space-y-2 mb-[15px]">
-                  <div className="flex justify-between">
-                    <p className="text-gray-700 font-medium mb-[5px]">
-                      Kích thước: {selectedSize?.namesize}
-                    </p>
-
-                    <button
-                      type="button"
-                      className="flex gap-[6px] items-center"
-                    >
-                      <LiaRulerHorizontalSolid size={20} />
-
-                      <span className="uppercase text-[0.9rem] underline">
-                        Hướng dẫn chọn size
-                      </span>
-                    </button>
-                  </div>
+                  <p className="text-gray-700 font-medium mb-[5px]">
+                    Kích thước: {selectedSize?.namesize}
+                  </p>
 
                   <div className="flex space-x-2">
                     {selectedInventory?.inventories.map((inv, index) => {
