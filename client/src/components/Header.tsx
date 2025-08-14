@@ -16,12 +16,13 @@ import useGetCart from "@/hooks/useGetCart";
 import useGetWishlist from "@/hooks/useGetWishlist";
 
 function Header() {
+  const { cart } = useGetCart();
+  const { wishlist } = useGetWishlist();
   const { categoriesMale, categoriesFemale } = useGetCategories();
+
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [menuMobileOpen, setMenuMobileOpen] = useState<boolean>(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
-  const { cart } = useGetCart();
-  const { wishlist } = useGetWishlist();
 
   const totalQuantity =
     cart?.productsInCart.reduce((sum, item) => {

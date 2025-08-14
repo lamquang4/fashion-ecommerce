@@ -7,10 +7,12 @@ import Image from "./Image";
 import useGetProductsSuggest from "@/hooks/useGetProductsSuggest";
 import Loading from "./Loading";
 function SearchDesktop() {
+  const router = useRouter();
+
+  const { products, setKeyword, isLoading } = useGetProductsSuggest();
+
   const [search, setSearch] = useState<string>("");
   const [focused, setFocused] = useState<boolean>(false);
-  const router = useRouter();
-  const { products, setKeyword, isLoading } = useGetProductsSuggest();
 
   useEffect(() => {
     if (search) {

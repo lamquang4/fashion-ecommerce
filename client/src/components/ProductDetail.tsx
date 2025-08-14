@@ -25,17 +25,17 @@ function ProductDetail() {
   const [selectedSize, setSelectedSize] = useState<Size>();
   const [selectedColor, setSelectedColor] = useState<Color>();
   const [mainImage, setMainImage] = useState<string>("");
-  const [isInStock, setIsInStock] = useState<boolean>(true);
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+
   const { product, isLoading } = useGetProductSlug(slug);
   const { coupons } = useGetCoupons();
+  const { wishlist, mutate: mutateWishlist } = useGetWishlist();
+  const { mutate: mutateCart } = useGetCart();
   const { addCart, isLoading: isLoadingAddCart } = useAddCart();
   const { addWishlist, isLoading: isLoadingAddWishlist } = useAddWishlist();
-  const { mutate: mutateCart } = useGetCart();
-  const { wishlist, mutate: mutateWishlist } = useGetWishlist();
   const { removeItem, isLoading: isLoadingRemoveItem } =
     useRemoveItemWishlist();
 
@@ -43,39 +43,26 @@ function ProductDetail() {
     (item) => item.variant._id === selectedInventory?._id
   );
 
+  const currentInventory = selectedInventory?.inventories.find(
+    (inv) => inv.size._id === selectedSize?._id
+  );
+
+  const allImages =
+    product?.variants.flatMap((variant) => variant.images) || [];
+
+  const isInStock = !!currentInventory?.quantity;
+
   useEffect(() => {
-    if (product?.variants && product.variants.length > 0) {
+    if (product?.variants?.length) {
       setMainImage(product.variants[0].images[0]);
       setSelectedColor(product.variants[0].color);
       setSelectedInventory(product.variants[0]);
     }
   }, [product]);
 
-  const currentInventory = selectedInventory?.inventories.find(
-    (inv) => inv.size._id === selectedSize?._id
-  );
-
-  useEffect(() => {
-    if (selectedInventory && selectedSize && selectedColor) {
-      if (currentInventory?.quantity) {
-        setIsInStock(true);
-      } else {
-        setIsInStock(false);
-      }
-    }
-  }, [
-    selectedInventory,
-    selectedSize,
-    selectedColor,
-    currentInventory?.quantity,
-  ]);
-
   useEffect(() => {
     setSelectedSize(undefined);
   }, [selectedColor]);
-
-  const allImages =
-    product?.variants.flatMap((variant) => variant.images) || [];
 
   const handleNextImage = () => {
     if (!allImages.length) return;
@@ -97,10 +84,6 @@ function ProductDetail() {
     setOpenViewer(true);
   };
 
-  const toggleOpen = () => {
-    setMenuOpen(!menuOpen);
-  };
-
   const HandleIncrement = () => {
     const maxQuantity =
       currentInventory?.quantity! > 15 ? 15 : currentInventory?.quantity!;
@@ -110,10 +93,6 @@ function ProductDetail() {
   const HandleDecrement = () => {
     setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
   };
-
-  if (!product && !isLoading) {
-    return notFound();
-  }
 
   const handleAddToCart = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -133,21 +112,14 @@ function ProductDetail() {
       return;
     }
 
-    if (!product) {
-      return;
-    }
+    if (!product || !selectedInventory) return;
 
-    if (!selectedInventory) {
-      return;
-    }
-
-    const payload = {
-      variant: selectedInventory._id,
-      size: selectedSize._id,
-      quantity: quantity,
-    };
     try {
-      await addCart(payload);
+      await addCart({
+        variant: selectedInventory._id,
+        size: selectedSize._id,
+        quantity,
+      });
       mutateCart();
       toast.success("Đã thêm vào giỏ hàng!");
     } catch (err: any) {
@@ -175,6 +147,14 @@ function ProductDetail() {
     });
     mutateWishlist();
   };
+
+  const toggleOpen = () => {
+    setMenuOpen(!menuOpen);
+  };
+
+  if (!product && !isLoading) {
+    return notFound();
+  }
 
   return (
     <section className="w-full mx-auto mt-0 lg:mt-[40px] mb-[40px]">

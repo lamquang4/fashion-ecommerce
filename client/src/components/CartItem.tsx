@@ -13,13 +13,14 @@ import { useRouter } from "next/navigation";
 import useGetAddresses from "@/hooks/useGetAddresses";
 
 function CartItem() {
+  const router = useRouter();
+
   const { cart, mutate } = useGetCart();
+  const { addresses } = useGetAddresses();
+  const { data: session } = useSession();
   const { removeItem, isLoading: isLoadingRemoveItem } = useRemoveItemCart();
   const { changeQuantity, isLoading: isLoadingChangeQuantity } =
     useChangeQuantityItemCart();
-  const { data: session } = useSession();
-  const { addresses } = useGetAddresses();
-  const router = useRouter();
 
   const totalQuantity =
     cart?.productsInCart.reduce((sum, item) => {

@@ -10,13 +10,15 @@ import Image from "./Image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 function AddressInfo() {
+  const { status } = useSession();
+  const router = useRouter();
+
   const [addressId, setAddressId] = useState<string>("");
   const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
+
   const { addresses, isLoading, mutate } = useGetAddresses();
   const { deleteAddress, isLoading: isLoadingDeleteAddress } =
     useDeleteAddress();
-  const { status } = useSession();
-  const router = useRouter();
 
   useEffect(() => {
     if (status === "unauthenticated") {

@@ -22,9 +22,9 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
   const { provinces } = useGetProvinces();
   const { address, mutate, isLoading } = useGetAddress(addressId);
   const { addresses, mutate: mutateAddresses } = useGetAddresses();
+  const { addAddress, isLoading: isLoadingAddAddress } = useAddAddress();
   const { updateAddress, isLoading: isLoadingUpdateAddress } =
     useUpdateAddress(addressId);
-  const { addAddress, isLoading: isLoadingAddAddress } = useAddAddress();
   const [selectedProvinceName, setSelectedProvinceName] = useState<string>("");
   const [selectedWard, setSelectedWard] = useState<string>("");
   const [data, setData] = useState({ fullname: "", phone: "", speaddress: "" });

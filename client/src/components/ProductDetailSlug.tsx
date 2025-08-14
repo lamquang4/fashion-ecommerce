@@ -9,8 +9,8 @@ import ProductSlider from "./ProductSlider";
 function ProductDetailSlug() {
   const params = useParams();
   const slug = params.slug as string;
-  const { product, isLoading: isLoadingProductSlug } = useGetProductSlug(slug);
 
+  const { product, isLoading: isLoadingProductSlug } = useGetProductSlug(slug);
   const { productsCateogry, isLoading: isLoadingProductsCategory } =
     useGetProductsCategory(product?.category?._id || "", product?._id || "");
 

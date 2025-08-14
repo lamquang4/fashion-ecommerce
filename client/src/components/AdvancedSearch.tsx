@@ -10,10 +10,11 @@ type AdvancedSearchProps = {
   toggleMenu: () => void;
 };
 function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
-  const { colors } = useGetColors();
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
+
+  const { colors } = useGetColors();
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();

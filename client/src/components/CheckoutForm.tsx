@@ -18,7 +18,18 @@ import useDeleteCart from "@/hooks/useDeleteCart";
 import Loading from "./Loading";
 
 function CheckoutForm() {
+  const router = useRouter();
+  
   const { provinces } = useGetProvinces();
+  const { cart, mutate: mutateCart, isLoading: isLoadingCart } = useGetCart();
+  const { status } = useSession();
+  const { addresses, isLoading: isLoadingAddresses } = useGetAddresses();
+  const { addOrder, isLoading: isLoadingAddOrder } = useAddOrder();
+  const { deleteCart, isLoading: isLoadingDeleteCart } = useDeleteCart();
+  const { createPaymentMomo } = usePaymentMomo();
+  const { checkPaymentStatusMomo, isLoading: isLoadingCheckPaymentStatusMomo } =
+    useStatusMomo();
+
   const [data, setData] = useState({
     fullname: "",
     phone: "",
@@ -29,15 +40,6 @@ function CheckoutForm() {
   const [selectedWard, setSelectedWard] = useState<string>("");
   const [couponCode, setCouponCode] = useState<string>("");
   const [paymethod, setPaymethod] = useState<number>();
-  const { cart, mutate: mutateCart, isLoading: isLoadingCart } = useGetCart();
-  const { status } = useSession();
-  const { addresses, isLoading: isLoadingAddresses } = useGetAddresses();
-  const { addOrder, isLoading: isLoadingAddOrder } = useAddOrder();
-  const { deleteCart, isLoading: isLoadingDeleteCart } = useDeleteCart();
-  const { createPaymentMomo } = usePaymentMomo();
-  const { checkPaymentStatusMomo, isLoading: isLoadingCheckPaymentStatusMomo } =
-    useStatusMomo();
-  const router = useRouter();
 
   const totalPrice =
     cart?.productsInCart.reduce((sum, item) => {

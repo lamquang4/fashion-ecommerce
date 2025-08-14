@@ -17,8 +17,8 @@ function ProductSlider({ title, products }: Props) {
   const [selectedInventoryIndexes, setSelectedInventoryIndexes] = useState<{
     [productId: string]: number;
   }>({});
-  const { addWishlist } = useAddWishlist();
   const { wishlist, mutate } = useGetWishlist();
+  const { addWishlist } = useAddWishlist();
   const { removeItem } = useRemoveItemWishlist();
 
   const [sliderRef] = useKeenSlider({

@@ -9,6 +9,7 @@ import Loading from "./Loading";
 function ProductCollection() {
   const params = useParams();
   const slug = params.slug as string;
+
   const { category, isLoading: isLoadingCategory } = useGetCategory(slug);
 
   const {

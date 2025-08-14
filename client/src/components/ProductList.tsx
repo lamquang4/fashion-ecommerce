@@ -15,17 +15,18 @@ interface Props {
   products: Product[];
 }
 function ProductList({ category, products }: Props) {
-  const [advancedSearchOpen, setAdvancedSearchOpen] = useState(false);
-  const [selectedInventoryIndexes, setSelectedInventoryIndexes] = useState<{
-    [productId: string]: number;
-  }>({});
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
   const search = searchParams.get("q");
 
-  const { addWishlist } = useAddWishlist();
+  const [advancedSearchOpen, setAdvancedSearchOpen] = useState<boolean>(false);
+  const [selectedInventoryIndexes, setSelectedInventoryIndexes] = useState<
+    Record<string, number>
+  >({});
+
   const { wishlist, mutate } = useGetWishlist();
+  const { addWishlist } = useAddWishlist();
   const { removeItem } = useRemoveItemWishlist();
 
   const toggleAdvancedSearch = () => {
@@ -38,11 +39,9 @@ function ProductList({ category, products }: Props) {
   ) => {
     const variant = product.variants[inventoryIndex];
 
-    const payload = {
+    await addWishlist({
       variant: variant._id,
-    };
-
-    await addWishlist(payload);
+    });
     mutate();
   };
 
@@ -87,22 +86,22 @@ function ProductList({ category, products }: Props) {
     router.push(`?${params.toString()}`);
   };
 
+  const getTitle = () => {
+    if (category) {
+      return `${category.namecategory} ${
+        category.gender === 1 ? "nam" : category.gender === 0 ? "nữ" : ""
+      }`;
+    }
+    if (pathname === "/search" && search) return search;
+    if (pathname === "/sale/nam") return "Giảm giá đồ nam";
+    if (pathname === "/sale/nu") return "Giảm giá đồ nữ";
+    return "";
+  };
+
   return (
     <div className="w-full mx-auto md:max-w-[1000px] lg:max-w-[1240px]">
       <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550]  mb-[20px]">
-        {category
-          ? `${category.namecategory} ${
-              category.gender === 1 ? "nam" : category.gender === 0 ? "nữ" : ""
-            }`
-          : ""}
-
-        {pathname === "/search" && search && search}
-
-        {pathname === "/sale/nam"
-          ? "Giảm giá đồ nam"
-          : pathname === "/sale/nu"
-          ? "Giảm giá đồ nữ"
-          : ""}
+        {getTitle()}
       </h2>
 
       <div className="flex justify-between items-center flex-wrap mb-[35px]">

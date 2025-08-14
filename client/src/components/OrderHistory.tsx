@@ -106,7 +106,7 @@ function OrderHistory() {
                           ClassName={
                             "w-full max-w-[120px] round-[5px] object-cover"
                           }
-                          loadingType="eager"
+                          loadingType="lazy"
                         />
                       </Link>
 

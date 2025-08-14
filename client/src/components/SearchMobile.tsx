@@ -12,10 +12,12 @@ type Props = {
 };
 
 function SearchMobile({ toggleSearch, openSearch }: Props) {
+  const router = useRouter();
+
+  const { products, setKeyword, isLoading } = useGetProductsSuggest();
+
   const [search, setSearch] = useState<string>("");
   const [focused, setFocused] = useState<boolean>(false);
-  const { products, setKeyword, isLoading } = useGetProductsSuggest();
-  const router = useRouter();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
