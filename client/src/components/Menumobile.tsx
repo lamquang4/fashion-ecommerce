@@ -22,17 +22,17 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
   return (
     <>
       <nav
-        className={`fixed top-0 w-full max-w-[320px] h-screen p-5 bg-white shadow-md overflow-hidden overscroll-contain transition-all duration-500 ease-in-out z-[22] ${
+        className={`custom-scroll fixed top-0 w-full max-w-[320px] h-screen p-5 bg-white shadow-md overflow-y-auto transition-all duration-500 ease-in-out z-[22] ${
           isOpen ? "right-0 visible" : "right-[-100%] invisible"
         }`}
       >
-        <div className="mb-5 flex justify-end items-center">
+        <div className="flex justify-end items-center">
           <button onClick={toggleMenu} className="flex">
             <HiMiniXMark size={30} color="black" />
           </button>
         </div>
 
-        <ul className="mb-[30px]">
+        <ul className="py-[30px]">
           <li className="border-b border-gray-300">
             <div
               onClick={() => toggleOpen(`abc`)}

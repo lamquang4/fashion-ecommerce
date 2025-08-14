@@ -17,21 +17,18 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
   return (
     <>
       <div
-        className={`fixed top-0 right-0 w-full max-w-[400px] h-full overflow-scroll bg-white z-[25] px-[12px] pl-[20px] transform transition-transform duration-350 ease-in-out ${
+        className={`custom-scroll fixed top-0 right-0 w-full max-w-[400px] h-screen overflow-y-auto bg-white z-[25] px-[12px] pl-[20px] transform transition-transform duration-350 ease-in-out ${
           isOpen ? "translate-x-[0px]" : "translate-x-[400px]"
         }`}
-        style={{ scrollbarWidth: "none", msOverflowStyle: "none" }}
       >
-        <div className="sticky top-0 overflow-hidden bg-white z-[25] py-[15px] flex justify-between items-center">
+        <div className="sticky top-0 overflow-hidden bg-white z-[25] py-[15px] flex justify-between items-center border-b border-gray-300">
           <h1 className="text-[1.4rem] font-semibold">Mã giảm giá</h1>
           <button onClick={toggleMenu}>
             <HiMiniXMark size={32} color="black" />
           </button>
         </div>
 
-        <hr className=" border-gray-300 mt-[15px]" />
-
-        <div className="flex gap-[25px] flex-col items-center h-full w-full mt-[30px]">
+        <div className="flex gap-[25px] flex-col items-center w-full py-[30px]">
           {coupons.length > 0 &&
             coupons.map((coupon) => (
               <div
