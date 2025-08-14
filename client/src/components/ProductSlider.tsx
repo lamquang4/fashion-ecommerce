@@ -66,7 +66,7 @@ function ProductSlider({ title, products }: Props) {
   return (
     <>
       {products.length > 0 && (
-        <section className="px-[10px] mt-[40px] sm:mt-[45px] sm:px-[15px]">
+        <section className="px-[10px] mb-[40px] sm:mb-[45px] sm:px-[15px]">
           <div className="w-full mx-auto md:max-w-[1000px] lg:max-w-[1240px]">
             <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
               {title}

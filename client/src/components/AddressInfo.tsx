@@ -50,105 +50,103 @@ function AddressInfo() {
   };
 
   return (
-    <>
-      <section className="w-full mt-[40px] sm:mt-[45px] ">
-        <div className="flex justify-center flex-wrap">
-          <SideBarMenu />
+    <section className="w-full py-[60px] px-[15px]">
+      <div className="flex justify-center flex-wrap gap-8">
+        <SideBarMenu />
 
-          <div className="w-full max-w-full border border-gray-300 lg:max-w-[700px]">
-            <div className="p-[25px_15px]">
-              <h2 className="text-[1.5rem] font-semibold mb-[15px]">Địa chỉ</h2>
-              <div className="mb-[30px]">
-                <button
-                  onClick={toggleAddressModal}
-                  type="button"
-                  className="px-[10px] py-[6px] bg-red-600 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-red-700"
-                >
-                  Thêm địa chỉ
-                </button>
-              </div>
+        <div className="w-full max-w-full lg:max-w-[700px]">
+          <h2 className="text-[1.5rem] capitalize font-semibold mb-[15px]">
+            Địa chỉ
+          </h2>
+          <div className="mb-[30px]">
+            <button
+              onClick={toggleAddressModal}
+              type="button"
+              className="px-[10px] py-[6px] bg-red-600 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-red-700"
+            >
+              Thêm địa chỉ
+            </button>
+          </div>
 
-              <div>
-                {isLoading ? (
-                  <Loading height={70} size={50} color="black" thickness={3} />
-                ) : addresses.length > 0 ? (
-                  addresses.map((address) => (
-                    <div key={address._id}>
-                      <hr className="border-gray-300 my-[20px]" />
-                      <div className="flex justify-between flex-wrap gap-y-[8px]">
-                        <div className="flex flex-col gap-[8px] max-w-[360px]">
-                          <div className="flex gap-[8px] items-center">
-                            <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
-                              Họ và tên:
-                              <p className="font-normal text-black">
-                                {address.fullname}
-                              </p>
-                            </span>
-                          </div>
-
-                          <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
-                            Số điện thoại:
-                            <p className="font-normal text-black">
-                              {address.phone}
-                            </p>
-                          </span>
-                          <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
-                            Địa chỉ:
-                            <p className="font-normal text-black">
-                              {address.speaddress}, {address.city},{" "}
-                              {address.ward}
-                            </p>
-                          </span>
-                        </div>
-
-                        <div className="flex gap-[25px] items-center">
-                          <button
-                            className="border-0 p-1 outline-0 text-[0.9rem] text-blue-500 font-medium"
-                            type="button"
-                            onClick={() => {
-                              toggleAddressModal();
-                              setAddressId(address._id || "");
-                            }}
-                          >
-                            Chỉnh sửa
-                          </button>
-                          <button
-                            className="border-0 p-1 outline-0 text-[0.9rem] text-red-500 font-medium"
-                            type="button"
-                            disabled={isLoadingDeleteAddress}
-                            onClick={() => handleDelete(address._id || "")}
-                          >
-                            Xóa
-                          </button>
-                        </div>
+          <div>
+            {isLoading ? (
+              <Loading height={70} size={50} color="black" thickness={3} />
+            ) : addresses.length > 0 ? (
+              addresses.map((address) => (
+                <div key={address._id}>
+                  <hr className="border-gray-300 my-[20px]" />
+                  <div className="flex justify-between flex-wrap gap-y-[8px]">
+                    <div className="flex flex-col gap-[8px] max-w-[360px]">
+                      <div className="flex gap-[8px] items-center">
+                        <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
+                          Họ và tên:
+                          <p className="font-normal text-black">
+                            {address.fullname}
+                          </p>
+                        </span>
                       </div>
+
+                      <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
+                        Số điện thoại:
+                        <p className="font-normal text-black">
+                          {address.phone}
+                        </p>
+                      </span>
+                      <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
+                        Địa chỉ:
+                        <p className="font-normal text-black">
+                          {address.speaddress}, {address.city}, {address.ward}
+                        </p>
+                      </span>
                     </div>
-                  ))
-                ) : (
-                  <div className="flex justify-center items-center h-[70vh]">
-                    <div>
-                      <div className="mb-[15px] flex justify-center">
-                        <Image
-                          Src={"/assets/other/address.png"}
-                          Alt={""}
-                          ClassName={"w-[80px]"}
-                          loadingType="eager"
-                        />
-                      </div>
 
-                      <div className="flex justify-center flex-col gap-3 items-center text-center">
-                        <h2 className="text-[1.1rem] font-medium">
-                          Không có địa chỉ nào
-                        </h2>
-                      </div>
+                    <div className="flex gap-[25px] items-center">
+                      <button
+                        className="border-0 p-1 outline-0 text-[0.9rem] text-blue-500 font-medium"
+                        type="button"
+                        onClick={() => {
+                          toggleAddressModal();
+                          setAddressId(address._id || "");
+                        }}
+                      >
+                        Chỉnh sửa
+                      </button>
+                      <button
+                        className="border-0 p-1 outline-0 text-[0.9rem] text-red-500 font-medium"
+                        type="button"
+                        disabled={isLoadingDeleteAddress}
+                        onClick={() => handleDelete(address._id || "")}
+                      >
+                        Xóa
+                      </button>
                     </div>
                   </div>
-                )}
+                </div>
+              ))
+            ) : (
+              <div className="flex justify-center items-center h-[70vh]">
+                <div>
+                  <div className="mb-[15px] flex justify-center">
+                    <Image
+                      Src={"/assets/other/address.png"}
+                      Alt={""}
+                      ClassName={"w-[80px]"}
+                      loadingType="eager"
+                    />
+                  </div>
+
+                  <div className="flex justify-center flex-col gap-3 items-center text-center">
+                    <h2 className="text-[1.1rem] font-medium">
+                      Không có địa chỉ nào
+                    </h2>
+                  </div>
+                </div>
               </div>
-            </div>
+            )}
           </div>
         </div>
-      </section>
+      </div>
+
       {openAddressModal && (
         <AddressModal
           addressId={addressId}
@@ -156,7 +154,7 @@ function AddressInfo() {
           isOpen={openAddressModal}
         />
       )}
-    </>
+    </section>
   );
 }
 

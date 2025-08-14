@@ -21,8 +21,6 @@ export async function GET(
 
     return NextResponse.json(address);
   } catch (err) {
-    console.log(err);
-
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

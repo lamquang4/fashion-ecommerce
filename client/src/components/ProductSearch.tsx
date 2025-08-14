@@ -30,7 +30,7 @@ function ProductSearch() {
       {isLoading ? (
         <Loading height={70} size={50} color="black" thickness={2} />
       ) : (
-        <>
+        <section className="w-full px-[15px] my-[40px] sm:my-[45px]">
           <ProductList products={products} />
 
           <Pagination
@@ -38,7 +38,7 @@ function ProductSearch() {
             currentPage={currentPage}
             totalItems={totalItems}
           />
-        </>
+        </section>
       )}
     </>
   );

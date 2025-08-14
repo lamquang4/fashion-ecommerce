@@ -30,8 +30,6 @@ export async function GET(
 
     return NextResponse.json(category);
   } catch (err) {
-    console.log(err);
-
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

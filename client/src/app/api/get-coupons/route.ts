@@ -1,7 +1,7 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Coupon from "@/model/Coupon";
 import { getServerSession } from "next-auth";
-import {  NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 import { options } from "../auth/[...nextauth]/options";
 import mongoose from "mongoose";
 

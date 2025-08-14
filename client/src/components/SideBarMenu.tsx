@@ -7,13 +7,15 @@ import { IoBagHandleOutline } from "react-icons/io5";
 import { LuDoorOpen } from "react-icons/lu";
 function SideBarMenu() {
   const pathname = usePathname();
-  const activeClass = "border-l-2 font-medium";
+  const activeClass = "bg-gray-100 font-medium rounded-md";
   return (
-    <div className="w-full max-w-full lg:max-w-[250px] border border-gray-300">
-      <div className="py-[25px] text-[0.95rem] text-black font-normal flex flex-col gap-2">
+    <div className="w-full max-w-full lg:max-w-[320px]">
+      <div className="text-[0.95rem] text-black font-normal flex flex-col gap-2">
         <Link
           href="/account"
-          className={`p-2.5 ${pathname === "/account" ? activeClass : ""}`}
+          className={`py-3.5 px-4 ${
+            pathname === "/account" ? activeClass : ""
+          }`}
         >
           <div className="flex items-center gap-2.5 text-[0.95rem]">
             <HiOutlineUser size={20} />
@@ -23,7 +25,9 @@ function SideBarMenu() {
 
         <Link
           href="/address"
-          className={`p-2.5 ${pathname === "/address" ? activeClass : ""}`}
+          className={`py-3.5 px-4 ${
+            pathname === "/address" ? activeClass : ""
+          }`}
         >
           <div className="flex items-center gap-2.5 text-[0.95rem]">
             <HiOutlineBuildingOffice size={20} />
@@ -33,7 +37,11 @@ function SideBarMenu() {
 
         <Link
           href="/order"
-          className={`p-2.5 ${pathname === "/order" ? activeClass : ""}`}
+          className={`py-3.5 px-4 ${
+            pathname === "/order" || pathname.startsWith("/order-detail")
+              ? activeClass
+              : ""
+          }`}
         >
           <div className="flex items-center gap-2.5 text-[0.95rem]">
             <IoBagHandleOutline size={20} />
@@ -44,7 +52,7 @@ function SideBarMenu() {
         <button
           type="button"
           onClick={() => signOut()}
-          className="p-2.5 text-left text-[0.95rem] text-red-500 font-medium"
+          className="py-3.5 px-4 text-left text-[0.95rem] text-red-500 font-medium"
         >
           <div className="flex items-center gap-2.5 text-[0.95rem]">
             <LuDoorOpen size={22} />

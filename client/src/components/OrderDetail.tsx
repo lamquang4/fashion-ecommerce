@@ -50,9 +50,10 @@ function OrderDetail() {
   ];
 
   return (
-    <section className="w-full mt-[40px] sm:mt-[45px]">
-      <div className="flex justify-center flex-wrap">
+    <section className="w-full py-[60px] px-[15px]">
+      <div className="flex justify-center flex-wrap gap-8">
         <SideBarMenu />
+        
         <div className="w-full max-w-full border border-gray-300 lg:max-w-[700px]">
           {isLoading ? (
             <Loading height={70} size={50} color="black" thickness={3} />

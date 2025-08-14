@@ -1,11 +1,7 @@
 import AccountInfo from "../../components/AccountInfo";
 
 async function Account() {
-  return (
-    <>
-      <AccountInfo />
-    </>
-  );
+  return <AccountInfo />;
 }
 
 export default Account;
