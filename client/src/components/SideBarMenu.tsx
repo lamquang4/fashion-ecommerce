@@ -9,7 +9,7 @@ function SideBarMenu() {
   const pathname = usePathname();
   const activeClass = "bg-gray-100 font-medium rounded-md";
   return (
-    <div className="w-full max-w-full lg:max-w-[320px]">
+    <div className="w-full max-w-full lg:max-w-[300px]">
       <div className="text-[0.95rem] text-black font-normal flex flex-col gap-2">
         <Link
           href="/account"
