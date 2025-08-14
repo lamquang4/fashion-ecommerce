@@ -336,10 +336,9 @@ function ProductDetail() {
                         setMainImage(inv.images?.[0]);
                       }}
                       style={{ backgroundColor: `${inv.color.codecolor}` }}
-                      className={`w-8 h-8 rounded-full  ${
-                        selectedColor?.namecolor === `${inv.color.namecolor}`
-                          ? "border border-red-800"
-                          : "border-gray-300 border"
+                      className={`w-8 h-8 rounded-full border border-gray-300 focus:outline-none ${
+                        selectedColor?.namecolor === inv.color.namecolor &&
+                        "ring-1 ring-offset-2  ring-red-800"
                       }`}
                     ></button>
                   ))}
