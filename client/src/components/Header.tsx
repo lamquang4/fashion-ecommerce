@@ -179,8 +179,8 @@ function Header() {
                 <ProfileMenu isOpen={profileMenuOpen} />
               </div>
 
-              <Link href={"/cart"} className="relative" title="Giỏ hàng">
-                <CiShoppingCart size={26} title="Giỏ hàng" />
+              <Link href={"/cart"} className="relative">
+                <CiShoppingCart size={26} />
 
                 <span
                   className="absolute flex items-center justify-center 
@@ -192,8 +192,8 @@ function Header() {
                 </span>
               </Link>
 
-              <Link href="/wishlist" className="relative" title="Yêu thích">
-                <CiHeart size={25} title="Yêu thích" />
+              <Link href="/wishlist" className="relative">
+                <CiHeart size={25} />
 
                 <span
                   className="absolute flex items-center justify-center 
@@ -211,12 +211,8 @@ function Header() {
 
             {/* Mobile */}
             <div className="flex lg:hidden items-center gap-4 relative">
-              <button
-                onClick={toggleSearch}
-                className="text-gray-800"
-                title="Tìm kiếm"
-              >
-                <CiSearch size={24} title="Tìm kiếm" />
+              <button onClick={toggleSearch} className="text-gray-800">
+                <CiSearch size={24} />
               </button>
 
               <div
@@ -228,8 +224,8 @@ function Header() {
                 <ProfileMenu isOpen={profileMenuOpen} />
               </div>
 
-              <Link href={"/cart"} className="relative" title="Giỏ hàng">
-                <CiShoppingCart size={26} title="Giỏ hàng" />
+              <Link href={"/cart"} className="relative">
+                <CiShoppingCart size={26} />
 
                 <span
                   className="absolute flex items-center justify-center 
@@ -241,8 +237,8 @@ function Header() {
                 </span>
               </Link>
 
-              <Link href={"/wishlist"} className="relative" title="Yêu thích">
-                <CiHeart size={25} title="Yêu thích" />
+              <Link href={"/wishlist"} className="relative">
+                <CiHeart size={25} />
 
                 <span
                   className="absolute flex items-center justify-center 
@@ -253,8 +249,8 @@ function Header() {
                   {wishlist?.productsInWishlist.length || 0}
                 </span>
               </Link>
-              <button onClick={toggleMobileMenu} title="Mở menu">
-                <AiOutlineMenu size={24} title="Mở menu" />
+              <button onClick={toggleMobileMenu}>
+                <AiOutlineMenu size={24} />
               </button>
             </div>
           </div>

@@ -575,7 +575,7 @@ function CheckoutForm() {
 
                 <hr className="border-slate-300 my-[20px]" />
 
-                <div className="">
+                <div>
                   <div className="flex justify-between items-center mb-[5px]">
                     <label
                       htmlFor="discount"
@@ -665,45 +665,44 @@ function CheckoutForm() {
 
                 <hr className="border-slate-300 my-[20px]" />
 
-                <div>
-                  <div className="flex flex-col">
-                    <div className="flex items-center justify-between text-[1rem] font-medium mb-[15px]">
-                      <p className=" text-gray-600">Tổng</p>
-                      <p className=" text-gray-600">
-                        {totalPrice.toLocaleString("vi-VN")}₫
-                      </p>
-                    </div>
-
-                    {coupon && (
-                      <div className="flex items-center justify-between text-[1rem] font-medium">
-                        <p className=" text-gray-600">Phiếu giảm giá</p>
-                        {coupon.discountType === 1 ? (
-                          <p className=" text-gray-600">
-                            -{coupon.discountValue.toLocaleString("vi-VN")}₫
-                          </p>
-                        ) : coupon.discountType === 0 ? (
-                          <p className=" text-gray-600">
-                            -
-                            {Math.min(
-                              (totalPrice * coupon.discountValue) / 100,
-                              coupon.maxDiscountValue!
-                            ).toLocaleString("vi-VN")}
-                            ₫
-                          </p>
-                        ) : (
-                          <p className=" text-gray-600"></p>
-                        )}
-                      </div>
-                    )}
-
-                    <hr className="border-slate-300 my-[20px]" />
-                  </div>
-                  <div className="flex items-center justify-between text-[1.2rem] font-medium">
-                    <p className=" text-gray-900">Tổng cộng</p>
-                    <p className=" text-gray-900">
-                      {finalTotal.toLocaleString("vi-VN")}₫
+                <div className="flex flex-col gap-4">
+                  <div className="flex items-center justify-between text-[1rem] font-medium">
+                    <p className=" text-gray-600">Tổng</p>
+                    <p className=" text-gray-600">
+                      {totalPrice.toLocaleString("vi-VN")}₫
                     </p>
                   </div>
+
+                  {coupon && (
+                    <div className="flex items-center justify-between text-[1rem] font-medium">
+                      <p className=" text-gray-600">Phiếu giảm giá</p>
+                      {coupon.discountType === 1 ? (
+                        <p className=" text-gray-600">
+                          -{coupon.discountValue.toLocaleString("vi-VN")}₫
+                        </p>
+                      ) : coupon.discountType === 0 ? (
+                        <p className=" text-gray-600">
+                          -
+                          {Math.min(
+                            (totalPrice * coupon.discountValue) / 100,
+                            coupon.maxDiscountValue!
+                          ).toLocaleString("vi-VN")}
+                          ₫
+                        </p>
+                      ) : (
+                        <p className=" text-gray-600"></p>
+                      )}
+                    </div>
+                  )}
+                </div>
+
+                <hr className="border-slate-300 my-[20px]" />
+
+                <div className="flex items-center justify-between text-[1.2rem] font-semibold">
+                  <p className=" text-gray-900">Tổng cộng</p>
+                  <p className=" text-gray-900">
+                    {finalTotal.toLocaleString("vi-VN")}₫
+                  </p>
                 </div>
               </div>
             </div>

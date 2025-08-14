@@ -127,21 +127,21 @@ function CartItem() {
   return (
     <section className="max-w-[1230px] mx-auto my-[40px] sm:my-[45px]">
       <div className="px-[10px] sm:px-[15px]">
-        <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
+        <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[35px]">
           Giỏ hàng ({totalQuantity})
         </h2>
         {cart?.productsInCart && cart.productsInCart.length > 0 ? (
           <form onSubmit={handleSubmit}>
             <div className="flex gap-8 w-full lg:flex-row flex-col">
-              <div className=" bg-white basis-[70%]">
+              <div className="flex flex-col gap-8 bg-white basis-[70%]">
                 {cart?.productsInCart.map((item) => (
                   <React.Fragment
                     key={`${item._id}-${item.variant._id}-${item.variant.color._id}-${item.variant.size._id}`}
                   >
-                    <div className="flex gap-4 py-6">
-                      <div className="flex gap-4.5">
+                    <div className="flex w-full gap-4.5 relative">
+                      <div className="flex gap-4.5 w-full">
                         <Link href={`/product/${item.slug}`}>
-                          <div className="w-full max-w-[200px] shrink-0">
+                          <div className="w-full max-w-[250px] shrink-0">
                             <Image
                               Src={item.variant.images[0]}
                               Alt={item.name}
@@ -151,120 +151,123 @@ function CartItem() {
                           </div>
                         </Link>
 
-                        <div className="flex flex-col gap-4">
-                          <div>
-                            <h2 className="text-[0.9rem] sm:text-[1.1rem] font-semibold text-black">
-                              {item.name}
-                            </h2>
-                            <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black mt-2">
-                              Màu sắc: {item.variant.color.namecolor}
-                            </p>
-                            <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black mt-2">
-                              Kích thước: {item.variant.size.namesize}
-                            </p>
-                            {item.discount > 0 ? (
-                              <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-[#c00] mt-2">
-                                Giá giảm còn:{" "}
-                                {(item.price - item.discount).toLocaleString(
-                                  "vi-VN"
-                                )}
-                                ₫
+                        <div className="flex flex-col gap-4.5 w-full">
+                          <div className="flex justify-between gap-4.5">
+                            <div className="flex flex-col gap-2">
+                              <h2 className="text-[0.9rem] sm:text-[1.1rem] font-semibold text-black">
+                                {item.name}
+                              </h2>
+                              <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black">
+                                Màu sắc: {item.variant.color.namecolor}
                               </p>
-                            ) : (
-                              <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black mt-2">
-                                Giá: {item.price.toLocaleString("vi-VN")}₫
+                              <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black">
+                                Kích thước: {item.variant.size.namesize}
                               </p>
-                            )}
+                              {item.discount > 0 ? (
+                                <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-[#c00]">
+                                  Giá giảm còn:{" "}
+                                  {(item.price - item.discount).toLocaleString(
+                                    "vi-VN"
+                                  )}
+                                  ₫
+                                </p>
+                              ) : (
+                                <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black">
+                                  Giá: {item.price.toLocaleString("vi-VN")}₫
+                                </p>
+                              )}
+                            </div>
+
+                            <button
+                              type="button"
+                              className="mb-auto"
+                              disabled={isLoadingRemoveItem}
+                              onClick={() =>
+                                handleRemoveItem(
+                                  cart?._id || "",
+                                  item.variant._id,
+                                  item.variant.size._id
+                                )
+                              }
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="w-5 h-5 cursor-pointer fill-black hover:fill-red-600 inline-block"
+                                viewBox="0 0 24 24"
+                              >
+                                <path
+                                  d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
+                                  data-original="#000000"
+                                ></path>
+                                <path
+                                  d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
+                                  data-original="#000000"
+                                ></path>
+                              </svg>
+                            </button>
                           </div>
 
-                          <div className="mt-auto flex items-center gap-1">
-                            <button
-                              type="button"
-                              name="button-1"
-                              onClick={() =>
-                                handleDecrement(
-                                  cart?._id || "",
-                                  item.variant._id,
-                                  item.variant.size._id,
-                                  item.variant.quantity
-                                )
-                              }
-                              disabled={
-                                item.variant.quantity <= 1 ||
-                                isLoadingChangeQuantity
-                              }
-                              className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-slate-300 border"
-                            >
-                              <HiOutlineMinusSmall size={20} />
-                            </button>
-                            <span className="flex items-center justify-center  font-normal w-7 h-7 text-[1.1rem] leading-[18px]">
-                              {item.variant.quantity}
-                            </span>
-                            <button
-                              type="button"
-                              name="button-1"
-                              onClick={() =>
-                                handleIncrement(
-                                  cart?._id || "",
-                                  item.variant._id,
-                                  item.variant.size._id,
-                                  item.variant.quantity,
-                                  item.variant.stock
-                                )
-                              }
-                              disabled={
-                                item.variant.quantity >=
-                                  (item.variant.stock < 15
-                                    ? item.variant.stock
-                                    : 15) || isLoadingChangeQuantity
-                              }
-                              className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-slate-300 border"
-                            >
-                              <HiOutlinePlusSmall size={20} />
-                            </button>
+                          <div className="flex-wrap justify-between flex items-center gap-4.5 mt-auto">
+                            <div className="flex items-center gap-1">
+                              <button
+                                type="button"
+                                name="button-1"
+                                onClick={() =>
+                                  handleDecrement(
+                                    cart?._id || "",
+                                    item.variant._id,
+                                    item.variant.size._id,
+                                    item.variant.quantity
+                                  )
+                                }
+                                disabled={
+                                  item.variant.quantity <= 1 ||
+                                  isLoadingChangeQuantity
+                                }
+                                className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-slate-300 border"
+                              >
+                                <HiOutlineMinusSmall size={20} />
+                              </button>
+                              <span className="flex items-center justify-center  font-normal w-7 h-7 text-[1.1rem] leading-[18px]">
+                                {item.variant.quantity}
+                              </span>
+                              <button
+                                type="button"
+                                name="button-1"
+                                onClick={() =>
+                                  handleIncrement(
+                                    cart?._id || "",
+                                    item.variant._id,
+                                    item.variant.size._id,
+                                    item.variant.quantity,
+                                    item.variant.stock
+                                  )
+                                }
+                                disabled={
+                                  item.variant.quantity >=
+                                    (item.variant.stock < 15
+                                      ? item.variant.stock
+                                      : 15) || isLoadingChangeQuantity
+                                }
+                                className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-slate-300 border"
+                              >
+                                <HiOutlinePlusSmall size={20} />
+                              </button>
+                            </div>
+
+                            <h3 className="text-[1rem] font-medium text-black ">
+                              Tổng:{" "}
+                              {item.discount > 0
+                                ? (
+                                    (item.price - item.discount) *
+                                    item.variant.quantity
+                                  ).toLocaleString("vi-VN") + "₫"
+                                : (
+                                    item.price * item.variant.quantity
+                                  ).toLocaleString("vi-VN") + "₫"}
+                            </h3>
                           </div>
                         </div>
-                      </div>
-                      <div className="ml-auto flex flex-col">
-                        <div className="flex gap-4 justify-end">
-                          <button
-                            type="button"
-                            disabled={isLoadingRemoveItem}
-                            onClick={() =>
-                              handleRemoveItem(
-                                cart?._id || "",
-                                item.variant._id,
-                                item.variant.size._id
-                              )
-                            }
-                          >
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              className="w-5 h-5 cursor-pointer fill-black hover:fill-red-600 inline-block"
-                              viewBox="0 0 24 24"
-                            >
-                              <path
-                                d="M19 7a1 1 0 0 0-1 1v11.191A1.92 1.92 0 0 1 15.99 21H8.01A1.92 1.92 0 0 1 6 19.191V8a1 1 0 0 0-2 0v11.191A3.918 3.918 0 0 0 8.01 23h7.98A3.918 3.918 0 0 0 20 19.191V8a1 1 0 0 0-1-1Zm1-3h-4V2a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v2H4a1 1 0 0 0 0 2h16a1 1 0 0 0 0-2ZM10 4V3h4v1Z"
-                                data-original="#000000"
-                              ></path>
-                              <path
-                                d="M11 17v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Zm4 0v-7a1 1 0 0 0-2 0v7a1 1 0 0 0 2 0Z"
-                                data-original="#000000"
-                              ></path>
-                            </svg>
-                          </button>
-                        </div>
-                        <h3 className="text-[1rem] font-medium text-black mt-auto">
-                          Tổng:{" "}
-                          {item.discount > 0
-                            ? (
-                                (item.price - item.discount) *
-                                item.variant.quantity
-                              ).toLocaleString("vi-VN") + "₫"
-                            : (
-                                item.price * item.variant.quantity
-                              ).toLocaleString("vi-VN") + "₫"}
-                        </h3>
                       </div>
                     </div>
 

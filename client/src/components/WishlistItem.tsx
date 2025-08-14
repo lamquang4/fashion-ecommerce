@@ -18,8 +18,8 @@ function WishlistItem() {
   };
   return (
     <section className="max-w-[1230px] mx-auto my-[40px] sm:my-[45px]">
-      <div className=" px-[10px] sm:px-[15px]">
-        <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
+      <div className="px-[10px] sm:px-[15px]">
+        <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[35px]">
           Yêu thích ({wishlist?.productsInWishlist.length || 0})
         </h2>
         {isLoading ? (
@@ -27,15 +27,15 @@ function WishlistItem() {
         ) : wishlist?.productsInWishlist &&
           wishlist?.productsInWishlist.length > 0 ? (
           <div className="flex gap-8 max-w-xl mx-auto w-full">
-            <div className="basis-[100%]">
+            <div className="flex flex-col gap-5 bg-white basis-full">
               {wishlist?.productsInWishlist.map((item) => (
                 <React.Fragment
                   key={`${item._id}-${item.variant._id}-${item.variant.color._id}`}
                 >
-                  <div className="flex gap-4 bg-white py-5">
-                    <div className="flex gap-4.5">
+                  <div className="flex w-full gap-4.5 relative">
+                    <div className="flex gap-4.5 w-full">
                       <Link href={`/product/${item.slug}`}>
-                        <div className="w-full max-w-[200px] shrink-0">
+                        <div className="w-full max-w-[270px] shrink-0">
                           <Image
                             Src={item.variant.images[0]}
                             Alt={""}
@@ -45,25 +45,24 @@ function WishlistItem() {
                         </div>
                       </Link>
 
-                      <div className="flex flex-col gap-4">
-                        <h2 className="text-[0.9rem] sm:text-[1.1rem] font-semibold text-black">
-                          {item.name}
-                        </h2>
-                        <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black">
-                          Màu sắc: {item.variant.color.namecolor}
-                        </p>
-                      </div>
-                    </div>
-                    <div className="ml-auto flex flex-col">
-                      <div className="flex gap-4 justify-end">
+                      <div className="flex justify-between gap-4.5 w-full">
+                        <div className="flex flex-col gap-2">
+                          <h2 className="text-[0.9rem] sm:text-[1.1rem] font-semibold text-black">
+                            {item.name}
+                          </h2>
+                          <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black">
+                            Màu sắc: {item.variant.color.namecolor}
+                          </p>
+                        </div>
+
                         <button
+                          className="mb-auto text-black duration-200 hover:scale-112"
                           onClick={() =>
                             handleRemoveItem(
                               wishlist?._id || "",
                               item.variant._id
                             )
                           }
-                          className="p-1 text-black duration-200 hover:scale-112"
                         >
                           <svg viewBox="0 0 256 256" width="22" height="22">
                             <rect fill="none" height="256" width="256" />

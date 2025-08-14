@@ -88,7 +88,7 @@ function ProductList({ category, products }: Props) {
   };
 
   return (
-    <div className="w-full mx-auto md:max-w-[1000px] lg:max-w-[1240px] px-[10px] sm:px-[15px]">
+    <div className="w-full mx-auto md:max-w-[1000px] lg:max-w-[1240px]">
       <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550]  mb-[20px]">
         {category
           ? `${category.namecategory} ${

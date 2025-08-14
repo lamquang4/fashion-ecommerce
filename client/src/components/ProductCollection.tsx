@@ -24,7 +24,7 @@ function ProductCollection() {
       {isLoadingCategory || isLoadingProductsSlug ? (
         <Loading height={70} size={50} color="black" thickness={2} />
       ) : (
-        <section className="w-full px-[15px] my-[40px] sm:my-[45px]">
+        <section className="px-[10px] my-[40px] sm:my-[45px] sm:px-[15px]">
           <ProductList products={products} category={category} />
 
           <Pagination
