@@ -88,12 +88,6 @@ function EditProduct() {
     setOpenViewer(true);
   };
 
-  const handleReset = () => {
-    setNewVariants([]);
-    setPreviewImages2([]);
-    setSelectedFiles2([]);
-  };
-
   const handleDeleteImage = async (id: string, img: string) => {
     try {
       await deleteImage(id, img);
@@ -219,7 +213,9 @@ function EditProduct() {
 
     try {
       await updateProduct(formData);
-      handleReset();
+      setNewVariants([]);
+      setPreviewImages2([]);
+      setSelectedFiles2([]);
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);

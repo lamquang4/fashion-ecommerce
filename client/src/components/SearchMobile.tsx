@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import Image from "./Image";
 import Link from "next/link";
@@ -130,4 +130,4 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
   );
 }
 
-export default SearchMobile;
+export default memo(SearchMobile);

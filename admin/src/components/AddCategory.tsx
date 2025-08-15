@@ -32,15 +32,6 @@ function AddCategory() {
     });
   };
 
-  const handelReset = () => {
-    setData({
-      namecategory: "",
-      gender: "",
-    });
-    setPreviewImages([]);
-    setSelectedFiles([]);
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -59,7 +50,12 @@ function AddCategory() {
     try {
       await addCategory(formData);
 
-      handelReset();
+      setData({
+        namecategory: "",
+        gender: "",
+      });
+      setPreviewImages([]);
+      setSelectedFiles([]);
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }

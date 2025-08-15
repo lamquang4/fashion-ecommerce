@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "./Image";
 import MenuSideCoupon from "./MenuSideCoupon";
 import useGetProvinces from "@/hooks/useGetProvinceVN";
@@ -19,11 +19,18 @@ import Loading from "./Loading";
 
 function CheckoutForm() {
   const router = useRouter();
-  
+
   const { provinces } = useGetProvinces();
   const { cart, mutate: mutateCart, isLoading: isLoadingCart } = useGetCart();
   const { status } = useSession();
   const { addresses, isLoading: isLoadingAddresses } = useGetAddresses();
+  const {
+    coupon,
+    error,
+    getCoupon,
+    mutate,
+    isLoading: isLoadingCoupon,
+  } = useGetCoupon();
   const { addOrder, isLoading: isLoadingAddOrder } = useAddOrder();
   const { deleteCart, isLoading: isLoadingDeleteCart } = useDeleteCart();
   const { createPaymentMomo } = usePaymentMomo();
@@ -41,33 +48,25 @@ function CheckoutForm() {
   const [couponCode, setCouponCode] = useState<string>("");
   const [paymethod, setPaymethod] = useState<number>();
 
-  const totalPrice =
-    cart?.productsInCart.reduce((sum, item) => {
-      const finalPrice =
-        item.discount > 0 ? item.price - item.discount : item.price;
+  const totalPrice = useMemo(() => {
+    return (
+      cart?.productsInCart.reduce((sum, item) => {
+        const finalPrice =
+          item.discount > 0 ? item.price - item.discount : item.price;
 
-      return sum + finalPrice * item.variant.quantity;
-    }, 0) || 0;
-
-  const {
-    coupon,
-    error,
-    getCoupon,
-    mutate,
-    isLoading: isLoadingCoupon,
-  } = useGetCoupon();
+        return sum + finalPrice * item.variant.quantity;
+      }, 0) || 0
+    );
+  }, [cart?.productsInCart]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
-    setData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleGetAddress = (address: Address | null) => {
+  const handleGetAddress = useCallback((address: Address | null) => {
     if (address) {
       setData({
         fullname: address.fullname,
@@ -77,15 +76,11 @@ function CheckoutForm() {
       setSelectedProvinceName(address.city);
       setSelectedWard(address.ward);
     } else {
-      setData({
-        fullname: "",
-        phone: "",
-        speaddress: "",
-      });
+      setData({ fullname: "", phone: "", speaddress: "" });
       setSelectedProvinceName("");
       setSelectedWard("");
     }
-  };
+  }, []);
 
   useEffect(() => {
     if (isLoadingCart || isLoadingAddresses || status === "loading") return;
@@ -164,37 +159,39 @@ function CheckoutForm() {
         coupon,
       });
 
-      toast.success(`Đặt hàng thành công!`);
-      router.replace("/");
-
-      localStorage.removeItem("checkoutData");
-      localStorage.removeItem("orderId");
       await deleteCart();
       mutateCart();
+      localStorage.removeItem("checkoutData");
+      localStorage.removeItem("orderId");
+
+      toast.success(`Đặt hàng thành công!`);
+      router.replace("/");
     };
 
     handleOrderMomoPayment();
   }, []);
 
-  const selectedProvince = provinces?.find(
-    (province) => province.province === selectedProvinceName
-  );
+  const selectedProvince = useMemo(() => {
+    return provinces?.find(
+      (province) => province.province === selectedProvinceName
+    );
+  }, [provinces, selectedProvinceName]);
 
-  let finalTotal = totalPrice;
-
-  if (coupon) {
-    if (coupon.discountType === 1) {
-      finalTotal -= coupon.discountValue;
-    } else if (coupon.discountType === 0) {
-      const discount = Math.min(
-        (totalPrice * coupon.discountValue) / 100,
-        coupon.maxDiscountValue!
-      );
-      finalTotal -= discount;
+  const finalTotal = useMemo(() => {
+    let result = totalPrice;
+    if (coupon) {
+      if (coupon.discountType === 1) {
+        result -= coupon.discountValue;
+      } else if (coupon.discountType === 0) {
+        const discount = Math.min(
+          (totalPrice * coupon.discountValue) / 100,
+          coupon.maxDiscountValue!
+        );
+        result -= discount;
+      }
     }
-  }
-
-  finalTotal = Math.max(0, finalTotal);
+    return Math.max(0, result);
+  }, [totalPrice, coupon]);
 
   const handleCoupon = () => {
     if (!couponCode) {
@@ -285,7 +282,7 @@ function CheckoutForm() {
   };
 
   const toggleOpen = () => {
-    setMenuOpen(!menuOpen);
+    setMenuOpen((prev) => !prev);
   };
 
   return (

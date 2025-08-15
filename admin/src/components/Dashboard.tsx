@@ -12,37 +12,42 @@ import useGetOrders from "@/hooks/useGetOrders";
 import useGetCustomers from "@/hooks/useGetCustomers";
 import Loading from "./Loading";
 import useGetTop10Products from "@/hooks/useGetTop10Products";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import useGetRevenues from "@/hooks/useGetRevenues";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 function Dashboard() {
-  const { orders, totalRevenue, totalSold } = useGetOrders();
-  const { customers } = useGetCustomers();
-  const { topProducts, isLoading } = useGetTop10Products();
-
   const currentYear = new Date().getFullYear();
   const startYear = 2025;
   const endYear = currentYear + 2;
 
   const [year, setYear] = useState<number>(startYear);
+  const { orders, totalRevenue, totalSold } = useGetOrders();
   const { revenues } = useGetRevenues(year);
+  const { customers } = useGetCustomers();
+  const { topProducts, isLoading } = useGetTop10Products();
 
-  const monthlyRevenueData = Array.from({ length: 12 }, (_, i) => {
-    const monthData = revenues?.revenues?.find((r) => r.month === i + 1);
-    return monthData ? monthData.totalRevenue : 0;
-  });
+  const monthlyRevenueData = useMemo(() => {
+    return Array.from({ length: 12 }, (_, i) => {
+      const monthData = revenues?.revenues?.find((r) => r.month === i + 1);
+      return monthData ? monthData.totalRevenue : 0;
+    });
+  }, [revenues]);
 
-  const monthlySoldData = Array.from({ length: 12 }, (_, i) => {
-    const monthData = revenues?.revenues?.find((r) => r.month === i + 1);
-    return monthData ? monthData.totalQuantity : 0;
-  });
+  const monthlySoldData = useMemo(() => {
+    return Array.from({ length: 12 }, (_, i) => {
+      const monthData = revenues?.revenues?.find((r) => r.month === i + 1);
+      return monthData ? monthData.totalQuantity : 0;
+    });
+  }, [revenues]);
 
-  const totalRevenueYear = monthlyRevenueData.reduce(
-    (sum, value) => sum + value,
-    0
-  );
-  const totalSoldYear = monthlySoldData.reduce((sum, value) => sum + value, 0);
+  const totalRevenueYear = useMemo(() => {
+    return monthlyRevenueData.reduce((sum, value) => sum + value, 0);
+  }, [monthlyRevenueData]);
+
+  const totalSoldYear = useMemo(() => {
+    return monthlySoldData.reduce((sum, value) => sum + value, 0);
+  }, [monthlySoldData]);
 
   const array = [
     {

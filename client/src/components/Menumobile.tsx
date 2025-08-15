@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { memo, useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
@@ -172,4 +172,4 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
   );
 }
 
-export default Menumobile;
+export default memo(Menumobile);

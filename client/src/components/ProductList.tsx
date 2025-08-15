@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import AdvancedSearch from "./AdvancedSearch";
 import Image from "./Image";
 import { VscSettings } from "react-icons/vsc";
@@ -28,6 +28,12 @@ function ProductList({ category, products }: Props) {
   const { wishlist, mutate } = useGetWishlist();
   const { addWishlist } = useAddWishlist();
   const { removeItem } = useRemoveItemWishlist();
+
+  const wishlistVariantId = useMemo(() => {
+    return new Set(
+      wishlist?.productsInWishlist.map((item: any) => item.variant._id)
+    );
+  }, [wishlist?.productsInWishlist]);
 
   const toggleAdvancedSearch = () => {
     setAdvancedSearchOpen(!advancedSearchOpen);
@@ -142,9 +148,7 @@ function ProductList({ category, products }: Props) {
             const selectedIndex = selectedInventoryIndexes[product._id] || 0;
             const selectedInventory = product.variants[selectedIndex];
 
-            const isInWishlist = wishlist?.productsInWishlist.some(
-              (item: any) => item.variant._id === selectedInventory._id
-            );
+            const isInWishlist = wishlistVariantId.has(selectedInventory._id);
 
             return (
               <div key={product._id}>

@@ -3,7 +3,7 @@ import { useKeenSlider } from "keen-slider/react";
 import "keen-slider/keen-slider.min.css";
 import Link from "next/link";
 import Image from "./Image";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { Product } from "@/types/type";
 import useAddWishlist from "@/hooks/useAddWishlist";
 import useGetWishlist from "@/hooks/useGetWishlist";
@@ -20,6 +20,12 @@ function ProductSlider({ title, products }: Props) {
   const { wishlist, mutate } = useGetWishlist();
   const { addWishlist } = useAddWishlist();
   const { removeItem } = useRemoveItemWishlist();
+
+  const wishlistVariantId = useMemo(() => {
+    return new Set(
+      wishlist?.productsInWishlist.map((item: any) => item.variant._id)
+    );
+  }, [wishlist?.productsInWishlist]);
 
   const [sliderRef] = useKeenSlider({
     loop: false,
@@ -46,11 +52,9 @@ function ProductSlider({ title, products }: Props) {
   ) => {
     const variant = product.variants[inventoryIndex];
 
-    const payload = {
+    await addWishlist({
       variant: variant._id,
-    };
-
-    await addWishlist(payload);
+    });
     mutate();
   };
 
@@ -77,8 +81,8 @@ function ProductSlider({ title, products }: Props) {
                   selectedInventoryIndexes[product._id] || 0;
                 const selectedInventory = product.variants[selectedIndex];
 
-                const isInWishlist = wishlist?.productsInWishlist.some(
-                  (item: any) => item.variant._id === selectedInventory._id
+                const isInWishlist = wishlistVariantId.has(
+                  selectedInventory._id
                 );
                 return (
                   <div key={product._id} className="keen-slider__slide">

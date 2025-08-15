@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import Image from "./Image";
 import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
@@ -39,18 +39,25 @@ function ProductDetail() {
   const { removeItem, isLoading: isLoadingRemoveItem } =
     useRemoveItemWishlist();
 
-  const isInWishlist = wishlist?.productsInWishlist?.some(
-    (item) => item.variant._id === selectedInventory?._id
-  );
+  const isInWishlist = useMemo(() => {
+    return wishlist?.productsInWishlist?.some(
+      (item) => item.variant._id === selectedInventory?._id
+    );
+  }, [wishlist?.productsInWishlist, selectedInventory?._id]);
 
-  const currentInventory = selectedInventory?.inventories.find(
-    (inv) => inv.size._id === selectedSize?._id
-  );
+  const currentInventory = useMemo(() => {
+    return selectedInventory?.inventories.find(
+      (inv) => inv.size._id === selectedSize?._id
+    );
+  }, [selectedInventory, selectedSize?._id]);
 
-  const allImages =
-    product?.variants.flatMap((variant) => variant.images) || [];
+  const allImages = useMemo(() => {
+    return product?.variants.flatMap((variant) => variant.images) || [];
+  }, [product?.variants]);
 
-  const isInStock = !!currentInventory?.quantity;
+  const isInStock = useMemo(() => {
+    return !!currentInventory?.quantity;
+  }, [currentInventory?.quantity]);
 
   useEffect(() => {
     if (product?.variants?.length) {
@@ -148,9 +155,9 @@ function ProductDetail() {
     mutateWishlist();
   };
 
-  const toggleOpen = () => {
-    setMenuOpen(!menuOpen);
-  };
+  const toggleOpen = useCallback(() => {
+    setMenuOpen((prev) => !prev);
+  }, []);
 
   if (!product && !isLoading) {
     return notFound();

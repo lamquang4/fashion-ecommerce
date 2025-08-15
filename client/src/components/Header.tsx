@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
 import { CiUser, CiSearch } from "react-icons/ci";
@@ -24,28 +24,31 @@ function Header() {
   const [menuMobileOpen, setMenuMobileOpen] = useState<boolean>(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
 
-  const totalQuantity =
-    cart?.productsInCart.reduce((sum, item) => {
-      return sum + (item?.variant?.quantity || 0);
-    }, 0) || 0;
+  const totalQuantity = useMemo(() => {
+    return (
+      cart?.productsInCart.reduce((sum, item) => {
+        return sum + (item?.variant?.quantity || 0);
+      }, 0) || 0
+    );
+  }, [cart?.productsInCart]);
 
-  const toggleSearch = () => {
-    setOpenSearch(!openSearch);
-    if (menuMobileOpen) setMenuMobileOpen(false);
-    if (profileMenuOpen) setProfileMenuOpen(false);
-  };
+  const toggleSearch = useCallback(() => {
+    setOpenSearch((prev) => !prev);
+    setMenuMobileOpen(false);
+    setProfileMenuOpen(false);
+  }, []);
 
-  const toggleMobileMenu = () => {
-    setMenuMobileOpen(!menuMobileOpen);
-    if (openSearch) setOpenSearch(false);
-    if (profileMenuOpen) setProfileMenuOpen(false);
-  };
+  const toggleMobileMenu = useCallback(() => {
+    setMenuMobileOpen((prev) => !prev);
+    setOpenSearch(false);
+    setProfileMenuOpen(false);
+  }, []);
 
-  const toggleProfileMenu = () => {
+  const toggleProfileMenu = useCallback(() => {
     setProfileMenuOpen((prev) => !prev);
-    if (menuMobileOpen) setMenuMobileOpen(false);
-    if (openSearch) setOpenSearch(false);
-  };
+    setMenuMobileOpen(false);
+    setOpenSearch(false);
+  }, []);
 
   useEffect(() => {
     const handleResize = () => {
@@ -259,6 +262,7 @@ function Header() {
       </header>
 
       <Menumobile isOpen={menuMobileOpen} toggleMenu={toggleMobileMenu} />
+
       {openSearch && <Overplay closeMenu={toggleSearch} IndexForZ={12} />}
     </>
   );

@@ -58,24 +58,6 @@ function AddProduct() {
     });
   };
 
-  const handleReset = () => {
-    setNewVariants([
-      {
-        inventories: [{ size: "", quantity: 1 }],
-        color: "",
-        previewImages: [],
-        selectedFiles: [],
-      },
-    ]);
-    setData({
-      name: "",
-      price: 1,
-      discount: 0,
-      description: "",
-      category: "",
-    });
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -117,7 +99,22 @@ function AddProduct() {
 
     try {
       await addProduct(formData);
-      handleReset();
+
+      setNewVariants([
+        {
+          inventories: [{ size: "", quantity: 1 }],
+          color: "",
+          previewImages: [],
+          selectedFiles: [],
+        },
+      ]);
+      setData({
+        name: "",
+        price: 1,
+        discount: 0,
+        description: "",
+        category: "",
+      });
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }

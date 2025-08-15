@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import Image from "./Image";
-import React from "react";
+import React, { useMemo } from "react";
 import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
 import useGetCart from "@/hooks/useGetCart";
@@ -22,18 +22,32 @@ function CartItem() {
   const { changeQuantity, isLoading: isLoadingChangeQuantity } =
     useChangeQuantityItemCart();
 
-  const totalQuantity =
-    cart?.productsInCart.reduce((sum, item) => {
-      return sum + (item?.variant?.quantity || 0);
-    }, 0) || 0;
+  const totalQuantity = useMemo(() => {
+    return (
+      cart?.productsInCart.reduce((sum, item) => {
+        return sum + (item?.variant?.quantity || 0);
+      }, 0) || 0
+    );
+  }, [cart?.productsInCart]);
 
-  const totalPrice =
-    cart?.productsInCart.reduce((sum, item) => {
-      const finalPrice =
-        item.discount > 0 ? item.price - item.discount : item.price;
+  const totalPrice = useMemo(() => {
+    return (
+      cart?.productsInCart.reduce((sum, item) => {
+        const finalPrice =
+          item.discount > 0 ? item.price - item.discount : item.price;
 
-      return sum + finalPrice * item.variant.quantity;
-    }, 0) || 0;
+        return sum + finalPrice * item.variant.quantity;
+      }, 0) || 0
+    );
+  }, [cart?.productsInCart]);
+
+  // lấy những sản phẩm không đủ số lượng mua (số lượng mua > số lượng tồn kho)
+  const outOfStockItems = useMemo(() => {
+    if (!cart?.productsInCart) return [];
+    return cart.productsInCart.filter(
+      (item) => item.variant.quantity > item.variant.stock
+    );
+  }, [cart?.productsInCart]);
 
   const handleChangeQuantity = async (
     cartId: string,
@@ -106,18 +120,14 @@ function CartItem() {
       return;
     }
 
-    const outOfStockItems = cart?.productsInCart.filter(
-      (item) => item.variant.quantity > item.variant.stock
-    ); // lấy những sản phẩm không đủ số lượng mua (số lượng mua > số lượng tồn kho)
-
     if (outOfStockItems.length > 0) {
       const errorMessage = outOfStockItems
         .map(
           (item) =>
-            `Sản phẩm ${item.name} (${item.variant.size.namesize}, ${item.variant.color.namecolor}) chỉ còn ${item.variant.stock} sản phẩm.`
+            `Sản phẩm ${item.name} (${item.variant.size.namesize}, ${item.variant.color.namecolor}) chỉ còn ${item.variant.stock} sản phẩm. Không đủ tồn kho!`
         )
         .join("\n");
-      toast.error(`Không đủ tồn kho:\n${errorMessage}`);
+      toast.error(`${errorMessage}`);
       router.push(`/cart`);
       return;
     }

@@ -3,6 +3,7 @@ import useGetCoupons from "@/hooks/useGetCoupons";
 import Overplay from "./Overplay";
 import { HiMiniXMark } from "react-icons/hi2";
 import toast from "react-hot-toast";
+import { memo } from "react";
 type MenuSideCouponProps = {
   isOpen: boolean;
   toggleMenu: () => void;
@@ -14,6 +15,7 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
     navigator.clipboard.writeText(code);
     toast.success("Sao chép mã thành công");
   };
+
   return (
     <>
       <div
@@ -95,4 +97,4 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
   );
 }
 
-export default MenuSideCoupon;
+export default memo(MenuSideCoupon);

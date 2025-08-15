@@ -7,7 +7,7 @@ import { RiArrowLeftSLine } from "react-icons/ri";
 import { TbCancel } from "react-icons/tb";
 import Loading from "./Loading";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import toast from "react-hot-toast";
 
 function OrderDetail() {
@@ -26,13 +26,16 @@ function OrderDetail() {
     }
   }, [order, isLoading, router]);
 
-  const totalPrice =
-    order?.productsBuy.reduce((sum, item) => {
-      const finalPrice =
-        item.discount > 0 ? item.price - item.discount : item.price;
+  const totalPrice = useMemo(() => {
+    return (
+      order?.productsBuy.reduce((sum, item) => {
+        const finalPrice =
+          item.discount > 0 ? item.price - item.discount : item.price;
 
-      return sum + finalPrice * item.quantity;
-    }, 0) || 0;
+        return sum + finalPrice * item.quantity;
+      }, 0) || 0
+    );
+  }, [order?.productsBuy]);
 
   const steps = [
     { label: "Đơn đã đặt", icon: <LuArchive size={24} /> },

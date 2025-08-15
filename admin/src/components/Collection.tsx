@@ -22,11 +22,6 @@ function Collection() {
     handleClear,
   } = useInputImage1();
 
-  const handleReset = () => {
-    setSelectedFiles1([]);
-    setPreviewImages1([]);
-  };
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -55,7 +50,8 @@ function Collection() {
       }
 
       mutate();
-      handleReset();
+      setSelectedFiles1([]);
+      setPreviewImages1([]);
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
       mutate();
