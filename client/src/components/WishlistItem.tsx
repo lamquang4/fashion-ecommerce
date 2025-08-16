@@ -5,7 +5,7 @@ import React from "react";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
 function WishlistItem() {
-  const { wishlist, isLoading, mutate } = useGetWishlist();
+  const { wishlist, mutate } = useGetWishlist();
   const { removeItem } = useRemoveItemWishlist();
 
   const handleRemoveItem = async (wishlistId: string, variant: string) => {

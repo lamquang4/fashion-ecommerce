@@ -41,7 +41,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
     return provinces?.find(
       (province) => province.province === selectedProvinceName
     );
-  }, [provinces]);
+  }, [provinces, selectedProvinceName]);
 
   useEffect(() => {
     if (isLoading) return;

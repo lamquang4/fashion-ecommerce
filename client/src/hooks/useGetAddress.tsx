@@ -6,15 +6,7 @@ import useSWR from "swr";
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetAddress(id: string) {
-  if (!id) {
-    return {
-      address: undefined,
-      error: null,
-      isLoading: false,
-      mutate: () => {},
-    };
-  }
-  const url = `/api/get-address/${id}`;
+  const url = id ? `/api/get-address/${id}` : null;
   const { data, error, isLoading, mutate } = useSWR<Address>(url, fetcher);
 
   return {
