@@ -9,7 +9,7 @@ import useUpdateBanner from "@/hooks/useUpdateBanner";
 import { useInputImage1 } from "@/hooks/useInputImage1";
 import Loading from "./Loading";
 
-function Collection() {
+function CollectionBanner() {
   const { collections, mutate, isLoading } = useGetCollections();
   const { addBanner, isLoading: isLoadingAddBanner } = useAddBanner();
   const { updateBanner, isLoading: isLoadingUpdateBanner } = useUpdateBanner();
@@ -138,4 +138,4 @@ function Collection() {
   );
 }
 
-export default Collection;
+export default CollectionBanner;

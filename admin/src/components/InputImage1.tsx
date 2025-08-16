@@ -1,4 +1,5 @@
 "use client";
+import { memo } from "react";
 import { RiImageEditFill } from "react-icons/ri";
 type InputImageProp = {
   InputId: string;
@@ -9,11 +10,9 @@ type InputImageProp = {
 function InputImage1({ InputId, onFileSelect, sizeIcon }: InputImageProp) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
-    if (file && onFileSelect) {
-      onFileSelect(file);
-    }
+    if (file && onFileSelect) onFileSelect(file);
   };
+
   return (
     <div className="flex justify-center items-center bg-white rounded-full p-1.5 border border-gray-300">
       <label htmlFor={InputId} className="cursor-pointer">
@@ -31,4 +30,4 @@ function InputImage1({ InputId, onFileSelect, sizeIcon }: InputImageProp) {
   );
 }
 
-export default InputImage1;
+export default memo(InputImage1);

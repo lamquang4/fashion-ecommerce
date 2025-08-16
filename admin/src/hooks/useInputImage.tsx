@@ -1,11 +1,11 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import toast from "react-hot-toast";
 
 export function useInputImage(max: number = 1) {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-  const handleRemovePreviewImage = (index: number) => {
+  const handleRemovePreviewImage = useCallback((index: number) => {
     URL.revokeObjectURL(previewImages[index]);
 
     const newImages = previewImages.filter((_, i) => i !== index);
@@ -13,26 +13,27 @@ export function useInputImage(max: number = 1) {
 
     setPreviewImages(newImages);
     setSelectedFiles(newFiles);
-  };
+  }, []);
 
-  const handlePreviewImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const files = e.target.files;
-    if (!files) return;
+  const handlePreviewImage = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      const files = e.target.files;
+      if (!files) return;
 
-    const incomingFiles = Array.from(files);
+      const incomingFiles = Array.from(files);
 
-    if (previewImages.length + incomingFiles.length > max) {
-      toast.error(`Tổng số hình không được vượt quá ${max}.`);
-      return;
-    }
+      if (previewImages.length + incomingFiles.length > max) {
+        toast.error(`Tổng số hình không được vượt quá ${max}.`);
+        return;
+      }
 
-    const imageUrls = incomingFiles.map((file) => URL.createObjectURL(file));
+      const imageUrls = incomingFiles.map((file) => URL.createObjectURL(file));
 
-    setPreviewImages((prev) => [...prev, ...imageUrls]);
-    setSelectedFiles((prev) => [...prev, ...incomingFiles]);
-  };
-
-  
+      setPreviewImages((prev) => [...prev, ...imageUrls]);
+      setSelectedFiles((prev) => [...prev, ...incomingFiles]);
+    },
+    []
+  );
 
   return {
     previewImages,

@@ -140,8 +140,8 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
         },
         {
           icon: <MdOutlineContentPasteSearch size={20} />,
-          label: "Bộ sưu tập",
-          path: "/collection",
+          label: "Banner bộ sưu tập",
+          path: "/collectionbanner",
         },
       ],
     },

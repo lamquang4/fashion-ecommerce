@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import InputImage from "./InputImage";
 import Image from "./Image";
 import { VscTrash } from "react-icons/vsc";
@@ -13,7 +13,6 @@ import toast from "react-hot-toast";
 import useGetSizes from "@/hooks/useGetSizes";
 import useGetColors from "@/hooks/useGetColors";
 import useUpdateProduct from "@/hooks/useUpdateProduct";
-import { useInventory } from "@/hooks/useInventory";
 import useDeleteImage from "@/hooks/useDeleteImage";
 import useUpdateImage from "@/hooks/useUpdateImage";
 import useGetCategories1 from "@/hooks/useGetCategories1";
@@ -21,6 +20,8 @@ import { GoTrash } from "react-icons/go";
 import { useInputImage2 } from "@/hooks/useInputImage2";
 import dynamic from "next/dynamic";
 import TextBoxEditor from "./TextBoxEditor";
+import { useNewInventory } from "@/hooks/useNewInventory";
+import { useCurrentInventory } from "@/hooks/useCurrentInventory";
 
 const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),
@@ -54,25 +55,28 @@ function EditProduct() {
   const {
     newVariants,
     setNewVariants,
-    currentVariants,
-    setCurrentVariants,
     handleRemoveNewInventoryBlock,
     handleAddNewInventory,
-    handleAddCurrentInventory,
     handleChangeNewInventory,
-    handleChangeCurrentInventory,
     handleRemoveNewInventory,
-    handleRemoveCurrentInventory,
     handleRemoveAllNewInventories,
     handleAddInventoryBlock,
     handleRemoveAllInventoryBlocks,
     handleImage,
     handleRemoveImage,
+    handleSortNewInventory,
+  } = useNewInventory();
+
+  const {
+    currentVariants,
+    setCurrentVariants,
+    handleAddCurrentInventory,
+    handleChangeCurrentInventory,
+    handleRemoveCurrentInventory,
     handleImageCurrent,
     handleRemoveImageCurrent,
-    handleSortNewInventory,
     handleSortCurrentInventory,
-  } = useInventory();
+  } = useCurrentInventory();
 
   const [data, setData] = useState({
     name: "",
@@ -81,7 +85,7 @@ function EditProduct() {
     description: "",
     category: "",
   });
-  const [openViewer, setOpenViewer] = useState(false);
+  const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
 
   const handleOpenViewer = (image: string) => {
@@ -111,6 +115,24 @@ function EditProduct() {
   const handleDescriptionChange = useCallback((val: string) => {
     setData((prev) => ({ ...prev, description: val }));
   }, []);
+
+  const newPreviewImageHandlers = useMemo(() => {
+    return newVariants.map((_, blockIndex) => ({
+      handlePreviewImage: (e: React.ChangeEvent<HTMLInputElement>) =>
+        handleImage(e, blockIndex),
+      handleRemovePreviewImage: (index: number) =>
+        handleRemoveImage(index, blockIndex),
+    }));
+  }, [newVariants, handleImage, handleRemoveImage]);
+
+  const currentPreviewImageHandlers = useMemo(() => {
+    return currentVariants.map((_, blockIndex) => ({
+      handlePreviewImage: (e: React.ChangeEvent<HTMLInputElement>) =>
+        handleImageCurrent(e, blockIndex),
+      handleRemovePreviewImage: (index: number) =>
+        handleRemoveImageCurrent(index, blockIndex),
+    }));
+  }, [currentVariants, handleImageCurrent, handleRemoveImageCurrent]);
 
   useEffect(() => {
     if (isLoading) return;
@@ -367,9 +389,12 @@ function EditProduct() {
                   <InputImage
                     InputId={`img-products-a${index}`}
                     previewImages={block.previewImages}
-                    handlePreviewImage={(e) => handleImageCurrent(e, index)}
-                    handleRemovePreviewImage={(i) =>
-                      handleRemoveImageCurrent(i, index)
+                    handlePreviewImage={
+                      currentPreviewImageHandlers[index].handlePreviewImage
+                    }
+                    handleRemovePreviewImage={
+                      currentPreviewImageHandlers[index]
+                        .handleRemovePreviewImage
                     }
                   />
 
@@ -603,9 +628,11 @@ function EditProduct() {
                     <InputImage
                       InputId={`img-products-${index}`}
                       previewImages={block.previewImages}
-                      handlePreviewImage={(e) => handleImage(e, index)}
-                      handleRemovePreviewImage={(i) =>
-                        handleRemoveImage(index, i)
+                      handlePreviewImage={
+                        newPreviewImageHandlers[index].handlePreviewImage
+                      }
+                      handleRemovePreviewImage={
+                        newPreviewImageHandlers[index].handleRemovePreviewImage
                       }
                     />
                   </div>

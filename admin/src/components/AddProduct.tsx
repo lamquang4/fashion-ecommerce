@@ -2,8 +2,7 @@
 import Link from "next/link";
 import InputImage from "./InputImage";
 import { GoTrash } from "react-icons/go";
-import { useInventory } from "../hooks/useInventory";
-import { useCallback, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import useAddProduct from "@/hooks/useAddProduct";
 import toast from "react-hot-toast";
 import useGetColors from "@/hooks/useGetColors";
@@ -11,6 +10,7 @@ import useGetSizes from "@/hooks/useGetSizes";
 import useGetCategories1 from "@/hooks/useGetCategories1";
 import dynamic from "next/dynamic";
 import TextBoxEditor from "./TextBoxEditor";
+import { useNewInventory } from "@/hooks/useNewInventory";
 
 const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),
@@ -38,7 +38,7 @@ function AddProduct() {
     handleImage,
     handleRemoveImage,
     handleSortNewInventory,
-  } = useInventory();
+  } = useNewInventory();
 
   const [data, setData] = useState({
     name: "",
@@ -61,6 +61,15 @@ function AddProduct() {
   const handleDescriptionChange = useCallback((val: string) => {
     setData((prev) => ({ ...prev, description: val }));
   }, []);
+
+  const previewImageHandlers = useMemo(() => {
+    return newVariants.map((_, blockIndex) => ({
+      handlePreviewImage: (e: React.ChangeEvent<HTMLInputElement>) =>
+        handleImage(e, blockIndex),
+      handleRemovePreviewImage: (index: number) =>
+        handleRemoveImage(index, blockIndex),
+    }));
+  }, [newVariants, handleImage, handleRemoveImage]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -271,9 +280,11 @@ function AddProduct() {
                   <InputImage
                     InputId={`img-products-${index}`}
                     previewImages={block.previewImages}
-                    handlePreviewImage={(e) => handleImage(e, index)}
-                    handleRemovePreviewImage={(i) =>
-                      handleRemoveImage(i, index)
+                    handlePreviewImage={
+                      previewImageHandlers[index].handlePreviewImage
+                    }
+                    handleRemovePreviewImage={
+                      previewImageHandlers[index].handleRemovePreviewImage
                     }
                   />
                 </div>

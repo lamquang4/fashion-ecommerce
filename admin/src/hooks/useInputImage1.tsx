@@ -1,9 +1,10 @@
 "use client";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 export const useInputImage1 = () => {
   const [previewImages1, setPreviewImages1] = useState<string[]>([]);
   const [selectedFiles1, setSelectedFiles1] = useState<File[]>([]);
-  const onFileSelect = (file: File, index: number) => {
+
+  const onFileSelect = useCallback((file: File, index: number) => {
     setPreviewImages1((prev) => {
       const updated = [...prev];
       if (updated[index]) URL.revokeObjectURL(updated[index]);
@@ -16,22 +17,23 @@ export const useInputImage1 = () => {
       updated[index] = file;
       return updated;
     });
-  };
+  }, []);
 
-  const handleClear = (index: number) => {
+  const handleClear = useCallback((index: number) => {
     setPreviewImages1((prev) => {
       const updated = [...prev];
       if (updated[index]) URL.revokeObjectURL(updated[index]);
-      updated.splice(index, 1); 
+      updated.splice(index, 1);
       return updated;
     });
 
     setSelectedFiles1((prev) => {
       const updated = [...prev];
-      updated.splice(index, 1); 
+      updated.splice(index, 1);
       return updated;
     });
-  };
+  }, []);
+
   return {
     selectedFiles1,
     setSelectedFiles1,
