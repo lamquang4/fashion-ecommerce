@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 interface Props {
   onSearchChange: (value: string) => void;
 }
@@ -13,4 +15,4 @@ function InputSearch({ onSearchChange }: Props) {
   );
 }
 
-export default InputSearch;
+export default memo(InputSearch);

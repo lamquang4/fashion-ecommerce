@@ -17,7 +17,7 @@ export default function useGetProductsCategory(
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    productsCateogry: data?.productsCateogry,
+    productsCateogry: data?.productsCateogry ?? [],
     isLoading,
     error,
     mutate,

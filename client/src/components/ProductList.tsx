@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useCallback, useMemo, useState } from "react";
 import AdvancedSearch from "./AdvancedSearch";
 import Image from "./Image";
 import { VscSettings } from "react-icons/vsc";
@@ -9,12 +9,14 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
 import useAddWishlist from "@/hooks/useAddWishlist";
+import Loading from "./Loading";
 
 interface Props {
   category?: Category;
   products: Product[];
+  isLoading: boolean;
 }
-function ProductList({ category, products }: Props) {
+function ProductList({ category, products, isLoading }: Props) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -35,9 +37,9 @@ function ProductList({ category, products }: Props) {
     );
   }, [wishlist?.productsInWishlist]);
 
-  const toggleAdvancedSearch = () => {
-    setAdvancedSearchOpen(!advancedSearchOpen);
-  };
+  const toggleAdvancedSearch = useCallback(() => {
+    setAdvancedSearchOpen((prev) => !prev);
+  }, []);
 
   const handleAddToWishlist = async (
     product: Product,
@@ -138,7 +140,9 @@ function ProductList({ category, products }: Props) {
         toggleMenu={toggleAdvancedSearch}
       />
 
-      {products.length > 0 ? (
+      {isLoading ? (
+        <Loading height={70} size={50} color="black" thickness={2} />
+      ) : products.length > 0 ? (
         <div
           className={`grid grid-cols-2 gap-x-[12px] gap-y-[35px] lg:grid-cols-3 2xl:grid-cols-4 sm:grid-cols-2 ${
             products.length <= 0 ? "h-[50vh]" : ""

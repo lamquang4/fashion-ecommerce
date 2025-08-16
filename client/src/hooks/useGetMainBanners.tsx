@@ -15,8 +15,8 @@ export default function useGetMainBanners() {
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    banners1: data?.banners1 || [],
-    banners2: data?.banners2 || [],
+    banners1: data?.banners1 ?? [],
+    banners2: data?.banners2 ?? [],
     error,
     isLoading,
     mutate,

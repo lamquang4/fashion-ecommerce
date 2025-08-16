@@ -4,7 +4,6 @@ import ProductList from "@/components/ProductList";
 import useGetProductsSearch from "@/hooks/useGetProductsSearch";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
-import Loading from "./Loading";
 
 function ProductSearch() {
   const {
@@ -27,19 +26,15 @@ function ProductSearch() {
 
   return (
     <>
-      {isLoading ? (
-        <Loading height={70} size={50} color="black" thickness={2} />
-      ) : (
-        <section className="px-[10px] my-[40px] sm:my-[45px] sm:px-[15px]">
-          <ProductList products={products} />
+      <section className="px-[10px] my-[40px] sm:my-[45px] sm:px-[15px]">
+        <ProductList products={products} isLoading={isLoading} />
 
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            totalItems={totalItems}
-          />
-        </section>
-      )}
+        <Pagination
+          totalPages={totalPages}
+          currentPage={currentPage}
+          totalItems={totalItems}
+        />
+      </section>
     </>
   );
 }

@@ -31,7 +31,7 @@ export default function useGetMainBanners() {
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    mainbanners: data?.mainbanners || [],
+    mainbanners: data?.mainbanners ?? [],
     totalPages: data?.totalPages || 1,
     totalItems: data?.total || 0,
     currentPage: page,

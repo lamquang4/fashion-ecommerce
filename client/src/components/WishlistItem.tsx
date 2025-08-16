@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import Image from "./Image";
-import Loading from "./Loading";
 import React from "react";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
@@ -20,12 +19,10 @@ function WishlistItem() {
     <section className="max-w-[1230px] mx-auto my-[40px] sm:my-[45px]">
       <div className="px-[10px] sm:px-[15px]">
         <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[35px]">
-          Yêu thích ({wishlist?.productsInWishlist.length || 0})
+          Yêu thích ({wishlist?.productsInWishlist.length})
         </h2>
-        {isLoading ? (
-          <Loading height={70} size={50} color="black" thickness={2} />
-        ) : wishlist?.productsInWishlist &&
-          wishlist?.productsInWishlist.length > 0 ? (
+        {wishlist?.productsInWishlist &&
+        wishlist?.productsInWishlist.length > 0 ? (
           <div className="flex gap-8 max-w-xl mx-auto w-full">
             <div className="flex flex-col gap-5 bg-white basis-full">
               {wishlist?.productsInWishlist.map((item) => (

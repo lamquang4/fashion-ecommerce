@@ -14,7 +14,7 @@ export default function useGetCategories1() {
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    categories: data?.categories || [],
+    categories: data?.categories ?? [],
     isLoading,
     error,
     mutate,

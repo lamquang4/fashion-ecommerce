@@ -30,7 +30,7 @@ export default function useGetCoupons() {
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    coupons: data?.coupons || [],
+    coupons: data?.coupons ?? [],
     totalPages: data?.totalPages || 1,
     totalItems: data?.total || 0,
     currentPage: page,

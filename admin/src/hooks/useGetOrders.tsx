@@ -38,7 +38,7 @@ export default function useGetOrders() {
   const url = `/api/get-orders?${query.toString()}`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    orders: data?.orders || [],
+    orders: data?.orders ?? [],
     totalPages: data?.totalPages || 1,
     totalItems: data?.total || 0,
     totalRevenue: data?.totalRevenue || 0,

@@ -1,5 +1,5 @@
 import useGetNotifyOrders from "@/hooks/useGetNotifyOrders";
-import React from "react";
+import React, { memo } from "react";
 import { LiaBell } from "react-icons/lia";
 type menuProps = {
   menuOpen: boolean;
@@ -64,4 +64,4 @@ function Notification({ menuOpen, toggleMenu }: menuProps) {
   );
 }
 
-export default Notification;
+export default memo(Notification);

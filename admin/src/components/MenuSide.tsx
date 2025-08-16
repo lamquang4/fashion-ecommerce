@@ -25,7 +25,6 @@ type MenuSideProps = {
 
 function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
   const pathname = usePathname();
-
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
 
   const menuData = [

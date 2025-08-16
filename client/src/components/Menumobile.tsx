@@ -13,6 +13,7 @@ type MenuMobileProps = {
 function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   const { categoriesMale, categoriesFemale } = useGetCategories();
+
   const toggleOpen = (menu: string) => {
     setOpenMenus((prev) => ({
       ...prev,

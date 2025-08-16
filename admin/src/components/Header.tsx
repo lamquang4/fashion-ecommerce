@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import ProfileMenu from "./ProfileMenu";
 import Notification from "./Notification";
@@ -12,6 +12,7 @@ type HeaderProps = {
 
 function Header({ toggleMenu }: HeaderProps) {
   const [profileMenuOpen, setProfileMenuOpen] = useState(false);
+  const [notifiMenuOpen, setNotifiMenuOpen] = useState(false);
   const { status } = useSession();
   const router = useRouter();
 
@@ -21,14 +22,13 @@ function Header({ toggleMenu }: HeaderProps) {
     }
   }, [status, router]);
 
-  const toggleProfileMenu = () => {
+  const toggleProfileMenu = useCallback(() => {
     setProfileMenuOpen((prev) => !prev);
-  };
+  }, []);
 
-  const [notifiMenuOpen, setNotifiMenuOpen] = useState(false);
-  const toggleNotifiMenu = () => {
+  const toggleNotifiMenu = useCallback(() => {
     setNotifiMenuOpen((prev) => !prev);
-  };
+  }, []);
   return (
     <>
       <header className="sticky top-0 z-20 flex w-full bg-white border-b-gray-200 items-center border-b">

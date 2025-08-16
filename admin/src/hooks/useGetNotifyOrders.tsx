@@ -9,11 +9,10 @@ interface ResponseType {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetNotifyOrders() {
-
   const url = `/api/get-notify-orders`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    orders: data?.orders || [],
+    orders: data?.orders ?? [],
     isLoading,
     error,
     mutate,

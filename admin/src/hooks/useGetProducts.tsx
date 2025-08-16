@@ -31,7 +31,7 @@ export default function useGetProducts() {
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    products: data?.products || [],
+    products: data?.products ?? [],
     totalPages: data?.totalPages || 1,
     totalItems: data?.total || 0,
     currentPage: page,

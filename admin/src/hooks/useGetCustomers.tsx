@@ -32,7 +32,7 @@ export default function useGetCustomers() {
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    customers: data?.customers || [],
+    customers: data?.customers ?? [],
     totalPages: data?.totalPages || 1,
     totalItems: data?.total || 0,
     currentPage: page,

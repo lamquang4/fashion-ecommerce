@@ -48,11 +48,6 @@ function EditCategory() {
     });
   };
 
-  const handelReset = () => {
-    setPreviewImages([]);
-    setSelectedFiles([]);
-  };
-
   useEffect(() => {
     if (isLoading) return;
 
@@ -86,7 +81,8 @@ function EditCategory() {
     try {
       await updateCategory(formData);
 
-      handelReset();
+      setPreviewImages([]);
+      setSelectedFiles([]);
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);

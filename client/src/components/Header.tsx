@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
 import { CiUser, CiSearch } from "react-icons/ci";
@@ -52,7 +52,7 @@ function Header() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth >= 1041) {
+      if (window.innerWidth >= 1024) {
         setMenuMobileOpen(false);
         setOpenSearch(false);
       }
@@ -268,4 +268,4 @@ function Header() {
   );
 }
 
-export default Header;
+export default memo(Header);

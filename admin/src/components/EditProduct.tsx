@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import InputImage from "./InputImage";
 import Image from "./Image";
 import { VscTrash } from "react-icons/vsc";
@@ -29,6 +29,19 @@ const Sortable = dynamic(
   }
 );
 function EditProduct() {
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+
+  const { product, mutate, isLoading } = useGetProduct(id);
+  const { categories } = useGetCategories1();
+  const { colors } = useGetColors();
+  const { sizes } = useGetSizes();
+  const { updateProduct, isLoading: isLoadingUpdateProduct } =
+    useUpdateProduct(id);
+  const { deleteImage, isLoading: isLoadingDeleteImage } = useDeleteImage();
+  const { updateImage, isLoading: isLoadingSUpdateImage } = useUpdateImage();
+
   const {
     previewImages2,
     selectedFiles2,
@@ -60,19 +73,7 @@ function EditProduct() {
     handleSortNewInventory,
     handleSortCurrentInventory,
   } = useInventory();
-  const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
 
-  const { product, mutate, isLoading } = useGetProduct(id);
-
-  const { categories } = useGetCategories1();
-  const { colors } = useGetColors();
-  const { sizes } = useGetSizes();
-  const { updateProduct, isLoading: isLoadingUpdateProduct } =
-    useUpdateProduct(id);
-  const { deleteImage, isLoading: isLoadingDeleteImage } = useDeleteImage();
-  const { updateImage, isLoading: isLoadingSUpdateImage } = useUpdateImage();
   const [data, setData] = useState({
     name: "",
     price: 1,
@@ -106,6 +107,10 @@ function EditProduct() {
       [name]: value,
     }));
   };
+
+  const handleDescriptionChange = useCallback((val: string) => {
+    setData((prev) => ({ ...prev, description: val }));
+  }, []);
 
   useEffect(() => {
     if (isLoading) return;
@@ -282,9 +287,7 @@ function EditProduct() {
                 </label>
                 <TextBoxEditor
                   content={data.description}
-                  onChange={(value) =>
-                    setData((prev) => ({ ...prev, description: value }))
-                  }
+                  onChange={handleDescriptionChange}
                 />
               </div>
             </div>

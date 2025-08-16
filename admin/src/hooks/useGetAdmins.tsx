@@ -31,7 +31,7 @@ export default function useGetAdmins() {
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    admins: data?.admins || [],
+    admins: data?.admins ?? [],
     totalPages: data?.totalPages || 1,
     totalItems: data?.total || 0,
     currentPage: page,

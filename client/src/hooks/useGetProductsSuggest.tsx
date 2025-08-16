@@ -21,7 +21,7 @@ export default function useGetProductsSuggest() {
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    products: data?.products || [],
+    products: data?.products ?? [],
     setKeyword,
     isLoading,
     error,

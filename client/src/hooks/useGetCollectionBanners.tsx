@@ -14,7 +14,7 @@ export default function useGetCollectionBanners() {
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    collections: data?.collections || [],
+    collections: data?.collections ?? [],
     error,
     isLoading,
     mutate,

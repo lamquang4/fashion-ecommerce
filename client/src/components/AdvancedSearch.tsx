@@ -5,6 +5,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 import Overplay from "./Overplay";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import useGetColors from "@/hooks/useGetColors";
+import { memo } from "react";
 type AdvancedSearchProps = {
   isOpen: boolean;
   toggleMenu: () => void;
@@ -250,4 +251,4 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
   );
 }
 
-export default AdvancedSearch;
+export default memo(AdvancedSearch);

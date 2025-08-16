@@ -22,8 +22,8 @@ export default function useGetSizeColorProduct(slug: string) {
   );
 
   return {
-    sizes: data?.sizes || [],
-    colors: data?.colors || [],
+    sizes: data?.sizes ?? [],
+    colors: data?.colors ?? [],
     isLoading,
     error,
     mutate,

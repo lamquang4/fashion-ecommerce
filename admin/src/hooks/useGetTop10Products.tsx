@@ -13,7 +13,7 @@ export default function useGetTop10Products() {
   const url = `/api/get-top10products`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    topProducts: data?.topProducts || [],
+    topProducts: data?.topProducts ?? [],
     isLoading,
     error,
     mutate,

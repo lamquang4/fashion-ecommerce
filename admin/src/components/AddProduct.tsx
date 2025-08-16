@@ -3,7 +3,7 @@ import Link from "next/link";
 import InputImage from "./InputImage";
 import { GoTrash } from "react-icons/go";
 import { useInventory } from "../hooks/useInventory";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import useAddProduct from "@/hooks/useAddProduct";
 import toast from "react-hot-toast";
 import useGetColors from "@/hooks/useGetColors";
@@ -57,6 +57,10 @@ function AddProduct() {
       [name]: value,
     });
   };
+
+  const handleDescriptionChange = useCallback((val: string) => {
+    setData((prev) => ({ ...prev, description: val }));
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -177,9 +181,7 @@ function AddProduct() {
                 </label>
                 <TextBoxEditor
                   content={data.description}
-                  onChange={(value) =>
-                    setData((prev) => ({ ...prev, description: value }))
-                  }
+                  onChange={handleDescriptionChange}
                 />
               </div>
             </div>

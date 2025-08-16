@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import { memo } from "react";
 
 type ProfileMenuProp = {
   isOpen: boolean;
@@ -68,4 +69,4 @@ function ProfileMenu({ isOpen }: ProfileMenuProp) {
   );
 }
 
-export default ProfileMenu;
+export default memo(ProfileMenu);

@@ -2,7 +2,7 @@
 import { HiMiniXMark } from "react-icons/hi2";
 import Overplay from "./Overplay";
 import useGetProvinces from "@/hooks/useGetProvinceVN";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import useGetAddress from "@/hooks/useGetAddress";
 import useUpdateAddress from "@/hooks/useUpdateAddress";
 import { useSession } from "next-auth/react";
@@ -36,9 +36,12 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
   };
-  const selectedProvince = provinces?.find(
-    (province) => province.province === selectedProvinceName
-  );
+
+  const selectedProvince = useMemo(() => {
+    return provinces?.find(
+      (province) => province.province === selectedProvinceName
+    );
+  }, [provinces]);
 
   useEffect(() => {
     if (isLoading) return;

@@ -15,7 +15,7 @@ export default function useGetCollections() {
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    collections: data?.collections || [],
+    collections: data?.collections ?? [],
     isLoading,
     error,
     mutate,

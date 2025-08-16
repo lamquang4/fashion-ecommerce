@@ -32,7 +32,7 @@ export default function useGetInventories() {
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    inventories: data?.inventories || [],
+    inventories: data?.inventories ?? [],
     totalPages: data?.totalPages || 1,
     totalItems: data?.total || 0,
     totalQuantity: data?.totalQuantity || 0,

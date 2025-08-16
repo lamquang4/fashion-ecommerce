@@ -14,7 +14,7 @@ export default function useGetCoupons() {
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    coupons: data?.coupons || [],
+    coupons: data?.coupons ?? [],
     error,
     isLoading,
     mutate,

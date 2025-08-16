@@ -3,6 +3,7 @@ import Link from "next/link";
 import { FaInstagram, FaFacebookSquare } from "react-icons/fa";
 import { IoLogoYoutube } from "react-icons/io";
 import Image from "./Image";
+import { memo } from "react";
 function Footer() {
   return (
     <footer className="bg-gray-50 border-t border-gray-200">
@@ -128,4 +129,4 @@ function Footer() {
   );
 }
 
-export default Footer;
+export default memo(Footer);

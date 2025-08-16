@@ -30,7 +30,7 @@ export default function useGetSizes() {
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    sizes: data?.sizes || [],
+    sizes: data?.sizes ?? [],
     totalPages: data?.totalPages || 1,
     totalItems: data?.total || 0,
     currentPage: page,

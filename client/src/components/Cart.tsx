@@ -18,7 +18,7 @@ function Cart() {
           <CartItem />
 
           <ProductSlider
-            products={productsBestseller || []}
+            products={productsBestseller ?? []}
             title={"Sản phẩm bán chạy"}
           />
         </>

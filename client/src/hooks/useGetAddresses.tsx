@@ -15,7 +15,7 @@ export default function useGetAddresses() {
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    addresses: data?.addresses || [],
+    addresses: data?.addresses ?? [],
     error,
     isLoading,
     mutate,

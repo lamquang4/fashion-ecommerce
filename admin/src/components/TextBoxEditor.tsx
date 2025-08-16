@@ -1,5 +1,5 @@
 "use client";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import Heading from "@tiptap/extension-heading";
@@ -25,18 +25,20 @@ type Props = {
   onChange?: (value: string) => void;
 };
 
-export default function TextBoxEditor({ content, onChange }: Props) {
+function TextBoxEditor({ content, onChange }: Props) {
   const editor = useEditor({
     editable: true,
     immediatelyRender: true,
     extensions: [
-      StarterKit,
+      StarterKit.configure({
+        heading: false,
+        bulletList: false,
+        orderedList: false,
+      }),
       Heading.configure({ levels: [1, 2, 3] }),
       BulletList,
       OrderedList,
-      TextAlign.configure({
-        types: ["heading", "paragraph"],
-      }),
+      TextAlign.configure({ types: ["heading", "paragraph"] }),
     ],
     content: content,
     editorProps: {
@@ -158,3 +160,5 @@ export default function TextBoxEditor({ content, onChange }: Props) {
     </div>
   );
 }
+
+export default memo(TextBoxEditor);

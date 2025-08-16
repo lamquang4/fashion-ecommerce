@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import { HiOutlineBuildingOffice, HiOutlineUser } from "react-icons/hi2";
 import { IoBagHandleOutline } from "react-icons/io5";
 import { LuDoorOpen } from "react-icons/lu";
+import { memo } from "react";
 function SideBarMenu() {
   const pathname = usePathname();
   const activeClass = "bg-gray-100 font-medium rounded-md";
@@ -64,4 +65,4 @@ function SideBarMenu() {
   );
 }
 
-export default SideBarMenu;
+export default memo(SideBarMenu);

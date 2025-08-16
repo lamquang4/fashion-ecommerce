@@ -18,6 +18,7 @@ function Image({ Src, Alt, ClassName, loadingType }: ImageProps) {
       sizes="100vw"
       className={ClassName}
       loading={loadingType}
+      priority={loadingType === "eager"}
     />
   );
 }

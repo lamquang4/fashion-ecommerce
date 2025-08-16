@@ -16,6 +16,10 @@ import Loading from "./Loading";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 function Order() {
+  const pathname = usePathname();
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const {
     orders,
     mutate,
@@ -33,10 +37,6 @@ function Order() {
 
   const { updateStatusOrder, isLoading: isLoadingUpdateStatusOrder } =
     useUpdateStatusOrder();
-
-  const pathname = usePathname();
-  const router = useRouter();
-  const searchParams = useSearchParams();
 
   const handleUpdateStatus = async (id: string, status: number) => {
     if (!id && !status) {

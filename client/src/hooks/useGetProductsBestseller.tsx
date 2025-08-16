@@ -14,7 +14,7 @@ export default function useGetProductsBestseller() {
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    productsBestseller: data?.productsBestseller,
+    productsBestseller: data?.productsBestseller ?? [],
     isLoading,
     error,
     mutate,

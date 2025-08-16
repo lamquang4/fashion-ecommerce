@@ -14,7 +14,7 @@ export default function useGetPromoteBanners() {
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
 
   return {
-    promotebanners: data?.promotebanners || [],
+    promotebanners: data?.promotebanners ?? [],
     mutate,
     error,
     isLoading,

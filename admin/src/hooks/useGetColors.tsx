@@ -30,7 +30,7 @@ export default function useGetColors() {
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
-    colors: data?.colors || [],
+    colors: data?.colors ?? [],
     totalPages: data?.totalPages || 1,
     totalItems: data?.total || 0,
     currentPage: page,
