@@ -31,6 +31,7 @@ export default function useDeleteSize() {
       console.error("Lỗi:", err);
       throw err;
     } finally {
+      toast.dismiss(loadingToast);
       setIsLoading(false);
     }
   };

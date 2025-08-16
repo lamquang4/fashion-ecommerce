@@ -37,6 +37,7 @@ export default function useBlockUser() {
       console.error("Lỗi:", err);
       throw err;
     } finally {
+      toast.dismiss(loadingToast);
       setIsLoading(false);
     }
   };

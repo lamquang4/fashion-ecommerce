@@ -18,6 +18,7 @@ export default function useAddCoupon() {
       console.error("Lỗi:", err);
       throw err;
     } finally {
+      toast.dismiss(loadingToast);
       setIsLoading(false);
     }
   };

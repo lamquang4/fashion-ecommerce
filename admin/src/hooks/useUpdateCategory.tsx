@@ -22,6 +22,7 @@ export default function useUpdateCategory(id: string) {
       console.error("Lỗi:", err);
       throw err;
     } finally {
+      toast.dismiss(loadingToast);
       setIsLoading(false);
     }
   };

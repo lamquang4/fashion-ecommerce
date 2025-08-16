@@ -33,6 +33,7 @@ export default function useDeleteImage() {
       console.error("Lỗi:", err);
       throw err;
     } finally {
+      toast.dismiss(loadingToast);
       setIsLoading(false);
     }
   };

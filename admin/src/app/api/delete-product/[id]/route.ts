@@ -1,5 +1,6 @@
 import cloudinary from "@/lib/cloudinary";
 import { connectMongoDB } from "@/lib/MongoConnect";
+import Category from "@/model/Category";
 import Inventory from "@/model/Inventory";
 import OrderDetail from "@/model/OrderDetail";
 import Product from "@/model/Product";
@@ -54,13 +55,25 @@ export async function DELETE(
       );
     }
 
+    const categoryId = product.category;
+
     const deleteProduct = await Product.findByIdAndDelete(id);
     await Inventory.deleteMany({ product: id });
 
+    if (categoryId) {
+      const hasActiveProducts = await Product.exists({
+        category: categoryId,
+        status: 1,
+      });
+
+      if (!hasActiveProducts) {
+        // Cập nhật category status = 0 nếu không còn sản phẩm status = 1
+        await Category.findByIdAndUpdate(categoryId, { $set: { status: 0 } });
+      }
+    }
+
     return NextResponse.json({ product: deleteProduct }, { status: 201 });
   } catch (err) {
-    console.log(err);
-
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

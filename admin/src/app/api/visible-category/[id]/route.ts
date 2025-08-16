@@ -27,25 +27,17 @@ export async function PUT(
       );
     }
 
-    const hasProduct = await Product.exists({ category: id, status: 1 });
+    // kiểm tra danh mục có chứa sản phẩm nào (không tính status)
+    const hasProduct = await Product.exists({ category: id });
 
-    if (status === 1 && !hasProduct) {
+    if (!hasProduct && status !== 0) {
       return NextResponse.json(
         {
-          msg: "Danh mục chưa có sản phẩm nào đang là hiện nên không thể hiện",
+          msg: "Danh mục chưa có sản phẩm nào!",
         },
         { status: 400 }
       );
     }
-
-    /*
-    if (status === 0 && category.status === 1 && hasProduct) {
-      return NextResponse.json(
-        { msg: "Danh mục đã có sản phẩm đang hiện nên không thể ẩn" },
-        { status: 400 }
-      );
-    }
-      */
 
     const updatedCategory = await Category.findByIdAndUpdate(
       id,

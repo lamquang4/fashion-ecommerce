@@ -15,9 +15,11 @@ export default function useAddAdmin() {
       toast.dismiss(loadingToast);
       toast.success("Thêm thành công");
     } catch (err) {
+      toast.dismiss(loadingToast);
       console.error("Lỗi:", err);
       throw err;
     } finally {
+      toast.dismiss(loadingToast);
       setIsLoading(false);
     }
   };

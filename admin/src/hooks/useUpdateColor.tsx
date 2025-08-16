@@ -19,6 +19,7 @@ export default function useUpdateColor(id: string) {
       console.error("Lỗi:", err);
       throw err;
     } finally {
+      toast.dismiss(loadingToast);
       setIsLoading(false);
     }
   };

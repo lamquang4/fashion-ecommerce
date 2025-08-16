@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 export default function useAddCategory() {
   const [isLoading, setIsLoading] = useState(false);
   const addCategory = async (formData: FormData) => {
-      const loadingToast = toast.loading("Đang thêm...");
+    const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {
       const url = `/api/add-category`;
@@ -21,6 +21,7 @@ export default function useAddCategory() {
       console.error("Lỗi:", err);
       throw err;
     } finally {
+      toast.dismiss(loadingToast);
       setIsLoading(false);
     }
   };

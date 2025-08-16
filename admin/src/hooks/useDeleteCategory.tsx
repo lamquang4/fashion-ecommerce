@@ -19,7 +19,7 @@ export default function useDeleteCategory() {
     if (!result.isConfirmed || !id) return;
 
     const loadingToast = toast.loading("Đang xóa...");
-    
+
     setIsLoading(true);
 
     try {
@@ -31,6 +31,7 @@ export default function useDeleteCategory() {
       console.error("Lỗi:", err);
       throw err;
     } finally {
+      toast.dismiss(loadingToast);
       setIsLoading(false);
     }
   };
