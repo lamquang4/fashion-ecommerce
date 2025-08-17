@@ -9,9 +9,9 @@ export async function GET(req: NextRequest) {
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
     const skip = (page - 1) * limit;
-    const keyword = searchParams.get("keyword") || "";
+    const q = searchParams.get("q") || "";
 
-    // tìm kiếm keyword (name) của Product ngoài Inventory
+    // tìm kiếm tên sản phẩm lấy trong Product
     const [inventories, countTotal, countQuantity] = await Promise.all([
       Inventory.aggregate([
         {
@@ -23,11 +23,11 @@ export async function GET(req: NextRequest) {
           },
         },
         { $unwind: "$product" },
-        ...(keyword
+        ...(q
           ? [
               {
                 $match: {
-                  "product.name": { $regex: keyword, $options: "i" },
+                  "product.name": { $regex: q, $options: "i" },
                 },
               },
             ]
@@ -87,11 +87,11 @@ export async function GET(req: NextRequest) {
           },
         },
         { $unwind: "$product" },
-        ...(keyword
+        ...(q
           ? [
               {
                 $match: {
-                  "product.name": { $regex: keyword, $options: "i" },
+                  "product.name": { $regex: q, $options: "i" },
                 },
               },
             ]
@@ -118,11 +118,11 @@ export async function GET(req: NextRequest) {
           },
         },
         { $unwind: "$product" },
-        ...(keyword
+        ...(q
           ? [
               {
                 $match: {
-                  "product.name": { $regex: keyword, $options: "i" },
+                  "product.name": { $regex: q, $options: "i" },
                 },
               },
             ]

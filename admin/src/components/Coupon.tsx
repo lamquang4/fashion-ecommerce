@@ -20,8 +20,6 @@ function Coupon() {
     totalItems,
     currentPage,
     limit,
-    setKeyword,
-    setStatus,
   } = useGetCoupons();
   const { deleteCoupon, isLoading: isLoadingDeleteCoupon } = useDeleteCoupon();
 
@@ -78,7 +76,7 @@ function Coupon() {
       <div className=" bg-white w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
-            <InputSearch onSearchChange={(val) => setKeyword(val)} />
+            <InputSearch />
           </div>
         </div>
 
@@ -103,11 +101,11 @@ function Coupon() {
                 Thời gian
               </th>
 
-              <th className="text-left text-[#444] text-[0.9rem] relative">
+              <th className="text-left text-[#444] text-[0.9rem]">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
-                  onFilterChange={(val) => setStatus(val)}
+                  paramName="status"
                 />
               </th>
 

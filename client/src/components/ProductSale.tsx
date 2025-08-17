@@ -12,17 +12,15 @@ function ProductSale() {
     useGetProductsSale(slug);
 
   return (
-    <>
-      <section className="px-[10px] my-[40px] sm:my-[45px] sm:px-[15px]">
-        <ProductList products={products} isLoading={isLoading} />
+    <section className="px-[10px] my-[40px] sm:my-[45px] sm:px-[15px]">
+      <ProductList products={products} isLoading={isLoading} />
 
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          totalItems={totalItems}
-        />
-      </section>
-    </>
+      <Pagination
+        totalPages={totalPages}
+        currentPage={currentPage}
+        totalItems={totalItems}
+      />
+    </section>
   );
 }
 

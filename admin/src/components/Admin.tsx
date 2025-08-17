@@ -14,6 +14,7 @@ import useDeleteUser from "@/hooks/useDeleteUser";
 import InputSearch from "./InputSearch";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+
 function Admin() {
   const { data: session } = useSession({
     required: true,
@@ -25,26 +26,15 @@ function Admin() {
     totalItems,
     currentPage,
     limit,
-    setKeyword,
-    setStatus,
     mutate,
   } = useGetAdmins();
   const { blockUser, isLoading: isLoadingBlockUser } = useBlockUser();
   const { deleteUser, isLoading: isLoadingDeleteUser } = useDeleteUser();
 
   const array = [
-    {
-      name: "Tất cả",
-      status: null,
-    },
-    {
-      name: "Bình thường",
-      status: 1,
-    },
-    {
-      name: "Đã chặn",
-      status: 0,
-    },
+    { name: "Tất cả", status: null },
+    { name: "Bình thường", status: 1 },
+    { name: "Đã chặn", status: 0 },
   ];
 
   const handleDelete = async (id: string) => {
@@ -99,7 +89,7 @@ function Admin() {
       <div className=" bg-white w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
-            <InputSearch onSearchChange={(val) => setKeyword(val)} />
+            <InputSearch />
           </div>
         </div>
 
@@ -125,11 +115,11 @@ function Admin() {
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Vai trò
               </th>
-              <th className="text-left text-[#444] text-[0.9rem] relative">
+              <th className="text-left text-[#444] text-[0.9rem]">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
-                  onFilterChange={(val) => setStatus(val)}
+                  paramName="status"
                 />
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">

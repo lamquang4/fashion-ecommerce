@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
@@ -19,23 +18,22 @@ interface ResponseType {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetOrders() {
-  const [keyword, setKeyword] = useState("");
-  const [status, setStatus] = useState("");
-
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
   const start = searchParams.get("start") || "";
   const end = searchParams.get("end") || "";
-  const query = new URLSearchParams({
-    page: page.toString(),
-    limit: limit.toString(),
-    start,
-    end,
-    keyword,
-    status,
-  });
+  const q = searchParams.get("q");
+  const status = searchParams.get("status");
+
+  const query = new URLSearchParams();
+  if (page) query.set("page", page.toString());
+  if (limit) query.set("limit", limit.toString());
+  if (q) query.set("q", q);
+  if (status) query.set("status", status.toString());
+
   const url = `/api/get-orders?${query.toString()}`;
+
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
   return {
     orders: data?.orders ?? [],
@@ -48,8 +46,6 @@ export default function useGetOrders() {
     totalStatus4: data?.totalStatus4 || 0,
     currentPage: page,
     limit,
-    setKeyword,
-    setStatus,
     isLoading,
     error,
     mutate,

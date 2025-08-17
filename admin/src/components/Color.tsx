@@ -19,7 +19,6 @@ function Color() {
     totalItems,
     currentPage,
     limit,
-    setKeyword,
   } = useGetColors();
   const { deleteColor, isLoading: isLoadingDeleteColor } = useDeleteColor();
 
@@ -53,7 +52,7 @@ function Color() {
       <div className=" bg-white w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
-            <InputSearch onSearchChange={(val) => setKeyword(val)} />
+            <InputSearch />
           </div>
         </div>
 

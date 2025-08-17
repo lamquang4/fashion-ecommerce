@@ -10,8 +10,8 @@ export async function GET(req: NextRequest) {
     const page = parseInt(searchParams.get("page") || "1");
     const limit = 12;
     const skip = (page - 1) * limit;
-    const keyword = searchParams.get("keyword") || "";
 
+    const q = searchParams.get("q") || "";
     const min = parseInt(searchParams.get("min") || "");
     const max = parseInt(searchParams.get("max") || "");
     const colors = searchParams.getAll("color");
@@ -19,7 +19,7 @@ export async function GET(req: NextRequest) {
 
     const query: any = {
       status: 1,
-      name: { $regex: keyword, $options: "i" },
+      name: { $regex: q, $options: "i" },
     };
 
     const pipeline: any[] = [

@@ -23,8 +23,6 @@ function Product() {
     totalItems,
     currentPage,
     limit,
-    setKeyword,
-    setStatus,
   } = useGetProducts();
   const { visibleProduct, isLoading: isLoadingVisibleProduct } =
     useVisibleProduct();
@@ -43,10 +41,6 @@ function Product() {
     {
       name: "Ẩn",
       status: 0,
-    },
-    {
-      name: "Hết hàng",
-      status: 2,
     },
   ];
 
@@ -93,7 +87,7 @@ function Product() {
       <div className=" bg-white w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center sticky top-0">
           <div className="flex items-center">
-            <InputSearch onSearchChange={(val) => setKeyword(val)} />
+            <InputSearch />
           </div>
         </div>
 
@@ -126,7 +120,7 @@ function Product() {
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
-                  onFilterChange={(val) => setStatus(val)}
+                  paramName="status"
                 />
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
@@ -223,7 +217,7 @@ function Product() {
                       ? "Hiện"
                       : product.status === 0
                       ? "Ẩn"
-                      : "Hết hàng"}
+                      : ""}
                   </td>
 
                   <td className="py-[1rem] text-[0.9rem] text-[#444]">

@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
@@ -16,7 +15,7 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 export default function useGetProductsSearch() {
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
-  const [keyword, setKeyword] = useState("");
+  const q = searchParams.get("q");
   const min = searchParams.get("min");
   const max = searchParams.get("max");
   const colors = searchParams.getAll("color");
@@ -31,7 +30,7 @@ export default function useGetProductsSearch() {
   if (colors.length > 0) {
     colors.forEach((c) => query.append("color", c));
   }
-  if (keyword) query.set("keyword", keyword);
+  if (q) query.set("q", q);
 
   const url = `/api/get-products-search?${query.toString()}`;
 
@@ -41,7 +40,6 @@ export default function useGetProductsSearch() {
     totalPages: data?.totalPages || 1,
     totalItems: data?.total || 0,
     currentPage: page,
-    setKeyword,
     isLoading,
     error,
     mutate,

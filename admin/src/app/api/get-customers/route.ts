@@ -9,13 +9,14 @@ export async function GET(req: NextRequest) {
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
     const skip = (page - 1) * limit;
-    const keyword = searchParams.get("keyword") || "";
+    const q = searchParams.get("q") || "";
     const status = searchParams.get("status") || "";
+
     const query: any = { role: { $in: [4, 5] } };
-    if (keyword) {
+    if (q) {
       query.$or = [
-        { fullname: { $regex: keyword, $options: "i" } },
-        { email: { $regex: keyword, $options: "i" } },
+        { fullname: { $regex: q, $options: "i" } },
+        { email: { $regex: q, $options: "i" } },
       ];
     }
     if (status) {

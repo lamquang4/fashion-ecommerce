@@ -3,7 +3,7 @@ import { HiMiniXMark } from "react-icons/hi2";
 import { IoIosArrowDown } from "react-icons/io";
 import { FaArrowRightLong } from "react-icons/fa6";
 import Overplay from "./Overplay";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import useGetColors from "@/hooks/useGetColors";
 import { memo } from "react";
 type AdvancedSearchProps = {
@@ -11,7 +11,6 @@ type AdvancedSearchProps = {
   toggleMenu: () => void;
 };
 function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
-  const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -50,8 +49,24 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
       colorValues.forEach((color) => params.append("color", color));
     }
 
-    router.push(`${pathname}?${params.toString()}`);
+    params.set("page", "1");
+    router.push(`?${params.toString()}`);
     toggleMenu();
+  };
+
+  const handleRemovePriceFiler = () => {
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("min");
+    params.delete("max");
+    router.push(`?${params.toString()}`);
+  };
+
+  const handleRemoveColorFilter = (color: string) => {
+    const params = new URLSearchParams(searchParams.toString());
+    const updatedColors = params.getAll("color").filter((c) => c !== color);
+    params.delete("color");
+    updatedColors.forEach((c) => params.append("color", c));
+    router.push(`?${params.toString()}`);
   };
 
   return (
@@ -81,12 +96,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
                   <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
                     <button
                       onClick={() => {
-                        const params = new URLSearchParams(
-                          searchParams.toString()
-                        );
-                        params.delete("min");
-                        params.delete("max");
-                        router.push(`${pathname}?${params.toString()}`);
+                        handleRemovePriceFiler();
                       }}
                     >
                       <HiMiniXMark size={20} color="black" />
@@ -121,19 +131,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
                     key={color}
                     className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer"
                   >
-                    <button
-                      onClick={() => {
-                        const params = new URLSearchParams(
-                          searchParams.toString()
-                        );
-                        const updatedColors = params
-                          .getAll("color")
-                          .filter((c) => c !== color);
-                        params.delete("color");
-                        updatedColors.forEach((c) => params.append("color", c));
-                        router.push(`${pathname}?${params.toString()}`);
-                      }}
-                    >
+                    <button onClick={() => handleRemoveColorFilter(color)}>
                       <HiMiniXMark size={20} color="black" />
                     </button>
                     <span className="text-[0.9rem]">{color}</span>

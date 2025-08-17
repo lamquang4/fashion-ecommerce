@@ -10,11 +10,11 @@ export async function GET(req: NextRequest) {
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
     const skip = (page - 1) * limit;
-    const keyword = searchParams.get("keyword") || "";
+    const q = searchParams.get("q") || "";
     const status = searchParams.get("status") || "";
     const query: any = {};
-    if (keyword) {
-      query.code = { $regex: keyword, $options: "i" };
+    if (q) {
+      query.code = { $regex: q, $options: "i" };
     }
     if (status) {
       query.status = parseInt(status);

@@ -13,7 +13,6 @@ function Inventory() {
     totalItems,
     currentPage,
     limit,
-    setKeyword,
     isLoading,
     totalQuantity,
   } = useGetInventories();
@@ -29,7 +28,7 @@ function Inventory() {
       <div className=" bg-white w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
-            <InputSearch onSearchChange={(val) => setKeyword(val)} />
+            <InputSearch  />
           </div>
         </div>
 

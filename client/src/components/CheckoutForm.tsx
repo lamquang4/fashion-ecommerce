@@ -97,12 +97,6 @@ function CheckoutForm() {
       return;
     }
 
-    // kiểm tra tài khoản đã có địa chỉ chưa
-    if (!addresses || !addresses.length) {
-      router.replace("/address");
-      return;
-    }
-
     const outOfStockItems = cart?.productsInCart.filter(
       (item) => item.variant.quantity > item.variant.stock
     );

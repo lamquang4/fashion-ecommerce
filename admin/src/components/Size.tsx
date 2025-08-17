@@ -19,7 +19,6 @@ function Size() {
     totalItems,
     currentPage,
     limit,
-    setKeyword,
   } = useGetSizes();
   const { deleteSize, isLoading: isLoadingDeleteSize } = useDeleteSize();
 
@@ -54,7 +53,7 @@ function Size() {
       <div className="bg-white w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
-            <InputSearch onSearchChange={(val) => setKeyword(val)} />
+            <InputSearch  />
           </div>
         </div>
 

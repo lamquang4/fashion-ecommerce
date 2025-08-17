@@ -21,8 +21,6 @@ function MainBanner() {
     totalItems,
     currentPage,
     limit,
-    setStatus,
-    setType,
   } = useGetMainBanners();
   const { deleteBanner, isLoading: isLoadingDeleteBanner } = useDeleteBanner();
   const { visibleBanner, isLoading: isLoadingVisibleBanner } =
@@ -49,11 +47,11 @@ function MainBanner() {
     },
     {
       name: "Banner chính desktop",
-      status: 1,
+      status: 0,
     },
     {
       name: "Banner chính mobile",
-      status: 0,
+      status: 1,
     },
   ];
 
@@ -111,14 +109,14 @@ function MainBanner() {
                 <FilterDropDownMenu
                   title="Loại"
                   array={array1}
-                  onFilterChange={(val) => setType(val)}
+                  paramName="type"
                 />
               </th>
               <th className="text-left text-[#444] text-[0.9rem] relative">
                 <FilterDropDownMenu
-                  onFilterChange={(val) => setStatus(val)}
                   title="Tình trạng"
                   array={array}
+                  paramName="status"
                 />
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">

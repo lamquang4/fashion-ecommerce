@@ -1,17 +1,39 @@
-import { memo } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { memo, useEffect, useState } from "react";
 
-interface Props {
-  onSearchChange: (value: string) => void;
-}
+function InputSearch() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const [search, setSearch] = useState<string>("");
 
-function InputSearch({ onSearchChange }: Props) {
+  const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const params = new URLSearchParams(searchParams.toString());
+
+    if (search.trim()) {
+      params.set("q", search.trim());
+    } else {
+      params.delete("q");
+    }
+    params.set("page", "1");
+    router.push(`?${params.toString()}`);
+  };
+
+  useEffect(() => {
+    const q = searchParams.get("q") || "";
+    setSearch(q);
+  }, [searchParams]);
+
   return (
-    <input
-      type="search"
-      placeholder="Tìm kiếm..."
-      onChange={(e) => onSearchChange(e.target.value.trim())}
-      className="p-[6px_10px] border border-[#b0b0b0] inline-block text-[#666] outline-none text-[0.9rem]"
-    />
+    <form onSubmit={handleSearch}>
+      <input
+        type="search"
+        placeholder="Tìm kiếm..."
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        className="p-[6px_10px] border border-[#b0b0b0] inline-block text-[#666] outline-none text-[0.9rem]"
+      />
+    </form>
   );
 }
 

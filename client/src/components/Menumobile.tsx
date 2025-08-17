@@ -60,6 +60,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                 <li className="my-[10px]">
                   <Link
                     href={`/collection/nam`}
+                    onClick={toggleMenu}
                     className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
                   >
                     Đồ nam
@@ -69,6 +70,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                   <li className="my-[10px]" key={category._id}>
                     <Link
                       href={`/collection/${category.slug}`}
+                      onClick={toggleMenu}
                       className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
                     >
                       {category.namecategory}
@@ -105,6 +107,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                 <li className="my-[10px]">
                   <Link
                     href={`/collection/nu`}
+                    onClick={toggleMenu}
                     className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
                   >
                     Đồ nữ
@@ -114,6 +117,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                   <li className="my-[10px]" key={category._id}>
                     <Link
                       href={`/collection/${category.slug}`}
+                      onClick={toggleMenu}
                       className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
                     >
                       {category.namecategory}
@@ -149,6 +153,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               <li className="my-[10px]">
                 <Link
                   href={"/sale/nam"}
+                  onClick={toggleMenu}
                   className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
                 >
                   Giảm giá đồ nam
@@ -158,6 +163,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               <li className="my-[10px]">
                 <Link
                   href={"/sale/nu"}
+                  onClick={toggleMenu}
                   className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
                 >
                   Giảm giá đồ nữ

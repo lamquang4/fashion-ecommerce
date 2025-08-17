@@ -1,45 +1,69 @@
 "use client";
-import React, { useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
+import React, { memo, useState } from "react";
 import { FaSortDown } from "react-icons/fa";
 type ArrayProps = {
   name: string;
   status: number | null;
+  type?: number | null;
 };
 type FilterDropDownMenuProps = {
   title: string;
   array: ArrayProps[];
-  onFilterChange: (status: string) => void;
+  paramName: string;
 };
 
 function FilterDropDownMenu({
   title,
   array,
-  onFilterChange,
+  paramName,
 }: FilterDropDownMenuProps) {
+  const router = useRouter();
+  const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);
 
+  const currentValue = searchParams.get(paramName);
+
+  const handleClick = (value: number | null) => {
+    const params = new URLSearchParams(searchParams.toString());
+    if (value !== null) {
+      params.set(paramName, value.toString());
+    } else {
+      params.delete(paramName);
+    }
+    params.set("page", "1");
+    router.push(`?${params.toString()}`);
+  };
+
   return (
-    <span
+    <div
       onMouseEnter={() => setIsOpen(true)}
       onMouseLeave={() => setIsOpen(false)}
-      className="py-[1rem] cursor-pointer flex items-center gap-[2px] relative w-full"
+      className=" cursor-pointer flex items-center gap-[2px] relative w-full"
     >
       {title} <FaSortDown size={14} />
       {isOpen && (
-        <div className="absolute bg-[#f9f9f9] z-10 top-[90%] left-0 w-full shadow-sm font-medium">
-          {array.map((item, index) => (
-            <button
-              className="text-black px-3 py-2.5 block w-full text-left"
-              onClick={() => onFilterChange(item.status?.toString() || "")}
-              key={index}
-            >
-              {item.name}
-            </button>
-          ))}
+        <div className="bg-white absolute border border-gray-300 z-10 top-full left-0 flex flex-col shadow-md font-medium">
+          {array.map((item, index) => {
+            const isActive =
+              currentValue ===
+              (item.status !== null ? item.status.toString() : null);
+            return (
+              <button
+                key={index}
+                onClick={() => handleClick(item.status)}
+                className={`w-full text-left px-3 py-2.5 ${
+                  isActive ? "bg-[#E9EDF2]" : ""
+                }`}
+              >
+                {item.name}
+              </button>
+            );
+          })}
         </div>
       )}
-    </span>
+    </div>
   );
 }
 
-export default FilterDropDownMenu;
+export default memo(FilterDropDownMenu);

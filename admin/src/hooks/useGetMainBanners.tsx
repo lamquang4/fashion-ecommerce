@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
@@ -14,19 +13,18 @@ interface ResponseType {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetMainBanners() {
-  const [type, setType] = useState("");
-  const [status, setStatus] = useState("");
-
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
+  const status = searchParams.get("status");
+  const type = searchParams.get("type");
 
-  const query = new URLSearchParams({
-    page: page.toString(),
-    limit: limit.toString(),
-    type,
-    status,
-  });
+  const query = new URLSearchParams();
+  if (page) query.set("page", page.toString());
+  if (limit) query.set("limit", limit.toString());
+  if (status) query.set("status", status.toString());
+  if (type) query.set("type", type.toString());
+
   const url = `/api/get-mainbanners?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
@@ -36,8 +34,6 @@ export default function useGetMainBanners() {
     totalItems: data?.total || 0,
     currentPage: page,
     limit,
-    setType,
-    setStatus,
     isLoading,
     error,
     mutate,

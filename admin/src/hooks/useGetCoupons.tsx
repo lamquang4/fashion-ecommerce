@@ -14,18 +14,18 @@ interface ResponseType {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetCoupons() {
-  const [keyword, setKeyword] = useState("");
-  const [status, setStatus] = useState("");
-
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
-  const query = new URLSearchParams({
-    page: page.toString(),
-    limit: limit.toString(),
-    keyword,
-    status,
-  });
+  const q = searchParams.get("q");
+  const status = searchParams.get("status");
+
+  const query = new URLSearchParams();
+  if (page) query.set("page", page.toString());
+  if (limit) query.set("limit", limit.toString());
+  if (q) query.set("q", q);
+  if (status) query.set("status", status.toString());
+
   const url = `/api/get-coupons?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
@@ -35,8 +35,6 @@ export default function useGetCoupons() {
     totalItems: data?.total || 0,
     currentPage: page,
     limit,
-    setKeyword,
-    setStatus,
     isLoading,
     error,
     mutate,

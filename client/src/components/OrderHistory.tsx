@@ -52,7 +52,6 @@ function OrderHistory() {
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const status = e.target.value;
     const params = new URLSearchParams(searchParams.toString());
-    params.set("page", "1");
 
     if (!isNaN(Number(status))) {
       params.set("status", status);
@@ -60,6 +59,7 @@ function OrderHistory() {
       params.delete("status");
     }
 
+    params.set("page", "1");
     router.push(`?${params.toString()}`);
   };
 

@@ -9,12 +9,12 @@ export async function GET(req: NextRequest) {
     const page = parseInt(searchParams.get("page") || "1");
     const limit = parseInt(searchParams.get("limit") || "10");
     const skip = (page - 1) * limit;
-    const keyword = searchParams.get("keyword") || "";
+    const q = searchParams.get("q") || "";
     const query: any = {};
-    if (keyword) {
+    if (q) {
       query.$or = [
-        { namecolor: { $regex: keyword, $options: "i" } },
-        { codecolor: { $regex: keyword, $options: "i" } },
+        { namecolor: { $regex: q, $options: "i" } },
+        { codecolor: { $regex: q, $options: "i" } },
       ];
     }
 

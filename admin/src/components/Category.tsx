@@ -21,8 +21,6 @@ function Category() {
     totalItems,
     currentPage,
     limit,
-    setKeyword,
-    setStatus,
     mutate,
     isLoading,
   } = useGetCategories();
@@ -89,7 +87,7 @@ function Category() {
       <div className=" bg-white w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
-            <InputSearch onSearchChange={(val) => setKeyword(val)} />
+            <InputSearch />
           </div>
         </div>
 
@@ -110,11 +108,11 @@ function Category() {
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
                 Ngày thêm
               </th>
-              <th className="text-left text-[#444] text-[0.9rem] relative">
+              <th className="text-left text-[#444] text-[0.9rem]">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
-                  onFilterChange={(val) => setStatus(val)}
+                  paramName="status"
                 />
               </th>
               <th className="py-[1rem] p-[1rem_0] text-left text-[#444] text-[0.9rem]">

@@ -90,7 +90,7 @@ function ProductList({ category, products, isLoading }: Props) {
     } else {
       params.delete("sort");
     }
-
+    params.set("page", "1");
     router.push(`?${params.toString()}`);
   };
 

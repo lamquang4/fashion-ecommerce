@@ -10,13 +10,11 @@ import { useChangeQuantityItemCart } from "@/hooks/useChangeQuantityItemCart";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import useGetAddresses from "@/hooks/useGetAddresses";
 
 function CartItem() {
   const router = useRouter();
 
   const { cart, mutate } = useGetCart();
-  const { addresses } = useGetAddresses();
   const { data: session } = useSession();
   const { removeItem, isLoading: isLoadingRemoveItem } = useRemoveItemCart();
   const { changeQuantity, isLoading: isLoadingChangeQuantity } =
@@ -111,12 +109,6 @@ function CartItem() {
     if (!cart?.productsInCart.length) {
       toast.error("Vui lòng thêm sản phẩm vào giỏ hàng");
       router.push(`/collection/all`);
-      return;
-    }
-
-    if (addresses.length <= 0) {
-      toast.error("Vui lòng thêm địa chỉ");
-      router.push(`/address`);
       return;
     }
 

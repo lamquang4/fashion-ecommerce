@@ -28,8 +28,6 @@ function Order() {
     totalItems,
     currentPage,
     limit,
-    setKeyword,
-    setStatus,
     totalStatus0,
     totalStatus3,
     totalStatus4,
@@ -168,7 +166,7 @@ function Order() {
       <div className=" bg-white  w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
-            <InputSearch onSearchChange={(val) => setKeyword(val)} />
+            <InputSearch />
           </div>
         </div>
 
@@ -196,7 +194,7 @@ function Order() {
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
-                  onFilterChange={(val) => setStatus(val)}
+                  paramName="status"
                 />
               </th>
               <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">

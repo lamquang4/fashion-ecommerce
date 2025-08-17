@@ -12,11 +12,12 @@ export async function GET(req: NextRequest) {
     const start = searchParams.get("start");
     const end = searchParams.get("end");
     const skip = (page - 1) * limit;
-    const keyword = searchParams.get("keyword") || "";
+    const q = searchParams.get("q") || "";
     const status = searchParams.get("status") || "";
+
     const query: any = {};
-    if (keyword) {
-      query.orderCode = { $regex: keyword, $options: "i" };
+    if (q) {
+      query.orderCode = { $regex: q, $options: "i" };
     }
     if (status) {
       query.status = parseInt(status);
