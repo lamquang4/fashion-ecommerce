@@ -21,8 +21,6 @@ export default function useGetOrders() {
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
   const limit = parseInt(searchParams.get("limit") || "10");
-  const start = searchParams.get("start") || "";
-  const end = searchParams.get("end") || "";
   const q = searchParams.get("q");
   const status = searchParams.get("status");
 

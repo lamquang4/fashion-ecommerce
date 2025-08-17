@@ -1,5 +1,4 @@
 "use client";
-import { useState } from "react";
 import { useSearchParams } from "next/navigation";
 import axios from "axios";
 import useSWR from "swr";
