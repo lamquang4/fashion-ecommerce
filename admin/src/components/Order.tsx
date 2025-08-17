@@ -47,27 +47,27 @@ function Order() {
   const array = [
     {
       name: "Tất cả",
-      status: null,
+      value: null,
     },
     {
       name: "Chờ xác nhận",
-      status: 0,
+      value: 0,
     },
     {
       name: "Xác nhận",
-      status: 1,
+      value: 1,
     },
     {
       name: "Đang giao",
-      status: 2,
+      value: 2,
     },
     {
       name: "Giao thành công",
-      status: 3,
+      value: 3,
     },
     {
       name: "Đã hủy",
-      status: 4,
+      value: 4,
     },
   ];
 

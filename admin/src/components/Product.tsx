@@ -32,15 +32,15 @@ function Product() {
   const array = [
     {
       name: "Tất cả",
-      status: null,
+      value: null,
     },
     {
       name: "Hiện",
-      status: 1,
+      value: 1,
     },
     {
       name: "Ẩn",
-      status: 0,
+      value: 0,
     },
   ];
 

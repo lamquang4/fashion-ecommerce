@@ -26,23 +26,23 @@ function Coupon() {
   const array = [
     {
       name: "Tất cả",
-      status: null,
+      value: null,
     },
     {
       name: "Chưa hiệu lực",
-      status: 0,
+      value: 0,
     },
     {
       name: "Đang hiệu lực",
-      status: 1,
+      value: 1,
     },
     {
       name: "Hết lượt dùng",
-      status: 2,
+      value: 2,
     },
     {
       name: "Hết hạn",
-      status: 3,
+      value: 3,
     },
   ];
 

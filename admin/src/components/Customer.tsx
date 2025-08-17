@@ -29,15 +29,15 @@ function Customer() {
   const array = [
     {
       name: "Tất cả",
-      status: null,
+      value: null,
     },
     {
       name: "Bình thường",
-      status: 1,
+      value: 1,
     },
     {
       name: "Đã chặn",
-      status: 0,
+      value: 0,
     },
   ];
 

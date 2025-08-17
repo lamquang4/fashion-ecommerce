@@ -32,9 +32,9 @@ function Admin() {
   const { deleteUser, isLoading: isLoadingDeleteUser } = useDeleteUser();
 
   const array = [
-    { name: "Tất cả", status: null },
-    { name: "Bình thường", status: 1 },
-    { name: "Đã chặn", status: 0 },
+    { name: "Tất cả", value: null },
+    { name: "Bình thường", value: 1 },
+    { name: "Đã chặn", value: 0 },
   ];
 
   const handleDelete = async (id: string) => {

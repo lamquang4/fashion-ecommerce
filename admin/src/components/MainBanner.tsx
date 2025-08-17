@@ -28,30 +28,30 @@ function MainBanner() {
   const array = [
     {
       name: "Tất cả",
-      status: null,
+      value: null,
     },
     {
       name: "Hiện",
-      status: 1,
+      value: 1,
     },
     {
       name: "Ẩn",
-      status: 0,
+      value: 0,
     },
   ];
 
   const array1 = [
     {
       name: "Tất cả",
-      status: null,
+      value: null,
     },
     {
       name: "Banner chính desktop",
-      status: 0,
+      value: 0,
     },
     {
       name: "Banner chính mobile",
-      status: 1,
+      value: 1,
     },
   ];
 

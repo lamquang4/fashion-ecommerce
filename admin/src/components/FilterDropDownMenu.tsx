@@ -4,8 +4,7 @@ import React, { memo, useState } from "react";
 import { FaSortDown } from "react-icons/fa";
 type ArrayProps = {
   name: string;
-  status: number | null;
-  type?: number | null;
+  value: number | null;
 };
 type FilterDropDownMenuProps = {
   title: string;
@@ -47,11 +46,11 @@ function FilterDropDownMenu({
           {array.map((item, index) => {
             const isActive =
               currentValue ===
-              (item.status !== null ? item.status.toString() : null);
+              (item.value !== null ? item.value.toString() : null);
             return (
               <button
                 key={index}
-                onClick={() => handleClick(item.status)}
+                onClick={() => handleClick(item.value)}
                 className={`w-full text-left px-3 py-2.5 ${
                   isActive ? "bg-[#E9EDF2]" : ""
                 }`}
