@@ -37,7 +37,7 @@ function Notification({ menuOpen, toggleMenu }: menuProps) {
                       đã đặt hàng, mã đơn là {order.orderCode}
                     </span>
 
-                    <small className="text-[#22BAA0] text-[0.8rem] font-medium">
+                    <p className="text-[#22BAA0] text-[0.8rem] font-medium">
                       Hôm nay{" "}
                       {new Date(order.createdAt as string).toLocaleString(
                         "vi-VN",
@@ -46,7 +46,7 @@ function Notification({ menuOpen, toggleMenu }: menuProps) {
                           minute: "2-digit",
                         }
                       )}
-                    </small>
+                    </p>
                   </div>
                 </div>
               );

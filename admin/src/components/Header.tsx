@@ -11,8 +11,8 @@ type HeaderProps = {
 };
 
 function Header({ toggleMenu }: HeaderProps) {
-  const [profileMenuOpen, setProfileMenuOpen] = useState(false);
-  const [notifiMenuOpen, setNotifiMenuOpen] = useState(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
+  const [notifiMenuOpen, setNotifiMenuOpen] = useState<boolean>(false);
   const { status } = useSession();
   const router = useRouter();
 
