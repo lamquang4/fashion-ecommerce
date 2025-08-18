@@ -30,22 +30,24 @@ function Notification({ menuOpen, toggleMenu }: menuProps) {
             orders.map((order) => {
               return (
                 <div className="px-3 py-2.5" key={order._id}>
-                  <span className="text-[0.9rem]">
-                    Khách hàng{" "}
-                    <span className="font-semibold">{order.fullname}</span> đã
-                    đặt hàng, mã đơn là {order.orderCode}
-                  </span>
+                  <div className="flex flex-col gap-1.5">
+                    <span className="text-[0.9rem]">
+                      Khách hàng{" "}
+                      <span className="font-semibold">{order.fullname}</span> đã
+                      đặt hàng, mã đơn là {order.orderCode}
+                    </span>
 
-                  <p className="text-[#22BAA0] text-[0.8rem] font-medium">
-                    Hôm nay{" "}
-                    {new Date(order.createdAt as string).toLocaleString(
-                      "vi-VN",
-                      {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      }
-                    )}
-                  </p>
+                    <p className="text-[#22BAA0] text-[0.8rem] font-medium text-right">
+                      Hôm nay{" "}
+                      {new Date(order.createdAt as string).toLocaleString(
+                        "vi-VN",
+                        {
+                          hour: "2-digit",
+                          minute: "2-digit",
+                        }
+                      )}
+                    </p>
+                  </div>
                 </div>
               );
             })
