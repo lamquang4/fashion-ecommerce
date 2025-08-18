@@ -340,13 +340,13 @@ function EditCoupon() {
           <button
             disabled={isLoadingUpdateCoupon}
             type="submit"
-            className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
+            className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center hover:bg-teal-600 rounded-sm"
           >
             {isLoadingUpdateCoupon ? "Đang cập nhật..." : "Cập nhật"}
           </button>
           <Link
             href="/coupon"
-            className="p-[6px_10px] bg-red-500 text-white text-[0.9rem] text-center rounded-sm"
+            className="p-[6px_10px] bg-red-500 text-white text-[0.9rem] text-center hover:bg-red-600 rounded-sm"
           >
             Trở về
           </Link>

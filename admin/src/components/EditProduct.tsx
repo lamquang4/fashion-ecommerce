@@ -788,7 +788,7 @@ function EditProduct() {
             <button
               disabled={isLoadingUpdateProduct}
               type="submit"
-              className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
+              className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center hover:bg-teal-600 rounded-sm"
             >
               {isLoadingUpdateProduct || isLoadingSUpdateImage
                 ? "Đang cập nhật..."
@@ -796,7 +796,7 @@ function EditProduct() {
             </button>
             <Link
               href="/product"
-              className="p-[6px_10px] bg-red-500 text-white text-[0.9rem] text-center rounded-sm"
+              className="p-[6px_10px] bg-red-500 text-white text-[0.9rem] text-center hover:bg-red-600 rounded-sm"
             >
               Trở về
             </Link>
