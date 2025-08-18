@@ -18,36 +18,34 @@ function Notification({ menuOpen, toggleMenu }: menuProps) {
       </button>
 
       <div
-        className={`absolute top-[40px] right-0 w-[200px] overflow-hidden z-20 transition-max-height duration-400 ease-in-out bg-white group-hover:max-h-[400px] shadow-md rounded-[6px] ${
+        className={`absolute top-[40px] right-0 w-[200px] overflow-hidden z-20 transition-max-height duration-400 ease-in-out bg-white group-hover:max-h-[400px] shadow-md rounded-sm ${
           menuOpen ? "max-h-[400px]" : "max-h-0"
         }`}
       >
         <div className="sticky top-0 px-3 py-3.5 border-b border-gray-300">
-          <h2 className="text-[0.9rem] font-semibold">Thông báo</h2>
+          <h2 className="text-[0.9rem] font-semibold text-center">Thông báo</h2>
         </div>
         <div className="h-full max-h-[400px] overflow-y-auto custom-scroll">
           {orders.length > 0 ? (
             orders.map((order) => {
               return (
                 <div className="px-3 py-2.5" key={order._id}>
-                  <div className="flex flex-col gap-2">
-                    <span className="text-[0.9rem]">
-                      Khách hàng{" "}
-                      <span className="font-semibold">{order.fullname}</span>
-                      đã đặt hàng, mã đơn là {order.orderCode}
-                    </span>
+                  <span className="text-[0.9rem]">
+                    Khách hàng{" "}
+                    <span className="font-semibold">{order.fullname}</span> đã
+                    đặt hàng, mã đơn là {order.orderCode}
+                  </span>
 
-                    <p className="text-[#22BAA0] text-[0.8rem] font-medium">
-                      Hôm nay{" "}
-                      {new Date(order.createdAt as string).toLocaleString(
-                        "vi-VN",
-                        {
-                          hour: "2-digit",
-                          minute: "2-digit",
-                        }
-                      )}
-                    </p>
-                  </div>
+                  <p className="text-[#22BAA0] text-[0.8rem] font-medium">
+                    Hôm nay{" "}
+                    {new Date(order.createdAt as string).toLocaleString(
+                      "vi-VN",
+                      {
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )}
+                  </p>
                 </div>
               );
             })
