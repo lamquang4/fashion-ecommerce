@@ -2,7 +2,7 @@
 import Link from "next/link";
 import InputImage from "./InputImage";
 import { GoTrash } from "react-icons/go";
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useState } from "react";
 import useAddProduct from "@/hooks/useAddProduct";
 import toast from "react-hot-toast";
 import useGetColors from "@/hooks/useGetColors";
@@ -62,15 +62,6 @@ function AddProduct() {
     setData((prev) => ({ ...prev, description: val }));
   }, []);
 
-  const previewImageHandlers = useMemo(() => {
-    return newVariants.map((_, blockIndex) => ({
-      handlePreviewImage: (e: React.ChangeEvent<HTMLInputElement>) =>
-        handleImage(e, blockIndex),
-      handleRemovePreviewImage: (index: number) =>
-        handleRemoveImage(index, blockIndex),
-    }));
-  }, [newVariants, handleImage, handleRemoveImage]);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -81,6 +72,7 @@ function AddProduct() {
     formData.append("description", data.description.trim());
     formData.append("category", data.category);
     formData.append("newInventories", JSON.stringify(newVariants));
+
     if (!newVariants) {
       toast.error(`Sản phẩm không được để trống tồn kho`);
       return;
@@ -241,6 +233,7 @@ function AddProduct() {
               <div className="flex gap-[15px] mb-[20px] justify-between items-center">
                 <button
                   type="button"
+                  disabled={newVariants.length > 5}
                   onClick={handleAddInventoryBlock}
                   className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
                 >
@@ -257,176 +250,177 @@ function AddProduct() {
               </div>
             </div>
 
-            {newVariants.map((block, index) => (
-              <div
-                className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[25px] w-full"
-                key={index}
-              >
-                <div className="flex items-center justify-between">
-                  <p className="font-bold text-[1rem] text-[#74767d]">
-                    Biến thể {index + 1}
-                  </p>
+            {newVariants.length > 0 &&
+              newVariants.map((block, index) => (
+                <div
+                  className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[25px] w-full"
+                  key={index}
+                >
+                  <div className="flex items-center justify-between">
+                    <p className="font-bold text-[1rem] text-[#74767d]">
+                      Biến thể {index + 1}
+                    </p>
 
-                  <button
-                    onClick={() => handleRemoveNewInventoryBlock(index)}
-                    className="p-1 text-[#FB2C36]"
-                    type="button"
-                  >
-                    <GoTrash size={22} />
-                  </button>
-                </div>
-
-                <div className=" bg-white rounded-md flex flex-col gap-[25px] w-full">
-                  <InputImage
-                    InputId={`img-products-${index}`}
-                    previewImages={block.previewImages}
-                    handlePreviewImage={
-                      previewImageHandlers[index].handlePreviewImage
-                    }
-                    handleRemovePreviewImage={
-                      previewImageHandlers[index].handleRemovePreviewImage
-                    }
-                  />
-                </div>
-
-                <div className="flex gap-[15px] justify-between items-center">
-                  <button
-                    type="button"
-                    onClick={() => handleAddNewInventory(index)}
-                    disabled={block.inventories.length === sizes.length}
-                    className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
-                  >
-                    Thêm số lượng
-                  </button>
-
-                  <button
-                    type="button"
-                    onClick={() => handleRemoveAllNewInventories(index)}
-                    className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_12px] items-center justify-center gap-[5px] text-white"
-                  >
-                    Xóa tất cả
-                  </button>
-                </div>
-
-                <div>
-                  <select
-                    name="color"
-                    value={block.color}
-                    onChange={(e) => {
-                      const updated = [...newVariants];
-                      updated[index].color = e.target.value;
-                      setNewVariants(updated);
-                    }}
-                    required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
-                  >
-                    <option value="">Chọn màu</option>
-                    {colors
-                      .filter((color) => {
-                        return !newVariants.some(
-                          (b, i) => i !== index && b.color === color._id
-                        );
-                      })
-                      .map((color) => (
-                        <option value={color._id} key={color._id}>
-                          {color.namecolor} ({color.codecolor})
-                        </option>
-                      ))}
-                  </select>
-                </div>
-
-                <div className="bg-white w-full overflow-auto">
-                  <table className="border-collapse w-[250%] sm:w-[130%] lg:w-full">
-                    <thead>
-                      <tr>
-                        <th className=" text-left text-[#444] text-[0.9rem] py-[1rem]">
-                          Kích thước
-                        </th>
-
-                        <th className="text-left text-[#444] text-[0.9rem] py-[1rem]">
-                          Số lượng
-                        </th>
-                        <th className="text-left text-[#444] text-[0.9rem] py-[1rem]">
-                          Hành động
-                        </th>
-                      </tr>
-                    </thead>
-
-                    <Sortable
-                      tag="tbody"
-                      list={block.inventories}
-                      setList={(newList) =>
-                        handleSortNewInventory(index, newList)
-                      }
+                    <button
+                      onClick={() => handleRemoveNewInventoryBlock(index)}
+                      className="p-1 text-[#FB2C36]"
+                      type="button"
                     >
-                      {block.inventories.map((newInventory, i) => (
-                        <tr key={i} className=" cursor-move">
-                          <td className="py-[1rem]">
-                            <select
-                              name="size"
-                              required
-                              value={newInventory.size}
-                              onChange={(e) =>
-                                handleChangeNewInventory(
-                                  index,
-                                  i,
-                                  "size",
-                                  e.target.value
-                                )
-                              }
-                              className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
-                            >
-                              <option value="">Chọn kích thước</option>
-                              {sizes
-                                .filter((size) => {
-                                  return !block.inventories.some(
-                                    (inv, j) => j !== i && inv.size === size._id
-                                  );
-                                })
-                                .map((size) => (
-                                  <option value={size._id} key={size._id}>
-                                    {size.namesize}
-                                  </option>
-                                ))}
-                            </select>
-                          </td>
+                      <GoTrash size={22} />
+                    </button>
+                  </div>
 
-                          <td className="py-[1rem]">
-                            <input
-                              type="number"
-                              required
-                              name="quantity"
-                              inputMode="numeric"
-                              value={newInventory.quantity}
-                              onChange={(e) =>
-                                handleChangeNewInventory(
-                                  index,
-                                  i,
-                                  "quantity",
-                                  e.target.value
-                                )
-                              }
-                              min={1}
-                              className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
-                            />
-                          </td>
+                  <div className=" bg-white rounded-md flex flex-col gap-[25px] w-full">
+                    <InputImage
+                      InputId={`img-products-${index}`}
+                      previewImages={block.previewImages}
+                      onPreviewImage={handleImage}
+                      onRemovePreviewImage={handleRemoveImage}
+                      blockIndex={index}
+                    />
+                  </div>
 
-                          <td className="py-[1rem]">
-                            <button
-                              type="button"
-                              onClick={() => handleRemoveNewInventory(index, i)}
-                              className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_12px] items-center justify-center gap-[5px] text-white"
-                            >
-                              Xóa
-                            </button>
-                          </td>
+                  <div className="flex gap-[15px] justify-between items-center">
+                    <button
+                      type="button"
+                      onClick={() => handleAddNewInventory(index)}
+                      disabled={block.inventories.length === sizes.length}
+                      className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
+                    >
+                      Thêm số lượng
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => handleRemoveAllNewInventories(index)}
+                      className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_12px] items-center justify-center gap-[5px] text-white"
+                    >
+                      Xóa tất cả
+                    </button>
+                  </div>
+
+                  <div>
+                    <select
+                      name="color"
+                      value={block.color}
+                      onChange={(e) => {
+                        const updated = [...newVariants];
+                        updated[index].color = e.target.value;
+                        setNewVariants(updated);
+                      }}
+                      required
+                      className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                    >
+                      <option value="">Chọn màu</option>
+                      {colors
+                        .filter((color) => {
+                          return !newVariants.some(
+                            (b, i) => i !== index && b.color === color._id
+                          );
+                        })
+                        .map((color) => (
+                          <option value={color._id} key={color._id}>
+                            {color.namecolor} ({color.codecolor})
+                          </option>
+                        ))}
+                    </select>
+                  </div>
+
+                  <div className="bg-white w-full overflow-auto">
+                    <table className="border-collapse w-[250%] sm:w-[130%] lg:w-full">
+                      <thead>
+                        <tr>
+                          <th className=" text-left text-[#444] text-[0.9rem] py-[1rem]">
+                            Kích thước
+                          </th>
+
+                          <th className="text-left text-[#444] text-[0.9rem] py-[1rem]">
+                            Số lượng
+                          </th>
+                          <th className="text-left text-[#444] text-[0.9rem] py-[1rem]">
+                            Hành động
+                          </th>
                         </tr>
-                      ))}
-                    </Sortable>
-                  </table>
+                      </thead>
+
+                      <Sortable
+                        tag="tbody"
+                        list={block.inventories}
+                        setList={(newList) =>
+                          handleSortNewInventory(index, newList)
+                        }
+                      >
+                        {block.inventories.map((newInventory, i) => (
+                          <tr key={i} className=" cursor-move">
+                            <td className="py-[1rem]">
+                              <select
+                                name="size"
+                                required
+                                value={newInventory.size}
+                                onChange={(e) =>
+                                  handleChangeNewInventory(
+                                    index,
+                                    i,
+                                    "size",
+                                    e.target.value
+                                  )
+                                }
+                                className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                              >
+                                <option value="">Chọn kích thước</option>
+                                {sizes
+                                  .filter((size) => {
+                                    return !block.inventories.some(
+                                      (inv, j) =>
+                                        j !== i && inv.size === size._id
+                                    );
+                                  })
+                                  .map((size) => (
+                                    <option value={size._id} key={size._id}>
+                                      {size.namesize}
+                                    </option>
+                                  ))}
+                              </select>
+                            </td>
+
+                            <td className="py-[1rem]">
+                              <input
+                                type="number"
+                                required
+                                name="quantity"
+                                inputMode="numeric"
+                                value={newInventory.quantity}
+                                onChange={(e) =>
+                                  handleChangeNewInventory(
+                                    index,
+                                    i,
+                                    "quantity",
+                                    e.target.value
+                                  )
+                                }
+                                min={1}
+                                className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                              />
+                            </td>
+
+                            <td className="py-[1rem]">
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  handleRemoveNewInventory(index, i)
+                                }
+                                className="bg-red-500 border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[6px_12px] items-center justify-center gap-[5px] text-white"
+                              >
+                                Xóa
+                              </button>
+                            </td>
+                          </tr>
+                        ))}
+                      </Sortable>
+                    </table>
+                  </div>
                 </div>
-              </div>
-            ))}
+              ))}
           </div>
 
           <div className="flex justify-center gap-6">

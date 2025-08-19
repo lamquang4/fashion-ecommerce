@@ -17,20 +17,21 @@ function Notification({ menuOpen, toggleMenu }: menuProps) {
         <LiaBell size={21} />
       </button>
 
-      <div
-        className={`absolute top-[40px] right-0 w-[200px] overflow-hidden z-20 transition-max-height duration-400 ease-in-out bg-white group-hover:max-h-[400px] shadow-md rounded-sm ${
-          menuOpen ? "max-h-[400px]" : "max-h-0"
-        }`}
-      >
-        <div className="sticky top-0 px-3 py-3.5 border-b border-gray-300">
-          <h2 className="text-[0.9rem] font-semibold text-center">Thông báo</h2>
-        </div>
-        <div className="h-full max-h-[400px] overflow-y-auto custom-scroll">
-          {orders.length > 0 ? (
-            orders.map((order) => {
-              return (
-                <div className="px-3 py-2.5" key={order._id}>
-                  <div className="flex flex-col gap-1.5">
+      {menuOpen && (
+        <div className="w-[200px] absolute top-full right-0 overflow-hidden z-20 duration-400 ease-in-out bg-white shadow-md rounded-md border border-gray-200  ">
+          <div className="sticky top-0 px-2 py-2.5 border-b border-gray-300">
+            <h2 className="text-[0.95rem] font-semibold text-center">
+              Thông báo
+            </h2>
+          </div>
+          <div className="h-full max-h-[400px] overflow-y-auto custom-scroll">
+            {orders.length > 0 ? (
+              orders.map((order) => {
+                return (
+                  <div
+                    className="flex flex-col gap-1.5 px-2 py-2.5"
+                    key={order._id}
+                  >
                     <span className="text-[0.9rem]">
                       Khách hàng{" "}
                       <span className="font-semibold">{order.fullname}</span> đã
@@ -48,18 +49,18 @@ function Notification({ menuOpen, toggleMenu }: menuProps) {
                       )}
                     </p>
                   </div>
-                </div>
-              );
-            })
-          ) : (
-            <div className="py-3.5 text-center">
-              <span className="font-medium text-[0.9rem] text-gray-500">
-                Không có thông báo
-              </span>
-            </div>
-          )}
+                );
+              })
+            ) : (
+              <div className="px-2 py-2.5 text-center">
+                <span className="font-medium text-[0.9rem] text-gray-500">
+                  Không có thông báo
+                </span>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

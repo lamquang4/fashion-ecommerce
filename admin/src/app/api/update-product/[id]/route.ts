@@ -66,8 +66,6 @@ export async function PUT(
       new: true,
     });
 
-    const imagePaths = [];
-
     // Thêm Inventory mới
     const newInventoryBlocks = JSON.parse(
       formData.get("newInventories") as string
@@ -98,6 +96,8 @@ export async function PUT(
 
         const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
         const maxSizeKB = 1000;
+
+        const imagePaths = [];
 
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
@@ -273,6 +273,8 @@ export async function PUT(
 
         const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
         const maxSizeKB = 1000;
+
+        const imagePaths = [];
 
         for (let i = 0; i < files.length; i++) {
           const file = files[i];

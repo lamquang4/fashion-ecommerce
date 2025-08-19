@@ -64,7 +64,7 @@ export const useNewInventory = () => {
 
   const handleAddInventoryBlock = () => {
     setNewVariants((prev) => {
-      if (prev.length >= 6) return prev;
+      if (prev.length >= 5) return prev;
       return [
         ...prev,
         {
@@ -86,26 +86,31 @@ export const useNewInventory = () => {
   };
 
   const handleAddNewInventory = (blockIndex: number) => {
-    setNewVariants((prev) => {
-      const updated = [...prev];
-      if (updated[blockIndex].inventories.length >= 6) return updated;
+    setNewVariants((prev) =>
+      prev.map((block, i) => {
+        if (i !== blockIndex) return block;
+        if (block.inventories.length >= 6) return block;
 
-      updated[blockIndex].inventories.push({
-        size: "",
-        quantity: 1,
-      });
-      return updated;
-    });
+        return {
+          ...block,
+          inventories: [...block.inventories, { size: "", quantity: 1 }],
+        };
+      })
+    );
   };
 
   const handleRemoveNewInventory = (blockIndex: number, index: number) => {
-    setNewVariants((prev) => {
-      const updated = [...prev];
-      if (updated[blockIndex].inventories.length <= 1) return updated;
+    setNewVariants((prev) =>
+      prev.map((block, i) => {
+        if (i !== blockIndex) return block;
+        if (block.inventories.length <= 1) return block;
 
-      updated[blockIndex].inventories.splice(index, 1);
-      return updated;
-    });
+        return {
+          ...block,
+          inventories: block.inventories.filter((_, j) => j !== index),
+        };
+      })
+    );
   };
 
   const handleRemoveAllNewInventories = (blockIndex: number) => {
@@ -116,16 +121,16 @@ export const useNewInventory = () => {
     });
   };
 
-  const handleSortNewInventory = useCallback(
-    (blockIndex: number, newList: { size: string; quantity: number }[]) => {
-      setNewVariants((prev) => {
-        const updated = [...prev];
-        updated[blockIndex].inventories = newList;
-        return updated;
-      });
-    },
-    []
-  );
+  const handleSortNewInventory = (
+    blockIndex: number,
+    newList: { size: string; quantity: number }[]
+  ) => {
+    setNewVariants((prev) => {
+      const updated = [...prev];
+      updated[blockIndex].inventories = newList;
+      return updated;
+    });
+  };
 
   const handleRemoveAllInventoryBlocks = () => {
     setNewVariants([]);

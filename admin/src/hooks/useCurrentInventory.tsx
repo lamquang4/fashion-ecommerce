@@ -15,16 +15,16 @@ export const useCurrentInventory = () => {
   >([]);
 
   const handleAddCurrentInventory = (blockIndex: number) => {
-    setCurrentVariants((prev) => {
-      const updated = [...prev];
-      if (updated[blockIndex].inventories.length >= 6) return updated;
+    setCurrentVariants((prev) =>
+      prev.map((block, i) => {
+        if (i !== blockIndex) return block;
 
-      updated[blockIndex].inventories.push({
-        size: "",
-        quantity: 1,
-      });
-      return updated;
-    });
+        return {
+          ...block,
+          inventories: [...block.inventories, { size: "", quantity: 1 }],
+        };
+      })
+    );
   };
 
   const handleRemoveCurrentInventory = async (
@@ -42,13 +42,17 @@ export const useCurrentInventory = () => {
 
     if (!result.isConfirmed) return;
 
-    setCurrentVariants((prev) => {
-      const updated = [...prev];
-      if (updated[blockIndex].inventories.length <= 1) return updated;
+    setCurrentVariants((prev) =>
+      prev.map((block, i) => {
+        if (i !== blockIndex) return block;
+        if (block.inventories.length <= 1) return block;
 
-      updated[blockIndex].inventories.splice(index, 1);
-      return updated;
-    });
+        return {
+          ...block,
+          inventories: block.inventories.filter((_, j) => j !== index),
+        };
+      })
+    );
   };
 
   const handleRemoveAllCurrentInventories = (blockIndex: number) => {
@@ -133,16 +137,16 @@ export const useCurrentInventory = () => {
     []
   );
 
-  const handleSortCurrentInventory = useCallback(
-    (blockIndex: number, newList: { size: string; quantity: number }[]) => {
-      setCurrentVariants((prev) => {
-        const updated = [...prev];
-        updated[blockIndex].inventories = newList;
-        return updated;
-      });
-    },
-    []
-  );
+  const handleSortCurrentInventory = (
+    blockIndex: number,
+    newList: { size: string; quantity: number }[]
+  ) => {
+    setCurrentVariants((prev) => {
+      const updated = [...prev];
+      updated[blockIndex].inventories = newList;
+      return updated;
+    });
+  };
 
   return {
     currentVariants,

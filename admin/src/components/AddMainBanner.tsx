@@ -88,8 +88,9 @@ function AddMainBanner() {
               <InputImage
                 InputId="desktop-banner"
                 previewImages={desktopPreviewImages}
-                handlePreviewImage={handleDesktopPreviewImage}
-                handleRemovePreviewImage={handleRemoveDesktopPreviewImage}
+                onPreviewImage={handleDesktopPreviewImage}
+                onRemovePreviewImage={handleRemoveDesktopPreviewImage}
+                blockIndex={0}
               />
             </div>
 
@@ -101,8 +102,9 @@ function AddMainBanner() {
               <InputImage
                 InputId="mobile-banner"
                 previewImages={mobilePreviewImages}
-                handlePreviewImage={handleMobilePreviewImage}
-                handleRemovePreviewImage={handleRemoveMobilePreviewImage}
+                onPreviewImage={handleMobilePreviewImage}
+                onRemovePreviewImage={handleRemoveMobilePreviewImage}
+                blockIndex={0}
               />
             </div>
           </div>

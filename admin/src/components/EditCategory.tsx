@@ -101,8 +101,9 @@ function EditCategory() {
               <InputImage
                 InputId="img-category"
                 previewImages={previewImages}
-                handlePreviewImage={handlePreviewImage}
-                handleRemovePreviewImage={handleRemovePreviewImage}
+                onPreviewImage={handlePreviewImage}
+                onRemovePreviewImage={handleRemovePreviewImage}
+                blockIndex={0}
               />
 
               <div className="flex gap-3 flex-wrap justify-center">

@@ -53,7 +53,7 @@ function OrderDetail() {
   ];
 
   return (
-    <section className="w-full py-[60px] px-[15px]">
+    <section className="w-full py-[60px]">
       <div className="flex justify-center flex-wrap gap-8">
         <SideBarMenu />
 

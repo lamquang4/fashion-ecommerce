@@ -5,9 +5,10 @@ import { memo } from "react";
 
 type ProfileMenuProp = {
   isOpen: boolean;
+  toggleMenu: () => void;
 };
 
-function ProfileMenu({ isOpen }: ProfileMenuProp) {
+function ProfileMenu({ isOpen, toggleMenu }: ProfileMenuProp) {
   const { data: session, status } = useSession();
 
   if (!isOpen || status === "loading") return null;
@@ -22,6 +23,7 @@ function ProfileMenu({ isOpen }: ProfileMenuProp) {
 
           <Link
             href="/account"
+            onClick={toggleMenu}
             className="hover:bg-[#F7F7F7] w-full block p-2.5 text-[0.95rem] text-black"
           >
             Thông tin tài khoản
@@ -29,6 +31,7 @@ function ProfileMenu({ isOpen }: ProfileMenuProp) {
 
           <Link
             href="/address"
+            onClick={toggleMenu}
             className="hover:bg-[#F7F7F7] w-full block p-2.5 text-[0.95rem] text-black"
           >
             Sổ địa chỉ
@@ -36,13 +39,17 @@ function ProfileMenu({ isOpen }: ProfileMenuProp) {
 
           <Link
             href="/order"
+            onClick={toggleMenu}
             className="hover:bg-[#F7F7F7] w-full block p-2.5 text-[0.95rem] text-black"
           >
             Đơn hàng
           </Link>
 
           <button
-            onClick={() => signOut()}
+            onClick={() => {
+              signOut();
+              toggleMenu;
+            }}
             className="hover:bg-[#F7F7F7] w-full block p-2.5 text-[0.95rem] text-black text-left"
           >
             Đăng xuất
@@ -52,6 +59,7 @@ function ProfileMenu({ isOpen }: ProfileMenuProp) {
         <div className="w-[120px] absolute top-[22px] right-[-40px] overflow-hidden z-20 duration-400 ease-in-out bg-white shadow-md rounded-md ">
           <Link
             href="/login"
+            onClick={toggleMenu}
             className="hover:bg-[#F7F7F7] w-full block p-2.5 text-[0.95rem] text-black"
           >
             Đăng nhập
@@ -59,6 +67,7 @@ function ProfileMenu({ isOpen }: ProfileMenuProp) {
 
           <Link
             href="/register"
+            onClick={toggleMenu}
             className="hover:bg-[#F7F7F7] w-full block p-2.5 text-[0.95rem] text-black"
           >
             Đăng kí

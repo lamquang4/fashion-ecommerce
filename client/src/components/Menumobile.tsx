@@ -1,5 +1,5 @@
 "use client";
-import React, { memo, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
@@ -20,6 +20,19 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
       [menu]: !prev[menu],
     }));
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isOpen]);
+
   return (
     <>
       <nav

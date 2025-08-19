@@ -36,6 +36,18 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
     }
   }, [search, setKeyword]);
 
+  useEffect(() => {
+    if (openSearch) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [openSearch]);
+
   return (
     <div
       className={`absolute left-0 w-full p-[10px_12px] bg-white border-y-[1.2px] border-gray-300 transition-all duration-300 overflow-hidden ${

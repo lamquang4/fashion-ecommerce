@@ -64,11 +64,11 @@ function OrderHistory() {
   };
 
   return (
-    <section className="w-full py-[60px] px-[15px]">
+    <section className="w-full py-[60px]">
       <div className="flex justify-center flex-wrap gap-8">
         <SideBarMenu />
 
-        <div className="w-full max-w-full lg:max-w-[700px]">
+        <div className="w-full max-w-full lg:max-w-[700px] px-[15px]">
           <div className="flex justify-between items-center mb-[25px]">
             <h2 className="text-[1.5rem] font-semibold">Đơn hàng</h2>
 

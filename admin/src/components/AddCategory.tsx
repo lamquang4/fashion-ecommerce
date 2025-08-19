@@ -74,8 +74,9 @@ function AddCategory() {
               <InputImage
                 InputId="img-category"
                 previewImages={previewImages}
-                handlePreviewImage={handlePreviewImage}
-                handleRemovePreviewImage={handleRemovePreviewImage}
+                onPreviewImage={handlePreviewImage}
+                onRemovePreviewImage={handleRemovePreviewImage}
+                blockIndex={0}
               />
             </div>
 

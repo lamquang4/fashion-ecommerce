@@ -6,16 +6,20 @@ import ImageViewer from "./ImageViewer";
 
 type InputImageProps = {
   InputId: string;
-  success?: boolean;
   previewImages: string[];
-  handlePreviewImage: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  handleRemovePreviewImage: (index: number) => void;
+  onPreviewImage: (
+    e: React.ChangeEvent<HTMLInputElement>,
+    blockIndex: number
+  ) => void;
+  onRemovePreviewImage: (index: number, blockIndex: number) => void;
+  blockIndex: number;
 };
 function InputImage({
   InputId,
   previewImages,
-  handlePreviewImage,
-  handleRemovePreviewImage,
+  onPreviewImage,
+  onRemovePreviewImage,
+  blockIndex,
 }: InputImageProps) {
   const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
@@ -83,7 +87,7 @@ function InputImage({
                     onClick={(e) => {
                       e.stopPropagation();
                       e.preventDefault();
-                      handleRemovePreviewImage(index);
+                      onRemovePreviewImage(index, blockIndex);
                     }}
                   >
                     <HiMiniXMark size={20} />
@@ -101,7 +105,7 @@ function InputImage({
           name="image"
           accept=".png,.jpg,.webp"
           multiple
-          onChange={handlePreviewImage}
+          onChange={(e) => onPreviewImage(e, blockIndex)}
         />
       </label>
 

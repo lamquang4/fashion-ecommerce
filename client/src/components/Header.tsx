@@ -180,7 +180,10 @@ function Header() {
                 onMouseLeave={() => setProfileMenuOpen(false)}
               >
                 <CiUser size={24} />
-                <ProfileMenu isOpen={profileMenuOpen} />
+                <ProfileMenu
+                  isOpen={profileMenuOpen}
+                  toggleMenu={toggleProfileMenu}
+                />
               </div>
 
               <Link href={"/cart"} className="relative">
@@ -225,7 +228,10 @@ function Header() {
                 onMouseOut={toggleProfileMenu}
               >
                 <CiUser size={24} />
-                <ProfileMenu isOpen={profileMenuOpen} />
+                <ProfileMenu
+                  isOpen={profileMenuOpen}
+                  toggleMenu={toggleProfileMenu}
+                />
               </div>
 
               <Link href={"/cart"} className="relative">

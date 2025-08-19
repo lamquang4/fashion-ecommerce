@@ -12,7 +12,7 @@ type HeaderProps = {
 
 function Header({ toggleMenu }: HeaderProps) {
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
-  const [notifiMenuOpen, setNotifiMenuOpen] = useState<boolean>(false);
+  const [notifyMenuOpen, setNotifyMenuOpen] = useState<boolean>(false);
   const { status } = useSession();
   const router = useRouter();
 
@@ -24,10 +24,12 @@ function Header({ toggleMenu }: HeaderProps) {
 
   const toggleProfileMenu = useCallback(() => {
     setProfileMenuOpen((prev) => !prev);
+    setNotifyMenuOpen(false);
   }, []);
 
-  const toggleNotifiMenu = useCallback(() => {
-    setNotifiMenuOpen((prev) => !prev);
+  const toggleNotifyMenu = useCallback(() => {
+    setNotifyMenuOpen((prev) => !prev);
+    setProfileMenuOpen(false);
   }, []);
   return (
     <>
@@ -42,8 +44,8 @@ function Header({ toggleMenu }: HeaderProps) {
 
           <div className="flex gap-[20px] items-center">
             <Notification
-              toggleMenu={toggleNotifiMenu}
-              menuOpen={notifiMenuOpen}
+              toggleMenu={toggleNotifyMenu}
+              menuOpen={notifyMenuOpen}
             />
 
             <ProfileMenu

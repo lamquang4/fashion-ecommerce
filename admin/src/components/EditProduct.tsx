@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import InputImage from "./InputImage";
 import Image from "./Image";
 import { VscTrash } from "react-icons/vsc";
@@ -115,24 +115,6 @@ function EditProduct() {
   const handleDescriptionChange = useCallback((val: string) => {
     setData((prev) => ({ ...prev, description: val }));
   }, []);
-
-  const newPreviewImageHandlers = useMemo(() => {
-    return newVariants.map((_, blockIndex) => ({
-      handlePreviewImage: (e: React.ChangeEvent<HTMLInputElement>) =>
-        handleImage(e, blockIndex),
-      handleRemovePreviewImage: (index: number) =>
-        handleRemoveImage(index, blockIndex),
-    }));
-  }, [newVariants, handleImage, handleRemoveImage]);
-
-  const currentPreviewImageHandlers = useMemo(() => {
-    return currentVariants.map((_, blockIndex) => ({
-      handlePreviewImage: (e: React.ChangeEvent<HTMLInputElement>) =>
-        handleImageCurrent(e, blockIndex),
-      handleRemovePreviewImage: (index: number) =>
-        handleRemoveImageCurrent(index, blockIndex),
-    }));
-  }, [currentVariants, handleImageCurrent, handleRemoveImageCurrent]);
 
   useEffect(() => {
     if (isLoading) return;
@@ -360,6 +342,7 @@ function EditProduct() {
               <div className="flex gap-[15px] mb-[20px] justify-between items-center">
                 <button
                   type="button"
+                  disabled={currentVariants.length + newVariants.length >= 5}
                   onClick={handleAddInventoryBlock}
                   className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
                 >
@@ -389,13 +372,9 @@ function EditProduct() {
                   <InputImage
                     InputId={`img-products-a${index}`}
                     previewImages={block.previewImages}
-                    handlePreviewImage={
-                      currentPreviewImageHandlers[index].handlePreviewImage
-                    }
-                    handleRemovePreviewImage={
-                      currentPreviewImageHandlers[index]
-                        .handleRemovePreviewImage
-                    }
+                    onPreviewImage={handleImageCurrent}
+                    onRemovePreviewImage={handleRemoveImageCurrent}
+                    blockIndex={index}
                   />
 
                   <div className="flex gap-3 flex-wrap justify-center">
@@ -628,12 +607,9 @@ function EditProduct() {
                     <InputImage
                       InputId={`img-products-${index}`}
                       previewImages={block.previewImages}
-                      handlePreviewImage={
-                        newPreviewImageHandlers[index].handlePreviewImage
-                      }
-                      handleRemovePreviewImage={
-                        newPreviewImageHandlers[index].handleRemovePreviewImage
-                      }
+                      onPreviewImage={handleImage}
+                      onRemovePreviewImage={handleRemoveImage}
+                      blockIndex={index}
                     />
                   </div>
 

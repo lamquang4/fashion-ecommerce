@@ -48,8 +48,6 @@ export async function POST(req: NextRequest) {
       status: 0,
     });
 
-    const imagePaths = [];
-
     const newInventoryBlocks = JSON.parse(
       formData.get("newInventories") as string
     );
@@ -78,6 +76,8 @@ export async function POST(req: NextRequest) {
 
       const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
       const maxSizeKB = 1000;
+
+      const imagePaths: string[] = [];
 
       for (let i = 0; i < files.length; i++) {
         const file = files[i];

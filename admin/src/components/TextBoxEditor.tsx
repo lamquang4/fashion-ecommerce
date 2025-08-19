@@ -28,7 +28,7 @@ type Props = {
 function TextBoxEditor({ content, onChange }: Props) {
   const editor = useEditor({
     editable: true,
-    immediatelyRender: true,
+    immediatelyRender: false,
     extensions: [
       StarterKit.configure({
         heading: false,
