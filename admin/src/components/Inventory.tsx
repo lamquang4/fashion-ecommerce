@@ -28,30 +28,30 @@ function Inventory() {
       <div className=" bg-white w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
-            <InputSearch  />
+            <InputSearch />
           </div>
         </div>
 
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
-            <tr className="bg-[#E9EDF2]">
-              <th className="pl-[1rem] py-[1rem] text-left text-[#444] text-[0.9rem]">
+            <tr className="bg-[#E9EDF2] text-left">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Sản phẩm
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Màu
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Kích thước
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Số lượng
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Ngày tạo
               </th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Hành động
               </th>
             </tr>
@@ -86,7 +86,7 @@ function Inventory() {
                       </div>
                     </td>
 
-                    <td className="py-[1rem] text-[0.9rem]  text-[#444]">
+                    <td className="p-[1rem] text-[0.9rem]  text-[#444]">
                       <div className="flex gap-[10px] items-center">
                         <div
                           className={`w-5 h-5 border-gray-500 border`}
@@ -95,20 +95,20 @@ function Inventory() {
                         {inventory.color.namecolor}
                       </div>
                     </td>
-                    <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
                       {inv.size.namesize}
                     </td>
-                    <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
                       {inv.quantity}
                     </td>
 
-                    <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
                       {new Date(
                         inventory.createdAt as string
                       ).toLocaleDateString("vi-VN")}
                     </td>
 
-                    <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
                       <div className="flex items-center gap-[15px]">
                         <Link href={`/edit-product/${inventory.product._id}`}>
                           <LiaExternalLinkAltSolid

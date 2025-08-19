@@ -172,32 +172,22 @@ function Order() {
 
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
-            <tr className="bg-[#E9EDF2]">
-              <th className="pl-[1rem] py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Mã đơn
-              </th>
+            <tr className="bg-[#E9EDF2] text-left">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Mã đơn</th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Khách hàng
-              </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Thanh toán
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Khách hàng</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Thanh toán</th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Tổng tiền
-              </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Ngày tạo
-              </th>
-              <th className=" text-left text-[#444] text-[0.9rem] relative">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Tổng tiền</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày tạo</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem] relative">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
                   paramName="status"
                 />
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Hành động
               </th>
             </tr>
@@ -215,19 +205,19 @@ function Order() {
                   <td className="p-[1rem] text-[#22BAA0] font-semibold text-[0.9rem]">
                     {order.orderCode}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {order.fullname}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {order.paymethod === 1 ? "Momo" : "COD"}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {order.total!.toLocaleString("vi-VN")}₫
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(order.createdAt).toLocaleDateString("vi-VN")}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     <select
                       disabled={isLoadingUpdateStatusOrder}
                       name="status"
@@ -268,7 +258,7 @@ function Order() {
                       )}
                     </select>
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex items-center gap-[15px]">
                       <Link href={`/order-detail/${order._id}`}>
                         <LiaExternalLinkAltSolid

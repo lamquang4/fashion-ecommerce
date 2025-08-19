@@ -49,7 +49,7 @@ function Color() {
         </Link>
       </div>
 
-      <div className=" bg-white w-full overflow-auto">
+      <div className="bg-white w-full overflow-auto">
         <div className="p-[1.2rem] flex justify-between items-center">
           <div className="flex items-center">
             <InputSearch />
@@ -58,19 +58,19 @@ function Color() {
 
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
-            <tr className="bg-[#E9EDF2]">
-              <th className="py-[1rem] pl-[1rem] text-left text-[#444] text-[0.9rem]">
+            <tr className="bg-[#E9EDF2] text-left">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Tên màu
               </th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Mã màu
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Ngày thêm
               </th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Hành động
               </th>
             </tr>
@@ -94,15 +94,15 @@ function Color() {
                       {color.namecolor}
                     </div>
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {color.codecolor}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(color.createdAt as string).toLocaleDateString(
                       "vi-VN"
                     )}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex items-center gap-[15px]">
                       <Link href={`/edit-color/${color._id}`}>
                         <LiaEdit size={22} className="text-[#076ffe]" />

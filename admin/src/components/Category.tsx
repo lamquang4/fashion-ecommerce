@@ -93,31 +93,29 @@ function Category() {
 
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
-            <tr className="bg-[#E9EDF2]">
-              <th className="py-[1rem] pl-[1rem] text-left text-[#444] text-[0.9rem]">
+            <tr className="bg-[#E9EDF2] text-left">
+              <th className="p-[1rem]  text-[#444] text-[0.9rem]">
                 Tên danh mục
               </th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Giới tính
               </th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Số lượng sản phẩm
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Ngày thêm
               </th>
-              <th className="text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
                   paramName="status"
                 />
               </th>
-              <th className="py-[1rem] p-[1rem_0] text-left text-[#444] text-[0.9rem]">
-                Hành động
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -130,7 +128,7 @@ function Category() {
             ) : categories.length > 0 ? (
               categories.map((category) => (
                 <tr key={category._id}>
-                  <td className="p-[1rem] ">
+                  <td className="p-[1rem]">
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">
                         <Image
@@ -146,28 +144,28 @@ function Category() {
                       </p>
                     </div>
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {category.gender === 1
                       ? "Nam"
                       : category.gender === 0
                       ? "Nữ"
                       : ""}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex flex-col gap-[10px]">
                       <p>Tất cả: {category.totalProduct}</p>
                       <p>Đang hoạt động: {category.totalProductActive}</p>
                     </div>
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(category.createdAt as string).toLocaleDateString(
                       "vi-VN"
                     )}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {category.status === 1 ? "Hiện" : "Ẩn"}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex items-center gap-[15px]">
                       <button
                         disabled={isLoadingVisibleCategory}

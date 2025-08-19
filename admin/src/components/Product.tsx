@@ -93,37 +93,25 @@ function Product() {
 
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
-            <tr className="bg-[#E9EDF2]">
-              <th className="pl-[1rem] py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Sản phẩm
-              </th>
+            <tr className="bg-[#E9EDF2] text-left">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Sản phẩm</th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Giá
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Giá</th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Số lượng
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Số lượng</th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Màu sắc
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Màu sắc</th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Ngày thêm
-              </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Danh mục
-              </th>
-              <th className=" text-left text-[#444] text-[0.9rem] relative">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày thêm</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Danh mục</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem] relative">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
                   paramName="status"
                 />
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Hành động
               </th>
             </tr>
@@ -155,7 +143,7 @@ function Product() {
                     </div>
                   </td>
 
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex flex-col">
                       <span
                         className={` ${
@@ -177,14 +165,14 @@ function Product() {
                     </div>
                   </td>
 
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex flex-col gap-1.5">
                       <p>Tồn kho: {product.totalQuantity}</p>
                       <p>Đã bán: {product.totalSold}</p>
                     </div>
                   </td>
 
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex gap-1.5">
                       {product.variants.map((variant, index) => (
                         <div
@@ -199,11 +187,11 @@ function Product() {
                     </div>
                   </td>
 
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(product.createdAt).toLocaleDateString("vi-VN")}
                   </td>
 
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {product.category.namecategory}/
                     {product.category.gender === 1
                       ? "Nam"
@@ -212,7 +200,7 @@ function Product() {
                       : ""}
                   </td>
 
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {product.status === 1
                       ? "Hiện"
                       : product.status === 0
@@ -220,7 +208,7 @@ function Product() {
                       : ""}
                   </td>
 
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex items-center gap-[15px]">
                       <button
                         disabled={isLoadingVisibleProduct}

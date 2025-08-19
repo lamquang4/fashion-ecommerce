@@ -82,26 +82,24 @@ function Coupon() {
 
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
-            <tr className="bg-[#E9EDF2]">
-              <th className="py-[1rem] pl-[1rem] text-left text-[#444] text-[0.9rem]">
+            <tr className="bg-[#E9EDF2] text-left">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Mã giảm giá
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Điều kiện sử dụng
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Giảm giá
               </th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Số lượng
               </th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Thời gian
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Thời gian</th>
 
-              <th className="text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
@@ -109,7 +107,7 @@ function Coupon() {
                 />
               </th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Hành động
               </th>
             </tr>
@@ -127,7 +125,7 @@ function Coupon() {
                   <td className="p-[1rem] text-[0.9rem] text-[#22BAA0] font-semibold uppercase">
                     {coupon.code}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {coupon.minOrderValue
                       ? `Đơn hàng phải từ ${coupon.minOrderValue.toLocaleString(
                           "vi-VN"
@@ -139,7 +137,7 @@ function Coupon() {
                         "vi-VN"
                       )}₫`}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {coupon.discountType === 1
                       ? `${coupon.discountValue.toLocaleString("vi-VN")}₫`
                       : coupon.discountType === 0
@@ -147,11 +145,11 @@ function Coupon() {
                       : ""}
                   </td>
 
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     Tối đa: {coupon.amount}
                   </td>
 
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(coupon.startDate).toLocaleDateString("vi-VN")}{" "}
                     {new Date(coupon.startDate).toLocaleTimeString("vi-VN", {
                       hour: "2-digit",
@@ -166,7 +164,7 @@ function Coupon() {
                       minute: "2-digit",
                     })}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {coupon.status === 0
                       ? "Chưa hiệu lực"
                       : coupon.status === 1
@@ -175,7 +173,7 @@ function Coupon() {
                       ? "Hết lượt dùng"
                       : "Hết hạn"}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex items-center gap-[15px]">
                       <Link href={`/edit-coupon/${coupon._id}`}>
                         <LiaEdit size={22} className="text-[#076ffe]" />

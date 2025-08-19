@@ -95,34 +95,22 @@ function Admin() {
 
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
-            <tr className="bg-[#E9EDF2]">
-              <th className="py-[1rem] pl-[1rem] text-left text-[#444] text-[0.9rem]">
-                Họ tên
-              </th>
+            <tr className="bg-[#E9EDF2] text-left">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Họ tên</th>
 
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Email
-              </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                SĐT
-              </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Sinh nhật
-              </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Ngày tạo
-              </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                Vai trò
-              </th>
-              <th className="text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Email</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">SĐT</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Sinh nhật</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày tạo</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Vai trò</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
                   paramName="status"
                 />
               </th>
-              <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Hành động
               </th>
             </tr>
@@ -140,23 +128,23 @@ function Admin() {
                   <td className="p-[1rem] text-[0.9rem] font-semibold text-[#22BAA0]">
                     {admin.fullname}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {admin.email}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {admin.phone}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(admin.birthday as string).toLocaleDateString(
                       "vi-VN"
                     )}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {new Date(admin.createdAt as string).toLocaleDateString(
                       "vi-VN"
                     )}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {admin.role === 0
                       ? "Quản trị viên"
                       : admin.role === 1
@@ -165,10 +153,10 @@ function Admin() {
                       ? "Nhân viên nội dung"
                       : ""}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     {admin.status === 1 ? "Bình thường" : "Đã chặn"}
                   </td>
-                  <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
                     <div className="flex items-center gap-[15px]">
                       <button
                         disabled={isLoadingBlockUser}
