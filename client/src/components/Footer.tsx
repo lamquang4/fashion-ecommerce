@@ -8,7 +8,7 @@ function Footer() {
   return (
     <footer className="bg-gray-50 border-t border-gray-200">
       <div className="mx-auto w-full max-w-screen-xl">
-        <div className="grid grid-cols-2 gap-8 px-[10px] sm:px-[15px] md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] sm:py-[80px] py-[70px]">
+        <div className="grid grid-cols-2 gap-8 px-[10px] sm:px-[15px] md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] py-[40px]">
           <div>
             <Link href={"/"}>
               <Image
@@ -120,8 +120,8 @@ function Footer() {
         </div>
 
         <div className="text-center py-[15px] mx-auto">
-          <p className="text-[hsl(0,0%,47%)] text-[0.9375rem] font-medium capitalize">
-            © 2025 Aura
+          <p className="text-black text-[0.9rem] font-medium capitalize">
+            Bản quyền 2025 © Aura. Giữ toàn bộ quyền.
           </p>
         </div>
       </div>

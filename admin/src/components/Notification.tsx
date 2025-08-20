@@ -18,7 +18,7 @@ function Notification({ menuOpen, toggleMenu }: menuProps) {
       </button>
 
       {menuOpen && (
-        <div className="w-[200px] absolute top-full right-0 overflow-hidden z-20 duration-400 ease-in-out bg-white shadow-md rounded-md border border-gray-200  ">
+        <div className="w-[200px] absolute top-full right-[-40px] overflow-hidden z-20 duration-400 ease-in-out bg-white shadow-md rounded-md border border-gray-200  ">
           <div className="sticky top-0 px-2 py-2.5 border-b border-gray-300">
             <h2 className="text-[0.95rem] font-semibold text-center">
               Thông báo

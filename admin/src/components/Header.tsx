@@ -53,7 +53,7 @@ function Header({ toggleMenu }: HeaderProps) {
             <AiOutlineMenu size={20} />
           </button>
 
-          <div className="flex gap-[20px] items-center">
+          <div className="flex gap-[15px] sm:gap-[20px] items-center">
             <button
               onClick={handleFullscreen}
               className="w-9 h-9 rounded-lg border border-gray-200 text-gray-500 justify-center items-center flex relative"
