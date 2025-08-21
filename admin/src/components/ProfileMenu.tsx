@@ -23,8 +23,8 @@ function ProfileMenu({ menuOpen, toggleMenu }: menuProps) {
           onMouseOver={toggleMenu}
           onMouseOut={toggleMenu}
         >
-          <div className="flex cursor-pointer items-center gap-[6px]">
-            <div className="w-[30px] rounded-full border border-gray-30 p-1">
+          <div className="flex cursor-pointer items-center gap-[6px] text-[0.9rem]">
+            <div className="w-[30px] rounded-full border border-gray-300 p-1">
               <Image
                 Src={"/assets/other/owner.png"}
                 Alt={""}
@@ -32,8 +32,7 @@ function ProfileMenu({ menuOpen, toggleMenu }: menuProps) {
                 loadingType="eager"
               />
             </div>
-
-            {session?.user.fullname || ""}
+            <p>{session?.user.fullname || ""}</p>
           </div>
 
           {menuOpen && (

@@ -13,8 +13,11 @@ function Notification({ menuOpen, toggleMenu }: menuProps) {
       onMouseOver={toggleMenu}
       onMouseOut={toggleMenu}
     >
-      <button className="w-9 h-9 rounded-lg border border-gray-200 text-gray-500 justify-center items-center flex relative">
-        <LiaBell size={21} />
+      <button className="w-8.5 h-8.5 rounded-lg border border-gray-200 text-gray-500 justify-center items-center flex relative">
+        <LiaBell size={20} />
+        <span className="absolute top-0 right-0 z-1 h-2.5 w-2.5 rounded-full bg-[#DC3545] inline">
+          {orders.length}
+        </span>
       </button>
 
       {menuOpen && (

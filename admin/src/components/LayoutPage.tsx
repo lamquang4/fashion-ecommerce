@@ -30,7 +30,7 @@ function LayoutPage({ children }: LayoutProps) {
   return (
     <div className="flex h-screen w-full overflow-scroll">
       <MenuSide menuOpen={menuOpen} toggleMenu={toggleMenu} />
-      <main className="w-full">
+      <main className="w-full overflow-y-auto">
         <Header toggleMenu={toggleMenu} />
         {children}
       </main>
