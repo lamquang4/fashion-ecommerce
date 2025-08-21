@@ -59,20 +59,12 @@ function Color() {
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
             <tr className="bg-[#E9EDF2] text-left">
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Tên màu
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Tên màu</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Mã màu
-              </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Ngày thêm
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Mã màu</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày thêm</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Hành động
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -84,7 +76,7 @@ function Color() {
               </tr>
             ) : colors.length > 0 ? (
               colors.map((color) => (
-                <tr key={color._id}>
+                <tr key={color._id} className="hover:bg-[#f2f3f8]">
                   <td className="p-[1rem] text-[0.9rem] font-semibold">
                     <div className="flex gap-[10px] items-center">
                       <div

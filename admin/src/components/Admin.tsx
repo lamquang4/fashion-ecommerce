@@ -110,9 +110,7 @@ function Admin() {
                   paramName="status"
                 />
               </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Hành động
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -124,7 +122,7 @@ function Admin() {
               </tr>
             ) : admins.length > 0 ? (
               admins.map((admin) => (
-                <tr key={admin._id}>
+                <tr key={admin._id} className="hover:bg-[#f2f3f8]">
                   <td className="p-[1rem] text-[0.9rem] font-semibold text-[#22BAA0]">
                     {admin.fullname}
                   </td>

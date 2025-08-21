@@ -24,9 +24,9 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
         }`}
       >
         <div className="sticky top-0 overflow-hidden bg-white z-[25] py-[15px] flex justify-between items-center border-b border-gray-300">
-          <h1 className="text-[1.4rem] font-semibold">Mã giảm giá</h1>
+          <h2 className="text-[1.2rem] font-semibold">Mã giảm giá</h2>
           <button onClick={toggleMenu}>
-            <HiMiniXMark size={32} color="black" />
+            <HiMiniXMark size={22} color="black" />
           </button>
         </div>
 

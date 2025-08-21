@@ -35,25 +35,13 @@ function Inventory() {
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
           <thead>
             <tr className="bg-[#E9EDF2] text-left">
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Sản phẩm
-              </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Màu
-              </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Kích thước
-              </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Số lượng
-              </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Ngày tạo
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Sản phẩm</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Màu</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Kích thước</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Số lượng</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày tạo</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Hành động
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -68,6 +56,7 @@ function Inventory() {
                 inventory.inventories.map((inv) => (
                   <tr
                     key={`${inventory._id}-${inventory.color._id}-${inv.size._id}`}
+                    className="hover:bg-[#f2f3f8]"
                   >
                     <td className="p-[1rem]">
                       <div className="flex gap-[10px] items-center">

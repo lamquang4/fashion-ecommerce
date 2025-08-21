@@ -98,16 +98,12 @@ function Category() {
                 Tên danh mục
               </th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Giới tính
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Giới tính</th>
 
               <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Số lượng sản phẩm
               </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Ngày thêm
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày thêm</th>
               <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 <FilterDropDownMenu
                   title="Tình trạng"
@@ -127,7 +123,7 @@ function Category() {
               </tr>
             ) : categories.length > 0 ? (
               categories.map((category) => (
-                <tr key={category._id}>
+                <tr key={category._id} className="hover:bg-[#f2f3f8]">
                   <td className="p-[1rem]">
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">

@@ -104,9 +104,7 @@ function Customer() {
                   paramName="status"
                 />
               </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Hành động
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -118,7 +116,7 @@ function Customer() {
               </tr>
             ) : customers.length > 0 ? (
               customers.map((customer) => (
-                <tr key={customer._id}>
+                <tr key={customer._id} className="hover:bg-[#f2f3f8]">
                   <td className="p-[1rem] text-[0.9rem] text-[#22BAA0] font-semibold">
                     {customer.fullname}
                   </td>

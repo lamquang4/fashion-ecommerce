@@ -41,8 +41,8 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
         }`}
       >
         <div className="flex justify-end items-center">
-          <button onClick={toggleMenu} className="flex">
-            <HiMiniXMark size={30} color="black" />
+          <button onClick={toggleMenu}>
+            <HiMiniXMark size={22} color="black" />
           </button>
         </div>
 

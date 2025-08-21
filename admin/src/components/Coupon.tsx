@@ -89,13 +89,9 @@ function Coupon() {
               <th className="p-[1rem] text-[#444] text-[0.9rem]">
                 Điều kiện sử dụng
               </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Giảm giá
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Giảm giá</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Số lượng
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Số lượng</th>
 
               <th className="p-[1rem] text-[#444] text-[0.9rem]">Thời gian</th>
 
@@ -107,9 +103,7 @@ function Coupon() {
                 />
               </th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Hành động
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -121,7 +115,7 @@ function Coupon() {
               </tr>
             ) : coupons.length > 0 ? (
               coupons.map((coupon) => (
-                <tr key={coupon._id}>
+                <tr key={coupon._id} className="hover:bg-[#f2f3f8]">
                   <td className="p-[1rem] text-[0.9rem] text-[#22BAA0] font-semibold uppercase">
                     {coupon.code}
                   </td>

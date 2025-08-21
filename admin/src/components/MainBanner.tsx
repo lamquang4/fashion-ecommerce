@@ -115,9 +115,7 @@ function MainBanner() {
                   paramName="status"
                 />
               </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Hành động
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -129,7 +127,7 @@ function MainBanner() {
               </tr>
             ) : mainbanners.length > 0 ? (
               mainbanners.map((mainbanner) => (
-                <tr key={mainbanner._id}>
+                <tr key={mainbanner._id} className="hover:bg-[#f2f3f8]">
                   <td className="p-[1rem]">
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">

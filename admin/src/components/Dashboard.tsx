@@ -245,7 +245,7 @@ function Dashboard() {
                 </tr>
               ) : topProducts.length > 0 ? (
                 topProducts.map((product) => (
-                  <tr key={product._id}>
+                  <tr key={product._id} className="hover:bg-[#f2f3f8]">
                     <td className="pl-[1rem] py-[1rem] w-[300px]">
                       <div className="flex gap-[10px] items-center">
                         <div className="cursor-pointer">

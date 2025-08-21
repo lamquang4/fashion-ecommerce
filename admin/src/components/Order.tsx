@@ -187,9 +187,7 @@ function Order() {
                   paramName="status"
                 />
               </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Hành động
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -201,7 +199,7 @@ function Order() {
               </tr>
             ) : orders.length > 0 ? (
               orders.map((order) => (
-                <tr key={order._id}>
+                <tr key={order._id} className="hover:bg-[#f2f3f8]">
                   <td className="p-[1rem] text-[#22BAA0] font-semibold text-[0.9rem]">
                     {order.orderCode}
                   </td>

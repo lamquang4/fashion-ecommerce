@@ -61,12 +61,8 @@ function Size() {
           <thead>
             <tr className="bg-[#E9EDF2] text-left">
               <th className="p-[1rem] text-[#444] text-[0.9rem]">Kích thước</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Ngày tạo
-              </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Hành động
-              </th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày tạo</th>
+              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -78,7 +74,7 @@ function Size() {
               </tr>
             ) : sizes.length > 0 ? (
               sizes.map((size) => (
-                <tr key={size._id}>
+                <tr key={size._id} className="hover:bg-[#f2f3f8]">
                   <td className="p-[1rem] text-[0.9rem] font-semibold">
                     {size.namesize}
                   </td>
