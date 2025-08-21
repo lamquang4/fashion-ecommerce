@@ -45,10 +45,10 @@ function Header({ toggleMenu }: HeaderProps) {
   return (
     <>
       <header className="sticky top-0 z-20 flex w-full bg-white border-b-gray-200 items-center border-b">
-        <div className="w-full flex justify-between items-center sm:px-[20px] py-3 px-[15px]">
+        <div className="w-full flex justify-between items-center sm:px-[20px] py-3.5 px-[15px]">
           <button
             onClick={toggleMenu}
-            className="w-9 h-9 rounded-lg border border-gray-200 text-gray-500 justify-center items-center flex"
+            className="w-8.5 h-8.5 rounded-lg border border-gray-200 text-gray-500 justify-center items-center flex"
           >
             <AiOutlineMenu size={20} />
           </button>

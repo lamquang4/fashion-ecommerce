@@ -15,7 +15,7 @@ function Notification({ menuOpen, toggleMenu }: menuProps) {
     >
       <button className="w-8.5 h-8.5 rounded-lg border border-gray-200 text-gray-500 justify-center items-center flex relative">
         <LiaBell size={20} />
-        <p className="absolute top-[-9px] right-[-11px] z-1 h-5 w-5 rounded-full bg-[#0AB39C] flex items-center justify-center text-white text-[0.7rem]">
+        <p className="absolute top-[-9px] right-[-9px] z-1 h-5 w-5 rounded-full bg-[#0AB39C] flex items-center justify-center text-white text-[0.7rem]">
           {orders.length}
         </p>
       </button>
