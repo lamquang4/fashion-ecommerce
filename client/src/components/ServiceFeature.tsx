@@ -23,7 +23,7 @@ function ServiceFeature() {
     },
   ];
   return (
-    <section className="px-[10px] mb-[40px] sm:mb-[45px] sm:px-[15px]">
+    <section className="px-[10px] mb-[40px] sm:px-[15px]">
       <div className="w-full m-[0_auto] md:max-w-[1000px] lg:max-w-[1240px]">
         <div className="gap-y-[25px] gap-[5px] grid grid-cols-2 lg:grid-cols-4 lg:gap-[15px]">
           {services.map((service, index) => (

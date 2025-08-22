@@ -16,7 +16,7 @@ function WishlistItem() {
     mutate();
   };
   return (
-    <section className="max-w-[1230px] mx-auto my-[40px] sm:my-[45px]">
+    <section className="max-w-[1230px] mx-auto my-[40px]">
       <div className="px-[10px] sm:px-[15px]">
         <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[35px]">
           Yêu thích ({wishlist?.productsInWishlist.length})

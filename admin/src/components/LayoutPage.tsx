@@ -10,7 +10,7 @@ type LayoutProps = {
 function LayoutPage({ children }: LayoutProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    setMenuOpen((prev) => !prev);
   };
 
   useEffect(() => {

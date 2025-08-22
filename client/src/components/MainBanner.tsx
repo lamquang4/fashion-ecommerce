@@ -14,7 +14,7 @@ function MainBanner() {
   return (
     <>
       {(banners1.length > 0 || banners2.length > 0) && (
-        <section className="w-full mb-[40px] sm:mb-[45px]">
+        <section className="w-full mb-[40px]">
           <Swiper
             modules={[Autoplay, Pagination]}
             pagination={{ clickable: true, type: "bullets" }}

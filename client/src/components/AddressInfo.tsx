@@ -52,7 +52,7 @@ function AddressInfo() {
   };
 
   return (
-    <section className="w-full py-[60px]">
+    <section className="w-full my-[40px]">
       <div className="flex justify-center flex-wrap gap-8">
         <SideBarMenu />
 

@@ -6,7 +6,7 @@ type TitleProp = {
 function DifferentLR({ title }: TitleProp) {
   return (
     <>
-      <div className="flex items-center m-[30px_0]">
+      <div className="flex items-center mt-[30px]">
         <div className="flex-grow bg-[#e5e5e5] border-t border-t-[#e5e5e5] h-[0.5px]"></div>
         <div className="px-[0.6rem] text-[0.9rem]">Hoặc {title}</div>
         <div className="flex-grow bg-[#e5e5e5] border-t border-t-[#e5e5e5] h-[0.5px]"></div>

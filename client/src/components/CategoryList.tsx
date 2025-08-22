@@ -14,7 +14,7 @@ function CategoryList() {
 
   const categories = selectedGender === 1 ? categoriesMale : categoriesFemale;
   return (
-    <section className="px-[10px] sm:px-[15px] mb-[40px] sm:mb-[45px]">
+    <section className="px-[10px] sm:px-[15px] mb-[40px]">
       <div className="w-full m-[0_auto] md:max-w-[1000px] lg:max-w-[1240px]">
         <div className="flex justify-center mb-5">
           {[1, 0].map((gender) => (

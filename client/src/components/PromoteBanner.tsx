@@ -10,7 +10,7 @@ function PromoteBanner({ gender }: PromoteBannerProp) {
   return (
     <>
       {promotebanners.length > 0 && (
-        <section className="px-[10px] mb-[40px] sm:mb-[45px] sm:px-[15px]">
+        <section className="px-[10px] mb-[40px] sm:px-[15px]">
           <div className="w-full mx-auto md:max-w-[1000px] lg:max-w-[1240px]">
             <div className="flex flex-col gap-[20px] sm:gap-[30px]">
               {gender === 1 ? (

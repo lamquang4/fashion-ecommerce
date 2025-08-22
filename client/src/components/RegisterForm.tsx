@@ -61,7 +61,7 @@ function RegisterForm() {
     }
   };
   return (
-    <section className="my-[40px] sm:my-[45px] px-[10px] sm:px-[15px]">
+    <section className="my-[40px] px-[10px] sm:px-[15px]">
       <div className="flex flex-col items-center justify-center">
         <div className="w-full bg-white md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
