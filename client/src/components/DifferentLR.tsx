@@ -6,17 +6,14 @@ type TitleProp = {
 function DifferentLR({ title }: TitleProp) {
   return (
     <>
-      <div className="flex items-center mt-[30px]">
-        <div className="flex-grow bg-[#e5e5e5] border-t border-t-[#e5e5e5] h-[0.5px]"></div>
-        <div className="px-[0.6rem] text-[0.9rem]">Hoặc {title}</div>
-        <div className="flex-grow bg-[#e5e5e5] border-t border-t-[#e5e5e5] h-[0.5px]"></div>
+      <div className="flex items-center">
+        <div className="flex-grow bg-gray-300 h-[1px]"></div>
+        <div className="px-[10px] text-[0.9rem] font-light">Or {title}</div>
+        <div className="flex-grow bg-gray-300 h-[1px]"></div>
       </div>
 
-      <div className="flex justify-center">
-        <button
-          type="button"
-          className="px-[12px] py-[7px] border border-[rgba(0,0,0,0.26)]"
-        >
+      <div className="flex justify-center gap-[15px]">
+        <button className="px-[12px] py-[7px] border border-[rgba(0,0,0,0.26)]">
           <div className="text-[0.9rem] flex items-center gap-[10px] font-medium">
             <Image
               Src={"/assets/other/google.png"}
@@ -24,7 +21,19 @@ function DifferentLR({ title }: TitleProp) {
               ClassName={"w-[25px]"}
               loadingType="eager"
             />
-            <div>Google</div>
+            <p>Google</p>
+          </div>
+        </button>
+
+        <button className="px-[12px] py-[7px] border border-[rgba(0,0,0,0.26)]">
+          <div className="text-[0.9rem] flex items-center gap-[10px] font-medium">
+            <Image
+              Src={"/assets/other/google.png"}
+              Alt={""}
+              ClassName={"w-[25px]"}
+              loadingType="eager"
+            />
+            <p>Google</p>
           </div>
         </button>
       </div>

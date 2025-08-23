@@ -14,15 +14,15 @@ function StaticCards({ array }: StaticCardsProp) {
       {array.map((item, index) => (
         <div
           key={index}
-          className="relative break-words rounded-lg border border-gray-200 dark:border-dark-600 h-[18vh] flex items-center justify-between px-4 bg-white"
+          className="relative break-words rounded-lg border border-gray-200 h-[18vh] flex items-center justify-between px-4 bg-white"
         >
-          <div>
-            <p>{item.title}</p>
-            <p className="mt-0.5 text-xl font-medium">{item.number}</p>
+          <div className="space-y-2.5">
+            <h5 className="font-medium">{item.title}</h5>
+            <h4 className="text-[#0AB39C]">{item.number}</h4>
           </div>
 
-          <div className="relative inline-flex shrink-0">
-            <div className="h-full w-full">{item.icon1}</div>
+          <div className="w-12 h-12 rounded-full bg-[#DAF4F0] flex items-center justify-center">
+            {item.icon1}
           </div>
         </div>
       ))}

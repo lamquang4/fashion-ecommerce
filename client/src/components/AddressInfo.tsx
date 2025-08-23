@@ -57,10 +57,9 @@ function AddressInfo() {
         <SideBarMenu />
 
         <div className="w-full max-w-full lg:max-w-[700px] px-[15px]">
-          <h2 className="text-[1.5rem] capitalize font-semibold mb-[15px]">
-            Địa chỉ
-          </h2>
-          <div className="mb-[30px]">
+          <div className="space-y-[20px]">
+            <h2 className="capitalize">Địa chỉ</h2>
+
             <button
               onClick={toggleAddressModal}
               type="button"
@@ -68,83 +67,78 @@ function AddressInfo() {
             >
               Thêm địa chỉ
             </button>
-          </div>
 
-          <div>
-            {isLoading ? (
-              <Loading height={70} size={50} color="black" thickness={3} />
-            ) : addresses.length > 0 ? (
-              addresses.map((address) => (
-                <div key={address._id}>
-                  <hr className="border-gray-300 my-[20px]" />
-                  <div className="flex justify-between flex-wrap gap-y-[8px]">
-                    <div className="flex flex-col gap-[8px] max-w-[360px]">
-                      <div className="flex gap-[8px] items-center">
-                        <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
-                          Họ và tên:
-                          <p className="font-normal text-black">
-                            {address.fullname}
+            <div>
+              {isLoading ? (
+                <Loading height={70} size={50} color="black" thickness={3} />
+              ) : addresses.length > 0 ? (
+                addresses.map((address) => (
+                  <div key={address._id}>
+                    <hr className="border-gray-300 my-[20px]" />
+                    <div className="flex justify-between flex-wrap gap-y-[8px]">
+                      <div className="flex flex-col gap-[8px] max-w-[360px]">
+                        <div className="flex gap-[8px] items-center">
+                          <span className="flex gap-[5px] items-center text-[#6c757d]">
+                            Họ và tên:
+                            <span className="font-medium text-black">
+                              {address.fullname}
+                            </span>
+                          </span>
+                        </div>
+
+                        <span className="flex gap-[5px] items-center text-[#6c757d]">
+                          Số điện thoại:
+                          <span className="font-medium text-black">
+                            {address.phone}
+                          </span>
+                        </span>
+
+                        <span className="flex gap-[5px] items-center text-[#6c757d]">
+                          Địa chỉ:
+                          <p className="font-medium text-black">
+                            {address.speaddress}, {address.city}, {address.ward}
                           </p>
                         </span>
                       </div>
 
-                      <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
-                        Số điện thoại:
-                        <p className="font-normal text-black">
-                          {address.phone}
-                        </p>
-                      </span>
-                      <span className="text-[0.9rem] flex gap-[5px] items-center text-[#6c757d]">
-                        Địa chỉ:
-                        <p className="font-normal text-black">
-                          {address.speaddress}, {address.city}, {address.ward}
-                        </p>
-                      </span>
-                    </div>
-
-                    <div className="flex gap-[25px] items-center">
-                      <button
-                        className="border-0 p-1 outline-0 text-[0.9rem] text-blue-500 font-medium"
-                        type="button"
-                        onClick={() => {
-                          toggleAddressModal();
-                          setAddressId(address._id || "");
-                        }}
-                      >
-                        Chỉnh sửa
-                      </button>
-                      <button
-                        className="border-0 p-1 outline-0 text-[0.9rem] text-red-500 font-medium"
-                        type="button"
-                        disabled={isLoadingDeleteAddress}
-                        onClick={() => handleDelete(address._id || "")}
-                      >
-                        Xóa
-                      </button>
+                      <div className="flex gap-[25px] items-center">
+                        <button
+                          className="border-0 p-1 outline-0 text-[0.9rem] text-blue-500 font-medium"
+                          type="button"
+                          onClick={() => {
+                            toggleAddressModal();
+                            setAddressId(address._id || "");
+                          }}
+                        >
+                          Chỉnh sửa
+                        </button>
+                        <button
+                          className="border-0 p-1 outline-0 text-[0.9rem] text-red-500 font-medium"
+                          type="button"
+                          disabled={isLoadingDeleteAddress}
+                          onClick={() => handleDelete(address._id || "")}
+                        >
+                          Xóa
+                        </button>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))
-            ) : (
-              <div className="flex justify-center items-center h-[70vh]">
-                <div>
-                  <div className="mb-[15px] flex justify-center">
+                ))
+              ) : (
+                <div className="flex justify-center items-center h-[70vh]">
+                  <div className="flex flex-col justify-center items-center gap-[15px]">
                     <Image
                       Src={"/assets/other/address.png"}
                       Alt={""}
                       ClassName={"w-[80px]"}
                       loadingType="eager"
                     />
-                  </div>
 
-                  <div className="flex justify-center flex-col gap-3 items-center text-center">
-                    <h2 className="text-[1.1rem] font-medium">
-                      Không có địa chỉ nào
-                    </h2>
+                    <h4 className="text-gray-600">Không có địa chỉ nào</h4>
                   </div>
                 </div>
-              </div>
-            )}
+              )}
+            </div>
           </div>
         </div>
       </div>

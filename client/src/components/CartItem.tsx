@@ -141,41 +141,39 @@ function CartItem() {
                   <React.Fragment
                     key={`${item._id}-${item.variant._id}-${item.variant.color._id}-${item.variant.size._id}`}
                   >
-                    <div className="flex w-full gap-4.5 relative">
-                      <div className="flex gap-4.5 w-full">
+                    <div className="flex w-full gap-4 relative">
+                      <div className="flex gap-4 w-full">
                         <Link href={`/product/${item.slug}`}>
                           <div className="w-full max-w-[250px] shrink-0">
                             <Image
                               Src={item.variant.images[0]}
                               Alt={item.name}
-                              ClassName={"w-full h-full object-cover"}
+                              ClassName={"w-full"}
                               loadingType="eager"
                             />
                           </div>
                         </Link>
 
-                        <div className="flex flex-col gap-4.5 w-full">
-                          <div className="flex justify-between gap-4.5">
+                        <div className="flex flex-col gap-4 w-full">
+                          <div className="flex justify-between gap-4">
                             <div className="flex flex-col gap-2">
-                              <h2 className="text-[0.9rem] sm:text-[1.1rem] font-semibold text-black">
-                                {item.name}
-                              </h2>
-                              <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black">
-                                Màu sắc: {item.variant.color.namecolor}
+                              <h5 className="text-black">{item.name}</h5>
+                              <p className="font-medium text-black">
+                                Màu: {item.variant.color.namecolor}
                               </p>
-                              <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black">
+                              <p className="font-medium text-black">
                                 Kích thước: {item.variant.size.namesize}
                               </p>
                               {item.discount > 0 ? (
-                                <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-[#c00]">
-                                  Giá giảm còn:{" "}
+                                <p className="font-medium text-[#c00]">
+                                  Giá giảm:{" "}
                                   {(item.price - item.discount).toLocaleString(
                                     "vi-VN"
                                   )}
                                   ₫
                                 </p>
                               ) : (
-                                <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black">
+                                <p className="font-medium text-black">
                                   Giá: {item.price.toLocaleString("vi-VN")}₫
                                 </p>
                               )}
@@ -210,7 +208,7 @@ function CartItem() {
                             </button>
                           </div>
 
-                          <div className="flex-wrap justify-between flex items-center gap-4.5 mt-auto">
+                          <div className="flex-wrap justify-between flex items-center gap-4 mt-auto">
                             <div className="flex items-center gap-1">
                               <button
                                 type="button"
@@ -231,9 +229,9 @@ function CartItem() {
                               >
                                 <HiOutlineMinusSmall size={20} />
                               </button>
-                              <span className="flex items-center justify-center  font-normal w-7 h-7 text-[1.1rem] leading-[18px]">
+                              <h5 className="flex items-center justify-center w-7 h-7">
                                 {item.variant.quantity}
-                              </span>
+                              </h5>
                               <button
                                 type="button"
                                 name="button-1"
@@ -258,7 +256,7 @@ function CartItem() {
                               </button>
                             </div>
 
-                            <h3 className="text-[1rem] font-medium text-black ">
+                            <h5 className="text-black font-medium">
                               Tổng:{" "}
                               {item.discount > 0
                                 ? (
@@ -268,7 +266,7 @@ function CartItem() {
                                 : (
                                     item.price * item.variant.quantity
                                   ).toLocaleString("vi-VN") + "₫"}
-                            </h3>
+                            </h5>
                           </div>
                         </div>
                       </div>
@@ -276,7 +274,7 @@ function CartItem() {
 
                     {item.variant.stock < item.variant.quantity && (
                       <div className="my-1">
-                        <p className="text-[0.95rem] text-red-500 font-semibold text-center">
+                        <p className="text-red-500 font-semibold text-center">
                           Sản phẩm hiện tại không đủ số lượng. Vui lòng giảm số
                           lượng hoặc xóa sản phẩm khỏi giỏ hàng
                         </p>
@@ -291,14 +289,10 @@ function CartItem() {
               </div>
 
               <div className="bg-[#F7F7F7] rounded-sm px-4 py-6 h-auto basis-[30%]">
-                <ul className="text-slate-900 font-medium space-y-4">
-                  <li className="flex flex-wrap gap-4 text-[1.1rem] font-semibold uppercase">
-                    Tổng cộng{" "}
-                    <span className="ml-auto">
-                      {totalPrice.toLocaleString("vi-VN")}₫
-                    </span>
-                  </li>
-                </ul>
+                <div className="uppercase flex justify-between items-center font-semibold">
+                  <h5>Tổng cộng</h5>
+                  <h5>{totalPrice.toLocaleString("vi-VN")}₫</h5>
+                </div>
 
                 <hr className="border-gray-300 my-[20px]" />
 
@@ -321,29 +315,23 @@ function CartItem() {
             </div>
           </form>
         ) : (
-          <div className="flex justify-center items-center h-[60vh]">
-            <div>
-              <div className="mb-[15px] flex justify-center">
-                <Image
-                  Src={"/assets/other/empty-cart.png"}
-                  Alt={""}
-                  ClassName={"w-[150px]"}
-                  loadingType="eager"
-                />
-              </div>
+          <div className="flex justify-center items-center h-[70vh]">
+            <div className="flex flex-col justify-center items-center gap-[15px]">
+              <Image
+                Src={"/assets/other/empty-cart.png"}
+                Alt={""}
+                ClassName={"w-[150px]"}
+                loadingType="eager"
+              />
 
-              <div className="flex justify-center flex-col gap-3 items-center text-center">
-                <h2 className="text-[1.2rem] font-semibold">
-                  Không có gì trong giỏ hết
-                </h2>
+              <h4 className="text-gray-600">Không có gì trong giỏ hết</h4>
 
-                <Link
-                  href={"/collection/all"}
-                  className="text-[0.95rem] border border-black rounded-md font-medium px-3 py-2 hover:bg-black hover:text-white"
-                >
-                  Mua sắm ngay
-                </Link>
-              </div>
+              <Link
+                href={"/collection/all"}
+                className="text-[0.9rem] border border-black rounded-md font-medium px-3 py-2 hover:bg-black hover:text-white"
+              >
+                Mua sắm ngay
+              </Link>
             </div>
           </div>
         )}

@@ -37,9 +37,9 @@ function ProfileMenu({ menuOpen, toggleMenu }: menuProps) {
 
           {menuOpen && (
             <div className="w-[185px] absolute top-full right-0 overflow-hidden z-20 duration-400 ease-in-out bg-white shadow-md rounded-md border border-gray-200 ">
-              <h2 className="cursor-pointer border-b px-3 py-3.5 border-gray-300 text-[0.95rem] max-w-[210px] overflow-hidden text-ellipsis whitespace-nowrap text-center">
+              <p className="border-b p-2.5 border-gray-300 max-w-[210px] overflow-hidden text-ellipsis whitespace-nowrap text-center">
                 Xin chào, {session?.user?.fullname}
-              </h2>
+              </p>
 
               <Link
                 onClick={toggleMenu}
@@ -48,12 +48,12 @@ function ProfileMenu({ menuOpen, toggleMenu }: menuProps) {
               >
                 <div className="flex items-center gap-[8px] text-[#878a99]">
                   <FaRegCircleUser size={18} />
-                  <p className="text-[0.9rem]">Tài khoản</p>
+                  <p>Tài khoản</p>
                 </div>
               </Link>
 
               <button
-                className="w-full block hover:bg-[#F8F9FA] px-3 py-3.5"
+                className="w-ful block hover:bg-[#F8F9FA] px-3 py-3.5"
                 onClick={() => {
                   signOut();
                   toggleMenu;
@@ -61,7 +61,7 @@ function ProfileMenu({ menuOpen, toggleMenu }: menuProps) {
               >
                 <div className="flex items-center gap-[8px] text-[#EF5F5F]">
                   <RiLogoutBoxLine size={18} />
-                  <p className="text-[0.9rem]">Đăng xuất</p>
+                  <p>Đăng xuất</p>
                 </div>
               </button>
             </div>

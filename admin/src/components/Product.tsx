@@ -72,9 +72,9 @@ function Product() {
   return (
     <>
       <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
+        <h2 className="mb-[20px] text-[#74767d] capitalize">
           Sản phẩm ({totalItems})
-        </h1>
+        </h2>
 
         <Link
           href={"/add-product"}
@@ -85,10 +85,8 @@ function Product() {
       </div>
 
       <div className=" bg-white w-full overflow-auto">
-        <div className="p-[1.2rem] flex justify-between items-center sticky top-0">
-          <div className="flex items-center">
-            <InputSearch />
-          </div>
+        <div className="p-[1.2rem]">
+          <InputSearch />
         </div>
 
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
@@ -142,25 +140,24 @@ function Product() {
                   </td>
 
                   <td className="p-[1rem] text-[0.9rem] text-[#444]">
-                    <div className="flex flex-col">
-                      <span
-                        className={` ${
-                          product.discount > 0
-                            ? "line-through text-gray-400"
-                            : "text-black"
-                        } `}
-                      >
-                        {product.price?.toLocaleString("vi-VN")}₫
-                      </span>
-                      {product.discount > 0 && (
-                        <span className="text-black font-semibold">
+                    {product.discount > 0 ? (
+                      <div className="flex gap-[12px] text-black">
+                        <del className="text-[#707072] text-[1rem]">
+                          {product.price.toLocaleString("vi-VN")}₫
+                        </del>
+
+                        <p className="font-medium text-[#c00]">
                           {(product.price - product.discount).toLocaleString(
                             "vi-VN"
                           )}
                           ₫
-                        </span>
-                      )}
-                    </div>
+                        </p>
+                      </div>
+                    ) : (
+                      <p className="font-medium">
+                        {product.price.toLocaleString("vi-VN")}₫
+                      </p>
+                    )}
                   </td>
 
                   <td className="p-[1rem] text-[0.9rem] text-[#444]">
@@ -242,7 +239,7 @@ function Product() {
             ) : (
               <tr>
                 <td colSpan={8} className="w-full h-[70vh]">
-                  <div className="flex flex-col justify-center items-center">
+                  <div className="flex justify-center items-center">
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}

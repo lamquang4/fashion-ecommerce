@@ -15,8 +15,8 @@ function CategoryList() {
   const categories = selectedGender === 1 ? categoriesMale : categoriesFemale;
   return (
     <section className="px-[10px] sm:px-[15px] mb-[40px]">
-      <div className="w-full m-[0_auto] md:max-w-[1000px] lg:max-w-[1240px]">
-        <div className="flex justify-center mb-5">
+      <div className="w-full mx-auto md:max-w-[1000px] lg:max-w-[1240px]">
+        <div className="flex justify-center mb-[20px]">
           {[1, 0].map((gender) => (
             <button
               key={gender}
@@ -46,23 +46,25 @@ function CategoryList() {
           {categories.map((category) => (
             <SwiperSlide
               key={category._id}
-              className="!flex !flex-col !items-center !w-[90px] sm:!w-[110px]"
+              className="!flex !flex-col !items-center !w-auto"
             >
-              <Link href={`/collection/${category.slug}`}>
-                <div className="mb-[8px]">
+              <Link
+                href={`/collection/${category.slug}`}
+                className="space-y-[8px]"
+              >
+                <div className="w-[100px] sm:w-[120px] border-gray-300 border">
                   <Image
                     Src={category.image}
                     Alt={category.namecategory}
-                    ClassName="block w-[90px] sm:w-[110px] object-cover"
+                    ClassName="w-full"
                     loadingType="lazy"
                   />
                 </div>
-                <div className="w-full">
-                  <div className="flex justify-center items-center">
-                    <h3 className="text-[0.85rem] uppercase font-medium">
-                      {category.namecategory} ({category.productCount})
-                    </h3>
-                  </div>
+                <div className="text-center">
+                  <h5 className="font-medium">{category.namecategory} </h5>
+                  <p className="font-normal">
+                    ({category.productCount} sản phẩm)
+                  </p>
                 </div>
               </Link>
             </SwiperSlide>

@@ -61,15 +61,15 @@ function RegisterForm() {
     }
   };
   return (
-    <section className="my-[40px] px-[10px] sm:px-[15px]">
-      <div className="flex flex-col items-center justify-center">
+    <section className="my-[60px] px-[10px] sm:px-[15px]">
+      <div className="flex items-center justify-center">
         <div className="w-full bg-white md:mt-0 sm:max-w-md xl:p-0">
           <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
-            <h2 className="text-[1.5rem] sm:text-[1.7rem] uppercase font-[550] mb-[20px] text-center text-black">
+            <h2 className="uppercase mb-[20px] text-center text-black">
               Đăng kí
             </h2>
-            <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-              <div className="mb-[15px]">
+            <form className="space-y-[15px]" onSubmit={handleSubmit}>
+              <div>
                 <label
                   htmlFor=""
                   className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
@@ -86,7 +86,8 @@ function RegisterForm() {
                   required
                 />
               </div>
-              <div className="mb-[15px]">
+
+              <div>
                 <label
                   htmlFor=""
                   className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
@@ -103,7 +104,8 @@ function RegisterForm() {
                   required
                 />
               </div>
-              <div className="mb-[15px]">
+
+              <div>
                 <label
                   htmlFor=""
                   className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
@@ -121,7 +123,8 @@ function RegisterForm() {
                   required
                 />
               </div>
-              <div className="mb-[15px]">
+
+              <div>
                 <label
                   htmlFor=""
                   className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
@@ -138,7 +141,8 @@ function RegisterForm() {
                   required
                 />
               </div>
-              <div className="mb-[15px]">
+
+              <div>
                 <label
                   htmlFor=""
                   className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
@@ -158,11 +162,12 @@ function RegisterForm() {
 
               <button
                 type="submit"
-                className="w-full bg-black text-white bg-primary-600 hover:bg-primary-700 focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-sm text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+                className="w-full bg-black text-white focus:outline-none font-medium rounded-sm text-[0.9rem] px-5 py-2.5 text-center"
               >
                 Đăng kí
               </button>
-              <p className="flex gap-1.5 justify-center font-light text-[0.9rem]">
+
+              <p className="flex gap-1.5 justify-center font-medium">
                 Bạn đã có tài khoản?
                 <Link href="/login" className="text-blue-400 font-medium">
                   Đăng nhập

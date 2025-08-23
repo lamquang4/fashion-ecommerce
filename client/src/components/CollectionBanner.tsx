@@ -10,9 +10,7 @@ function CollectionBanner() {
       {collections.length > 0 && (
         <section className="px-[10px] sm:px-[15px] mb-[40px]">
           <div className="w-full mx-auto md:max-w-[1000px] lg:max-w-[1240px]">
-            <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
-              Bộ sưu tập
-            </h2>
+            <h2 className="mb-[20px] font-semibold capitalize">Bộ sưu tập</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-[20px]">
               <div className="relative">
                 <Image
@@ -22,9 +20,9 @@ function CollectionBanner() {
                   loadingType="lazy"
                 />
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
-                  <h2 className="text-[2rem] mb-[10px] font-bold">NAM</h2>
+                  <h2 className="mb-[10px]">NAM</h2>
                   <Link
-                    className="text-[0.95rem] border border-white p-2 font-medium hover:scale-105"
+                    className="text-[0.9rem] border border-white p-2 font-medium hover:scale-105"
                     href={"/collection/nam"}
                   >
                     KHÁM PHÁ NGAY
@@ -39,9 +37,9 @@ function CollectionBanner() {
                   loadingType="lazy"
                 />
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
-                  <h2 className="text-[2rem] mb-[10px] font-bold">NỮ</h2>
+                  <h2 className="mb-[10px]">NỮ</h2>
                   <Link
-                    className="text-[0.95rem] border border-white p-2 font-medium hover:scale-105"
+                    className="text-[0.9rem] border border-white p-2 font-medium hover:scale-105"
                     href={"/collection/nu"}
                   >
                     KHÁM PHÁ NGAY

@@ -133,9 +133,8 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
         <div className="relative w-full max-w-lg max-h-full">
           <div className="relative p-[25px_15px] bg-white z-20">
             <div className="flex items-center justify-between">
-              <h2 className="text-[1.2rem] font-semibold text-gray-900  uppercase">
-                Địa chỉ của bạn
-              </h2>
+              <h4 className="text-black  uppercase">Địa chỉ của bạn</h4>
+
               <button
                 type="button"
                 className="text-gray-600 bg-transparent hover:text-black ms-auto"
@@ -145,7 +144,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
               </button>
             </div>
 
-            <hr className=" border-slate-300 my-[15px]" />
+            <hr className=" border-gray-300 my-[15px]" />
 
             <form onSubmit={handleSubmit}>
               <div className="grid gap-4 mb-[20px] grid-cols-2">

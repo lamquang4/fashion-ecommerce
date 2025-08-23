@@ -129,15 +129,11 @@ function AddProduct() {
     <>
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
         <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
-          <h1 className="font-bold text-[1.5rem] text-[#74767d]">
-            Thêm sản phẩm
-          </h1>
+          <h2 className="text-[#74767d] capitalize">Thêm sản phẩm</h2>
 
           <div className="flex gap-[25px] w-full flex-col">
             <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-              <p className="font-bold text-[1rem] text-[#74767d] mb-[10px]">
-                Thông tin chung
-              </p>
+              <h5 className="font-bold text-[#74767d]">Thông tin chung</h5>
 
               <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
                 <div className="flex flex-col gap-1 w-full">
@@ -188,9 +184,7 @@ function AddProduct() {
             </div>
 
             <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-              <p className="font-bold text-[1rem] text-[#74767d] mb-[10px]">
-                Giá cả
-              </p>
+              <h5 className="font-bold text-[#74767d]">Giá cả</h5>
 
               <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
                 <div className="flex flex-col gap-1 w-full">
@@ -227,10 +221,8 @@ function AddProduct() {
             </div>
 
             <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-              <p className="font-bold text-[1rem] text-[#74767d] mb-[10px]">
-                Tồn kho
-              </p>
-              <div className="flex gap-[15px] mb-[20px] justify-between items-center">
+              <h5 className="font-bold text-[#74767d]">Tồn kho</h5>
+              <div className="flex gap-[15px] justify-between items-center">
                 <button
                   type="button"
                   disabled={newVariants.length > 5}
@@ -256,10 +248,10 @@ function AddProduct() {
                   className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[25px] w-full"
                   key={index}
                 >
-                  <div className="flex items-center justify-between">
-                    <p className="font-bold text-[1rem] text-[#74767d]">
+                  <div className="flex gap-[15px] items-center justify-between">
+                    <h5 className="font-bold text-[#74767d]">
                       Biến thể {index + 1}
-                    </p>
+                    </h5>
 
                     <button
                       onClick={() => handleRemoveNewInventoryBlock(index)}
@@ -270,7 +262,7 @@ function AddProduct() {
                     </button>
                   </div>
 
-                  <div className=" bg-white rounded-md flex flex-col gap-[25px] w-full">
+                  <div className="bg-white rounded-md w-full">
                     <InputImage
                       InputId={`img-products-${index}`}
                       previewImages={block.previewImages}
@@ -327,17 +319,17 @@ function AddProduct() {
                   </div>
 
                   <div className="bg-white w-full overflow-auto">
-                    <table className="border-collapse w-[250%] sm:w-[130%] lg:w-full">
+                    <table className="border-collapse w-[180%] sm:w-[120%] lg:w-full">
                       <thead>
-                        <tr>
-                          <th className=" text-left text-[#444] text-[0.9rem] py-[1rem]">
+                        <tr className="text-left">
+                          <th className="text-[#444] text-[0.9rem] py-[1rem]">
                             Kích thước
                           </th>
 
-                          <th className="text-left text-[#444] text-[0.9rem] py-[1rem]">
+                          <th className="text-[#444] text-[0.9rem] py-[1rem]">
                             Số lượng
                           </th>
-                          <th className="text-left text-[#444] text-[0.9rem] py-[1rem]">
+                          <th className="text-[#444] text-[0.9rem] py-[1rem]">
                             Hành động
                           </th>
                         </tr>
@@ -351,7 +343,7 @@ function AddProduct() {
                         }
                       >
                         {block.inventories.map((newInventory, i) => (
-                          <tr key={i} className=" cursor-move">
+                          <tr key={i} className="cursor-move">
                             <td className="py-[1rem]">
                               <select
                                 name="size"

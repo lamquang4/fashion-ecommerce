@@ -292,123 +292,40 @@ function CheckoutForm() {
             />
           </Link>
 
-          <hr className="border-slate-300 my-[15px]" />
+          <hr className="border-gray-300 my-[15px]" />
 
           <form onSubmit={handleSubmit}>
-            <div className="grid lg:grid-cols-2 gap-[50px]">
-              <div className=" bg-gray-50 order-last lg:order-first">
-                <p className="text-xl font-medium mb-[15px]">
-                  Thông tin giao hàng
-                </p>
+            <div className="grid lg:grid-cols-2 gap-[40px]">
+              <div className="order-last lg:order-first">
+                <h4 className="mb-[15px]">Thông tin giao hàng</h4>
 
-                <div className="">
-                  <div className="mb-[15px]">
-                    <label
-                      htmlFor=""
-                      className="mt-4 mb-2 block text-[0.9rem] font-medium"
-                    >
-                      Địa chỉ lưu trữ
-                    </label>
-                    <select
-                      onChange={(e) => {
-                        const value = e.target.value;
-                        if (value === "") {
-                          handleGetAddress(null);
-                        } else {
-                          const selected = addresses.find(
-                            (addr) => addr._id === value
-                          );
-                          if (selected) handleGetAddress(selected);
-                        }
-                      }}
-                      className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                    >
-                      <option value="">Chọn địa chỉ lưu trữ</option>
-                      {addresses.map((address, index) => (
-                        <option value={address._id} key={index}>
-                          {address.speaddress}, {address.city}, {address.ward}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor=""
-                      className="mb-2 block text-[0.9rem] font-medium"
-                    >
-                      Họ và tên
-                    </label>
-                    <input
-                      type="text"
-                      name="fullname"
-                      value={data.fullname}
-                      onChange={handleChange}
-                      required
-                      className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                      placeholder="Họ và tên"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor=""
-                      className="mt-4 mb-2 block text-[0.9rem] font-medium"
-                    >
-                      Số điện thoại
-                    </label>
-                    <input
-                      type="number"
-                      inputMode="numeric"
-                      name="phone"
-                      value={data.phone}
-                      onChange={handleChange}
-                      required
-                      className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                      placeholder="Số điện thoại"
-                    />
-                  </div>
-
-                  <div>
-                    <label
-                      htmlFor=""
-                      className="mt-4 mb-2 block text-[0.9rem] font-medium"
-                    >
-                      Địa chỉ cụ thể
-                    </label>
-                    <input
-                      type="text"
-                      name="speaddress"
-                      value={data.speaddress}
-                      onChange={handleChange}
-                      required
-                      className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
-                      placeholder="Địa chỉ cụ thể"
-                    />
-                  </div>
-
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px]">
+                <div className="space-y-[15px]">
+                  <div className="space-y-[15px]">
                     <div>
                       <label
                         htmlFor=""
                         className="mt-4 mb-2 block text-[0.9rem] font-medium"
                       >
-                        Tỉnh/thành phố
+                        Địa chỉ lưu trữ
                       </label>
                       <select
-                        name="city"
-                        required
-                        value={selectedProvinceName}
                         onChange={(e) => {
-                          setSelectedProvinceName(e.target.value);
-                          setSelectedWard("");
+                          const value = e.target.value;
+                          if (value === "") {
+                            handleGetAddress(null);
+                          } else {
+                            const selected = addresses.find(
+                              (addr) => addr._id === value
+                            );
+                            if (selected) handleGetAddress(selected);
+                          }
                         }}
                         className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
                       >
-                        <option value="">Chọn tỉnh/thành phố</option>
-                        {provinces?.map((province) => (
-                          <option key={province.id} value={province.province}>
-                            {province.province}
+                        <option value="">Chọn địa chỉ lưu trữ</option>
+                        {addresses.map((address, index) => (
+                          <option value={address._id} key={index}>
+                            {address.speaddress}, {address.city}, {address.ward}
                           </option>
                         ))}
                       </select>
@@ -417,33 +334,114 @@ function CheckoutForm() {
                     <div>
                       <label
                         htmlFor=""
+                        className="mb-2 block text-[0.9rem] font-medium"
+                      >
+                        Họ và tên
+                      </label>
+                      <input
+                        type="text"
+                        name="fullname"
+                        value={data.fullname}
+                        onChange={handleChange}
+                        required
+                        className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Họ và tên"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor=""
                         className="mt-4 mb-2 block text-[0.9rem] font-medium"
                       >
-                        Phường/xã
+                        Số điện thoại
                       </label>
-                      <select
-                        name="ward"
+                      <input
+                        type="number"
+                        inputMode="numeric"
+                        name="phone"
+                        value={data.phone}
+                        onChange={handleChange}
                         required
-                        disabled={!selectedProvince}
-                        value={selectedWard}
-                        onChange={(e) => setSelectedWard(e.target.value)}
-                        className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 text-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                        className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Số điện thoại"
+                      />
+                    </div>
+
+                    <div>
+                      <label
+                        htmlFor=""
+                        className="mt-4 mb-2 block text-[0.9rem] font-medium"
                       >
-                        <option value="">Chọn phường/xã</option>
-                        {selectedProvince?.wards.map((ward, idx) => (
-                          <option key={idx} value={ward.name}>
-                            {ward.name}
-                          </option>
-                        ))}
-                      </select>
+                        Địa chỉ cụ thể
+                      </label>
+                      <input
+                        type="text"
+                        name="speaddress"
+                        value={data.speaddress}
+                        onChange={handleChange}
+                        required
+                        className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                        placeholder="Địa chỉ cụ thể"
+                      />
+                    </div>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px]">
+                      <div>
+                        <label
+                          htmlFor=""
+                          className="mt-4 mb-2 block text-[0.9rem] font-medium"
+                        >
+                          Tỉnh/thành phố
+                        </label>
+                        <select
+                          name="city"
+                          required
+                          value={selectedProvinceName}
+                          onChange={(e) => {
+                            setSelectedProvinceName(e.target.value);
+                            setSelectedWard("");
+                          }}
+                          className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                        >
+                          <option value="">Chọn tỉnh/thành phố</option>
+                          {provinces?.map((province) => (
+                            <option key={province.id} value={province.province}>
+                              {province.province}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
+
+                      <div>
+                        <label
+                          htmlFor=""
+                          className="mt-4 mb-2 block text-[0.9rem] font-medium"
+                        >
+                          Phường/xã
+                        </label>
+                        <select
+                          name="ward"
+                          required
+                          disabled={!selectedProvince}
+                          value={selectedWard}
+                          onChange={(e) => setSelectedWard(e.target.value)}
+                          className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 text-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+                        >
+                          <option value="">Chọn phường/xã</option>
+                          {selectedProvince?.wards.map((ward, idx) => (
+                            <option key={idx} value={ward.name}>
+                              {ward.name}
+                            </option>
+                          ))}
+                        </select>
+                      </div>
                     </div>
                   </div>
 
                   <div>
-                    <p className="mt-8 text-lg font-medium">
-                      Phương thức thanh toán
-                    </p>
-                    <div className="mt-5 grid gap-6">
+                    <h4 className="mb-[15px]">Phương thức thanh toán</h4>
+                    <div className="grid gap-6">
                       <div className="relative">
                         <input
                           className="peer hidden"
@@ -464,11 +462,9 @@ function CheckoutForm() {
                             loadingType="eager"
                             Alt=""
                           />
-                          <div>
-                            <span className="font-medium text-[0.9rem]">
-                              Thanh toán khi giao hàng (COD)
-                            </span>
-                          </div>
+                          <span className="font-medium">
+                            Thanh toán khi giao hàng (COD)
+                          </span>
                         </label>
                       </div>
                       <div className="relative">
@@ -491,11 +487,7 @@ function CheckoutForm() {
                             loadingType="eager"
                             Alt=""
                           />
-                          <div>
-                            <span className="font-medium text-[0.9rem]">
-                              Thanh toán Momo
-                            </span>
-                          </div>
+                          <span className="font-medium">Thanh toán Momo</span>
                         </label>
                       </div>
                     </div>
@@ -521,8 +513,8 @@ function CheckoutForm() {
 
               <div className="order-first lg:order-last">
                 <div>
-                  <p className="text-xl font-medium  mb-[15px]">Đơn hàng</p>
-                  <div className="space-y-5.5 bg-white">
+                  <h4 className="mb-[15px]">Đơn hàng</h4>
+                  <div className="space-y-5 bg-white">
                     {cart?.productsInCart.map((item, index) => (
                       <div
                         className="flex rounded-lg bg-white gap-[15px]"
@@ -536,46 +528,43 @@ function CheckoutForm() {
                             loadingType="eager"
                           />
 
-                          <span className="absolute flex items-center justify-center    top-[-9px] right-[-11px]    bg-[#197FB6] text-white text-[0.85rem] font-medium leading-none    rounded-full w-[25px] h-[25px]">
+                          <small className="text-[0.8rem] absolute flex items-center justify-center top-[-7px] right-[-9px] bg-[#197FB6] text-white font-medium leading-none rounded-full w-[25px] h-[25px]">
                             {item.variant.quantity}
-                          </span>
+                          </small>
                         </div>
 
                         <div className="flex w-full flex-col my-auto gap-[5px]">
-                          <span className="font-semibold text-[0.9rem]">
-                            {item.name}
-                          </span>
-                          <span className="float-right text-[0.9rem] text-gray-500">
+                          <span className="font-semibold">{item.name}</span>
+                          <span className="text-black">
                             {item.variant.size.namesize} /{" "}
                             {item.variant.color.namecolor}
                           </span>
-                          {item.discount > 0 && (
-                            <del className="text-[#707072]">
-                              {item.price.toLocaleString("vi-VN")}₫
-                            </del>
+                          {item.discount > 0 ? (
+                            <div className="flex items-center gap-[8px]">
+                              <del className="text-[#707072]">
+                                {item.price.toLocaleString("vi-VN")}₫
+                              </del>
+                              <p className="font-medium text-[#c00]">
+                                {(item.price - item.discount).toLocaleString(
+                                  "vi-VN"
+                                )}
+                                ₫
+                              </p>
+                            </div>
+                          ) : (
+                            <p className="font-medium">{item.price}</p>
                           )}
-                          <p className="font-medium text-[#c00]">
-                            {(
-                              item.price - item.discount || item.price
-                            ).toLocaleString("vi-VN")}
-                            ₫
-                          </p>
                         </div>
                       </div>
                     ))}
                   </div>
                 </div>
 
-                <hr className="border-slate-300 my-[20px]" />
+                <hr className="border-gray-300 my-[15px]" />
 
-                <div>
-                  <div className="flex justify-between items-center mb-[5px]">
-                    <label
-                      htmlFor="discount"
-                      className="block text-[1rem] font-semibold"
-                    >
-                      Mã giảm giá
-                    </label>
+                <div className="space-y-[15px]">
+                  <div className="flex justify-between flex-wrap gap-[15px] items-center mb-[15px]">
+                    <h4>Phiếu giảm giá</h4>
 
                     <button
                       type="button"
@@ -620,10 +609,10 @@ function CheckoutForm() {
                       <div className="absolute right-[-6px] top-[61%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
                       <div className="absolute right-[-6px] top-[83.4%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
 
-                      <div className="border border-[#197FB6] text-[#197FB6] px-[26px] relative w-full">
+                      <div className="border border-[#197FB6] text-[#197FB6] px-[25px] relative w-full">
                         <div className="flex items-center border-l border-r px-3 py-4 border-[#197FB6] w-full bg-white">
                           <div className="flex gap-2 flex-col w-full">
-                            <h2 className="text-[1.3rem] font-semibold uppercase">
+                            <h3 className="uppercase">
                               {coupon.discountType === 1
                                 ? `Giảm ${coupon.discountValue.toLocaleString(
                                     "vi-VN"
@@ -631,9 +620,9 @@ function CheckoutForm() {
                                 : coupon.discountType === 0
                                 ? `Giảm ${coupon.discountValue}%`
                                 : ""}
-                            </h2>
+                            </h3>
 
-                            <p className="text-[0.9rem] font-medium text-black">
+                            <p className="font-medium text-black">
                               {coupon.minOrderValue
                                 ? `Đơn hàng phải từ ${coupon.minOrderValue.toLocaleString(
                                     "vi-VN"
@@ -646,7 +635,7 @@ function CheckoutForm() {
                                 )}₫`}
                             </p>
 
-                            <p className="text-[0.9rem] font-medium text-black">
+                            <p className="font-medium text-black">
                               Mã: {coupon.code}
                             </p>
                           </div>
@@ -656,46 +645,39 @@ function CheckoutForm() {
                   )}
                 </div>
 
-                <hr className="border-slate-300 my-[20px]" />
+                <hr className="border-gray-300 my-[15px]" />
 
-                <div className="flex flex-col gap-4">
-                  <div className="flex items-center justify-between text-[1rem] font-medium">
-                    <p className=" text-gray-600">Tổng</p>
-                    <p className=" text-gray-600">
-                      {totalPrice.toLocaleString("vi-VN")}₫
-                    </p>
+                <div className="space-y-[15px]">
+                  <div className="flex items-center justify-between font-medium text-gray-600">
+                    <h5>Tổng</h5>
+                    <h5>{totalPrice.toLocaleString("vi-VN")}₫</h5>
                   </div>
 
                   {coupon && (
-                    <div className="flex items-center justify-between text-[1rem] font-medium">
-                      <p className=" text-gray-600">Phiếu giảm giá</p>
-                      {coupon.discountType === 1 ? (
-                        <p className=" text-gray-600">
-                          -{coupon.discountValue.toLocaleString("vi-VN")}₫
-                        </p>
-                      ) : coupon.discountType === 0 ? (
-                        <p className=" text-gray-600">
-                          -
-                          {Math.min(
-                            (totalPrice * coupon.discountValue) / 100,
-                            coupon.maxDiscountValue!
-                          ).toLocaleString("vi-VN")}
-                          ₫
-                        </p>
-                      ) : (
-                        <p className=" text-gray-600"></p>
-                      )}
+                    <div className="flex items-center justify-between font-medium text-gray-600">
+                      <h5>Phiếu giảm giá</h5>
+
+                      <h5>
+                        -{" "}
+                        {coupon.discountType === 1
+                          ? coupon.discountValue.toLocaleString("vi-VN")
+                          : coupon.discountType === 0
+                          ? Math.min(
+                              (totalPrice * coupon.discountValue) / 100,
+                              coupon.maxDiscountValue!
+                            ).toLocaleString("vi-VN")
+                          : ""}
+                        ₫
+                      </h5>
                     </div>
                   )}
                 </div>
 
-                <hr className="border-slate-300 my-[20px]" />
+                <hr className="border-gray-300 my-[15px]" />
 
-                <div className="flex items-center justify-between text-[1.2rem] font-semibold">
-                  <p className=" text-gray-900">Tổng cộng</p>
-                  <p className=" text-gray-900">
-                    {finalTotal.toLocaleString("vi-VN")}₫
-                  </p>
+                <div className="flex items-center justify-between text-black">
+                  <h4>Tổng cộng</h4>
+                  <h4>{finalTotal.toLocaleString("vi-VN")}₫</h4>
                 </div>
               </div>
             </div>
@@ -709,9 +691,7 @@ function CheckoutForm() {
           isLoadingCheckPaymentStatusMomo) && (
           <div className="fixed inset-0 z-50 flex flex-col items-center gap-8 justify-center text-center bg-black/50">
             <Loading height={0} size={55} color="white" thickness={8} />
-            <h2 className="text-[1.2rem] font-semibold text-white">
-              Vui lòng chờ trong giây lát..
-            </h2>
+            <h4 className="text-white">Vui lòng chờ trong giây lát..</h4>
           </div>
         )}
       </section>

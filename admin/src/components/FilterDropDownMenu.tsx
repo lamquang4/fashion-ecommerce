@@ -51,8 +51,8 @@ function FilterDropDownMenu({
               <button
                 key={index}
                 onClick={() => handleClick(item.value)}
-                className={`w-full text-left px-3 py-2.5 ${
-                  isActive ? "bg-[#E9EDF2]" : ""
+                className={`w-full text-[0.9rem] px-3 py-2.5 ${
+                  isActive ? "bg-gray-100" : ""
                 }`}
               >
                 {item.name}

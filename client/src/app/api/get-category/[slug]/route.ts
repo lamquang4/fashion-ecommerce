@@ -15,9 +15,9 @@ export async function GET(
     if (slug === "all") {
       category = { namecategory: "Tất cả sản phẩm" };
     } else if (slug === "nam") {
-      category = { namecategory: "Đồ nam", gender: 1 };
+      category = { namecategory: "Đồ nam" };
     } else if (slug === "nu") {
-      category = { namecategory: "Đồ nữ", gender: 0 };
+      category = { namecategory: "Đồ nữ" };
     } else {
       category = await Category.findOne({ slug }).lean();
       if (!category) {

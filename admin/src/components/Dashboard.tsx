@@ -53,37 +53,37 @@ function Dashboard() {
     {
       title: "Doanh thu",
       number: `${totalRevenue.toLocaleString("vi-VN")}₫`,
-      icon1: <FaRegMoneyBillAlt size={25} />,
+      icon1: <FaRegMoneyBillAlt size={22} color="#0AB39C" />,
     },
     {
       title: "Tổng đơn",
       number: orders.length,
-      icon1: <RiShoppingBag4Line size={25} />,
+      icon1: <RiShoppingBag4Line size={22} color="#0AB39C" />,
     },
     {
       title: "Khách hàng",
       number: customers.length,
-      icon1: <IoPeopleOutline size={25} />,
+      icon1: <IoPeopleOutline size={22} color="#0AB39C" />,
     },
     {
       title: "Số lượng bán ra",
       number: totalSold,
-      icon1: <PiTShirtBold size={25} />,
+      icon1: <PiTShirtBold size={22} color="#0AB39C" />,
     },
   ];
 
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
+        <h2 className="mb-[20px] text-[#74767d] capitalize">Thống kê</h2>
+
         <StaticCards array={array} />
       </div>
 
       <div className="bg-white">
         <div className="py-[1.3rem] px-[1.2rem] flex flex-col gap-[1.3rem]">
           <div className="flex items-center gap-2">
-            <h1 className="font-bold text-[1.5rem] text-[#74767d]">
-              Thống kê năm
-            </h1>
+            <h2 className="text-[#74767d] capitalize">Năm</h2>
             {
               <select
                 onChange={(e) => setYear(Number(e.target.value))}
@@ -102,131 +102,117 @@ function Dashboard() {
             }
           </div>
           <div className="flex items-center justify-between gap-3 flex-wrap">
-            <h2 className="font-semibold text-[1rem] text-[#74767d]">
+            <h5 className="font-semibold text-[#74767d]">
               Tổng doanh thu:{" "}
               <span className="text-[#c00]">
                 {totalRevenueYear.toLocaleString("vi-VN")}₫
               </span>
-            </h2>
-            <h2 className="font-semibold text-[1rem] text-[#74767d]">
+            </h5>
+            <h5 className="font-semibold text-[#74767d]">
               Tổng số lượng bán ra:{" "}
               <span className="text-[#c00]">{totalSoldYear}</span>
-            </h2>
+            </h5>
           </div>
         </div>
 
-        <div className="bg-white">
-          <Chart
-            options={{
-              chart: {
-                id: "mixed-chart",
-                toolbar: {
-                  show: true,
-                  tools: {
-                    download: true,
-                    selection: false,
-                    zoom: false,
-                    zoomin: false,
-                    zoomout: false,
-                    pan: false,
-                    reset: true,
-                  },
+        <Chart
+          options={{
+            chart: {
+              id: "mixed-chart",
+              toolbar: {
+                show: true,
+                tools: {
+                  download: true,
+                  selection: false,
+                  zoom: false,
+                  zoomin: false,
+                  zoomout: false,
+                  pan: false,
+                  reset: true,
                 },
               },
-              xaxis: {
-                categories: [
-                  "Tháng 1",
-                  "Tháng 2",
-                  "Tháng 3",
-                  "Tháng 4",
-                  "Tháng 5",
-                  "Tháng 6",
-                  "Tháng 7",
-                  "Tháng 8",
-                  "Tháng 9",
-                  "Tháng 10",
-                  "Tháng 11",
-                  "Tháng 12",
-                ],
-              },
-              colors: ["#0AB39C", "#f39c12"],
-              stroke: {
-                width: [0, 3],
-              },
-              markers: {
-                size: 5,
-              },
-              yaxis: [
-                {
-                  title: {
-                    text: "Doanh thu (VNĐ)",
-                    style: {
-                      fontFamily: "Quicksand",
-                    },
-                  },
-                },
-                {
-                  opposite: true,
-                  title: {
-                    text: "Số lượng bán ra",
-                    style: {
-                      fontFamily: "Quicksand",
-                    },
-                  },
-                },
+            },
+            xaxis: {
+              categories: [
+                "Tháng 1",
+                "Tháng 2",
+                "Tháng 3",
+                "Tháng 4",
+                "Tháng 5",
+                "Tháng 6",
+                "Tháng 7",
+                "Tháng 8",
+                "Tháng 9",
+                "Tháng 10",
+                "Tháng 11",
+                "Tháng 12",
               ],
-            }}
-            series={[
+            },
+            colors: ["#0AB39C", "#f39c12"],
+            stroke: {
+              width: [0, 3],
+            },
+            markers: {
+              size: 5,
+            },
+            yaxis: [
               {
-                name: "Doanh thu",
-                type: "column",
-                data: monthlyRevenueData, // dữ liệu doanh thu
+                title: {
+                  text: "Doanh thu (VNĐ)",
+                  style: {
+                    fontFamily: "Quicksand",
+                  },
+                },
               },
               {
-                name: "Số lượng bán ra",
-                type: "line",
-                data: monthlySoldData, // dữ liệu sl bán ra
+                opposite: true,
+                title: {
+                  text: "Số lượng bán ra",
+                  style: {
+                    fontFamily: "Quicksand",
+                  },
+                },
               },
-            ]}
-            type="line"
-            width="100%"
-            height={400}
-          />
-        </div>
+            ],
+          }}
+          series={[
+            {
+              name: "Doanh thu",
+              type: "column",
+              data: monthlyRevenueData, // dữ liệu doanh thu
+            },
+            {
+              name: "Số lượng bán ra",
+              type: "line",
+              data: monthlySoldData, // dữ liệu sl bán ra
+            },
+          ]}
+          type="line"
+          width="100%"
+          height={400}
+        />
       </div>
 
       <div>
         <div className="py-[1.3rem] px-[1.2rem] bg-white">
-          <h1 className="font-bold text-[1.5rem] text-[#74767d]">
-            Top 10 bán chạy nhất
-          </h1>
+          <h2 className="text-[#74767d] capitalize">Top 10 bán chạy nhất</h2>
         </div>
 
         <div className=" bg-white w-full overflow-auto">
           <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
             <thead>
-              <tr className="bg-[#E9EDF2]">
-                <th className="py-[1rem] pl-[1rem] text-left text-[#444] text-[0.9rem]">
-                  Sản phẩm
-                </th>
+              <tr className="bg-[#E9EDF2] text-left">
+                <th className="p-[1rem] text-[#444] text-[0.9rem]">Sản phẩm</th>
 
-                <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                  Giá
-                </th>
+                <th className="p-[1rem] text-[#444] text-[0.9rem]">Giá</th>
 
-                <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                  Số lượng
-                </th>
+                <th className="p-[1rem] text-[#444] text-[0.9rem]">Số lượng</th>
 
-                <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                  Màu sắc
-                </th>
+                <th className="p-[1rem] text-[#444] text-[0.9rem]">Màu sắc</th>
 
-                <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
-                  Danh mục
-                </th>
+                <th className="p-[1rem] text-[#444] text-[0.9rem]">Danh mục</th>
 
-                <th className="py-[1rem] text-left text-[#444] text-[0.9rem]">
+                <th className="p-[1rem] text-[#444] text-[0.9rem]">
                   Hành động
                 </th>
               </tr>
@@ -246,7 +232,7 @@ function Dashboard() {
               ) : topProducts.length > 0 ? (
                 topProducts.map((product) => (
                   <tr key={product._id} className="hover:bg-[#f2f3f8]">
-                    <td className="pl-[1rem] py-[1rem] w-[300px]">
+                    <td className="p-[1rem] w-[300px]">
                       <div className="flex gap-[10px] items-center">
                         <div className="cursor-pointer">
                           <Image
@@ -257,40 +243,40 @@ function Dashboard() {
                           />
                         </div>
 
-                        <div className="flex flex-col gap-[5px]">
-                          <p className="text-[0.9rem] font-medium  text-[#444]">
-                            {product.name}
-                          </p>
-                        </div>
+                        <p className="font-medium  text-[#444]">
+                          {product.name}
+                        </p>
                       </div>
                     </td>
 
-                    <td className="py-[1rem] text-[0.9rem]  text-[#444]">
-                      <div className="flex flex-col">
-                        <span
-                          className={` ${
-                            product.discount > 0
-                              ? "line-through text-gray-400"
-                              : "text-black"
-                          } `}
-                        >
-                          {product.price?.toLocaleString("vi-VN")}₫
-                        </span>
-                        {product.discount > 0 && (
-                          <span className="text-red-500 font-semibold">
-                            {product.discount?.toLocaleString("vi-VN")}₫
-                          </span>
-                        )}
-                      </div>
+                    <td className="p-[1rem] text-[0.9rem]  text-[#444]">
+                      {product.discount > 0 ? (
+                        <div className="flex gap-[12px] text-black">
+                          <del className="text-[#707072] text-[1rem]">
+                            {product.price.toLocaleString("vi-VN")}₫
+                          </del>
+
+                          <p className="font-medium text-[#c00]">
+                            {(product.price - product.discount).toLocaleString(
+                              "vi-VN"
+                            )}
+                            ₫
+                          </p>
+                        </div>
+                      ) : (
+                        <p className="font-medium">
+                          {product.price.toLocaleString("vi-VN")}₫
+                        </p>
+                      )}
                     </td>
-                    <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
                       <div className="flex flex-col gap-1.5">
                         <p>Còn lại: {product.totalQuantity}</p>
                         <p>Đã bán: {product.totalSold}</p>
                       </div>
                     </td>
 
-                    <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
                       <div className="flex gap-1.5">
                         {product.variants.map((variant) => (
                           <div
@@ -305,7 +291,7 @@ function Dashboard() {
                       </div>
                     </td>
 
-                    <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
                       {product.category.namecategory}/
                       {product.category.gender === 1
                         ? "Nam"
@@ -314,7 +300,7 @@ function Dashboard() {
                         : ""}
                     </td>
 
-                    <td className="py-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
                       <div className="flex items-center gap-[15px]">
                         <Link href={`/edit-product/${product._id}`}>
                           <LiaExternalLinkAltSolid
@@ -329,7 +315,7 @@ function Dashboard() {
               ) : (
                 <tr>
                   <td colSpan={8} className="w-full h-[70vh]">
-                    <div className="flex flex-col justify-center items-center">
+                    <div className="flex justify-center items-center">
                       <Image
                         Src={"/assets/other/notfound1.png"}
                         Alt={""}

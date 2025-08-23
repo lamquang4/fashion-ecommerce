@@ -7,13 +7,11 @@ function Account() {
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
       <form className="flex flex-col gap-7 w-full">
-        <h1 className="font-bold text-[1.5rem] text-[#74767d]">Tài khoản</h1>
+        <h2 className="text-[#74767d] capitalize">Tài khoản</h2>
 
         <div className="gap-[25px] w-full flex flex-wrap lg:flex-nowrap">
           <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-            <p className="font-bold text-[1rem] text-[#74767d]">
-              Thông tin cá nhân
-            </p>
+            <h5 className="font-bold text-[#74767d]">Thông tin cá nhân</h5>
 
             <div className="flex flex-col gap-1 w-full ">
               <label htmlFor="" className="text-[0.9rem] text-black">

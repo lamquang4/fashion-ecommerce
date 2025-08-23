@@ -63,13 +63,10 @@ function ProductDetail() {
     if (product?.variants?.length) {
       setMainImage(product.variants[0].images[0]);
       setSelectedColor(product.variants[0].color);
+      setSelectedSize(product.variants[0].inventories[0].size);
       setSelectedInventory(product.variants[0]);
     }
   }, [product]);
-
-  useEffect(() => {
-    setSelectedSize(undefined);
-  }, [selectedColor]);
 
   const handleNextImage = () => {
     if (!allImages.length) return;
@@ -101,9 +98,7 @@ function ProductDetail() {
     setQuantity((prev) => (prev > 1 ? prev - 1 : prev));
   };
 
-  const handleAddToCart = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const handleAddToCart = async () => {
     if (!selectedSize) {
       toast.error("Bạn hãy chọn kích thước!");
       return;
@@ -242,44 +237,36 @@ function ProductDetail() {
         </div>
 
         <div className="relative lg:w-[500px] w-full px-[15px] sm:px-[20px]">
-          <div className="py-[10px]">
-            <div className="mb-[12px]">
-              <p className="text-[1rem] mb-[5px]">
-                {product?.category?.namecategory} /{" "}
-                {product?.category?.gender === 1 ? "Nam" : "Nữ"}
-              </p>
-              <h2 className="text-[1.3rem] mb-[5px] font-medium">
-                {product?.name}
-              </h2>
-              <div className="text-[1.5rem] flex gap-[15px] font-semibold">
-                {product?.discount !== 0 && (
-                  <del className="text-[#707072] font-light">
-                    {product?.price.toLocaleString("vi-VN") || 0}₫
+          <div className="space-y-[5px]">
+            <h5 className="font-medium">
+              {product?.category?.namecategory} /{" "}
+              {product?.category?.gender === 1 ? "Nam" : "Nữ"}
+            </h5>
+            <h3 className="font-semibold">{product?.name}</h3>
+            <div className="flex items-center gap-[15px]">
+              {product && product?.discount > 0 ? (
+                <>
+                  <del className="text-[#707072] font-light text-[1.4rem]">
+                    {product?.price.toLocaleString("vi-VN")}₫
                   </del>
-                )}
 
-                {product?.discount === 0 && (
-                  <span>{product?.price.toLocaleString("vi-VN") || 0}₫</span>
-                )}
-
-                {product?.discount !== 0 && (
-                  <span className="text-[#c00]">
-                    {(product &&
-                      (product?.price - product?.discount).toLocaleString(
-                        "vi-VN"
-                      )) ||
-                      0}
+                  <h3 className="text-[#c00] font-medium">
+                    {(product?.price - product?.discount).toLocaleString(
+                      "vi-VN"
+                    )}
                     ₫
-                  </span>
-                )}
-              </div>
+                  </h3>
+                </>
+              ) : (
+                <h3 className="font-medium">
+                  {product?.price.toLocaleString("vi-VN")}₫
+                </h3>
+              )}
             </div>
 
-            <MenuSideCoupon toggleMenu={toggleOpen} isOpen={menuOpen} />
-
-            <form action="" onSubmit={handleAddToCart}>
+            <div className="space-y-[15px]">
               {coupons.length > 0 && (
-                <div className="mb-[15px]">
+                <div className="space-y-[8px]">
                   <p className="text-gray-700 font-medium mb-[5px]">
                     Mã giảm giá
                   </p>
@@ -307,9 +294,9 @@ function ProductDetail() {
                 </div>
               )}
 
-              <div className="mb-[15px]">
-                <p className="text-gray-700 font-medium mb-[5px]">
-                  Màu sắc: {selectedColor?.namecolor}
+              <div className="space-y-[8px]">
+                <p className="text-gray-700 font-medium">
+                  Màu: {selectedColor?.namecolor}
                 </p>
                 <div className="flex space-x-2">
                   {product?.variants.map((inv) => (
@@ -332,8 +319,8 @@ function ProductDetail() {
                 </div>
               </div>
 
-              <div className="flex flex-col space-y-2 mb-[15px]">
-                <p className="text-gray-700 font-medium mb-[5px]">
+              <div className="space-y-[8px]">
+                <p className="text-gray-700 font-medium">
                   Kích thước: {selectedSize?.namesize}
                 </p>
 
@@ -366,7 +353,7 @@ function ProductDetail() {
                 </div>
               </div>
 
-              <div className="mb-[30px] relative flex justify-between items-center max-w-[8rem] border border-gray-300 rounded-sm">
+              <div className="relative flex justify-between items-center max-w-[8rem] border border-gray-300 rounded-sm">
                 <button
                   type="button"
                   onClick={HandleDecrement}
@@ -404,8 +391,9 @@ function ProductDetail() {
                 </button>
               </div>
 
-              <div className="w-full flex gap-[20px] flex-wrap md:flex-nowrap mb-[30px] items-center">
+              <div className="w-full flex gap-[20px] flex-wrap md:flex-nowrap items-center">
                 <button
+                  onClick={handleAddToCart}
                   disabled={isLoadingAddCart}
                   type="submit"
                   className="px-[10px] py-[10px] w-full uppercase text-[0.9rem] font-medium border bg-black text-white hover:bg-[#050708]/80"
@@ -445,16 +433,14 @@ function ProductDetail() {
                   </svg>
                 </button>
               </div>
-            </form>
 
-            <div className="flex flex-col gap-y-[30px]">
               <div>
-                <h2 className="text-[1.2rem] font-medium">Mô tả sản phẩm</h2>
+                <h4 className="font-medium">Mô tả sản phẩm</h4>
 
-                <hr className="border-1 my-[15px]" />
+                <hr className="border my-[15px]" />
 
                 <div
-                  className="text-black text-[0.95rem] textbox-editor"
+                  className="text-black textbox-editor"
                   dangerouslySetInnerHTML={{
                     __html: product?.description || "",
                   }}
@@ -463,14 +449,17 @@ function ProductDetail() {
             </div>
           </div>
         </div>
+
+        <MenuSideCoupon toggleMenu={toggleOpen} isOpen={menuOpen} />
+
+        {openViewer && (
+          <ImageViewer
+            image={viewerImage}
+            open={openViewer}
+            onClose={() => setOpenViewer(false)}
+          />
+        )}
       </div>
-      {openViewer && (
-        <ImageViewer
-          image={viewerImage}
-          open={openViewer}
-          onClose={() => setOpenViewer(false)}
-        />
-      )}
     </section>
   );
 }

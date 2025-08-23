@@ -8,17 +8,17 @@ import { LuDoorOpen } from "react-icons/lu";
 import { memo } from "react";
 function SideBarMenu() {
   const pathname = usePathname();
-  const activeClass = "bg-gray-100 font-medium rounded-md";
+  const activeClass = "bg-gray-200 rounded-md font-semibold";
   return (
     <div className="w-full max-w-full lg:max-w-[300px]">
-      <div className="text-[0.95rem] text-black font-normal flex flex-col gap-2">
+      <div className="text-[0.9rem] text-black font-medium flex flex-col gap-2">
         <Link
           href="/account"
           className={`py-3.5 px-4 ${
             pathname === "/account" ? activeClass : ""
           }`}
         >
-          <div className="flex items-center gap-2.5 text-[0.95rem]">
+          <div className="flex items-center gap-2.5">
             <HiOutlineUser size={20} />
             <span>Thông tin toàn khoản</span>
           </div>
@@ -30,7 +30,7 @@ function SideBarMenu() {
             pathname === "/address" ? activeClass : ""
           }`}
         >
-          <div className="flex items-center gap-2.5 text-[0.95rem]">
+          <div className="flex items-center gap-2.5">
             <HiOutlineBuildingOffice size={20} />
             <span>Sổ địa chỉ</span>
           </div>
@@ -44,7 +44,7 @@ function SideBarMenu() {
               : ""
           }`}
         >
-          <div className="flex items-center gap-2.5 text-[0.95rem]">
+          <div className="flex items-center gap-2.5">
             <IoBagHandleOutline size={20} />
             <span>Đơn hàng</span>
           </div>
@@ -53,9 +53,9 @@ function SideBarMenu() {
         <button
           type="button"
           onClick={() => signOut()}
-          className="py-3.5 px-4 text-left text-[0.95rem] text-red-500 font-medium"
+          className="py-3.5 px-4 hover:bg-gray-100 text-left text-red-500 font-medium"
         >
-          <div className="flex items-center gap-2.5 text-[0.95rem]">
+          <div className="flex items-center gap-2.5">
             <LuDoorOpen size={22} />
             <span>Đăng xuất</span>
           </div>

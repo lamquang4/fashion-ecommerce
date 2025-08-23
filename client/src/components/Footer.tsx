@@ -7,8 +7,8 @@ import { memo } from "react";
 function Footer() {
   return (
     <footer className="bg-gray-50 border-t border-gray-200">
-      <div className="mx-auto w-full max-w-screen-xl">
-        <div className="grid grid-cols-2 gap-8 px-[10px] sm:px-[15px] md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] py-[40px]">
+      <div className="mx-auto w-full max-w-screen-xl px-[10px] sm:px-[15px]">
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] py-[60px]">
           <div>
             <Link href={"/"}>
               <Image
@@ -23,9 +23,9 @@ function Footer() {
           <div>
             <ul>
               <li>
-                <h2 className="relative font-bold text-black text-[0.935rem] uppercase mb-3 pb-1.5 after:content-[''] after:absolute after:bottom-0 after:left-0 after:bg-black after:w-[60px] after:h-[1.5px]">
+                <p className="relative font-bold text-black text-[0.95rem] uppercase mb-3 pb-1.5 after:content-[''] after:absolute after:bottom-0 after:left-0 after:bg-black after:w-[60px] after:h-[1.5px]">
                   Chính sách
-                </h2>
+                </p>
               </li>
 
               <li className="py-[8px]">
@@ -51,9 +51,9 @@ function Footer() {
           <div>
             <ul>
               <li>
-                <h2 className="relative font-bold text-black text-[0.935rem] uppercase mb-3 pb-1.5 after:content-[''] after:absolute after:bottom-0 after:left-0 after:bg-black after:w-[60px] after:h-[1.5px]">
+                <p className="relative font-bold text-black text-[0.95rem] uppercase mb-3 pb-1.5 after:content-[''] after:absolute after:bottom-0 after:left-0 after:bg-black after:w-[60px] after:h-[1.5px]">
                   Chính sách
-                </h2>
+                </p>
               </li>
 
               <li className="py-[8px]">
@@ -79,9 +79,9 @@ function Footer() {
           <div>
             <ul>
               <li>
-                <h2 className="relative font-bold text-black text-[0.935rem] uppercase mb-3 pb-1.5 after:content-[''] after:absolute after:bottom-0 after:left-0 after:bg-black after:w-[60px] after:h-[1.5px]">
+                <p className="relative font-bold text-black text-[0.95rem] uppercase mb-3 pb-1.5 after:content-[''] after:absolute after:bottom-0 after:left-0 after:bg-black after:w-[60px] after:h-[1.5px]">
                   Theo dõi
-                </h2>
+                </p>
               </li>
 
               <li>
@@ -119,10 +119,8 @@ function Footer() {
           </div>
         </div>
 
-        <div className="text-center py-[15px] mx-auto">
-          <p className="text-black text-[0.9rem] font-medium capitalize">
-            Bản quyền 2025 © Aura. Giữ toàn bộ quyền.
-          </p>
+        <div className="text-center py-[15px]">
+          <p className="text-black font-medium">Quanglam 2025 © Aura</p>
         </div>
       </div>
     </footer>

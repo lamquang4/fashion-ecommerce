@@ -65,15 +65,13 @@ function AddCustomer() {
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
       <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
-        <h1 className="font-bold text-[1.5rem] text-[#74767d]">
-          Thêm khách hàng
-        </h1>
+        <h2 className="text-[#74767d] capitalize">Thêm khách hàng</h2>
 
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-            <p className="font-bold text-[1rem] text-[#74767d]">
+            <h5 className="font-bold text-[#74767d]">
               Thông tin chung
-            </p>
+            </h5>
             <div className="flex flex-col gap-1">
               <label htmlFor="" className="text-[0.9rem] text-black">
                 Họ tên

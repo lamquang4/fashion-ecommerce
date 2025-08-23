@@ -75,22 +75,22 @@ function Order() {
     {
       title: "Tổng đơn",
       number: orders.length,
-      icon1: <RiShoppingBag4Line size={25} />,
+      icon1: <RiShoppingBag4Line size={22} color="#0AB39C" />,
     },
     {
       title: "Đơn giao thành công",
       number: totalStatus3,
-      icon1: <RiTruckLine size={25} />,
+      icon1: <RiTruckLine size={22} color="#0AB39C" />,
     },
     {
       title: "Đơn đã hủy",
       number: totalStatus4,
-      icon1: <TbCancel size={25} />,
+      icon1: <TbCancel size={22} color="#0AB39C" />,
     },
     {
       title: "Đơn chờ xác nhận",
       number: totalStatus0,
-      icon1: <LuClock size={25} />,
+      icon1: <LuClock size={22} color="#0AB39C" />,
     },
   ];
 
@@ -116,9 +116,7 @@ function Order() {
   return (
     <>
       <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
-          Đơn hàng
-        </h1>
+        <h2 className="mb-[20px] text-[#74767d] capitalize">Đơn hàng</h2>
 
         <div className="mb-[20px]">
           <StaticCards array={array1} />
@@ -164,10 +162,8 @@ function Order() {
       </div>
 
       <div className=" bg-white  w-full overflow-auto">
-        <div className="p-[1.2rem] flex justify-between items-center">
-          <div className="flex items-center">
-            <InputSearch />
-          </div>
+        <div className="p-[1.2rem]">
+          <InputSearch />
         </div>
 
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
@@ -271,7 +267,7 @@ function Order() {
             ) : (
               <tr>
                 <td colSpan={8} className="w-full h-[70vh]">
-                  <div className="flex flex-col justify-center items-center">
+                  <div className="flex justify-center items-center">
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}

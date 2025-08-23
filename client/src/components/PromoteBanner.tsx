@@ -20,7 +20,7 @@ function PromoteBanner({ gender }: PromoteBannerProp) {
                       Src={promotebanners[0].image}
                       Alt=""
                       ClassName="w-full object-cover"
-                      loadingType="eager"
+                      loadingType="lazy"
                     />
                   </div>
                 </Link>
@@ -31,7 +31,7 @@ function PromoteBanner({ gender }: PromoteBannerProp) {
                       Src={promotebanners[1].image}
                       Alt=""
                       ClassName="w-full object-cover"
-                      loadingType="eager"
+                      loadingType="lazy"
                     />
                   </div>
                 </Link>

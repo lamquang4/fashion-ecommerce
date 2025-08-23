@@ -2,10 +2,7 @@
 import { useRouter } from "next/navigation";
 import React, { memo, useEffect, useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
-import Image from "./Image";
-import Link from "next/link";
-import useGetProductsSuggest from "@/hooks/useGetProductsSuggest";
-import Loading from "./Loading";
+import SuggestionProduct from "./SuggestionProduct";
 type Props = {
   toggleSearch: () => void;
   openSearch: boolean;
@@ -13,8 +10,6 @@ type Props = {
 
 function SearchMobile({ toggleSearch, openSearch }: Props) {
   const router = useRouter();
-
-  const { products, setKeyword, isLoading } = useGetProductsSuggest();
 
   const [search, setSearch] = useState<string>("");
   const [focused, setFocused] = useState<boolean>(false);
@@ -30,11 +25,6 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
     toggleSearch();
   };
 
-  useEffect(() => {
-    if (search) {
-      setKeyword(search.trim());
-    }
-  }, [search, setKeyword]);
 
   useEffect(() => {
     if (openSearch) {
@@ -83,58 +73,7 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
 
         {focused && search && (
           <div className="fixed left-1/2 translate-x-[-50%] z-[12] w-full bg-white shadow-lg border-gray-200 border">
-            <div className="p-2.5">
-              <p className="text-black font-medium">
-                Kết quả tìm kiếm cho{" "}
-                <span className="text-red-600">{search}</span>
-              </p>
-            </div>
-
-            <div className="overflow-y-auto max-h-96 flex flex-col">
-              {isLoading ? (
-                <Loading height={30} size={40} color={"#c00"} thickness={3} />
-              ) : products.length > 0 ? (
-                products.map((product) => (
-                  <div className="flex w-full" key={product._id}>
-                    <Link
-                      href={`/product/${product.slug}`}
-                      className="w-full"
-                      onClick={toggleSearch}
-                    >
-                      <div className="hover:bg-[#F7F7F7] p-2.5 w-full flex gap-3.5 border-t border-gray-200">
-                        <div>
-                          <Image
-                            Src={product.variants[0].images[0]}
-                            Alt=""
-                            ClassName="w-[80px] h-full object-cover"
-                            loadingType="eager"
-                          />
-                        </div>
-
-                        <div className="flex flex-col gap-1.5 text-[0.9rem]">
-                          <h2>{product.name}</h2>
-                          {product.discount > 0 && (
-                            <del className="text-[#707072]">
-                              {product.price.toLocaleString("vi-VN")}₫
-                            </del>
-                          )}
-                          <p className="font-medium text-[#c00]">
-                            {(
-                              product.price - product.discount || product.price
-                            ).toLocaleString("vi-VN")}
-                            ₫
-                          </p>
-                        </div>
-                      </div>
-                    </Link>
-                  </div>
-                ))
-              ) : (
-                <p className="p-4 text-center text-[0.9rem] text-gray-500">
-                  Không tìm thấy kết quả
-                </p>
-              )}
-            </div>
+            <SuggestionProduct search={search} />
           </div>
         )}
       </div>

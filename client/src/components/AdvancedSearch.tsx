@@ -89,9 +89,10 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
         }`}
       >
         <div className="sticky top-0 overflow-hidden p-4 bg-white z-[25] flex justify-between items-center border-b border-gray-200">
-          <h2 className="text-[1.25rem] font-semibold">Bộ lọc</h2>
+          <h4 className="uppercase">Bộ lọc</h4>
+
           <button onClick={toggleMenu}>
-            <HiMiniXMark size={30} color="black" />
+            <HiMiniXMark size={25} color="black" />
           </button>
         </div>
 
@@ -100,9 +101,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
             searchParams.get("max") ||
             searchParams.get("color")) && (
             <div className="p-4 border-b border-gray-200">
-              <h2 className="block font-semibold text-[1rem] mb-2.5">
-                Bộ lọc đã chọn
-              </h2>
+              <h5 className="mb-2.5">Bộ lọc đã chọn</h5>
               <div className="flex items-center flex-wrap gap-3">
                 {(searchParams.get("min") || searchParams.get("max")) && (
                   <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
@@ -156,9 +155,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
           <form id="advanced-search-form" onSubmit={handleSubmit}>
             <div className="border-b border-gray-200 p-4 flex flex-col gap-4">
               <div className="flex items-center justify-between">
-                <h2 className="block font-semibold text-[1rem] uppercase">
-                  Giá
-                </h2>
+                <h5 className="uppercase font-medium">Giá</h5>
                 <IoIosArrowDown size={18} />
               </div>
 
@@ -166,7 +163,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
                 <div className="border border-gray-300 p-2.5 w-full">
                   <label
                     htmlFor="min"
-                    className="text-sm text-gray-600 block mb-1"
+                    className="text-[0.9rem] text-gray-600 block mb-1"
                   >
                     Tối thiểu
                   </label>
@@ -179,14 +176,14 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
                       inputMode="numeric"
                       min={0}
                     />
-                    <span className="text-sm text-gray-600">đ</span>
+                    <span className="text-gray-600">đ</span>
                   </div>
                 </div>
 
                 <div className="border border-gray-300 p-2.5 w-full">
                   <label
                     htmlFor="max"
-                    className="text-sm text-gray-600 block mb-1"
+                    className="text-[0.9rem] text-gray-600 block mb-1"
                   >
                     Tối đa
                   </label>
@@ -199,7 +196,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
                       inputMode="numeric"
                       max={1000000}
                     />
-                    <span className="text-sm text-gray-600">đ</span>
+                    <span className=" text-gray-600">đ</span>
                   </div>
                 </div>
               </div>
@@ -207,16 +204,14 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
 
             <div className="border-b border-gray-200 p-4 flex flex-col gap-4">
               <div className="flex items-center justify-between">
-                <h2 className="block font-semibold text-[1rem] uppercase">
-                  Màu sắc
-                </h2>
+                <h5 className="uppercase font-medium">Màu</h5>
                 <IoIosArrowDown size={18} />
               </div>
 
-              <div className="w-full flex flex-wrap justify-between gap-2.5">
+              <div className="w-full flex flex-wrap justify-between gap-5">
                 {colors.map((color, index) => {
                   return (
-                    <div className="flex gap-2.5 items-center" key={color._id}>
+                    <div className="flex gap-2 items-center" key={color._id}>
                       <input
                         type="checkbox"
                         className={`peer relative w-[22px] h-[22px] appearance-none border border-gray-300 cursor-pointer 
@@ -248,7 +243,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
           <button
             type="submit"
             form="advanced-search-form"
-            className="bg-black text-white px-[18px] py-[10px] text-[0.95rem] flex justify-center items-center gap-2.5 font-semibold"
+            className="bg-black text-white px-[18px] py-[10px] text-[0.9rem] flex justify-center items-center gap-2.5 font-semibold"
           >
             Áp dụng
             <FaArrowRightLong size={20} />

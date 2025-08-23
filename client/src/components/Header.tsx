@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import React, { memo, useCallback, useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { CiHeart } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
 import { CiUser, CiSearch } from "react-icons/ci";
@@ -65,15 +65,6 @@ function Header() {
     <>
       <header className="w-full bg-white sticky top-0 border-b border-gray-200 z-[15]">
         <div>
-          {/* Header top */}
-          <div className="bg-black w-full hidden">
-            <div className="py-[9px]">
-              <p className="text-white text-center text-[0.8rem] uppercase font-bold">
-                Free Ship với đơn hàng trên 100K
-              </p>
-            </div>
-          </div>
-
           {/* Desktop */}
           <div className="flex justify-between items-center w-full py-[20px] px-[15px] md:px-[20px] lg:px-[40px] relative">
             <Link href={"/"}>
@@ -88,9 +79,9 @@ function Header() {
             <nav className="hidden lg:block">
               <ul className="flex items-center gap-[30px] text-[1rem] font-semibold uppercase">
                 <li className="relative menu-category">
-                  <p className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
+                  <h5 className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
                     Nam
-                  </p>
+                  </h5>
                   {categoriesMale.length > 0 && (
                     <ul className="absolute font-medium top-5 left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
                       <li className="my-2">
@@ -116,9 +107,9 @@ function Header() {
                 </li>
 
                 <li className="relative menu-category">
-                  <p className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
+                  <h5 className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
                     Nữ
-                  </p>
+                  </h5>
                   {categoriesFemale.length > 0 && (
                     <ul className="absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
                       <li className="my-2">
@@ -144,9 +135,9 @@ function Header() {
                 </li>
 
                 <li className="relative menu-category">
-                  <p className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
+                  <h5 className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
                     Giảm giá
-                  </p>
+                  </h5>
 
                   <ul className="absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
                     <li className="my-2">
@@ -180,36 +171,33 @@ function Header() {
                 onMouseLeave={() => setProfileMenuOpen(false)}
               >
                 <CiUser size={24} />
-                <ProfileMenu
-                  isOpen={profileMenuOpen}
-                  toggleMenu={toggleProfileMenu}
-                />
+                <ProfileMenu isOpen={profileMenuOpen} />
               </div>
 
               <Link href={"/cart"} className="relative">
                 <CiShoppingCart size={26} />
 
-                <span
+                <small
                   className="absolute flex items-center justify-center 
     top-[-9px] right-[-11px] 
     bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
     rounded-full w-[20px] h-[20px]"
                 >
                   {totalQuantity}
-                </span>
+                </small>
               </Link>
 
               <Link href="/wishlist" className="relative">
                 <CiHeart size={25} />
 
-                <span
+                <small
                   className="absolute flex items-center justify-center 
     top-[-9px] right-[-11px] 
     bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
     rounded-full w-[20px] h-[20px]"
                 >
                   {wishlist?.productsInWishlist.length || 0}
-                </span>
+                </small>
               </Link>
             </div>
 
@@ -228,50 +216,47 @@ function Header() {
                 onMouseOut={toggleProfileMenu}
               >
                 <CiUser size={24} />
-                <ProfileMenu
-                  isOpen={profileMenuOpen}
-                  toggleMenu={toggleProfileMenu}
-                />
+                <ProfileMenu isOpen={profileMenuOpen} />
               </div>
 
               <Link href={"/cart"} className="relative">
                 <CiShoppingCart size={26} />
 
-                <span
+                <small
                   className="absolute flex items-center justify-center 
     top-[-9px] right-[-11px] 
     bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
     rounded-full w-[20px] h-[20px]"
                 >
                   {totalQuantity}
-                </span>
+                </small>
               </Link>
 
               <Link href={"/wishlist"} className="relative">
                 <CiHeart size={25} />
 
-                <span
+                <small
                   className="absolute flex items-center justify-center 
     top-[-9px] right-[-11px] 
     bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
     rounded-full w-[20px] h-[20px]"
                 >
                   {wishlist?.productsInWishlist.length || 0}
-                </span>
+                </small>
               </Link>
               <button onClick={toggleMobileMenu}>
                 <AiOutlineMenu size={24} />
               </button>
             </div>
           </div>
+
+          <Menumobile isOpen={menuMobileOpen} toggleMenu={toggleMobileMenu} />
         </div>
       </header>
-
-      <Menumobile isOpen={menuMobileOpen} toggleMenu={toggleMobileMenu} />
 
       {openSearch && <Overplay closeMenu={toggleSearch} IndexForZ={12} />}
     </>
   );
 }
 
-export default memo(Header);
+export default Header;

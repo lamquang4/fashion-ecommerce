@@ -17,19 +17,19 @@ function WishlistItem() {
   };
   return (
     <section className="max-w-[1230px] mx-auto my-[40px]">
-      <div className="px-[10px] sm:px-[15px]">
-        <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[35px]">
+      <div className=" px-[10px] sm:px-[15px]">
+        <h2 className="mb-[20px]">
           Yêu thích ({wishlist?.productsInWishlist.length})
         </h2>
         {wishlist?.productsInWishlist &&
         wishlist?.productsInWishlist.length > 0 ? (
-          <div className="flex gap-8 max-w-xl mx-auto w-full">
+          <div className="flex gap-8 lg:max-w-xl mx-auto w-full">
             <div className="flex flex-col gap-5 bg-white basis-full">
               {wishlist?.productsInWishlist.map((item) => (
                 <React.Fragment
                   key={`${item._id}-${item.variant._id}-${item.variant.color._id}`}
                 >
-                  <div className="flex w-full gap-4.5 relative">
+                  <div className="flex w-full gap-4 relative">
                     <div className="flex gap-4.5 w-full">
                       <Link href={`/product/${item.slug}`}>
                         <div className="w-full max-w-[270px] shrink-0">
@@ -42,13 +42,11 @@ function WishlistItem() {
                         </div>
                       </Link>
 
-                      <div className="flex justify-between gap-4.5 w-full">
+                      <div className="flex justify-between gap-4 w-full">
                         <div className="flex flex-col gap-2">
-                          <h2 className="text-[0.9rem] sm:text-[1.1rem] font-semibold text-black">
-                            {item.name}
-                          </h2>
-                          <p className="text-[0.85rem] sm:text-[0.95rem] font-medium text-black">
-                            Màu sắc: {item.variant.color.namecolor}
+                          <h5 className="text-black">{item.name}</h5>
+                          <p className="font-medium text-black">
+                            Màu: {item.variant.color.namecolor}
                           </p>
                         </div>
 
@@ -86,28 +84,22 @@ function WishlistItem() {
           </div>
         ) : (
           <div className="flex justify-center items-center h-[60vh]">
-            <div>
-              <div className="mb-[15px] flex justify-center">
-                <Image
-                  Src={"/assets/other/empty-wishlist.png"}
-                  Alt={""}
-                  ClassName={"w-[170px]"}
-                  loadingType="eager"
-                />
-              </div>
+            <div className="flex flex-col justify-center items-center gap-[15px]">
+              <Image
+                Src={"/assets/other/empty-wishlist.png"}
+                Alt={""}
+                ClassName={"w-[170px]"}
+                loadingType="eager"
+              />
 
-              <div className="flex justify-center flex-col gap-3 items-center text-center">
-                <h2 className="text-[1.2rem] font-semibold">
-                  Không có gì trong yêu thích hết
-                </h2>
+              <h4 className="text-gray-600">Không có gì trong yêu thích hết</h4>
 
-                <Link
-                  href={"/collection/all"}
-                  className="text-[0.95rem] border border-black rounded-md font-medium px-3 py-2 hover:bg-black hover:text-white"
-                >
-                  Mua sắm ngay
-                </Link>
-              </div>
+              <Link
+                href={"/collection/all"}
+                className="text-[0.9rem] border border-black rounded-md font-medium px-3 py-2 hover:bg-black hover:text-white"
+              >
+                Mua sắm ngay
+              </Link>
             </div>
           </div>
         )}

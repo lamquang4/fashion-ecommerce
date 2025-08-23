@@ -83,9 +83,9 @@ function MainBanner() {
   return (
     <>
       <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
+        <h2 className="mb-[20px] text-[#74767d] capitalize">
           Banner chính ({totalItems})
-        </h1>
+        </h2>
 
         <Link
           href={"/add-mainbanner"}
@@ -187,7 +187,7 @@ function MainBanner() {
             ) : (
               <tr>
                 <td colSpan={8} className="w-full h-[70vh]">
-                  <div className="flex flex-col justify-center items-center">
+                  <div className="flex justify-center items-center">
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}

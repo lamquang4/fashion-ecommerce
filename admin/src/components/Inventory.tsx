@@ -20,16 +20,14 @@ function Inventory() {
   return (
     <>
       <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h1 className="font-bold mb-[20px] text-[1.5rem] text-[#74767d]">
+        <h2 className="mb-[20px] text-[#74767d] capitalize">
           Hàng trong kho ({totalQuantity})
-        </h1>
+        </h2>
       </div>
 
       <div className=" bg-white w-full overflow-auto">
-        <div className="p-[1.2rem] flex justify-between items-center">
-          <div className="flex items-center">
-            <InputSearch />
-          </div>
+        <div className="p-[1.2rem]">
+          <InputSearch />
         </div>
 
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
@@ -113,7 +111,7 @@ function Inventory() {
             ) : (
               <tr>
                 <td colSpan={8} className="w-full h-[70vh]">
-                  <div className="flex flex-col justify-center items-center">
+                  <div className="flex justify-center items-center">
                     <Image
                       Src={"/assets/other/notfound1.png"}
                       Alt={""}

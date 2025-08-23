@@ -72,9 +72,7 @@ function ProductSlider({ title, products }: Props) {
       {products.length > 0 && (
         <section className="px-[10px] sm:px-[15px] mb-[40px]">
           <div className="w-full mx-auto md:max-w-[1000px] lg:max-w-[1240px]">
-            <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[15px]">
-              {title}
-            </h2>
+            <h2 className="mb-[20px]">{title}</h2>
             <div ref={sliderRef} className="keen-slider">
               {products.map((product) => {
                 const selectedIndex =
@@ -88,38 +86,35 @@ function ProductSlider({ title, products }: Props) {
                   <div key={product._id} className="keen-slider__slide">
                     <div className="relative group">
                       <Link href={`/product/${product.slug}`}>
-                        <picture>
-                          {selectedInventory.images[0] && (
-                            <Image
-                              Src={selectedInventory.images[0]}
-                              Alt={product.name}
-                              ClassName={
-                                "block w-full h-auto object-cover z-[1] relative"
-                              }
-                              loadingType="lazy"
-                            />
-                          )}
-                          {selectedInventory.images[1] && (
-                            <Image
-                              Src={selectedInventory.images[1]}
-                              Alt={""}
-                              ClassName={
-                                "block w-full h-auto object-cover absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
-                              }
-                              loadingType="lazy"
-                            />
-                          )}
-                        </picture>
+                        {selectedInventory.images[0] && (
+                          <Image
+                            Src={selectedInventory.images[0]}
+                            Alt={product.name}
+                            ClassName={"w-full z-[1] relative"}
+                            loadingType="lazy"
+                          />
+                        )}
+                        {selectedInventory.images[1] && (
+                          <Image
+                            Src={selectedInventory.images[1]}
+                            Alt={product.name}
+                            ClassName={
+                              "w-full absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
+                            }
+                            loadingType="eager"
+                          />
+                        )}
                       </Link>
+
                       <div className="flex gap-2 flex-col absolute top-[12px] left-[12px] z-[3] font-semibold text-center text-black">
                         {product.discount > 0 && (
-                          <p className="uppercase text-[0.75rem] py-1 px-1.5 bg-white">
+                          <small className="uppercase text-[0.7rem] py-1 px-1.5 bg-white">
                             Giảm giá{" "}
                             {Math.floor(
                               (product.discount / product.price) * 100
                             )}
                             %
-                          </p>
+                          </small>
                         )}
                       </div>
 
@@ -147,39 +142,8 @@ function ProductSlider({ title, products }: Props) {
                         </button>
                       </div>
                     </div>
-                    <div className="p-[14px_2px]">
-                      <h2 className="text-[#969696] text-[0.9rem] sm:text-[0.95rem] font-medium uppercase mb-[6px]">
-                        {product.category.namecategory} /{" "}
-                        {product.category.gender === 1
-                          ? "Nam"
-                          : product.category.gender === 0
-                          ? "Nữ"
-                          : ""}
-                      </h2>
-                      <h2 className="text-black text-[0.9rem] sm:text-[0.95rem] font-medium capitalize mb-[6px]">
-                        {product.name}
-                      </h2>
-                      <div className="flex gap-[10px] text-[0.95rem] sm:text-[1rem] text-black mb-[8px]">
-                        {product.discount > 0 && (
-                          <del className="text-[#707072]">
-                            {product.price.toLocaleString("vi-VN")}₫
-                          </del>
-                        )}
-                        {product.discount > 0 ? (
-                          <p className="font-medium text-[#c00]">
-                            {(product.price - product.discount).toLocaleString(
-                              "vi-VN"
-                            )}
-                            ₫
-                          </p>
-                        ) : (
-                          <p className="font-medium">
-                            {product.price.toLocaleString("vi-VN")}₫
-                          </p>
-                        )}
-                      </div>
-
-                      <div className="flex space-x-2">
+                    <div className="py-[12px] space-y-[6px]">
+                      <div className="flex space-x-2 mb-[8px]">
                         {product.variants.map((variant, index) => (
                           <button
                             key={index}
@@ -193,13 +157,43 @@ function ProductSlider({ title, products }: Props) {
                             }
                             type="button"
                             title={variant.color?.namecolor}
-                            className="w-5.5 h-5.5 rounded-full border-gray-400 border"
+                            className="w-5.5 h-5.5 border-gray-400 border rounded-full"
                             style={{
                               backgroundColor: variant.color?.codecolor,
                             }}
                           ></button>
                         ))}
                       </div>
+
+                      <h5 className="text-gray-700 font-medium">
+                        {product.category.namecategory} /{" "}
+                        {product.category.gender === 1
+                          ? "Nam"
+                          : product.category.gender === 0
+                          ? "Nữ"
+                          : ""}
+                      </h5>
+                      <h5 className="text-black font-medium capitalize">
+                        {product.name}
+                      </h5>
+                      {product.discount > 0 ? (
+                        <div className="flex gap-[12px] text-black">
+                          <del className="text-[#707072] text-[1rem]">
+                            {product.price.toLocaleString("vi-VN")}₫
+                          </del>
+
+                          <h5 className="font-medium text-[#c00]">
+                            {(product.price - product.discount).toLocaleString(
+                              "vi-VN"
+                            )}
+                            ₫
+                          </h5>
+                        </div>
+                      ) : (
+                        <h5 className="font-medium">
+                          {product.price.toLocaleString("vi-VN")}₫
+                        </h5>
+                      )}
                     </div>
                   </div>
                 );

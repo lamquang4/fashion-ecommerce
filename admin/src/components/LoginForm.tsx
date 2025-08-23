@@ -50,9 +50,9 @@ function LoginForm() {
         />
       </div>
       <div className="relative max-w-[420px] w-full bg-white rounded-lg shadow-lg border border-slate-200 overflow-hidden mx-5">
-        <div className="flex items-center h-[440px] w-[200%] transition-all duration-200 ease">
-          <div className="w-1/2 px-8 bg-white transition-all duration-150 ease">
-            <h2 className="relative text-[1.5rem] text-center font-semibold">
+        <div className="flex items-center h-[440px] w-[200%]">
+          <div className="w-1/2 px-8 bg-white">
+            <h2 className="relative text-center capitalize">
               Đăng nhập quản trị viên
             </h2>
 

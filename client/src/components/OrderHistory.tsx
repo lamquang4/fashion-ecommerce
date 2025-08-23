@@ -70,7 +70,7 @@ function OrderHistory() {
 
         <div className="w-full max-w-full lg:max-w-[700px] px-[15px]">
           <div className="flex justify-between items-center mb-[25px]">
-            <h2 className="text-[1.5rem] font-semibold">Đơn hàng</h2>
+            <h2 className="capitalize">Đơn hàng</h2>
 
             <select
               onChange={handleStatusChange}
@@ -110,12 +110,10 @@ function OrderHistory() {
                         />
                       </Link>
 
-                      <div className="flex flex-col gap-[10px]">
-                        <h2 className="text-[0.9rem] font-medium">
-                          {item.product.name}
-                        </h2>
+                      <div className="flex flex-col gap-[12px]">
+                        <h5>{item.product.name}</h5>
 
-                        <div className="flex gap-[12px] text-[0.9rem] flex-wrap">
+                        <div className="flex gap-[12px] flex-wrap">
                           <span>x{item.quantity}</span>
                           <span>
                             {item.variant.size.namesize} /{" "}
@@ -142,7 +140,7 @@ function OrderHistory() {
 
                   <div>
                     <p
-                      className={`mt-[15px] text-[0.95rem] font-medium ${
+                      className={`mt-[15px] font-medium ${
                         order.status === 0
                           ? "text-gray-500"
                           : order.status === 1
@@ -170,7 +168,7 @@ function OrderHistory() {
                     </p>
 
                     <div className="flex justify-between items-center mt-[15px]">
-                      <span className="text-black text-[1rem] font-medium">
+                      <span className="text-black font-medium">
                         Tổng cộng: {order.total.toLocaleString("vi-VN")}₫
                       </span>
 
@@ -186,21 +184,15 @@ function OrderHistory() {
               ))
             ) : (
               <div className="flex justify-center items-center h-[70vh]">
-                <div>
-                  <div className="mb-[15px] flex justify-center">
-                    <Image
-                      Src={"/assets/other/empty-order.png"}
-                      Alt={""}
-                      ClassName={"w-[120px]"}
-                      loadingType="eager"
-                    />
-                  </div>
+                <div className="flex flex-col justify-center items-center gap-[15px]">
+                  <Image
+                    Src={"/assets/other/empty-order.png"}
+                    Alt={""}
+                    ClassName={"w-[120px]"}
+                    loadingType="eager"
+                  />
 
-                  <div className="flex justify-center flex-col gap-3 items-center text-center">
-                    <h2 className="text-[1.1rem] font-medium">
-                      Không có đơn hàng nào
-                    </h2>
-                  </div>
+                  <h4 className="text-gray-600">Không có đơn hàng nào</h4>
                 </div>
               </div>
             )}

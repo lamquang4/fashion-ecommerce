@@ -60,9 +60,7 @@ function CollectionBanner() {
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
       <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
-        <h1 className="font-bold text-[1.5rem] text-[#74767d]">
-          Banner bộ sưu tập
-        </h1>
+        <h2 className="text-[#74767d] capitalize">Banner bộ sưu tập</h2>
 
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
@@ -86,12 +84,12 @@ function CollectionBanner() {
                           loadingType="lazy"
                         />
                         <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
-                          <h2 className="text-[2rem] mb-[10px] font-bold">
+                          <h2 className="mb-[10px]">
                             {index === 0 ? "NAM" : "NỮ"}
                           </h2>
                           <button
                             type="button"
-                            className="text-[0.95rem] border border-white p-2 font-medium hover:scale-105"
+                            className="text-[0.9rem] uppercase border border-white p-2 font-medium hover:scale-105"
                           >
                             KHÁM PHÁ NGAY
                           </button>

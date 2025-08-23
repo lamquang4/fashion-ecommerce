@@ -109,16 +109,14 @@ function ProductList({ category, products, isLoading }: Props) {
   return (
     <section className="px-[10px] sm:px-[15px] my-[40px]">
       <div className="w-full mx-auto md:max-w-[1000px] lg:max-w-[1240px]">
-        <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550]  mb-[20px]">
-          {getTitle()}
-        </h2>
+        <h2 className="mb-[20px]">{getTitle()}</h2>
 
         <div className="flex justify-between items-center flex-wrap mb-[35px]">
           <button
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block p-2 outline-0"
+            className="bg-gray-50 border border-gray-300 text-gray-900 rounded-sm block p-2 outline-0"
             onClick={toggleAdvancedSearch}
           >
-            <span className="flex gap-2 items-center text-[0.9rem] font-medium">
+            <span className="flex gap-2 items-center font-medium">
               <VscSettings size={20} /> Bộ lọc
             </span>
           </button>
@@ -163,9 +161,7 @@ function ProductList({ category, products, isLoading }: Props) {
                         <Image
                           Src={selectedInventory.images[0]}
                           Alt={product.name}
-                          ClassName={
-                            "block w-full h-auto object-cover z-[1] relative"
-                          }
+                          ClassName={"w-full z-[1] relative"}
                           loadingType="lazy"
                         />
                       )}
@@ -174,7 +170,7 @@ function ProductList({ category, products, isLoading }: Props) {
                           Src={selectedInventory.images[1]}
                           Alt={product.name}
                           ClassName={
-                            "block w-full h-auto object-cover absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
+                            "w-full absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
                           }
                           loadingType="eager"
                         />
@@ -183,11 +179,11 @@ function ProductList({ category, products, isLoading }: Props) {
 
                     <div className="flex gap-2 flex-col absolute top-[12px] left-[12px] z-[3] font-semibold text-center text-black">
                       {product.discount > 0 && (
-                        <p className="uppercase text-[0.75rem] py-1 px-1.5 bg-white">
+                        <small className="uppercase text-[0.7rem] py-1 px-1.5 bg-white">
                           Giảm giá{" "}
                           {Math.floor((product.discount / product.price) * 100)}
                           %
-                        </p>
+                        </small>
                       )}
                     </div>
 
@@ -215,39 +211,8 @@ function ProductList({ category, products, isLoading }: Props) {
                       </button>
                     </div>
                   </div>
-                  <div className="p-[14px_2px]">
-                    <h2 className="text-[#969696] text-[0.9rem] sm:text-[0.95rem] font-medium uppercase mb-[6px]">
-                      {product.category.namecategory} /{" "}
-                      {product.category.gender === 1
-                        ? "Nam"
-                        : product.category.gender === 0
-                        ? "Nữ"
-                        : ""}
-                    </h2>
-                    <h2 className="text-black text-[0.9rem] sm:text-[0.95rem] font-medium capitalize mb-[6px]">
-                      {product.name}
-                    </h2>
-                    <div className="flex gap-[10px] text-[0.95rem] sm:text-[1rem] text-black mb-[8px]">
-                      {product.discount > 0 && (
-                        <del className="text-[#707072]">
-                          {product.price.toLocaleString("vi-VN")}₫
-                        </del>
-                      )}
-                      {product.discount > 0 ? (
-                        <p className="font-medium text-[#c00]">
-                          {(product.price - product.discount).toLocaleString(
-                            "vi-VN"
-                          )}
-                          ₫
-                        </p>
-                      ) : (
-                        <p className="font-medium">
-                          {product.price.toLocaleString("vi-VN")}₫
-                        </p>
-                      )}
-                    </div>
-
-                    <div className="flex space-x-2">
+                  <div className="py-[12px] space-y-[6px]">
+                    <div className="flex space-x-2 mb-[8px]">
                       {product.variants.map((variant, index) => (
                         <button
                           key={index}
@@ -268,6 +233,36 @@ function ProductList({ category, products, isLoading }: Props) {
                         ></button>
                       ))}
                     </div>
+
+                    <h5 className="text-gray-700 font-medium">
+                      {product.category.namecategory} /{" "}
+                      {product.category.gender === 1
+                        ? "Nam"
+                        : product.category.gender === 0
+                        ? "Nữ"
+                        : ""}
+                    </h5>
+                    <h5 className="text-black font-medium capitalize">
+                      {product.name}
+                    </h5>
+                    {product.discount > 0 ? (
+                      <div className="flex gap-[12px] text-black">
+                        <del className="text-[#707072] text-[1rem]">
+                          {product.price.toLocaleString("vi-VN")}₫
+                        </del>
+
+                        <h5 className="font-medium text-[#c00]">
+                          {(product.price - product.discount).toLocaleString(
+                            "vi-VN"
+                          )}
+                          ₫
+                        </h5>
+                      </div>
+                    ) : (
+                      <h5 className="font-medium">
+                        {product.price.toLocaleString("vi-VN")}₫
+                      </h5>
+                    )}
                   </div>
                 </div>
               );
@@ -275,21 +270,15 @@ function ProductList({ category, products, isLoading }: Props) {
           </div>
         ) : (
           <div className="flex justify-center items-center h-[60vh]">
-            <div>
-              <div className="mb-[15px] flex justify-center">
-                <Image
-                  Src={"/assets/other/notfound1.png"}
-                  Alt={""}
-                  ClassName={"w-[150px]"}
-                  loadingType="eager"
-                />
-              </div>
+            <div className="flex flex-col justify-center items-center gap-[15px]">
+              <Image
+                Src={"/assets/other/notfound1.png"}
+                Alt={""}
+                ClassName={"w-[150px]"}
+                loadingType="eager"
+              />
 
-              <div className="flex justify-center flex-col gap-3 items-center text-center">
-                <h2 className="text-[1.1rem] font-medium">
-                  Không tìm thấy sản phẩm nào
-                </h2>
-              </div>
+              <h4 className="text-gray-600">Không tìm thấy sản phẩm nào</h4>
             </div>
           </div>
         )}

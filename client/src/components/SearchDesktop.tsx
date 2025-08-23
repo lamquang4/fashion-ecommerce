@@ -1,24 +1,13 @@
 "use client";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { memo, useEffect, useState } from "react";
+import React, { memo, useState } from "react";
 import { CiSearch } from "react-icons/ci";
-import Image from "./Image";
-import useGetProductsSuggest from "@/hooks/useGetProductsSuggest";
-import Loading from "./Loading";
+import SuggestionProduct from "./SuggestionProduct";
 function SearchDesktop() {
   const router = useRouter();
 
-  const { products, setKeyword, isLoading } = useGetProductsSuggest();
-
   const [search, setSearch] = useState<string>("");
   const [focused, setFocused] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (search) {
-      setKeyword(search.trim());
-    }
-  }, [search, setKeyword]);
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -34,7 +23,7 @@ function SearchDesktop() {
       <form onSubmit={handleSearch}>
         <input
           type="text"
-          className="px-3 py-1.5 pr-7 w-[145px] border border-gray-300 text-[0.8rem] tracking-[0.9px] bg-transparent outline-none"
+          className="px-3 py-1.5 pr-7 w-[145px] border border-gray-300 text-[0.8rem] placeholder:text-[0.8rem] bg-transparent outline-none"
           required
           maxLength={50}
           placeholder="Tìm kiếm..."
@@ -52,60 +41,13 @@ function SearchDesktop() {
           className="absolute top-1/2 right-[7px] transform -translate-y-1/2 text-black flex items-center"
           type="submit"
         >
-          <CiSearch size={21} title="Tìm kiếm" />
+          <CiSearch size={20} />
         </button>
       </form>
 
       {focused && search && (
         <div className="fixed top-12 right-12 z-[12] mt-3 w-96 max-w-[calc(100%-30px)] bg-white shadow-lg border-gray-200 border">
-          <div className="p-2.5">
-            <p className="text-black font-medium text-balance">
-              Kết quả tìm kiếm cho{" "}
-              <span className="text-red-600">{search}</span>
-            </p>
-          </div>
-
-          <div className="overflow-y-auto max-h-96 flex flex-col">
-            {isLoading ? (
-              <Loading height={25} size={35} color={"#c00"} thickness={3} />
-            ) : products.length > 0 ? (
-              products.map((product) => (
-                <div className="flex w-full" key={product._id}>
-                  <Link href={`/product/${product.slug}`} className="w-full">
-                    <div className="hover:bg-[#F7F7F7] p-2.5 w-full flex gap-3.5 border-t border-gray-200">
-                      <div>
-                        <Image
-                          Src={product.variants[0].images[0]}
-                          Alt=""
-                          ClassName="w-[80px] h-full object-cover"
-                          loadingType="eager"
-                        />
-                      </div>
-
-                      <div className="flex flex-col gap-1.5 text-[0.9rem]">
-                        <h2>{product.name}</h2>
-                        {product.discount > 0 && (
-                          <del className="text-[#707072]">
-                            {product.price.toLocaleString("vi-VN")}₫
-                          </del>
-                        )}
-                        <p className="font-medium text-[#c00]">
-                          {(
-                            product.price - product.discount || product.price
-                          ).toLocaleString("vi-VN")}
-                          ₫
-                        </p>
-                      </div>
-                    </div>
-                  </Link>
-                </div>
-              ))
-            ) : (
-              <p className="p-4 text-center text-[0.9rem] text-gray-500">
-                Không tìm thấy kết quả
-              </p>
-            )}
-          </div>
+          <SuggestionProduct search={search} />
         </div>
       )}
     </div>

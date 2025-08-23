@@ -46,15 +46,13 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
           </button>
         </div>
 
-        <ul className="py-[30px]">
+        <ul className="py-[30px] font-semibold text-[0.9rem] uppercase">
           <li className="border-b border-gray-300">
             <div
               onClick={() => toggleOpen(`abc`)}
               className="w-full cursor-pointer flex justify-between items-center"
             >
-              <p className="text-black text-[0.9rem] font-medium py-4 uppercase">
-                Nam
-              </p>
+              <p className="text-black font-medium py-4">Nam</p>
               <button>
                 {openMenus[`abc`] ? (
                   <FaMinus className="text-[#3b3a3a]" size={15} />
@@ -73,8 +71,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                 <li className="my-[10px]">
                   <Link
                     href={`/collection/nam`}
-                    onClick={toggleMenu}
-                    className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                    className="py-[8px] text-[0.9rem] text-[#777777] font-medium hover:text-black"
                   >
                     Đồ nam
                   </Link>
@@ -83,8 +80,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                   <li className="my-[10px]" key={category._id}>
                     <Link
                       href={`/collection/${category.slug}`}
-                      onClick={toggleMenu}
-                      className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                      className="py-[8px] text-[0.9rem] text-[#777777] font-medium hover:text-black"
                     >
                       {category.namecategory}
                     </Link>
@@ -99,9 +95,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               onClick={() => toggleOpen(`xyz`)}
               className="w-full cursor-pointer flex justify-between items-center"
             >
-              <p className="text-black text-[0.9rem] font-medium py-4 uppercase">
-                Nữ
-              </p>
+              <p className="text-black font-medium py-4">Nữ</p>
               <button>
                 {openMenus[`xyz`] ? (
                   <FaMinus className="text-[#3b3a3a]" size={15} />
@@ -120,8 +114,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                 <li className="my-[10px]">
                   <Link
                     href={`/collection/nu`}
-                    onClick={toggleMenu}
-                    className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                    className="py-[8px] text-[0.9rem] text-[#777777] font-medium hover:text-black"
                   >
                     Đồ nữ
                   </Link>
@@ -130,8 +123,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                   <li className="my-[10px]" key={category._id}>
                     <Link
                       href={`/collection/${category.slug}`}
-                      onClick={toggleMenu}
-                      className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                      className="py-[8px] text-[0.9rem] text-[#777777] font-medium hover:text-black"
                     >
                       {category.namecategory}
                     </Link>
@@ -146,9 +138,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               onClick={() => toggleOpen(`klo`)}
               className="w-full cursor-pointer flex justify-between items-center"
             >
-              <p className="text-black text-[0.9rem] font-medium py-4 uppercase">
-                Giảm giá
-              </p>
+              <p className="text-black font-medium py-4">Giảm giá</p>
               <button>
                 {openMenus[`klo`] ? (
                   <FaMinus className="text-[#3b3a3a]" size={15} />
@@ -166,8 +156,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               <li className="my-[10px]">
                 <Link
                   href={"/sale/nam"}
-                  onClick={toggleMenu}
-                  className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                  className="py-[8px] text-[0.9rem] text-[#777777] font-medium hover:text-black"
                 >
                   Giảm giá đồ nam
                 </Link>
@@ -176,8 +165,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               <li className="my-[10px]">
                 <Link
                   href={"/sale/nu"}
-                  onClick={toggleMenu}
-                  className="py-[8px] text-[0.938rem] text-[#777777] font-medium hover:text-black"
+                  className="py-[8px] text-[0.9rem] text-[#777777] font-medium hover:text-black"
                 >
                   Giảm giá đồ nữ
                 </Link>
