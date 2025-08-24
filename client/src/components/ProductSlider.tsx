@@ -144,38 +144,42 @@ function ProductSlider({ title, products }: Props) {
                     </div>
                     <div className="py-[12px] space-y-[6px]">
                       <div className="flex space-x-2 mb-[8px]">
-                        {product.variants.map((variant, index) => (
-                          <button
-                            key={index}
-                            onClick={() =>
-                              setSelectedInventoryIndexes((prev) => ({
-                                ...prev,
-                                [product._id]: product.variants.findIndex(
-                                  (i) => i.color?._id === variant.color?._id
-                                ),
-                              }))
-                            }
-                            type="button"
-                            title={variant.color?.namecolor}
-                            className="w-5.5 h-5.5 border-gray-400 border rounded-full"
-                            style={{
-                              backgroundColor: variant.color?.codecolor,
-                            }}
-                          ></button>
-                        ))}
+                        {product.variants.map((variant, index) => {
+                          return (
+                            <button
+                              key={index}
+                              onClick={() =>
+                                setSelectedInventoryIndexes((prev) => ({
+                                  ...prev,
+                                  [product._id]: product.variants.findIndex(
+                                    (i) => i.color?._id === variant.color?._id
+                                  ),
+                                }))
+                              }
+                              type="button"
+                              title={variant.color?.namecolor}
+                              className="w-5.5 h-5.5 border-gray-400 border rounded-full"
+                              style={{
+                                backgroundColor: variant.color?.codecolor,
+                              }}
+                            ></button>
+                          );
+                        })}
                       </div>
 
-                      <h5 className="text-gray-700 font-medium">
+                      <h5 className="  font-medium capitalize">
+                        {product.name}
+                      </h5>
+
+                      <p className="font-medium text-[#444]">
                         {product.category.namecategory} /{" "}
                         {product.category.gender === 1
                           ? "Nam"
                           : product.category.gender === 0
                           ? "Nữ"
                           : ""}
-                      </h5>
-                      <h5 className="  font-medium capitalize">
-                        {product.name}
-                      </h5>
+                      </p>
+
                       {product.discount > 0 ? (
                         <div className="flex gap-[12px]  ">
                           <del className="text-[#707072] text-[1rem]">

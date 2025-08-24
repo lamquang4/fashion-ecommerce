@@ -169,9 +169,9 @@ function ProductDetail() {
                   <button
                     type="button"
                     onClick={handleNextImage}
-                    className="absolute right-1.5 top-1/2 -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300"
+                    className="absolute border border-gray-100 right-1.5 top-1/2 w-10 h-10 bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
                   >
-                    <GrNext size={28} />
+                    <GrNext size={16} />
                   </button>
 
                   {mainImage && (
@@ -195,9 +195,9 @@ function ProductDetail() {
                   <button
                     type="button"
                     onClick={handlePrevImage}
-                    className="absolute left-1.5 top-1/2 -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300"
+                    className="absolute left-1.5 top-1/2 w-10 h-10 border border-gray-100 bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
                   >
-                    <GrPrevious size={28} />
+                    <GrPrevious size={16} />
                   </button>
                 </div>
               </div>
@@ -264,7 +264,7 @@ function ProductDetail() {
               )}
             </div>
 
-            <div className="space-y-[15px]">
+            <div className="space-y-[20px]">
               {coupons.length > 0 && (
                 <div className="space-y-[8px]">
                   <p className="text-gray-700 font-medium mb-[5px]">

@@ -8,7 +8,7 @@ import { LuDoorOpen } from "react-icons/lu";
 import { memo } from "react";
 function SideBarMenu() {
   const pathname = usePathname();
-  const activeClass = "bg-gray-100 border-l-[3.5px] border-black";
+  const activeClass = "bg-gray-100 border-l-[3px] border-black";
   return (
     <div className="w-full max-w-full lg:max-w-[300px]">
       <div className="text-[0.9rem] font-medium flex flex-col gap-2">

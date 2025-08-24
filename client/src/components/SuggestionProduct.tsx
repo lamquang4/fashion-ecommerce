@@ -2,7 +2,7 @@
 import Link from "next/link";
 import Loading from "./Loading";
 import Image from "./Image";
-import { useEffect } from "react";
+import { memo, useEffect } from "react";
 import useGetProductsSuggest from "@/hooks/useGetProductsSuggest";
 type prop = {
   search: string;
@@ -75,4 +75,4 @@ function SuggestionProduct({ search }: prop) {
   );
 }
 
-export default SuggestionProduct;
+export default memo(SuggestionProduct);

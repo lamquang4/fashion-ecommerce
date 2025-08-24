@@ -76,29 +76,25 @@ function AddressInfo() {
                   <div key={address._id}>
                     <hr className="border-gray-300 my-[20px]" />
                     <div className="flex justify-between flex-wrap gap-y-[8px]">
-                      <div className="flex flex-col gap-[8px] max-w-[360px]">
-                        <div className="flex gap-[8px] items-center">
-                          <span className="flex gap-[5px] items-center text-[#6c757d]">
-                            Họ và tên:
-                            <span className="font-medium  ">
-                              {address.fullname}
-                            </span>
+                      <div className="flex flex-col gap-[8px]">
+                        <p className="font-medium">
+                          Họ và tên:{" "}
+                          <span className="font-normal">
+                            {address.fullname}
                           </span>
-                        </div>
+                        </p>
 
-                        <span className="flex gap-[5px] items-center text-[#6c757d]">
-                          Số điện thoại:
-                          <span className="font-medium  ">
-                            {address.phone}
-                          </span>
-                        </span>
+                        <p className="font-medium">
+                          Số điện thoại:{" "}
+                          <span className="font-normal">{address.phone}</span>
+                        </p>
 
-                        <span className="flex gap-[5px] items-center text-[#6c757d]">
-                          Địa chỉ:
-                          <p className="font-medium  ">
+                        <p className="font-medium">
+                          Địa chỉ:{" "}
+                          <span className="font-normal">
                             {address.speaddress}, {address.city}, {address.ward}
-                          </p>
-                        </span>
+                          </span>
+                        </p>
                       </div>
 
                       <div className="flex gap-[25px] items-center">
