@@ -133,11 +133,7 @@ export async function PUT(
                 folder: `aura-fashion/product`, // tên thư mục
                 public_id: `${slug}-${Date.now()}`, // tên hình
                 resource_type: "image",
-                transformation: [
-                  { width: 800, height: 1000, crop: "fill" },
-                  { quality: "auto" },
-                  { fetch_format: "auto" },
-                ],
+                transformation: [{ quality: "auto" }, { fetch_format: "auto" }],
               },
               (error, result) => {
                 if (error) reject(error);

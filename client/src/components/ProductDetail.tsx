@@ -161,77 +161,73 @@ function ProductDetail() {
   return (
     <section className="w-full mx-auto mt-0 lg:mt-[40px] mb-[40px]">
       <div className="flex justify-center flex-wrap gap-[40px] w-full">
-        <div>
-          <div className="flex flex-col md:flex-col-reverse xl:flex-row flex-wrap gap-[20px] lg:sticky lg:top-[100px]">
-            <div className=" md:order-2 relative grow overflow-hidden bg-white">
-              <div className="w-full xl:w-[450px] flex flex-col gap-[20px]">
-                <div className="relative group">
-                  <button
-                    type="button"
-                    onClick={handleNextImage}
-                    className="absolute border border-gray-100 right-1.5 top-1/2 w-10 h-10 bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
-                  >
-                    <GrNext size={16} />
-                  </button>
+        <div className="flex flex-col md:flex-col-reverse xl:flex-row flex-wrap gap-[20px] lg:sticky lg:top-[100px]">
+          <div className=" md:order-2 relative grow overflow-hidden bg-white">
+            <div className="w-full xl:w-[450px] flex flex-col gap-[20px]">
+              <div className="relative group">
+                <button
+                  type="button"
+                  onClick={handleNextImage}
+                  className="absolute border border-gray-100 right-1.5 top-1/2 w-10 h-10 bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
+                >
+                  <GrNext size={16} />
+                </button>
 
-                  {mainImage && (
-                    <div
-                      className="cursor-pointer"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        e.preventDefault();
-                        handleOpenViewer(mainImage);
-                      }}
-                    >
-                      <Image
-                        Src={mainImage}
-                        Alt=""
-                        ClassName="w-full h-full object-cover "
-                        loadingType="eager"
-                      />
-                    </div>
-                  )}
-
-                  <button
-                    type="button"
-                    onClick={handlePrevImage}
-                    className="absolute left-1.5 top-1/2 w-10 h-10 border border-gray-100 bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
+                {mainImage && (
+                  <div
+                    className="cursor-pointer"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      handleOpenViewer(mainImage);
+                    }}
                   >
-                    <GrPrevious size={16} />
-                  </button>
-                </div>
+                    <Image
+                      Src={mainImage}
+                      Alt=""
+                      ClassName="w-full h-full object-cover "
+                      loadingType="eager"
+                    />
+                  </div>
+                )}
+
+                <button
+                  type="button"
+                  onClick={handlePrevImage}
+                  className="absolute left-1.5 top-1/2 w-10 h-10 border border-gray-100 bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
+                >
+                  <GrPrevious size={16} />
+                </button>
               </div>
             </div>
+          </div>
 
-            <div className="md:order-1 flex justify-center">
-              <div className="max-h-[500px] max-w-[400px] flex flex-row xl:flex-col gap-[15px] overflow-x-auto overflow-y-auto">
-                {product?.variants.map((variant) =>
-                  variant.images.map((img) => (
-                    <div
-                      key={`${variant._id}-${img}`}
-                      className={`shrink-0 border  overflow-hidden cursor-pointer w-[60px] ${
-                        mainImage === img
-                          ? "border-gray-500"
-                          : "border-gray-300"
-                      }`}
-                      onMouseEnter={() => {
-                        setMainImage(img);
-                        const indexInAll = allImages.indexOf(img);
-                        if (indexInAll !== -1) {
-                          setCurrentImageIndex(indexInAll);
-                        }
-                      }}
-                    >
-                      <Image
-                        Src={img}
-                        Alt=""
-                        ClassName="w-full h-full object-cover"
-                        loadingType="eager"
-                      />
-                    </div>
-                  ))
-                )}
-              </div>
+          <div className="md:order-1 flex justify-center">
+            <div className="max-h-[500px] max-w-[400px] flex flex-row xl:flex-col gap-[15px] overflow-x-auto overflow-y-auto">
+              {product?.variants.map((variant) =>
+                variant.images.map((img) => (
+                  <div
+                    key={`${variant._id}-${img}`}
+                    className={`shrink-0 border  overflow-hidden cursor-pointer w-[70px] ${
+                      mainImage === img ? "border-gray-500" : "border-gray-300"
+                    }`}
+                    onMouseEnter={() => {
+                      setMainImage(img);
+                      const indexInAll = allImages.indexOf(img);
+                      if (indexInAll !== -1) {
+                        setCurrentImageIndex(indexInAll);
+                      }
+                    }}
+                  >
+                    <Image
+                      Src={img}
+                      Alt=""
+                      ClassName="w-full h-full object-cover"
+                      loadingType="eager"
+                    />
+                  </div>
+                ))
+              )}
             </div>
           </div>
         </div>

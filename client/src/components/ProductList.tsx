@@ -22,6 +22,8 @@ function ProductList({ category, products, isLoading }: Props) {
   const pathname = usePathname();
   const search = searchParams.get("q");
 
+  console.log(products);
+
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState<boolean>(false);
   const [selectedInventoryIndexes, setSelectedInventoryIndexes] = useState<
     Record<string, number>
