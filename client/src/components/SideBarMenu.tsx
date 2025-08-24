@@ -8,14 +8,14 @@ import { LuDoorOpen } from "react-icons/lu";
 import { memo } from "react";
 function SideBarMenu() {
   const pathname = usePathname();
-  const activeClass = "bg-gray-200 rounded-md font-semibold";
+  const activeClass = "bg-gray-100 border-l-[3.5px] border-black";
   return (
     <div className="w-full max-w-full lg:max-w-[300px]">
-      <div className="text-[0.9rem]   font-medium flex flex-col gap-2">
+      <div className="text-[0.9rem] font-medium flex flex-col gap-2">
         <Link
           href="/account"
-          className={`py-3.5 px-4 ${
-            pathname === "/account" ? activeClass : ""
+          className={`py-3.5 px-4   ${
+            pathname === "/account" ? activeClass : "hover:bg-gray-100"
           }`}
         >
           <div className="flex items-center gap-2.5">
@@ -26,8 +26,8 @@ function SideBarMenu() {
 
         <Link
           href="/address"
-          className={`py-3.5 px-4 ${
-            pathname === "/address" ? activeClass : ""
+          className={`py-3.5 px-4   ${
+            pathname === "/address" ? activeClass : "hover:bg-gray-100"
           }`}
         >
           <div className="flex items-center gap-2.5">
@@ -38,10 +38,10 @@ function SideBarMenu() {
 
         <Link
           href="/order"
-          className={`py-3.5 px-4 ${
+          className={`py-3.5 px-4   ${
             pathname === "/order" || pathname.startsWith("/order-detail")
               ? activeClass
-              : ""
+              : "hover:bg-gray-100"
           }`}
         >
           <div className="flex items-center gap-2.5">
@@ -53,7 +53,7 @@ function SideBarMenu() {
         <button
           type="button"
           onClick={() => signOut()}
-          className="py-3.5 px-4 hover:bg-gray-100 text-left text-red-500 font-medium"
+          className="py-3.5 px-4   text-left text-red-500 font-medium hover:bg-gray-100"
         >
           <div className="flex items-center gap-2.5">
             <LuDoorOpen size={22} />

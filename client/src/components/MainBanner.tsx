@@ -42,8 +42,10 @@ function MainBanner() {
                         loadingType="eager"
                       />
                     </picture>
-                    <div className="text-white absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full">
-                      <h2 className="uppercase mb-5">Thời trang hiện đại</h2>
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full">
+                      <h2 className="uppercase mb-5 text-white">
+                        Thời trang hiện đại
+                      </h2>
                       <div className="flex gap-7 justify-center items-center">
                         <Link
                           href={"/collection/nu"}

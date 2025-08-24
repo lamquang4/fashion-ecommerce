@@ -24,7 +24,10 @@ function AccountInfo() {
 
             <div>
               <div className="w-full">
-                <label htmlFor="" className="block text-left text-[0.9rem]">
+                <label
+                  htmlFor=""
+                  className="block text-left text-[0.9rem] font-medium"
+                >
                   Họ và tên:
                 </label>
                 <input
@@ -35,7 +38,10 @@ function AccountInfo() {
                   readOnly
                 />
 
-                <label htmlFor="" className="block text-left text-[0.9rem]">
+                <label
+                  htmlFor=""
+                  className="block text-left text-[0.9rem] font-medium"
+                >
                   Email:
                 </label>
                 <input
@@ -58,7 +64,10 @@ function AccountInfo() {
                   readOnly
                 />
 
-                <label htmlFor="" className="block text-left text-[0.9rem]">
+                <label
+                  htmlFor=""
+                  className="block text-left text-[0.9rem] font-medium"
+                >
                   Sinh nhật:
                 </label>
                 <input
