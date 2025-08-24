@@ -4,7 +4,7 @@ import { useCallback, useMemo, useState } from "react";
 import AdvancedSearch from "./AdvancedSearch";
 import Image from "./Image";
 import { VscSettings } from "react-icons/vsc";
-import { Category, Product } from "@/types/type";
+import { Category, Product, Variant } from "@/types/type";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
@@ -22,16 +22,21 @@ function ProductList({ category, products, isLoading }: Props) {
   const pathname = usePathname();
   const search = searchParams.get("q");
 
-  console.log(products);
-
   const [advancedSearchOpen, setAdvancedSearchOpen] = useState<boolean>(false);
-  const [selectedInventoryIndexes, setSelectedInventoryIndexes] = useState<
-    Record<string, number>
+  const [selectedVariant, setSelectedVariant] = useState<
+    Record<string, Variant>
   >({});
 
   const { wishlist, mutate } = useGetWishlist();
   const { addWishlist } = useAddWishlist();
   const { removeItem } = useRemoveItemWishlist();
+
+  const handleSelectVariant = (productId: string, variant: Variant) => {
+    setSelectedVariant((prev) => ({
+      ...prev,
+      [productId]: variant,
+    }));
+  };
 
   const wishlistVariantId = useMemo(() => {
     return new Set(
@@ -43,20 +48,12 @@ function ProductList({ category, products, isLoading }: Props) {
     setAdvancedSearchOpen((prev) => !prev);
   }, []);
 
-  const handleAddToWishlist = async (
-    product: Product,
-    inventoryIndex: number
-  ) => {
-    const variant = product.variants[inventoryIndex];
-
-    await addWishlist({
-      variant: variant._id,
-    });
+  const handleAddToWishlist = async (variant: Variant) => {
+    await addWishlist({ variant: variant._id });
     mutate();
   };
 
-  const handleRemove = async (product: Product, inventoryIndex: number) => {
-    const variant = product.variants[inventoryIndex];
+  const handleRemove = async (variant: Variant) => {
     await removeItem({
       wishlistId: wishlist?._id || "",
       variant: variant._id,
@@ -109,7 +106,7 @@ function ProductList({ category, products, isLoading }: Props) {
   };
 
   return (
-    <div className="w-full mx-auto md:max-w-[1000px] lg:max-w-[1240px]">
+    <div>
       <h2 className="mb-[20px]">{getTitle()}</h2>
 
       <div className="flex justify-between items-center flex-wrap mb-[35px]">
@@ -149,26 +146,23 @@ function ProductList({ category, products, isLoading }: Props) {
           }`}
         >
           {products.map((product) => {
-            const selectedIndex = selectedInventoryIndexes[product._id] || 0;
-            const selectedInventory = product.variants[selectedIndex];
-
-            const isInWishlist = wishlistVariantId.has(selectedInventory._id);
-
+            const variant = selectedVariant[product._id] ?? product.variants[0];
+            const isInWishlist = wishlistVariantId.has(variant._id);
             return (
               <div key={product._id}>
                 <div className="relative group">
                   <Link href={`/product/${product.slug}`}>
-                    {selectedInventory.images[0] && (
+                    {variant.images[0] && (
                       <Image
-                        Src={selectedInventory.images[0]}
+                        Src={variant.images[0]}
                         Alt={product.name}
                         ClassName={"w-full z-[1] relative"}
                         loadingType="lazy"
                       />
                     )}
-                    {selectedInventory.images[1] && (
+                    {variant.images[1] && (
                       <Image
-                        Src={selectedInventory.images[1]}
+                        Src={variant.images[1]}
                         Alt={product.name}
                         ClassName={
                           "w-full absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
@@ -193,8 +187,8 @@ function ProductList({ category, products, isLoading }: Props) {
                       className="p-1 transition-colors duration-200 hover:scale-112  "
                       onClick={() => {
                         isInWishlist
-                          ? handleRemove(product, selectedIndex)
-                          : handleAddToWishlist(product, selectedIndex);
+                          ? handleRemove(variant)
+                          : handleAddToWishlist(variant);
                       }}
                     >
                       <svg viewBox="0 0 256 256" width="22" height="22">
@@ -218,12 +212,7 @@ function ProductList({ category, products, isLoading }: Props) {
                         <button
                           key={index}
                           onClick={() =>
-                            setSelectedInventoryIndexes((prev) => ({
-                              ...prev,
-                              [product._id]: product.variants.findIndex(
-                                (i) => i.color?._id === variant.color?._id
-                              ),
-                            }))
+                            handleSelectVariant(product._id, variant)
                           }
                           type="button"
                           title={variant.color?.namecolor}

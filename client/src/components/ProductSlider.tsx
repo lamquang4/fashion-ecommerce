@@ -4,7 +4,7 @@ import "keen-slider/keen-slider.min.css";
 import Link from "next/link";
 import Image from "./Image";
 import { useMemo, useState } from "react";
-import { Product } from "@/types/type";
+import { Product, Variant } from "@/types/type";
 import useAddWishlist from "@/hooks/useAddWishlist";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
@@ -14,18 +14,39 @@ interface Props {
   products: Product[];
 }
 function ProductSlider({ title, products }: Props) {
-  const [selectedInventoryIndexes, setSelectedInventoryIndexes] = useState<{
-    [productId: string]: number;
-  }>({});
+  const [selectedVariant, setSelectedVariant] = useState<
+    Record<string, Variant>
+  >({});
+
   const { wishlist, mutate } = useGetWishlist();
   const { addWishlist } = useAddWishlist();
   const { removeItem } = useRemoveItemWishlist();
+
+  const handleSelectVariant = (productId: string, variant: Variant) => {
+    setSelectedVariant((prev) => ({
+      ...prev,
+      [productId]: variant,
+    }));
+  };
 
   const wishlistVariantId = useMemo(() => {
     return new Set(
       wishlist?.productsInWishlist.map((item: any) => item.variant._id)
     );
   }, [wishlist?.productsInWishlist]);
+
+  const handleAddToWishlist = async (variant: Variant) => {
+    await addWishlist({ variant: variant._id });
+    mutate();
+  };
+
+  const handleRemove = async (variant: Variant) => {
+    await removeItem({
+      wishlistId: wishlist?._id || "",
+      variant: variant._id,
+    });
+    mutate();
+  };
 
   const [sliderRef] = useKeenSlider({
     loop: false,
@@ -46,57 +67,32 @@ function ProductSlider({ title, products }: Props) {
     },
   });
 
-  const handleAddToWishlist = async (
-    product: Product,
-    inventoryIndex: number
-  ) => {
-    const variant = product.variants[inventoryIndex];
-
-    await addWishlist({
-      variant: variant._id,
-    });
-    mutate();
-  };
-
-  const handleRemove = async (product: Product, inventoryIndex: number) => {
-    const variant = product.variants[inventoryIndex];
-    await removeItem({
-      wishlistId: wishlist?._id || "",
-      variant: variant._id,
-    });
-    mutate();
-  };
-
   return (
     <>
       {products.length > 0 && (
-        <section className="px-[10px] sm:px-[15px] mb-[40px]">
-          <div className="w-full mx-auto md:max-w-[1000px] lg:max-w-[1240px]">
+        <section className="mb-[40px]">
+          <div className="mx-auto max-w-[1230px] w-full px-[10px] sm:px-[15px]">
             <h2 className="mb-[20px]">{title}</h2>
             <div ref={sliderRef} className="keen-slider">
               {products.map((product) => {
-                const selectedIndex =
-                  selectedInventoryIndexes[product._id] || 0;
-                const selectedInventory = product.variants[selectedIndex];
-
-                const isInWishlist = wishlistVariantId.has(
-                  selectedInventory._id
-                );
+                const variant =
+                  selectedVariant[product._id] ?? product.variants[0];
+                const isInWishlist = wishlistVariantId.has(variant._id);
                 return (
                   <div key={product._id} className="keen-slider__slide">
                     <div className="relative group">
                       <Link href={`/product/${product.slug}`}>
-                        {selectedInventory.images[0] && (
+                        {variant.images[0] && (
                           <Image
-                            Src={selectedInventory.images[0]}
+                            Src={variant.images[0]}
                             Alt={product.name}
                             ClassName={"w-full z-[1] relative"}
                             loadingType="lazy"
                           />
                         )}
-                        {selectedInventory.images[1] && (
+                        {variant.images[1] && (
                           <Image
-                            Src={selectedInventory.images[1]}
+                            Src={variant.images[1]}
                             Alt={product.name}
                             ClassName={
                               "w-full absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
@@ -124,8 +120,8 @@ function ProductSlider({ title, products }: Props) {
                           className="p-1 transition-colors duration-200 hover:scale-112  "
                           onClick={() => {
                             isInWishlist
-                              ? handleRemove(product, selectedIndex)
-                              : handleAddToWishlist(product, selectedIndex);
+                              ? handleRemove(variant)
+                              : handleAddToWishlist(variant);
                           }}
                         >
                           <svg viewBox="0 0 256 256" width="22" height="22">
@@ -149,12 +145,7 @@ function ProductSlider({ title, products }: Props) {
                             <button
                               key={index}
                               onClick={() =>
-                                setSelectedInventoryIndexes((prev) => ({
-                                  ...prev,
-                                  [product._id]: product.variants.findIndex(
-                                    (i) => i.color?._id === variant.color?._id
-                                  ),
-                                }))
+                                handleSelectVariant(product._id, variant)
                               }
                               type="button"
                               title={variant.color?.namecolor}

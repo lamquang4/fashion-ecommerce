@@ -66,13 +66,13 @@ export interface Product {
   slug: string;
   status: number;
   category: Category;
-  variants: Inventory[];
+  variants: Variant[];
   createdAt: string;
   totalSold?: number;
   totalQuantity?: number;
 }
 
-export interface Inventory {
+export interface Variant {
   _id: string;
   product: Product;
   images: string[];

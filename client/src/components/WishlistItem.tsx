@@ -16,8 +16,8 @@ function WishlistItem() {
     mutate();
   };
   return (
-    <section className="max-w-[1230px] mx-auto my-[40px]">
-      <div className=" px-[10px] sm:px-[15px]">
+    <section className="my-[40px]">
+      <div className="mx-auto max-w-[1230px] w-full px-[10px] sm:px-[15px]">
         <h2 className="mb-[20px]">
           Yêu thích ({wishlist?.productsInWishlist.length})
         </h2>
@@ -44,8 +44,10 @@ function WishlistItem() {
 
                       <div className="flex justify-between gap-4 w-full">
                         <div className="flex flex-col gap-2">
-                          <h5 className=" ">{item.name}</h5>
-                          <p className="font-medium  ">
+                          <h5 className="font-medium capitalize">
+                            {item.name}
+                          </h5>
+                          <p className="font-medium">
                             Màu: {item.variant.color.namecolor}
                           </p>
                         </div>

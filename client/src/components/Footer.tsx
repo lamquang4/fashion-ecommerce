@@ -7,7 +7,7 @@ import { memo } from "react";
 function Footer() {
   return (
     <footer className="bg-gray-50 border-t border-gray-200">
-      <div className="mx-auto w-full max-w-screen-xl px-[10px] sm:px-[15px]">
+      <div className="mx-auto max-w-[1230px] w-full px-[10px] sm:px-[15px]">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] py-[60px]">
           <div>
             <Link href={"/"}>
@@ -31,7 +31,7 @@ function Footer() {
               <li className="py-[8px]">
                 <Link
                   href="/"
-                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem] hover:text-black"
+                  className="inline-block max-w-max text-gray-500 font-medium text-[0.9rem] hover:text-black"
                 >
                   Trang chủ
                 </Link>
@@ -40,7 +40,7 @@ function Footer() {
               <li className="py-[8px]">
                 <Link
                   href="/collection/all"
-                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem] hover:text-black"
+                  className="inline-block max-w-max text-gray-500 font-medium text-[0.9rem] hover:text-black"
                 >
                   Sản phẩm
                 </Link>
@@ -59,7 +59,7 @@ function Footer() {
               <li className="py-[8px]">
                 <Link
                   href="/"
-                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem] hover:text-black"
+                  className="inline-block max-w-max text-gray-500 font-medium text-[0.9rem] hover:text-black"
                 >
                   Trang chủ
                 </Link>
@@ -68,7 +68,7 @@ function Footer() {
               <li className="py-[8px]">
                 <Link
                   href="/collection/all"
-                  className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem] hover:text-black"
+                  className="inline-block max-w-max text-gray-500 font-medium text-[0.9rem] hover:text-black"
                 >
                   Sản phẩm
                 </Link>
@@ -88,7 +88,7 @@ function Footer() {
                 <ul className="flex justify-start items-center gap-3">
                   <li className="py-[8px]">
                     <Link
-                      className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
+                      className="inline-block max-w-max text-gray-500 font-medium text-[0.9rem]"
                       href={"/"}
                       title="Instagram"
                     >
@@ -97,7 +97,7 @@ function Footer() {
                   </li>
                   <li className="py-[8px]">
                     <Link
-                      className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
+                      className="inline-block max-w-max text-gray-500 font-medium text-[0.9rem]"
                       href={"/"}
                       title="Facebook"
                     >
@@ -106,7 +106,7 @@ function Footer() {
                   </li>
                   <li className="py-[8px]">
                     <Link
-                      className="inline-block max-w-max text-[#707072] font-medium text-[0.9rem]"
+                      className="inline-block max-w-max text-gray-500 font-medium text-[0.9rem]"
                       href={"/"}
                       title="Youtube"
                     >
@@ -120,7 +120,7 @@ function Footer() {
         </div>
 
         <div className="text-center py-[15px]">
-          <p className="text-black font-medium">Quanglam 2025 © Aura</p>
+          <p className="font-medium text-gray-500">© Aura Vietnam 2025</p>
         </div>
       </div>
     </footer>

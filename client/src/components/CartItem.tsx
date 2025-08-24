@@ -128,11 +128,9 @@ function CartItem() {
   };
 
   return (
-    <section className="max-w-[1230px] mx-auto my-[40px]">
-      <div className="px-[10px] sm:px-[15px]">
-        <h2 className="text-[1.5rem] sm:text-[1.7rem] font-[550] mb-[35px]">
-          Giỏ hàng ({totalQuantity})
-        </h2>
+    <section className="my-[40px]">
+      <div className="max-w-[1230px] mx-auto px-[10px] sm:px-[15px]">
+        <h2 className="mb-[20px]">Giỏ hàng ({totalQuantity})</h2>
         {cart?.productsInCart && cart.productsInCart.length > 0 ? (
           <form onSubmit={handleSubmit}>
             <div className="flex gap-8 w-full lg:flex-row flex-col">

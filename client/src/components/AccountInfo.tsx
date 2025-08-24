@@ -14,16 +14,16 @@ function AccountInfo() {
     }
   }, [status, router]);
   return (
-    <section className="w-full my-[40px]">
-      <div className="flex justify-center flex-wrap gap-8">
+    <section className="my-[40px]">
+      <div className=" w-full flex justify-center flex-wrap gap-6">
         <SideBarMenu />
 
         <div className="w-full max-w-full lg:max-w-[700px] px-[15px]">
           <div className="space-y-[20px]">
             <h2 className="capitalize">Tài khoản</h2>
 
-            <div>
-              <div className="w-full">
+            <div className="flex flex-col gap-[15px]">
+              <div className="space-y-[5px]">
                 <label
                   htmlFor=""
                   className="block text-left text-[0.9rem] font-medium"
@@ -33,11 +33,13 @@ function AccountInfo() {
                 <input
                   type="text"
                   name="fullname"
-                  className="w-full rounded-[5px] p-[6px_10px] text-[0.9rem] border border-gray-300 mt-[5px] not-last:mb-[15px] focus:outline-0"
+                  className="w-full rounded-sm p-[6px_10px] text-[0.9rem] border border-gray-300  focus:outline-0"
                   value={session?.user.fullname || ""}
                   readOnly
                 />
+              </div>
 
+              <div className="space-y-[5px]">
                 <label
                   htmlFor=""
                   className="block text-left text-[0.9rem] font-medium"
@@ -47,23 +49,30 @@ function AccountInfo() {
                 <input
                   type="text"
                   name="email"
-                  className="w-full rounded-[5px] p-[6px_10px] text-[0.9rem] border border-gray-300 mt-[5px] not-last:mb-[15px] focus:outline-0"
+                  className="w-full rounded-sm p-[6px_10px] text-[0.9rem] border border-gray-300  focus:outline-0"
                   value={session?.user.email || ""}
                   readOnly
                 />
+              </div>
 
-                <label htmlFor="" className="block text-left text-[0.9rem]">
+              <div className="space-y-[5px]">
+                <label
+                  htmlFor=""
+                  className="block text-left text-[0.9rem] font-medium"
+                >
                   Số điện thoại:
                 </label>
                 <input
                   type="number"
                   name="phone"
                   inputMode="numeric"
-                  className="w-full rounded-[5px] p-[6px_10px] text-[0.9rem] border border-gray-300 mt-[5px] not-last:mb-[15px] focus:outline-0"
+                  className="w-full rounded-sm p-[6px_10px] text-[0.9rem] border border-gray-300  focus:outline-0"
                   value={session?.user.phone || ""}
                   readOnly
                 />
+              </div>
 
+              <div className="space-y-[5px]">
                 <label
                   htmlFor=""
                   className="block text-left text-[0.9rem] font-medium"
@@ -73,7 +82,7 @@ function AccountInfo() {
                 <input
                   type="date"
                   name="birthday"
-                  className="w-full rounded-[5px] p-[6px_10px] text-[0.9rem] border border-gray-300 mt-[5px] not-last:mb-[15px] focus:outline-0"
+                  className="w-full rounded-sm p-[6px_10px] text-[0.9rem] border border-gray-300  focus:outline-0"
                   value={session?.user.birthday.slice(0, 10) || ""}
                   readOnly
                 />

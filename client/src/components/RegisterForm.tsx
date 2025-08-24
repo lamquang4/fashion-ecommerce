@@ -61,19 +61,16 @@ function RegisterForm() {
     }
   };
   return (
-    <section className="my-[60px] px-[10px] sm:px-[15px]">
-      <div className="flex items-center justify-center">
-        <div className="w-full bg-white md:mt-0 sm:max-w-md xl:p-0">
-          <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
+    <section className="my-[60px]">
+      <div className="mx-auto max-w-[1230px] w-full px-[10px] sm:px-[15px]">
+        <div className="flex items-center justify-center">
+          <div className="max-w-sm w-full">
             <h2 className="uppercase mb-[20px] text-center text-black">
               Đăng kí
             </h2>
             <form className="space-y-[15px]" onSubmit={handleSubmit}>
-              <div>
-                <label
-                  htmlFor=""
-                  className="block mb-2 text-[0.9rem] font-medium"
-                >
+              <div className="space-y-[5px]">
+                <label htmlFor="" className="block text-[0.9rem] font-medium">
                   Họ và tên
                 </label>
                 <input
@@ -87,11 +84,8 @@ function RegisterForm() {
                 />
               </div>
 
-              <div>
-                <label
-                  htmlFor=""
-                  className="block mb-2 text-[0.9rem] font-medium"
-                >
+              <div className="space-y-[5px]">
+                <label htmlFor="" className="block text-[0.9rem] font-medium">
                   Email
                 </label>
                 <input
@@ -105,11 +99,8 @@ function RegisterForm() {
                 />
               </div>
 
-              <div>
-                <label
-                  htmlFor=""
-                  className="block mb-2 text-[0.9rem] font-medium"
-                >
+              <div className="space-y-[5px]">
+                <label htmlFor="" className="block text-[0.9rem] font-medium">
                   Số điện thoại
                 </label>
                 <input
@@ -124,11 +115,8 @@ function RegisterForm() {
                 />
               </div>
 
-              <div>
-                <label
-                  htmlFor=""
-                  className="block mb-2 text-[0.9rem] font-medium"
-                >
+              <div className="space-y-[5px]">
+                <label htmlFor="" className="block text-[0.9rem] font-medium">
                   Sinh nhật
                 </label>
                 <input
@@ -142,11 +130,8 @@ function RegisterForm() {
                 />
               </div>
 
-              <div>
-                <label
-                  htmlFor=""
-                  className="block mb-2 text-[0.9rem] font-medium"
-                >
+              <div className="space-y-[5px]">
+                <label htmlFor="" className="block text-[0.9rem] font-medium">
                   Mật khẩu
                 </label>
                 <input

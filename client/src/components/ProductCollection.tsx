@@ -20,8 +20,8 @@ function ProductCollection() {
   } = useGetProductsSlug(slug);
 
   return (
-    <>
-      <section className="px-[10px] sm:px-[15px] my-[40px]">
+    <section className="my-[40px]">
+      <div className="mx-auto max-w-[1230px] w-full px-[10px] sm:px-[15px]">
         <ProductList
           products={products}
           category={category}
@@ -33,8 +33,8 @@ function ProductCollection() {
           currentPage={currentPage}
           totalItems={totalItems}
         />
-      </section>
-    </>
+      </div>
+    </section>
   );
 }
 
