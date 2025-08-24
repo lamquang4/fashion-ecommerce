@@ -16,7 +16,7 @@ function InputImage1({ InputId, onFileSelect, sizeIcon }: InputImageProp) {
   return (
     <div className="flex justify-center items-center bg-white rounded-full p-1.5 border border-gray-300">
       <label htmlFor={InputId} className="cursor-pointer">
-        <RiImageEditFill size={sizeIcon} color="black" />
+        <RiImageEditFill size={sizeIcon} />
       </label>
 
       <input

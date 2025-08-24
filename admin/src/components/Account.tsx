@@ -14,7 +14,7 @@ function Account() {
             <h5 className="font-bold text-[#74767d]">Thông tin cá nhân</h5>
 
             <div className="flex flex-col gap-1 w-full ">
-              <label htmlFor="" className="text-[0.9rem] text-black">
+              <label htmlFor="" className="text-[0.9rem]  font-medium">
                 Họ tên
               </label>
               <input
@@ -22,12 +22,12 @@ function Account() {
                 name="fullname"
                 value={session?.user.fullname || ""}
                 readOnly
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               />
             </div>
 
             <div className="flex flex-col gap-1 w-full ">
-              <label htmlFor="" className="text-[0.9rem] text-black">
+              <label htmlFor="" className="text-[0.9rem]  font-medium">
                 Email
               </label>
               <input
@@ -35,13 +35,13 @@ function Account() {
                 name="email"
                 value={session?.user.email || ""}
                 readOnly
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               />
             </div>
 
             <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
               <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label htmlFor="" className="text-[0.9rem]  font-medium">
                   Số điện thoại
                 </label>
                 <input
@@ -50,12 +50,12 @@ function Account() {
                   inputMode="numeric"
                   value={session?.user.phone || ""}
                   readOnly
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                 />
               </div>
 
               <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label htmlFor="" className="text-[0.9rem]  font-medium">
                   Sinh nhật
                 </label>
                 <input
@@ -63,13 +63,13 @@ function Account() {
                   name="birthday"
                   value={session?.user.birthday.slice(0, 10) || ""}
                   readOnly
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                 />
               </div>
             </div>
 
             <div className="flex flex-col gap-1 w-full ">
-              <label htmlFor="" className="text-[0.9rem] text-black">
+              <label htmlFor="" className="text-[0.9rem]  font-medium">
                 Chức vụ
               </label>
               <input
@@ -85,7 +85,7 @@ function Account() {
                     : ""
                 }
                 readOnly
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               />
             </div>
           </div>

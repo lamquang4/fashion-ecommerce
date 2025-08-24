@@ -75,22 +75,22 @@ function Order() {
     {
       title: "Tổng đơn",
       number: orders.length,
-      icon1: <RiShoppingBag4Line size={22} color="#0AB39C" />,
+      icon1: <RiShoppingBag4Line size={25} />,
     },
     {
       title: "Đơn giao thành công",
       number: totalStatus3,
-      icon1: <RiTruckLine size={22} color="#0AB39C" />,
+      icon1: <RiTruckLine size={25} />,
     },
     {
       title: "Đơn đã hủy",
       number: totalStatus4,
-      icon1: <TbCancel size={22} color="#0AB39C" />,
+      icon1: <TbCancel size={25} />,
     },
     {
       title: "Đơn chờ xác nhận",
       number: totalStatus0,
-      icon1: <LuClock size={22} color="#0AB39C" />,
+      icon1: <LuClock size={25} />,
     },
   ];
 
@@ -126,30 +126,24 @@ function Order() {
           <form onSubmit={handleSubmit}>
             <div className="flex gap-[15px] flex-wrap">
               <div className="relative flex gap-1.5 items-center">
-                <label
-                  htmlFor=""
-                  className="text-[0.9rem] text-black font-medium"
-                >
+                <label htmlFor="" className="text-[0.9rem]   font-medium">
                   Từ:
                 </label>
                 <input
                   name="start"
                   type="date"
-                  className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400 text-gray-900"
+                  className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400  "
                 />
               </div>
 
               <div className="relative flex gap-1.5 items-center">
-                <label
-                  htmlFor=""
-                  className="text-[0.9rem] text-black font-medium"
-                >
+                <label htmlFor="" className="text-[0.9rem]   font-medium">
                   Đến:
                 </label>
                 <input
                   name="end"
                   type="date"
-                  className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400 text-gray-900"
+                  className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400  "
                 />
               </div>
 
@@ -166,24 +160,24 @@ function Order() {
           <InputSearch />
         </div>
 
-        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
+        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full text-[0.9rem]">
           <thead>
             <tr className="bg-[#E9EDF2] text-left">
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Mã đơn</th>
+              <th className="p-[1rem]  ">Mã đơn</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Khách hàng</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Thanh toán</th>
+              <th className="p-[1rem]  ">Khách hàng</th>
+              <th className="p-[1rem]  ">Thanh toán</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Tổng tiền</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày tạo</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem] relative">
+              <th className="p-[1rem]  ">Tổng tiền</th>
+              <th className="p-[1rem]  ">Ngày tạo</th>
+              <th className="p-[1rem]   relative">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
                   paramName="status"
                 />
               </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
+              <th className="p-[1rem]  ">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -199,19 +193,17 @@ function Order() {
                   <td className="p-[1rem] text-[#22BAA0] font-semibold text-[0.9rem]">
                     {order.orderCode}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
-                    {order.fullname}
-                  </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">{order.fullname}</td>
+                  <td className="p-[1rem]  ">
                     {order.paymethod === 1 ? "Momo" : "COD"}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {order.total!.toLocaleString("vi-VN")}₫
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {new Date(order.createdAt).toLocaleDateString("vi-VN")}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     <select
                       disabled={isLoadingUpdateStatusOrder}
                       name="status"
@@ -219,7 +211,7 @@ function Order() {
                       onChange={(e) =>
                         handleUpdateStatus(order._id, parseInt(e.target.value))
                       }
-                      className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                      className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
                     >
                       {order.status === 0 && (
                         <>
@@ -252,7 +244,7 @@ function Order() {
                       )}
                     </select>
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     <div className="flex items-center gap-[15px]">
                       <Link href={`/order-detail/${order._id}`}>
                         <LiaExternalLinkAltSolid

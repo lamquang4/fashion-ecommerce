@@ -54,15 +54,15 @@ function Color() {
           <InputSearch />
         </div>
 
-        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
+        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full text-[0.9rem]">
           <thead>
             <tr className="bg-[#E9EDF2] text-left">
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Tên màu</th>
+              <th className="p-[1rem]  ">Tên màu</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Mã màu</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày thêm</th>
+              <th className="p-[1rem]  ">Mã màu</th>
+              <th className="p-[1rem]  ">Ngày thêm</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
+              <th className="p-[1rem]  ">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -84,15 +84,15 @@ function Color() {
                       {color.namecolor}
                     </div>
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {color.codecolor}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {new Date(color.createdAt as string).toLocaleDateString(
                       "vi-VN"
                     )}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     <div className="flex items-center gap-[15px]">
                       <Link href={`/edit-color/${color._id}`}>
                         <LiaEdit size={22} className="text-[#076ffe]" />

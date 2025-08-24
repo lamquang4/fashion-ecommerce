@@ -87,7 +87,7 @@ function Header() {
                       <li className="my-2">
                         <Link
                           href={`/collection/nam`}
-                          className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                          className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                         >
                           Đồ nam
                         </Link>
@@ -96,7 +96,7 @@ function Header() {
                         <li className="my-2" key={index}>
                           <Link
                             href={`/collection/${category.slug}`}
-                            className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                            className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                           >
                             {category.namecategory}
                           </Link>
@@ -115,7 +115,7 @@ function Header() {
                       <li className="my-2">
                         <Link
                           href={`/collection/nu`}
-                          className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                          className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                         >
                           Đồ nữ
                         </Link>
@@ -124,7 +124,7 @@ function Header() {
                         <li className="my-2" key={index}>
                           <Link
                             href={`/collection/${category.slug}`}
-                            className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                            className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                           >
                             {category.namecategory}
                           </Link>
@@ -143,7 +143,7 @@ function Header() {
                     <li className="my-2">
                       <Link
                         href={"/sale/nam"}
-                        className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                        className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                       >
                         Giảm giá đồ nam
                       </Link>
@@ -152,7 +152,7 @@ function Header() {
                     <li className="my-2">
                       <Link
                         href={"/sale/nu"}
-                        className="text-black text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                        className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                       >
                         Giảm giá đồ nữ
                       </Link>

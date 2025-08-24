@@ -53,22 +53,22 @@ function Dashboard() {
     {
       title: "Doanh thu",
       number: `${totalRevenue.toLocaleString("vi-VN")}₫`,
-      icon1: <FaRegMoneyBillAlt size={22} color="#0AB39C" />,
+      icon1: <FaRegMoneyBillAlt size={25} />,
     },
     {
       title: "Tổng đơn",
       number: orders.length,
-      icon1: <RiShoppingBag4Line size={22} color="#0AB39C" />,
+      icon1: <RiShoppingBag4Line size={25} />,
     },
     {
       title: "Khách hàng",
       number: customers.length,
-      icon1: <IoPeopleOutline size={22} color="#0AB39C" />,
+      icon1: <IoPeopleOutline size={25} />,
     },
     {
       title: "Số lượng bán ra",
       number: totalSold,
-      icon1: <PiTShirtBold size={22} color="#0AB39C" />,
+      icon1: <PiTShirtBold size={25} />,
     },
   ];
 
@@ -199,22 +199,20 @@ function Dashboard() {
         </div>
 
         <div className=" bg-white w-full overflow-auto">
-          <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
+          <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full text-[0.9rem]">
             <thead>
               <tr className="bg-[#E9EDF2] text-left">
-                <th className="p-[1rem] text-[#444] text-[0.9rem]">Sản phẩm</th>
+                <th className="p-[1rem]  ">Sản phẩm</th>
 
-                <th className="p-[1rem] text-[#444] text-[0.9rem]">Giá</th>
+                <th className="p-[1rem]  ">Giá</th>
 
-                <th className="p-[1rem] text-[#444] text-[0.9rem]">Số lượng</th>
+                <th className="p-[1rem]  ">Số lượng</th>
 
-                <th className="p-[1rem] text-[#444] text-[0.9rem]">Màu sắc</th>
+                <th className="p-[1rem]  ">Màu sắc</th>
 
-                <th className="p-[1rem] text-[#444] text-[0.9rem]">Danh mục</th>
+                <th className="p-[1rem]  ">Danh mục</th>
 
-                <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                  Hành động
-                </th>
+                <th className="p-[1rem]  ">Hành động</th>
               </tr>
             </thead>
             <tbody>
@@ -243,13 +241,11 @@ function Dashboard() {
                           />
                         </div>
 
-                        <p className="font-medium  text-[#444]">
-                          {product.name}
-                        </p>
+                        <p className="font-medium">{product.name}</p>
                       </div>
                     </td>
 
-                    <td className="p-[1rem] text-[0.9rem]  text-[#444]">
+                    <td className="p-[1rem]">
                       {product.discount > 0 ? (
                         <div className="flex gap-[12px] text-black">
                           <del className="text-[#707072] text-[1rem]">
@@ -269,14 +265,14 @@ function Dashboard() {
                         </p>
                       )}
                     </td>
-                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem]  ">
                       <div className="flex flex-col gap-1.5">
                         <p>Còn lại: {product.totalQuantity}</p>
                         <p>Đã bán: {product.totalSold}</p>
                       </div>
                     </td>
 
-                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem]  ">
                       <div className="flex gap-1.5">
                         {product.variants.map((variant) => (
                           <div
@@ -291,7 +287,7 @@ function Dashboard() {
                       </div>
                     </td>
 
-                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem]  ">
                       {product.category.namecategory}/
                       {product.category.gender === 1
                         ? "Nam"
@@ -300,7 +296,7 @@ function Dashboard() {
                         : ""}
                     </td>
 
-                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem]  ">
                       <div className="flex items-center gap-[15px]">
                         <Link href={`/edit-product/${product._id}`}>
                           <LiaExternalLinkAltSolid

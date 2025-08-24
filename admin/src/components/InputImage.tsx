@@ -33,12 +33,12 @@ function InputImage({
     <div className="flex items-center justify-center w-full">
       <label
         htmlFor={InputId}
-        className="flex flex-col items-center justify-center w-full h-auto min-h-62 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
+        className="flex flex-col items-center justify-center w-full h-auto min-h-62 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 "
       >
         {!previewImages.length ? (
           <div className="flex flex-col items-center justify-center py-8">
             <svg
-              className="w-12 h-12 mb-4 text-gray-500 dark:text-gray-400"
+              className="w-12 h-12 mb-4"
               aria-hidden="true"
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -53,10 +53,10 @@ function InputImage({
               />
             </svg>
 
-            <p className="mb-2 text-gray-500">
+            <p className="mb-2">
               <span className="font-semibold">Bấm để tải hoặc kéo và thả</span>
             </p>
-            <p className=" text-gray-500">PNG, JPG, WEBP</p>
+            <p>PNG, JPG, WEBP</p>
           </div>
         ) : (
           <div className="flex gap-3 px-[15px] flex-wrap py-5 justify-center">

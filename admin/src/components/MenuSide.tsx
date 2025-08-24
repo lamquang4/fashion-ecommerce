@@ -170,10 +170,10 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
             loadingType="eager"
           />
         </div>
-        <ul className="flex flex-col gap-[15px]">
+        <ul className="flex flex-col gap-[15px] font-semibold">
           {menuData.map((group, groupIndex) => (
             <div key={groupIndex} className="flex flex-col gap-[10px]">
-              <p className="text-gray-700 uppercase">{group.title}</p>
+              <p className="  uppercase">{group.title}</p>
               {group.items.map((item, index) => (
                 <li key={index}>
                   {item.children ? (

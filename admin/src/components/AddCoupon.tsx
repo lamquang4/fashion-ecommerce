@@ -122,12 +122,10 @@ function AddCoupon() {
 
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
-            <h5 className="font-bold text-[#74767d]">
-              Thông tin chung
-            </h5>
+            <h5 className="font-bold text-[#74767d]">Thông tin chung</h5>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.95rem] text-black">
+              <label htmlFor="" className="text-[0.95rem] font-medium">
                 Mã giảm giá
               </label>
               <input
@@ -137,14 +135,14 @@ function AddCoupon() {
                 onChange={handleChange}
                 maxLength={12}
                 required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900 uppercase"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400   uppercase"
               />
             </div>
 
             <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
               <div className="flex flex-col gap-1 w-full">
                 <div className="flex flex-col gap-1">
-                  <label htmlFor="" className="text-[0.95rem] text-black">
+                  <label htmlFor="" className="text-[0.95rem] font-medium">
                     Số lượng
                   </label>
                   <input
@@ -154,14 +152,14 @@ function AddCoupon() {
                     value={data.amount}
                     onChange={handleChange}
                     required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                   />
                 </div>
               </div>
 
               <div className="flex flex-col gap-1 w-full">
                 <div className="flex flex-col gap-1">
-                  <label htmlFor="" className="text-[0.95rem] text-black">
+                  <label htmlFor="" className="text-[0.95rem] font-medium">
                     Số lần dùng
                   </label>
                   <input
@@ -171,14 +169,14 @@ function AddCoupon() {
                     value={data.limit}
                     onChange={handleChange}
                     required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                   />
                 </div>
               </div>
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.95rem] text-black">
+              <label htmlFor="" className="text-[0.95rem] font-medium">
                 Loại giảm giá
               </label>
               <select
@@ -186,7 +184,7 @@ function AddCoupon() {
                 value={data.discountType}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               >
                 <option value="">Chọn loại giảm giá</option>
                 <option value="0">Phần trăm %</option>
@@ -196,7 +194,7 @@ function AddCoupon() {
 
             {data.discountType !== "" && (
               <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="" className="text-[0.95rem] text-black">
+                <label htmlFor="" className="text-[0.95rem] font-medium">
                   {`Giá trị ${
                     data.discountType === "0"
                       ? "phần trăm"
@@ -212,13 +210,13 @@ function AddCoupon() {
                   value={data.discountValue}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400   w-full"
                 />
               </div>
             )}
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.95rem] text-black">
+              <label htmlFor="" className="text-[0.95rem] font-medium">
                 Giá trị tiền cố định tối thiểu của đơn hàng để áp dụng phiếu (0
                 để áp dụng cho mọi đơn hàng)
               </label>
@@ -229,13 +227,13 @@ function AddCoupon() {
                 value={data.minOrderValue}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               />
             </div>
 
             {data.discountType === "0" && (
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.95rem] text-black">
+                <label htmlFor="" className="text-[0.95rem] font-medium">
                   Giá trị tiền cố định giảm tối đa (chỉ áp dụng loại phiếu %)
                 </label>
                 <input
@@ -245,14 +243,14 @@ function AddCoupon() {
                   value={data.maxDiscountValue}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                 />
               </div>
             )}
 
             <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
               <div className="w-full flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.95rem] text-black">
+                <label htmlFor="" className="text-[0.95rem] font-medium">
                   Ngày bắt đầu
                 </label>
                 <input
@@ -261,11 +259,11 @@ function AddCoupon() {
                   value={data.startDate}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                 />
               </div>
               <div className="w-full flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.95rem] text-black">
+                <label htmlFor="" className="text-[0.95rem] font-medium">
                   Ngày kết thúc
                 </label>
                 <input
@@ -274,7 +272,7 @@ function AddCoupon() {
                   value={data.expiryDate}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                 />
               </div>
             </div>

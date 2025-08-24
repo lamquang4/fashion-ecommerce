@@ -72,11 +72,9 @@ function AddAdmin() {
 
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-            <h5 className="font-bold text-[#74767d]">
-              Thông tin chung
-            </h5>
+            <h5 className="font-bold text-[#74767d]">Thông tin chung</h5>
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.9rem] text-black">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
                 Họ tên
               </label>
               <input
@@ -85,12 +83,12 @@ function AddAdmin() {
                 value={data.fullname}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.9rem] text-black">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
                 Email
               </label>
               <input
@@ -99,13 +97,13 @@ function AddAdmin() {
                 value={data.email}
                 onChange={handleChange}
                 required
-                className="lowercase border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="lowercase border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               />
             </div>
 
             <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
               <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   Số điện thoại
                 </label>
                 <input
@@ -115,12 +113,12 @@ function AddAdmin() {
                   value={data.phone}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                 />
               </div>
 
               <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   Sinh nhật
                 </label>
                 <input
@@ -129,13 +127,13 @@ function AddAdmin() {
                   value={data.birthday}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                 />
               </div>
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.9rem] text-black">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
                 Chức vụ
               </label>
               <select
@@ -143,7 +141,7 @@ function AddAdmin() {
                 value={data.role}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               >
                 <option value="">Chọn chức vụ</option>
                 <option value="0">Quản trị viên</option>
@@ -153,7 +151,7 @@ function AddAdmin() {
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.9rem] text-black">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
                 Mật khẩu
               </label>
               <input
@@ -162,7 +160,7 @@ function AddAdmin() {
                 value={data.password}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               />
             </div>
           </div>

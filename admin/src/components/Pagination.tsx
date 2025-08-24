@@ -86,7 +86,7 @@ function Pagination({ totalPages, currentPage, limit, totalItems }: Props) {
             >
               <button
                 type="button"
-                className="h-8.5 w-8.5 inline-flex justify-center items-center gap-x-2 text-[0.9rem] text-gray-800 border border-gray-300"
+                className="h-8.5 w-8.5 inline-flex justify-center items-center gap-x-2 text-[0.9rem]   border border-gray-300"
                 aria-label="Previous"
                 title="Previous"
                 disabled={currentPage <= 1}
@@ -102,7 +102,7 @@ function Pagination({ totalPages, currentPage, limit, totalItems }: Props) {
                       type="button"
                       disabled
                       key={`ellipsis-${index}`}
-                      className="group h-8.5 w-8.5 flex justify-center items-center text-gray-800 text-[0.9rem] border border-gray-300"
+                      className="group h-8.5 w-8.5 flex justify-center items-center   text-[0.9rem] border border-gray-300"
                     >
                       ...
                     </button>
@@ -116,7 +116,7 @@ function Pagination({ totalPages, currentPage, limit, totalItems }: Props) {
                     className={`h-8.5 w-8.5 flex justify-center items-center font-medium text-[0.9rem] border border-gray-300 ${
                       currentPage === page
                         ? "bg-[#22BAA0] text-white"
-                        : "text-gray-800 hover:bg-gray-50"
+                        : " hover:bg-gray-50"
                     }`}
                   >
                     {page}
@@ -129,7 +129,7 @@ function Pagination({ totalPages, currentPage, limit, totalItems }: Props) {
                 onClick={() =>
                   currentPage < totalPages && goToPage(currentPage + 1)
                 }
-                className="h-8.5 w-8.5 inline-flex justify-center items-center gap-x-2 text-[0.9rem] border border-gray-300 text-gray-800"
+                className="h-8.5 w-8.5 inline-flex justify-center items-center gap-x-2 text-[0.9rem] border border-gray-300  "
               >
                 <GrFormNext />
               </button>

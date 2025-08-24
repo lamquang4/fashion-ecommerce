@@ -30,16 +30,16 @@ function Inventory() {
           <InputSearch />
         </div>
 
-        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
+        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full text-[0.9rem]">
           <thead>
             <tr className="bg-[#E9EDF2] text-left">
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Sản phẩm</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Màu</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Kích thước</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Số lượng</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày tạo</th>
+              <th className="p-[1rem]  ">Sản phẩm</th>
+              <th className="p-[1rem]  ">Màu</th>
+              <th className="p-[1rem]  ">Kích thước</th>
+              <th className="p-[1rem]  ">Số lượng</th>
+              <th className="p-[1rem]  ">Ngày tạo</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
+              <th className="p-[1rem]  ">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -82,20 +82,16 @@ function Inventory() {
                         {inventory.color.namecolor}
                       </div>
                     </td>
-                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
-                      {inv.size.namesize}
-                    </td>
-                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
-                      {inv.quantity}
-                    </td>
+                    <td className="p-[1rem]  ">{inv.size.namesize}</td>
+                    <td className="p-[1rem]  ">{inv.quantity}</td>
 
-                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem]  ">
                       {new Date(
                         inventory.createdAt as string
                       ).toLocaleDateString("vi-VN")}
                     </td>
 
-                    <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                    <td className="p-[1rem]  ">
                       <div className="flex items-center gap-[15px]">
                         <Link href={`/edit-product/${inventory.product._id}`}>
                           <LiaExternalLinkAltSolid

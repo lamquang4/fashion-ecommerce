@@ -535,7 +535,7 @@ function CheckoutForm() {
 
                         <div className="flex w-full flex-col my-auto gap-[5px]">
                           <span className="font-semibold">{item.name}</span>
-                          <span className="text-black">
+                          <span className=" ">
                             {item.variant.size.namesize} /{" "}
                             {item.variant.color.namecolor}
                           </span>
@@ -622,7 +622,7 @@ function CheckoutForm() {
                                 : ""}
                             </h3>
 
-                            <p className="font-medium text-black">
+                            <p className="font-medium  ">
                               {coupon.minOrderValue
                                 ? `Đơn hàng phải từ ${coupon.minOrderValue.toLocaleString(
                                     "vi-VN"
@@ -635,7 +635,7 @@ function CheckoutForm() {
                                 )}₫`}
                             </p>
 
-                            <p className="font-medium text-black">
+                            <p className="font-medium  ">
                               Mã: {coupon.code}
                             </p>
                           </div>
@@ -675,7 +675,7 @@ function CheckoutForm() {
 
                 <hr className="border-gray-300 my-[15px]" />
 
-                <div className="flex items-center justify-between text-black">
+                <div className="flex items-center justify-between  ">
                   <h4>Tổng cộng</h4>
                   <h4>{finalTotal.toLocaleString("vi-VN")}₫</h4>
                 </div>

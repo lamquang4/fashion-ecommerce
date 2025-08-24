@@ -89,27 +89,27 @@ function Product() {
           <InputSearch />
         </div>
 
-        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
+        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full text-[0.9rem]">
           <thead>
             <tr className="bg-[#E9EDF2] text-left">
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Sản phẩm</th>
+              <th className="p-[1rem]  ">Sản phẩm</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Giá</th>
+              <th className="p-[1rem]  ">Giá</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Số lượng</th>
+              <th className="p-[1rem]  ">Số lượng</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Màu sắc</th>
+              <th className="p-[1rem]  ">Màu sắc</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày thêm</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Danh mục</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem] relative">
+              <th className="p-[1rem]  ">Ngày thêm</th>
+              <th className="p-[1rem]  ">Danh mục</th>
+              <th className="p-[1rem]   relative">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
                   paramName="status"
                 />
               </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
+              <th className="p-[1rem]  ">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -139,9 +139,9 @@ function Product() {
                     </div>
                   </td>
 
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {product.discount > 0 ? (
-                      <div className="flex gap-[12px] text-black">
+                      <div className="flex gap-[12px]  ">
                         <del className="text-[#707072] text-[1rem]">
                           {product.price.toLocaleString("vi-VN")}₫
                         </del>
@@ -160,14 +160,14 @@ function Product() {
                     )}
                   </td>
 
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     <div className="flex flex-col gap-1.5">
                       <p>Tồn kho: {product.totalQuantity}</p>
                       <p>Đã bán: {product.totalSold}</p>
                     </div>
                   </td>
 
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     <div className="flex gap-1.5">
                       {product.variants.map((variant, index) => (
                         <div
@@ -182,11 +182,11 @@ function Product() {
                     </div>
                   </td>
 
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {new Date(product.createdAt).toLocaleDateString("vi-VN")}
                   </td>
 
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {product.category.namecategory}/
                     {product.category.gender === 1
                       ? "Nam"
@@ -195,7 +195,7 @@ function Product() {
                       : ""}
                   </td>
 
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {product.status === 1
                       ? "Hiện"
                       : product.status === 0
@@ -203,7 +203,7 @@ function Product() {
                       : ""}
                   </td>
 
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     <div className="flex items-center gap-[15px]">
                       <button
                         disabled={isLoadingVisibleProduct}

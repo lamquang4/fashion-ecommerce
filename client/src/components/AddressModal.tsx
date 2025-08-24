@@ -133,11 +133,11 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
         <div className="relative w-full max-w-lg max-h-full">
           <div className="relative p-[25px_15px] bg-white z-20">
             <div className="flex items-center justify-between">
-              <h4 className="text-black  uppercase">Địa chỉ của bạn</h4>
+              <h4 className="uppercase">Địa chỉ của bạn</h4>
 
               <button
                 type="button"
-                className="text-gray-600 bg-transparent hover:text-black ms-auto"
+                className=" bg-transparent ms-auto"
                 onClick={toggleMenu}
               >
                 <HiMiniXMark size={25} />
@@ -151,7 +151,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                 <div className="col-span-2 w-full">
                   <label
                     htmlFor="fullname"
-                    className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-[0.9rem] font-medium"
                   >
                     Họ và tên
                   </label>
@@ -161,7 +161,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                     required
                     onChange={handleChange}
                     value={data.fullname}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
+                    className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
                     placeholder="Họ và tên"
                   />
                 </div>
@@ -169,7 +169,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                 <div className="col-span-2 w-full">
                   <label
                     htmlFor="phone"
-                    className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-[0.9rem] font-medium"
                   >
                     Số điện thoại
                   </label>
@@ -180,7 +180,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                     name="phone"
                     onChange={handleChange}
                     value={data.phone}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
+                    className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
                     placeholder="Số điện thoại"
                   />
                 </div>
@@ -188,7 +188,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                 <div className="col-span-2 w-full">
                   <label
                     htmlFor="speaddress"
-                    className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-[0.9rem] font-medium"
                   >
                     Địa chỉ cụ thể
                   </label>
@@ -198,7 +198,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                     required
                     onChange={handleChange}
                     value={data.speaddress}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
+                    className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
                     placeholder="Địa chỉ cụ thể"
                   />
                 </div>
@@ -206,7 +206,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                 <div className="col-span-2 w-full">
                   <label
                     htmlFor="city"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium"
                   >
                     Tỉnh/thành phố
                   </label>
@@ -218,7 +218,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                       setSelectedProvinceName(e.target.value);
                       setSelectedWard("");
                     }}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
+                    className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
                   >
                     <option value="">Chọn tỉnh/thành phố</option>
                     {provinces?.map((province) => (
@@ -232,7 +232,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                 <div className="col-span-2 w-full">
                   <label
                     htmlFor="ward"
-                    className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+                    className="block mb-2 text-sm font-medium"
                   >
                     Phường/xã
                   </label>
@@ -242,7 +242,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
                     disabled={!selectedProvince}
                     value={selectedWard}
                     onChange={(e) => setSelectedWard(e.target.value)}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
+                    className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
                   >
                     <option value="">Chọn phường/xã</option>
                     {selectedProvince?.wards.map((ward, idx) => (

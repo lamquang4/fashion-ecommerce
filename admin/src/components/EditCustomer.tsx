@@ -97,7 +97,7 @@ function EditCustomer() {
               Thông tin chung
             </h5>
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.9rem] text-black">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
                 Họ tên
               </label>
               <input
@@ -106,12 +106,12 @@ function EditCustomer() {
                 required
                 value={data.fullname}
                 onChange={handleChange}
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.9rem] text-black">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
                 Email
               </label>
               <input
@@ -120,13 +120,13 @@ function EditCustomer() {
                 required
                 value={data.email}
                 onChange={handleChange}
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               />
             </div>
 
             <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
               <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   Số điện thoại
                 </label>
                 <input
@@ -136,12 +136,12 @@ function EditCustomer() {
                   value={data.phone}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                 />
               </div>
 
               <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   Sinh nhật
                 </label>
                 <input
@@ -150,13 +150,13 @@ function EditCustomer() {
                   required
                   value={data.birthday}
                   onChange={handleChange}
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                 />
               </div>
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.9rem] text-black">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
                 Mật khẩu mới
               </label>
               <input
@@ -164,7 +164,7 @@ function EditCustomer() {
                 name="password"
                 value={data.password}
                 onChange={handleChange}
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               />
             </div>
           </div>

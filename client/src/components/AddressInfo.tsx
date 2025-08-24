@@ -80,7 +80,7 @@ function AddressInfo() {
                         <div className="flex gap-[8px] items-center">
                           <span className="flex gap-[5px] items-center text-[#6c757d]">
                             Họ và tên:
-                            <span className="font-medium text-black">
+                            <span className="font-medium  ">
                               {address.fullname}
                             </span>
                           </span>
@@ -88,14 +88,14 @@ function AddressInfo() {
 
                         <span className="flex gap-[5px] items-center text-[#6c757d]">
                           Số điện thoại:
-                          <span className="font-medium text-black">
+                          <span className="font-medium  ">
                             {address.phone}
                           </span>
                         </span>
 
                         <span className="flex gap-[5px] items-center text-[#6c757d]">
                           Địa chỉ:
-                          <p className="font-medium text-black">
+                          <p className="font-medium  ">
                             {address.speaddress}, {address.city}, {address.ward}
                           </p>
                         </span>

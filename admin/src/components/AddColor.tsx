@@ -50,7 +50,7 @@ function AddColor() {
             </h5>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.9rem] text-black">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
                 Tên màu
               </label>
               <input
@@ -60,12 +60,12 @@ function AddColor() {
                 onChange={handleChange}
                 maxLength={20}
                 required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.9rem] text-black">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
                 Chọn màu: {data.codecolor}
               </label>
               <input
@@ -74,7 +74,7 @@ function AddColor() {
                 value={data.codecolor}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 p-1 text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-1 text-[0.9rem] w-full outline-none focus:border-gray-400  "
               />
             </div>
           </div>

@@ -71,7 +71,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                 <li className="my-[10px]">
                   <Link
                     href={`/collection/nam`}
-                    className="py-[8px] text-[0.9rem] text-[#777777] font-medium hover:text-black"
+                    className="py-[8px] text-[0.9rem] text-[#444] font-medium hover:text-black"
                   >
                     Đồ nam
                   </Link>
@@ -80,7 +80,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                   <li className="my-[10px]" key={category._id}>
                     <Link
                       href={`/collection/${category.slug}`}
-                      className="py-[8px] text-[0.9rem] text-[#777777] font-medium hover:text-black"
+                      className="py-[8px] text-[0.9rem] text-[#444] font-medium hover:text-black"
                     >
                       {category.namecategory}
                     </Link>
@@ -114,7 +114,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                 <li className="my-[10px]">
                   <Link
                     href={`/collection/nu`}
-                    className="py-[8px] text-[0.9rem] text-[#777777] font-medium hover:text-black"
+                    className="py-[8px] text-[0.9rem] text-[#444] font-medium hover:text-black"
                   >
                     Đồ nữ
                   </Link>
@@ -123,7 +123,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                   <li className="my-[10px]" key={category._id}>
                     <Link
                       href={`/collection/${category.slug}`}
-                      className="py-[8px] text-[0.9rem] text-[#777777] font-medium hover:text-black"
+                      className="py-[8px] text-[0.9rem] text-[#444] font-medium hover:text-black"
                     >
                       {category.namecategory}
                     </Link>
@@ -156,7 +156,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               <li className="my-[10px]">
                 <Link
                   href={"/sale/nam"}
-                  className="py-[8px] text-[0.9rem] text-[#777777] font-medium hover:text-black"
+                  className="py-[8px] text-[0.9rem] text-[#444] font-medium hover:text-black"
                 >
                   Giảm giá đồ nam
                 </Link>
@@ -165,7 +165,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               <li className="my-[10px]">
                 <Link
                   href={"/sale/nu"}
-                  className="py-[8px] text-[0.9rem] text-[#777777] font-medium hover:text-black"
+                  className="py-[8px] text-[0.9rem] text-[#444] font-medium hover:text-black"
                 >
                   Giảm giá đồ nữ
                 </Link>

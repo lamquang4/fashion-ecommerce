@@ -49,7 +49,7 @@ function LoginForm() {
           loadingType="eager"
         />
       </div>
-      <div className="relative max-w-[420px] w-full bg-white rounded-lg shadow-lg border border-slate-200 overflow-hidden mx-5">
+      <div className="relative max-w-[420px] w-full bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden mx-5">
         <div className="flex items-center h-[440px] w-[200%]">
           <div className="w-1/2 px-8 bg-white">
             <h2 className="relative text-center capitalize">
@@ -57,7 +57,7 @@ function LoginForm() {
             </h2>
 
             <form action="" onSubmit={handleSubmit}>
-              <div className="relative h-12 w-full mt-8 focus-within:text-blue-500 text-gray-500">
+              <div className="relative h-12 w-full mt-8 focus-within:text-blue-500">
                 <AiOutlineMail
                   className="z-99 absolute left-0 top-1/2 transform -translate-y-1/2  transition-all duration-200 focus-within:text-blue-500"
                   size={20}
@@ -72,7 +72,7 @@ function LoginForm() {
                 />
               </div>
 
-              <div className="relative h-12 w-full mt-8 focus-within:text-blue-500 text-gray-500">
+              <div className="relative h-12 w-full mt-8 focus-within:text-blue-500">
                 <GoLock
                   className="absolute left-0 top-1/2 transform -translate-y-1/2 transition-all duration-200 focus-within:text-blue-500"
                   size={20}
@@ -87,11 +87,9 @@ function LoginForm() {
                 />
               </div>
 
-              <div className="mt-10">
-                <button className="w-full text-[0.9rem] py-2 text-white font-medium tracking-wide rounded-md bg-blue-500 hover:bg-blue-600 transition-all duration-300">
-                  Đăng nhập
-                </button>
-              </div>
+              <button className="mt-8 w-full text-[1rem] py-2 text-white font-medium tracking-wide rounded-md bg-blue-500 hover:bg-blue-600 transition-all duration-300">
+                Đăng nhập
+              </button>
             </form>
           </div>
         </div>

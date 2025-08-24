@@ -44,14 +44,14 @@ function WishlistItem() {
 
                       <div className="flex justify-between gap-4 w-full">
                         <div className="flex flex-col gap-2">
-                          <h5 className="text-black">{item.name}</h5>
-                          <p className="font-medium text-black">
+                          <h5 className=" ">{item.name}</h5>
+                          <p className="font-medium  ">
                             Màu: {item.variant.color.namecolor}
                           </p>
                         </div>
 
                         <button
-                          className="mb-auto text-black duration-200 hover:scale-112"
+                          className="mb-auto   duration-200 hover:scale-112"
                           onClick={() =>
                             handleRemoveItem(
                               wishlist?._id || "",

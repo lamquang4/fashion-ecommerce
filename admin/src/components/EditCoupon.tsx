@@ -156,18 +156,14 @@ function EditCoupon() {
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
       <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
-        <h2 className="text-[#74767d] capitalize">
-          Chỉnh sửa phiếu giảm giá
-        </h2>
+        <h2 className="text-[#74767d] capitalize">Chỉnh sửa phiếu giảm giá</h2>
 
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
-            <h5 className="font-bold text-[#74767d]">
-              Thông tin chung
-            </h5>
+            <h5 className="font-bold text-[#74767d]">Thông tin chung</h5>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.95rem] text-black">
+              <label htmlFor="" className="text-[0.95rem]  font-medium">
                 Mã giảm giá
               </label>
               <input
@@ -177,14 +173,14 @@ function EditCoupon() {
                 onChange={handleChange}
                 maxLength={12}
                 required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900 uppercase"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400   uppercase"
               />
             </div>
 
             <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
               <div className="flex flex-col gap-1 w-full">
                 <div className="flex flex-col gap-1">
-                  <label htmlFor="" className="text-[0.95rem] text-black">
+                  <label htmlFor="" className="text-[0.95rem]  font-medium">
                     Số lượng
                   </label>
                   <input
@@ -194,14 +190,14 @@ function EditCoupon() {
                     value={data.amount}
                     onChange={handleChange}
                     required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                   />
                 </div>
               </div>
 
               <div className="flex flex-col gap-1 w-full">
                 <div className="flex flex-col gap-1">
-                  <label htmlFor="" className="text-[0.95rem] text-black">
+                  <label htmlFor="" className="text-[0.95rem]  font-medium">
                     Số lần dùng
                   </label>
                   <input
@@ -211,14 +207,14 @@ function EditCoupon() {
                     value={data.limit}
                     onChange={handleChange}
                     required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                   />
                 </div>
               </div>
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.95rem] text-black">
+              <label htmlFor="" className="text-[0.95rem]  font-medium">
                 Loại giảm giá
               </label>
               <select
@@ -227,7 +223,7 @@ function EditCoupon() {
                 disabled={coupon?.status === 1}
                 onChange={handleChange}
                 required
-                className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
+                className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400   w-full ${
                   coupon?.status === 1 ? "cursor-not-allowed" : ""
                 }`}
               >
@@ -237,7 +233,7 @@ function EditCoupon() {
             </div>
 
             <div className="flex flex-col gap-1 w-full">
-              <label htmlFor="" className="text-[0.95rem] text-black">
+              <label htmlFor="" className="text-[0.95rem]  font-medium">
                 {`Giá trị ${
                   data.discountType === "0"
                     ? "phần trăm"
@@ -254,14 +250,14 @@ function EditCoupon() {
                 disabled={coupon?.status === 1}
                 onChange={handleChange}
                 required
-                className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
+                className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400   w-full ${
                   coupon?.status === 1 ? "cursor-not-allowed" : ""
                 }`}
               />
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.95rem] text-black">
+              <label htmlFor="" className="text-[0.95rem]  font-medium">
                 Giá trị tối thiểu của đơn hàng để áp dụng phiếu (0 để áp dụng
                 cho mọi đơn hàng)
               </label>
@@ -273,7 +269,7 @@ function EditCoupon() {
                 disabled={coupon?.status === 1}
                 onChange={handleChange}
                 required
-                className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
+                className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400   w-full ${
                   coupon?.status === 1 ? "cursor-not-allowed" : ""
                 }`}
               />
@@ -281,7 +277,7 @@ function EditCoupon() {
 
             {data.discountType === "0" && (
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.95rem] text-black">
+                <label htmlFor="" className="text-[0.95rem]  font-medium">
                   Giá trị tiền cố định giảm tối đa (chỉ áp dụng loại phiếu %)
                 </label>
                 <input
@@ -292,7 +288,7 @@ function EditCoupon() {
                   disabled={coupon?.status === 1}
                   onChange={handleChange}
                   required
-                  className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
+                  className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400   w-full ${
                     coupon?.status === 1 ? "cursor-not-allowed" : ""
                   }`}
                 />
@@ -301,7 +297,7 @@ function EditCoupon() {
 
             <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
               <div className="w-full flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.95rem] text-black">
+                <label htmlFor="" className="text-[0.95rem]  font-medium">
                   Ngày bắt đầu
                 </label>
                 <input
@@ -311,13 +307,13 @@ function EditCoupon() {
                   disabled={coupon?.status === 1}
                   onChange={handleChange}
                   required
-                  className={`border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
+                  className={`border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400   w-full ${
                     coupon?.status === 1 ? "cursor-not-allowed" : ""
                   }`}
                 />
               </div>
               <div className="w-full flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.95rem] text-black">
+                <label htmlFor="" className="text-[0.95rem]  font-medium">
                   Ngày kết thúc
                 </label>
                 <input
@@ -327,7 +323,7 @@ function EditCoupon() {
                   disabled={coupon?.status === 1}
                   onChange={handleChange}
                   required
-                  className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900 w-full ${
+                  className={`border border-gray-300  p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400   w-full ${
                     coupon?.status === 1 ? "cursor-not-allowed" : ""
                   }`}
                 />

@@ -243,7 +243,7 @@ function EditProduct() {
 
               <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
                 <div className="flex flex-col gap-1 w-full">
-                  <label htmlFor="" className="text-[0.9rem] text-black">
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
                     Tên sản phẩm
                   </label>
                   <input
@@ -252,12 +252,12 @@ function EditProduct() {
                     value={data.name}
                     onChange={handleChange}
                     required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                   />
                 </div>
 
                 <div className="flex flex-col gap-1 w-full">
-                  <label htmlFor="" className="text-[0.9rem] text-black">
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
                     Danh mục
                   </label>
                   <select
@@ -265,7 +265,7 @@ function EditProduct() {
                     required
                     value={data.category}
                     onChange={handleChange}
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                   >
                     {categories.map((category) => (
                       <option value={category._id} key={category._id}>
@@ -282,7 +282,7 @@ function EditProduct() {
               </div>
 
               <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   Mô tả
                 </label>
                 <TextBoxEditor
@@ -297,7 +297,7 @@ function EditProduct() {
 
               <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
                 <div className="flex flex-col gap-1 w-full">
-                  <label htmlFor="" className="text-[0.9rem] text-black">
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
                     Giá
                   </label>
                   <input
@@ -307,12 +307,12 @@ function EditProduct() {
                     value={data.price}
                     onChange={handleChange}
                     required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                   />
                 </div>
 
                 <div className="flex flex-col gap-1 w-full">
-                  <label htmlFor="" className="text-[0.9rem] text-black">
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
                     Số tiền giảm (Giảm giá{" "}
                     {Math.floor((data.discount / data.price) * 100)}%)
                   </label>
@@ -323,7 +323,7 @@ function EditProduct() {
                     value={data.discount}
                     onChange={handleChange}
                     required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                   />
                 </div>
               </div>
@@ -460,7 +460,7 @@ function EditProduct() {
                       setCurrentVariants(updated);
                     }}
                     required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
                   >
                     {colors
                       .filter((color) => {
@@ -519,7 +519,7 @@ function EditProduct() {
                                   e.target.value
                                 )
                               }
-                              className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                              className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
                             >
                               <option value="">Chọn kích thước</option>
                               {sizes
@@ -552,7 +552,7 @@ function EditProduct() {
                                   e.target.value
                                 )
                               }
-                              className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                              className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
                             />
                           </td>
 
@@ -634,7 +634,7 @@ function EditProduct() {
                         setNewVariants(updated);
                       }}
                       required
-                      className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                      className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
                     >
                       <option value="">Chọn màu</option>
                       {colors
@@ -694,7 +694,7 @@ function EditProduct() {
                                     e.target.value
                                   )
                                 }
-                                className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                                className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
                               >
                                 <option value="">Chọn kích thước</option>
                                 {sizes
@@ -728,7 +728,7 @@ function EditProduct() {
                                   )
                                 }
                                 min={1}
-                                className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                                className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
                               />
                             </td>
 

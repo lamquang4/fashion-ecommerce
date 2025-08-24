@@ -139,7 +139,7 @@ function EditCategory() {
               </p>
 
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   Tên danh mục
                 </label>
                 <input
@@ -148,12 +148,12 @@ function EditCategory() {
                   value={data.namecategory}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                 />
               </div>
 
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   Giới tính
                 </label>
                 <select
@@ -161,7 +161,7 @@ function EditCategory() {
                   value={data.gender}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                 >
                   <option value="1">Nam</option>
                   <option value="0">Nữ</option>

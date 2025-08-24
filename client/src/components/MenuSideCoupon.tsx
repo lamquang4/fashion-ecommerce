@@ -59,7 +59,7 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
                           ? `Giảm ${coupon.discountValue}%`
                           : ""}
                       </h3>
-                      <p className="font-medium text-black">
+                      <p className="font-medium  ">
                         {coupon.minOrderValue
                           ? `Đơn hàng phải từ ${coupon.minOrderValue.toLocaleString(
                               "vi-VN"
@@ -72,9 +72,7 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
                           )}₫`}
                       </p>
                       <div className="flex justify-between items-center w-full">
-                        <p className="font-medium text-black">
-                          Nhập mã: {coupon.code}
-                        </p>
+                        <p className="font-medium  ">Nhập mã: {coupon.code}</p>
                         <button
                           className="border text-[0.9rem] px-2.5 py-1.5 bg-[#197FB6] text-white rounded-sm"
                           onClick={() => {

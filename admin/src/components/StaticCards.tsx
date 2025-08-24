@@ -16,14 +16,12 @@ function StaticCards({ array }: StaticCardsProp) {
           key={index}
           className="relative break-words rounded-lg border border-gray-200 h-[18vh] flex items-center justify-between px-4 bg-white"
         >
-          <div className="space-y-2.5">
-            <h5 className="font-medium">{item.title}</h5>
-            <h4 className="text-[#0AB39C]">{item.number}</h4>
+          <div className="space-y-2">
+            <p className="font-medium">{item.title}</p>
+            <h4 className="font-semibold">{item.number}</h4>
           </div>
 
-          <div className="w-12 h-12 rounded-full bg-[#DAF4F0] flex items-center justify-center">
-            {item.icon1}
-          </div>
+          <div>{item.icon1}</div>
         </div>
       ))}
     </div>

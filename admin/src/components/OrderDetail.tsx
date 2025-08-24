@@ -44,11 +44,11 @@ function OrderDetail() {
     { label: "Đơn hoàn thành", icon: <LuStar size={24} /> },
   ];
   return (
-    <div className="w-full px-[15px] py-[30px]">
+    <>
       {isLoading ? (
         <Loading height={60} size={50} color="black" thickness={2} />
       ) : (
-        <div className="w-full max-w-full border-[1.5px] border-double border-gray-300 lg:max-w-[750px] rounded-sm mx-auto">
+        <div className="w-full max-w-full my-[30px] border-[1.5px] border-double border-gray-300 lg:max-w-[750px] rounded-sm mx-auto">
           <div>
             <div className="flex justify-between px-[15px] sm:px-[20px] py-[30px] border-b border-gray-300">
               <div className="flex flex-col gap-[8px]">
@@ -100,7 +100,7 @@ function OrderDetail() {
                       </div>
                       <span
                         className={`font-medium text-center ${
-                          isActive ? " text-green-500" : "text-black"
+                          isActive ? " text-green-500" : " "
                         }`}
                       >
                         {step.label}
@@ -120,33 +120,33 @@ function OrderDetail() {
             <div className="px-[15px] sm:px-[20px] space-y-[8px] py-[30px]">
               <h4 className="uppercase">Thông tin giao hàng</h4>
 
-              <span>
+              <p className="font-medium">
                 Họ và tên:{" "}
-                <span className="font-medium">{order?.fullname}</span>
-              </span>
+                <span className="font-normal">{order?.fullname}</span>
+              </p>
 
-              <span>
+              <p className="font-medium">
                 Số điện thoại:{" "}
-                <span className="font-medium">{order?.phone}</span>
-              </span>
+                <span className="font-normal">{order?.phone}</span>
+              </p>
 
-              <span>
+              <p className="font-medium">
                 Địa chỉ:{" "}
-                <span className="font-medium">
+                <span className="font-normal">
                   {order?.speaddress}
                   {", "}
                   {order?.city}
                   {", "}
                   {order?.ward}
                 </span>
-              </span>
+              </p>
 
-              <span>
+              <p className="font-medium">
                 Phương thức thanh toán:{" "}
-                <span className="font-medium">
+                <span className="font-normal">
                   {order?.paymethod === 1 ? "Momo" : "COD"}
                 </span>
-              </span>
+              </p>
             </div>
 
             <div className="w-full overflow-auto pb-[30px]">
@@ -182,7 +182,7 @@ function OrderDetail() {
                       </td>
                       <td className="p-[15px] sm:p-[20px]">
                         {item.discount > 0 ? (
-                          <div className="flex gap-[12px] text-black">
+                          <div className="flex gap-[12px]  ">
                             <del className="text-[#707072] text-[1rem]">
                               {item.price.toLocaleString("vi-VN")}₫
                             </del>
@@ -219,27 +219,21 @@ function OrderDetail() {
                     <td className="pl-[15px] sm:pl-[20px]">
                       <hr className="border border-black" />
                     </td>
-
-                    <td>
-                      <hr className="border border-black" />
-                    </td>
                   </tr>
 
-                  <tr className="text-[1rem]">
-                    <td className="font-semibold p-[15px] sm:p-[20px]">
-                      Tổng:
-                    </td>
+                  <tr className="text-[1rem] font-medium">
+                    <td className="p-[15px] sm:p-[20px]">Tổng:</td>
                     <td className="p-[15px] sm:p-[20px]">
                       {totalPrice.toLocaleString("vi-VN")}₫
                     </td>
                   </tr>
 
                   {order?.coupon && (
-                    <tr className="text-[1rem]">
+                    <tr className="text-[1rem] font-medium ">
                       <td className="p-[15px] sm:p-[20px]">Phiếu giảm giá:</td>
                       <td className="p-[15px] sm:p-[20px]">
                         {order?.coupon?.discountType === 1 ? (
-                          <p className=" text-gray-600">
+                          <p>
                             -
                             {order?.coupon?.discountValue.toLocaleString(
                               "vi-VN"
@@ -247,7 +241,7 @@ function OrderDetail() {
                             ₫
                           </p>
                         ) : order?.coupon?.discountType === 0 ? (
-                          <p className=" text-gray-600">
+                          <p>
                             -
                             {Math.min(
                               (totalPrice * order?.coupon?.discountValue) / 100,
@@ -261,7 +255,7 @@ function OrderDetail() {
                     </tr>
                   )}
 
-                  <tr className="text-[1rem]">
+                  <tr className="text-[1rem] font-semibold">
                     <td className="p-[15px] sm:p-[20px]">Tổng cộng:</td>
                     <td className="p-[15px] sm:p-[20px]">
                       {order?.total.toLocaleString("vi-VN")}₫
@@ -273,7 +267,7 @@ function OrderDetail() {
           </div>
         </div>
       )}
-    </div>
+    </>
   );
 }
 

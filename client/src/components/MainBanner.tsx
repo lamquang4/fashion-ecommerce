@@ -47,13 +47,13 @@ function MainBanner() {
                       <div className="flex gap-7 justify-center items-center">
                         <Link
                           href={"/collection/nu"}
-                          className="w-[85px] py-[7.5px] md:w-[90px]  bg-white text-black text-[0.9rem] font-bold uppercase hover:scale-105"
+                          className="w-[85px] py-[7.5px] md:w-[90px]  bg-white   text-[0.9rem] font-bold uppercase hover:scale-105"
                         >
                           Nữ
                         </Link>
                         <Link
                           href={"/collection/nam"}
-                          className="w-[85px] py-[7.5px] md:w-[90px]  bg-white text-black text-[0.9rem] font-bold uppercase hover:scale-105"
+                          className="w-[85px] py-[7.5px] md:w-[90px]  bg-white   text-[0.9rem] font-bold uppercase hover:scale-105"
                         >
                           Nam
                         </Link>

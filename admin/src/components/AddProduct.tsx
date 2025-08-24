@@ -137,7 +137,7 @@ function AddProduct() {
 
               <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
                 <div className="flex flex-col gap-1 w-full">
-                  <label htmlFor="" className="text-[0.9rem] text-black">
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
                     Tên sản phẩm
                   </label>
                   <input
@@ -146,12 +146,12 @@ function AddProduct() {
                     onChange={handleChange}
                     name="name"
                     required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                   />
                 </div>
 
                 <div className="flex flex-col gap-1 w-full">
-                  <label htmlFor="" className="text-[0.9rem] text-black">
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
                     Danh mục
                   </label>
                   <select
@@ -159,7 +159,7 @@ function AddProduct() {
                     required
                     onChange={handleChange}
                     value={data.category}
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                   >
                     <option value="">Chọn danh mục</option>
                     {categories.map((category) => (
@@ -173,7 +173,7 @@ function AddProduct() {
               </div>
 
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   Mô tả
                 </label>
                 <TextBoxEditor
@@ -188,7 +188,7 @@ function AddProduct() {
 
               <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
                 <div className="flex flex-col gap-1 w-full">
-                  <label htmlFor="" className="text-[0.9rem] text-black">
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
                     Giá
                   </label>
                   <input
@@ -198,12 +198,12 @@ function AddProduct() {
                     value={data.price}
                     onChange={handleChange}
                     required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                   />
                 </div>
 
                 <div className="flex flex-col gap-1 w-full">
-                  <label htmlFor="" className="text-[0.9rem] text-black">
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
                     Số tiền giảm (Giảm giá{" "}
                     {Math.floor((data.discount / data.price) * 100)}%)
                   </label>
@@ -214,7 +214,7 @@ function AddProduct() {
                     value={data.discount}
                     onChange={handleChange}
                     required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                   />
                 </div>
               </div>
@@ -301,7 +301,7 @@ function AddProduct() {
                         setNewVariants(updated);
                       }}
                       required
-                      className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                      className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
                     >
                       <option value="">Chọn màu</option>
                       {colors
@@ -357,7 +357,7 @@ function AddProduct() {
                                     e.target.value
                                   )
                                 }
-                                className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                                className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
                               >
                                 <option value="">Chọn kích thước</option>
                                 {sizes
@@ -391,7 +391,7 @@ function AddProduct() {
                                   )
                                 }
                                 min={1}
-                                className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400 text-gray-900"
+                                className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
                               />
                             </td>
 

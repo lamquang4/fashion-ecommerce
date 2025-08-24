@@ -91,24 +91,24 @@ function Admin() {
           <InputSearch />
         </div>
 
-        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
+        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full text-[0.9rem]">
           <thead>
             <tr className="bg-[#E9EDF2] text-left">
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Họ tên</th>
+              <th className="p-[1rem]  ">Họ tên</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Email</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">SĐT</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Sinh nhật</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày tạo</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Vai trò</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
+              <th className="p-[1rem]  ">Email</th>
+              <th className="p-[1rem]  ">SĐT</th>
+              <th className="p-[1rem]  ">Sinh nhật</th>
+              <th className="p-[1rem]  ">Ngày tạo</th>
+              <th className="p-[1rem]  ">Vai trò</th>
+              <th className="p-[1rem]  ">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
                   paramName="status"
                 />
               </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
+              <th className="p-[1rem]  ">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -124,23 +124,19 @@ function Admin() {
                   <td className="p-[1rem] text-[0.9rem] font-semibold text-[#22BAA0]">
                     {admin.fullname}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
-                    {admin.email}
-                  </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
-                    {admin.phone}
-                  </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">{admin.email}</td>
+                  <td className="p-[1rem]  ">{admin.phone}</td>
+                  <td className="p-[1rem]  ">
                     {new Date(admin.birthday as string).toLocaleDateString(
                       "vi-VN"
                     )}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {new Date(admin.createdAt as string).toLocaleDateString(
                       "vi-VN"
                     )}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {admin.role === 0
                       ? "Quản trị viên"
                       : admin.role === 1
@@ -149,10 +145,10 @@ function Admin() {
                       ? "Nhân viên nội dung"
                       : ""}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {admin.status === 1 ? "Bình thường" : "Đã chặn"}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     <div className="flex items-center gap-[15px]">
                       <button
                         disabled={isLoadingBlockUser}

@@ -61,7 +61,7 @@ function LoginForm() {
             <div>
               <label
                 htmlFor=""
-                className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-[0.9rem] font-medium"
               >
                 Email
               </label>
@@ -70,7 +70,7 @@ function LoginForm() {
                 name="email"
                 value={data.email}
                 onChange={handleChange}
-                className="text-[0.9rem] block w-full px-3 py-2 border border-[#e5e5e5] text-[#243238]"
+                className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
                 placeholder="Nhập email"
                 required
               />
@@ -78,7 +78,7 @@ function LoginForm() {
             <div>
               <label
                 htmlFor=""
-                className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
+                className="block mb-2 text-[0.9rem] font-medium"
               >
                 Mật khẩu
               </label>
@@ -88,7 +88,7 @@ function LoginForm() {
                 value={data.password}
                 onChange={handleChange}
                 placeholder="Nhập mật khẩu"
-                className="text-[0.9rem] block w-full px-3 py-2 border border-[#e5e5e5] text-[#243238]"
+                className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
                 required
               />
             </div>
@@ -104,7 +104,7 @@ function LoginForm() {
 
             <button
               type="submit"
-              className="w-full bg-black text-white focus:outline-none font-medium rounded-sm text-[0.9rem] px-5 py-2.5 text-center"
+              className="w-full bg-black text-white focus:outline-none font-semibold rounded-sm text-[1rem] px-5 py-2.5 text-center"
             >
               Đăng nhập
             </button>

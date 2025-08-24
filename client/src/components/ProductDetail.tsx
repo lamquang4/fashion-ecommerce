@@ -335,7 +335,7 @@ function ProductDetail() {
                         disabled={isOutOfStock}
                         type="button"
                         onClick={() => setSelectedSize(inv.size)}
-                        className={`relative w-[70px] h-[35px] border text-black font-medium text-[0.95rem] ${
+                        className={`relative w-[70px] h-[35px] border   font-medium text-[0.95rem] ${
                           isSelected
                             ? "border-black"
                             : "border-gray-300 hover:border-gray-400"
@@ -366,7 +366,7 @@ function ProductDetail() {
                   type="number"
                   name="quantity"
                   readOnly
-                  className="h-11 text-center text-black w-11 outline-none placeholder:text-black text-[1rem] font-normal"
+                  className="h-11 text-center   w-11 outline-none placeholder:  text-[1rem] font-normal"
                   placeholder="1"
                   min={1}
                   max={
@@ -440,7 +440,7 @@ function ProductDetail() {
                 <hr className="border my-[15px]" />
 
                 <div
-                  className="text-black textbox-editor"
+                  className="  textbox-editor"
                   dangerouslySetInnerHTML={{
                     __html: product?.description || "",
                   }}

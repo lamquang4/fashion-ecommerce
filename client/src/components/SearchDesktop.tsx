@@ -38,7 +38,7 @@ function SearchDesktop() {
           }}
         />
         <button
-          className="absolute top-1/2 right-[7px] transform -translate-y-1/2 text-black flex items-center"
+          className="absolute top-1/2 right-[7px] transform -translate-y-1/2   flex items-center"
           type="submit"
         >
           <CiSearch size={20} />

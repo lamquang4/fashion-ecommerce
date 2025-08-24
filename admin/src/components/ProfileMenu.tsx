@@ -42,21 +42,19 @@ function ProfileMenu({ menuOpen, toggleMenu }: menuProps) {
               </p>
 
               <Link
-                onClick={toggleMenu}
                 href={"/account"}
-                className="w-ful block hover:bg-[#F8F9FA] px-3 py-3.5"
+                className="w-ful block hover:bg-gray-100 px-3 py-3.5"
               >
-                <div className="flex items-center gap-[8px] text-[#878a99]">
+                <div className="flex items-center gap-[8px]">
                   <FaRegCircleUser size={18} />
                   <p>Tài khoản</p>
                 </div>
               </Link>
 
               <button
-                className="w-ful block hover:bg-[#F8F9FA] px-3 py-3.5"
+                className="w-ful block hover:bg-gray-100 px-3 py-3.5"
                 onClick={() => {
                   signOut();
-                  toggleMenu;
                 }}
               >
                 <div className="flex items-center gap-[8px] text-[#EF5F5F]">

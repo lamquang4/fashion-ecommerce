@@ -4,6 +4,10 @@
   scroll-behavior: smooth;
 }
 
+body {
+  color: #444;
+}
+
 .custom-scroll::-webkit-scrollbar {
   width: 6px;
 }

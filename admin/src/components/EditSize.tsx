@@ -69,7 +69,7 @@ function EditSize() {
             <h5 className="font-bold text-[#74767d]">Thông tin chung</h5>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.9rem] text-black">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
                 Kích thước
               </label>
               <input
@@ -78,7 +78,7 @@ function EditSize() {
                 value={data.namesize}
                 onChange={handleChange}
                 required
-                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
               />
             </div>
           </div>

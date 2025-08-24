@@ -84,23 +84,23 @@ function Customer() {
           <InputSearch />
         </div>
 
-        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
+        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full text-[0.9rem]">
           <thead>
             <tr className="bg-[#E9EDF2] text-left">
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Họ tên</th>
+              <th className="p-[1rem]  ">Họ tên</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Email</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">SĐT</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Sinh nhật</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày tạo</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem] relative">
+              <th className="p-[1rem]  ">Email</th>
+              <th className="p-[1rem]  ">SĐT</th>
+              <th className="p-[1rem]  ">Sinh nhật</th>
+              <th className="p-[1rem]  ">Ngày tạo</th>
+              <th className="p-[1rem]   relative">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
                   paramName="status"
                 />
               </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
+              <th className="p-[1rem]  ">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -116,26 +116,22 @@ function Customer() {
                   <td className="p-[1rem] text-[0.9rem] text-[#22BAA0] font-semibold">
                     {customer.fullname}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
-                    {customer.email}
-                  </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
-                    {customer.phone}
-                  </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">{customer.email}</td>
+                  <td className="p-[1rem]  ">{customer.phone}</td>
+                  <td className="p-[1rem]  ">
                     {new Date(customer.birthday as string).toLocaleDateString(
                       "vi-VN"
                     )}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {new Date(customer.createdAt as string).toLocaleDateString(
                       "vi-VN"
                     )}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {customer.status === 1 ? "Bình thường" : "Đã chặn"}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     <div className="flex items-center gap-[15px]">
                       <button
                         disabled={isLoadingBlockUser}

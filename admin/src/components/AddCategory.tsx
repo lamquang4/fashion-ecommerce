@@ -79,12 +79,10 @@ function AddCategory() {
             </div>
 
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[15px] w-full">
-              <h5 className="font-bold text-[#74767d]">
-                Thông tin chung
-              </h5>
+              <h5 className="font-bold text-[#74767d]">Thông tin chung</h5>
 
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   Tên danh mục
                 </label>
                 <input
@@ -93,12 +91,12 @@ function AddCategory() {
                   value={data.namecategory}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                 />
               </div>
 
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.9rem] text-black">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   Giới tính
                 </label>
                 <select
@@ -106,7 +104,7 @@ function AddCategory() {
                   value={data.gender}
                   onChange={handleChange}
                   required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400 text-gray-900"
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
                 >
                   <option value="">Chọn giới tính</option>
                   <option value="1">Nam</option>

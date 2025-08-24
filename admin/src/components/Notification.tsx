@@ -13,7 +13,7 @@ function Notification({ menuOpen, toggleMenu }: menuProps) {
       onMouseOver={toggleMenu}
       onMouseOut={toggleMenu}
     >
-      <button className="w-8.5 h-8.5 rounded-lg border border-gray-200 text-gray-500 justify-center items-center flex relative">
+      <button className="w-8.5 h-8.5 rounded-lg border border-gray-200 justify-center items-center flex relative">
         <LiaBell size={20} />
         <small className="absolute top-[-9px] right-[-9px] z-1 h-5 w-5 rounded-full font-medium bg-[#0AB39C] flex items-center justify-center text-white text-[0.7rem]">
           {orders.length}
@@ -54,9 +54,7 @@ function Notification({ menuOpen, toggleMenu }: menuProps) {
               })
             ) : (
               <div className="px-2 py-2.5 text-center">
-                <span className="font-medium text-gray-500">
-                  Không có thông báo
-                </span>
+                <span className="font-medium">Không có thông báo</span>
               </div>
             )}
           </div>

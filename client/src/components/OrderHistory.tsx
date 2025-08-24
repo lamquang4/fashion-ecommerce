@@ -168,7 +168,7 @@ function OrderHistory() {
                     </p>
 
                     <div className="flex justify-between items-center mt-[15px]">
-                      <span className="text-black font-medium">
+                      <span className="  font-medium">
                         Tổng cộng: {order.total.toLocaleString("vi-VN")}₫
                       </span>
 

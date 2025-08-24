@@ -72,7 +72,7 @@ function RegisterForm() {
               <div>
                 <label
                   htmlFor=""
-                  className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-[0.9rem] font-medium"
                 >
                   Họ và tên
                 </label>
@@ -81,7 +81,7 @@ function RegisterForm() {
                   name="fullname"
                   value={data.fullname}
                   onChange={handleChange}
-                  className="text-[0.9rem] block w-full px-3 py-2 border border-[#e5e5e5] text-[#243238]"
+                  className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
                   placeholder="Nhập họ và tên"
                   required
                 />
@@ -90,7 +90,7 @@ function RegisterForm() {
               <div>
                 <label
                   htmlFor=""
-                  className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-[0.9rem] font-medium"
                 >
                   Email
                 </label>
@@ -99,7 +99,7 @@ function RegisterForm() {
                   name="email"
                   value={data.email}
                   onChange={handleChange}
-                  className="text-[0.9rem] block w-full px-3 py-2 border border-[#e5e5e5] text-[#243238]"
+                  className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
                   placeholder="Nhập email"
                   required
                 />
@@ -108,7 +108,7 @@ function RegisterForm() {
               <div>
                 <label
                   htmlFor=""
-                  className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-[0.9rem] font-medium"
                 >
                   Số điện thoại
                 </label>
@@ -118,7 +118,7 @@ function RegisterForm() {
                   inputMode="numeric"
                   value={data.phone}
                   onChange={handleChange}
-                  className="text-[0.9rem] block w-full px-3 py-2 border border-[#e5e5e5] text-[#243238]"
+                  className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
                   placeholder="Nhập số điện thoại"
                   required
                 />
@@ -127,7 +127,7 @@ function RegisterForm() {
               <div>
                 <label
                   htmlFor=""
-                  className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-[0.9rem] font-medium"
                 >
                   Sinh nhật
                 </label>
@@ -136,7 +136,7 @@ function RegisterForm() {
                   name="birthday"
                   value={data.birthday}
                   onChange={handleChange}
-                  className="text-[0.9rem] block w-full px-3 py-2 border border-[#e5e5e5] text-[#243238]"
+                  className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
                   placeholder="Nhập số điện thoại"
                   required
                 />
@@ -145,7 +145,7 @@ function RegisterForm() {
               <div>
                 <label
                   htmlFor=""
-                  className="block mb-2 text-[0.9rem] font-medium text-gray-900 dark:text-white"
+                  className="block mb-2 text-[0.9rem] font-medium"
                 >
                   Mật khẩu
                 </label>
@@ -155,14 +155,14 @@ function RegisterForm() {
                   value={data.password}
                   onChange={handleChange}
                   placeholder="Nhập mật khẩu"
-                  className="text-[0.9rem] block w-full px-3 py-2 border border-[#e5e5e5] text-[#243238]"
+                  className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
                   required
                 />
               </div>
 
               <button
                 type="submit"
-                className="w-full bg-black text-white focus:outline-none font-medium rounded-sm text-[0.9rem] px-5 py-2.5 text-center"
+                className="w-full bg-black text-white focus:outline-none font-semibold rounded-sm text-[1rem] px-5 py-2.5 text-center"
               >
                 Đăng kí
               </button>

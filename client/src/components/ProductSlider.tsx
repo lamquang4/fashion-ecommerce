@@ -106,7 +106,7 @@ function ProductSlider({ title, products }: Props) {
                         )}
                       </Link>
 
-                      <div className="flex gap-2 flex-col absolute top-[12px] left-[12px] z-[3] font-semibold text-center text-black">
+                      <div className="flex gap-2 flex-col absolute top-[12px] left-[12px] z-[3] font-semibold text-center  ">
                         {product.discount > 0 && (
                           <small className="uppercase text-[0.7rem] py-1 px-1.5 bg-white">
                             Giảm giá{" "}
@@ -118,10 +118,10 @@ function ProductSlider({ title, products }: Props) {
                         )}
                       </div>
 
-                      <div className="absolute top-[12px] right-[10px] z-[3] font-semibold text-center text-black">
+                      <div className="absolute top-[12px] right-[10px] z-[3] font-semibold text-center  ">
                         <button
                           type="button"
-                          className="p-1 transition-colors duration-200 hover:scale-112 text-black"
+                          className="p-1 transition-colors duration-200 hover:scale-112  "
                           onClick={() => {
                             isInWishlist
                               ? handleRemove(product, selectedIndex)
@@ -173,11 +173,11 @@ function ProductSlider({ title, products }: Props) {
                           ? "Nữ"
                           : ""}
                       </h5>
-                      <h5 className="text-black font-medium capitalize">
+                      <h5 className="  font-medium capitalize">
                         {product.name}
                       </h5>
                       {product.discount > 0 ? (
-                        <div className="flex gap-[12px] text-black">
+                        <div className="flex gap-[12px]  ">
                           <del className="text-[#707072] text-[1rem]">
                             {product.price.toLocaleString("vi-VN")}₫
                           </del>

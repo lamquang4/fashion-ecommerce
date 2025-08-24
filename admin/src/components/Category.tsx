@@ -89,27 +89,23 @@ function Category() {
           <InputSearch />
         </div>
 
-        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full">
+        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full text-[0.9rem]">
           <thead>
             <tr className="bg-[#E9EDF2] text-left">
-              <th className="p-[1rem]  text-[#444] text-[0.9rem]">
-                Tên danh mục
-              </th>
+              <th className="p-[1rem]   ">Tên danh mục</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Giới tính</th>
+              <th className="p-[1rem]  ">Giới tính</th>
 
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
-                Số lượng sản phẩm
-              </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Ngày thêm</th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">
+              <th className="p-[1rem]  ">Số lượng sản phẩm</th>
+              <th className="p-[1rem]  ">Ngày thêm</th>
+              <th className="p-[1rem]  ">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
                   paramName="status"
                 />
               </th>
-              <th className="p-[1rem] text-[#444] text-[0.9rem]">Hành động</th>
+              <th className="p-[1rem]  ">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -138,28 +134,28 @@ function Category() {
                       </p>
                     </div>
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {category.gender === 1
                       ? "Nam"
                       : category.gender === 0
                       ? "Nữ"
                       : ""}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     <div className="flex flex-col gap-[10px]">
                       <p>Tất cả: {category.totalProduct}</p>
                       <p>Đang hoạt động: {category.totalProductActive}</p>
                     </div>
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {new Date(category.createdAt as string).toLocaleDateString(
                       "vi-VN"
                     )}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     {category.status === 1 ? "Hiện" : "Ẩn"}
                   </td>
-                  <td className="p-[1rem] text-[0.9rem] text-[#444]">
+                  <td className="p-[1rem]  ">
                     <div className="flex items-center gap-[15px]">
                       <button
                         disabled={isLoadingVisibleCategory}

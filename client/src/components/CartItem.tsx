@@ -157,11 +157,11 @@ function CartItem() {
                         <div className="flex flex-col gap-4 w-full">
                           <div className="flex justify-between gap-4">
                             <div className="flex flex-col gap-2">
-                              <h5 className="text-black">{item.name}</h5>
-                              <p className="font-medium text-black">
+                              <h5 className=" ">{item.name}</h5>
+                              <p className="font-medium  ">
                                 Màu: {item.variant.color.namecolor}
                               </p>
-                              <p className="font-medium text-black">
+                              <p className="font-medium  ">
                                 Kích thước: {item.variant.size.namesize}
                               </p>
                               {item.discount > 0 ? (
@@ -173,7 +173,7 @@ function CartItem() {
                                   ₫
                                 </p>
                               ) : (
-                                <p className="font-medium text-black">
+                                <p className="font-medium  ">
                                   Giá: {item.price.toLocaleString("vi-VN")}₫
                                 </p>
                               )}
@@ -225,7 +225,7 @@ function CartItem() {
                                   item.variant.quantity <= 1 ||
                                   isLoadingChangeQuantity
                                 }
-                                className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-slate-300 border"
+                                className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-gray-300 border"
                               >
                                 <HiOutlineMinusSmall size={20} />
                               </button>
@@ -250,13 +250,13 @@ function CartItem() {
                                       ? item.variant.stock
                                       : 15) || isLoadingChangeQuantity
                                 }
-                                className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-slate-300 border"
+                                className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-gray-300 border"
                               >
                                 <HiOutlinePlusSmall size={20} />
                               </button>
                             </div>
 
-                            <h5 className="text-black font-medium">
+                            <h5 className="font-medium">
                               Tổng:{" "}
                               {item.discount > 0
                                 ? (

@@ -11,7 +11,7 @@ function SideBarMenu() {
   const activeClass = "bg-gray-200 rounded-md font-semibold";
   return (
     <div className="w-full max-w-full lg:max-w-[300px]">
-      <div className="text-[0.9rem] text-black font-medium flex flex-col gap-2">
+      <div className="text-[0.9rem]   font-medium flex flex-col gap-2">
         <Link
           href="/account"
           className={`py-3.5 px-4 ${
