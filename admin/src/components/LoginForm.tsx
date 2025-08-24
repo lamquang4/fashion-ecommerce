@@ -52,9 +52,7 @@ function LoginForm() {
       <div className="relative max-w-[420px] w-full bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden mx-5">
         <div className="flex items-center h-[440px] w-[200%]">
           <div className="w-1/2 px-8 bg-white">
-            <h2 className="relative text-center capitalize">
-              Đăng nhập quản trị viên
-            </h2>
+            <h2 className="relative text-center">Đăng nhập</h2>
 
             <form action="" onSubmit={handleSubmit}>
               <div className="relative h-12 w-full mt-8 focus-within:text-blue-500">
