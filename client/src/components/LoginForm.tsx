@@ -89,7 +89,7 @@ function LoginForm() {
                 />
               </div>
 
-              <div className="flex items-center justify-between">
+              <div className="mt-3.5">
                 <Link
                   href="/login"
                   className="text-[0.9rem] text-blue-400 font-medium"
