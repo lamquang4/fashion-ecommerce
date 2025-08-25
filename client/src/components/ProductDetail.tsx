@@ -21,8 +21,9 @@ import useAddWishlist from "@/hooks/useAddWishlist";
 function ProductDetail() {
   const params = useParams();
   const slug = params.slug as string;
+  
   const [quantity, setQuantity] = useState<number>(1);
-  const [selectedInventory, setSelectedInventory] = useState<Variant>();
+  const [selectedVariant, setSelectedVariant] = useState<Variant>();
   const [selectedSize, setSelectedSize] = useState<Size>();
   const [selectedColor, setSelectedColor] = useState<Color>();
   const [mainImage, setMainImage] = useState<string>("");
@@ -40,17 +41,26 @@ function ProductDetail() {
   const { removeItem, isLoading: isLoadingRemoveItem } =
     useRemoveItemWishlist();
 
+  useEffect(() => {
+    if (product?.variants?.length) {
+      setMainImage(product.variants[0].images[0]);
+      setSelectedColor(product.variants[0].color);
+      setSelectedSize(product.variants[0].inventories[0].size);
+      setSelectedVariant(product.variants[0]);
+    }
+  }, [product]);
+
   const isInWishlist = useMemo(() => {
     return wishlist?.productsInWishlist?.some(
-      (item) => item.variant._id === selectedInventory?._id
+      (item) => item.variant._id === selectedVariant?._id
     );
-  }, [wishlist?.productsInWishlist, selectedInventory?._id]);
+  }, [wishlist?.productsInWishlist, selectedVariant?._id]);
 
   const currentInventory = useMemo(() => {
-    return selectedInventory?.inventories.find(
+    return selectedVariant?.inventories.find(
       (inv) => inv.size._id === selectedSize?._id
     );
-  }, [selectedInventory, selectedSize?._id]);
+  }, [selectedVariant, selectedSize?._id]);
 
   const allImages = useMemo(() => {
     return product?.variants.flatMap((variant) => variant.images) || [];
@@ -59,15 +69,6 @@ function ProductDetail() {
   const isInStock = useMemo(() => {
     return !!currentInventory?.quantity;
   }, [currentInventory?.quantity]);
-
-  useEffect(() => {
-    if (product?.variants?.length) {
-      setMainImage(product.variants[0].images[0]);
-      setSelectedColor(product.variants[0].color);
-      setSelectedSize(product.variants[0].inventories[0].size);
-      setSelectedInventory(product.variants[0]);
-    }
-  }, [product]);
 
   const handleNextImage = () => {
     if (!allImages.length) return;
@@ -115,11 +116,11 @@ function ProductDetail() {
       return;
     }
 
-    if (!product || !selectedInventory) return;
+    if (!product || !selectedVariant) return;
 
     try {
       await addCart({
-        variant: selectedInventory._id,
+        variant: selectedVariant._id,
         size: selectedSize._id,
         quantity,
       });
@@ -131,18 +132,18 @@ function ProductDetail() {
   };
 
   const handleAddToWishlist = async () => {
-    if (!selectedInventory || !product) return;
+    if (!selectedVariant || !product) return;
 
-    await addWishlist({ variant: selectedInventory._id });
+    await addWishlist({ variant: selectedVariant._id });
     mutateWishlist();
     toast.success("Đã thêm vào yêu thích!");
   };
 
   const handleRemove = async () => {
-    if (!selectedInventory || !product) return;
+    if (!selectedVariant || !product) return;
     await removeItem({
       wishlistId: wishlist?._id || "",
-      variant: selectedInventory._id,
+      variant: selectedVariant._id,
     });
     mutateWishlist();
   };
@@ -304,7 +305,7 @@ function ProductDetail() {
                         title={inv.color.namecolor}
                         onClick={() => {
                           setSelectedColor(inv.color);
-                          setSelectedInventory(inv);
+                          setSelectedVariant(inv);
                           setMainImage(inv.images?.[0]);
                         }}
                         style={{ backgroundColor: `${inv.color.codecolor}` }}
@@ -329,13 +330,13 @@ function ProductDetail() {
                     >
                       <LiaRulerHorizontalSolid size={20} />
                       <span className="uppercase font-medium">
-                        Bảng kích thước
+                        Hướng dẫn kích thước
                       </span>
                     </button>
                   </div>
 
                   <div className="flex space-x-2">
-                    {selectedInventory?.inventories.map((inv, index) => {
+                    {selectedVariant?.inventories.map((inv, index) => {
                       const isSelected = selectedSize?._id === inv.size._id;
                       const isOutOfStock = inv.quantity === 0;
 
@@ -415,7 +416,7 @@ function ProductDetail() {
                     disabled={isLoadingAddWishlist || isLoadingRemoveItem}
                     type="button"
                     onClick={() => {
-                      if (!selectedInventory || !product) return;
+                      if (!selectedVariant || !product) return;
 
                       if (isInWishlist) {
                         handleRemove();

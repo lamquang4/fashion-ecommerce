@@ -6,7 +6,19 @@ export async function GET() {
   try {
     await connectMongoDB();
 
-    const categories = await Category.find().sort({ gender: -1 }).lean();
+    const categories = await Category.aggregate([
+      {
+        $project: {
+          _id: 1,
+          namecategory: 1,
+          gender: 1,
+        },
+      },
+      {
+        $sort: { gender: -1 },
+      },
+    ]);
+
 
     return NextResponse.json({ categories });
   } catch (err) {

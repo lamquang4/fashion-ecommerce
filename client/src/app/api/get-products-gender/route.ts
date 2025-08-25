@@ -1,6 +1,6 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Product from "@/model/Product";
-import {  NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export async function GET() {
   try {
@@ -55,10 +55,19 @@ export async function GET() {
                   _id: "$_id",
                   product: { $first: "$product" },
                   images: { $first: "$images" },
-                  color: { $first: "$color" },
+                  color: {
+                    $first: {
+                      _id: "$color._id",
+                      namecolor: "$color.namecolor",
+                      codecolor: "$color.codecolor",
+                    },
+                  },
                   inventories: {
                     $push: {
-                      size: "$inventories.size",
+                      size: {
+                        _id: "$inventories.size._id",
+                        namesize: "$inventories.size.namesize",
+                      },
                       quantity: "$inventories.quantity",
                     },
                   },
@@ -67,6 +76,24 @@ export async function GET() {
               { $sort: { _id: 1 } },
             ],
             as: "variants",
+          },
+        },
+        {
+          $project: {
+            _id: 1,
+            name: 1,
+            price: 1,
+            discount: 1,
+            description: 1,
+            slug: 1,
+            status: 1,
+            createdAt: 1,
+            category: {
+              _id: "$category._id",
+              namecategory: "$category.namecategory",
+              gender: "$category.gender",
+            },
+            variants: 1,
           },
         },
         {

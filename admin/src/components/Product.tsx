@@ -69,6 +69,9 @@ function Product() {
       mutate();
     }
   };
+
+  console.log(products);
+
   return (
     <>
       <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">

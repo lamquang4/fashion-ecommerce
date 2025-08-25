@@ -54,7 +54,7 @@ function InputImage({
             </svg>
 
             <p className="mb-2">
-              <span className="font-semibold">Bấm để tải hoặc kéo và thả</span>
+              <span className="font-semibold">Bấm để tải, kéo hoặc thả</span>
             </p>
             <p>PNG, JPG, WEBP</p>
           </div>

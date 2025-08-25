@@ -35,6 +35,8 @@ function Size() {
     }
   };
 
+  console.log(sizes);
+
   return (
     <>
       <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
@@ -59,6 +61,11 @@ function Size() {
           <thead>
             <tr className="bg-[#E9EDF2] text-left">
               <th className="p-[1rem]  ">Kích thước</th>
+              <th className="p-[1rem]  ">Vòng ngực</th>
+              <th className="p-[1rem]  ">Vòng eo</th>
+              <th className="p-[1rem]  ">Vòng mông</th>
+              <th className="p-[1rem]  ">Chiều cao</th>
+              <th className="p-[1rem]  ">Cân nặng </th>
               <th className="p-[1rem]  ">Ngày tạo</th>
               <th className="p-[1rem]  ">Hành động</th>
             </tr>
@@ -75,6 +82,26 @@ function Size() {
                 <tr key={size._id} className="hover:bg-[#f2f3f8]">
                   <td className="p-[1rem] text-[0.9rem] font-semibold">
                     {size.namesize}
+                  </td>
+
+                  <td className="p-[1rem] text-[0.9rem]">
+                    {size.chest[0]} - {size.chest[1]}
+                  </td>
+
+                  <td className="p-[1rem] text-[0.9rem]">
+                    {size.waist[0]} - {size.waist[1]}
+                  </td>
+
+                  <td className="p-[1rem] text-[0.9rem]">
+                    {size.hip[0]} - {size.hip[1]}
+                  </td>
+
+                  <td className="p-[1rem] text-[0.9rem]">
+                    {size.height[0]} - {size.height[1]}
+                  </td>
+
+                  <td className="p-[1rem] text-[0.9rem]">
+                    {size.weight[0]} - {size.weight[1]}
                   </td>
 
                   <td className="p-[1rem]  ">

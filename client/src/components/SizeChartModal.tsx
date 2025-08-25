@@ -12,7 +12,7 @@ function SizeChartModal({ isOpen, toggleMenu }: props) {
       <div className="relative w-full max-w-lg max-h-full">
         <div className="relative p-[25px_15px] bg-white z-20">
           <div className="flex items-center justify-between">
-            <h4 className="uppercase">Bảng kích thước</h4>
+            <h4 className="uppercase">Hướng dẫn kích thước</h4>
 
             <button
               type="button"
@@ -21,6 +21,18 @@ function SizeChartModal({ isOpen, toggleMenu }: props) {
             >
               <HiMiniXMark size={25} />
             </button>
+          </div>
+
+          <hr className=" border-gray-300 my-[15px]" />
+
+          <div>
+            <h5>Bảng kích thước</h5>
+
+            <table>
+              <thead>
+                <th>Kích thước</th>
+              </thead>
+            </table>
           </div>
         </div>
 

@@ -6,6 +6,26 @@ const sizeSchema = new Schema(
       type: String,
       required: true,
     },
+    chest: {
+      type: [Number],
+      required: true,
+    },
+    waist: {
+      type: [Number],
+      required: true,
+    },
+    hip: {
+      type: [Number],
+      required: true,
+    },
+    height: {
+      type: [Number],
+      required: true,
+    },
+    weight: {
+      type: [Number],
+      required: true,
+    },
   },
   {
     timestamps: true,

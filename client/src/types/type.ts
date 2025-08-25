@@ -17,6 +17,11 @@ export interface Color {
 export interface Size {
   _id: string;
   namesize: string;
+  chest: [number, number];
+  waist: [number, number];
+  hip: [number, number];
+  height: [number, number];
+  weight: [number, number];
 }
 
 export interface Category {
@@ -29,6 +34,23 @@ export interface Category {
   productCount?: number;
 }
 
+export interface Variant {
+  _id: string;
+  product: string;
+  images: string[];
+  color: {
+    _id: string;
+    namecolor: string;
+    codecolor: string;
+  };
+  inventories: {
+    size: {
+      _id: string;
+      namesize: string;
+    };
+    quantity: number;
+  }[];
+}
 export interface Product {
   _id: string;
   name: string;
@@ -37,20 +59,13 @@ export interface Product {
   description: string;
   slug: string;
   status: number;
-  category: Category;
+  category: {
+    _id: string;
+    namecategory: string;
+    gender: number;
+  };
   variants: Variant[];
   createdAt?: string;
-}
-
-export interface Variant {
-  _id: string;
-  product: string;
-  images: string[];
-  color: Color;
-  inventories: {
-    size: Size;
-    quantity: number;
-  }[];
 }
 
 export interface Coupon {
@@ -164,8 +179,15 @@ export interface ProductInCart {
     _id: string;
     images: string[];
     stock: number;
-    color: Color;
-    size: Size;
+    color: {
+      _id: string;
+      namecolor: string;
+      codecolor: string;
+    };
+    size: {
+      _id: string;
+      namesize: string;
+    };
     quantity: number;
   };
 }

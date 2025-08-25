@@ -20,6 +20,11 @@ export interface Color {
 export interface Size {
   _id?: string;
   namesize: string;
+  chest: [number, number];
+  waist: [number, number];
+  hip: [number, number];
+  height: [number, number];
+  weight: [number, number];
   createdAt?: string;
 }
 
@@ -49,11 +54,22 @@ export interface Category {
   createdAt?: string;
 }
 
-export interface Banner {
+export interface Variant {
   _id: string;
-  image: string;
-  type: number;
-  status: number;
+  product: string;
+  images: string[];
+  color: {
+    _id: string;
+    namecolor: string;
+    codecolor: string;
+  };
+  inventories: {
+    size: {
+      _id: string;
+      namesize: string;
+    };
+    quantity: number;
+  }[];
   createdAt?: string;
 }
 
@@ -65,31 +81,15 @@ export interface Product {
   description: string;
   slug: string;
   status: number;
-  category: Category;
+  category: {
+    _id: string;
+    namecategory: string;
+    gender: number;
+  };
   variants: Variant[];
   createdAt: string;
   totalSold?: number;
   totalQuantity?: number;
-}
-
-export interface Variant {
-  _id: string;
-  product: Product;
-  images: string[];
-  color: Color;
-  inventories: {
-    size: Size;
-    quantity: number;
-  }[];
-  createdAt?: string;
-}
-
-export interface Address {
-  fullname: string;
-  phone: string;
-  speaddress: string;
-  ward: string;
-  city: string;
 }
 
 export interface Order {
@@ -160,4 +160,12 @@ export interface Revenue {
   month: number;
   totalRevenue: number;
   totalQuantity: number;
+}
+
+export interface Banner {
+  _id: string;
+  image: string;
+  type: number;
+  status: number;
+  createdAt?: string;
 }
