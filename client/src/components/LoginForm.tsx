@@ -89,7 +89,7 @@ function LoginForm() {
                 />
               </div>
 
-              <div className="mt-3.5">
+              <div className="mt-4">
                 <Link
                   href="/login"
                   className="text-[0.9rem] text-blue-400 font-medium"

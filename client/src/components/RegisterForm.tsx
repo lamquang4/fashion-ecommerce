@@ -147,7 +147,7 @@ function RegisterForm() {
 
               <button
                 type="submit"
-                className="w-full bg-black text-white focus:outline-none font-semibold rounded-sm text-[1rem] px-5 py-2.5 text-center mt-3.5"
+                className="w-full bg-black text-white focus:outline-none font-semibold rounded-sm text-[1rem] px-5 py-2.5 text-center mt-4"
               >
                 Đăng kí
               </button>

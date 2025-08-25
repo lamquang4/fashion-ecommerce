@@ -196,13 +196,13 @@ function OrderHistory() {
                 </div>
               </div>
             )}
-          </div>
 
-          <Pagination
-            totalPages={totalPages}
-            currentPage={currentPage}
-            totalItems={totalItems}
-          />
+            <Pagination
+              totalPages={totalPages}
+              currentPage={currentPage}
+              totalItems={totalItems}
+            />
+          </div>
         </div>
       </div>
     </section>

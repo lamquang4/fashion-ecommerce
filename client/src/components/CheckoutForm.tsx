@@ -291,19 +291,19 @@ function CheckoutForm() {
           />
         </Link>
 
-        <hr className="border-gray-300 my-[15px]" />
+        <hr className="border-gray-200 my-[15px]" />
 
         <form onSubmit={handleSubmit}>
           <div className="grid lg:grid-cols-2 gap-[40px]">
-            <div className="order-last lg:order-first">
-              <h4 className="mb-[15px]">Thông tin giao hàng</h4>
+            <div className="order-last lg:order-first space-y-[15px]">
+              <h4>Thông tin giao hàng</h4>
 
-              <div className="space-y-[15px]">
+              <div className="space-y-[30px]">
                 <div className="space-y-[15px]">
-                  <div>
+                  <div className="space-y-[5px]">
                     <label
                       htmlFor=""
-                      className="mt-4 mb-2 block text-[0.9rem] font-medium"
+                      className="block text-[0.9rem] font-medium"
                     >
                       Địa chỉ lưu trữ
                     </label>
@@ -330,10 +330,10 @@ function CheckoutForm() {
                     </select>
                   </div>
 
-                  <div>
+                  <div className="space-y-[5px]">
                     <label
                       htmlFor=""
-                      className="mb-2 block text-[0.9rem] font-medium"
+                      className="block text-[0.9rem] font-medium"
                     >
                       Họ và tên
                     </label>
@@ -348,10 +348,10 @@ function CheckoutForm() {
                     />
                   </div>
 
-                  <div>
+                  <div className="space-y-[5px]">
                     <label
                       htmlFor=""
-                      className="mt-4 mb-2 block text-[0.9rem] font-medium"
+                      className="block text-[0.9rem] font-medium"
                     >
                       Số điện thoại
                     </label>
@@ -367,10 +367,10 @@ function CheckoutForm() {
                     />
                   </div>
 
-                  <div>
+                  <div className="space-y-[5px]">
                     <label
                       htmlFor=""
-                      className="mt-4 mb-2 block text-[0.9rem] font-medium"
+                      className="block text-[0.9rem] font-medium"
                     >
                       Địa chỉ cụ thể
                     </label>
@@ -386,10 +386,10 @@ function CheckoutForm() {
                   </div>
 
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-[14px]">
-                    <div>
+                    <div className="space-y-[5px]">
                       <label
                         htmlFor=""
-                        className="mt-4 mb-2 block text-[0.9rem] font-medium"
+                        className="block text-[0.9rem] font-medium"
                       >
                         Tỉnh/thành phố
                       </label>
@@ -412,10 +412,10 @@ function CheckoutForm() {
                       </select>
                     </div>
 
-                    <div>
+                    <div className="space-y-[5px]">
                       <label
                         htmlFor=""
-                        className="mt-4 mb-2 block text-[0.9rem] font-medium"
+                        className="block text-[0.9rem] font-medium"
                       >
                         Phường/xã
                       </label>
@@ -440,7 +440,7 @@ function CheckoutForm() {
 
                 <div>
                   <h4 className="mb-[15px]">Phương thức thanh toán</h4>
-                  <div className="grid gap-6">
+                  <div className="grid gap-[20px]">
                     <div className="relative">
                       <input
                         className="peer hidden"
@@ -491,79 +491,78 @@ function CheckoutForm() {
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div className="mt-[30px] flex justify-between">
-                <button
-                  disabled={isLoadingAddOrder}
-                  className="text-[0.9rem] rounded-md bg-[#197FB6] px-4 py-2 font-medium text-white"
-                >
-                  Đặt hàng
-                </button>
+                <div className="flex justify-between items-center">
+                  <button
+                    disabled={isLoadingAddOrder}
+                    className="text-[0.9rem] rounded-md bg-[#197FB6] px-4 py-2 font-medium text-white"
+                  >
+                    Đặt hàng
+                  </button>
 
-                <Link
-                  href={"/cart"}
-                  className="text-[0.95rem] rounded-md bg-transparent py-2 font-medium text-[#338dbc] hover:text-blue-400"
-                >
-                  Giỏ hàng
-                </Link>
+                  <Link
+                    href={"/cart"}
+                    className="text-[0.95rem] rounded-md bg-transparent py-2 font-medium text-[#338dbc] hover:text-blue-400"
+                  >
+                    Giỏ hàng
+                  </Link>
+                </div>
               </div>
             </div>
 
-            <div className="order-first lg:order-last">
-              <div>
-                <h4 className="mb-[15px]">Đơn hàng</h4>
-                <div className="space-y-5 bg-white">
-                  {cart?.productsInCart.map((item, index) => (
-                    <div
-                      className="flex rounded-lg bg-white gap-[15px]"
-                      key={index}
-                    >
-                      <div className="relative">
-                        <Image
-                          Src={item.variant.images[0]}
-                          Alt={""}
-                          ClassName={"w-[120px] object-cover"}
-                          loadingType="eager"
-                        />
+            <div className="order-first lg:order-last space-y-[15px]">
+              <h4>Đơn hàng</h4>
 
-                        <small className="text-[0.8rem] absolute flex items-center justify-center top-[-7px] right-[-9px] bg-[#197FB6] text-white font-medium leading-none rounded-full w-[25px] h-[25px]">
-                          {item.variant.quantity}
-                        </small>
-                      </div>
+              <div className="space-y-[15px] bg-white">
+                {cart?.productsInCart.map((item, index) => (
+                  <div
+                    className="flex rounded-lg bg-white gap-[15px]"
+                    key={index}
+                  >
+                    <div className="relative">
+                      <Image
+                        Src={item.variant.images[0]}
+                        Alt={""}
+                        ClassName={"w-[120px] object-cover"}
+                        loadingType="eager"
+                      />
 
-                      <div className="flex w-full flex-col my-auto gap-[5px]">
-                        <span className="font-semibold">{item.name}</span>
-                        <span className=" ">
-                          {item.variant.size.namesize} /{" "}
-                          {item.variant.color.namecolor}
-                        </span>
-                        {item.discount > 0 ? (
-                          <div className="flex items-center gap-[8px]">
-                            <del className="text-[#707072]">
-                              {item.price.toLocaleString("vi-VN")}₫
-                            </del>
-                            <p className="font-medium text-[#c00]">
-                              {(item.price - item.discount).toLocaleString(
-                                "vi-VN"
-                              )}
-                              ₫
-                            </p>
-                          </div>
-                        ) : (
-                          <p className="font-medium">{item.price}</p>
-                        )}
-                      </div>
+                      <small className="text-[0.8rem] absolute flex items-center justify-center top-[-7px] right-[-9px] bg-[#197FB6] text-white font-medium leading-none rounded-full w-[25px] h-[25px]">
+                        {item.variant.quantity}
+                      </small>
                     </div>
-                  ))}
-                </div>
+
+                    <div className="flex w-full flex-col my-auto gap-[5px]">
+                      <span className="font-semibold">{item.name}</span>
+                      <span className=" ">
+                        {item.variant.size.namesize} /{" "}
+                        {item.variant.color.namecolor}
+                      </span>
+                      {item.discount > 0 ? (
+                        <div className="flex items-center gap-[8px]">
+                          <del className="text-[#707072]">
+                            {item.price.toLocaleString("vi-VN")}₫
+                          </del>
+                          <p className="font-medium text-[#c00]">
+                            {(item.price - item.discount).toLocaleString(
+                              "vi-VN"
+                            )}
+                            ₫
+                          </p>
+                        </div>
+                      ) : (
+                        <p className="font-medium">{item.price}</p>
+                      )}
+                    </div>
+                  </div>
+                ))}
               </div>
 
-              <hr className="border-gray-300 my-[15px]" />
+              <hr className="border-gray-200" />
 
               <div className="space-y-[15px]">
-                <div className="flex justify-between flex-wrap gap-[15px] items-center mb-[15px]">
-                  <h4>Phiếu giảm giá</h4>
+                <div className="flex justify-between flex-wrap gap-[15px] items-center mb-[5px]">
+                  <h5 className="font-medium">Phiếu giảm giá</h5>
 
                   <button
                     type="button"
@@ -574,7 +573,7 @@ function CheckoutForm() {
                   </button>
                 </div>
 
-                <div className="flex gap-[15px] items-center mb-[20px]">
+                <div className="flex gap-[15px] items-center">
                   <input
                     type="text"
                     id="discount"
@@ -642,16 +641,16 @@ function CheckoutForm() {
                 )}
               </div>
 
-              <hr className="border-gray-300 my-[15px]" />
+              <hr className="border-gray-200" />
 
               <div className="space-y-[15px]">
-                <div className="flex items-center justify-between font-medium text-gray-600">
+                <div className="flex items-center justify-between font-medium">
                   <h5>Tổng</h5>
                   <h5>{totalPrice.toLocaleString("vi-VN")}₫</h5>
                 </div>
 
                 {coupon && (
-                  <div className="flex items-center justify-between font-medium text-gray-600">
+                  <div className="flex items-center justify-between font-medium">
                     <h5>Phiếu giảm giá</h5>
 
                     <h5>
@@ -670,7 +669,7 @@ function CheckoutForm() {
                 )}
               </div>
 
-              <hr className="border-gray-300 my-[15px]" />
+              <hr className="border-gray-200" />
 
               <div className="flex items-center justify-between  ">
                 <h4>Tổng cộng</h4>
