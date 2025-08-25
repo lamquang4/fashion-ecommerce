@@ -291,7 +291,7 @@ function CheckoutForm() {
           />
         </Link>
 
-        <hr className="border-gray-200 my-[15px]" />
+        <hr className="border-gray-300 my-[15px]" />
 
         <form onSubmit={handleSubmit}>
           <div className="grid lg:grid-cols-2 gap-[40px]">
@@ -558,7 +558,7 @@ function CheckoutForm() {
                 ))}
               </div>
 
-              <hr className="border-gray-200" />
+              <hr className="border-gray-300" />
 
               <div className="space-y-[15px]">
                 <div className="flex justify-between flex-wrap gap-[15px] items-center mb-[5px]">
@@ -641,7 +641,7 @@ function CheckoutForm() {
                 )}
               </div>
 
-              <hr className="border-gray-200" />
+              <hr className="border-gray-300" />
 
               <div className="space-y-[15px]">
                 <div className="flex items-center justify-between font-medium">
@@ -669,7 +669,7 @@ function CheckoutForm() {
                 )}
               </div>
 
-              <hr className="border-gray-200" />
+              <hr className="border-gray-300" />
 
               <div className="flex items-center justify-between  ">
                 <h4>Tổng cộng</h4>

@@ -73,8 +73,10 @@ function AddressInfo() {
                 <Loading height={70} size={50} color="black" thickness={3} />
               ) : addresses.length > 0 ? (
                 addresses.map((address) => (
-                  <div key={address._id}>
-                    <hr className="border-gray-300 my-[20px]" />
+                  <div
+                    key={address._id}
+                    className="border-t border-gray-300 py-[20px]"
+                  >
                     <div className="flex justify-between flex-wrap gap-y-[8px]">
                       <div className="flex flex-col gap-[8px]">
                         <p className="font-medium">

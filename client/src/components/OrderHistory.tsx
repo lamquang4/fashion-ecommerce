@@ -69,7 +69,7 @@ function OrderHistory() {
         <SideBarMenu />
 
         <div className="w-full max-w-full lg:max-w-[700px] px-[15px]">
-          <div className="flex justify-between items-center mb-[25px]">
+          <div className="flex justify-between items-center mb-[20px]">
             <h2 className="capitalize">Đơn hàng</h2>
 
             <select
