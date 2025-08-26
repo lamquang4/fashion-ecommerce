@@ -153,13 +153,13 @@ function ProductDetail() {
     mutateWishlist();
   };
 
-  const toggleCouponMenu = () => {
+  const toggleCouponMenu = useCallback(() => {
     setOpenCouponMenu((prev) => !prev);
-  };
+  }, []);
 
-  const toggleSizeChartModal = () => {
+  const toggleSizeChartModal = useCallback(() => {
     setOpenSizeChartModal((prev) => !prev);
-  };
+  }, []);
 
   if (!product && !isLoading) {
     return notFound();
