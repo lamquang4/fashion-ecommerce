@@ -2,6 +2,7 @@
 import useGetCoupons from "@/hooks/useGetCoupons";
 import Overplay from "./Overplay";
 import { HiMiniXMark } from "react-icons/hi2";
+import { MdContentCopy } from "react-icons/md";
 import toast from "react-hot-toast";
 import { memo } from "react";
 type MenuSideCouponProps = {
@@ -30,11 +31,11 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
           </button>
         </div>
 
-        <div className="flex gap-[25px] flex-col items-center w-full py-[30px]">
+        <div className="flex gap-[15px] flex-col items-center w-full py-[30px]">
           {coupons.length > 0 &&
             coupons.map((coupon) => (
               <div
-                className="relative w-full flex rounded-none filter-none min-h-0 overflow-hidden px-0 bg-[#197FB6]"
+                className="relative w-full flex overflow-hidden bg-[#197FB6]"
                 key={coupon._id}
               >
                 <div className="absolute left-[-6px] top-[16.6%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
@@ -74,12 +75,12 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
                       <div className="flex justify-between items-center w-full">
                         <p className="font-medium ">Nhập mã: {coupon.code}</p>
                         <button
-                          className="border text-[0.9rem] font-medium px-2.5 py-1.5 bg-[#197FB6] text-white rounded-sm"
+                          className="border text-[0.9rem] font-medium p-2 bg-[#197FB6] text-white rounded-sm"
                           onClick={() => {
                             handleCopy(coupon.code);
                           }}
                         >
-                          Sao chép
+                          <MdContentCopy />
                         </button>
                       </div>
                     </div>

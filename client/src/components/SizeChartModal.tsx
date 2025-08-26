@@ -31,6 +31,11 @@ function SizeChartModal({ isOpen, toggleMenu }: props) {
             <table>
               <thead>
                 <th>Kích thước</th>
+                <th>Vòng ngực</th>
+                <th>Vòng eo</th>
+                <th>Vòng mông</th>
+                <th>Chiều cao</th>
+                <th>Cân nặng</th>
               </thead>
             </table>
           </div>

@@ -145,8 +145,8 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
 
           <hr className=" border-gray-300 my-[15px]" />
 
-          <form onSubmit={handleSubmit}>
-            <div className="grid gap-4 mb-[20px] grid-cols-2">
+          <form onSubmit={handleSubmit} className="space-y-[30px]">
+            <div className="grid gap-4 grid-cols-2">
               <div className="col-span-2 w-full space-y-[5px]">
                 <label
                   htmlFor="fullname"
@@ -250,7 +250,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
               </div>
             </div>
 
-            <div className="flex mt-4 justify-center">
+            <div className="flex justify-center items-center">
               <button
                 disabled={isLoadingUpdateAddress || isLoadingAddAddress}
                 type="submit"
