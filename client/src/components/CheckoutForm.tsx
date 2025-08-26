@@ -438,8 +438,8 @@ function CheckoutForm() {
                   </div>
                 </div>
 
-                <div>
-                  <h4 className="mb-[15px]">Phương thức thanh toán</h4>
+                <div className="space-y-[15px]">
+                  <h4>Phương thức thanh toán</h4>
                   <div className="grid gap-[20px]">
                     <div className="relative">
                       <input
@@ -466,6 +466,7 @@ function CheckoutForm() {
                         </span>
                       </label>
                     </div>
+
                     <div className="relative">
                       <input
                         className="peer hidden"
@@ -527,7 +528,7 @@ function CheckoutForm() {
                         loadingType="eager"
                       />
 
-                      <small className="text-[0.8rem] absolute flex items-center justify-center top-[-7px] right-[-9px] bg-[#197FB6] text-white font-medium leading-none rounded-full w-[25px] h-[25px]">
+                      <small className="text-[0.8rem] absolute flex items-center justify-center top-[-7px] right-[-9px] bg-[#197FB6] text-white font-medium rounded-full w-[25px] h-[25px]">
                         {item.variant.quantity}
                       </small>
                     </div>
