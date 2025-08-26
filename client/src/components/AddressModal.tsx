@@ -130,7 +130,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
   return (
     <div className="flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-20 h-full">
       <div className="relative w-full max-w-lg max-h-full">
-        <div className="relative p-[25px_15px] bg-white z-20">
+        <div className="relative p-[25px_15px] bg-white z-20 space-y-[15px]">
           <div className="flex items-center justify-between">
             <h4 className="uppercase">Địa chỉ của bạn</h4>
 
@@ -143,7 +143,7 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
             </button>
           </div>
 
-          <hr className=" border-gray-300 my-[15px]" />
+          <hr className=" border-gray-300" />
 
           <form onSubmit={handleSubmit} className="space-y-[30px]">
             <div className="grid gap-4 grid-cols-2">
