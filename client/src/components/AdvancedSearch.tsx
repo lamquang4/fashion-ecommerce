@@ -88,11 +88,11 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
           isOpen ? "translate-x-[0px]" : "translate-x-[-320px]"
         }`}
       >
-        <div className="sticky top-0 overflow-hidden p-4 bg-white z-[25] flex justify-between items-center border-b border-gray-200">
+        <div className="sticky top-0 overflow-hidden p-[15px] bg-white z-[25] flex justify-between items-center border-b border-gray-300">
           <h4 className="uppercase">Bộ lọc</h4>
 
           <button onClick={toggleMenu}>
-            <HiMiniXMark size={25} color="black" />
+            <HiMiniXMark size={30} color="black" />
           </button>
         </div>
 
@@ -100,8 +100,9 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
           {(searchParams.get("min") ||
             searchParams.get("max") ||
             searchParams.get("color")) && (
-            <div className="p-4 border-b border-gray-200">
-              <h5 className="mb-2.5">Bộ lọc đã chọn</h5>
+            <div className="p-[15px] border-b border-gray-300 space-y-[15px]">
+              <h5 className="font-semibold capitalize">Bộ lọc đã chọn</h5>
+
               <div className="flex items-center flex-wrap gap-3">
                 {(searchParams.get("min") || searchParams.get("max")) && (
                   <div className="bg-[#f5f5f5] border border-gray-300 rounded-[4px] p-[9px_10px] flex justify-between items-center gap-1.5 cursor-pointer">
@@ -153,9 +154,9 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
           )}
 
           <form id="advanced-search-form" onSubmit={handleSubmit}>
-            <div className="border-b border-gray-200 p-4 flex flex-col gap-4">
+            <div className="border-b border-gray-300 p-[15px] space-y-[15px]">
               <div className="flex items-center justify-between">
-                <h5 className="uppercase font-medium">Giá</h5>
+                <h5 className="capitalize font-semibold">Giá</h5>
                 <IoIosArrowDown size={18} />
               </div>
 
@@ -202,16 +203,19 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
               </div>
             </div>
 
-            <div className="border-b border-gray-200 p-4 flex flex-col gap-4">
+            <div className="border-b border-gray-300 p-[15px] space-y-[15px]">
               <div className="flex items-center justify-between">
-                <h5 className="uppercase font-medium">Màu</h5>
+                <h5 className="capitalize font-semibold">Màu</h5>
                 <IoIosArrowDown size={18} />
               </div>
 
-              <div className="w-full flex flex-wrap justify-between gap-5">
+              <div className="w-full grid grid-cols-2 gap-[15px]">
                 {colors.map((color, index) => {
                   return (
-                    <div className="flex gap-2 items-center" key={color._id}>
+                    <div
+                      className="flex gap-[10px] items-center"
+                      key={color._id}
+                    >
                       <input
                         type="checkbox"
                         className={`peer relative w-[22px] h-[22px] appearance-none border border-gray-300 cursor-pointer 
@@ -239,7 +243,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
           </form>
         </div>
 
-        <div className="fixed bottom-0 left-0 w-[320px] bg-white z-[30] p-4 flex justify-center">
+        <div className="fixed bottom-0 left-0 w-[320px] bg-white z-[30] p-[15px] flex justify-center">
           <button
             type="submit"
             form="advanced-search-form"

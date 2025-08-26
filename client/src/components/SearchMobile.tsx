@@ -25,7 +25,6 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
     toggleSearch();
   };
 
-
   useEffect(() => {
     if (openSearch) {
       document.body.style.overflow = "hidden";
@@ -48,31 +47,34 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
     >
       <div className="relative">
         <div className="flex items-center">
-          <form className="w-full" onSubmit={handleSearch}>
-            <input
-              type="text"
-              required
-              placeholder="Tìm kiếm..."
-              maxLength={50}
-              autoComplete="off"
-              className="w-full px-2 py-2 rounded outline-none"
-              value={search}
-              onChange={(e) => setSearch(e.target.value)}
-              onFocus={() => setFocused(true)}
-              onBlur={() => {
-                setTimeout(() => {
-                  setFocused(false);
-                }, 200);
-              }}
-            />
-          </form>
-          <button onClick={toggleSearch} title="Đóng">
-            <HiMiniXMark size={23} title="Đóng" />
+          <div className="w-full">
+            <form onSubmit={handleSearch}>
+              <input
+                type="text"
+                required
+                placeholder="Tìm kiếm..."
+                maxLength={50}
+                autoComplete="off"
+                className="w-full px-2 py-2 rounded outline-none"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+                onFocus={() => setFocused(true)}
+                onBlur={() => {
+                  setTimeout(() => {
+                    setFocused(false);
+                  }, 200);
+                }}
+              />
+            </form>
+          </div>
+
+          <button onClick={toggleSearch}>
+            <HiMiniXMark size={25} />
           </button>
         </div>
 
         {focused && search && (
-          <div className="fixed left-1/2 translate-x-[-50%] z-[12] w-full bg-white shadow-lg border-gray-200 border">
+          <div className="fixed left-1/2 translate-x-[-50%] z-12 w-full bg-white shadow-lg border-gray-300 border">
             <SuggestionProduct search={search} />
           </div>
         )}

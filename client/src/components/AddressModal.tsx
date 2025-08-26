@@ -2,7 +2,7 @@
 import { HiMiniXMark } from "react-icons/hi2";
 import Overplay from "./Overplay";
 import useGetProvinces from "@/hooks/useGetProvinceVN";
-import { useEffect, useMemo, useState } from "react";
+import { memo, useEffect, useMemo, useState } from "react";
 import useGetAddress from "@/hooks/useGetAddress";
 import useUpdateAddress from "@/hooks/useUpdateAddress";
 import { useSession } from "next-auth/react";
@@ -128,140 +128,145 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
   };
 
   return (
-    <div className="flex justify-center items-center overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-20 h-full">
-      <div className="relative w-full max-w-lg max-h-full">
-        <div className="relative p-[25px_15px] bg-white z-20 space-y-[15px]">
-          <div className="flex items-center justify-between">
-            <h4 className="uppercase">Địa chỉ của bạn</h4>
+    <div className="fixed top-0 right-0 left-0 z-20 h-full overflow-y-auto overflow-x-hidden">
+      <div className="py-[40px] px-[10px] sm:px-[15px] flex justify-center items-center">
+        <div className="relative w-full max-w-lg max-h-full">
+          <div className="relative sm:p-[25px_20px] p-[25px_15px] bg-white z-20 space-y-[15px] rounded-lg">
+            <div className="flex items-center justify-between">
+              <h4 className="uppercase">Địa chỉ của bạn</h4>
 
-            <button
-              type="button"
-              className=" bg-transparent ms-auto"
-              onClick={toggleMenu}
-            >
-              <HiMiniXMark size={25} />
-            </button>
-          </div>
-
-          <hr className=" border-gray-300" />
-
-          <form onSubmit={handleSubmit} className="space-y-[30px]">
-            <div className="grid gap-4 grid-cols-2">
-              <div className="col-span-2 w-full space-y-[5px]">
-                <label
-                  htmlFor="fullname"
-                  className="block text-[0.9rem] font-medium"
-                >
-                  Họ và tên
-                </label>
-                <input
-                  type="text"
-                  name="fullname"
-                  required
-                  onChange={handleChange}
-                  value={data.fullname}
-                  className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
-                  placeholder="Họ và tên"
-                />
-              </div>
-
-              <div className="col-span-2 w-full space-y-[5px]">
-                <label
-                  htmlFor="phone"
-                  className="block text-[0.9rem] font-medium"
-                >
-                  Số điện thoại
-                </label>
-                <input
-                  type="number"
-                  inputMode="numeric"
-                  required
-                  name="phone"
-                  onChange={handleChange}
-                  value={data.phone}
-                  className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
-                  placeholder="Số điện thoại"
-                />
-              </div>
-
-              <div className="col-span-2 w-full space-y-[5px]">
-                <label
-                  htmlFor="speaddress"
-                  className="block text-[0.9rem] font-medium"
-                >
-                  Địa chỉ cụ thể
-                </label>
-                <input
-                  type="text"
-                  name="speaddress"
-                  required
-                  onChange={handleChange}
-                  value={data.speaddress}
-                  className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
-                  placeholder="Địa chỉ cụ thể"
-                />
-              </div>
-
-              <div className="col-span-2 w-full space-y-[5px]">
-                <label htmlFor="city" className="block text-sm font-medium">
-                  Tỉnh/thành phố
-                </label>
-                <select
-                  name="cỉty"
-                  required
-                  value={selectedProvinceName}
-                  onChange={(e) => {
-                    setSelectedProvinceName(e.target.value);
-                    setSelectedWard("");
-                  }}
-                  className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
-                >
-                  <option value="">Chọn tỉnh/thành phố</option>
-                  {provinces?.map((province) => (
-                    <option key={province.id} value={province.province}>
-                      {province.province}
-                    </option>
-                  ))}
-                </select>
-              </div>
-
-              <div className="col-span-2 w-full space-y-[5px]">
-                <label
-                  htmlFor="ward"
-                  className="block mb-2 text-sm font-medium"
-                >
-                  Phường/xã
-                </label>
-                <select
-                  name="ward"
-                  required
-                  disabled={!selectedProvince}
-                  value={selectedWard}
-                  onChange={(e) => setSelectedWard(e.target.value)}
-                  className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
-                >
-                  <option value="">Chọn phường/xã</option>
-                  {selectedProvince?.wards.map((ward, idx) => (
-                    <option key={idx} value={ward.name}>
-                      {ward.name}
-                    </option>
-                  ))}
-                </select>
-              </div>
-            </div>
-
-            <div className="flex justify-center items-center">
               <button
-                disabled={isLoadingUpdateAddress || isLoadingAddAddress}
-                type="submit"
-                className="px-[14px] py-[6px] bg-red-600 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-red-700"
+                type="button"
+                className="bg-transparent ms-auto"
+                onClick={toggleMenu}
               >
-                {isLoadingAddAddress || isLoadingUpdateAddress
-                  ? "Đang lưu..."
-                  : "Lưu"}
+                <HiMiniXMark size={30} />
               </button>
             </div>
-          </form>
+
+            <hr className=" border-gray-300" />
+
+            <form onSubmit={handleSubmit} className="space-y-[30px]">
+              <div className="grid gap-[15px] grid-cols-2">
+                <div className="col-span-2 w-full space-y-[5px]">
+                  <label
+                    htmlFor="fullname"
+                    className="block text-[0.9rem] font-medium"
+                  >
+                    Họ và tên
+                  </label>
+                  <input
+                    type="text"
+                    name="fullname"
+                    required
+                    onChange={handleChange}
+                    value={data.fullname}
+                    className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
+                    placeholder="Họ và tên"
+                  />
+                </div>
+
+                <div className="col-span-2 w-full space-y-[5px]">
+                  <label
+                    htmlFor="phone"
+                    className="block text-[0.9rem] font-medium"
+                  >
+                    Số điện thoại
+                  </label>
+                  <input
+                    type="number"
+                    inputMode="numeric"
+                    required
+                    name="phone"
+                    onChange={handleChange}
+                    value={data.phone}
+                    className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
+                    placeholder="Số điện thoại"
+                  />
+                </div>
+
+                <div className="col-span-2 w-full space-y-[5px]">
+                  <label
+                    htmlFor="speaddress"
+                    className="block text-[0.9rem] font-medium"
+                  >
+                    Địa chỉ cụ thể
+                  </label>
+                  <input
+                    type="text"
+                    name="speaddress"
+                    required
+                    onChange={handleChange}
+                    value={data.speaddress}
+                    className="bg-gray-50 border border-gray-300 text-[0.9rem] rounded-sm block w-full p-2 outline-0"
+                    placeholder="Địa chỉ cụ thể"
+                  />
+                </div>
+
+                <div className="col-span-2 w-full space-y-[5px]">
+                  <label
+                    htmlFor="city"
+                    className="block text-[0.9rem] font-medium"
+                  >
+                    Tỉnh/thành phố
+                  </label>
+                  <select
+                    name="cỉty"
+                    required
+                    value={selectedProvinceName}
+                    onChange={(e) => {
+                      setSelectedProvinceName(e.target.value);
+                      setSelectedWard("");
+                    }}
+                    className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
+                  >
+                    <option value="">Chọn tỉnh/thành phố</option>
+                    {provinces?.map((province) => (
+                      <option key={province.id} value={province.province}>
+                        {province.province}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+
+                <div className="col-span-2 w-full space-y-[5px]">
+                  <label
+                    htmlFor="ward"
+                    className="block text-[0.9rem] font-medium"
+                  >
+                    Phường/xã
+                  </label>
+                  <select
+                    name="ward"
+                    required
+                    disabled={!selectedProvince}
+                    value={selectedWard}
+                    onChange={(e) => setSelectedWard(e.target.value)}
+                    className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
+                  >
+                    <option value="">Chọn phường/xã</option>
+                    {selectedProvince?.wards.map((ward, idx) => (
+                      <option key={idx} value={ward.name}>
+                        {ward.name}
+                      </option>
+                    ))}
+                  </select>
+                </div>
+              </div>
+
+              <div className="flex justify-center items-center">
+                <button
+                  disabled={isLoadingUpdateAddress || isLoadingAddAddress}
+                  type="submit"
+                  className="px-[14px] py-[6px] bg-red-600 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-red-700"
+                >
+                  {isLoadingAddAddress || isLoadingUpdateAddress
+                    ? "Đang lưu..."
+                    : "Lưu"}
+                </button>
+              </div>
+            </form>
+          </div>
         </div>
 
         {isOpen && <Overplay closeMenu={toggleMenu} IndexForZ={15} />}
@@ -270,4 +275,4 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
   );
 }
 
-export default AddressModal;
+export default memo(AddressModal);

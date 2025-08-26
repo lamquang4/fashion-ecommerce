@@ -24,7 +24,7 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
           isOpen ? "translate-x-[0px]" : "translate-x-[400px]"
         }`}
       >
-        <div className="sticky top-0 overflow-hidden bg-white z-[25] py-[15px] flex justify-between items-center border-b border-gray-300">
+        <div className="sticky top-0 overflow-hidden bg-white py-[15px] flex justify-between items-center border-b border-gray-300">
           <h4 className="uppercase">Phiếu giảm giá</h4>
           <button onClick={toggleMenu}>
             <HiMiniXMark size={25} color="black" />

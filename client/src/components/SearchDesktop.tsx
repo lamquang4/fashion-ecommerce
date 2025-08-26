@@ -46,7 +46,7 @@ function SearchDesktop() {
       </form>
 
       {focused && search && (
-        <div className="fixed top-12 right-12 z-[12] mt-3 w-96 max-w-[calc(100%-30px)] bg-white shadow-lg border-gray-200 border">
+        <div className="fixed top-12 right-12 z-12 w-96 max-w-[calc(100%-30px)] bg-white shadow-lg border-gray-300 border">
           <SuggestionProduct search={search} />
         </div>
       )}

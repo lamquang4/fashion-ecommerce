@@ -17,6 +17,7 @@ import useGetCart from "@/hooks/useGetCart";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import useAddWishlist from "@/hooks/useAddWishlist";
+import SizeChartModal from "./SizeChartModal";
 
 function ProductDetail() {
   const params = useParams();
@@ -30,7 +31,8 @@ function ProductDetail() {
   }>();
   const [selectedColor, setSelectedColor] = useState<Color>();
   const [mainImage, setMainImage] = useState<string>("");
-  const [menuOpen, setMenuOpen] = useState<boolean>(false);
+  const [openCouponMenu, setOpenCouponMenu] = useState<boolean>(false);
+  const [openSizeChartModal, setOpenSizeChartModal] = useState<boolean>(false);
   const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
@@ -151,9 +153,13 @@ function ProductDetail() {
     mutateWishlist();
   };
 
-  const toggleOpen = useCallback(() => {
-    setMenuOpen((prev) => !prev);
-  }, []);
+  const toggleCouponMenu = () => {
+    setOpenCouponMenu((prev) => !prev);
+  };
+
+  const toggleSizeChartModal = () => {
+    setOpenSizeChartModal((prev) => !prev);
+  };
 
   if (!product && !isLoading) {
     return notFound();
@@ -279,7 +285,7 @@ function ProductDetail() {
                           className="relative flex rounded-none filter-none min-h-0 overflow-hidden px-0 cursor-pointer
     before:content-[''] before:absolute before:rounded-full before:w-[12px] before:h-[12px] before:bg-white before:border before:border-[#197FB6] before:top-1/2 before:translate-y-[-50%] before:left-[-6px] before:z-[10]
     after:content-[''] after:absolute after:rounded-full after:w-[12px] after:h-[12px] after:bg-white after:border after:border-[#197FB6] after:top-1/2 after:translate-y-[-50%] after:right-[-6px] after:z-[10]"
-                          onClick={toggleOpen}
+                          onClick={toggleCouponMenu}
                         >
                           <div className="border border-[#197FB6] text-[#197FB6] px-3 py-[7px] relative text-[0.9rem] font-medium uppercase">
                             {coupon.discountType === 1
@@ -329,6 +335,7 @@ function ProductDetail() {
 
                     <button
                       type="button"
+                      onClick={toggleSizeChartModal}
                       className="flex gap-[5px] items-center"
                     >
                       <LiaRulerHorizontalSolid size={20} />
@@ -464,7 +471,17 @@ function ProductDetail() {
             </div>
           </div>
 
-          <MenuSideCoupon toggleMenu={toggleOpen} isOpen={menuOpen} />
+          {openSizeChartModal && (
+            <SizeChartModal
+              toggleMenu={toggleSizeChartModal}
+              isOpen={openSizeChartModal}
+            />
+          )}
+
+          <MenuSideCoupon
+            toggleMenu={toggleCouponMenu}
+            isOpen={openCouponMenu}
+          />
 
           {openViewer && (
             <ImageViewer
