@@ -32,7 +32,6 @@ export async function GET(req: NextRequest) {
               },
             ]
           : []),
-
         {
           $unwind: "$inventories",
         },
@@ -71,6 +70,25 @@ export async function GET(req: NextRequest) {
         },
         {
           $unwind: "$color",
+        },
+        {
+          $project: {
+            _id: 1,
+            "product._id": 1,
+            "product.name": 1,
+            images: 1,
+            "color._id": 1,
+            "color.namecolor": 1,
+            "color.codecolor": 1,
+            inventories: {
+              size: {
+                _id: 1,
+                namesize: 1,
+              },
+              quantity: 1,
+            },
+            createdAt: 1,
+          },
         },
 
         { $sort: { "product._id": 1, color: -1 } },

@@ -10,8 +10,6 @@ import { HiMiniXMark } from "react-icons/hi2";
 import { useParams, useRouter } from "next/navigation";
 import useGetProduct from "@/hooks/useGetProduct";
 import toast from "react-hot-toast";
-import useGetSizes from "@/hooks/useGetSizes";
-import useGetColors from "@/hooks/useGetColors";
 import useUpdateProduct from "@/hooks/useUpdateProduct";
 import useDeleteImage from "@/hooks/useDeleteImage";
 import useUpdateImage from "@/hooks/useUpdateImage";
@@ -22,6 +20,8 @@ import dynamic from "next/dynamic";
 import TextBoxEditor from "./TextBoxEditor";
 import { useNewInventory } from "@/hooks/useNewInventory";
 import { useCurrentInventory } from "@/hooks/useCurrentInventory";
+import useGetColors1 from "@/hooks/useGetColors1";
+import useGetSizes1 from "@/hooks/useGetSizes1";
 
 const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),
@@ -36,8 +36,8 @@ function EditProduct() {
 
   const { product, mutate, isLoading } = useGetProduct(id);
   const { categories } = useGetCategories1();
-  const { colors } = useGetColors();
-  const { sizes } = useGetSizes();
+  const { colors } = useGetColors1();
+  const { sizes } = useGetSizes1();
   const { updateProduct, isLoading: isLoadingUpdateProduct } =
     useUpdateProduct(id);
   const { deleteImage, isLoading: isLoadingDeleteImage } = useDeleteImage();

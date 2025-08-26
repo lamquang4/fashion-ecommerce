@@ -56,7 +56,10 @@ export interface Category {
 
 export interface Variant {
   _id: string;
-  product: string;
+  product: {
+    _id: string;
+    name: string;
+  };
   images: string[];
   color: {
     _id: string;

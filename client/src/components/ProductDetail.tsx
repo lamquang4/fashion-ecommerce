@@ -18,6 +18,7 @@ import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import useAddWishlist from "@/hooks/useAddWishlist";
 import SizeChartModal from "./SizeChartModal";
+import useGetSizes from "@/hooks/useGetSizes";
 
 function ProductDetail() {
   const params = useParams();
@@ -37,6 +38,7 @@ function ProductDetail() {
   const [viewerImage, setViewerImage] = useState<string>("");
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
+  const { isLoading: isLoadingSizes } = useGetSizes();
   const { product, isLoading } = useGetProductSlug(slug);
   const { coupons } = useGetCoupons();
   const { wishlist, mutate: mutateWishlist } = useGetWishlist();
@@ -471,7 +473,7 @@ function ProductDetail() {
             </div>
           </div>
 
-          {openSizeChartModal && (
+          {openSizeChartModal && !isLoadingSizes && (
             <SizeChartModal
               toggleMenu={toggleSizeChartModal}
               isOpen={openSizeChartModal}

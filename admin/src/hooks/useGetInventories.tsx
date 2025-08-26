@@ -2,10 +2,10 @@
 import axios from "axios";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
-import { Inventory } from "@/types/types";
+import { Variant } from "@/types/types";
 
 interface ResponseType {
-  inventories: Inventory[];
+  inventories: Variant[];
   totalPages: number;
   total: number;
   totalQuantity: number;

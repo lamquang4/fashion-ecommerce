@@ -5,12 +5,12 @@ import { GoTrash } from "react-icons/go";
 import { useCallback, useState } from "react";
 import useAddProduct from "@/hooks/useAddProduct";
 import toast from "react-hot-toast";
-import useGetColors from "@/hooks/useGetColors";
-import useGetSizes from "@/hooks/useGetSizes";
 import useGetCategories1 from "@/hooks/useGetCategories1";
 import dynamic from "next/dynamic";
 import TextBoxEditor from "./TextBoxEditor";
 import { useNewInventory } from "@/hooks/useNewInventory";
+import useGetSizes1 from "@/hooks/useGetSizes1";
+import useGetColors1 from "@/hooks/useGetColors1";
 
 const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),
@@ -20,8 +20,8 @@ const Sortable = dynamic(
 );
 function AddProduct() {
   const { categories } = useGetCategories1();
-  const { colors } = useGetColors();
-  const { sizes } = useGetSizes();
+  const { colors } = useGetColors1();
+  const { sizes } = useGetSizes1();
 
   const { addProduct, isLoading } = useAddProduct();
 
