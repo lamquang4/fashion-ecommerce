@@ -24,7 +24,7 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
         }`}
       >
         <div className="sticky top-0 overflow-hidden bg-white z-[25] py-[15px] flex justify-between items-center border-b border-gray-300">
-          <h2 className="text-[1.2rem] font-semibold">Mã giảm giá</h2>
+          <h4 className="uppercase">Phiếu giảm giá</h4>
           <button onClick={toggleMenu}>
             <HiMiniXMark size={25} color="black" />
           </button>
@@ -47,10 +47,10 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
                 <div className="absolute right-[-6px] top-[61%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
                 <div className="absolute right-[-6px] top-[83.4%] -translate-y-1/2 w-[14px] h-[14px] rounded-full bg-white border border-[#197FB6] z-[10]"></div>
 
-                <div className="border border-[#197FB6] text-[#197FB6] px-[25px] relative w-full">
+                <div className="border border-[#197FB6] px-[25px] relative w-full">
                   <div className="flex items-center border-l border-r px-3 py-4 border-[#197FB6] w-full bg-white">
                     <div className="flex gap-2 flex-col w-full">
-                      <h3 className="uppercase">
+                      <h3 className="uppercase text-[#197FB6]">
                         {coupon.discountType === 1
                           ? `Giảm ${coupon.discountValue.toLocaleString(
                               "vi-VN"
@@ -72,9 +72,9 @@ function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
                           )}₫`}
                       </p>
                       <div className="flex justify-between items-center w-full">
-                        <p className="font-medium  ">Nhập mã: {coupon.code}</p>
+                        <p className="font-medium ">Nhập mã: {coupon.code}</p>
                         <button
-                          className="border text-[0.9rem] px-2.5 py-1.5 bg-[#197FB6] text-white rounded-sm"
+                          className="border text-[0.9rem] font-medium px-2.5 py-1.5 bg-[#197FB6] text-white rounded-sm"
                           onClick={() => {
                             handleCopy(coupon.code);
                           }}

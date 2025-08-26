@@ -10,7 +10,7 @@ import useGetProductSlug from "@/hooks/useGetProductSlug";
 import { notFound, useParams } from "next/navigation";
 import useGetCoupons from "@/hooks/useGetCoupons";
 import toast from "react-hot-toast";
-import { Color, Variant, Size } from "@/types/type";
+import { Color, Variant } from "@/types/type";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import useAddCart from "@/hooks/useAddCart";
 import useGetCart from "@/hooks/useGetCart";
@@ -21,10 +21,13 @@ import useAddWishlist from "@/hooks/useAddWishlist";
 function ProductDetail() {
   const params = useParams();
   const slug = params.slug as string;
-  
+
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedVariant, setSelectedVariant] = useState<Variant>();
-  const [selectedSize, setSelectedSize] = useState<Size>();
+  const [selectedSize, setSelectedSize] = useState<{
+    _id: string;
+    namesize: string;
+  }>();
   const [selectedColor, setSelectedColor] = useState<Color>();
   const [mainImage, setMainImage] = useState<string>("");
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -168,9 +171,9 @@ function ProductDetail() {
                     <button
                       type="button"
                       onClick={handleNextImage}
-                      className="absolute border border-gray-100 right-1.5 top-1/2 w-10 h-10 bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
+                      className="absolute border border-gray-100 right-1.5 top-1/2 w-11 h-11 bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 xl:opacity-0 xl:group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
                     >
-                      <GrNext size={16} />
+                      <GrNext size={18} />
                     </button>
 
                     {mainImage && (
@@ -194,9 +197,9 @@ function ProductDetail() {
                     <button
                       type="button"
                       onClick={handlePrevImage}
-                      className="absolute left-1.5 top-1/2 w-10 h-10 border border-gray-100 bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 opacity-0 group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
+                      className="absolute left-1.5 top-1/2 w-11 h-11 border border-gray-100 bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 xl:opacity-0 xl:group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
                     >
-                      <GrPrevious size={16} />
+                      <GrPrevious size={18} />
                     </button>
                   </div>
                 </div>
@@ -337,22 +340,22 @@ function ProductDetail() {
 
                   <div className="flex space-x-2">
                     {selectedVariant?.inventories.map((inv, index) => {
-                      const isSelected = selectedSize?._id === inv.size._id;
-                      const isOutOfStock = inv.quantity === 0;
+                      const isSelectedSize = selectedSize?._id === inv.size._id;
+                      const isSizeOutOfStock = inv.quantity === 0;
 
                       return (
                         <button
                           key={index}
-                          disabled={isOutOfStock}
+                          disabled={isSizeOutOfStock}
                           type="button"
                           onClick={() => setSelectedSize(inv.size)}
                           className={`relative w-[70px] h-[35px] border   font-medium text-[0.95rem] ${
-                            isSelected
+                            isSelectedSize
                               ? "border-black"
                               : "border-gray-300 hover:border-gray-400"
                           }`}
                         >
-                          {isOutOfStock && (
+                          {isSizeOutOfStock && (
                             <span className="absolute inset-0 before:content-[''] before:absolute before:top-1/2 before:left-0 before:border-t before:border-black before:w-full before:rotate-[26.5deg] before:origin-center pointer-events-none"></span>
                           )}
                           <span className="relative z-10">
