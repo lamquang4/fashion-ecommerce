@@ -9,6 +9,7 @@ import Loading from "./Loading";
 import Image from "./Image";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import useGetAddress from "@/hooks/useGetAddress";
 function AddressInfo() {
   const { status } = useSession();
   const router = useRouter();
@@ -16,6 +17,7 @@ function AddressInfo() {
   const [addressId, setAddressId] = useState<string>("");
   const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
 
+  const { isLoading: isLoadingAddress } = useGetAddress(addressId);
   const { addresses, isLoading, mutate } = useGetAddresses();
   const { deleteAddress, isLoading: isLoadingDeleteAddress } =
     useDeleteAddress();
@@ -142,11 +144,23 @@ function AddressInfo() {
       </div>
 
       {openAddressModal && (
-        <AddressModal
-          addressId={addressId}
-          toggleMenu={toggleAddressModal}
-          isOpen={openAddressModal}
-        />
+        <>
+          {!addressId && (
+            <AddressModal
+              addressId=""
+              toggleMenu={toggleAddressModal}
+              isOpen={openAddressModal}
+            />
+          )}
+
+          {addressId && !isLoadingAddress && (
+            <AddressModal
+              addressId={addressId}
+              toggleMenu={toggleAddressModal}
+              isOpen={openAddressModal}
+            />
+          )}
+        </>
       )}
     </section>
   );
