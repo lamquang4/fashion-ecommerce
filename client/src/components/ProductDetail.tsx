@@ -51,11 +51,22 @@ function ProductDetail() {
   useEffect(() => {
     if (product?.variants?.length) {
       setMainImage(product.variants[0].images[0]);
-      setSelectedColor(product.variants[0].color);
-      setSelectedSize(product.variants[0].inventories[0].size);
       setSelectedVariant(product.variants[0]);
+      setSelectedColor(product.variants[0].color);
     }
   }, [product]);
+
+  useEffect(() => {
+    const availableSize = selectedVariant?.inventories.find(
+      (inv) => inv.quantity > 0
+    );
+
+    if (availableSize) {
+      setSelectedSize(availableSize.size);
+    } else {
+      setSelectedSize(undefined);
+    }
+  }, [selectedVariant]);
 
   const isInWishlist = useMemo(() => {
     return wishlist?.productsInWishlist?.some(
@@ -226,9 +237,9 @@ function ProductDetail() {
                         }`}
                         onMouseEnter={() => {
                           setMainImage(img);
-                          const indexInAll = allImages.indexOf(img);
-                          if (indexInAll !== -1) {
-                            setCurrentImageIndex(indexInAll);
+                          const indexOfImage = allImages.indexOf(img);
+                          if (indexOfImage !== -1) {
+                            setCurrentImageIndex(indexOfImage);
                           }
                         }}
                       >
@@ -250,7 +261,11 @@ function ProductDetail() {
             <div className="space-y-[5px]">
               <h5 className="font-medium">
                 {product?.category?.namecategory} /{" "}
-                {product?.category?.gender === 1 ? "Nam" : "Nữ"}
+                {product?.category?.gender === 1
+                  ? "Nam"
+                  : product?.category?.gender === 0
+                  ? "Nữ"
+                  : ""}
               </h5>
               <h3 className="font-semibold">{product?.name}</h3>
               <div className="flex items-center gap-[15px]">
