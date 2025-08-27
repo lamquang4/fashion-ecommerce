@@ -22,6 +22,7 @@ import { useNewInventory } from "@/hooks/useNewInventory";
 import { useCurrentInventory } from "@/hooks/useCurrentInventory";
 import useGetColors1 from "@/hooks/useGetColors1";
 import useGetSizes1 from "@/hooks/useGetSizes1";
+import useDeleteVariant from "@/hooks/useDeleteVariant";
 
 const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),
@@ -42,6 +43,8 @@ function EditProduct() {
     useUpdateProduct(id);
   const { deleteImage, isLoading: isLoadingDeleteImage } = useDeleteImage();
   const { updateImage, isLoading: isLoadingSUpdateImage } = useUpdateImage();
+  const { deleteVariant, isLoading: isLoadingDeleteVariant } =
+    useDeleteVariant();
 
   const {
     previewImages2,
@@ -96,6 +99,15 @@ function EditProduct() {
   const handleDeleteImage = async (id: string, img: string) => {
     try {
       await deleteImage(id, img);
+      mutate();
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
+    }
+  };
+
+  const handleDeleteVariant = async (id: string) => {
+    try {
+      await deleteVariant(id);
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
@@ -356,9 +368,19 @@ function EditProduct() {
                 className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[25px] w-full"
                 key={block._id}
               >
-                <h5 className="font-bold text-[#74767d]">
-                  Biến thể {index + 1}
-                </h5>
+                <div className="flex gap-[15px] items-center justify-between">
+                  <h5 className="font-bold text-[#74767d]">
+                    Biến thể {index + 1}
+                  </h5>
+
+                  <button
+                    className="p-1 text-[#FB2C36]"
+                    onClick={() => handleDeleteVariant(block._id!)}
+                    type="button"
+                  >
+                    <GoTrash size={22} />
+                  </button>
+                </div>
 
                 <div className=" bg-white rounded-md flex flex-col gap-[25px] w-full">
                   <InputImage
