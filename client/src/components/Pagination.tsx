@@ -51,7 +51,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
           <nav className="isolate inline-flex gap-2">
             <button
               type="button"
-              className="h-8.5 w-8.5 inline-flex justify-center items-center gap-x-2 text-[0.9rem] rounded-md border text-gray-800"
+              className="h-8.5 w-8.5 inline-flex justify-center items-center gap-x-2 text-[0.9rem] rounded-lg border text-gray-800"
               aria-label="Previous"
               title="Previous"
               disabled={currentPage <= 1}
@@ -67,7 +67,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
                     type="button"
                     disabled
                     key={`ellipsis-${index}`}
-                    className="group h-8.5 border w-8.5 flex justify-center items-center text-gray-800 rounded-md text-[0.9rem]"
+                    className="group h-8.5 border w-8.5 flex justify-center items-center text-gray-800 rounded-lg text-[0.9rem]"
                   >
                     ...
                   </button>
@@ -78,7 +78,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
                 <button
                   key={page}
                   onClick={() => goToPage(page as number)}
-                  className={`h-8.5 w-8.5 border flex justify-center items-center text-[0.9rem] font-medium rounded-md ${
+                  className={`h-8.5 w-8.5 border flex justify-center items-center text-[0.9rem] font-medium rounded-lg ${
                     currentPage === page
                       ? "bg-black text-white"
                       : "text-gray-800 hover:bg-gray-50"
@@ -94,7 +94,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
               onClick={() =>
                 currentPage < totalPages && goToPage(currentPage + 1)
               }
-              className="h-8.5 w-8.5 inline-flex justify-center items-center gap-x-2 text-[0.9rem] rounded-md border text-gray-800"
+              className="h-8.5 w-8.5 inline-flex justify-center items-center gap-x-2 text-[0.9rem] rounded-lg border text-gray-800"
             >
               <GrFormNext />
             </button>
