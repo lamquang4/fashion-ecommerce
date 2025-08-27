@@ -47,7 +47,7 @@ function SizeChartModal({ isOpen, toggleMenu }: props) {
                 <h5 className="capitalize font-semibold">Bảng kích thước</h5>
 
                 <div className=" w-full overflow-auto">
-                  <table className="w-[220%] border-collapse sm:w-[180%] xl:w-full border border-gray-200 text-[0.9rem] text-left">
+                  <table className="w-[260%] border-collapse sm:w-[180%] xl:w-full border border-gray-200 text-[0.9rem] text-left">
                     <thead>
                       <tr>
                         <th className="p-[1rem] border border-gray-200">
