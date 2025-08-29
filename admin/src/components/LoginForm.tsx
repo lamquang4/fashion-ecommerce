@@ -37,55 +37,69 @@ function LoginForm() {
 
   return (
     <>
-      <section className="bg-[#F9FAFB] w-full h-screen flex justify-center items-center flex-col gap-[30px] px-[15px]">
-        <div>
-          <Image
-            Src={"/assets/other/logo.png"}
-            Alt={""}
-            ClassName={"w-[100px]"}
-            loadingType="eager"
-          />
-        </div>
-        <div className="relative max-w-[420px] w-full bg-white rounded-lg shadow-md border border-gray-200 overflow-hidden mx-5">
-          <div className="flex items-center h-[440px] w-[200%]">
-            <div className="w-1/2 px-8 bg-white">
-              <h2 className="relative text-center uppercase">Đăng nhập</h2>
-
-              <form action="" onSubmit={handleSubmit}>
-                <div className="relative h-12 w-full mt-8 focus-within:text-blue-500">
-                  <AiOutlineMail
-                    className="z-99 absolute left-0 top-1/2 transform -translate-y-1/2  transition-all duration-200 focus-within:text-blue-500"
-                    size={20}
-                  />
-                  <input
-                    type="text"
-                    name="email"
-                    onChange={handleChange}
-                    className="absolute text-[0.9rem] h-full w-full px-8 outline-none border-b-2 border-gray-300 transition-all duration-200 focus:border-blue-500"
-                    placeholder="Nhập email"
-                    required
-                  />
-                </div>
-
-                <div className="relative h-12 w-full mt-8 focus-within:text-blue-500">
-                  <GoLock
-                    className="absolute left-0 top-1/2 transform -translate-y-1/2 transition-all duration-200 focus-within:text-blue-500"
-                    size={20}
-                  />
-                  <input
-                    type="password"
-                    name="password"
-                    onChange={handleChange}
-                    className="absolute text-[0.9rem] h-full w-full px-8 outline-none border-b-2 border-gray-300 transition-all duration-200 focus:border-blue-500"
-                    placeholder="Nhập mật khẩu"
-                    required
-                  />
-                </div>
-
-                <button className="mt-8 w-full text-[1rem] py-2 text-white font-medium tracking-wide rounded-md bg-blue-500 hover:bg-blue-600 transition-all duration-300">
+      <section className="bg-[#DAF4F0] w-full">
+        <div className="flex justify-center items-center h-screen">
+          <div className="relative bg-white rounded-lg shadow-md border border-gray-200 max-w-[850px] w-full h-[500px]">
+            <div className="h-full grid grid-cols-1 sm:grid-cols-2 items-center">
+              <div className="w-full px-4 sm:px-8 bg-white">
+                <h1 className="relative text-center uppercase mb-6">
                   Đăng nhập
-                </button>
-              </form>
+                </h1>
+
+                <form className="space-y-[15px]" onSubmit={handleSubmit}>
+                  <div className="space-y-[5px]">
+                    <label
+                      htmlFor=""
+                      className="block text-[0.9rem] font-medium"
+                    >
+                      Email <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="text"
+                      name="email"
+                      value={data.email}
+                      onChange={handleChange}
+                      className="text-[0.9rem] block w-full px-3 py-2 outline-none border border-gray-300 focus:border-[#0AB39C] focus:text-[#0AB39C]"
+                      placeholder="Nhập email"
+                      required
+                    />
+                  </div>
+
+                  <div className="space-y-[5px]">
+                    <label
+                      htmlFor=""
+                      className="block text-[0.9rem] font-medium"
+                    >
+                      Mật khẩu <span className="text-red-500">*</span>
+                    </label>
+                    <input
+                      type="password"
+                      name="password"
+                      value={data.password}
+                      onChange={handleChange}
+                      placeholder="Nhập mật khẩu"
+                      className="text-[0.9rem] block w-full px-3 py-2 outline-none border border-gray-300 focus:border-[#0AB39C] focus:text-[#0AB39C]"
+                      required
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full bg-[#0AB39C] text-[1rem] text-white focus:outline-none font-semibold rounded-sm px-5 py-2.5 text-center mt-6"
+                  >
+                    Đăng nhập
+                  </button>
+                </form>
+              </div>
+
+              <div className="hidden sm:block border-l-2 border-gray-200 sm:px-2">
+                <Image
+                  Src={"/assets/other/urban.jpg"}
+                  Alt={""}
+                  ClassName={"w-auto"}
+                  loadingType="eager"
+                />
+              </div>
             </div>
           </div>
         </div>
