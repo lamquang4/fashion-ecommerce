@@ -48,10 +48,10 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
     <>
       {totalItems > 0 && (
         <div className="mt-[20px]">
-          <div className="flex items-center justify-center px-[10px] sm:px-[15px] w-full flex-wrap gap-2">
+          <div className="flex items-center justify-center px-[10px] sm:px-[15px] w-full flex-wrap gap-2.5 text-gray-600">
             <button
               type="button"
-              className="h-8.5 w-8.5 flex justify-center items-center rounded-full border  "
+              className="h-8.5 w-8.5 flex justify-center items-center rounded-full border border-gray-600   "
               disabled={currentPage <= 1}
               onClick={() => currentPage > 1 && goToPage(currentPage - 1)}
             >
@@ -65,7 +65,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
                     type="button"
                     disabled
                     key={`ellipsis-${index}`}
-                    className="group h-8.5 border w-8.5 flex justify-center items-center rounded-full text-[0.9rem] font-medium"
+                    className="group h-8.5 w-8.5 flex justify-center items-center rounded-full text-[0.9rem] font-medium border border-gray-600 "
                   >
                     ...
                   </button>
@@ -79,7 +79,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
                   className={`h-8.5 w-8.5 border flex justify-center items-center text-[0.9rem] font-medium rounded-full ${
                     currentPage === page
                       ? "bg-black text-white"
-                      : "  hover:bg-gray-50"
+                      : "border-gray-600   hover:bg-gray-50"
                   }`}
                 >
                   {page}
@@ -92,7 +92,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
               onClick={() =>
                 currentPage < totalPages && goToPage(currentPage + 1)
               }
-              className="h-8.5 w-8.5 flex justify-center items-center rounded-full border  "
+              className="h-8.5 w-8.5 flex justify-center items-center rounded-full border border-gray-600  "
             >
               <GrFormNext size={20} />
             </button>
