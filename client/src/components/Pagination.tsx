@@ -47,17 +47,15 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
   return (
     <>
       {totalItems > 0 && (
-        <div className="flex items-center justify-center bg-white px-[15px] py-3 w-full flex-wrap gap-5 sm:gap-3 text-[0.9rem]">
-          <nav className="isolate inline-flex gap-2">
+        <div className="mt-[20px]">
+          <div className="flex items-center justify-center px-[10px] sm:px-[15px] w-full flex-wrap gap-2">
             <button
               type="button"
-              className="h-8.5 w-8.5 inline-flex justify-center items-center gap-x-2 text-[0.9rem] rounded-lg border text-gray-800"
-              aria-label="Previous"
-              title="Previous"
+              className="h-8.5 w-8.5 flex justify-center items-center rounded-full border  "
               disabled={currentPage <= 1}
               onClick={() => currentPage > 1 && goToPage(currentPage - 1)}
             >
-              <GrFormPrevious />
+              <GrFormPrevious size={20} />
             </button>
 
             {getPageNumbers().map((page, index) => {
@@ -67,7 +65,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
                     type="button"
                     disabled
                     key={`ellipsis-${index}`}
-                    className="group h-8.5 border w-8.5 flex justify-center items-center text-gray-800 rounded-lg text-[0.9rem]"
+                    className="group h-8.5 border w-8.5 flex justify-center items-center rounded-full text-[0.9rem] font-medium"
                   >
                     ...
                   </button>
@@ -78,10 +76,10 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
                 <button
                   key={page}
                   onClick={() => goToPage(page as number)}
-                  className={`h-8.5 w-8.5 border flex justify-center items-center text-[0.9rem] font-medium rounded-lg ${
+                  className={`h-8.5 w-8.5 border flex justify-center items-center text-[0.9rem] font-medium rounded-full ${
                     currentPage === page
                       ? "bg-black text-white"
-                      : "text-gray-800 hover:bg-gray-50"
+                      : "  hover:bg-gray-50"
                   }`}
                 >
                   {page}
@@ -94,11 +92,11 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
               onClick={() =>
                 currentPage < totalPages && goToPage(currentPage + 1)
               }
-              className="h-8.5 w-8.5 inline-flex justify-center items-center gap-x-2 text-[0.9rem] rounded-lg border text-gray-800"
+              className="h-8.5 w-8.5 flex justify-center items-center rounded-full border  "
             >
-              <GrFormNext />
+              <GrFormNext size={20} />
             </button>
-          </nav>
+          </div>
         </div>
       )}
     </>
