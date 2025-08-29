@@ -1,18 +1,23 @@
 "use client";
 
 type OverplayProp = {
-  closeMenu: () => void;
+  closeMenu?: () => void;
+  children?: React.ReactNode;
 };
-function Overplay({ closeMenu }: OverplayProp) {
+function Overplay({ closeMenu, children }: OverplayProp) {
   const handleOverlayClick = () => {
     if (closeMenu) closeMenu();
   };
 
   return (
     <div
-      className="fixed top-0 left-0 w-full h-screen bg-black/50 opacity-100 pointer-events-auto transition ease-in-out duration-500 z-22 xl:hidden"
+      className={`fixed inset-0 flex flex-col gap-10 items-center justify-center text-center bg-black/50 z-22 ${
+        !children ? "xl:hidden" : ""
+      }`}
       onClick={handleOverlayClick}
-    ></div>
+    >
+      {children}
+    </div>
   );
 }
 

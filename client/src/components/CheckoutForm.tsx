@@ -16,6 +16,7 @@ import usePaymentMomo from "@/hooks/usePaymentMomo";
 import useStatusMomo from "@/hooks/useStatusMomo";
 import useDeleteCart from "@/hooks/useDeleteCart";
 import Loading from "./Loading";
+import Overplay from "./Overplay";
 
 function CheckoutForm() {
   const router = useRouter();
@@ -32,10 +33,10 @@ function CheckoutForm() {
     isLoading: isLoadingCoupon,
   } = useGetCoupon();
   const { addOrder, isLoading: isLoadingAddOrder } = useAddOrder();
-  const { deleteCart, isLoading: isLoadingDeleteCart } = useDeleteCart();
   const { createPaymentMomo } = usePaymentMomo();
   const { checkPaymentStatusMomo, isLoading: isLoadingCheckPaymentStatusMomo } =
     useStatusMomo();
+  const { deleteCart, isLoading: isLoadingDeleteCart } = useDeleteCart();
 
   const [data, setData] = useState({
     fullname: "",
@@ -686,10 +687,10 @@ function CheckoutForm() {
       {(isLoadingAddOrder ||
         isLoadingDeleteCart ||
         isLoadingCheckPaymentStatusMomo) && (
-        <div className="fixed inset-0 z-50 flex flex-col items-center gap-8 justify-center text-center bg-black/50">
+        <Overplay IndexForZ={50}>
           <Loading height={0} size={55} color="white" thickness={8} />
-          <h4 className="text-white">Vui lòng chờ trong giây lát..</h4>
-        </div>
+          <h4 className="text-white">Vui lòng chờ trong giây lát...</h4>
+        </Overplay>
       )}
     </section>
   );

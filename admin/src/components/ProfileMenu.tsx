@@ -52,7 +52,7 @@ function ProfileMenu({ menuOpen, toggleMenu }: menuProps) {
               </Link>
 
               <button
-                className="w-ful block hover:bg-gray-100 px-3 py-3.5"
+                className="w-full block hover:bg-gray-100 px-3 py-3.5"
                 onClick={() => {
                   signOut();
                 }}
