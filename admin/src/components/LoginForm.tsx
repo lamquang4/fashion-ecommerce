@@ -5,7 +5,9 @@ import toast from "react-hot-toast";
 import useLogin from "@/hooks/useLogin";
 import Overplay from "./Overplay";
 import Loading from "./Loading";
+import { useRouter } from "next/navigation";
 function LoginForm() {
+  const router = useRouter();
   const [data, setData] = useState({ email: "", password: "" });
 
   const { handleLogin, isLoading } = useLogin();
@@ -20,13 +22,20 @@ function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      await handleLogin({
-        email: data.email.trim(),
-        password: data.password.trim(),
+    const result = await handleLogin({
+      email: data.email.trim(),
+      password: data.password.trim(),
+    });
+
+    if (result?.ok) {
+      setData({
+        email: "",
+        password: "",
       });
-    } catch (err: any) {
-      toast.error(err?.response?.data?.msg);
+
+      router.replace("/");
+    } else if (result?.error) {
+      toast.error(result?.error);
     }
   };
 

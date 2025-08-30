@@ -8,7 +8,9 @@ import { useSyncWishlist } from "@/hooks/useSyncWishlist";
 import useLogin from "@/hooks/useLogin";
 import Loading from "./Loading";
 import Overplay from "./Overplay";
+import { useRouter } from "next/navigation";
 function LoginForm() {
+  const router = useRouter();
   const [data, setData] = useState({ email: "", password: "" });
 
   const { handleLogin, isLoading: isLoadingLogin } = useLogin();
@@ -26,23 +28,24 @@ function LoginForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    try {
-      await handleLogin({
-        email: data.email.trim(),
-        password: data.password.trim(),
-      });
+    const result = await handleLogin({
+      email: data.email.trim(),
+      password: data.password.trim(),
+    });
 
+    if (result?.ok) {
       setData({
         email: "",
         password: "",
       });
 
-      syncCart();
-      syncWishlist();
+      router.replace("/");
 
+      await syncCart();
+      await syncWishlist();
       mutate();
-    } catch (err: any) {
-      toast.error(err?.response?.data?.msg);
+    } else if (result?.error) {
+      toast.error(result?.error);
     }
   };
   return (

@@ -1,5 +1,6 @@
 "use client";
 import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function useLogin() {
@@ -7,15 +8,15 @@ export default function useLogin() {
   const handleLogin = async (data: { email: string; password: string }) => {
     setIsLoading(true);
     try {
-      await signIn("credentials", {
+      const result = await signIn("credentials", {
         email: data.email.trim(),
         password: data.password.trim(),
-        redirect: true,
-        callbackUrl: "/",
+        redirect: false,
       });
+
+      return result;
     } catch (err) {
       console.error("Lỗi:", err);
-      throw err;
     } finally {
       setIsLoading(false);
     }
