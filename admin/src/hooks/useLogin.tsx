@@ -10,7 +10,8 @@ export default function useLogin() {
       await signIn("credentials", {
         email: data.email.trim(),
         password: data.password.trim(),
-        redirect: false,
+        redirect: true,
+        callbackUrl: "/dashboard",
       });
     } catch (err) {
       console.error("Lỗi:", err);

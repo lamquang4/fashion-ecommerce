@@ -1,7 +1,6 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import useGetCart from "@/hooks/useGetCart";
 import { useSyncCart } from "@/hooks/useSyncCart";
@@ -10,9 +9,8 @@ import useLogin from "@/hooks/useLogin";
 import Loading from "./Loading";
 import Overplay from "./Overplay";
 function LoginForm() {
-  const router = useRouter();
   const [data, setData] = useState({ email: "", password: "" });
-  
+
   const { handleLogin, isLoading: isLoadingLogin } = useLogin();
   const { mutate } = useGetCart();
   const { syncCart, isLoading: isLoadingSyncCart } = useSyncCart();
@@ -34,7 +32,6 @@ function LoginForm() {
         password: data.password.trim(),
       });
 
-      router.replace("/");
       setData({
         email: "",
         password: "",

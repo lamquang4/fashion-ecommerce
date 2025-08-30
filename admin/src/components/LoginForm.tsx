@@ -1,13 +1,11 @@
 "use client";
 import Image from "./Image";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useLogin from "@/hooks/useLogin";
 import Overplay from "./Overplay";
 import Loading from "./Loading";
 function LoginForm() {
-  const router = useRouter();
   const [data, setData] = useState({ email: "", password: "" });
 
   const { handleLogin, isLoading } = useLogin();
@@ -27,7 +25,6 @@ function LoginForm() {
         email: data.email.trim(),
         password: data.password.trim(),
       });
-      router.replace("/dashboard");
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
