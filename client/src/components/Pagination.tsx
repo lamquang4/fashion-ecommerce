@@ -48,7 +48,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
     <>
       {totalItems > 0 && (
         <div className="mt-[20px]">
-          <div className="flex items-center justify-center px-[10px] sm:px-[15px] w-full flex-wrap gap-2.5 text-gray-600">
+          <div className="flex items-center justify-center px-[10px] sm:px-[15px] w-full flex-wrap gap-2.5 text-gray-600 text-[0.9rem]">
             <button
               type="button"
               className="h-8.5 w-8.5 flex justify-center items-center rounded-full border border-gray-600   "
@@ -65,7 +65,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
                     type="button"
                     disabled
                     key={`ellipsis-${index}`}
-                    className="group h-8.5 w-8.5 flex justify-center items-center rounded-full text-[0.9rem] font-medium border border-gray-600 "
+                    className="group h-8.5 w-8.5 flex justify-center items-center rounded-full   font-medium border border-gray-600 "
                   >
                     ...
                   </button>
@@ -76,7 +76,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
                 <button
                   key={page}
                   onClick={() => goToPage(page as number)}
-                  className={`h-8.5 w-8.5 border flex justify-center items-center text-[0.9rem] font-medium rounded-full ${
+                  className={`h-8.5 w-8.5 border flex justify-center items-center   font-medium rounded-full ${
                     currentPage === page
                       ? "bg-black text-white"
                       : "border-gray-600   hover:bg-gray-50"
