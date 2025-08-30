@@ -1,7 +1,5 @@
 "use client";
 import Image from "./Image";
-import { GoLock } from "react-icons/go";
-import { AiOutlineMail } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import toast from "react-hot-toast";

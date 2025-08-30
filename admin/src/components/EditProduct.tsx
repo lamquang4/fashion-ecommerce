@@ -376,6 +376,7 @@ function EditProduct() {
                   <button
                     className="p-1 text-[#FB2C36]"
                     onClick={() => handleDeleteVariant(block._id!)}
+                    disabled={isLoadingDeleteVariant}
                     type="button"
                   >
                     <GoTrash size={22} />

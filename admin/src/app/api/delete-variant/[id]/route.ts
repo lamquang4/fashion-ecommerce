@@ -1,7 +1,6 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Inventory from "@/model/Inventory";
 import OrderDetail from "@/model/OrderDetail";
-import User from "@/model/User";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function DELETE(
