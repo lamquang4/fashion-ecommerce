@@ -1,7 +1,9 @@
+import cloudinary from "@/lib/cloudinary";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Inventory from "@/model/Inventory";
 import OrderDetail from "@/model/OrderDetail";
 import mongoose from "mongoose";
+import { extractPublicId } from "@/utils/extractPublicId";
 import { NextRequest, NextResponse } from "next/server";
 export async function DELETE(
   _req: NextRequest,
@@ -20,6 +22,15 @@ export async function DELETE(
     if (!variant) {
       return NextResponse.json(
         { msg: "Không tìm thấy biến thế của sản phẩm" },
+        { status: 404 }
+      );
+    }
+
+    const variants = await Inventory.find({ product: variant.product });
+
+    if (variants.length === 1) {
+      return NextResponse.json(
+        { msg: "Sản phẩm này chỉ còn 1 biến thể nên không thể xóa!" },
         { status: 404 }
       );
     }
@@ -43,6 +54,17 @@ export async function DELETE(
     }
 
     const deleteVariant = await Inventory.findByIdAndDelete(id);
+
+    if (variant) {
+      const allImages = variant.images;
+      const publicIds = allImages
+        .map((img: string) => extractPublicId(img))
+        .filter(Boolean) as string[];
+
+      await Promise.all(
+        publicIds.map((pid) => cloudinary.uploader.destroy(pid))
+      );
+    }
 
     return NextResponse.json({ deleteVariant }, { status: 201 });
   } catch (err) {
