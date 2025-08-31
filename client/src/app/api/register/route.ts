@@ -1,5 +1,6 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import User from "@/model/User";
+import { validateBirthday } from "@/utils/validateBirthday";
 import { validateEmail } from "@/utils/validateEmail";
 import { validatePhone } from "@/utils/validatePhone";
 import bcryptjs from "bcryptjs";
@@ -19,6 +20,13 @@ export async function POST(req: NextRequest) {
     if (!validatePhone(phone)) {
       return NextResponse.json(
         { msg: "Số điện thoại không hợp lệ" },
+        { status: 400 }
+      );
+    }
+
+    if (!validateBirthday(birthday)) {
+      return NextResponse.json(
+        { msg: "Bạn phải đủ 18 tuổi trở lên" },
         { status: 400 }
       );
     }

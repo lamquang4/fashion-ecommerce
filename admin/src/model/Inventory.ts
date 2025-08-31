@@ -21,6 +21,10 @@ const inventorySchema = new Schema(
         quantity: {
           type: Number,
           required: true,
+          min: 1,
+          validate: {
+            validator: Number.isInteger,
+          },
         },
         size: {
           type: mongoose.Schema.Types.ObjectId,

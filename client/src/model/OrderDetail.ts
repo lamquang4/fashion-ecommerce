@@ -19,9 +19,30 @@ const orderDetailSchema = new Schema({
         ref: "Color",
         required: true,
       },
-      discount: { type: Number, required: true }, // số tiền giảm giá tại lúc đặt hàng sản phẩm đó
-      price: { type: Number, required: true }, // giá tại lúc đặt hàng sản phẩm đó
-      quantity: { type: Number, required: true },
+      discount: {
+        type: Number,
+        required: true,
+        min: 0,
+        validate: {
+          validator: Number.isInteger,
+        },
+      }, // số tiền giảm giá tại lúc đặt hàng sản phẩm đó
+      price: {
+        type: Number,
+        required: true,
+        min: 1,
+        validate: {
+          validator: Number.isInteger,
+        },
+      }, // giá tại lúc đặt hàng sản phẩm đó
+      quantity: {
+        type: Number,
+        required: true,
+        min: 1,
+        validate: {
+          validator: Number.isInteger,
+        },
+      },
     },
   ],
 });

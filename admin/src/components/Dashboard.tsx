@@ -75,7 +75,7 @@ function Dashboard() {
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h2 className="mb-[20px] text-[#74767d] capitalize">Thống kê</h2>
+        <h2 className="mb-[20px] text-[#74767d]">Thống kê</h2>
 
         <StaticCards array={array} />
       </div>
@@ -83,7 +83,7 @@ function Dashboard() {
       <div className="bg-white">
         <div className="py-[1.3rem] px-[1.2rem] flex flex-col gap-[1.3rem]">
           <div className="flex items-center gap-2">
-            <h2 className="text-[#74767d] capitalize">Năm</h2>
+            <h2 className="text-[#74767d]">Năm</h2>
             {
               <select
                 onChange={(e) => setYear(Number(e.target.value))}
@@ -195,7 +195,7 @@ function Dashboard() {
 
       <div>
         <div className="py-[1.3rem] px-[1.2rem] bg-white">
-          <h2 className="text-[#74767d] capitalize">Top 10 bán chạy nhất</h2>
+          <h2 className="text-[#74767d]">Top 10 bán chạy nhất</h2>
         </div>
 
         <div className=" bg-white w-full overflow-auto">

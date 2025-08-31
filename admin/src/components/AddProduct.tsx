@@ -129,7 +129,7 @@ function AddProduct() {
     <>
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
         <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
-          <h2 className="text-[#74767d] capitalize">Thêm sản phẩm</h2>
+          <h2 className="text-[#74767d]">Thêm sản phẩm</h2>
 
           <div className="flex gap-[25px] w-full flex-col">
             <div className="sm:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">

@@ -116,7 +116,7 @@ function Order() {
   return (
     <>
       <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h2 className="mb-[20px] text-[#74767d] capitalize">Đơn hàng</h2>
+        <h2 className="mb-[20px] text-[#74767d]">Đơn hàng</h2>
 
         <div className="mb-[20px]">
           <StaticCards array={array1} />

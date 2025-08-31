@@ -7,23 +7,23 @@ const sizeSchema = new Schema(
       required: true,
     },
     chest: {
-      type: Number,
+      type: [Number],
       required: true,
     },
     waist: {
-      type: Number,
+      type: [Number],
       required: true,
     },
     hip: {
-      type: Number,
+      type: [Number],
       required: true,
     },
     height: {
-      type: Number,
+      type: [Number],
       required: true,
     },
     weight: {
-      type: Number,
+      type: [Number],
       required: true,
     },
   },

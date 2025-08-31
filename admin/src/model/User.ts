@@ -1,5 +1,7 @@
 import { model, models, Schema } from "mongoose";
-
+import { validateEmail } from "@/utils/validateEmail";
+import { validatePhone } from "@/utils/validatePhone";
+import { validateBirthday } from "@/utils/validateBirthday";
 const userSchema = new Schema(
   {
     fullname: {
@@ -8,15 +10,26 @@ const userSchema = new Schema(
     },
     email: {
       type: String,
+      unique: true,
       required: true,
+      validate: {
+        validator: validateEmail,
+      },
     },
     phone: {
       type: String,
+      unique: true,
       required: true,
+      validate: {
+        validator: validatePhone,
+      },
     },
     birthday: {
       type: Date,
       required: true,
+      validate: {
+        validator: validateBirthday,
+      },
     },
     password: {
       type: String,

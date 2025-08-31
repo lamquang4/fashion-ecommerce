@@ -9,9 +9,18 @@ const productSchema = new Schema(
     price: {
       type: Number,
       required: true,
+      min: 1,
+      validate: {
+        validator: Number.isInteger,
+      },
     },
     discount: {
       type: Number,
+      required: true,
+      min: 0,
+      validate: {
+        validator: Number.isInteger,
+      },
     },
     description: {
       type: String,

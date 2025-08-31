@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 import useRegister from "@/hooks/useRegister";
 import Overplay from "./Overplay";
 import Loading from "./Loading";
+import { validateBirthday } from "@/utils/validateBirthday";
 
 function RegisterForm() {
   const { handleRegister, isLoading } = useRegister();
@@ -36,6 +37,10 @@ function RegisterForm() {
     }
     if (!validatePhone(data.phone)) {
       toast.error("Số điện thoại không hợp lệ");
+      return;
+    }
+    if (!validateBirthday(data.birthday)) {
+      toast.error("Bạn phải đủ 18 tuổi trở lên");
       return;
     }
     if (data.password.length < 6) {

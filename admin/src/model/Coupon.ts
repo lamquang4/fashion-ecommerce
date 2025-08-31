@@ -10,6 +10,10 @@ const couponSchema = new Schema(
       // giá trị giảm
       type: Number,
       required: true,
+      min: 1,
+      validate: {
+        validator: Number.isInteger,
+      },
     },
     discountType: {
       // loại phiếu gồm free, %, giá trị cố định
@@ -20,11 +24,19 @@ const couponSchema = new Schema(
       // số lượng phiếu
       type: Number,
       required: true,
+      min: 1,
+      validate: {
+        validator: Number.isInteger,
+      },
     },
     limit: {
       // giới hạn mỗi user được dùng mấy lần
       type: Number,
       required: true,
+      min: 1,
+      validate: {
+        validator: Number.isInteger,
+      },
     },
     startDate: {
       // ngày bắt đầu
@@ -39,10 +51,18 @@ const couponSchema = new Schema(
     minOrderValue: {
       // tiền đơn hàng tối thiểu được sủ dụng phiếu
       type: Number,
+      min: 0,
+      validate: {
+        validator: Number.isInteger,
+      },
     },
     maxDiscountValue: {
       // chỉ áp dụng cho loại phiếu %, số tiền giảm tối đa
       type: Number,
+      min: 1,
+      validate: {
+        validator: Number.isInteger,
+      },
     },
     status: {
       type: Number,

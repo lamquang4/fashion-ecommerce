@@ -25,7 +25,14 @@ const orderSchema = new Schema(
       type: Number,
       required: true,
     },
-    total: { type: Number, required: true },
+    total: {
+      type: Number,
+      required: true,
+      min: 1,
+      validate: {
+        validator: Number.isInteger,
+      },
+    },
   },
   { timestamps: true }
 );

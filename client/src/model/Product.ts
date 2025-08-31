@@ -9,9 +9,18 @@ const productSchema = new Schema(
     price: {
       type: Number,
       required: true,
+      min: 1,
+      validate: {
+        validator: Number.isInteger,
+      },
     },
     discount: {
       type: Number,
+      required: true,
+      min: 0,
+      validate: {
+        validator: Number.isInteger,
+      },
     },
     description: {
       type: String,
@@ -36,7 +45,7 @@ const productSchema = new Schema(
   }
 );
 
-productSchema.index({ status: 1 });
+productSchema.index({ status: 1, slug: 1 });
 
 const Product = models.Product || model("Product", productSchema);
 export default Product;

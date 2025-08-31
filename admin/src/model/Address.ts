@@ -1,3 +1,4 @@
+import { validatePhone } from "@/utils/validatePhone";
 import mongoose, { model, models, Schema } from "mongoose";
 
 const addressSchema = new Schema(
@@ -9,6 +10,9 @@ const addressSchema = new Schema(
     phone: {
       type: String,
       required: true,
+      validate: {
+        validator: validatePhone,
+      },
     },
     speaddress: {
       type: String,

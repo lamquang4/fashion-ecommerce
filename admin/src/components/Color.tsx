@@ -37,7 +37,7 @@ function Color() {
   return (
     <>
       <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h2 className="mb-[20px] text-[#74767d] capitalize">
+        <h2 className="mb-[20px] text-[#74767d]">
           Màu ({totalItems})
         </h2>
 

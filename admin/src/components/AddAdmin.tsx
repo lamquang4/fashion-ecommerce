@@ -1,5 +1,6 @@
 "use client";
 import useAddAdmin from "@/hooks/useAddAdmin";
+import { validateBirthday } from "@/utils/validateBirthday";
 import { validateEmail } from "@/utils/validateEmail";
 import { validatePhone } from "@/utils/validatePhone";
 import Link from "next/link";
@@ -38,6 +39,10 @@ function AddAdmin() {
       toast.error("Số điện thoại không hợp lệ");
       return;
     }
+    if (!validateBirthday(data.birthday)) {
+      toast.error("Bạn phải đủ 18 tuổi trở lên");
+      return;
+    }
     if (data.password.trim().length < 6) {
       toast.error("Mật khẩu phải có ít nhất 6 ký tự");
       return;
@@ -68,7 +73,7 @@ function AddAdmin() {
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
       <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
-        <h2 className="capitalize text-[#74767d]">Thêm quản trị viên</h2>
+        <h2 className=" text-[#74767d]">Thêm quản trị viên</h2>
 
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
