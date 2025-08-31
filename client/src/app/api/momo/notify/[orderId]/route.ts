@@ -42,6 +42,6 @@ export async function POST(
 
     return NextResponse.json(response.data, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ msg: "Lỗi", err }, { status: 400 });
+    return NextResponse.json({ msg: "Lỗi", err }, { status: 500 });
   }
 }

@@ -24,7 +24,7 @@ export async function GET(
     if (coupon.status !== 1) {
       return NextResponse.json(
         { msg: "Mã giảm giá không còn hoạt động" },
-        { status: 404 }
+        { status: 409 }
       );
     }
 
@@ -33,13 +33,13 @@ export async function GET(
     if (now < start) {
       return NextResponse.json(
         { msg: "Mã giảm giá chưa được bắt đầu" },
-        { status: 404 }
+        { status: 409 }
       );
     }
     if (now > end) {
       return NextResponse.json(
         { msg: "Mã giảm giá đã hết hạn" },
-        { status: 404 }
+        { status: 409 }
       );
     }
 
@@ -50,16 +50,18 @@ export async function GET(
             "vi-VN"
           )}₫ để sử dụng mã này`,
         },
-        { status: 404 }
+        { status: 422 }
       );
     }
 
-    return NextResponse.json(coupon);
+    await Coupon.findByIdAndUpdate(coupon._id, { $inc: { amount: -1 } });
+
+    return NextResponse.json(coupon, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

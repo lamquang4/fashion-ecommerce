@@ -43,7 +43,7 @@ export async function PUT(
     if (coupon.status === 3) {
       return NextResponse.json(
         { msg: "Phiếu giảm giá đã hết hạn nên không được cập nhật!" },
-        { status: 404 }
+        { status: 400 }
       );
     }
 
@@ -51,7 +51,7 @@ export async function PUT(
     if (checkCode) {
       return NextResponse.json(
         { msg: "Mã phiếu giảm giá đã được sử dụng" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
@@ -69,6 +69,13 @@ export async function PUT(
     if (start >= expiry && coupon.status != 1) {
       return NextResponse.json(
         { msg: "Ngày kết thúc phải sau ngày bắt đầu" },
+        { status: 400 }
+      );
+    }
+
+    if (amount < limit) {
+      return NextResponse.json(
+        { msg: "Số lượng phát hành phải lớn hơn số lần dùng" },
         { status: 400 }
       );
     }
@@ -158,12 +165,12 @@ export async function PUT(
       new: true,
     });
 
-    return NextResponse.json({ coupon: updatedCoupon }, { status: 201 });
+    return NextResponse.json({ coupon: updatedCoupon }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

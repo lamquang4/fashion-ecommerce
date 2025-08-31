@@ -19,12 +19,16 @@ export async function GET() {
       },
     ]);
 
-    return NextResponse.json({ colors });
+    if (!colors || colors.length === 0) {
+      return NextResponse.json({ msg: "Không tìm thấy màu" }, { status: 404 });
+    }
+
+    return NextResponse.json({ colors }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

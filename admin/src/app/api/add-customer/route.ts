@@ -42,7 +42,7 @@ export async function POST(req: NextRequest) {
     if (checkEmail) {
       return NextResponse.json(
         { msg: "Email đã được sử dụng" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
@@ -50,7 +50,7 @@ export async function POST(req: NextRequest) {
     if (checkPhone) {
       return NextResponse.json(
         { msg: "Số điện thoại đã được sử dụng" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

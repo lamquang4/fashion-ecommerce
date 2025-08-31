@@ -115,12 +115,12 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({ product: product[0] });
+    return NextResponse.json({ product: product[0] }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

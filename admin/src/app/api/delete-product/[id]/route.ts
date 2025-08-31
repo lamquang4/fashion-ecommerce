@@ -28,7 +28,7 @@ export async function DELETE(
           msg: "Sản phẩm này đã được mua trong đơn hàng nên không thể xóa!",
         },
         {
-          status: 400,
+          status: 409,
         }
       );
     }
@@ -72,12 +72,12 @@ export async function DELETE(
       }
     }
 
-    return NextResponse.json({ product: deleteProduct }, { status: 201 });
+    return NextResponse.json({ product: deleteProduct }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

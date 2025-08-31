@@ -50,9 +50,12 @@ export async function GET(
       { $sort: { month: 1 } },
     ]);
 
-    return NextResponse.json({ revenues });
+    if (!revenues || revenues.length === 0) {
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
+    }
+
+    return NextResponse.json({ revenues }, { status: 200 });
   } catch (err) {
-    console.error(err);
-    return NextResponse.json({ err, msg: "Lỗi" }, { status: 400 });
+    return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
   }
 }

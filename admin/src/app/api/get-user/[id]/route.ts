@@ -24,12 +24,12 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({ user });
+    return NextResponse.json({ user }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

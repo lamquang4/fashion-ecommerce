@@ -3,7 +3,7 @@ import { Product } from "@/types/type";
 import axios from "axios";
 import useSWR from "swr";
 
-const fetcher = (url: string) => axios.get(url).then((res) => res.data.product);
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetProductSlug(slug: string) {
   const url = `/api/get-product/${slug}`;

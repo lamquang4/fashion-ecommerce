@@ -114,19 +114,19 @@ export async function GET(
       { $limit: limit },
     ]);
 
-    if (!productsCateogry) {
+    if (!productsCateogry || productsCateogry.length === 0) {
       return NextResponse.json(
         { msg: "Không tìm thấy sản phẩm" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ productsCateogry });
+    return NextResponse.json({ productsCateogry }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

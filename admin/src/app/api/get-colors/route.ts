@@ -23,18 +23,25 @@ export async function GET(req: NextRequest) {
       Color.countDocuments(query),
     ]);
 
-    return NextResponse.json({
-      colors,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-    });
+    if (!colors || colors.length === 0) {
+      return NextResponse.json({ msg: "Không tìm thấy màu" }, { status: 404 });
+    }
+
+    return NextResponse.json(
+      {
+        colors,
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+      { status: 200 }
+    );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

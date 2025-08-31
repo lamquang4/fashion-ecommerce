@@ -23,7 +23,7 @@ export async function DELETE(
           msg: "Kích thước này đẫ được sử dụng cho biến thể của sản phẩm nên không thể xóa!",
         },
         {
-          status: 404,
+          status: 409,
         }
       );
     }
@@ -38,12 +38,12 @@ export async function DELETE(
 
     const deleteSize = await Size.findByIdAndDelete(id);
 
-    return NextResponse.json({ size: deleteSize }, { status: 201 });
+    return NextResponse.json({ size: deleteSize }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

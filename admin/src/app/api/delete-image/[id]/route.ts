@@ -28,7 +28,7 @@ export async function DELETE(
     if (inventory.images.length === 1) {
       return NextResponse.json(
         { msg: "Hình sản phẩm của biến thể này chỉ còn 1 nên không được xóa!" },
-        { status: 404 }
+        { status: 409 }
       );
     }
 
@@ -44,12 +44,12 @@ export async function DELETE(
       { new: true }
     );
 
-    return NextResponse.json({ inventory: deleteImage }, { status: 201 });
+    return NextResponse.json({ inventory: deleteImage }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

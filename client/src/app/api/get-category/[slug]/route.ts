@@ -20,6 +20,7 @@ export async function GET(
       category = { namecategory: "Đồ nữ" };
     } else {
       category = await Category.findOne({ slug }).lean();
+      
       if (!category) {
         return NextResponse.json(
           { msg: "Không tìm thấy danh mục" },
@@ -28,12 +29,12 @@ export async function GET(
       }
     }
 
-    return NextResponse.json(category);
+    return NextResponse.json(category, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

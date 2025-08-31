@@ -108,15 +108,32 @@ export async function GET() {
       productsGender(0),
     ]);
 
-    return NextResponse.json({
-      productsMale,
-      productsFemale,
-    });
+    if (!productsFemale || productsFemale.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy sản phẩm" },
+        { status: 404 }
+      );
+    }
+
+    if (!productsMale || productsMale.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy sản phẩm" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        productsMale,
+        productsFemale,
+      },
+      { status: 200 }
+    );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

@@ -44,7 +44,7 @@ export async function POST(req: NextRequest) {
     if (checkName) {
       return NextResponse.json(
         { msg: "Tên kích thước đã được sử dụng" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
@@ -62,7 +62,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

@@ -19,6 +19,7 @@ export async function DELETE(
     }
 
     const banner = await Banner.findById(id);
+
     if (!banner) {
       return NextResponse.json(
         { msg: "Không tìm thấy banner" },
@@ -33,12 +34,12 @@ export async function DELETE(
 
     const deleteBanner = await Banner.findByIdAndDelete(id);
 
-    return NextResponse.json({ banner: deleteBanner }, { status: 201 });
+    return NextResponse.json({ banner: deleteBanner }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

@@ -158,21 +158,26 @@ export async function GET(req: NextRequest) {
     const total = countTotal[0]?.total || 0;
     const totalQuantity = countQuantity[0]?.totalQuantity || 0;
 
-    return NextResponse.json({
-      inventories,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-      totalQuantity,
-    });
-  } catch (err) {
-    console.log(err);
+    if (!inventories || inventories.length === 0) {
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
+    }
 
+    return NextResponse.json(
+      {
+        inventories,
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+        totalQuantity,
+      },
+      { status: 200 }
+    );
+  } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

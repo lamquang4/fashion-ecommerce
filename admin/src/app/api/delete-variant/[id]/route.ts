@@ -31,7 +31,7 @@ export async function DELETE(
     if (variants.length === 1) {
       return NextResponse.json(
         { msg: "Sản phẩm này chỉ còn 1 biến thể nên không thể xóa!" },
-        { status: 404 }
+        { status: 409 }
       );
     }
 
@@ -49,7 +49,7 @@ export async function DELETE(
         {
           msg: "Biến thể của sản phẩm này đã được khách đặt hàng nên không thể xóa!",
         },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
@@ -66,12 +66,12 @@ export async function DELETE(
       );
     }
 
-    return NextResponse.json({ deleteVariant }, { status: 201 });
+    return NextResponse.json({ deleteVariant }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

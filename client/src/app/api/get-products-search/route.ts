@@ -222,17 +222,27 @@ export async function GET(req: NextRequest) {
 
     const total = totalCount[0]?.total || 0;
 
-    return NextResponse.json({
-      products: products,
-      total,
-      totalPages: Math.ceil(total / limit),
-      page,
-    });
+    if (!products || products.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy sản phẩm" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        products: products,
+        total,
+        totalPages: Math.ceil(total / limit),
+        page,
+      },
+      { status: 200 }
+    );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

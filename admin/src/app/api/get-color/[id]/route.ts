@@ -21,12 +21,12 @@ export async function GET(
       return NextResponse.json({ msg: "Không tìm thấy màu" }, { status: 404 });
     }
 
-    return NextResponse.json({ color });
+    return NextResponse.json({ color }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

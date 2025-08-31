@@ -47,6 +47,11 @@ function AddCoupon() {
       return;
     }
 
+    if (data.amount < data.limit) {
+      toast.error("Số lượng phát hành phải lớn hơn số lần dùng");
+      return;
+    }
+
     if (!validatePositiveNumber(data.amount)) {
       toast.error("Số lượng phải lớn hơn 0");
       return;
@@ -125,7 +130,7 @@ function AddCoupon() {
             <h5 className="font-bold text-[#74767d]">Thông tin chung</h5>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.95rem] font-medium">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
                 Mã giảm giá
               </label>
               <input
@@ -142,8 +147,8 @@ function AddCoupon() {
             <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
               <div className="flex flex-col gap-1 w-full">
                 <div className="flex flex-col gap-1">
-                  <label htmlFor="" className="text-[0.95rem] font-medium">
-                    Số lượng
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
+                    Số lượng phát hành
                   </label>
                   <input
                     type="number"
@@ -159,7 +164,7 @@ function AddCoupon() {
 
               <div className="flex flex-col gap-1 w-full">
                 <div className="flex flex-col gap-1">
-                  <label htmlFor="" className="text-[0.95rem] font-medium">
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
                     Số lần dùng
                   </label>
                   <input
@@ -176,7 +181,7 @@ function AddCoupon() {
             </div>
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.95rem] font-medium">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
                 Loại giảm giá
               </label>
               <select
@@ -194,7 +199,7 @@ function AddCoupon() {
 
             {data.discountType !== "" && (
               <div className="flex flex-col gap-1 w-full">
-                <label htmlFor="" className="text-[0.95rem] font-medium">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   {`Giá trị ${
                     data.discountType === "0"
                       ? "phần trăm"
@@ -216,7 +221,7 @@ function AddCoupon() {
             )}
 
             <div className="flex flex-col gap-1">
-              <label htmlFor="" className="text-[0.95rem] font-medium">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
                 Giá trị tiền cố định tối thiểu của đơn hàng để áp dụng phiếu (0
                 để áp dụng cho mọi đơn hàng)
               </label>
@@ -233,7 +238,7 @@ function AddCoupon() {
 
             {data.discountType === "0" && (
               <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.95rem] font-medium">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   Giá trị tiền cố định giảm tối đa (chỉ áp dụng loại phiếu %)
                 </label>
                 <input
@@ -250,7 +255,7 @@ function AddCoupon() {
 
             <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
               <div className="w-full flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.95rem] font-medium">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   Ngày bắt đầu
                 </label>
                 <input
@@ -263,7 +268,7 @@ function AddCoupon() {
                 />
               </div>
               <div className="w-full flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.95rem] font-medium">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
                   Ngày kết thúc
                 </label>
                 <input

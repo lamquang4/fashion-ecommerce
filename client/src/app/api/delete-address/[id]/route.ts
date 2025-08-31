@@ -16,6 +16,7 @@ export async function DELETE(
     }
 
     const address = await Address.findById(id);
+    
     if (!address) {
       return NextResponse.json(
         { msg: "Không tìm thấy địa chỉ" },
@@ -25,12 +26,12 @@ export async function DELETE(
 
     const deleteAddress = await Address.findByIdAndDelete(id);
 
-    return NextResponse.json({ address: deleteAddress }, { status: 201 });
+    return NextResponse.json({ address: deleteAddress }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

@@ -27,13 +27,13 @@ export async function POST(req: NextRequest) {
             gender === 0 ? "nữ" : "nam"
           }.`,
         },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
     if (file.size === 0 || !file) {
       return NextResponse.json(
-        { msg: "danh mục không để trống" },
+        { msg: "Danh mục không để trống" },
         { status: 404 }
       );
     }
@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

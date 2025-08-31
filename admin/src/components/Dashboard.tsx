@@ -17,11 +17,11 @@ import useGetRevenues from "@/hooks/useGetRevenues";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 function Dashboard() {
-  const currentYear = new Date().getFullYear();
   const startYear = 2025;
+  const [year, setYear] = useState<number>(startYear);
+  const currentYear = new Date().getFullYear();
   const endYear = currentYear + 2;
 
-  const [year, setYear] = useState<number>(startYear);
   const { orders, totalRevenue, totalSold } = useGetOrders();
   const { revenues } = useGetRevenues(year);
   const { customers } = useGetCustomers();

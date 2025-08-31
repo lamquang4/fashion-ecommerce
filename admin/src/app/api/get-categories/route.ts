@@ -72,18 +72,29 @@ export async function GET(req: NextRequest) {
       ]),
       Category.countDocuments(query),
     ]);
-    return NextResponse.json({
-      categories,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-    });
+
+    if (!categories || categories.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy danh mục" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        categories,
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+      { status: 200 }
+    );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

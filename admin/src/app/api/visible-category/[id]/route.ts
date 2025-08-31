@@ -35,7 +35,7 @@ export async function PUT(
         {
           msg: "Danh mục chưa có sản phẩm nào!",
         },
-        { status: 400 }
+        { status: 404 }
       );
     }
 
@@ -47,12 +47,12 @@ export async function PUT(
       }
     );
 
-    return NextResponse.json({ category: updatedCategory }, { status: 201 });
+    return NextResponse.json({ category: updatedCategory }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

@@ -1,6 +1,7 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Address from "@/model/Address";
 import { validatePhone } from "@/utils/validatePhone";
+import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function PUT(
   req: NextRequest,
@@ -13,6 +14,10 @@ export async function PUT(
     const body = await req.json();
 
     const { fullname, phone, speaddress, city, ward, user } = body;
+
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
+    }
 
     if (!validatePhone(phone)) {
       return NextResponse.json(
@@ -42,12 +47,12 @@ export async function PUT(
       new: true,
     });
 
-    return NextResponse.json({ address: updatedAddress }, { status: 201 });
+    return NextResponse.json({ address: updatedAddress }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

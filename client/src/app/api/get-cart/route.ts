@@ -133,7 +133,7 @@ export async function GET(req: NextRequest) {
       });
     }
 
-    return NextResponse.json(cart[0]);
+    return NextResponse.json(cart[0], { status: 200 });
   } catch (err) {
     return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
   }

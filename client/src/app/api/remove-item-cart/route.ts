@@ -14,6 +14,7 @@ export async function PUT(req: NextRequest) {
     }
 
     const cart = await Cart.findById(cartId);
+    
     if (!cart) {
       return NextResponse.json(
         { msg: "Không tìm thấy giỏ hàng" },

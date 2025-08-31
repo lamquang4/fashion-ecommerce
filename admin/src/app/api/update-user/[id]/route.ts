@@ -44,7 +44,7 @@ export async function PUT(
     if (checkEmail) {
       return NextResponse.json(
         { msg: "Email đã được sử dụng" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
@@ -52,7 +52,7 @@ export async function PUT(
     if (checkPhone) {
       return NextResponse.json(
         { msg: "Số điện thoại đã được sử dụng" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
@@ -77,12 +77,12 @@ export async function PUT(
       new: true,
     });
 
-    return NextResponse.json({ user: updatedUser }, { status: 201 });
+    return NextResponse.json({ user: updatedUser }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

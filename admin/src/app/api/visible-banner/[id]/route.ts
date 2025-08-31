@@ -19,10 +19,7 @@ export async function PUT(
 
     const banner = await Banner.findById(id);
     if (!banner) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy banner" },
-        { status: 404 }
-      );
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
     const updatedBanner = await Banner.findByIdAndUpdate(
@@ -33,12 +30,12 @@ export async function PUT(
       }
     );
 
-    return NextResponse.json({ Banner: updatedBanner }, { status: 201 });
+    return NextResponse.json({ Banner: updatedBanner }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

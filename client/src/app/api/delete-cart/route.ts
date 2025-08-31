@@ -18,12 +18,12 @@ export async function DELETE() {
 
     const deleteCart = await Cart.findOneAndDelete({ user: userId });
 
-    return NextResponse.json({ cart: deleteCart }, { status: 201 });
+    return NextResponse.json({ cart: deleteCart }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

@@ -33,12 +33,12 @@ export async function PUT(
       }
     );
 
-    return NextResponse.json({ Product: updatedProduct }, { status: 201 });
+    return NextResponse.json({ Product: updatedProduct }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

@@ -32,7 +32,7 @@ export async function PUT(
     if (price < discount) {
       return NextResponse.json(
         { msg: "Giá sản phẩm phải lớn hơn giá giảm" },
-        { status: 404 }
+        { status: 400 }
       );
     }
 
@@ -49,7 +49,7 @@ export async function PUT(
     if (checkName) {
       return NextResponse.json(
         { msg: "Tên sản phẩm đã được sử dụng" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
@@ -90,7 +90,7 @@ export async function PUT(
         if (files.length > 5) {
           return NextResponse.json(
             { msg: "Hình sản phẩm biến thể này không vượt quá 5 hình" },
-            { status: 404 }
+            { status: 400 }
           );
         }
 
@@ -109,7 +109,7 @@ export async function PUT(
                   blockIndex + 1
                 } không đúng định dạng PNG, JPG hoặc WEBP.`,
               },
-              { status: 404 }
+              { status: 400 }
             );
           }
 
@@ -120,7 +120,7 @@ export async function PUT(
                   blockIndex + 1
                 } vượt quá dung lượng ${maxSizeKB}KB.`,
               },
-              { status: 404 }
+              { status: 400 }
             );
           }
 
@@ -263,7 +263,7 @@ export async function PUT(
                 blockIndex + 1
               } không vượt quá 5 hình`,
             },
-            { status: 404 }
+            { status: 400 }
           );
         }
 
@@ -282,7 +282,7 @@ export async function PUT(
                   blockIndex + 1
                 } không đúng định dạng PNG, JPG hoặc WEBP.`,
               },
-              { status: 404 }
+              { status: 400 }
             );
           }
 
@@ -293,7 +293,7 @@ export async function PUT(
                   blockIndex + 1
                 } vượt quá dung lượng ${maxSizeKB}KB.`,
               },
-              { status: 404 }
+              { status: 400 }
             );
           }
 
@@ -354,10 +354,8 @@ export async function PUT(
       }
     }
 
-    return NextResponse.json({ product: updatedProduct }, { status: 201 });
+    return NextResponse.json({ product: updatedProduct }, { status: 200 });
   } catch (err) {
-    console.log(err);
-
-    return NextResponse.json({ err, msg: "Lỗi" }, { status: 400 });
+    return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
   }
 }

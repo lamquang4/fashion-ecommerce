@@ -15,13 +15,20 @@ export async function GET() {
       .sort({ createdAt: -1 })
       .limit(limit)
       .lean();
-      
-    return NextResponse.json({ orders });
+
+    if (!orders || orders.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy đơn hàng" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ orders }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

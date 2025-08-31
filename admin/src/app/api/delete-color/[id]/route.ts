@@ -23,7 +23,7 @@ export async function DELETE(
           msg: "Màu này đẫ được sử dụng cho biến thể của sản phẩm nên không thể xóa!",
         },
         {
-          status: 400,
+          status: 409,
         }
       );
     }
@@ -35,12 +35,12 @@ export async function DELETE(
 
     const deleteColor = await Color.findByIdAndDelete(id);
 
-    return NextResponse.json({ color: deleteColor }, { status: 201 });
+    return NextResponse.json({ color: deleteColor }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

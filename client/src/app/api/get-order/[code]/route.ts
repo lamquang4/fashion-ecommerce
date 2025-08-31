@@ -10,7 +10,7 @@ export async function GET(
     await connectMongoDB();
     const { code } = await params;
 
-    const data = await Order.aggregate([
+    const order = await Order.aggregate([
       {
         $match: { orderCode: code },
       },
@@ -137,19 +137,19 @@ export async function GET(
       },
     ]);
 
-    if (!data) {
+    if (!order[0]) {
       return NextResponse.json(
         { msg: "Không tìm thấy đơn hàng" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json(data[0]);
+    return NextResponse.json(order[0], { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

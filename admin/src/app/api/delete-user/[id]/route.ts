@@ -18,9 +18,12 @@ export async function DELETE(
 
     const checkUser = await Order.findOne({ user: id });
     if (checkUser) {
-      return NextResponse.json({
-        msg: "Người dùng này đẫ mua hàng nên không được xóa!",
-      });
+      return NextResponse.json(
+        {
+          msg: "Người dùng này đẫ mua hàng nên không được xóa!",
+        },
+        { status: 409 }
+      );
     }
 
     const user = await User.findById(id);
@@ -33,12 +36,12 @@ export async function DELETE(
 
     const deleteUser = await User.findByIdAndDelete(id);
 
-    return NextResponse.json({ user: deleteUser }, { status: 201 });
+    return NextResponse.json({ user: deleteUser }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

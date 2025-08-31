@@ -108,14 +108,24 @@ export async function GET(req: NextRequest) {
       },
     ]);
 
-    return NextResponse.json({
-      products,
-    });
+    if (!products || products.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy sản phẩm" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        products,
+      },
+      { status: 200 }
+    );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

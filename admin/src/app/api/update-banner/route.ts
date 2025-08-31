@@ -26,18 +26,12 @@ export async function PUT(req: NextRequest) {
         const file = files[i];
 
         if (!mongoose.Types.ObjectId.isValid(id)) {
-          return NextResponse.json(
-            { msg: `ID không hợp lệ: ${id}` },
-            { status: 400 }
-          );
+          return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
         }
 
         const banner = await Banner.findById(id);
         if (!banner) {
-          return NextResponse.json(
-            { msg: `Không tìm thấy banner với ID: ${id}` },
-            { status: 404 }
-          );
+          return NextResponse.json({ msg: `Không tìm thấy` }, { status: 404 });
         }
 
         const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
@@ -98,12 +92,12 @@ export async function PUT(req: NextRequest) {
       }
     }
 
-    return NextResponse.json({ banner: updatedBanners }, { status: 201 });
+    return NextResponse.json({ banner: updatedBanners }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

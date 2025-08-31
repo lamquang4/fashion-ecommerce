@@ -11,7 +11,7 @@ export async function GET(req: NextRequest) {
     const skip = (page - 1) * limit;
     const q = searchParams.get("q") || "";
     const status = searchParams.get("status") || "";
-    
+
     const query: any = { role: { $in: [0, 1, 2] } };
     if (q) {
       query.$or = [
@@ -27,18 +27,29 @@ export async function GET(req: NextRequest) {
       User.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
       User.countDocuments(query),
     ]);
-    return NextResponse.json({
-      admins,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-    });
+
+    if (!admins || admins.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy quản trị viên" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        admins,
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+      { status: 200 }
+    );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

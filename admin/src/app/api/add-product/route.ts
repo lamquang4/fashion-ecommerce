@@ -34,7 +34,7 @@ export async function POST(req: NextRequest) {
     if (checkName) {
       return NextResponse.json(
         { msg: "Tên sản phẩm đã được sử dụng" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
@@ -62,15 +62,15 @@ export async function POST(req: NextRequest) {
 
       if (files.length > 5) {
         return NextResponse.json(
-          { msg: "Hình sản phẩm biến thể thứ i không vượt quá 5 hình" },
-          { status: 404 }
+          { msg: "Hình sản phẩm của biến thể này không vượt quá 5 hình" },
+          { status: 400 }
         );
       }
 
       if (files.length === 0 || !files) {
         return NextResponse.json(
-          { msg: "Hình sản phẩm biến thể thứ i không để trống" },
-          { status: 404 }
+          { msg: "Hình sản phẩm của biến thể này không để trống" },
+          { status: 400 }
         );
       }
 
@@ -89,7 +89,7 @@ export async function POST(req: NextRequest) {
                 blockIndex + 1
               } không đúng định dạng PNG, JPG hoặc WEBP.`,
             },
-            { status: 404 }
+            { status: 400 }
           );
         }
 
@@ -100,7 +100,7 @@ export async function POST(req: NextRequest) {
                 blockIndex + 1
               } vượt quá dung lượng ${maxSizeKB}KB.`,
             },
-            { status: 404 }
+            { status: 400 }
           );
         }
 
@@ -142,7 +142,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

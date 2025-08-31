@@ -15,6 +15,7 @@ export async function PUT(req: NextRequest) {
     }
 
     const user = await User.findById(id);
+
     if (!user) {
       return NextResponse.json(
         { msg: "Không tìm thấy người dùng" },
@@ -30,12 +31,12 @@ export async function PUT(req: NextRequest) {
       }
     );
 
-    return NextResponse.json({ user: updatedUser }, { status: 201 });
+    return NextResponse.json({ user: updatedUser }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

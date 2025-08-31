@@ -161,14 +161,24 @@ export async function GET() {
       },
     ]);
 
-    return NextResponse.json({
-      productsBestseller,
-    });
+    if (!productsBestseller || productsBestseller.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy sản phẩm" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        productsBestseller,
+      },
+      { status: 200 }
+    );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

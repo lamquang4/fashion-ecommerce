@@ -175,8 +175,15 @@ export async function GET() {
       { $limit: 10 },
     ]);
 
-    return NextResponse.json({ topProducts });
+    if (!topProducts || topProducts.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy sản phẩm" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ topProducts }, { status: 200 });
   } catch (err) {
-    return NextResponse.json({ msg: "Lỗi", err }, { status: 400 });
+    return NextResponse.json({ msg: "Lỗi", err }, { status: 500 });
   }
 }

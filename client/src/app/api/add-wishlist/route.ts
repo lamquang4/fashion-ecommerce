@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       await wishlist.save();
     }
 
-    const response = NextResponse.json({ status: 200 });
+    const response = NextResponse.json({ status: 201 });
 
     if (!userId && !wishlistId) {
       response.cookies.set({

@@ -53,7 +53,14 @@ export async function GET() {
       },
     ]);
 
-    return NextResponse.json({ coupons });
+    if (!coupons || coupons.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy phiếu giảm giá" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ coupons }, { status: 200 });
   } catch (err) {
     return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
   }

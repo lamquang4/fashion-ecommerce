@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
     if (checkCode) {
       return NextResponse.json(
         { msg: "Mã phiếu giảm giá đã được sử dụng" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
@@ -44,6 +44,13 @@ export async function POST(req: NextRequest) {
     if (start >= expiry) {
       return NextResponse.json(
         { msg: "Ngày kết thúc phải sau ngày bắt đầu" },
+        { status: 400 }
+      );
+    }
+
+    if (amount < limit) {
+      return NextResponse.json(
+        { msg: "Số lượng phát hành phải lớn hơn số lần dùng" },
         { status: 400 }
       );
     }
@@ -136,7 +143,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

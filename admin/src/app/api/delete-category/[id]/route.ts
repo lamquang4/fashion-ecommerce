@@ -25,7 +25,7 @@ export async function DELETE(
           msg: "Danh mục này đẫ được sử dụng cho sản phẩm nên không được xóa!",
         },
         {
-          status: 404,
+          status: 409,
         }
       );
     }
@@ -45,12 +45,12 @@ export async function DELETE(
 
     const deleteCategory = await Category.findByIdAndDelete(id);
 
-    return NextResponse.json({ category: deleteCategory }, { status: 201 });
+    return NextResponse.json({ category: deleteCategory }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

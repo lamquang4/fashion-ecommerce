@@ -68,23 +68,33 @@ export async function GET(req: NextRequest) {
       ]),
     ]);
 
-    return NextResponse.json({
-      orders,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-      totalStatus0,
-      totalStatus3,
-      totalStatus4,
-      totalRevenue: totalRevenue[0]?.total || 0,
-      totalSold: totalSold[0]?.total1 || 0,
-    });
+    if (!orders || orders.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy đơn hàng" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        orders,
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+        totalStatus0,
+        totalStatus3,
+        totalStatus4,
+        totalRevenue: totalRevenue[0]?.total || 0,
+        totalSold: totalSold[0]?.total1 || 0,
+      },
+      { status: 200 }
+    );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

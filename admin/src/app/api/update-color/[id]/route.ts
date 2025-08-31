@@ -28,7 +28,7 @@ export async function PUT(
     if (checkName) {
       return NextResponse.json(
         { msg: "Tên màu đã được sử dụng" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
@@ -41,12 +41,12 @@ export async function PUT(
       new: true,
     });
 
-    return NextResponse.json({ color: updatedColor }, { status: 201 });
+    return NextResponse.json({ color: updatedColor }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

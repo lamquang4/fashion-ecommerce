@@ -20,22 +20,30 @@ export async function GET(req: NextRequest) {
       query.type = parseInt(type);
     }
 
-    const [data, total] = await Promise.all([
+    const [mainbanners, total] = await Promise.all([
       Banner.find(query).skip(skip).limit(limit).lean(),
       Banner.countDocuments(query),
     ]);
-    return NextResponse.json({
-      mainbanners: data,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-    });
+
+    if (!mainbanners || mainbanners.length === 0) {
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
+    }
+
+    return NextResponse.json(
+      {
+        mainbanners,
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+      { status: 200 }
+    );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

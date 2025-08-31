@@ -23,7 +23,7 @@ export async function DELETE(
           msg: "Phiếu giảm giá này đẫ được sử dụng cho đơn hàng nên không được xóa!",
         },
         {
-          status: 404,
+          status: 409,
         }
       );
     }
@@ -38,12 +38,12 @@ export async function DELETE(
 
     const deleteCoupon = await Coupon.findByIdAndDelete(id);
 
-    return NextResponse.json({ coupon: deleteCoupon }, { status: 201 });
+    return NextResponse.json({ coupon: deleteCoupon }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

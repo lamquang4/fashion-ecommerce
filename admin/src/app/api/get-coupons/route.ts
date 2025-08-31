@@ -24,18 +24,29 @@ export async function GET(req: NextRequest) {
       Coupon.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }).lean(),
       Coupon.countDocuments(query),
     ]);
-    return NextResponse.json({
-      coupons,
-      total,
-      page,
-      limit,
-      totalPages: Math.ceil(total / limit),
-    });
+
+    if (!coupons || coupons.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy phiếu giảm giá" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        coupons,
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+      { status: 200 }
+    );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

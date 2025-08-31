@@ -94,12 +94,12 @@ export async function PUT(
       { new: true }
     );
 
-    return NextResponse.json({ inventory: updatedImage }, { status: 201 });
+    return NextResponse.json({ inventory: updatedImage }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

@@ -13,6 +13,7 @@ export async function PUT(req: NextRequest) {
     }
 
     const wishlist = await Wishlist.findById(wishlistId);
+   
     if (!wishlist) {
       return NextResponse.json(
         { msg: "Không tìm thấy yêu thích" },

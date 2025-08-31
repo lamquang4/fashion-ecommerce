@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     if (!cartId || !mongoose.Types.ObjectId.isValid(cartId)) {
       return NextResponse.json(
         { msg: "Không tìm thấy giỏ hàng" },
-        { status: 400 }
+        { status: 404 }
       );
     }
 

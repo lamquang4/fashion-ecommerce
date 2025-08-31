@@ -21,10 +21,10 @@ const couponSchema = new Schema(
       required: true,
     },
     amount: {
-      // số lượng phiếu
+      // số lượng phiếu phát hành
       type: Number,
       required: true,
-      min: 1,
+      min: 0,
       validate: {
         validator: Number.isInteger,
       },

@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
     if (!userId) {
       return NextResponse.json(
         { msg: "Tài khoản chưa đăng nhập" },
-        { status: 404 }
+        { status: 401 }
       );
     }
 
@@ -103,7 +103,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

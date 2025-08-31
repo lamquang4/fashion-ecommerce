@@ -36,15 +36,32 @@ export async function GET() {
       categoriesByGender(0),
     ]);
 
-    return NextResponse.json({
-      categoriesMale,
-      categoriesFemale,
-    });
+    if (!categoriesMale || categoriesMale.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy danh mục nam" },
+        { status: 404 }
+      );
+    }
+
+    if (!categoriesFemale || categoriesFemale.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy danh mục nữ" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        categoriesMale,
+        categoriesFemale,
+      },
+      { status: 200 }
+    );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

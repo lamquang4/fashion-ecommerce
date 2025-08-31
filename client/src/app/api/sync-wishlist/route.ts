@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
     if (!wishlistId || !mongoose.Types.ObjectId.isValid(wishlistId)) {
       return NextResponse.json(
         { msg: "Không tìm thấy yêu thích" },
-        { status: 400 }
+        { status: 500 }
       );
     }
 

@@ -10,7 +10,7 @@ export async function GET(
     await connectMongoDB();
     const { slug } = await params;
 
-    const data = await Product.aggregate([
+    const product = await Product.aggregate([
       { $match: { slug, status: 1 } },
       {
         $lookup: {
@@ -100,19 +100,19 @@ export async function GET(
       },
     ]);
 
-    if (!data) {
+    if (!product[0]) {
       return NextResponse.json(
         { msg: "Không tìm thấy sản phẩm" },
         { status: 404 }
       );
     }
 
-    return NextResponse.json({ product: data[0] });
+    return NextResponse.json(product[0], { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

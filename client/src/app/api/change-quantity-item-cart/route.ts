@@ -36,7 +36,7 @@ export async function POST(req: NextRequest) {
     item.quantity = quantity;
     await cart.save();
 
-    return NextResponse.json({});
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
   }

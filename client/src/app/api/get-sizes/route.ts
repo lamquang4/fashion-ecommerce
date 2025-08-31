@@ -8,14 +8,24 @@ export async function GET() {
 
     const sizes = await Size.find().sort({ createdAt: -1 }).lean();
 
-    return NextResponse.json({
-      sizes,
-    });
+    if (!sizes || sizes.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy kích thước" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json(
+      {
+        sizes,
+      },
+      { status: 200 }
+    );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

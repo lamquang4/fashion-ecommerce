@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
     if (stock === 0) {
       return NextResponse.json(
         { msg: "Sản phẩm đã hết hàng" },
-        { status: 400 }
+        { status: 409 }
       );
     }
 
@@ -112,7 +112,7 @@ export async function POST(req: NextRequest) {
       if (totalQuantity > stock) {
         return NextResponse.json(
           { msg: `Bạn chỉ có thể mua tối đa ${stock} sản phẩm này.` },
-          { status: 400 }
+          { status: 409 }
         );
       }
 
@@ -121,7 +121,7 @@ export async function POST(req: NextRequest) {
       if (quantity > stock) {
         return NextResponse.json(
           { msg: `Sản phẩm chỉ còn ${stock} cái.` },
-          { status: 400 }
+          { status: 409 }
         );
       }
 
@@ -134,7 +134,7 @@ export async function POST(req: NextRequest) {
 
     await cart.save();
 
-    const response = NextResponse.json({ status: 200 });
+    const response = NextResponse.json({ status: 201 });
 
     if (!userId && !cartId) {
       response.cookies.set({

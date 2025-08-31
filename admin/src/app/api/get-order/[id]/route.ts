@@ -149,12 +149,12 @@ export async function GET(
       );
     }
 
-    return NextResponse.json({ order: order[0] });
+    return NextResponse.json({ order: order[0] }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }

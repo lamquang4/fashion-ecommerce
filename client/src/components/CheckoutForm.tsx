@@ -686,7 +686,8 @@ function CheckoutForm() {
 
       {(isLoadingAddOrder ||
         isLoadingDeleteCart ||
-        isLoadingCheckPaymentStatusMomo) && (
+        isLoadingCheckPaymentStatusMomo ||
+        isLoadingCoupon) && (
         <Overplay IndexForZ={50}>
           <Loading height={0} size={55} color="white" thickness={8} />
           <h4 className="text-white">Vui lòng chờ trong giây lát...</h4>

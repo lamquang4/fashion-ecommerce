@@ -13,20 +13,25 @@ export async function GET() {
     if (!userId) {
       return NextResponse.json(
         { msg: "Tài khoản chưa đăng nhập" },
-        { status: 404 }
+        { status: 401 }
       );
     }
 
     const addresses = await Address.find({ user: userId }).lean();
 
-    return NextResponse.json({
-      addresses,
-    });
+    if (!addresses || addresses.length === 0) {
+      return NextResponse.json(
+        { msg: "Không tìm thấy địa chỉ" },
+        { status: 404 }
+      );
+    }
+
+    return NextResponse.json({ addresses }, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
-        status: 400,
+        status: 500,
       }
     );
   }
