@@ -25,13 +25,6 @@ export async function GET(req: NextRequest) {
       Coupon.countDocuments(query),
     ]);
 
-    if (!coupons || coupons.length === 0) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy phiếu giảm giá" },
-        { status: 404 }
-      );
-    }
-
     return NextResponse.json(
       {
         coupons,

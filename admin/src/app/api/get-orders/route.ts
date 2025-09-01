@@ -16,22 +16,25 @@ export async function GET(req: NextRequest) {
     const end = searchParams.get("end") || "";
 
     const query: any = {};
-
     if (q) {
       query.orderCode = { $regex: q, $options: "i" };
     }
-
     if (status) {
       query.status = parseInt(status);
     }
-
     if (start || end) {
       query.createdAt = {};
+
       if (start) {
-        query.createdAt.$gte = new Date(`${start}T00:00:00.000Z`);
+        const startDate = new Date(start);
+        startDate.setHours(0, 0, 0, 0); // đầu ngày
+        query.createdAt.$gte = startDate;
       }
+
       if (end) {
-        query.createdAt.$lte = new Date(`${end}T23:59:59.999Z`);
+        const endDate = new Date(end);
+        endDate.setHours(23, 59, 59, 999); // cuối ngày
+        query.createdAt.$lte = endDate;
       }
     }
 
@@ -76,8 +79,20 @@ export async function GET(req: NextRequest) {
 
     if (!orders || orders.length === 0) {
       return NextResponse.json(
-        { msg: "Không tìm thấy đơn hàng" },
-        { status: 404 }
+        {
+          orders: [],
+          total: 0,
+          page,
+          limit,
+          totalPages: 0,
+          totalStatus0: 0,
+          totalStatus3: 0,
+          totalStatus4: 0,
+          totalRevenue: 0,
+          totalSold: 0,
+          msg: "Không tìm thấy đơn hàng",
+        },
+        { status: 200 }
       );
     }
 

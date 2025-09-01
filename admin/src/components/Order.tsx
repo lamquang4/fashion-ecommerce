@@ -200,9 +200,16 @@ function Order() {
                   <td className="p-[1rem]  ">
                     {order.total!.toLocaleString("vi-VN")}₫
                   </td>
-                  <td className="p-[1rem]  ">
-                    {new Date(order.createdAt).toLocaleDateString("vi-VN")}
+                  <td className="p-[1rem]">
+                    {new Date(order.createdAt).toLocaleString("vi-VN", {
+                      year: "numeric",
+                      month: "2-digit",
+                      day: "2-digit",
+                      hour: "2-digit",
+                      minute: "2-digit",
+                    })}
                   </td>
+
                   <td className="p-[1rem]  ">
                     <select
                       disabled={isLoadingUpdateStatusOrder}

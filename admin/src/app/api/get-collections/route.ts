@@ -8,10 +8,7 @@ export async function GET() {
     const collections = await Banner.find({ type: { $in: 3 } }).lean();
 
     if (!collections || collections.length === 0) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy" },
-        { status: 404 }
-      );
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
     return NextResponse.json({ collections }, { status: 200 });

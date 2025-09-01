@@ -222,13 +222,6 @@ export async function GET(req: NextRequest) {
 
     const total = totalCount[0]?.total || 0;
 
-    if (!products || products.length === 0) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy sản phẩm" },
-        { status: 404 }
-      );
-    }
-
     return NextResponse.json(
       {
         products: products,

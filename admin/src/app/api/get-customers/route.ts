@@ -30,7 +30,14 @@ export async function GET(req: NextRequest) {
 
     if (!customers || customers.length === 0) {
       return NextResponse.json(
-        { msg: "Không tìm thấy khách hàng" },
+        {
+          customers: [],
+          total: 0,
+          page,
+          limit,
+          totalPages: 0,
+          msg: "Không tìm thấy khách hàng",
+        },
         { status: 404 }
       );
     }

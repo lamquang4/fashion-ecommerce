@@ -23,7 +23,14 @@ export async function GET(req: NextRequest) {
 
     if (!sizes || sizes.length === 0) {
       return NextResponse.json(
-        { msg: "Không tìm thấy kích thước" },
+        {
+          sizes: [],
+          total: 0,
+          page,
+          limit,
+          totalPages: 0,
+          msg: "Không tìm thấy kích thước",
+        },
         { status: 404 }
       );
     }

@@ -24,7 +24,17 @@ export async function GET(req: NextRequest) {
     ]);
 
     if (!colors || colors.length === 0) {
-      return NextResponse.json({ msg: "Không tìm thấy màu" }, { status: 404 });
+      return NextResponse.json(
+        {
+          colors: [],
+          total: 0,
+          page,
+          limit,
+          totalPages: 0,
+          msg: "Không tìm thấy màu",
+        },
+        { status: 200 }
+      );
     }
 
     return NextResponse.json(

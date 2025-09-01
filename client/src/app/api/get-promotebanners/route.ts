@@ -9,10 +9,7 @@ export async function GET() {
     const promotebanners = await Banner.find({ type: { $in: [2] } }).lean();
 
     if (!promotebanners || promotebanners.length === 0) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy" },
-        { status: 404 }
-      );
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
     return NextResponse.json(

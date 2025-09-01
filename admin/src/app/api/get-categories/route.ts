@@ -75,8 +75,15 @@ export async function GET(req: NextRequest) {
 
     if (!categories || categories.length === 0) {
       return NextResponse.json(
-        { msg: "Không tìm thấy danh mục" },
-        { status: 404 }
+        {
+          categories: [],
+          total: 0,
+          page,
+          limit,
+          totalPages: 0,
+          msg: "Không tìm thấy danh mục",
+        },
+        { status: 200 }
       );
     }
 

@@ -159,7 +159,18 @@ export async function GET(req: NextRequest) {
     const totalQuantity = countQuantity[0]?.totalQuantity || 0;
 
     if (!inventories || inventories.length === 0) {
-      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
+      return NextResponse.json(
+        {
+          inventories: [],
+          total: 0,
+          page,
+          limit,
+          totalPages: 0,
+          totalQuantity: 0,
+          msg: "Không tìm thấy",
+        },
+        { status: 200 }
+      );
     }
 
     return NextResponse.json(
