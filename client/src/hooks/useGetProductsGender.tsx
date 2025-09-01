@@ -12,7 +12,14 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetProductsGender() {
   const url = `/api/get-products-gender`;
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
 
   return {
     productsMale: data?.productsMale ?? [],

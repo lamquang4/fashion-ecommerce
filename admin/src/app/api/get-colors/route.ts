@@ -31,7 +31,6 @@ export async function GET(req: NextRequest) {
           page,
           limit,
           totalPages: 0,
-          msg: "Không tìm thấy màu",
         },
         { status: 200 }
       );

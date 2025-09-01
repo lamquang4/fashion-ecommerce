@@ -27,7 +27,14 @@ export default function useGetCustomers() {
 
   const url = `/api/get-customers?${query.toString()}`;
 
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
   return {
     customers: data?.customers ?? [],
     totalPages: data?.totalPages || 1,

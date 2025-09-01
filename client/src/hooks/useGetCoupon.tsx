@@ -9,7 +9,10 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 export default function useGetCoupon() {
   const [url, setUrl] = useState<string | null>(null);
 
-  const { data, error, isLoading, mutate } = useSWR<Coupon>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<Coupon>(url, fetcher, {
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+  });
 
   const getCoupon = useCallback((code: string, totalPrice: number) => {
     if (!code || !totalPrice) return;

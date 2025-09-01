@@ -27,7 +27,14 @@ export default function useGetMainBanners() {
 
   const url = `/api/get-mainbanners?${query.toString()}`;
 
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
   return {
     mainbanners: data?.mainbanners ?? [],
     totalPages: data?.totalPages || 1,

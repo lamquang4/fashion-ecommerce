@@ -23,11 +23,12 @@ export async function GET(req: NextRequest) {
     }
 
     if (!matchCondition) {
-      return NextResponse.json({
-        _id: null,
-        user: null,
-        productsInCart: [],
-      });
+      return NextResponse.json(
+        {
+          msg: "Không biết",
+        },
+        { status: 400 }
+      );
     }
 
     const cart = await Cart.aggregate([
@@ -126,11 +127,12 @@ export async function GET(req: NextRequest) {
     ]);
 
     if (!cart || cart.length === 0) {
-      return NextResponse.json({
-        _id: null,
-        user: null,
-        productsInCart: [],
-      });
+      return NextResponse.json(
+        {
+          msg: "Không tìm thấy",
+        },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json(cart[0], { status: 200 });

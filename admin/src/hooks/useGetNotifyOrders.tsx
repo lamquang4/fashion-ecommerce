@@ -10,7 +10,14 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetNotifyOrders() {
   const url = `/api/get-notify-orders`;
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
   return {
     orders: data?.orders ?? [],
     isLoading,

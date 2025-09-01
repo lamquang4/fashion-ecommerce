@@ -11,7 +11,14 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetCategory(id: string) {
   const url = `/api/get-category/${id}`;
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
 
   return {
     category: data?.category,

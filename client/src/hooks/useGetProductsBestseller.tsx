@@ -11,7 +11,14 @@ type ResponseType = {
 
 export default function useGetProductsBestseller() {
   const url = `/api/get-products-bestseller`;
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
 
   return {
     productsBestseller: data?.productsBestseller ?? [],

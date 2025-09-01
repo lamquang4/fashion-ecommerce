@@ -12,7 +12,14 @@ const fetcher = (url: string): Promise<ResponseType> =>
 
 export default function useGetAddresses() {
   const url = `/api/get-addresses`;
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
 
   return {
     addresses: data?.addresses ?? [],

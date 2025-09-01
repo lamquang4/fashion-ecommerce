@@ -253,11 +253,6 @@ export async function GET(
     if (!products || products.length === 0) {
       return NextResponse.json(
         {
-          products: [],
-          total: 0,
-          page,
-          limit,
-          totalPages: 0,
           msg: "Không tìm thấy sản phẩm",
         },
         { status: 404 }

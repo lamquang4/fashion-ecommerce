@@ -33,7 +33,14 @@ export default function useGetProductsSlug(slug: string) {
 
   const url = `/api/get-products/${slug}?${query.toString()}`;
 
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
 
   return {
     products: data?.products ?? [],

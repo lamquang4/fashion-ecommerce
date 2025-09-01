@@ -27,7 +27,14 @@ export default function useGetCoupons() {
 
   const url = `/api/get-coupons?${query.toString()}`;
 
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
   return {
     coupons: data?.coupons ?? [],
     totalPages: data?.totalPages || 1,

@@ -11,7 +11,14 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 export default function useGetPromoteBanners() {
   const url = `/api/get-promotebanners`;
 
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
 
   return {
     promotebanners: data?.promotebanners ?? [],

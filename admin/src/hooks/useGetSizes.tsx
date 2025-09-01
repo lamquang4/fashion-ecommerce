@@ -25,7 +25,14 @@ export default function useGetSizes() {
 
   const url = `/api/get-sizes?${query.toString()}`;
 
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
   return {
     sizes: data?.sizes ?? [],
     totalPages: data?.totalPages || 1,

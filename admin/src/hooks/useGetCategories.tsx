@@ -27,7 +27,14 @@ export default function useGetCategories() {
 
   const url = `/api/get-categories?${query.toString()}`;
 
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
   return {
     categories: data?.categories ?? [],
     totalPages: data?.totalPages || 1,

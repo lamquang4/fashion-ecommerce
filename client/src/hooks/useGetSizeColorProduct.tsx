@@ -18,7 +18,11 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 export default function useGetSizeColorProduct(slug: string) {
   const { data, error, isLoading, mutate } = useSWR<SizeColor>(
     slug ? `/api/get-size-color/${slug}` : null,
-    fetcher
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
   );
 
   return {

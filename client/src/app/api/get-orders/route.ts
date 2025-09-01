@@ -170,11 +170,6 @@ export async function GET(req: NextRequest) {
     if (!orders || orders.length === 0) {
       return NextResponse.json(
         {
-          orders: [],
-          total: 0,
-          page,
-          limit,
-          totalPages: 0,
           msg: "Không tìm thấy đơn hàng",
         },
         { status: 404 }

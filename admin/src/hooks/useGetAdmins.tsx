@@ -27,7 +27,14 @@ export default function useGetAdmins() {
 
   const url = `/api/get-admins?${query.toString()}`;
 
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
   return {
     admins: data?.admins ?? [],
     totalPages: data?.totalPages || 1,

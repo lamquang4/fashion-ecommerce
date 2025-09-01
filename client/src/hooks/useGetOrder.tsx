@@ -7,7 +7,10 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetCategory(code: string) {
   const url = `/api/get-order/${code}`;
-  const { data, error, isLoading, mutate } = useSWR<OrderFull>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<OrderFull>(url, fetcher, {
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+  });
 
   return {
     order: data,

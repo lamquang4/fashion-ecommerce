@@ -7,7 +7,10 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetWishlist() {
   const url = `/api/get-wishlist`;
-  const { data, error, isLoading, mutate } = useSWR<Wishlist>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<Wishlist>(url, fetcher, {
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+  });
 
   return {
     wishlist: data,

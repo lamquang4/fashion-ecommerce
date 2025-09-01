@@ -7,7 +7,10 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetCart() {
   const url = `/api/get-cart`;
-  const { data, error, isLoading, mutate } = useSWR<Cart>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<Cart>(url, fetcher, {
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+  });
 
   return {
     cart: data,

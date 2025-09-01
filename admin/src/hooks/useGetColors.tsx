@@ -25,7 +25,14 @@ export default function useGetColors() {
 
   const url = `/api/get-colors?${query.toString()}`;
 
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
   return {
     colors: data?.colors ?? [],
     totalPages: data?.totalPages || 1,

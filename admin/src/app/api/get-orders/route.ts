@@ -80,19 +80,9 @@ export async function GET(req: NextRequest) {
     if (!orders || orders.length === 0) {
       return NextResponse.json(
         {
-          orders: [],
-          total: 0,
-          page,
-          limit,
-          totalPages: 0,
-          totalStatus0: 0,
-          totalStatus3: 0,
-          totalStatus4: 0,
-          totalRevenue: 0,
-          totalSold: 0,
-          msg: "Không tìm thấy đơn hàng",
+          msg: "Không tìm thấy",
         },
-        { status: 200 }
+        { status: 404 }
       );
     }
 

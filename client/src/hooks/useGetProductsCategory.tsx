@@ -14,7 +14,14 @@ export default function useGetProductsCategory(
   product: string
 ) {
   const url = `/api/get-products1/${category}/${product}`;
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
 
   return {
     productsCateogry: data?.productsCateogry ?? [],

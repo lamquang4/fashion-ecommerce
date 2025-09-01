@@ -23,11 +23,12 @@ export async function GET(req: NextRequest) {
     }
 
     if (!matchCondition) {
-      return NextResponse.json({
-        _id: null,
-        user: null,
-        productsInWishlist: [],
-      });
+      return NextResponse.json(
+        {
+          msg: "Không biết",
+        },
+        { status: 400 }
+      );
     }
 
     const wishlist = await Wishlist.aggregate([
@@ -89,11 +90,12 @@ export async function GET(req: NextRequest) {
     ]);
 
     if (!wishlist || wishlist.length === 0) {
-      return NextResponse.json({
-        _id: null,
-        user: null,
-        productsInWishlist: [],
-      });
+      return NextResponse.json(
+        {
+          msg: "Không tìm thấy",
+        },
+        { status: 404 }
+      );
     }
 
     return NextResponse.json(wishlist[0], { status: 200 });

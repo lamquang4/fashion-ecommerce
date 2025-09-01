@@ -12,7 +12,14 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 export default function useGetCollections() {
   const url = `/api/get-collections`;
 
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
 
   return {
     collections: data?.collections ?? [],

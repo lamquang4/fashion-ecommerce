@@ -34,7 +34,14 @@ export default function useGetProductsSearch() {
 
   const url = `/api/get-products-search?${query.toString()}`;
 
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
   return {
     products: data?.products ?? [],
     totalPages: data?.totalPages || 1,

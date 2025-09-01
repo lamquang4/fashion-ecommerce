@@ -24,12 +24,7 @@ export async function GET(req: NextRequest) {
     if (!sizes || sizes.length === 0) {
       return NextResponse.json(
         {
-          sizes: [],
-          total: 0,
-          page,
-          limit,
-          totalPages: 0,
-          msg: "Không tìm thấy kích thước",
+          msg: "Không tìm thấy",
         },
         { status: 404 }
       );

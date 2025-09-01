@@ -12,7 +12,14 @@ const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetMainBanners() {
   const url = `/api/get-mainbanners`;
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
 
   return {
     banners1: data?.banners1 ?? [],

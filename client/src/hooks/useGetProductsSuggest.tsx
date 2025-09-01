@@ -19,7 +19,14 @@ export default function useGetProductsSuggest() {
 
   const url = `/api/get-products-suggest?${query.toString()}`;
 
-  const { data, error, isLoading, mutate } = useSWR<ResponseType>(url, fetcher);
+  const { data, error, isLoading, mutate } = useSWR<ResponseType>(
+    url,
+    fetcher,
+    {
+      shouldRetryOnError: false,
+      revalidateOnFocus: false,
+    }
+  );
   return {
     products: data?.products ?? [],
     setKeyword,
