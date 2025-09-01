@@ -23,12 +23,16 @@ export default function useGetOrders() {
   const limit = parseInt(searchParams.get("limit") || "10");
   const q = searchParams.get("q");
   const status = searchParams.get("status");
+  const start = searchParams.get("start");
+  const end = searchParams.get("end");
 
   const query = new URLSearchParams();
   if (page) query.set("page", page.toString());
   if (limit) query.set("limit", limit.toString());
   if (q) query.set("q", q);
   if (status) query.set("status", status.toString());
+  if (start) query.set("start", start.toString());
+  if (end) query.set("end", end.toString());
 
   const url = `/api/get-orders?${query.toString()}`;
 
