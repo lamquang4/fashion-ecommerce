@@ -1,10 +1,8 @@
 "use client";
 import { signIn } from "next-auth/react";
-import { useRouter } from "next/navigation";
 import { useState } from "react";
 
 export default function useLogin() {
-  const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const handleLogin = async (data: { email: string; password: string }) => {
     setIsLoading(true);
