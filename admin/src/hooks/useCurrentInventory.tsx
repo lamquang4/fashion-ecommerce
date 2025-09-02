@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
@@ -13,6 +13,14 @@ export const useCurrentInventory = () => {
       selectedFiles: File[];
     }[]
   >([]);
+
+  useEffect(() => {
+    return () => {
+      currentVariants.forEach((block) => {
+        block.previewImages.forEach((url) => URL.revokeObjectURL(url));
+      });
+    };
+  }, [currentVariants]);
 
   const handleAddCurrentInventory = (blockIndex: number) => {
     setCurrentVariants((prev) =>

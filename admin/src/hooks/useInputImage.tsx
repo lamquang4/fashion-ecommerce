@@ -1,19 +1,28 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export function useInputImage(max: number = 1) {
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
 
-  const handleRemovePreviewImage = useCallback((index: number) => {
-    URL.revokeObjectURL(previewImages[index]);
+  useEffect(() => {
+    return () => {
+      previewImages.forEach((url) => URL.revokeObjectURL(url));
+    };
+  }, [previewImages]);
 
-    const newImages = previewImages.filter((_, i) => i !== index);
-    const newFiles = selectedFiles.filter((_, i) => i !== index);
+  const handleRemovePreviewImage = useCallback(
+    (index: number) => {
+      URL.revokeObjectURL(previewImages[index]);
 
-    setPreviewImages(newImages);
-    setSelectedFiles(newFiles);
-  }, []);
+      const newImages = previewImages.filter((_, i) => i !== index);
+      const newFiles = selectedFiles.filter((_, i) => i !== index);
+
+      setPreviewImages(newImages);
+      setSelectedFiles(newFiles);
+    },
+    [previewImages, selectedFiles]
+  );
 
   const handlePreviewImage = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -32,7 +41,7 @@ export function useInputImage(max: number = 1) {
       setPreviewImages((prev) => [...prev, ...imageUrls]);
       setSelectedFiles((prev) => [...prev, ...incomingFiles]);
     },
-    []
+    [previewImages, max]
   );
 
   return {

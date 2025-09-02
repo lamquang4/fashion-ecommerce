@@ -1,8 +1,16 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export const useInputImage2 = () => {
   const [previewImages2, setPreviewImages2] = useState<string[][]>([]);
   const [selectedFiles2, setSelectedFiles2] = useState<File[][]>([]);
+
+  useEffect(() => {
+    return () => {
+      previewImages2.forEach((block) =>
+        block.forEach((url) => URL.revokeObjectURL(url))
+      );
+    };
+  }, [previewImages2]);
 
   const onFileSelect = useCallback(
     (file: File, blockIndex: number, imageIndex: number) => {

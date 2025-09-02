@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 export const useNewInventory = () => {
@@ -11,6 +11,14 @@ export const useNewInventory = () => {
       selectedFiles: File[];
     }[]
   >([]);
+
+  useEffect(() => {
+    return () => {
+      newVariants.forEach((block) => {
+        block.previewImages.forEach((url) => URL.revokeObjectURL(url));
+      });
+    };
+  }, [newVariants]);
 
   const handleImage = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, blockIndex: number) => {
@@ -80,6 +88,11 @@ export const useNewInventory = () => {
   const handleRemoveNewInventoryBlock = (blockIndex: number) => {
     setNewVariants((prev) => {
       const updated = [...prev];
+
+      updated[blockIndex].previewImages.forEach((url) =>
+        URL.revokeObjectURL(url)
+      );
+
       updated.splice(blockIndex, 1);
       return updated;
     });
@@ -133,6 +146,9 @@ export const useNewInventory = () => {
   };
 
   const handleRemoveAllInventoryBlocks = () => {
+    newVariants.forEach((block) => {
+      block.previewImages.forEach((url) => URL.revokeObjectURL(url));
+    });
     setNewVariants([]);
   };
 
