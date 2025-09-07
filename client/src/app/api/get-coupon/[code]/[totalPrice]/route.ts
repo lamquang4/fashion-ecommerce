@@ -54,8 +54,6 @@ export async function GET(
       );
     }
 
-    await Coupon.findByIdAndUpdate(coupon._id, { $inc: { amount: -1 } });
-
     return NextResponse.json(coupon, { status: 200 });
   } catch (err) {
     return NextResponse.json(

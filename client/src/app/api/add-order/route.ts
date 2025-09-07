@@ -7,6 +7,7 @@ import { NextRequest } from "next/server";
 import { options } from "../auth/[...nextauth]/options";
 import OrderDetail from "@/model/OrderDetail";
 import Inventory from "@/model/Inventory";
+import Coupon from "@/model/Coupon";
 
 export async function POST(req: NextRequest) {
   try {
@@ -96,6 +97,10 @@ export async function POST(req: NextRequest) {
 
         await inventory.save();
       }
+    }
+
+    if (coupon) {
+      await Coupon.findByIdAndUpdate(coupon, { $inc: { amount: -1 } });
     }
 
     return NextResponse.json({ order: newOrder }, { status: 201 });
