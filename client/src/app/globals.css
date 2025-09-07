@@ -67,52 +67,114 @@ span {
   font-size: 0.9rem;
 }
 
-.textbox-editor p {
-  margin-bottom: 1em;
-}
+.main-prose {
+  table {
+    border-collapse: collapse;
+    margin: 0 auto;
+    table-layout: auto;
+    text-align: left;
+    margin-bottom: 1em;
+  }
 
-.textbox-editor h1 {
-  margin-bottom: 0.6em;
-}
+  table tr {
+    p,
+    h1,
+    h2,
+    h3,
+    h4 {
+      margin-bottom: 0;
+    }
+  }
 
-.textbox-editor h2 {
-  margin-bottom: 0.6em;
-}
+  td,
+  th {
+    border: 1px solid #d1d5dc;
+    box-sizing: border-box;
+    min-width: 80px;
+    padding: 6px;
+    position: relative;
+    vertical-align: top;
 
-.textbox-editor h3 {
-  margin-bottom: 0.6em;
-}
+    > * {
+      margin-bottom: 0;
+    }
+  }
 
-.textbox-editor a {
-  font-size: 0.9rem;
-  color: #3b82f6;
-  text-decoration: underline;
-}
+  th {
+    background-color: #eeeeee;
+  }
 
-.textbox-editor ul {
-  list-style-type: disc;
-  margin-left: 30px;
-  font-size: 0.9rem;
-  margin-bottom: 1.1em;
-}
+  hr {
+    margin-bottom: 0.8em;
+    border-color: #d1d5dc;
+  }
 
-.textbox-editor ol {
-  list-style-type: decimal;
-  margin-left: 30px;
-  font-size: 0.9rem;
-  margin-bottom: 1.1em;
-}
+  li {
+    margin-bottom: 0.6em;
+  }
 
-.textbox-editor li {
-  margin-bottom: calc(1.1em / 2);
-}
+  li::marker {
+    font-weight: bold;
+  }
 
-.textbox-editor ul:last-child,
-.textbox-editor ol:last-child,
-.textbox-editor li:last-child,
-.textbox-editor p:last-child,
-.textbox-editor h1:last-child,
-.textbox-editor h2:last-child,
-.textbox-editor h3:last-child {
-  margin-bottom: 0;
+  ol {
+    list-style-type: decimal;
+    margin-left: 30px;
+    font-size: 0.9rem;
+    margin-bottom: 0.8em;
+  }
+
+  ul {
+    list-style-type: disc;
+    margin-left: 30px;
+    font-size: 0.9rem;
+    margin-bottom: 0.8em;
+  }
+
+  blockquote {
+    border-left: 4px solid #d1d5dc;
+    margin-right: 5rem;
+    padding-left: 1rem;
+    margin-bottom: 0.8em;
+  }
+
+  p {
+    margin-bottom: 0.8em;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    margin-bottom: 0.6em;
+  }
+
+  p,
+  h1,
+  h2,
+  h3,
+  h4 {
+    line-height: 28px;
+  }
+
+  a {
+    display: inline;
+    cursor: pointer;
+    font-size: 0.9rem;
+    color: #158ed4;
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  img {
+    margin: 0 auto 1em;
+  }
+
+  iframe {
+    max-width: 100%;
+    width: 640px;
+    height: 360px;
+    margin: 0 auto;
+    margin-bottom: 1em;
+  }
 }

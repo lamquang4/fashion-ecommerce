@@ -8,7 +8,7 @@ function TopProduct() {
   const { topProducts, isLoading } = useGetTop10Products();
   return (
     <div>
-      <div className="py-[1.3rem] px-[1.2rem] bg-white">
+      <div className="py-[1.3rem] px-[1.2rem]">
         <h2 className="text-[#74767d]">Top 10 bán chạy nhất</h2>
       </div>
 

@@ -1,7 +1,6 @@
 "use client";
 import { HiMiniXMark } from "react-icons/hi2";
 import Overplay from "./Overplay";
-import useGetProvinces from "@/hooks/useGetProvinceVN";
 import { memo, useEffect, useMemo, useState } from "react";
 import useGetAddress from "@/hooks/useGetAddress";
 import useUpdateAddress from "@/hooks/useUpdateAddress";
@@ -11,31 +10,32 @@ import toast from "react-hot-toast";
 import useGetAddresses from "@/hooks/useGetAddresses";
 import { validatePhone } from "@/utils/validatePhone";
 import { useRouter } from "next/navigation";
+import { Province } from "@/types/type";
 
 type AddressModalProps = {
   isOpen: boolean;
   toggleMenu: () => void;
   addressId: string;
+  provinces: Province[];
 };
-function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
+function AddressModal({
+  isOpen,
+  toggleMenu,
+  addressId,
+  provinces,
+}: AddressModalProps) {
   const { data: session } = useSession();
-  const { provinces } = useGetProvinces();
+  const router = useRouter();
+
   const { address, mutate, isLoading } = useGetAddress(addressId);
   const { addresses, mutate: mutateAddresses } = useGetAddresses();
   const { addAddress, isLoading: isLoadingAddAddress } = useAddAddress();
   const { updateAddress, isLoading: isLoadingUpdateAddress } =
     useUpdateAddress(addressId);
+
   const [selectedProvinceName, setSelectedProvinceName] = useState<string>("");
   const [selectedWard, setSelectedWard] = useState<string>("");
   const [data, setData] = useState({ fullname: "", phone: "", speaddress: "" });
-  const router = useRouter();
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setData((prev) => ({ ...prev, [name]: value }));
-  };
 
   const selectedProvince = useMemo(() => {
     return provinces?.find(
@@ -54,6 +54,18 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
   }, [address, addressId, isLoading, router]);
 
   useEffect(() => {
+    if (address && !isLoading) {
+      setData({
+        fullname: address.fullname || "",
+        phone: address.phone || "",
+        speaddress: address.speaddress || "",
+      });
+      setSelectedProvinceName(address.city || "");
+      setSelectedWard(address.ward || "");
+    }
+  }, [address, isLoading]);
+
+  useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
@@ -65,17 +77,12 @@ function AddressModal({ isOpen, toggleMenu, addressId }: AddressModalProps) {
     };
   }, [isOpen]);
 
-  useEffect(() => {
-    if (address && !isLoading) {
-      setData({
-        fullname: address.fullname || "",
-        phone: address.phone || "",
-        speaddress: address.speaddress || "",
-      });
-      setSelectedProvinceName(address.city || "");
-      setSelectedWard(address.ward || "");
-    }
-  }, [address, isLoading]);
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData((prev) => ({ ...prev, [name]: value }));
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

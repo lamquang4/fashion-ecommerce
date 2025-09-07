@@ -3,13 +3,13 @@ import React, { memo, useEffect } from "react";
 import Overplay from "./Overplay";
 import { HiMiniXMark } from "react-icons/hi2";
 import Image from "./Image";
-import useGetSizes from "@/hooks/useGetSizes";
+import { Size } from "@/types/type";
 type props = {
+  sizes: Size[];
   isOpen: boolean;
   toggleMenu: () => void;
 };
-function SizeChartModal({ isOpen, toggleMenu }: props) {
-  const { sizes } = useGetSizes();
+function SizeChartModal({ sizes, isOpen, toggleMenu }: props) {
 
   useEffect(() => {
     if (isOpen) {

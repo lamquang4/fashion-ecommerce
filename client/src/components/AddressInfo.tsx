@@ -19,7 +19,7 @@ function AddressInfo() {
   const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
 
   const { isLoading: isLoadingAddress } = useGetAddress(addressId);
-  const { isLoading: isLoadingProvinces } = useGetProvinces();
+  const { provinces, isLoading: isLoadingProvinces } = useGetProvinces();
   const { addresses, isLoading, mutate } = useGetAddresses();
   const { deleteAddress, isLoading: isLoadingDeleteAddress } =
     useDeleteAddress();
@@ -149,6 +149,7 @@ function AddressInfo() {
         <>
           {!addressId && !isLoadingProvinces && (
             <AddressModal
+              provinces={provinces!}
               addressId=""
               toggleMenu={toggleAddressModal}
               isOpen={openAddressModal}
@@ -157,6 +158,7 @@ function AddressInfo() {
 
           {addressId && !isLoadingAddress && !isLoadingProvinces && (
             <AddressModal
+              provinces={provinces!}
               addressId={addressId}
               toggleMenu={toggleAddressModal}
               isOpen={openAddressModal}

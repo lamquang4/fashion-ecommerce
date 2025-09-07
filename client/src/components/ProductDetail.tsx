@@ -6,11 +6,9 @@ import { HiOutlinePlusSmall } from "react-icons/hi2";
 import { LiaRulerHorizontalSolid } from "react-icons/lia";
 import MenuSideCoupon from "./MenuSideCoupon";
 import ImageViewer from "./ImageViewer";
-import useGetProductSlug from "@/hooks/useGetProductSlug";
-import { notFound, useParams } from "next/navigation";
 import useGetCoupons from "@/hooks/useGetCoupons";
 import toast from "react-hot-toast";
-import { Color, Variant } from "@/types/type";
+import { Color, Product, Variant } from "@/types/type";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import useAddCart from "@/hooks/useAddCart";
 import useGetCart from "@/hooks/useGetCart";
@@ -20,10 +18,11 @@ import useAddWishlist from "@/hooks/useAddWishlist";
 import SizeChartModal from "./SizeChartModal";
 import useGetSizes from "@/hooks/useGetSizes";
 
-function ProductDetail() {
-  const params = useParams();
-  const slug = params.slug as string;
+type Props = {
+  product: Product;
+};
 
+function ProductDetail({ product }: Props) {
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedVariant, setSelectedVariant] = useState<Variant>();
   const [selectedSize, setSelectedSize] = useState<{
@@ -38,8 +37,7 @@ function ProductDetail() {
   const [viewerImage, setViewerImage] = useState<string>("");
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
 
-  const { isLoading: isLoadingSizes } = useGetSizes();
-  const { product, isLoading } = useGetProductSlug(slug);
+  const { sizes, isLoading: isLoadingSizes } = useGetSizes();
   const { coupons } = useGetCoupons();
   const { wishlist, mutate: mutateWishlist } = useGetWishlist();
   const { mutate: mutateCart } = useGetCart();
@@ -173,10 +171,6 @@ function ProductDetail() {
   const toggleSizeChartModal = useCallback(() => {
     setOpenSizeChartModal((prev) => !prev);
   }, []);
-
-  if (!product && !isLoading) {
-    return notFound();
-  }
 
   return (
     <section className="w-full mt-0 lg:mt-[40px] mb-[40px]">
@@ -478,7 +472,7 @@ function ProductDetail() {
                   <hr className="border my-[15px]" />
 
                   <div
-                    className="  textbox-editor"
+                    className="main-prose"
                     dangerouslySetInnerHTML={{
                       __html: product?.description || "",
                     }}
@@ -490,6 +484,7 @@ function ProductDetail() {
 
           {openSizeChartModal && !isLoadingSizes && (
             <SizeChartModal
+              sizes={sizes}
               toggleMenu={toggleSizeChartModal}
               isOpen={openSizeChartModal}
             />

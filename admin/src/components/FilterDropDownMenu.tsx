@@ -23,6 +23,10 @@ function FilterDropDownMenu({
 
   const currentValue = searchParams.get(paramName);
 
+  const toggleOpen = () => {
+    setIsOpen((prev) => !prev);
+  };
+
   const handleClick = (value: number | null) => {
     const params = new URLSearchParams(searchParams.toString());
     if (value !== null) {
@@ -36,13 +40,16 @@ function FilterDropDownMenu({
 
   return (
     <div
-      onMouseEnter={() => setIsOpen(true)}
-      onMouseLeave={() => setIsOpen(false)}
-      className=" cursor-pointer flex items-center gap-[2px] relative w-full"
+      onMouseEnter={toggleOpen}
+      onMouseLeave={toggleOpen}
+      className="relative w-full"
     >
-      {title} <FaSortDown size={14} />
+      <div className=" cursor-pointer flex items-center gap-[2px] ">
+        {title} <FaSortDown size={14} />
+      </div>
+
       {isOpen && (
-        <div className="bg-white absolute border border-gray-300 z-10 top-full left-0 flex flex-col shadow-md font-medium">
+        <div className="bg-white absolute border border-gray-300 z-10 top-full left-0 shadow-md font-medium text-[#444]">
           {array.map((item, index) => {
             const isActive =
               currentValue ===
@@ -51,8 +58,8 @@ function FilterDropDownMenu({
               <button
                 key={index}
                 onClick={() => handleClick(item.value)}
-                className={`w-full text-[0.9rem] px-3 py-2.5 ${
-                  isActive ? "bg-gray-100" : ""
+                className={`w-full text-left text-[0.9rem] px-3 py-2.5 ${
+                  isActive ? "bg-gray-100" : "hover:bg-gray-50"
                 }`}
               >
                 {item.name}

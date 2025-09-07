@@ -160,7 +160,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
         className={` ${menuOpen ? "left-0" : "left-[-100%]"} 
         ${
           menuOpen ? "xl:translate-x-[-100%] xl:p-0 xl:w-0" : "xl:translate-x-0"
-        } custom-scroll fixed border top-0 h-screen w-[320px] px-3.5 pb-5 bg-white transition-all duration-350 ease-in-out z-100 xl:sticky overflow-y-auto border-b border-gray-200`}
+        } custom-scroll fixed border top-0 h-screen w-[320px] pb-5 bg-white transition-all duration-350 ease-in-out z-100 xl:sticky overflow-y-auto border-b border-gray-200`}
       >
         <div className="mb-[20px] flex justify-center sticky top-0 bg-white px-3.5 py-4.5">
           <Image
@@ -170,7 +170,7 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
             loadingType="eager"
           />
         </div>
-        <ul className="flex flex-col gap-[15px] font-semibold">
+        <ul className="flex flex-col gap-[15px] font-semibold px-3.5">
           {menuData.map((group, groupIndex) => (
             <div key={groupIndex} className="flex flex-col gap-[10px]">
               <p className="  uppercase">{group.title}</p>

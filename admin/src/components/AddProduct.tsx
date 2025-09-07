@@ -7,10 +7,10 @@ import useAddProduct from "@/hooks/useAddProduct";
 import toast from "react-hot-toast";
 import useGetCategories1 from "@/hooks/useGetCategories1";
 import dynamic from "next/dynamic";
-import TextBoxEditor from "./TextBoxEditor";
 import { useNewInventory } from "@/hooks/useNewInventory";
 import useGetSizes1 from "@/hooks/useGetSizes1";
 import useGetColors1 from "@/hooks/useGetColors1";
+import TextBoxEditor from "./TextBoxEditor/TextBoxEditor";
 
 const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),

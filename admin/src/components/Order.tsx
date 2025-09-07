@@ -14,6 +14,8 @@ import useGetOrders from "@/hooks/useGetOrders";
 import useUpdateStatusOrder from "@/hooks/useUpdateStatusOrder";
 import Loading from "./Loading";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { FaRegMoneyBillAlt } from "react-icons/fa";
+import { PiTShirtBold } from "react-icons/pi";
 
 function Order() {
   const pathname = usePathname();
@@ -31,6 +33,8 @@ function Order() {
     totalStatus0,
     totalStatus3,
     totalStatus4,
+    totalRevenue,
+    totalSold,
   } = useGetOrders();
 
   const { updateStatusOrder, isLoading: isLoadingUpdateStatusOrder } =
@@ -92,6 +96,16 @@ function Order() {
       number: totalStatus0,
       icon1: <LuClock size={25} />,
     },
+    {
+      title: "Doanh thu",
+      number: `${totalRevenue.toLocaleString("vi-VN")}₫`,
+      icon1: <FaRegMoneyBillAlt size={25} />,
+    },
+    {
+      title: "Số lượng bán ra",
+      number: totalSold,
+      icon1: <PiTShirtBold size={25} />,
+    },
   ];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -115,10 +129,10 @@ function Order() {
   };
   return (
     <>
-      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h2 className="mb-[20px] text-[#74767d]">Đơn hàng</h2>
+      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9] space-y-[20px]">
+        <h2 className=" text-[#74767d]">Đơn hàng</h2>
 
-        <div className="mb-[20px]">
+        <div className="">
           <StaticCards array={array1} />
         </div>
 
