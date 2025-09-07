@@ -33,7 +33,7 @@ function LoginForm() {
         password: "",
       });
 
-      router.replace("/");
+      router.replace("/dashboard");
     } else if (result?.error) {
       toast.error(result?.error);
     }

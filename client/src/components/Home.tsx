@@ -17,8 +17,11 @@ export default function Home() {
       {isLoading ? (
         <Loading height={70} size={50} color="black" thickness={3} />
       ) : (
+        <MainBanner />
+      )}
+
+      {!isLoading && (
         <>
-          <MainBanner />
           <ServiceFeature />
           <CategoryList />
           <PromoteBanner gender={1} />
