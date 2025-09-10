@@ -10,7 +10,6 @@ function BubbleMenuBar({ editor }: { editor: Editor | null }) {
     <>
       {editor && (
         <BubbleMenu
-          pluginKey="bubbleMenu"
           options={{
             strategy: "absolute",
             placement: "top-end",

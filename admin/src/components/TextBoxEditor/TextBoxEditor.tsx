@@ -62,10 +62,6 @@ function TextBoxEditor({ content, onChange }: Props) {
         controls: false,
         nocookie: true,
       }),
-      BubbleMenu.configure({
-        pluginKey: "bubbleMenu",
-        element: document.querySelector(".menu-bubble") as HTMLElement | null,
-      }),
     ],
     content: content,
     editorProps: {
