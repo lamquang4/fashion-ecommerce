@@ -84,13 +84,13 @@ function BlockStyleTool({ editor }: { editor: Editor | null }) {
       </button>
 
       {openBlockStyle && (
-        <div className="absolute left-0 top-full bg-white w-[130px] z-6 border border-gray-200 shadow-md">
+        <div className="absolute left-0 top-full bg-white w-[130px] z-10 border border-gray-200 shadow-md">
           {blockStyles?.map((block, index) => (
             <div key={`block-${index}`}>
               <button
                 type="button"
                 onClick={block.onClick}
-                className={`flex items-center justify-between w-full p-[6px]  ${
+                className={`flex items-center justify-between w-full p-1.5  ${
                   block.active ? "bg-gray-200" : "hover:bg-gray-100"
                 }`}
               >

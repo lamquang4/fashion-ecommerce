@@ -16,7 +16,13 @@ import {
 } from "react-icons/lu";
 import { GoHorizontalRule } from "react-icons/go";
 import { BsQuote } from "react-icons/bs";
-function ButtonTool({ editor }: { editor: Editor | null }) {
+function ButtonTool({
+  editor,
+  visibleTools,
+}: {
+  editor: Editor | null;
+  visibleTools?: number[];
+}) {
   const [activeMarks, setActiveMarks] = useState<{
     bold: boolean;
     italic: boolean;
@@ -182,9 +188,15 @@ function ButtonTool({ editor }: { editor: Editor | null }) {
       title: "Video",
     },
   ];
+
+  const tools =
+    visibleTools && visibleTools.length > 0
+      ? buttonTools.filter((_, index) => visibleTools.includes(index))
+      : buttonTools;
+      
   return (
     <>
-      {buttonTools.map((tool, index) => (
+      {tools.map((tool, index) => (
         <button
           key={`btn-tool-${index}`}
           type="button"

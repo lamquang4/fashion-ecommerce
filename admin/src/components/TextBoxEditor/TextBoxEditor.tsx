@@ -71,7 +71,7 @@ function TextBoxEditor({ content, onChange }: Props) {
     editorProps: {
       attributes: {
         class:
-          "prose focus:outline-none p-[8px] border border-gray-300 min-h-[350px]",
+          "prose focus:outline-none p-2 border border-gray-300 min-h-[350px]",
       },
     },
     onUpdate: ({ editor }) => {
@@ -94,7 +94,7 @@ function TextBoxEditor({ content, onChange }: Props) {
       </div>
 
       {editor && (
-        <div className="text-right text-[0.9rem] p-[6px] border-t-0 border-gray-300 border">
+        <div className="text-right text-[0.9rem] p-2 border-t-0 border-gray-300 border">
           {editor.storage.characterCount.words()} từ,{" "}
           {editor.storage.characterCount.characters()} ký tự
         </div>

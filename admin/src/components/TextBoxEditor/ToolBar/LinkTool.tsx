@@ -52,7 +52,7 @@ function LinkTool({ editor }: { editor: Editor | null }) {
         type="button"
         title="Link"
         onClick={toggleLink}
-        className="p-[6px] flex items-center gap-1.5 justify-between hover:bg-gray-100 bg-gray-50"
+        className="p-2 flex items-center gap-1.5 justify-between hover:bg-gray-100 bg-gray-50"
       >
         <MdInsertLink size={18} />
       </button>

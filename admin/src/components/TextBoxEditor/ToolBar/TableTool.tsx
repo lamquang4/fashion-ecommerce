@@ -41,13 +41,13 @@ function TableTool({ editor }: { editor: Editor | null }) {
       <button
         type="button"
         title="Table"
-        className="p-[6px] flex items-center justify-between hover:bg-gray-100 bg-gray-50"
+        className="p-2 flex items-center justify-between hover:bg-gray-100 bg-gray-50"
       >
         <VscTable size={18} />
       </button>
 
       {openTable && (
-        <div className="absolute left-1/2 -translate-x-1/2 top-full min-w-max bg-white z-50 border border-gray-200 shadow-md p-2">
+        <div className="absolute left-1/2 -translate-x-1/2 top-full min-w-max space-y-2 bg-white z-10 border border-gray-200 shadow-md p-2">
           <div className="grid grid-cols-10 gap-1">
             {Array.from({ length: 100 }).map((_, i) => {
               const row = Math.floor(i / 10);
@@ -75,7 +75,7 @@ function TableTool({ editor }: { editor: Editor | null }) {
             })}
           </div>
 
-          <div className="text-[0.9rem] mt-1 text-center">
+          <div className="text-[0.9rem] text-center">
             {hoveredCol ? hoveredCol + 1 : 0} x{" "}
             {hoveredRow ? hoveredRow + 1 : 0}
           </div>
