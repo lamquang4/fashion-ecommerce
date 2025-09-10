@@ -1,8 +1,10 @@
 "use client";
-import { memo, useState } from "react";
+import { memo, useCallback, useState } from "react";
 import { Editor } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
-function TableBubbleMenu({ editor }: { editor: Editor | null }) {
+import BlockStyleTool from "./ToolBar/BlockStyleTool";
+import ButtonTool from "./ToolBar/ButtonTool";
+function BubbleMenuBar({ editor }: { editor: Editor | null }) {
   const [openTableEditRow, setOpenTableEditRow] = useState<boolean>(false);
   const [openTableEditCol, setOpenTableEditCol] = useState<boolean>(false);
   const [openTableEditTable, setOpenTableEditTable] = useState<boolean>(false);
@@ -19,10 +21,10 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
     setOpenTableEditTable((prev) => !prev);
   };
 
-  const bubbleMenu = [
+  const bubbleMenuTable = [
     {
       label: (
-        <svg viewBox="-2 -2 20 20" fill="#5F6368" className="w-6 h-6">
+        <svg fill="#5F6368" className="w-4.5 h-4.5" viewBox="2 2 13 12">
           <path
             fillRule="evenodd"
             d="M2,2v12h13V2H2z M6,13H3v-2h3V13z M6,10H3V8h3V10z M6,7H3V5h3V7z M10,13H7v-2h3V13z M10,10H7V8h3V10z M10,7H7V5h3V7z M14,13h-3v-2h3V13z M14,10h-3V8h3V10z M14,7h-3V5h3V7z"
@@ -36,7 +38,7 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
         {
           label: (
             <>
-              <svg viewBox="-2 -2 20 20" fill="#5F6368" className="w-6 h-6">
+              <svg fill="#444" viewBox="2 2 13 12" className="w-4.5 h-4.5">
                 <path d="M14,5h-3V4h-1v1H7V4H6v1H3V4H2v11h13V4h-1V5z M6,14H3v-2h3V14z M6,11H3V9h3V11z M6,8H3V6h3V8z M10,14H7v-2h3V14z M10,11H7V9h3V11z M10,8H7V6h3V8z M14,14h-3v-2h3V14z M14,11h-3V9h3V11z M14,8h-3V6h3V8z M2,1h13v2H2V1z" />
               </svg>
 
@@ -49,7 +51,7 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
         {
           label: (
             <>
-              <svg viewBox="-2 -2 20 20" className="w-6 h-6">
+              <svg viewBox="2 2 13 12" className="w-4.5 h-4.5">
                 <path
                   fill="#5F6368"
                   d="M9.4,3H7.5l-1,1l2,2H10v2H7V7.4L5.9,8.5L5.5,8H3V7.5l-1,1V15h13V3H9.4z M6,14H3v-2h3V14z M6,11H3V9 h3V11z M10,14H7v-2h3V14z M10,11H7V9h3V11z M14,14h-3v-2h3V14z M14,11h-3V9h3V11z M14,7.8V8h-3V6h3V7.8z"
@@ -69,7 +71,7 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
     },
     {
       label: (
-        <svg viewBox="-2 -2 20 20" className="w-6 h-6">
+        <svg viewBox="2 2 13 12" className="w-4.5 h-4.5">
           <path
             fill="#F0EFF1"
             d="M7,13h3v-2H7V13z M7,10h3V8H7V10z M7,7h3V5H7V7z M11,13h3v-2h-3V13z M11,10h3V8h-3V10z M11,5v2h3V5H11z"
@@ -91,7 +93,7 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
         {
           label: (
             <>
-              <svg viewBox="-2 -2 20 20" className="w-6 h-6">
+              <svg viewBox="2 2 13 12" className="w-4.5 h-4.5">
                 <path
                   fill="#5F6368"
                   d="M11,4v4H6V4H2v11h13V4H11z M5,14H3v-2h2V14z M5,8H3V6h2V8z M8,14H6v-2h2V14z M11,14H9v-2h2V14z M14,14h-2v-2h2V14z M14,8h-2V6h2V8z"
@@ -110,7 +112,7 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
         {
           label: (
             <>
-              <svg viewBox="-2 -2 20 20" className="w-6 h-6">
+              <svg viewBox="2 2 13 12" className="w-4.5 h-4.5">
                 <path
                   fill="#5F6368"
                   d="M2,1v11h4V9h1V8h3v1h1v3h4V1H2z M5,11H3V9h2V11z M5,5H3V3h2V5z M8,5H6V3h2V5z M11,5H9V3h2V5z M14,11h-2V9h2V11z M14,5h-2V3h2V5z"
@@ -129,7 +131,7 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
         {
           label: (
             <>
-              <svg viewBox="-2 -2 20 20" className="w-6 h-6">
+              <svg viewBox="2 2 13 12" className="w-4.5 h-4.5">
                 <path
                   fill="#5F6368"
                   d="M10,8.5V10H2V7h6.5l-1-1H7V2H1v13h6v-4h4V7.5L10,8.5z M2,3h4v3H2V3z M6,14H2v-3h4V14z"
@@ -149,7 +151,7 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
     },
     {
       label: (
-        <svg viewBox="-2 -2 20 20" className="w-6 h-6">
+        <svg viewBox="2 2 13 12" className="w-4.5 h-4.5">
           <g>
             <path
               fill="#F0EFF1"
@@ -175,7 +177,7 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
         {
           label: (
             <>
-              <svg viewBox="-2 -2 20 20" className="w-6 h-6">
+              <svg viewBox="2 2 13 12" className="w-4.5 h-4.5">
                 <path
                   fill="#5F6368"
                   d="M5,1v5h3v5H5v4h10V1H5z M8,14H6v-2h2V14z M8,5H6V3h2V5z M14,14h-2v-2h2V14z M14,11h-2V9h2V11z M14,8h-2V6h2V8z M14,5h-2V3h2V5z"
@@ -194,7 +196,7 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
         {
           label: (
             <>
-              <svg viewBox="-2 -2 20 20" className="w-6 h-6">
+              <svg viewBox="2 2 13 12" className="w-4.5 h-4.5">
                 <path
                   fill="#5F6368"
                   d="M11,1H1v14h10v-4H9.6H8v-1V7V6h1.6H11V1z M4,14H2v-2h2V14z M4,11H2V9h2V11z M4,8H2V6h2V8z M4,5H2V3h2V5z M10,12v2H8v-2H10z M10,5H8V3h2V5z"
@@ -213,7 +215,7 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
         {
           label: (
             <>
-              <svg viewBox="-2 -2 20 20" className="w-6 h-6">
+              <svg viewBox="2 2 13 12" className="w-4.5 h-4.5">
                 <path
                   fill="#5F6368"
                   d="M2,1v6h4v0.6l1,1V2h3v8H8.4l0.1,0.1L7.5,11H11V7h4V1H2z M6,6H3V2h3V6z M14,6h-3V2h3V6z"
@@ -233,20 +235,25 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
       ],
     },
   ];
+
+
   return (
     <>
       {editor && (
         <BubbleMenu
+          pluginKey="bubbleMenu"
           options={{
             strategy: "absolute",
-            placement: "top",
-            offset: 12,
+            placement: "top-end",
           }}
           editor={editor}
-          shouldShow={({ editor }) => editor.isActive("table")}
         >
-          <div className="flex bg-white border border-gray-300 shadow-md rounded-md">
-            {bubbleMenu.map((tool, i) => (
+          <div className="bg-white flex items-center flex-wrap gap-x-0.5 border border-gray-300 shadow-md">
+            <BlockStyleTool editor={editor} />
+
+            <ButtonTool editor={editor} />
+
+            {bubbleMenuTable.map((tool, i) => (
               <div
                 key={`bb-${i}`}
                 title={tool.title}
@@ -268,7 +275,7 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
                         key={`cc-${index}`}
                         type="button"
                         onClick={child.onClick}
-                        className={`flex items-center w-full p-[6px] gap-1 bg-gray-50 ${
+                        className={`flex items-center w-full p-[6px] gap-1.5 bg-gray-50 ${
                           child.active ? "bg-gray-200" : "hover:bg-gray-100"
                         }`}
                       >
@@ -286,4 +293,4 @@ function TableBubbleMenu({ editor }: { editor: Editor | null }) {
   );
 }
 
-export default memo(TableBubbleMenu);
+export default memo(BubbleMenuBar);

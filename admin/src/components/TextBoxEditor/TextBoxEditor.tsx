@@ -18,8 +18,9 @@ import {
 } from "@tiptap/extension-table";
 import Link from "@tiptap/extension-link";
 import ImageResize from "tiptap-extension-resize-image";
-import ToolBar from "./ToolBar";
-import TableBubbleMenu from "./TableBubbleMenu";
+import ToolBar from "./ToolBar/ToolBar";
+import BubbleMenuBar from "./BubbleMenuBar";
+import BubbleMenu from "@tiptap/extension-bubble-menu";
 
 type Props = {
   content: string;
@@ -61,6 +62,10 @@ function TextBoxEditor({ content, onChange }: Props) {
         controls: false,
         nocookie: true,
       }),
+      BubbleMenu.configure({
+        pluginKey: "bubbleMenu",
+        element: document.querySelector(".menu-bubble") as HTMLElement | null,
+      }),
     ],
     content: content,
     editorProps: {
@@ -80,14 +85,12 @@ function TextBoxEditor({ content, onChange }: Props) {
     }
   }, [content, editor]);
 
-  console.log(content);
-
   return (
     <div className="w-full text-[0.9rem]">
       <div className="relative z-5">
         <ToolBar editor={editor} />
         <EditorContent editor={editor} />
-        <TableBubbleMenu editor={editor} />
+        <BubbleMenuBar editor={editor} />
       </div>
 
       {editor && (
