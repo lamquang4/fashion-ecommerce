@@ -8,7 +8,6 @@ import ImageTool from "./ImageTool";
 import TableTool from "./TableTool";
 
 function ToolBar({ editor }: { editor: Editor | null }) {
-  console.log("render tool");
 
   return (
     <div className="border border-gray-300 border-b-0 bg-gray-50 w-full">

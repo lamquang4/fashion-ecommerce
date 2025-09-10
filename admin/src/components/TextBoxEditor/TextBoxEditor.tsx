@@ -20,7 +20,6 @@ import Link from "@tiptap/extension-link";
 import ImageResize from "tiptap-extension-resize-image";
 import ToolBar from "./ToolBar/ToolBar";
 import BubbleMenuBar from "./BubbleMenuBar";
-import BubbleMenu from "@tiptap/extension-bubble-menu";
 
 type Props = {
   content: string;
