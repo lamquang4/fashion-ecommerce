@@ -35,6 +35,7 @@ export const useNewInventory = () => {
         const max = 5;
         if (currentPreviewImages.length + incomingFiles.length > max) {
           toast.error(`Tổng số hình không được vượt quá ${max}.`);
+          e.target.value = "";
           return prev;
         }
 
@@ -50,6 +51,7 @@ export const useNewInventory = () => {
 
         return updated;
       });
+      e.target.value = "";
     },
     []
   );

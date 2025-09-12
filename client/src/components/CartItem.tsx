@@ -95,7 +95,17 @@ function CartItem() {
       variant: variant,
       size: size,
     });
-    mutate();
+
+    mutate(
+      (prevCart) => ({
+        ...prevCart!,
+        productsInCart: prevCart!.productsInCart.filter(
+          (item) =>
+            !(item.variant._id === variant && item.variant.size._id === size)
+        ),
+      }),
+      false
+    );
   };
 
   const handleSubmit = (e: React.FormEvent) => {

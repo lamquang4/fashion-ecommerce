@@ -20,7 +20,7 @@ export async function GET() {
 
     if (!sizes || sizes.length === 0) {
       return NextResponse.json(
-        { msg: "Không tìm thấy kích thước" },
+        { msg: "Không tìm thấy" },
         { status: 404 }
       );
     }

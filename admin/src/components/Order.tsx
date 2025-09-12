@@ -132,7 +132,7 @@ function Order() {
       <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9] space-y-[20px]">
         <h2 className=" text-[#74767d]">Đơn hàng</h2>
 
-        <div className="">
+        <div>
           <StaticCards array={array1} />
         </div>
 

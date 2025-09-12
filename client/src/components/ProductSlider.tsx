@@ -1,6 +1,8 @@
 "use client";
-import { useKeenSlider } from "keen-slider/react";
-import "keen-slider/keen-slider.min.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/free-mode";
+import { FreeMode } from "swiper/modules";
 import Link from "next/link";
 import Image from "./Image";
 import { useMemo, useState } from "react";
@@ -48,38 +50,37 @@ function ProductSlider({ title, products }: Props) {
     mutate();
   };
 
-  const [sliderRef] = useKeenSlider({
-    loop: false,
-    slides: { perView: 4, spacing: 12 },
-    breakpoints: {
-      "(max-width: 1640px)": {
-        slides: { perView: 4, spacing: 12 },
-      },
-      "(max-width: 1024px)": {
-        slides: { perView: 3, spacing: 12 },
-      },
-      "(max-width: 768px)": {
-        slides: { perView: 2, spacing: 12 },
-      },
-      "(max-width: 480px)": {
-        slides: { perView: 2, spacing: 12 },
-      },
-    },
-  });
-
   return (
     <>
       {products.length > 0 && (
         <section className="mb-[40px]">
           <div className="mx-auto max-w-[1230px] w-full px-[10px] sm:px-[15px]">
             <h2 className="mb-[20px]">{title}</h2>
-            <div ref={sliderRef} className="keen-slider">
+            <Swiper
+              spaceBetween={12}
+              modules={[FreeMode]}
+              freeMode={true}
+              breakpoints={{
+                0: {
+                  slidesPerView: 2,
+                },
+                768: {
+                  slidesPerView: 3,
+                },
+                1024: {
+                  slidesPerView: 4,
+                },
+                1640: {
+                  slidesPerView: 4,
+                },
+              }}
+            >
               {products.map((product) => {
                 const variant =
                   selectedVariant[product._id] ?? product.variants[0];
                 const isInWishlist = wishlistVariantId.has(variant._id);
                 return (
-                  <div key={product._id} className="keen-slider__slide">
+                  <SwiperSlide key={product._id}>
                     <div className="relative group">
                       <Link href={`/product/${product.slug}`}>
                         {variant.images[0] && (
@@ -190,10 +191,10 @@ function ProductSlider({ title, products }: Props) {
                         </h5>
                       )}
                     </div>
-                  </div>
+                  </SwiperSlide>
                 );
               })}
-            </div>
+            </Swiper>
           </div>
         </section>
       )}

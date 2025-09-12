@@ -36,40 +36,54 @@ function CategoryList() {
           ))}
         </div>
 
-        <Swiper
-          spaceBetween={30}
-          slidesPerView={"auto"}
-          freeMode={true}
-          modules={[FreeMode]}
-          className="mx-auto w-fit"
-        >
-          {categories.map((category) => (
-            <SwiperSlide
-              key={category._id}
-              className="!flex !flex-col !items-center !w-auto"
-            >
-              <Link
-                href={`/collection/${category.slug}`}
-                className="space-y-[8px]"
+        <div className="mx-auto w-fit">
+          <Swiper
+            spaceBetween={30}
+            modules={[FreeMode]}
+            freeMode={true}
+            breakpoints={{
+              0: {
+                slidesPerView: 2,
+              },
+              768: {
+                slidesPerView: 3,
+              },
+              1024: {
+                slidesPerView: 4,
+              },
+              1640: {
+                slidesPerView: 4,
+              },
+            }}
+          >
+            {categories.map((category) => (
+              <SwiperSlide
+                key={category._id}
+                className="!flex !flex-col !items-center !w-auto"
               >
-                <div className="w-[100px] sm:w-[120px] border-gray-300 border">
-                  <Image
-                    Src={category.image}
-                    Alt={category.namecategory}
-                    ClassName="w-full"
-                    loadingType="lazy"
-                  />
-                </div>
-                <div className="text-center">
-                  <h5 className="font-medium">{category.namecategory} </h5>
-                  <p className="font-normal">
-                    ({category.productCount} sản phẩm)
-                  </p>
-                </div>
-              </Link>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+                <Link
+                  href={`/collection/${category.slug}`}
+                  className="space-y-[8px]"
+                >
+                  <div className="w-[100px] sm:w-[120px] border-gray-300 border">
+                    <Image
+                      Src={category.image}
+                      Alt={category.namecategory}
+                      ClassName="w-full"
+                      loadingType="lazy"
+                    />
+                  </div>
+                  <div className="text-center">
+                    <h5 className="font-medium">{category.namecategory} </h5>
+                    <p className="font-normal">
+                      ({category.productCount} sản phẩm)
+                    </p>
+                  </div>
+                </Link>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
     </section>
   );

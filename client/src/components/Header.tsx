@@ -159,6 +159,10 @@ function Header() {
                     </li>
                   </ul>
                 </li>
+
+                <li className="relative menu-category">
+                  <Link href={"/blog"}>Tin tức</Link>
+                </li>
               </ul>
             </nav>
 

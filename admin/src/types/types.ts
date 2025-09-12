@@ -159,6 +159,16 @@ export interface OrderFull {
   createdAt?: string;
 }
 
+export interface Blog {
+  _id: string;
+  title: string;
+  slug: string;
+  image: string;
+  content: string;
+  status: number;
+  createdAt?: string;
+}
+
 export interface Revenue {
   month: number;
   totalRevenue: number;

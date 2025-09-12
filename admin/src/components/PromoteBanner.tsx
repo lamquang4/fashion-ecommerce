@@ -8,7 +8,12 @@ import useUpdateBanner from "@/hooks/useUpdateBanner";
 import toast from "react-hot-toast";
 import { useInputImage1 } from "@/hooks/useInputImage1";
 import Loading from "./Loading";
+import { useState } from "react";
+import ImageViewer from "./ImageViewer";
 function PromoteBanner() {
+  const [openViewer, setOpenViewer] = useState<boolean>(false);
+  const [viewerImage, setViewerImage] = useState<string>("");
+
   const { promotebanners, mutate, isLoading } = useGetPromoteBanners();
   const { addBanner, isLoading: isLoadingAddBanner } = useAddBanner();
   const { updateBanner, isLoading: isLoadingUpdateBanner } = useUpdateBanner();
@@ -20,6 +25,11 @@ function PromoteBanner() {
     onFileSelect,
     handleClear,
   } = useInputImage1();
+
+  const handleOpenViewer = (image: string) => {
+    setViewerImage(image);
+    setOpenViewer(true);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -57,70 +67,90 @@ function PromoteBanner() {
     }
   };
   return (
-    <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
-      <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
-        <h2 className="text-[#74767d]">Banner khuyến mãi</h2>
+    <>
+      <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
+        <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
+          <h2 className="text-[#74767d]">Banner khuyến mãi</h2>
 
-        <div className="flex gap-[25px] w-full flex-col">
-          <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-            {isLoading ? (
-              <Loading height={60} size={50} color="black" thickness={2} />
-            ) : (
-              <div className="flex flex-col gap-[20px] sm:gap-[30px]">
-                {[0, 1].map((index) => {
-                  const item = promotebanners[index];
-                  return (
-                    <div className="relative" key={index}>
-                      <Image
-                        Src={
-                          previewImages1[index] ||
-                          item?.image ||
-                          "/assets/other/default-banner.png"
-                        }
-                        Alt=""
-                        ClassName="w-full object-cover"
-                        loadingType="eager"
-                      />
+          <div className="flex gap-[25px] w-full flex-col">
+            <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
+              {isLoading ? (
+                <Loading height={60} size={50} color="black" thickness={2} />
+              ) : (
+                <div className="flex flex-col gap-[20px] sm:gap-[30px]">
+                  {[0, 1].map((index) => {
+                    const item = promotebanners[index];
+                    return (
+                      <div className="relative" key={index}>
+                        <div
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            e.preventDefault();
+                            handleOpenViewer(
+                              previewImages1[index] || item?.image
+                            );
+                          }}
+                        >
+                          <Image
+                            Src={
+                              previewImages1[index] ||
+                              item?.image ||
+                              "/assets/other/default-banner.png"
+                            }
+                            Alt=""
+                            ClassName="w-full object-cover"
+                            loadingType="eager"
+                          />
+                        </div>
 
-                      <div className="flex gap-[15px] absolute top-[20px] right-[20px]">
-                        <InputImage1
-                          onFileSelect={(file) => onFileSelect(file, index)}
-                          InputId={`b${index}`}
-                          sizeIcon={30}
-                        />
-                        {previewImages1[index] && (
-                          <div className="rounded-full border flex justify-center items-center bg-white">
-                            <button
-                              type="button"
-                              className="p-2"
-                              onClick={() => handleClear(index)}
-                            >
-                              <HiMiniXMark size={26} />
-                            </button>
-                          </div>
-                        )}
+                        <div className="flex gap-[15px] absolute top-[20px] right-[20px] z-5">
+                          <InputImage1
+                            onFileSelect={(file) => onFileSelect(file, index)}
+                            InputId={`b${index}`}
+                            sizeIcon={30}
+                          />
+                          {previewImages1[index] && (
+                            <div className="rounded-full border flex justify-center items-center bg-white">
+                              <button
+                                type="button"
+                                className="p-2"
+                                onClick={() => handleClear(index)}
+                              >
+                                <HiMiniXMark size={26} />
+                              </button>
+                            </div>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  );
-                })}
-              </div>
-            )}
+                    );
+                  })}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
 
-        <div className="flex justify-center gap-6">
-          <button
-            disabled={isLoadingAddBanner || isLoadingUpdateBanner}
-            type="submit"
-            className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
-          >
-            {isLoadingAddBanner || isLoadingUpdateBanner
-              ? "Đang lưu..."
-              : "Lưu"}
-          </button>
-        </div>
-      </form>
-    </div>
+          <div className="flex justify-center gap-6">
+            <button
+              disabled={isLoadingAddBanner || isLoadingUpdateBanner}
+              type="submit"
+              className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-teal-600"
+            >
+              {isLoadingAddBanner || isLoadingUpdateBanner
+                ? "Đang lưu..."
+                : "Lưu"}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {openViewer && (
+        <ImageViewer
+          image={viewerImage}
+          open={openViewer}
+          onClose={() => setOpenViewer(false)}
+        />
+      )}
+    </>
   );
 }
 

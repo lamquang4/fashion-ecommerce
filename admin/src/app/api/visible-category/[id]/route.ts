@@ -22,7 +22,7 @@ export async function PUT(
     const category = await Category.findById(id);
     if (!category) {
       return NextResponse.json(
-        { msg: "Không tìm thấy người dùng" },
+        { msg: "Không tìm thấy" },
         { status: 404 }
       );
     }

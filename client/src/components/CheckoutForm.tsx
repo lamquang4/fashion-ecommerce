@@ -155,7 +155,7 @@ function CheckoutForm() {
       });
 
       await deleteCart();
-      mutateCart();
+      mutateCart({ productsInCart: [] }, false);
       localStorage.removeItem("checkoutData");
       localStorage.removeItem("orderId");
 
@@ -272,7 +272,7 @@ function CheckoutForm() {
       router.replace("/");
 
       await deleteCart();
-      mutateCart();
+      mutateCart({ productsInCart: [] }, false);
     }
   };
 

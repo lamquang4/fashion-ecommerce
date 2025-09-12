@@ -9,6 +9,10 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 function EditCustomer() {
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+
   const [data, setData] = useState({
     fullname: "",
     email: "",
@@ -16,9 +20,6 @@ function EditCustomer() {
     phone: "",
     birthday: "",
   });
-  const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
 
   const { user, mutate, isLoading } = useGetUser(id);
   const { updateUser, isLoading: isLoadingUpdateUser } = useUpdateUser(id);
@@ -93,9 +94,7 @@ function EditCustomer() {
 
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-            <h5 className="font-bold text-[#74767d]">
-              Thông tin chung
-            </h5>
+            <h5 className="font-bold text-[#74767d]">Thông tin chung</h5>
             <div className="flex flex-col gap-1">
               <label htmlFor="" className="text-[0.9rem] font-medium">
                 Họ tên

@@ -172,14 +172,15 @@ function ProductDetail({ product }: Props) {
     setOpenSizeChartModal((prev) => !prev);
   }, []);
 
+
   return (
-    <section className="w-full mt-0 lg:mt-[40px] mb-[40px]">
+    <section className="w-full mb-[40px] mt-0  lg:mt-[40px]">
       <div className="mx-auto max-w-[1230px] w-full">
-        <div className="flex flex-wrap gap-[30px] justify-center">
+        <div className="flex flex-wrap gap-[15px]">
           <div className="flex justify-center">
-            <div className="flex flex-col md:flex-col-reverse xl:flex-row flex-wrap gap-[20px] lg:sticky lg:top-[100px]">
+            <div className="flex flex-col md:flex-col-reverse xl:flex-row flex-wrap gap-[15px] lg:sticky lg:top-[100px]">
               <div className="md:order-2 relative grow overflow-hidden bg-white">
-                <div className="w-full lg:max-w-[450px] flex flex-col gap-[20px]">
+                <div className="w-full lg:max-w-[600px] flex flex-col gap-[20px]">
                   <div className="relative group">
                     <button
                       type="button"

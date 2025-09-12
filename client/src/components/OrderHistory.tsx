@@ -85,13 +85,13 @@ function OrderHistory() {
             </select>
           </div>
 
-          <div className="flex gap-4.5 flex-col">
+          <div className="flex gap-5 flex-col">
             {isLoading ? (
               <Loading height={70} size={50} color="black" thickness={3} />
             ) : orders.length > 0 ? (
               orders.map((order) => (
                 <div
-                  className="border border-gray-300 p-[12px] flex gap-[10px] flex-col"
+                  className="border border-gray-300 p-[10px] flex gap-[10px] flex-col"
                   key={order._id}
                 >
                   {order.productsBuy.map((item, index) => (
@@ -138,9 +138,9 @@ function OrderHistory() {
                     </div>
                   ))}
 
-                  <div>
+                  <div className="space-y-[10px] py-[5px]">
                     <p
-                      className={`mt-[15px] font-medium ${
+                      className={`font-medium ${
                         order.status === 0
                           ? "text-gray-500"
                           : order.status === 1
@@ -167,7 +167,7 @@ function OrderHistory() {
                         : ""}
                     </p>
 
-                    <div className="flex justify-between items-center mt-[15px]">
+                    <div className="flex justify-between items-center">
                       <span className="  font-medium">
                         Tổng cộng: {order.total.toLocaleString("vi-VN")}₫
                       </span>

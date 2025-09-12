@@ -177,7 +177,7 @@ export async function GET() {
 
     if (!topProducts || topProducts.length === 0) {
       return NextResponse.json(
-        { msg: "Không tìm thấy sản phẩm" },
+        { msg: "Không tìm thấy" },
         { status: 404 }
       );
     }

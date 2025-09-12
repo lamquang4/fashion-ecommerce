@@ -18,7 +18,7 @@ export async function GET() {
 
     if (!orders || orders.length === 0) {
       return NextResponse.json(
-        { msg: "Không tìm thấy đơn hàng" },
+        { msg: "Không tìm thấy" },
         { status: 404 }
       );
     }

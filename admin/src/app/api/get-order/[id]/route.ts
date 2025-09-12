@@ -144,7 +144,7 @@ export async function GET(
 
     if (!order) {
       return NextResponse.json(
-        { msg: "Không tìm thấy đơn hàng" },
+        { msg: "Không tìm thấy" },
         { status: 404 }
       );
     }

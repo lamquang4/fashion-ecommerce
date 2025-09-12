@@ -33,6 +33,7 @@ export function useInputImage(max: number = 1) {
 
       if (previewImages.length + incomingFiles.length > max) {
         toast.error(`Tổng số hình không được vượt quá ${max}.`);
+        e.target.value = "";
         return;
       }
 
@@ -40,6 +41,7 @@ export function useInputImage(max: number = 1) {
 
       setPreviewImages((prev) => [...prev, ...imageUrls]);
       setSelectedFiles((prev) => [...prev, ...incomingFiles]);
+      e.target.value = "";
     },
     [previewImages, max]
   );

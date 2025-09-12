@@ -18,6 +18,7 @@ import { usePathname } from "next/navigation";
 import { PiHouseLineBold } from "react-icons/pi";
 import { MdOutlineContentPasteSearch } from "react-icons/md";
 import { RxSize } from "react-icons/rx";
+import { BsPostcard } from "react-icons/bs";
 type MenuSideProps = {
   menuOpen: boolean;
   toggleMenu: () => void;
@@ -124,6 +125,15 @@ function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
     {
       title: "Nội dung",
       items: [
+        {
+          icon: <BsPostcard size={20} />,
+          label: "Bài viết",
+          key: "80a",
+          children: [
+            { label: "Danh sách bài viết", path: "/blog" },
+            { label: "Thêm bài viết", path: "/add-blog" },
+          ],
+        },
         {
           icon: <PiHouseLineBold size={20} />,
           label: "Banner chính",

@@ -20,7 +20,7 @@ export async function PUT(
     const product = await Product.findById(id);
     if (!product) {
       return NextResponse.json(
-        { msg: "Không tìm thấy sản phẩm" },
+        { msg: "Không tìm thấy" },
         { status: 404 }
       );
     }

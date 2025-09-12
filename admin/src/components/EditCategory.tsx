@@ -11,6 +11,10 @@ import useGetCategory from "@/hooks/useGetCategory";
 import { useInputImage } from "@/hooks/useInputImage";
 import Loading from "./Loading";
 function EditCategory() {
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+
   const [data, setData] = useState({
     namecategory: "",
     gender: "",
@@ -18,13 +22,7 @@ function EditCategory() {
   });
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
-  const handleOpenViewer = (image: string) => {
-    setViewerImage(image);
-    setOpenViewer(true);
-  };
-  const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
+
   const { category, mutate, isLoading } = useGetCategory(id);
   const { updateCategory, isLoading: isLoadingUpdatedCategory } =
     useUpdateCategory(id);
@@ -37,16 +35,6 @@ function EditCategory() {
     handlePreviewImage,
     handleRemovePreviewImage,
   } = useInputImage(1);
-
-  const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
-  ) => {
-    const { name, value } = e.target;
-    setData({
-      ...data,
-      [name]: value,
-    });
-  };
 
   useEffect(() => {
     if (isLoading) return;
@@ -68,6 +56,21 @@ function EditCategory() {
     }
   }, [category]);
 
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData({
+      ...data,
+      [name]: value,
+    });
+  };
+
+  const handleOpenViewer = (image: string) => {
+    setViewerImage(image);
+    setOpenViewer(true);
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -88,13 +91,12 @@ function EditCategory() {
       toast.error(err?.response?.data?.msg);
     }
   };
+
   return (
     <>
       <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-auto">
         <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
-          <h2 className="text-[#74767d]">
-            Chỉnh sửa danh mục
-          </h2>
+          <h2 className="text-[#74767d]">Chỉnh sửa danh mục</h2>
 
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[25px] w-full">

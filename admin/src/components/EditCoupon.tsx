@@ -11,6 +11,10 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 function EditCoupon() {
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+
   const [data, setData] = useState({
     code: "",
     limit: 1,
@@ -22,9 +26,6 @@ function EditCoupon() {
     minOrderValue: 0,
     maxDiscountValue: 1,
   });
-  const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
 
   const { coupon, mutate, isLoading } = useGetCoupon(id);
   const { updateCoupon, isLoading: isLoadingUpdateCoupon } =

@@ -19,7 +19,7 @@ export async function GET(
 
     if (!coupon) {
       return NextResponse.json(
-        { msg: "Không tìm thấy phiếu giảm giá" },
+        { msg: "Không tìm thấy" },
         { status: 404 }
       );
     }

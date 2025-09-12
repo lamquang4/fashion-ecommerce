@@ -20,7 +20,7 @@ export async function GET() {
     ]);
 
     if (!colors || colors.length === 0) {
-      return NextResponse.json({ msg: "Không tìm thấy màu" }, { status: 404 });
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
     return NextResponse.json({ colors }, { status: 200 });

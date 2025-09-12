@@ -11,6 +11,7 @@ function InputImage1({ InputId, onFileSelect, sizeIcon }: InputImageProp) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && onFileSelect) onFileSelect(file);
+    e.target.value = "";
   };
 
   return (

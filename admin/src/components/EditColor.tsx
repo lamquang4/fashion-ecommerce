@@ -10,6 +10,7 @@ function EditColor() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
+  
   const { color, mutate, isLoading } = useGetColor(id);
   const { updateColor, isLoading: isLoadingUpdateColor } = useUpdateColor(id);
 

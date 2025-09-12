@@ -8,9 +8,12 @@ import Loading from "@/components/Loading";
 import MainBanner from "../components/MainBanner";
 import CollectionBanner from "../components/CollectionBanner";
 import useGetMainBanners from "@/hooks/useGetMainBanners";
+import BlogSlider from "./BlogSlider";
+import useGetLatestBlogs from "@/hooks/useGetLatestBlogs";
 
 export default function Home() {
   const { isLoading } = useGetMainBanners();
+  const { blogs } = useGetLatestBlogs();
   const { productsMale, productsFemale } = useGetProductsGender();
   return (
     <>
@@ -29,6 +32,7 @@ export default function Home() {
           <PromoteBanner gender={0} />
           <ProductSlider title={"Nữ"} products={productsFemale} />
           <CollectionBanner />
+          <BlogSlider title="Bài viết mới nhất" blogs={blogs} />
         </>
       )}
     </>

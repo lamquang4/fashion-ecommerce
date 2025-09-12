@@ -23,6 +23,7 @@ export const useInputImage1 = () => {
       updated[index] = file;
       return updated;
     });
+
   }, []);
 
   const handleClear = useCallback((index: number) => {

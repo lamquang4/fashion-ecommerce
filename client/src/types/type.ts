@@ -14,6 +14,16 @@ export interface Color {
   codecolor: string;
 }
 
+export interface Blog {
+  _id: string;
+  title: string;
+  slug: string;
+  image: string;
+  content: string;
+  status: number;
+  createdAt: string;
+}
+
 export interface Size {
   _id: string;
   namesize: string;

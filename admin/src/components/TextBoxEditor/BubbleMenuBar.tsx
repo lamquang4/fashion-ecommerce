@@ -14,6 +14,14 @@ function BubbleMenuBar({ editor }: { editor: Editor | null }) {
             strategy: "absolute",
             placement: "top-end",
           }}
+          shouldShow={({ editor }) =>
+            editor.isActive("table") ||
+            editor.isActive("heading", { level: 1 }) ||
+            editor.isActive("heading", { level: 2 }) ||
+            editor.isActive("heading", { level: 3 }) ||
+            editor.isActive("heading", { level: 4 }) ||
+            editor.isActive("paragraph")
+          }
           editor={editor}
         >
           <div className="bg-white flex items-center flex-wrap gap-x-0.5 border border-gray-300 shadow-md">

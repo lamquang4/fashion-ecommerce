@@ -38,6 +38,13 @@ input[type="number"]::-webkit-inner-spin-button {
   background-color: #197fb6 !important;
 }
 
+h1,
+h2,
+h3,
+h4 {
+  scroll-margin-top: 100px;
+}
+
 h1 {
   font-size: 1.75rem;
   font-weight: 650;

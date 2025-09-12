@@ -7,6 +7,10 @@ import React, { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
 function EditSize() {
+  const router = useRouter();
+  const params = useParams();
+  const id = params.id as string;
+
   const [data, setData] = useState({
     namesize: "",
     chestMin: 1,
@@ -20,9 +24,6 @@ function EditSize() {
     weightMin: 1,
     weightMax: 1,
   });
-  const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
 
   const { size, mutate, isLoading } = useGetSize(id);
   const { updateSize, isLoading: isLoadingUpdateSize } = useUpdateSize(id);

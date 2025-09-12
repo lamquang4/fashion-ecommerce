@@ -13,7 +13,17 @@ function WishlistItem() {
       wishlistId: wishlistId,
       variant: variant,
     });
-    mutate();
+
+    mutate(
+      (prevCart) => ({
+        ...prevCart!,
+        productsInWishlist: prevCart!.productsInWishlist.filter(
+          (item) =>
+            !(item.variant._id === variant)
+        ),
+      }),
+      false
+    );
   };
   return (
     <section className="my-[40px]">

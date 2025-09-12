@@ -35,6 +35,16 @@ function EditProduct() {
   const params = useParams();
   const id = params.id as string;
 
+  const [data, setData] = useState({
+    name: "",
+    price: 1,
+    discount: 0,
+    description: "",
+    category: "",
+  });
+  const [openViewer, setOpenViewer] = useState<boolean>(false);
+  const [viewerImage, setViewerImage] = useState<string>("");
+
   const { product, mutate, isLoading } = useGetProduct(id);
   const { categories } = useGetCategories1();
   const { colors } = useGetColors1();
@@ -80,16 +90,6 @@ function EditProduct() {
     handleRemoveImageCurrent,
     handleSortCurrentInventory,
   } = useCurrentInventory();
-
-  const [data, setData] = useState({
-    name: "",
-    price: 1,
-    discount: 0,
-    description: "",
-    category: "",
-  });
-  const [openViewer, setOpenViewer] = useState<boolean>(false);
-  const [viewerImage, setViewerImage] = useState<string>("");
 
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);
