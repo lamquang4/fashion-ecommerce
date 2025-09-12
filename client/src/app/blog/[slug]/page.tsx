@@ -1,9 +1,12 @@
 import BlogSlug from "@/components/BlogSlug";
+import { Suspense } from "react";
 
 function page() {
   return (
     <>
-      <BlogSlug />
+      <Suspense>
+        <BlogSlug />
+      </Suspense>
     </>
   );
 }
