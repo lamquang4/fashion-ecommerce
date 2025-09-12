@@ -1,6 +1,5 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Blog from "@/model/Blog";
-import Product from "@/model/Product";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function PUT(
