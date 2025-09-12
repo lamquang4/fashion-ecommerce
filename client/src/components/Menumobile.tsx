@@ -46,13 +46,13 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
           </button>
         </div>
 
-        <ul className="py-[25px] font-semibold text-[0.9rem]">
+        <ul className="py-[25px] font-semibold text-[0.9rem] uppercase">
           <li className="border-b border-gray-300">
             <div
               onClick={() => toggleOpen(`abc`)}
               className="w-full cursor-pointer flex justify-between items-center"
             >
-              <p className="text-black font-medium py-4">Nam</p>
+              <p className="text-black py-4">Nam</p>
               <button>
                 {openMenus[`abc`] ? (
                   <FaMinus className="text-[#3b3a3a]" size={15} />
@@ -95,7 +95,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               onClick={() => toggleOpen(`xyz`)}
               className="w-full cursor-pointer flex justify-between items-center"
             >
-              <p className="text-black font-medium py-4">Nữ</p>
+              <p className="text-black py-4">Nữ</p>
               <button>
                 {openMenus[`xyz`] ? (
                   <FaMinus className="text-[#3b3a3a]" size={15} />
@@ -138,7 +138,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
               onClick={() => toggleOpen(`klo`)}
               className="w-full cursor-pointer flex justify-between items-center"
             >
-              <p className="text-black font-medium py-4">Giảm giá</p>
+              <p className="text-black py-4">Giảm giá</p>
               <button>
                 {openMenus[`klo`] ? (
                   <FaMinus className="text-[#3b3a3a]" size={15} />
@@ -171,6 +171,12 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                 </Link>
               </li>
             </ul>
+          </li>
+
+          <li className="border-b border-gray-300">
+            <Link href={"/blog"} className="text-black py-4">
+              Tin tức
+            </Link>
           </li>
         </ul>
       </nav>

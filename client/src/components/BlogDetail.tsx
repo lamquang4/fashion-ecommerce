@@ -1,5 +1,6 @@
 "use client";
 import { Blog } from "@/types/type";
+import { generateNumberingTOC } from "@/utils/generateNumberingTOC";
 import { removeVietNamese } from "@/utils/removeVietnamese";
 import { useEffect, useMemo, useState } from "react";
 type Props = {
@@ -11,6 +12,11 @@ function BlogDetail({ blog }: Props) {
     { id: string; text: string; level: number }[]
   >([]);
   const [parsedContent, setParsedContent] = useState<string>("");
+
+  const numberedHeadings = useMemo(
+    () => generateNumberingTOC(headings),
+    [headings]
+  );
 
   useEffect(() => {
     if (!blog?.content) return;
@@ -43,7 +49,7 @@ function BlogDetail({ blog }: Props) {
     <section className="my-[40px] relative">
       <div className=" w-full max-w-[1230px] px-[10px] sm:px-[15px] mx-auto">
         <div className="flex gap-[25px] flex-wrap">
-          <div className="main-prose flex-1">
+          <div className="main-prose relative lg:flex-1">
             <h1>{blog?.title}</h1>
 
             <p className="font-normal">
@@ -63,17 +69,17 @@ function BlogDetail({ blog }: Props) {
             <div dangerouslySetInnerHTML={{ __html: parsedContent }} />
           </div>
 
-          <div className="border border-gray-300 w-[300px] h-full sticky top-[80px] overflow-y-auto max-h-[400px] rounded-md lg:block hidden">
+          <div className="border border-gray-300 w-full lg:w-[300px] h-full sticky top-[80px] overflow-y-auto max-h-[400px] rounded-md">
             <div className="space-y-3">
               <div className="sticky top-0 bg-white border-b border-gray-300 p-3">
                 <h5 className=" font-semibold">Nội dung bài viết</h5>
               </div>
 
               <ol className="text-[0.9rem] font-normal space-y-[10px] p-3 pt-0">
-                {headings.map((h, index) => (
+                {numberedHeadings.map((h) => (
                   <li
-                    className="hover:underline underline-offset-2 decoration-[#158ed4] flex"
                     key={h.id}
+                    className="hover:underline underline-offset-2 decoration-[#158ed4] flex"
                     style={{
                       marginLeft:
                         h.level !== maxLevel
@@ -82,8 +88,8 @@ function BlogDetail({ blog }: Props) {
                     }}
                   >
                     <a href={`#${h.id}`}>
-                      {index + 1}.{" "}
-                      <span className="text-[#158ed4] ">{h.text}</span>
+                      {h.numbering}.{" "}
+                      <span className="text-[#158ed4]">{h.text}</span>
                     </a>
                   </li>
                 ))}
