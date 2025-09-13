@@ -35,6 +35,10 @@ input[type="number"]::-webkit-inner-spin-button {
   background-color: #0ab39c !important;
 }
 
+.apexcharts-toolbar {
+  z-index: 2 !important;
+}
+
 h1 {
   font-size: 1.75rem;
   font-weight: 650;

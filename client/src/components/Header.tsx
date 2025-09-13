@@ -66,7 +66,7 @@ function Header() {
       <header className="w-full bg-white sticky top-0 border-b border-gray-200 z-[15]">
         <div>
           {/* Desktop */}
-          <div className="flex justify-between items-center w-full py-[20px] px-[15px] md:px-[20px] lg:px-[40px] relative">
+          <div className="flex justify-between items-center w-full py-[20px] px-[10px] sm:px-[15px] lg:px-[40px] relative">
             <Link href={"/"}>
               <Image
                 Src={"/assets/other/logo.png"}

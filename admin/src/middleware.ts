@@ -36,6 +36,9 @@ const protectedRoutesByRole: Record<string, number[]> = {
   "/mainbanner": [0, 2],
   "/add-mainbanner": [0, 2],
   "/collection": [0, 2],
+  "/add-blog": [0, 2],
+  "/blog": [0, 2],
+  "/edit-blog": [0, 2],
 };
 
 export async function middleware(req: NextRequest) {

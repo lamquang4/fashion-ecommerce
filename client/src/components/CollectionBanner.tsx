@@ -1,10 +1,10 @@
 "use client";
-
 import useGetCollectionBanners from "@/hooks/useGetCollectionBanners";
 import Image from "./Image";
 import Link from "next/link";
 function CollectionBanner() {
   const { collections } = useGetCollectionBanners();
+
   return (
     <>
       {collections.length > 0 && (

@@ -172,11 +172,10 @@ function ProductDetail({ product }: Props) {
     setOpenSizeChartModal((prev) => !prev);
   }, []);
 
-
   return (
     <section className="w-full mb-[40px] mt-0  lg:mt-[40px]">
       <div className="mx-auto max-w-[1230px] w-full">
-        <div className="flex flex-wrap gap-[15px]">
+        <div className="flex flex-wrap gap-x-[15px] gap-y-[30px]">
           <div className="flex justify-center">
             <div className="flex flex-col md:flex-col-reverse xl:flex-row flex-wrap gap-[15px] lg:sticky lg:top-[100px]">
               <div className="md:order-2 relative grow overflow-hidden bg-white">

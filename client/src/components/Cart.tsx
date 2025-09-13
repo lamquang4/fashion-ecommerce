@@ -6,7 +6,7 @@ import useGetCart from "@/hooks/useGetCart";
 import Loading from "./Loading";
 
 function Cart() {
-  const { isLoading: isLoadingCart } = useGetCart();
+  const { cart, isLoading: isLoadingCart } = useGetCart();
   const { productsBestseller, isLoading: isLoadingProductsBestseller } =
     useGetProductsBestseller();
   return (
@@ -15,7 +15,7 @@ function Cart() {
         <Loading height={70} size={50} color="black" thickness={2} />
       ) : (
         <>
-          <CartItem />
+          <CartItem cart={cart!} />
 
           <ProductSlider
             products={productsBestseller ?? []}

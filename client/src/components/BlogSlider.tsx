@@ -23,7 +23,7 @@ function BlogSlider({ title, blogs }: Prop) {
               modules={[FreeMode]}
               freeMode={true}
               breakpoints={{
-                0: { slidesPerView: 2 },
+                0: { slidesPerView: 1 },
                 768: { slidesPerView: 2 },
                 1024: { slidesPerView: 3 },
               }}
@@ -42,9 +42,7 @@ function BlogSlider({ title, blogs }: Prop) {
                     />
                   </Link>
 
-                  <div className="space-y-[10px] pt-[15px]">
-                    <h5 className="font-semibold">{blog.title}</h5>
-
+                  <div className="space-y-[8px] py-[12px]">
                     <div className="font-normal flex items-center gap-1">
                       <CiCalendar size={18} />{" "}
                       <span>
@@ -56,8 +54,10 @@ function BlogSlider({ title, blogs }: Prop) {
                       </span>
                     </div>
 
+                    <h5 className="font-semibold">{blog.title}</h5>
+
                     <div
-                      className="text-[0.9rem] line-clamp-3"
+                      className="text-[0.9rem] line-clamp-2"
                       dangerouslySetInnerHTML={{ __html: blog?.content || "" }}
                     />
                   </div>

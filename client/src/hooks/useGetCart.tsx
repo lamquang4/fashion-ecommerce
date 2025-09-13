@@ -9,7 +9,6 @@ export default function useGetCart() {
   const url = `/api/get-cart`;
   const { data, error, isLoading, mutate } = useSWR<Cart>(url, fetcher, {
     shouldRetryOnError: false,
-    revalidateOnFocus: false,
   });
 
   return {

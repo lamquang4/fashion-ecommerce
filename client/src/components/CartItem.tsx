@@ -10,11 +10,16 @@ import { useChangeQuantityItemCart } from "@/hooks/useChangeQuantityItemCart";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import { Cart } from "@/types/type";
 
-function CartItem() {
+type Props = {
+  cart: Cart;
+};
+
+function CartItem({ cart }: Props) {
   const router = useRouter();
 
-  const { cart, mutate } = useGetCart();
+  const { mutate } = useGetCart();
   const { data: session } = useSession();
   const { removeItem, isLoading: isLoadingRemoveItem } = useRemoveItemCart();
   const { changeQuantity, isLoading: isLoadingChangeQuantity } =
