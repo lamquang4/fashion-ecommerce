@@ -6,11 +6,16 @@ import useLogin from "@/hooks/useLogin";
 import Overplay from "./Overplay";
 import Loading from "./Loading";
 import { useRouter } from "next/navigation";
+import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
 function LoginForm() {
   const router = useRouter();
   const [data, setData] = useState({ email: "", password: "" });
-
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const { handleLogin, isLoading } = useLogin();
+
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -76,20 +81,35 @@ function LoginForm() {
                     >
                       Mật khẩu <span className="text-red-500">*</span>
                     </label>
-                    <input
-                      type="password"
-                      name="password"
-                      value={data.password}
-                      onChange={handleChange}
-                      placeholder="Nhập mật khẩu"
-                      className="text-[0.9rem] block w-full px-3 py-2 outline-none border border-gray-300 focus:border-[#0AB39C] focus:text-[#0AB39C]"
-                      required
-                    />
+
+                    <div className="relative">
+                      <input
+                        type={showPassword ? "password" : "text"}
+                        name="password"
+                        value={data.password}
+                        onChange={handleChange}
+                        placeholder="Nhập mật khẩu"
+                        className="text-[0.9rem] block w-full px-3 pr-12 py-2 outline-none border border-gray-300 focus:border-[#0AB39C] focus:text-[#0AB39C]"
+                        required
+                      />
+
+                      <button
+                        type="button"
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                        onClick={toggleShowPassword}
+                      >
+                        {showPassword ? (
+                          <HiOutlineEye size={22} />
+                        ) : (
+                          <HiOutlineEyeOff size={22} />
+                        )}
+                      </button>
+                    </div>
                   </div>
 
                   <button
                     type="submit"
-                    className="w-full bg-[#0AB39C] text-[1rem] text-white focus:outline-none font-semibold rounded-sm px-5 py-2.5 text-center mt-6"
+                    className="w-full bg-[#0AB39C] text-[0.9rem] text-white focus:outline-none font-semibold rounded-sm px-5 py-2.5 text-center mt-6"
                   >
                     Đăng nhập
                   </button>

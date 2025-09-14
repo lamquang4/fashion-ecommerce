@@ -1,5 +1,5 @@
 "use client";
-import   { useState } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import Overplay from "./Overplay";
 import Image from "./Image";
@@ -19,12 +19,12 @@ import { PiHouseLineBold } from "react-icons/pi";
 import { MdOutlineContentPasteSearch } from "react-icons/md";
 import { RxSize } from "react-icons/rx";
 import { BsPostcard } from "react-icons/bs";
-type MenuSideProps = {
+type Props = {
   menuOpen: boolean;
   toggleMenu: () => void;
 };
 
-function MenuSide({ menuOpen, toggleMenu }: MenuSideProps) {
+function MenuSide({ menuOpen, toggleMenu }: Props) {
   const pathname = usePathname();
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
 
