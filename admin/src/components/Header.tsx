@@ -1,5 +1,5 @@
 "use client";
-import React, { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { TbMaximize } from "react-icons/tb";
 import ProfileMenu from "./ProfileMenu";
@@ -7,11 +7,11 @@ import Notification from "./Notification";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-type HeaderProps = {
+type Props = {
   toggleMenu: () => void;
 };
 
-function Header({ toggleMenu }: HeaderProps) {
+function Header({ toggleMenu }: Props) {
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
   const [notifyMenuOpen, setNotifyMenuOpen] = useState<boolean>(false);
   const { status } = useSession();

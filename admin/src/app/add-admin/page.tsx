@@ -1,5 +1,5 @@
 import LayoutPage from "../../components/LayoutPage";
-import AddAdmin from "../../components/AddAdmin";
+import AddAdmin from "../../components/Admin/AddAdmin";
 import { Suspense } from "react";
 
 export default async function page() {

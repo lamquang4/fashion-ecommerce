@@ -1,5 +1,5 @@
+import Color from "@/components/Color/Color";
 import LayoutPage from "../../components/LayoutPage";
-import Color from "../../components/Color";
 import { Suspense } from "react";
 
 export default async function page() {

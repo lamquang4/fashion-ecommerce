@@ -1,13 +1,13 @@
 "use client";
 import { memo } from "react";
 import { RiImageEditFill } from "react-icons/ri";
-type InputImageProp = {
+type Props = {
   InputId: string;
   onFileSelect: (file: File) => void;
   sizeIcon: number;
 };
 
-function InputImage1({ InputId, onFileSelect, sizeIcon }: InputImageProp) {
+function InputImage1({ InputId, onFileSelect, sizeIcon }: Props) {
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && onFileSelect) onFileSelect(file);

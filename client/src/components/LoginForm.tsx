@@ -96,7 +96,7 @@ function LoginForm() {
 
                 <div className="mt-4">
                   <Link
-                    href="/login"
+                    href="/reset"
                     className="text-[0.9rem] text-blue-400 font-medium"
                   >
                     Quên mật khẩu?
@@ -105,7 +105,7 @@ function LoginForm() {
 
                 <button
                   type="submit"
-                  className="w-full bg-black text-white focus:outline-none font-semibold rounded-sm text-[1rem] px-5 py-2.5 text-center"
+                  className="w-full bg-black text-white focus:outline-none font-semibold rounded-sm text-[0.9rem] px-5 py-2.5 text-center"
                 >
                   Đăng nhập
                 </button>

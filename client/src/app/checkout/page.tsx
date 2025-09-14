@@ -1,4 +1,5 @@
-import CheckoutForm from "@/components/CheckoutForm";
+
+import CheckoutForm from "@/components/Checkout/CheckoutForm";
 import { Suspense } from "react";
 
 function page() {

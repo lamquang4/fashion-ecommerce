@@ -1,5 +1,5 @@
+import Dashboard from "@/components/Dashboard/Dashboard";
 import LayoutPage from "../../components/LayoutPage";
-import Dashboard from "../../components/Dashboard";
 import { Suspense } from "react";
 
 export default async function page() {

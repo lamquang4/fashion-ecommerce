@@ -1,4 +1,4 @@
-import EditColor from "@/components/EditColor";
+import EditColor from "@/components/Color/EditColor";
 import LayoutPage from "@/components/LayoutPage";
 import { Suspense } from "react";
 

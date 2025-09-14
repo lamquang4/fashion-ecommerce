@@ -1,4 +1,4 @@
-import EditAdmin from "@/components/EditAdmin";
+import EditAdmin from "@/components/Admin/EditAdmin";
 import LayoutPage from "@/components/LayoutPage";
 import { Suspense } from "react";
 

@@ -1,11 +1,11 @@
 import useGetNotifyOrders from "@/hooks/useGetNotifyOrders";
-import React, { memo } from "react";
+import   { memo } from "react";
 import { LiaBell } from "react-icons/lia";
-type menuProps = {
+type Props = {
   menuOpen: boolean;
   toggleMenu: () => void;
 };
-function Notification({ menuOpen, toggleMenu }: menuProps) {
+function Notification({ menuOpen, toggleMenu }: Props) {
   const { orders } = useGetNotifyOrders();
   return (
     <div

@@ -1,22 +1,18 @@
 "use client";
 import { useRouter, useSearchParams } from "next/navigation";
-import React, { memo, useState } from "react";
+import { memo, useState } from "react";
 import { FaSortDown } from "react-icons/fa";
-type ArrayProps = {
-  name: string;
-  value: number | null;
-};
-type FilterDropDownMenuProps = {
+
+type Props = {
   title: string;
-  array: ArrayProps[];
+  array: {
+    name: string;
+    value: number | null;
+  }[];
   paramName: string;
 };
 
-function FilterDropDownMenu({
-  title,
-  array,
-  paramName,
-}: FilterDropDownMenuProps) {
+function FilterDropDownMenu({ title, array, paramName }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [isOpen, setIsOpen] = useState(false);

@@ -1,5 +1,5 @@
 import LayoutPage from "../../components/LayoutPage";
-import AddSize from "../../components/AddSize";
+import AddSize from "../../components/Size/AddSize";
 import { Suspense } from "react";
 
 export default async function page() {

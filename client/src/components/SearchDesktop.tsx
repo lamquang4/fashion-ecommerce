@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { memo, useState } from "react";
+import { memo, useState } from "react";
 import { CiSearch } from "react-icons/ci";
 import SuggestionProduct from "./SuggestionProduct";
 function SearchDesktop() {

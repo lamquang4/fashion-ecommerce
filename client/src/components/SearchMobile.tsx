@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React, { memo, useEffect, useState } from "react";
+import { memo, useEffect, useState } from "react";
 import { HiMiniXMark } from "react-icons/hi2";
 import SuggestionProduct from "./SuggestionProduct";
 type Props = {

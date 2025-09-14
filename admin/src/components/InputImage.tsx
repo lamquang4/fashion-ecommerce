@@ -1,5 +1,5 @@
 "use client";
-import React, { memo, useState } from "react";
+import { memo, useState } from "react";
 import Image from "./Image";
 import { HiMiniXMark } from "react-icons/hi2";
 import ImageViewer from "./ImageViewer";

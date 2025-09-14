@@ -1,5 +1,4 @@
 "use client";
-import React from "react";
 import { ClipLoader } from "react-spinners";
 type prop = {
   height: number;

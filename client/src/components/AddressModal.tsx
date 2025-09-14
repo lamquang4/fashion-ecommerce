@@ -12,18 +12,13 @@ import { validatePhone } from "@/utils/validatePhone";
 import { useRouter } from "next/navigation";
 import { Province } from "@/types/type";
 
-type AddressModalProps = {
+type Props = {
   isOpen: boolean;
   toggleMenu: () => void;
   addressId: string;
   provinces: Province[];
 };
-function AddressModal({
-  isOpen,
-  toggleMenu,
-  addressId,
-  provinces,
-}: AddressModalProps) {
+function AddressModal({ isOpen, toggleMenu, addressId, provinces }: Props) {
   const { data: session } = useSession();
   const router = useRouter();
 

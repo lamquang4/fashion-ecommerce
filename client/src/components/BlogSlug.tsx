@@ -1,7 +1,7 @@
 "use client";
 import useGetBlog from "@/hooks/useGetBlog";
 import { useParams, useRouter } from "next/navigation";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import toast from "react-hot-toast";
 import BlogDetail from "./BlogDetail";
 import BlogSlider from "./BlogSlider";

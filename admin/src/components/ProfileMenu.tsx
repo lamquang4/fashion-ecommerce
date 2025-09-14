@@ -1,16 +1,16 @@
 "use client";
-import React, { memo } from "react";
+import { memo } from "react";
 import Image from "./Image";
 import Link from "next/link";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { RiLogoutBoxLine } from "react-icons/ri";
 import { signOut, useSession } from "next-auth/react";
 
-type menuProps = {
+type Props = {
   menuOpen: boolean;
   toggleMenu: () => void;
 };
-function ProfileMenu({ menuOpen, toggleMenu }: menuProps) {
+function ProfileMenu({ menuOpen, toggleMenu }: Props) {
   const { data: session } = useSession({
     required: true,
   });

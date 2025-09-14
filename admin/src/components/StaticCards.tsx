@@ -1,14 +1,7 @@
-import React from "react";
-type ArrayProps = {
-  title: string;
-  number: number | string;
-  icon1: React.ReactNode;
+type Props = {
+  array: { title: string; number: number | string; icon1: React.ReactNode }[];
 };
-
-type StaticCardsProp = {
-  array: ArrayProps[];
-};
-function StaticCards({ array }: StaticCardsProp) {
+function StaticCards({ array }: Props) {
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
       {array.map((item, index) => (

@@ -7,11 +7,11 @@ import "swiper/css/free-mode";
 import { FreeMode } from "swiper/modules";
 import { CiCalendar } from "react-icons/ci";
 import { Blog } from "@/types/type";
-type Prop = {
+type Props = {
   title: string;
   blogs: Blog[];
 };
-function BlogSlider({ title, blogs }: Prop) {
+function BlogSlider({ title, blogs }: Props) {
   return (
     <>
       {blogs?.length > 0 && (

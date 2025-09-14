@@ -6,11 +6,11 @@ import Overplay from "./Overplay";
 import { useRouter, useSearchParams } from "next/navigation";
 import useGetColors from "@/hooks/useGetColors";
 import { memo, useEffect } from "react";
-type AdvancedSearchProps = {
+type Props = {
   isOpen: boolean;
   toggleMenu: () => void;
 };
-function AdvancedSearch({ isOpen, toggleMenu }: AdvancedSearchProps) {
+function AdvancedSearch({ isOpen, toggleMenu }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 

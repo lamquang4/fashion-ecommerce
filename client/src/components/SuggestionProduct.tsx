@@ -4,10 +4,10 @@ import Loading from "./Loading";
 import Image from "./Image";
 import { memo, useEffect } from "react";
 import useGetProductsSuggest from "@/hooks/useGetProductsSuggest";
-type prop = {
+type Props = {
   search: string;
 };
-function SuggestionProduct({ search }: prop) {
+function SuggestionProduct({ search }: Props) {
   const { products, setKeyword, isLoading } = useGetProductsSuggest();
 
   useEffect(() => {

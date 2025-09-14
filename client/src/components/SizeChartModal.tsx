@@ -1,5 +1,5 @@
 "use client";
-import React, { memo, useEffect } from "react";
+import { memo, useEffect } from "react";
 import Overplay from "./Overplay";
 import { HiMiniXMark } from "react-icons/hi2";
 import Image from "./Image";
@@ -10,7 +10,6 @@ type props = {
   toggleMenu: () => void;
 };
 function SizeChartModal({ sizes, isOpen, toggleMenu }: props) {
-
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";

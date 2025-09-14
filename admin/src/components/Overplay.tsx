@@ -1,10 +1,10 @@
 "use client";
 
-type OverplayProp = {
+type Props = {
   closeMenu?: () => void;
   children?: React.ReactNode;
 };
-function Overplay({ closeMenu, children }: OverplayProp) {
+function Overplay({ closeMenu, children }: Props) {
   const handleOverlayClick = () => {
     if (closeMenu) closeMenu();
   };

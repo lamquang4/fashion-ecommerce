@@ -5,11 +5,11 @@ import { HiMiniXMark } from "react-icons/hi2";
 import { MdContentCopy } from "react-icons/md";
 import toast from "react-hot-toast";
 import { memo } from "react";
-type MenuSideCouponProps = {
+type Props = {
   isOpen: boolean;
   toggleMenu: () => void;
 };
-function MenuSideCoupon({ isOpen, toggleMenu }: MenuSideCouponProps) {
+function MenuSideCoupon({ isOpen, toggleMenu }: Props) {
   const { coupons } = useGetCoupons();
 
   const handleCopy = (code: string) => {

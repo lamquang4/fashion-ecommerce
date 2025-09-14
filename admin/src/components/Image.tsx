@@ -1,13 +1,13 @@
 "use client";
 import ImageNext from "next/image";
 
-type ImageProps = {
+type Props = {
   Src: string;
   Alt: string;
   ClassName: string;
   loadingType: "lazy" | "eager";
 };
-function Image({ Src, Alt, ClassName, loadingType }: ImageProps) {
+function Image({ Src, Alt, ClassName, loadingType }: Props) {
   return (
     <ImageNext
       src={Src}
