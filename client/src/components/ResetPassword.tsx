@@ -123,7 +123,7 @@ function ResetPassword() {
                   type="submit"
                   className="w-full bg-black text-white focus:outline-none font-semibold rounded-sm text-[0.9rem] px-5 py-2.5 text-center"
                 >
-                  {token ? "Đặt lại mật khẩu" : "Gửi mã xác nhận"}
+                  {token ? "Đặt lại mật khẩu" : "Gửi xác nhận"}
                 </button>
               </form>
             </div>
