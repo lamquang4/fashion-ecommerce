@@ -1,9 +1,12 @@
-import ForgotPassword from "@/components/Reset/ResetPassword";
+import ForgotPassword from "@/components/ResetPassword";
+import { Suspense } from "react";
 
 function page() {
   return (
     <>
-      <ForgotPassword />
+      <Suspense>
+        <ForgotPassword />
+      </Suspense>
     </>
   );
 }

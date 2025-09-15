@@ -1,12 +1,11 @@
 "use client";
-
 import { useSendResetPassword } from "@/hooks/useSendResetPassword";
 import { validateEmail } from "@/utils/validateEmail";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import Overplay from "../Overplay";
-import Loading from "../Loading";
+import Overplay from "./Overplay";
+import Loading from "./Loading";
 import { useSearchParams } from "next/navigation";
 import { useResetPassword } from "@/hooks/useResetPassword";
 
