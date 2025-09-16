@@ -6,7 +6,6 @@ import { hashValue } from "@/utils/hashValue";
 import { validateBirthday } from "@/utils/validateBirthday";
 import { validateEmail } from "@/utils/validateEmail";
 import { validatePhone } from "@/utils/validatePhone";
-import bcryptjs from "bcryptjs";
 import { NextResponse, NextRequest } from "next/server";
 export async function POST(req: NextRequest) {
   try {

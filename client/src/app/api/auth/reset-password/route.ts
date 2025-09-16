@@ -4,7 +4,6 @@ import { connectMongoDB } from "@/lib/MongoConnect";
 import { validateEmail } from "@/utils/validateEmail";
 import Otp from "@/model/Otp";
 import { hashValue } from "@/utils/hashValue";
-import bcryptjs from "bcryptjs";
 import { compareValue } from "@/utils/compareValue";
 
 export async function POST(req: NextRequest) {
