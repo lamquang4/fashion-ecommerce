@@ -12,7 +12,7 @@ const BreadCrumb = ({ items }: Props) => {
   return (
     <div className="px-[10px] sm:px-[15px]">
       <div className=" w-full max-w-[1230px] mx-auto">
-        <nav className="py-5">
+        <nav className="py-4">
           <ol className="flex items-center gap-2 text-[0.95rem] text-gray-500 font-medium">
             {items.map((item, index) => (
               <React.Fragment key={index}>
