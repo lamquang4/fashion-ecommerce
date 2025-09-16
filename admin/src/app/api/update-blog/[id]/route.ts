@@ -22,6 +22,7 @@ export async function PUT(
     const { id } = await params;
     const formData = await req.formData();
     const title = formData.get("title") as string;
+    const summary = formData.get("summary") as string;
     const content = formData.get("content") as string;
     const file = formData.get("image") as File;
 
@@ -102,6 +103,7 @@ export async function PUT(
     }
 
     const updatedData = {
+      summary,
       title,
       image: imagePath,
       slug: slug,

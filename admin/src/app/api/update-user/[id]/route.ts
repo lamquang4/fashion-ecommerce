@@ -1,8 +1,8 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import User from "@/model/User";
+import { hashValue } from "@/utils/hashValue";
 import { validateEmail } from "@/utils/validateEmail";
 import { validatePhone } from "@/utils/validatePhone";
-import bcryptjs from "bcryptjs";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function PUT(
@@ -68,9 +68,8 @@ export async function PUT(
     }
 
     if (password) {
-      const salt = await bcryptjs.genSalt(10);
-      const hashpassword = await bcryptjs.hash(password, salt);
-      updatedData.password = hashpassword;
+      const hashPassword = await hashValue(password);
+      updatedData.password = hashPassword;
     }
 
     const updatedUser = await User.findByIdAndUpdate(id, updatedData, {

@@ -19,6 +19,7 @@ export interface Blog {
   title: string;
   slug: string;
   image: string;
+  summary: string;
   content: string;
   status: number;
   createdAt: string;
@@ -73,6 +74,7 @@ export interface Product {
     _id: string;
     namecategory: string;
     gender: number;
+    slug: string;
   };
   variants: Variant[];
   createdAt?: string;

@@ -18,6 +18,7 @@ export async function POST(req: NextRequest) {
 
     const formData = await req.formData();
     const title = formData.get("title") as string;
+    const summary = formData.get("summary") as string;
     const content = formData.get("content") as string;
     const file = formData.get("image") as File;
     const session = await getServerSession(options);
@@ -77,6 +78,7 @@ export async function POST(req: NextRequest) {
     const imagePath = result.secure_url;
 
     const newBlog = await Blog.create({
+      summary,
       title,
       image: imagePath,
       slug: slug,

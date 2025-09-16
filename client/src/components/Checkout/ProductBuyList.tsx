@@ -42,7 +42,9 @@ function ProductBuyList({ productsInCart }: Props) {
                 </p>
               </div>
             ) : (
-              <p className="font-medium">{item.price}</p>
+              <p className="font-medium">
+                {item.price.toLocaleString("vi-VN")}₫
+              </p>
             )}
           </div>
         </div>

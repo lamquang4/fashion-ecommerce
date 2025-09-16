@@ -3,15 +3,13 @@ import Image from "./Image";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useLogin from "@/hooks/useLogin";
-import Overplay from "./Overplay";
-import Loading from "./Loading";
 import { useRouter } from "next/navigation";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
 function LoginForm() {
   const router = useRouter();
   const [data, setData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const { handleLogin, isLoading } = useLogin();
+  const { handleLogin } = useLogin();
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -84,7 +82,7 @@ function LoginForm() {
 
                     <div className="relative">
                       <input
-                        type={showPassword ? "password" : "text"}
+                        type={!showPassword ? "password" : "text"}
                         name="password"
                         value={data.password}
                         onChange={handleChange}
@@ -98,7 +96,7 @@ function LoginForm() {
                         className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
                         onClick={toggleShowPassword}
                       >
-                        {showPassword ? (
+                        {!showPassword ? (
                           <HiOutlineEye size={22} />
                         ) : (
                           <HiOutlineEyeOff size={22} />
@@ -128,13 +126,6 @@ function LoginForm() {
           </div>
         </div>
       </section>
-
-      {isLoading && (
-        <Overplay>
-          <Loading height={0} size={55} color="white" thickness={8} />
-          <h4 className="text-white">Vui lòng chờ trong giây lát...</h4>
-        </Overplay>
-      )}
     </>
   );
 }

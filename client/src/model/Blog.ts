@@ -14,6 +14,10 @@ const blogSchema = new Schema(
       type: String,
       required: true,
     },
+    summary: {
+      type: String,
+      required: true,
+    },
     content: {
       type: String,
       required: true,

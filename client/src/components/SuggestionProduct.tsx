@@ -18,7 +18,7 @@ function SuggestionProduct({ search }: Props) {
   return (
     <>
       <div className="p-2.5">
-        <p className="  font-medium text-balance">
+        <p className="font-medium text-balance">
           Kết quả tìm kiếm cho <span className="text-red-600">{search}</span>
         </p>
       </div>

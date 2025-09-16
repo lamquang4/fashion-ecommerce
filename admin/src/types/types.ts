@@ -164,6 +164,7 @@ export interface Blog {
   title: string;
   slug: string;
   image: string;
+  summary: string;
   content: string;
   status: number;
   createdAt?: string;

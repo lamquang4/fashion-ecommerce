@@ -64,198 +64,195 @@ function Header() {
   return (
     <>
       <header className="w-full bg-white sticky top-0 border-b border-gray-200 z-[15]">
-        <div>
-          {/* Desktop */}
-          <div className="flex justify-between items-center w-full py-[20px] px-[10px] sm:px-[15px] lg:px-[40px] relative">
-            <Link href={"/"}>
-              <Image
-                Src={"/assets/other/logo.png"}
-                Alt={"logo"}
-                ClassName={"w-[80px]"}
-                loadingType="eager"
-              />
-            </Link>
+        <div className="flex justify-between items-center w-full py-[20px] px-[10px] sm:px-[15px] lg:px-[40px] relative">
+          <Link href={"/"}>
+            <Image
+              Src={"/assets/other/logo.png"}
+              Alt={"logo"}
+              ClassName={"w-[80px]"}
+              loadingType="eager"
+            />
+          </Link>
 
-            <nav className="hidden lg:block">
-              <ul className="flex items-center gap-[30px] text-[1rem] font-semibold uppercase">
-                <li className="relative menu-category">
-                  <h5 className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
-                    Nam
-                  </h5>
-                  {categoriesMale.length > 0 && (
-                    <ul className="absolute font-medium top-5 left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
-                      <li className="my-2">
+          <nav className="hidden lg:block">
+            <ul className="flex items-center gap-[30px] text-[0.9rem] font-semibold uppercase">
+              <li className="relative menu-category">
+                <span className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
+                  Nam
+                </span>
+                {categoriesMale.length > 0 && (
+                  <ul className="absolute font-medium top-5 left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
+                    <li className="my-2">
+                      <Link
+                        href={`/collection/nam`}
+                        className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                      >
+                        Đồ nam
+                      </Link>
+                    </li>
+                    {categoriesMale.map((category, index) => (
+                      <li className="my-2" key={index}>
                         <Link
-                          href={`/collection/nam`}
+                          href={`/collection/${category.slug}`}
                           className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                         >
-                          Đồ nam
+                          {category.namecategory}
                         </Link>
                       </li>
-                      {categoriesMale.map((category, index) => (
-                        <li className="my-2" key={index}>
-                          <Link
-                            href={`/collection/${category.slug}`}
-                            className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
-                          >
-                            {category.namecategory}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
+                    ))}
+                  </ul>
+                )}
+              </li>
 
-                <li className="relative menu-category">
-                  <h5 className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
-                    Nữ
-                  </h5>
-                  {categoriesFemale.length > 0 && (
-                    <ul className="absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
-                      <li className="my-2">
-                        <Link
-                          href={`/collection/nu`}
-                          className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
-                        >
-                          Đồ nữ
-                        </Link>
-                      </li>
-                      {categoriesFemale.map((category, index) => (
-                        <li className="my-2" key={index}>
-                          <Link
-                            href={`/collection/${category.slug}`}
-                            className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
-                          >
-                            {category.namecategory}
-                          </Link>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
-                </li>
-
-                <li className="relative menu-category">
-                  <h5 className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
-                    Giảm giá
-                  </h5>
-
+              <li className="relative menu-category">
+                <span className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
+                  Nữ
+                </span>
+                {categoriesFemale.length > 0 && (
                   <ul className="absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
                     <li className="my-2">
                       <Link
-                        href={"/sale/nam"}
+                        href={`/collection/nu`}
                         className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
                       >
-                        Giảm giá đồ nam
+                        Đồ nữ
                       </Link>
                     </li>
-
-                    <li className="my-2">
-                      <Link
-                        href={"/sale/nu"}
-                        className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
-                      >
-                        Giảm giá đồ nữ
-                      </Link>
-                    </li>
+                    {categoriesFemale.map((category, index) => (
+                      <li className="my-2" key={index}>
+                        <Link
+                          href={`/collection/${category.slug}`}
+                          className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                        >
+                          {category.namecategory}
+                        </Link>
+                      </li>
+                    ))}
                   </ul>
-                </li>
+                )}
+              </li>
 
-                <li className="relative menu-category">
-                  <Link href={"/blog"}>Tin tức</Link>
-                </li>
-              </ul>
-            </nav>
+              <li className="relative menu-category">
+                <span className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
+                  Giảm giá
+                </span>
 
-            <div className="hidden lg:flex items-center gap-5">
-              <SearchDesktop />
+                <ul className="absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
+                  <li className="my-2">
+                    <Link
+                      href={"/sale/nam"}
+                      className="text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                    >
+                      Giảm giá đồ nam
+                    </Link>
+                  </li>
 
-              <div
-                className="relative cursor-pointer group"
-                onMouseEnter={() => setProfileMenuOpen(true)}
-                onMouseLeave={() => setProfileMenuOpen(false)}
-              >
-                <CiUser size={24} />
-                <ProfileMenu isOpen={profileMenuOpen} />
-              </div>
+                  <li className="my-2">
+                    <Link
+                      href={"/sale/nu"}
+                      className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                    >
+                      Giảm giá đồ nữ
+                    </Link>
+                  </li>
+                </ul>
+              </li>
 
-              <Link href={"/cart"} className="relative">
-                <CiShoppingCart size={26} />
+              <li className="relative menu-category">
+                <Link href={"/blog"}>Tin tức</Link>
+              </li>
+            </ul>
+          </nav>
 
-                <small
-                  className="absolute flex items-center justify-center 
-    top-[-9px] right-[-11px] 
-    bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
-    rounded-full w-[20px] h-[20px]"
-                >
-                  {totalQuantity}
-                </small>
-              </Link>
+          <div className="hidden lg:flex items-center gap-5">
+            <SearchDesktop />
 
-              <Link href="/wishlist" className="relative">
-                <CiHeart size={25} />
-
-                <small
-                  className="absolute flex items-center justify-center 
-    top-[-9px] right-[-11px] 
-    bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
-    rounded-full w-[20px] h-[20px]"
-                >
-                  {wishlist?.productsInWishlist.length || 0}
-                </small>
-              </Link>
+            <div
+              className="relative cursor-pointer group"
+              onMouseEnter={toggleProfileMenu}
+              onMouseLeave={toggleProfileMenu}
+            >
+              <CiUser size={24} />
+              <ProfileMenu isOpen={profileMenuOpen} />
             </div>
 
-            {/* Mobile Search */}
-            <SearchMobile toggleSearch={toggleSearch} openSearch={openSearch} />
+            <Link href={"/cart"} className="relative">
+              <CiShoppingCart size={26} />
 
-            {/* Mobile */}
-            <div className="flex lg:hidden items-center gap-4 relative">
-              <button onClick={toggleSearch} className="text-gray-800">
-                <CiSearch size={24} />
-              </button>
-
-              <div
-                className="relative cursor-pointer group"
-                onMouseOver={toggleProfileMenu}
-                onMouseOut={toggleProfileMenu}
+              <small
+                className="absolute flex items-center justify-center 
+    top-[-9px] right-[-11px] 
+    bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
+    rounded-full w-[20px] h-[20px]"
               >
-                <CiUser size={24} />
-                <ProfileMenu isOpen={profileMenuOpen} />
-              </div>
+                {totalQuantity}
+              </small>
+            </Link>
 
-              <Link href={"/cart"} className="relative">
-                <CiShoppingCart size={26} />
+            <Link href="/wishlist" className="relative">
+              <CiHeart size={25} />
 
-                <small
-                  className="absolute flex items-center justify-center 
+              <small
+                className="absolute flex items-center justify-center 
     top-[-9px] right-[-11px] 
     bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
     rounded-full w-[20px] h-[20px]"
-                >
-                  {totalQuantity}
-                </small>
-              </Link>
-
-              <Link href={"/wishlist"} className="relative">
-                <CiHeart size={25} />
-
-                <small
-                  className="absolute flex items-center justify-center 
-    top-[-9px] right-[-11px] 
-    bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
-    rounded-full w-[20px] h-[20px]"
-                >
-                  {wishlist?.productsInWishlist.length || 0}
-                </small>
-              </Link>
-              <button onClick={toggleMobileMenu}>
-                <AiOutlineMenu size={24} />
-              </button>
-            </div>
+              >
+                {wishlist?.productsInWishlist.length || 0}
+              </small>
+            </Link>
           </div>
 
-          <Menumobile isOpen={menuMobileOpen} toggleMenu={toggleMobileMenu} />
+          {/* Mobile Search */}
+          <SearchMobile toggleSearch={toggleSearch} openSearch={openSearch} />
+
+          {/* Mobile */}
+          <div className="flex lg:hidden items-center gap-4 relative">
+            <button onClick={toggleSearch} className="text-gray-800">
+              <CiSearch size={24} />
+            </button>
+
+            <div
+              className="relative cursor-pointer group"
+              onMouseOver={toggleProfileMenu}
+              onMouseOut={toggleProfileMenu}
+            >
+              <CiUser size={24} />
+              <ProfileMenu isOpen={profileMenuOpen} />
+            </div>
+
+            <Link href={"/cart"} className="relative">
+              <CiShoppingCart size={26} />
+
+              <small
+                className="absolute flex items-center justify-center 
+    top-[-9px] right-[-11px] 
+    bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
+    rounded-full w-[20px] h-[20px]"
+              >
+                {totalQuantity}
+              </small>
+            </Link>
+
+            <Link href={"/wishlist"} className="relative">
+              <CiHeart size={25} />
+
+              <small
+                className="absolute flex items-center justify-center 
+    top-[-9px] right-[-11px] 
+    bg-[#197FB6] text-white text-[0.7rem] font-medium leading-none 
+    rounded-full w-[20px] h-[20px]"
+              >
+                {wishlist?.productsInWishlist.length || 0}
+              </small>
+            </Link>
+            <button onClick={toggleMobileMenu}>
+              <AiOutlineMenu size={24} />
+            </button>
+          </div>
         </div>
+
+        <Menumobile isOpen={menuMobileOpen} toggleMenu={toggleMobileMenu} />
       </header>
 
       {openSearch && <Overplay closeMenu={toggleSearch} IndexForZ={12} />}

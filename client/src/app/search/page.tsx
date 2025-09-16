@@ -1,4 +1,4 @@
-import ProductSearch from "@/components/ProductSearch";
+import ProductSearch from "@/components/Product/ProductSearch";
 import { Suspense } from "react";
 
 function page() {

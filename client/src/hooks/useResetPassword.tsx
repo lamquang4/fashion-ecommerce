@@ -3,7 +3,11 @@ import { useState } from "react";
 
 export function useResetPassword() {
   const [isLoading, setIsLoading] = useState(false);
-  const resetPassword = async (data: { token: string; password: string }) => {
+  const resetPassword = async (data: {
+    otp: string;
+    email: string;
+    password: string;
+  }) => {
     setIsLoading(true);
     try {
       const url = `/api/auth/reset-password`;

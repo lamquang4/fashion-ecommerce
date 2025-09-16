@@ -7,9 +7,9 @@ import MainBanner from "./MainBanner";
 import ServiceFeature from "./ServiceFeature";
 import CategoryList from "./CategoryList";
 import PromoteBanner from "./PromoteBanner";
-import ProductSlider from "../ProductSlider";
-import BlogSlider from "../BlogSlider";
 import CollectionBanner from "./CollectionBanner";
+import BlogSlider from "../Blog/BlogSlider";
+import ProductSlider from "../Product/ProductSlider";
 
 export default function Home() {
   const { isLoading } = useGetMainBanners();
@@ -32,7 +32,7 @@ export default function Home() {
           <PromoteBanner gender={0} />
           <ProductSlider title={"Nữ"} products={productsFemale} />
           <CollectionBanner />
-          <BlogSlider title="Bài viết mới nhất" blogs={blogs} />
+          <BlogSlider title="Tin tức thời trang" blogs={blogs} />
         </>
       )}
     </>

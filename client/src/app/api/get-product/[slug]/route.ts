@@ -94,6 +94,7 @@ export async function GET(
             _id: "$category._id",
             namecategory: "$category.namecategory",
             gender: "$category.gender",
+            slug: "$category.slug",
           },
           variants: 1,
         },

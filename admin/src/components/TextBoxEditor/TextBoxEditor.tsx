@@ -66,7 +66,7 @@ function TextBoxEditor({ content, onChange }: Props) {
     editorProps: {
       attributes: {
         class:
-          "prose focus:outline-none p-2 border border-gray-300 min-h-[350px]",
+          "prose focus:outline-none p-2 border border-gray-300 min-h-[150px]",
       },
     },
     onUpdate: ({ editor }) => {
@@ -79,6 +79,8 @@ function TextBoxEditor({ content, onChange }: Props) {
       editor.commands.setContent(content);
     }
   }, [content, editor]);
+
+  console.log("render");
 
   return (
     <div className="w-full text-[0.9rem]">

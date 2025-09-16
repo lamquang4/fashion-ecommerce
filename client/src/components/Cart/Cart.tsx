@@ -2,8 +2,8 @@
 import useGetCart from "@/hooks/useGetCart";
 import useGetProductsBestseller from "@/hooks/useGetProductsBestseller";
 import Loading from "../Loading";
-import ProductSlider from "../ProductSlider";
 import CartItem from "./CartItem";
+import ProductSlider from "../Product/ProductSlider";
 
 function Cart() {
   const { cart, isLoading: isLoadingCart } = useGetCart();

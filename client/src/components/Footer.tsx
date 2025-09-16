@@ -6,8 +6,8 @@ import Image from "./Image";
 import { memo } from "react";
 function Footer() {
   return (
-    <footer className="bg-gray-50 border-t border-gray-200">
-      <div className="mx-auto max-w-[1230px] w-full px-[10px] sm:px-[15px]">
+    <footer className="bg-gray-50 border-t border-gray-200 px-[10px] sm:px-[15px]">
+      <div className="mx-auto max-w-[1230px] w-full">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-[repeat(auto-fit,minmax(200px,1fr))] py-[60px]">
           <div>
             <Link href={"/"}>

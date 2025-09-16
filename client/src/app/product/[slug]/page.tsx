@@ -1,5 +1,5 @@
 "use client";
-import ProductDetailSlug from "@/components/ProductDetailSlug";
+import ProductDetailSlug from "@/components/Product/ProductDetail/ProductDetailSlug";
 import { Suspense } from "react";
 
 function page() {

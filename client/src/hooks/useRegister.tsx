@@ -1,14 +1,20 @@
 "use client";
-import { User } from "@/types/type";
 import axios from "axios";
 import { useState } from "react";
 
 export default function useRegister() {
   const [isLoading, setIsLoading] = useState(false);
-  const handleRegister = async (data: User) => {
+  const handleRegister = async (data: {
+    fullname: string;
+    email: string;
+    phone: string;
+    birthday: string;
+    password: string;
+    otp: string;
+  }) => {
     setIsLoading(true);
     try {
-      const url = `/api/register`;
+      const url = `/api/auth/register`;
       await axios.post(url, data);
     } catch (err) {
       console.error("Lỗi:", err);

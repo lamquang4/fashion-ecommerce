@@ -1,10 +1,10 @@
 import { Suspense } from "react";
-import OrderHistory from "../../components/OrderHistory";
+import Order from "@/components/Order/Order";
 
 function page() {
   return (
     <Suspense>
-      <OrderHistory />
+      <Order />
     </Suspense>
   );
 }

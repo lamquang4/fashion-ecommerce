@@ -1,38 +1,45 @@
-import jwt from "jsonwebtoken";
 import User from "@/model/User";
 import { NextRequest, NextResponse } from "next/server";
-import bcryptjs from "bcryptjs";
 import { connectMongoDB } from "@/lib/MongoConnect";
+import { validateEmail } from "@/utils/validateEmail";
+import Otp from "@/model/Otp";
+import { hashValue } from "@/utils/hashValue";
+import bcryptjs from "bcryptjs";
+import { compareValue } from "@/utils/compareValue";
 
 export async function POST(req: NextRequest) {
   try {
     await connectMongoDB();
-    const { token, password } = await req.json();
-    const decoded: any = jwt.verify(token, process.env.JWT_SECRET!);
+    const { otp, password, email } = await req.json();
 
-    const user = await User.findOne({
-      _id: decoded.userId,
-      resetToken: token,
-      resetExpires: { $gt: Date.now() },
-      role: 4,
-    });
-
-    if (!user) {
-      return NextResponse.json(
-        { msg: "Đặt lại mật khẩu thất bại. Xin hãy lại thử lại lần nữa." },
-        { status: 400 }
-      );
+    if (!validateEmail(email)) {
+      return NextResponse.json({ msg: "Email không hợp lệ" }, { status: 400 });
     }
 
-    const salt = await bcryptjs.genSalt(10);
-    const hashpassword = await bcryptjs.hash(password, salt);
-    await User.updateOne(
+    const user = await User.findOne({ email, role: 4 });
+    if (!user) {
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
+    }
+
+    const currentOtp = await Otp.findOne({ email: email });
+    const isMatch = await compareValue(otp, currentOtp.otp);
+    if (!isMatch) {
+      return NextResponse.json({ msg: "Mã OTP không hợp lệ" }, { status: 400 });
+    }
+
+    if (currentOtp.otpExpires < Date.now()) {
+      return NextResponse.json({ msg: "Mã OTP đã hết hạn" }, { status: 400 });
+    }
+
+    const hashPassword = await hashValue(password);
+    await User.findByIdAndUpdate(
       { _id: user._id },
       {
-        $unset: { resetToken: "", resetExpires: "" },
-        $set: { password: hashpassword },
+        $set: { password: hashPassword },
       }
     );
+
+    await Otp.findByIdAndDelete(currentOtp._id);
 
     return NextResponse.json({ status: 201 });
   } catch (err) {

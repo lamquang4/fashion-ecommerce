@@ -1,4 +1,4 @@
-import BlogSlug from "@/components/BlogSlug";
+import BlogSlug from "@/components/Blog/BlogDetail/BlogSlug";
 import { Suspense } from "react";
 
 function page() {

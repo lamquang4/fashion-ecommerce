@@ -18,16 +18,15 @@ function WishlistItem() {
       (prevCart) => ({
         ...prevCart!,
         productsInWishlist: prevCart!.productsInWishlist.filter(
-          (item) =>
-            !(item.variant._id === variant)
+          (item) => !(item.variant._id === variant)
         ),
       }),
       false
     );
   };
   return (
-    <section className="my-[40px]">
-      <div className="mx-auto max-w-[1230px] w-full px-[10px] sm:px-[15px]">
+    <section className="my-[40px] px-[10px] sm:px-[15px]">
+      <div className="mx-auto max-w-[1230px] w-full">
         <h2 className="mb-[20px]">
           Yêu thích ({wishlist?.productsInWishlist.length})
         </h2>

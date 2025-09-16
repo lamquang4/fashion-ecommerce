@@ -92,7 +92,7 @@ function Blog() {
               <th className="p-[1rem]">Hình nền</th>
 
               <th className="p-[1rem]">Tiêu đề</th>
-
+              <th className="p-[1rem]">Tóm tắt</th>
               <th className="p-[1rem]">Ngày tạo</th>
               <th className="p-[1rem] relative">
                 <FilterDropDownMenu
@@ -125,6 +125,14 @@ function Blog() {
                     </div>
                   </td>
                   <td className="p-[1rem]">{blog.title}</td>
+                  <td className="p-[1rem]">
+                    <p
+                      className="line-clamp-3 leading-relaxed w-full max-w-[400px]"
+                      dangerouslySetInnerHTML={{
+                        __html: blog?.summary || "",
+                      }}
+                    />
+                  </td>
                   <td className="p-[1rem]">
                     {new Date(blog.createdAt as string).toLocaleDateString(
                       "vi-VN"

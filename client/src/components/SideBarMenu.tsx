@@ -8,14 +8,15 @@ import { LuDoorOpen } from "react-icons/lu";
 import { memo } from "react";
 function SideBarMenu() {
   const pathname = usePathname();
-  const activeClass = "bg-gray-100 border-l-[3px] border-black";
   return (
     <div className="w-full max-w-full lg:max-w-[300px]">
       <div className="text-[0.9rem] font-medium flex flex-col gap-2">
         <Link
           href="/account"
           className={`py-3.5 px-4   ${
-            pathname === "/account" ? activeClass : "hover:bg-gray-100"
+            pathname === "/account"
+              ? "bg-gray-100 border-l-[3px] border-black"
+              : "hover:bg-gray-100"
           }`}
         >
           <div className="flex items-center gap-2.5">
@@ -27,7 +28,9 @@ function SideBarMenu() {
         <Link
           href="/address"
           className={`py-3.5 px-4   ${
-            pathname === "/address" ? activeClass : "hover:bg-gray-100"
+            pathname === "/address"
+              ? "bg-gray-100 border-l-[3px] border-black"
+              : "hover:bg-gray-100"
           }`}
         >
           <div className="flex items-center gap-2.5">
@@ -40,7 +43,7 @@ function SideBarMenu() {
           href="/order"
           className={`py-3.5 px-4   ${
             pathname === "/order" || pathname.startsWith("/order-detail")
-              ? activeClass
+              ? "bg-gray-100 border-l-[3px] border-black"
               : "hover:bg-gray-100"
           }`}
         >

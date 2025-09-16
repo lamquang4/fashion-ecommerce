@@ -8,8 +8,8 @@ function CollectionBanner() {
   return (
     <>
       {collections.length > 0 && (
-        <section className="mb-[40px]">
-          <div className="mx-auto max-w-[1230px] w-full px-[10px] sm:px-[15px]">
+        <section className="mb-[40px] px-[10px] sm:px-[15px]">
+          <div className="mx-auto max-w-[1230px] w-full">
             <h2 className="mb-[20px] font-semibold">Bộ sưu tập</h2>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-[20px]">
               <div className="relative">

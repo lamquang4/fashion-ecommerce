@@ -1,4 +1,4 @@
-import BlogAll from "@/components/BlogAll";
+import BlogAll from "@/components/Blog/BlogAll";
 import { Suspense } from "react";
 
 function page() {

@@ -1,6 +1,7 @@
-import AddressInfo from "../../components/AddressInfo";
+import Address from "@/components/Address/Address";
+
 function page() {
-  return <AddressInfo />;
+  return <Address />;
 }
 
 export default page;

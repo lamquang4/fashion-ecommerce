@@ -1,65 +1,82 @@
 "use client";
-import { useSendResetPassword } from "@/hooks/useSendResetPassword";
+import { useSendResetOTP } from "@/hooks/useSendResetOTP";
 import { validateEmail } from "@/utils/validateEmail";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import Overplay from "./Overplay";
 import Loading from "./Loading";
-import { useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useResetPassword } from "@/hooks/useResetPassword";
 
 function ResetPassword() {
-  const searchParams = useSearchParams();
-  const token = searchParams.get("token");
+  const router = useRouter();
 
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
-  const { sendResetPassword, isLoading: isLoadingSendResetPassword } =
-    useSendResetPassword();
+  const [step, setStep] = useState<"step1" | "step2">("step1");
+  const [data, setData] = useState({
+    email: "",
+    otp: "",
+    password: "",
+  });
+
+  const { sendResetOTP, isLoading: isLoadingSendResetOTP } = useSendResetOTP();
   const { resetPassword, isLoading: isLoadingResetPassword } =
     useResetPassword();
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setData((prev) => ({
+      ...prev,
+      [name]: name === "email" ? value.toLowerCase() : value,
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (token) {
-      if (password.length < 6) {
-        toast.error("Mật khẩu phải có ít nhất 6 ký tự");
-        return;
-      }
-    } else {
-      if (!validateEmail(email)) {
+    if (step === "step1") {
+      if (!validateEmail(data.email)) {
         toast.error("Email không hợp lệ");
         return;
       }
 
-      if (email === process.env.EMAIL_USER) {
-        toast.error("Email này không đặt lại mật khẩu được!");
+      try {
+        await sendResetOTP({ email: data.email.trim() });
+        toast.success("Đã gửi OTP tới email");
+        setStep("step2");
+      } catch (err: any) {
+        toast.error(err?.response?.data?.msg);
+      }
+    } else {
+      if (data.password.length < 6) {
+        toast.error("Mật khẩu phải có ít nhất 6 ký tự");
         return;
       }
-    }
-
-    try {
-      if (token) {
+      try {
         await resetPassword({
-          token: token.trim(),
-          password: password.trim(),
+          email: data.email.trim(),
+          otp: data.otp.trim(),
+          password: data.password.trim(),
         });
-
-        setPassword("");
         toast.success("Đặt lại mật khẩu thành công");
-      } else {
-        await sendResetPassword({
-          email: email.trim(),
+        setData({
+          email: "",
+          password: "",
+          otp: "",
         });
-
-        setEmail("");
-        toast.success("Đã gửi thành công");
+        router.replace("/login");
+      } catch (err: any) {
+        toast.error(err?.response?.data?.msg);
       }
-    } catch (err: any) {
-      toast.error(err?.response?.data?.msg);
     }
   };
+
+  const handleSendOTP = async () => {
+    await sendResetOTP({ email: data.email.trim() });
+  };
+
   return (
     <>
       <section className="my-[60px]">
@@ -69,45 +86,67 @@ function ResetPassword() {
               <h2 className="uppercase mb-[20px] text-center text-black">
                 Đặt lại mật khẩu
               </h2>
+
               <form className="space-y-[15px]" onSubmit={handleSubmit}>
-                {token ? (
+                {step === "step1" ? (
+                  <div className="space-y-[5px]">
+                    <label className="block text-[0.9rem] font-medium">
+                      Email
+                    </label>
+                    <input
+                      type="text"
+                      name="email"
+                      value={data.email}
+                      onChange={handleChange}
+                      className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
+                      placeholder="Nhập email"
+                      required
+                    />
+                  </div>
+                ) : (
                   <>
                     <div className="space-y-[5px]">
-                      <label
-                        htmlFor=""
-                        className="block   text-[0.9rem] font-medium"
-                      >
+                      <div className="flex justify-between items-center">
+                        <label className="block text-[0.9rem] font-medium">
+                          Nhập mã OTP
+                        </label>
+
+                        <button
+                          type="button"
+                          className="text-[0.9rem] text-gray-500 p-0"
+                          onClick={handleSendOTP}
+                        >
+                          Gửi lại mã
+                        </button>
+                      </div>
+
+                      <input
+                        type="text"
+                        name="otp"
+                        maxLength={6}
+                        value={data.otp}
+                        onChange={handleChange}
+                        placeholder="Nhập mã OTP"
+                        className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-[5px]">
+                      <label className="block text-[0.9rem] font-medium">
                         Mật khẩu mới
                       </label>
                       <input
                         type="password"
                         name="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
+                        value={data.password}
+                        onChange={handleChange}
                         placeholder="Nhập mật khẩu mới"
                         className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
                         required
                       />
                     </div>
                   </>
-                ) : (
-                  <div className="space-y-[5px]">
-                    <label
-                      htmlFor=""
-                      className="block text-[0.9rem] font-medium"
-                    >
-                      Email
-                    </label>
-                    <input
-                      type="text"
-                      name="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
-                      placeholder="Nhập email"
-                      required
-                    />
-                  </div>
                 )}
 
                 <div className="mt-4">
@@ -123,7 +162,7 @@ function ResetPassword() {
                   type="submit"
                   className="w-full bg-black text-white focus:outline-none font-semibold rounded-sm text-[0.9rem] px-5 py-2.5 text-center"
                 >
-                  {token ? "Đặt lại mật khẩu" : "Gửi xác nhận"}
+                  {step === "step1" ? "Gửi mã xác nhận" : "Đặt lại mật khẩu"}
                 </button>
               </form>
             </div>
@@ -131,7 +170,7 @@ function ResetPassword() {
         </div>
       </section>
 
-      {(isLoadingSendResetPassword || isLoadingResetPassword) && (
+      {(isLoadingSendResetOTP || isLoadingResetPassword) && (
         <Overplay IndexForZ={50}>
           <Loading height={0} size={55} color="white" thickness={8} />
           <h4 className="text-white">Vui lòng chờ trong giây lát...</h4>

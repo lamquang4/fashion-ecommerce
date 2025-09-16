@@ -10,6 +10,7 @@ import useAddBlog from "@/hooks/useAddBlog";
 function AddBlog() {
   const [data, setData] = useState({
     title: "",
+    summary: "",
     content: "",
   });
 
@@ -37,11 +38,16 @@ function AddBlog() {
     setData((prev) => ({ ...prev, content: val }));
   }, []);
 
+  const handleSummaryChange = useCallback((val: string) => {
+    setData((prev) => ({ ...prev, summary: val }));
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append("title", data.title.trim());
+    formData.append("summary", data.summary.trim());
     formData.append("content", data.content.trim());
     if (selectedFiles[0]) {
       formData.append("image", selectedFiles[0]);
@@ -57,6 +63,7 @@ function AddBlog() {
 
       setData({
         title: "",
+        summary: "",
         content: "",
       });
       setPreviewImages([]);
@@ -96,6 +103,16 @@ function AddBlog() {
                 onChange={handleChange}
                 required
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400"
+              />
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label htmlFor="" className="text-[0.9rem]  font-medium">
+                Tóm tắt
+              </label>
+              <TextBoxEditor
+                content={data.summary}
+                onChange={handleSummaryChange}
               />
             </div>
 

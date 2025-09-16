@@ -8,16 +8,25 @@ import useRegister from "@/hooks/useRegister";
 import Overplay from "./Overplay";
 import Loading from "./Loading";
 import { validateBirthday } from "@/utils/validateBirthday";
+import { useSendRegisterOTP } from "@/hooks/useSendRegisterOTP";
+import { useRouter } from "next/navigation";
 
 function RegisterForm() {
-  const { handleRegister, isLoading } = useRegister();
+  const router = useRouter();
   const [data, setData] = useState({
     fullname: "",
     email: "",
     password: "",
     birthday: "",
     phone: "",
+    otp: "",
   });
+
+  const [step, setStep] = useState<"step1" | "step2">("step1");
+
+  const { handleRegister, isLoading } = useRegister();
+  const { sendRegisterOTP, isLoading: isLoadingSendResetOTP } =
+    useSendRegisterOTP();
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -31,41 +40,59 @@ function RegisterForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (!validateEmail(data.email)) {
-      toast.error("Email không hợp lệ");
-      return;
+
+    if (step === "step1") {
+      if (!validateEmail(data.email)) {
+        toast.error("Email không hợp lệ");
+        return;
+      }
+
+      try {
+        await sendRegisterOTP({ email: data.email.trim() });
+        setStep("step2");
+      } catch (err: any) {
+        toast.error(err?.response?.data?.msg);
+      }
+    } else {
+      if (!validatePhone(data.phone)) {
+        toast.error("Số điện thoại không hợp lệ");
+        return;
+      }
+      if (!validateBirthday(data.birthday)) {
+        toast.error("Bạn phải đủ 18 tuổi trở lên");
+        return;
+      }
+      if (data.password.length < 6) {
+        toast.error("Mật khẩu phải có ít nhất 6 ký tự");
+        return;
+      }
+      try {
+        await handleRegister({
+          fullname: data.fullname.trim(),
+          email: data.email.toLowerCase().trim(),
+          phone: data.phone.trim(),
+          birthday: data.birthday,
+          password: data.password.trim(),
+          otp: data.otp.trim(),
+        });
+        toast.success("Đăng kí thành công!");
+        setData({
+          fullname: "",
+          email: "",
+          password: "",
+          phone: "",
+          birthday: "",
+          otp: "",
+        });
+        router.replace("/login");
+      } catch (err: any) {
+        toast.error(err?.response?.data?.msg);
+      }
     }
-    if (!validatePhone(data.phone)) {
-      toast.error("Số điện thoại không hợp lệ");
-      return;
-    }
-    if (!validateBirthday(data.birthday)) {
-      toast.error("Bạn phải đủ 18 tuổi trở lên");
-      return;
-    }
-    if (data.password.length < 6) {
-      toast.error("Mật khẩu phải có ít nhất 6 ký tự");
-      return;
-    }
-    try {
-      await handleRegister({
-        fullname: data.fullname.trim(),
-        email: data.email.toLowerCase().trim(),
-        phone: data.phone.trim(),
-        birthday: data.birthday,
-        password: data.password.trim(),
-      });
-      toast.success("Đăng kí thành công!");
-      setData({
-        fullname: "",
-        email: "",
-        password: "",
-        phone: "",
-        birthday: "",
-      });
-    } catch (err: any) {
-      toast.error(err?.response?.data?.msg);
-    }
+  };
+
+  const handleSendOTP = async () => {
+    await sendRegisterOTP({ email: data.email.trim() });
   };
   return (
     <>
@@ -77,85 +104,151 @@ function RegisterForm() {
                 Đăng kí
               </h2>
               <form className="space-y-[15px]" onSubmit={handleSubmit}>
-                <div className="space-y-[5px]">
-                  <label htmlFor="" className="block text-[0.9rem] font-medium">
-                    Họ và tên
-                  </label>
-                  <input
-                    type="text"
-                    name="fullname"
-                    value={data.fullname}
-                    onChange={handleChange}
-                    className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
-                    placeholder="Nhập họ và tên"
-                    required
-                  />
-                </div>
+                {step === "step1" ? (
+                  <div className="space-y-[5px]">
+                    <label
+                      htmlFor=""
+                      className="block text-[0.9rem] font-medium"
+                    >
+                      Email
+                    </label>
+                    <input
+                      type="text"
+                      name="email"
+                      value={data.email}
+                      onChange={handleChange}
+                      className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
+                      placeholder="Nhập email"
+                      required
+                    />
+                  </div>
+                ) : (
+                  <>
+                    <div className="space-y-[5px]">
+                      <div className="flex justify-between items-center">
+                        <label className="block text-[0.9rem] font-medium">
+                          Nhập mã OTP
+                        </label>
 
-                <div className="space-y-[5px]">
-                  <label htmlFor="" className="block text-[0.9rem] font-medium">
-                    Email
-                  </label>
-                  <input
-                    type="text"
-                    name="email"
-                    value={data.email}
-                    onChange={handleChange}
-                    className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
-                    placeholder="Nhập email"
-                    required
-                  />
-                </div>
+                        <button
+                          type="button"
+                          onClick={handleSendOTP}
+                          className="text-[0.9rem] text-gray-500 p-0"
+                        >
+                          Gửi lại mã
+                        </button>
+                      </div>
 
-                <div className="space-y-[5px]">
-                  <label htmlFor="" className="block text-[0.9rem] font-medium">
-                    Số điện thoại
-                  </label>
-                  <input
-                    type="number"
-                    name="phone"
-                    inputMode="numeric"
-                    value={data.phone}
-                    onChange={handleChange}
-                    className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
-                    placeholder="Nhập số điện thoại"
-                    required
-                  />
-                </div>
+                      <input
+                        type="text"
+                        name="otp"
+                        maxLength={6}
+                        value={data.otp}
+                        onChange={handleChange}
+                        placeholder="Nhập mã OTP"
+                        className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
+                        required
+                      />
+                    </div>
 
-                <div className="space-y-[5px]">
-                  <label htmlFor="" className="block text-[0.9rem] font-medium">
-                    Sinh nhật
-                  </label>
-                  <input
-                    type="date"
-                    name="birthday"
-                    value={data.birthday}
-                    onChange={handleChange}
-                    className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
-                    placeholder="Nhập số điện thoại"
-                    required
-                  />
-                </div>
+                    <div className="space-y-[5px]">
+                      <label
+                        htmlFor=""
+                        className="block text-[0.9rem] font-medium"
+                      >
+                        Họ và tên
+                      </label>
+                      <input
+                        type="text"
+                        name="fullname"
+                        value={data.fullname}
+                        onChange={handleChange}
+                        className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
+                        placeholder="Nhập họ và tên"
+                        required
+                      />
+                    </div>
 
-                <div className="space-y-[5px]">
-                  <label htmlFor="" className="block text-[0.9rem] font-medium">
-                    Mật khẩu
-                  </label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={data.password}
-                    onChange={handleChange}
-                    placeholder="Nhập mật khẩu"
-                    className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
-                    required
-                  />
-                </div>
+                    <div className="space-y-[5px]">
+                      <label
+                        htmlFor=""
+                        className="block text-[0.9rem] font-medium"
+                      >
+                        Số điện thoại
+                      </label>
+                      <input
+                        type="number"
+                        name="phone"
+                        inputMode="numeric"
+                        value={data.phone}
+                        onChange={handleChange}
+                        className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
+                        placeholder="Nhập số điện thoại"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-[5px]">
+                      <label
+                        htmlFor=""
+                        className="block text-[0.9rem] font-medium"
+                      >
+                        Sinh nhật
+                      </label>
+                      <input
+                        type="date"
+                        name="birthday"
+                        value={data.birthday}
+                        onChange={handleChange}
+                        className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
+                        placeholder="Nhập số điện thoại"
+                        required
+                      />
+                    </div>
+
+                    <div className="space-y-[5px]">
+                      <label
+                        htmlFor=""
+                        className="block text-[0.9rem] font-medium"
+                      >
+                        Mật khẩu
+                      </label>
+                      <input
+                        type="password"
+                        name="password"
+                        value={data.password}
+                        onChange={handleChange}
+                        placeholder="Nhập mật khẩu"
+                        className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
+                        required
+                      />
+                    </div>
+
+                    <div className="mt-4">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setStep("step1");
+                          setData({
+                            fullname: "",
+                            email: "",
+                            password: "",
+                            phone: "",
+                            birthday: "",
+                            otp: "",
+                          });
+                        }}
+                        className="text-[0.9rem] text-blue-400 font-medium"
+                      >
+                        Trở về
+                      </button>
+                    </div>
+                  </>
+                )}
 
                 <button
                   type="submit"
-                  className="w-full bg-black text-white focus:outline-none font-semibold rounded-sm text-[1rem] px-5 py-2.5 text-center mt-4"
+                  className="w-full bg-black text-white focus:outline-none font-semibold rounded-sm text-[0.9rem] px-5 py-2.5 text-center"
                 >
                   Đăng kí
                 </button>
@@ -172,7 +265,7 @@ function RegisterForm() {
         </div>
       </section>
 
-      {isLoading && (
+      {(isLoading || isLoadingSendResetOTP) && (
         <Overplay IndexForZ={50}>
           <Loading height={0} size={55} color="white" thickness={8} />
           <h4 className="text-white">Vui lòng chờ trong giây lát...</h4>

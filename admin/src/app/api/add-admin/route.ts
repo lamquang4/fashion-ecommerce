@@ -1,9 +1,9 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import User from "@/model/User";
+import { hashValue } from "@/utils/hashValue";
 import { validateBirthday } from "@/utils/validateBirthday";
 import { validateEmail } from "@/utils/validateEmail";
 import { validatePhone } from "@/utils/validatePhone";
-import bcryptjs from "bcryptjs";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 export async function POST(req: NextRequest) {
@@ -54,14 +54,13 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const salt = await bcryptjs.genSalt(10);
-    const hashpassword = await bcryptjs.hash(password, salt);
+    const hashPassword = await hashValue(password);
     const newUser = await User.create({
       fullname,
       email,
       phone,
       birthday,
-      password: hashpassword,
+      password: hashPassword,
       role,
       status: 1,
     });

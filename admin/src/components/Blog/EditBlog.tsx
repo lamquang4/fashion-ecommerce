@@ -18,6 +18,7 @@ function EditBlog() {
 
   const [data, setData] = useState({
     title: "",
+    summary: "",
     content: "",
     image: "",
   });
@@ -50,6 +51,7 @@ function EditBlog() {
     if (blog) {
       setData({
         title: blog.title,
+        summary: blog.summary,
         image: blog.image,
         content: blog.content,
       });
@@ -75,11 +77,16 @@ function EditBlog() {
     setData((prev) => ({ ...prev, content: val }));
   }, []);
 
+  const handleSummaryChange = useCallback((val: string) => {
+    setData((prev) => ({ ...prev, summary: val }));
+  }, []);
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const formData = new FormData();
     formData.append("title", data.title.trim());
+    formData.append("summary", data.summary.trim());
     formData.append("content", data.content.trim());
     if (selectedFiles[0]) {
       formData.append("image", selectedFiles[0]);
@@ -158,6 +165,16 @@ function EditBlog() {
 
               <div className="flex flex-col gap-1">
                 <label htmlFor="" className="text-[0.9rem]  font-medium">
+                  Tóm tắt
+                </label>
+                <TextBoxEditor
+                  content={data.summary}
+                  onChange={handleSummaryChange}
+                />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label htmlFor="" className="text-[0.9rem]  font-medium">
                   Nội dung
                 </label>
                 <TextBoxEditor
@@ -185,7 +202,7 @@ function EditBlog() {
           </div>
         </form>
       </div>
-      
+
       {openViewer && (
         <ImageViewer
           image={viewerImage}

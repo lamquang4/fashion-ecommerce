@@ -1,5 +1,5 @@
+import ProductCollection from "@/components/Product/ProductCollection";
 import { Suspense } from "react";
-import ProductCollection from "@/components/ProductCollection";
 
 function page() {
   return (
