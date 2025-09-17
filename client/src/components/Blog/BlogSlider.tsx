@@ -33,15 +33,12 @@ function BlogSlider({ title, blogs }: Props) {
                   key={blog._id}
                   className=" group cursor-pointer h-auto"
                 >
-                  <Link
-                    href={`/blog/${blog.slug}`}
-                    className="flex flex-col h-full"
-                  >
-                    <div className="w-full h-56">
+                  <Link href={`/blog/${blog.slug}`} className="h-full">
+                    <div className="w-full aspect-[16/9] overflow-hidden">
                       <Image
                         Src={blog.image}
                         Alt={blog.title}
-                        ClassName="w-full object-cover"
+                        ClassName="w-full h-full object-cover"
                         loadingType="lazy"
                       />
                     </div>
