@@ -37,12 +37,14 @@ function BlogSlider({ title, blogs }: Props) {
                     href={`/blog/${blog.slug}`}
                     className="flex flex-col h-full"
                   >
-                    <Image
-                      Src={blog.image}
-                      Alt={""}
-                      ClassName="w-full overflow-hidden"
-                      loadingType="lazy"
-                    />
+                    <div className="w-full h-56">
+                      <Image
+                        Src={blog.image}
+                        Alt={blog.title}
+                        ClassName="w-full object-cover"
+                        loadingType="lazy"
+                      />
+                    </div>
 
                     <div className="flex flex-col flex-grow space-y-3 py-4 leading-relaxed">
                       <h5 className="font-semibold">{blog.title}</h5>
