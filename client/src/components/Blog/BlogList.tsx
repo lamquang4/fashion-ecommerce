@@ -19,16 +19,19 @@ function BlogList({ blogs, isLoading }: Props) {
         <Loading height={70} size={50} color="black" thickness={2} />
       ) : blogs.length > 0 ? (
         <div
-          className={`grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 ${
+          className={`grid grid-cols-20 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 ${
             blogs.length <= 0 ? "h-[50vh]" : ""
           }`}
         >
           {blogs.map((blog) => (
             <div
               key={blog._id}
-              className=" group cursor-pointer shadow-md rounded-md border border-gray-100"
+              className=" group cursor-pointer shadow-md rounded-md h-full"
             >
-              <Link href={`/blog/${blog.slug}`}>
+              <Link
+                className="flex flex-col h-full"
+                href={`/blog/${blog.slug}`}
+              >
                 <Image
                   Src={blog.image}
                   Alt={""}
@@ -36,11 +39,11 @@ function BlogList({ blogs, isLoading }: Props) {
                   loadingType="lazy"
                 />
 
-                <div className="space-y-3 p-6">
-                  <h4>{blog.title}</h4>
+                <div className="space-y-3 py-4 leading-relaxed">
+                  <h5 className="font-semibold">{blog.title}</h5>
 
                   <p
-                    className="text-gray-500 line-clamp-3 leading-relaxed"
+                    className="text-gray-500 line-clamp-3"
                     dangerouslySetInnerHTML={{
                       __html: blog?.summary || "",
                     }}

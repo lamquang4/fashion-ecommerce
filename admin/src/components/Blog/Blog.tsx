@@ -127,7 +127,7 @@ function Blog() {
                   <td className="p-[1rem]">{blog.title}</td>
                   <td className="p-[1rem]">
                     <p
-                      className="line-clamp-3 leading-relaxed w-full max-w-[400px]"
+                      className="line-clamp-3 leading-relaxed w-full max-w-[300px]"
                       dangerouslySetInnerHTML={{
                         __html: blog?.summary || "",
                       }}
