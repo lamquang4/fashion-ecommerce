@@ -24,14 +24,8 @@ function BlogList({ blogs, isLoading }: Props) {
           }`}
         >
           {blogs.map((blog) => (
-            <div
-              key={blog._id}
-              className=" group cursor-pointer shadow-md rounded-md h-full"
-            >
-              <Link
-                className="flex flex-col h-full"
-                href={`/blog/${blog.slug}`}
-              >
+            <div key={blog._id} className=" group cursor-pointer  h-full">
+              <Link href={`/blog/${blog.slug}`}>
                 <Image
                   Src={blog.image}
                   Alt={""}
