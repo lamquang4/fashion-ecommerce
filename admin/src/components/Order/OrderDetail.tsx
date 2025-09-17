@@ -1,11 +1,11 @@
 "use client";
-import Image from "./Image";
+import Image from "../Image";
 import { useParams, useRouter } from "next/navigation";
 import useGetOrder from "@/hooks/useGetOrder";
 import { LuArchive, LuCheck, LuStar, LuTruck } from "react-icons/lu";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { TbCancel } from "react-icons/tb";
-import Loading from "./Loading";
+import Loading from "../Loading";
 import Link from "next/link";
 import { useEffect, useMemo } from "react";
 import toast from "react-hot-toast";

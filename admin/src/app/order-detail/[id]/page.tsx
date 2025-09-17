@@ -1,5 +1,5 @@
 import LayoutPage from "@/components/LayoutPage";
-import OrderDetail from "@/components/OrderDetail";
+import OrderDetail from "@/components/Order/OrderDetail";
 import { Suspense } from "react";
 
 export default async function page() {

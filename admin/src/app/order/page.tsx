@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import LayoutPage from "../../components/LayoutPage";
-import Order from "../../components/Order";
+import Order from "../../components/Order/Order";
 
 export default async function page() {
   return (
