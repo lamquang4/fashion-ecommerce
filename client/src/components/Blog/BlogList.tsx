@@ -60,12 +60,12 @@ function BlogList({ blogs, isLoading }: Props) {
                       </span>
                     </div>
 
-                    <Link
-                      href={`/blog/${blog.slug}`}
+                    <button
+                      type="button"
                       className="text-[0.9rem] font-medium group-hover:underline group-hover:underline-offset-3"
                     >
                       Đọc thêm
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </Link>

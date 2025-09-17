@@ -33,7 +33,6 @@ function CheckoutForm() {
     coupon,
     error,
     getCoupon,
-    mutate,
     isLoading: isLoadingCoupon,
   } = useGetCoupon();
   const { addOrder, isLoading: isLoadingAddOrder } = useAddOrder();
@@ -193,19 +192,17 @@ function CheckoutForm() {
   }, []);
 
   const handleApplyCoupon = useCallback(() => {
-    if (!couponCode) {
+    if (!couponCode.trim()) {
       toast.error("Vui lòng nhập mã giảm giá");
       return;
     }
 
     getCoupon(couponCode.trim(), totalPrice);
 
-    mutate();
-
     if (error && !isLoadingCoupon) {
       toast.error(error?.response?.data?.msg);
     }
-  }, []);
+  }, [couponCode, error, isLoadingCoupon]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

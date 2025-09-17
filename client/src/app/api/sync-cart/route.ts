@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import Cart from "@/model/Cart";
-import mongoose from "mongoose";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import { options } from "../auth/[...nextauth]/options";
 
@@ -19,18 +18,14 @@ export async function POST(req: NextRequest) {
 
     const cartId = req.cookies.get("cart")?.value;
 
-    if (!cartId || !mongoose.Types.ObjectId.isValid(cartId)) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy giỏ hàng" },
-        { status: 404 }
-      );
-    }
-
+    // giỏ hàng chưa đăng nhập
     const guestCart = await Cart.findById(cartId);
+    // giỏ hàng đã đăng nhập
     const userCart = await Cart.findOne({ user: userId });
 
-    if (guestCart && guestCart.user == null) {
+    if (guestCart && guestCart.user === null) {
       if (userCart) {
+        // trường hợp user đã có giỏ hàng
         for (const item of guestCart.items) {
           const existing = userCart.items.find(
             (it: any) =>
@@ -47,6 +42,7 @@ export async function POST(req: NextRequest) {
         await userCart.save();
         await Cart.findByIdAndDelete(guestCart._id);
       } else {
+        // trường hợp user chưa có giỏ hàng
         guestCart.user = userId;
         await guestCart.save();
       }

@@ -7,7 +7,7 @@ export function useSyncWishlist() {
   const syncWishlist = async () => {
     setIsLoading(true);
     try {
-      const url = `/api/get-promotebanners`;
+      const url = `/api/sync-wishlist`;
       await axios.post(url);
     } catch (err: any) {
       console.error("Lỗi:", err);

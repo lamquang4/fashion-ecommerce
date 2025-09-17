@@ -2,21 +2,17 @@
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import useGetCart from "@/hooks/useGetCart";
-import { useSyncCart } from "@/hooks/useSyncCart";
-import { useSyncWishlist } from "@/hooks/useSyncWishlist";
 import useLogin from "@/hooks/useLogin";
 import Loading from "./Loading";
 import Overplay from "./Overplay";
 import { useRouter } from "next/navigation";
+
 function LoginForm() {
   const router = useRouter();
-  const [data, setData] = useState({ email: "", password: "" });
 
   const { handleLogin, isLoading: isLoadingLogin } = useLogin();
-  const { mutate } = useGetCart();
-  const { syncCart, isLoading: isLoadingSyncCart } = useSyncCart();
-  const { syncWishlist, isLoading: isLoadingSyncWishlist } = useSyncWishlist();
+
+  const [data, setData] = useState({ email: "", password: "" });
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -41,9 +37,6 @@ function LoginForm() {
 
       router.replace("/");
 
-      await syncCart();
-      await syncWishlist();
-      mutate();
     } else if (result?.error) {
       toast.error(result?.error);
     }
@@ -122,7 +115,7 @@ function LoginForm() {
         </div>
       </section>
 
-      {(isLoadingLogin || isLoadingSyncCart || isLoadingSyncWishlist) && (
+      {isLoadingLogin && (
         <Overplay IndexForZ={50}>
           <Loading height={0} size={55} color="white" thickness={8} />
           <h4 className="text-white">Vui lòng chờ trong giây lát...</h4>

@@ -5,6 +5,7 @@ type Props = {
   setPaymethod: (value: number) => void;
 };
 function PaymentMethod({ paymethod, setPaymethod }: Props) {
+
   return (
     <div className="space-y-[15px]">
       <h4>Phương thức thanh toán</h4>

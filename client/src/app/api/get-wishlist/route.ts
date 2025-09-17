@@ -16,10 +16,10 @@ export async function GET(req: NextRequest) {
 
     let matchCondition: any = null;
 
-    if (wishlistId) {
-      matchCondition = { _id: new mongoose.Types.ObjectId(wishlistId) };
-    } else if (userId) {
+    if (userId) {
       matchCondition = { user: new mongoose.Types.ObjectId(userId) };
+    } else if (wishlistId) {
+      matchCondition = { _id: new mongoose.Types.ObjectId(wishlistId) };
     }
 
     if (!matchCondition) {

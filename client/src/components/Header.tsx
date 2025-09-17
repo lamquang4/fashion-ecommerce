@@ -14,11 +14,17 @@ import SearchMobile from "./SearchMobile";
 import SearchDesktop from "./SearchDesktop";
 import useGetCart from "@/hooks/useGetCart";
 import useGetWishlist from "@/hooks/useGetWishlist";
+import { useSyncCart } from "@/hooks/useSyncCart";
+import { useSyncWishlist } from "@/hooks/useSyncWishlist";
+import { useSession } from "next-auth/react";
 
 function Header() {
-  const { cart } = useGetCart();
-  const { wishlist } = useGetWishlist();
   const { categoriesMale, categoriesFemale } = useGetCategories();
+  const { cart, mutate: mutateCart } = useGetCart();
+  const { wishlist, mutate: mutateWishlist } = useGetWishlist();
+  const { syncCart } = useSyncCart();
+  const { syncWishlist } = useSyncWishlist();
+  const { data: session } = useSession();
 
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [menuMobileOpen, setMenuMobileOpen] = useState<boolean>(false);
@@ -49,6 +55,17 @@ function Header() {
     setMenuMobileOpen(false);
     setOpenSearch(false);
   }, []);
+
+  useEffect(() => {
+    if (session?.user) {
+      (async () => {
+        await syncCart();
+        mutateCart();
+        await syncWishlist();
+        mutateWishlist();
+      })();
+    }
+  }, [session?.user, mutateCart, mutateWishlist]);
 
   useEffect(() => {
     const handleResize = () => {

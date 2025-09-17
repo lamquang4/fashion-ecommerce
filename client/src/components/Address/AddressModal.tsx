@@ -19,7 +19,6 @@ type Props = {
   provinces: Province[];
 };
 function AddressModal({ isOpen, toggleMenu, addressId, provinces }: Props) {
-  const { data: session } = useSession();
   const router = useRouter();
 
   const { address, mutate, isLoading } = useGetAddress(addressId);
@@ -101,7 +100,6 @@ function AddressModal({ isOpen, toggleMenu, addressId, provinces }: Props) {
         speaddress: data.speaddress.trim(),
         city: selectedProvinceName,
         ward: selectedWard,
-        user: session?.user.id,
       };
 
       if (addressId) {

@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
-import mongoose from "mongoose";
 import Wishlist from "@/model/Wishlist";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import { options } from "../auth/[...nextauth]/options";
@@ -18,13 +17,6 @@ export async function POST(req: NextRequest) {
       );
 
     const wishlistId = req.cookies.get("wishlist")?.value;
-
-    if (!wishlistId || !mongoose.Types.ObjectId.isValid(wishlistId)) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy yêu thích" },
-        { status: 500 }
-      );
-    }
 
     const guestWishlist = await Wishlist.findById(wishlistId);
     const userWishlist = await Wishlist.findOne({ user: userId });

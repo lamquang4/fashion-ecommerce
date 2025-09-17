@@ -158,8 +158,6 @@ export async function POST(req: NextRequest) {
 
     return response;
   } catch (err) {
-    console.log(err);
-
     return NextResponse.json({ msg: "Lỗi", err }, { status: 500 });
   }
 }

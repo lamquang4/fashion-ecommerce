@@ -17,6 +17,7 @@ function CouponApply({
   coupon,
   isLoadingCoupon,
 }: Props) {
+  
   return (
     <div className="space-y-[15px]">
       <div className="flex justify-between flex-wrap gap-[15px] items-center mb-[5px]">
