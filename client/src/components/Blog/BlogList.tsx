@@ -24,8 +24,11 @@ function BlogList({ blogs, isLoading }: Props) {
           }`}
         >
           {blogs.map((blog) => (
-            <div key={blog._id} className=" group cursor-pointer  h-full">
-              <Link href={`/blog/${blog.slug}`}>
+            <div key={blog._id} className=" group cursor-pointer h-auto">
+              <Link
+                href={`/blog/${blog.slug}`}
+                className="flex flex-col h-full"
+              >
                 <Image
                   Src={blog.image}
                   Alt={""}
@@ -33,7 +36,7 @@ function BlogList({ blogs, isLoading }: Props) {
                   loadingType="lazy"
                 />
 
-                <div className="space-y-3 py-4 leading-relaxed">
+                <div className="flex flex-col flex-grow space-y-3 py-4 leading-relaxed">
                   <h5 className="font-semibold">{blog.title}</h5>
 
                   <p
