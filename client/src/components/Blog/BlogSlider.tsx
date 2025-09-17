@@ -31,7 +31,7 @@ function BlogSlider({ title, blogs }: Props) {
               {blogs.map((blog) => (
                 <SwiperSlide
                   key={blog._id}
-                  className=" group cursor-pointer h-auto"
+                  className=" group cursor-pointer h-auto rounded-md shadow-md"
                 >
                   <Link href={`/blog/${blog.slug}`} className="h-full">
                     <div className="w-full aspect-[16/9] overflow-hidden">
@@ -43,7 +43,7 @@ function BlogSlider({ title, blogs }: Props) {
                       />
                     </div>
 
-                    <div className="flex flex-col flex-grow space-y-3 py-4 leading-relaxed">
+                    <div className="flex flex-col flex-grow space-y-3 py-6 px-[15px] leading-relaxed">
                       <h5 className="font-semibold">{blog.title}</h5>
 
                       <p
