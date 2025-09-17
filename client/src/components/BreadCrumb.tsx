@@ -13,10 +13,10 @@ const BreadCrumb = ({ items }: Props) => {
     <div className="px-[10px] sm:px-[15px]">
       <div className=" w-full max-w-[1230px] mx-auto">
         <nav className="py-4">
-          <ol className="flex items-center gap-2 text-[0.95rem] text-gray-500 font-medium">
+          <ol className="flex items-center gap-1 text-[0.9rem] text-gray-500 font-medium">
             {items.map((item, index) => (
               <React.Fragment key={index}>
-                <li className="flex items-center gap-1.5">
+                <li className="flex items-center gap-1">
                   {item.href ? (
                     <Link
                       href={item.href}
@@ -43,12 +43,14 @@ const BreadCrumb = ({ items }: Props) => {
                       {item.name}
                     </Link>
                   ) : (
-                    <div className="text-black">{item.name}</div>
+                    <span className="text-black hidden md:block">
+                      {item.name}
+                    </span>
                   )}
                 </li>
 
                 {index < items.length - 1 && (
-                  <li className="[&>svg]:size-3.5">
+                  <li className="last:hidden md:last:block">
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
                       width="22"
