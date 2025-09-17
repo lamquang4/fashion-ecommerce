@@ -19,7 +19,7 @@ function BlogList({ blogs, isLoading }: Props) {
         <Loading height={70} size={50} color="black" thickness={2} />
       ) : blogs.length > 0 ? (
         <div
-          className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 ${
+          className={`grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 ${
             blogs.length <= 0 ? "h-[50vh]" : ""
           }`}
         >
