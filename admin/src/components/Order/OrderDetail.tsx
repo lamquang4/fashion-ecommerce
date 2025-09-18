@@ -48,9 +48,9 @@ function OrderDetail() {
       {isLoading ? (
         <Loading height={60} size={50} color="black" thickness={2} />
       ) : (
-        <div className="w-full max-w-full my-[30px] border-[1.5px] border-double border-gray-300 lg:max-w-[750px] rounded-sm mx-auto">
-          <div>
-            <div className="flex justify-between px-[15px] sm:px-[20px] py-[30px] border-b border-gray-300">
+        <div className="w-full max-w-full my-[30px] border border-gray-300 lg:max-w-[750px]  mx-auto">
+          <div className=" pb-[20px]">
+            <div className="flex justify-between px-[20px] py-[20px] border-b border-gray-300">
               <div className="flex flex-col gap-[8px]">
                 <h4 className="uppercase">Đơn hàng</h4>
 
@@ -81,7 +81,7 @@ function OrderDetail() {
             </div>
 
             {order?.status !== 4 ? (
-              <div className="relative gap-y-5 grid grid-cols-2 md:grid-cols-4 py-[30px] px-[15px] sm:px-[20px] border-b border-gray-300">
+              <div className="relative gap-y-5 grid grid-cols-2 md:grid-cols-4 py-[20px] px-[20px]   border-b border-gray-300">
                 {steps.map((step, index) => {
                   const isActive = (order?.status ?? -1) >= index;
                   return (
@@ -110,14 +110,14 @@ function OrderDetail() {
                 })}
               </div>
             ) : (
-              <div className="relative flex items-center justify-center py-[30px] px-[15px] sm:px-[20px] border-b border-gray-300">
+              <div className="relative flex items-center justify-center py-[20px] px-[20px]   border-b border-gray-300">
                 <span className="font-semibold text-center text-red-500 flex items-center gap-2">
                   <TbCancel size={25} /> Đã hủy đơn hàng
                 </span>
               </div>
             )}
 
-            <div className="px-[15px] sm:px-[20px] space-y-[8px] py-[30px]">
+            <div className="px-[20px]   space-y-[8px] py-[20px]">
               <h4 className="uppercase">Thông tin giao hàng</h4>
 
               <p className="font-medium">
@@ -149,20 +149,20 @@ function OrderDetail() {
               </p>
             </div>
 
-            <div className="w-full overflow-auto pb-[30px]">
+            <div className="w-full overflow-auto">
               <table className="w-[200%] border-collapse text-[0.9rem] sm:w-full">
                 <thead>
                   <tr className="text-left bg-[#F1F2F4]">
-                    <th className="p-[15px] sm:p-[20px]">Tên</th>
-                    <th className="p-[15px] sm:p-[20px]">Giá</th>
-                    <th className="p-[15px] sm:p-[20px]">Số lượng</th>
-                    <th className="p-[15px] sm:p-[20px]">Thành tiền</th>
+                    <th className="p-[20px]  ">Tên</th>
+                    <th className="p-[20px]  ">Giá</th>
+                    <th className="p-[20px]  ">Số lượng</th>
+                    <th className="p-[20px]  ">Thành tiền</th>
                   </tr>
                 </thead>
                 <tbody>
                   {order?.productsBuy.map((item, index) => (
                     <tr key={index}>
-                      <td className="p-[15px] sm:p-[20px]">
+                      <td className="p-[20px]  ">
                         <div className="flex items-center gap-[10px]">
                           <Image
                             Src={item.variant.images[0]}
@@ -180,7 +180,7 @@ function OrderDetail() {
                           </div>
                         </div>
                       </td>
-                      <td className="p-[15px] sm:p-[20px]">
+                      <td className="p-[20px]  ">
                         {item.discount > 0 ? (
                           <div className="flex gap-[12px]  ">
                             <del className="text-[#707072] text-[1rem]">
@@ -200,8 +200,8 @@ function OrderDetail() {
                           </p>
                         )}
                       </td>
-                      <td className="p-[15px] sm:p-[20px]">x{item.quantity}</td>
-                      <td className="p-[15px] sm:p-[20px]">
+                      <td className="p-[20px]  ">x{item.quantity}</td>
+                      <td className="p-[20px]  ">
                         {item.discount > 0
                           ? (
                               (item.price - item.discount) *
@@ -222,16 +222,16 @@ function OrderDetail() {
                   </tr>
 
                   <tr className="text-[1rem] font-medium">
-                    <td className="p-[15px] sm:p-[20px]">Tổng:</td>
-                    <td className="p-[15px] sm:p-[20px]">
+                    <td className="p-[20px]  ">Tổng:</td>
+                    <td className="p-[20px]  ">
                       {totalPrice.toLocaleString("vi-VN")}₫
                     </td>
                   </tr>
 
                   {order?.coupon && (
                     <tr className="text-[1rem] font-medium ">
-                      <td className="p-[15px] sm:p-[20px]">Phiếu giảm giá:</td>
-                      <td className="p-[15px] sm:p-[20px]">
+                      <td className="p-[20px]  ">Phiếu giảm giá:</td>
+                      <td className="p-[20px]  ">
                         {order?.coupon?.discountType === 1 ? (
                           <p>
                             -
@@ -256,8 +256,8 @@ function OrderDetail() {
                   )}
 
                   <tr className="text-[1rem] font-semibold">
-                    <td className="p-[15px] sm:p-[20px]">Tổng cộng:</td>
-                    <td className="p-[15px] sm:p-[20px]">
+                    <td className="p-[20px]  ">Tổng cộng:</td>
+                    <td className="p-[20px]  ">
                       {order?.total.toLocaleString("vi-VN")}₫
                     </td>
                   </tr>

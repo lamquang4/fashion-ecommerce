@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import OrderInfo from "./OrderInfo";
+import BreadCrumb from "@/components/BreadCrumb";
 function OrderDetail() {
   const params = useParams();
   const code = params.code as string;
@@ -29,14 +30,34 @@ function OrderDetail() {
     }
   }, [order, isLoading, router]);
 
-  return (
-    <section className="my-[40px]">
-      <div className="flex justify-center flex-wrap gap-6">
-        <SideBarMenu />
+  const array = [
+    {
+      name: "Trang chủ",
+      href: "/",
+    },
+    {
+      name: "Đơn hàng",
+      href: "/order",
+    },
+    {
+      name: `Mã đơn ${code}`,
+    },
+  ];
 
-        <OrderInfo order={order!} isLoading={isLoading} />
-      </div>
-    </section>
+  return (
+    <>
+      <BreadCrumb items={array} />
+
+      <section className="mb-[40px]">
+        <div className="w-full max-w-[1230px] mx-auto">
+          <div className="flex justify-center flex-wrap gap-5">
+            <SideBarMenu />
+
+            <OrderInfo order={order!} isLoading={isLoading} />
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
 

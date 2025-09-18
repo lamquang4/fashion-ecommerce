@@ -15,7 +15,6 @@ function BlogAll() {
     },
     {
       name: "Tất cả tin tức",
-      href: `/blog`,
     },
   ];
   return (

@@ -36,9 +36,9 @@ function AddressInfo({ toggleAddressModal, setAddressId }: Props) {
   };
 
   return (
-    <div className="w-full max-w-full lg:max-w-[700px] px-[15px]">
+    <div className="w-full max-w-full flex-1 px-[15px]">
       <div className="space-y-[20px]">
-        <h2 className="capitalize">Địa chỉ</h2>
+        <h2>Sổ địa chỉ</h2>
 
         <button
           onClick={toggleAddressModal}

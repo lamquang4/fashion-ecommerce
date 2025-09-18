@@ -4,9 +4,9 @@ import { useSession } from "next-auth/react";
 function AccountInfo() {
   const { data: session } = useSession();
   return (
-    <div className="w-full max-w-full lg:max-w-[700px] px-[15px]">
+    <div className="w-full flex-1 sm:px-[15px] px-[10px]">
       <div className="space-y-[20px]">
-        <h2 className="capitalize">Tài khoản</h2>
+        <h2>Thông tin tài khoản</h2>
 
         <div className="flex flex-col gap-[15px]">
           <div className="space-y-[5px]">

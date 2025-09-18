@@ -98,20 +98,20 @@ function Header() {
                   Nam
                 </span>
                 {categoriesMale.length > 0 && (
-                  <ul className="absolute font-medium top-5 left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
-                    <li className="my-2">
+                  <ul className="text-[#707072] absolute font-medium top-5 left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
+                    <li>
                       <Link
                         href={`/collection/nam`}
-                        className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                        className="  text-[0.9rem] p-3 transition-all duration-200 hover:text-black"
                       >
                         Đồ nam
                       </Link>
                     </li>
                     {categoriesMale.map((category, index) => (
-                      <li className="my-2" key={index}>
+                      <li key={index}>
                         <Link
                           href={`/collection/${category.slug}`}
-                          className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                          className="  text-[0.9rem] p-3 transition-all duration-200 hover:text-black"
                         >
                           {category.namecategory}
                         </Link>
@@ -126,20 +126,20 @@ function Header() {
                   Nữ
                 </span>
                 {categoriesFemale.length > 0 && (
-                  <ul className="absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
-                    <li className="my-2">
+                  <ul className="text-[#707072] absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
+                    <li>
                       <Link
                         href={`/collection/nu`}
-                        className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                        className="  text-[0.9rem] p-3 transition-all duration-200 hover:text-black"
                       >
                         Đồ nữ
                       </Link>
                     </li>
                     {categoriesFemale.map((category, index) => (
-                      <li className="my-2" key={index}>
+                      <li key={index}>
                         <Link
                           href={`/collection/${category.slug}`}
-                          className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                          className="  text-[0.9rem] p-3 transition-all duration-200 hover:text-black"
                         >
                           {category.namecategory}
                         </Link>
@@ -154,20 +154,20 @@ function Header() {
                   Giảm giá
                 </span>
 
-                <ul className="absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
-                  <li className="my-2">
+                <ul className="text-[#707072] absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
+                  <li>
                     <Link
                       href={"/sale/nam"}
-                      className="text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                      className="text-[0.9rem] p-3 transition-all duration-200 hover:text-black"
                     >
                       Giảm giá đồ nam
                     </Link>
                   </li>
 
-                  <li className="my-2">
+                  <li>
                     <Link
                       href={"/sale/nu"}
-                      className="  text-[0.9rem] py-1.5 px-5 transition-all duration-200"
+                      className="text-[0.9rem] p-3 transition-all duration-200 hover:text-black"
                     >
                       Giảm giá đồ nữ
                     </Link>

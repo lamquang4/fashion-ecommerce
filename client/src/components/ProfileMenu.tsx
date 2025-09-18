@@ -28,17 +28,17 @@ function ProfileMenu({ isOpen }: ProfileMenuProp) {
           </Link>
 
           <Link
-            href="/address"
-            className="hover:bg-[#F7F7F7] w-full block p-2.5 text-[0.95rem]  "
-          >
-            Sổ địa chỉ
-          </Link>
-
-          <Link
             href="/order"
             className="hover:bg-[#F7F7F7] w-full block p-2.5 text-[0.95rem]  "
           >
             Đơn hàng
+          </Link>
+
+          <Link
+            href="/address"
+            className="hover:bg-[#F7F7F7] w-full block p-2.5 text-[0.95rem]  "
+          >
+            Sổ địa chỉ
           </Link>
 
           <button

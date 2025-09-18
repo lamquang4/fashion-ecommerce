@@ -5,11 +5,10 @@ import Overplay from "./Overplay";
 import Image from "./Image";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
-import { MdOutlineDashboard } from "react-icons/md";
 import { TbCategoryPlus } from "react-icons/tb";
 import { PiTShirtBold } from "react-icons/pi";
 import { FaRegAddressCard } from "react-icons/fa";
-import { LuWarehouse } from "react-icons/lu";
+import { LuChartNoAxesCombined, LuWarehouse } from "react-icons/lu";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { RiShoppingBag4Line } from "react-icons/ri";
 import { IoColorPaletteOutline } from "react-icons/io5";
@@ -33,7 +32,7 @@ function MenuSide({ menuOpen, toggleMenu }: Props) {
       title: "Hàng hóa",
       items: [
         {
-          icon: <MdOutlineDashboard size={20} />,
+          icon: <LuChartNoAxesCombined size={20} />,
           label: "Thống kê",
           path: "/dashboard",
         },

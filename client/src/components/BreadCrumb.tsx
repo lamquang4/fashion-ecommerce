@@ -11,9 +11,9 @@ interface Props {
 const BreadCrumb = ({ items }: Props) => {
   return (
     <div className="px-[10px] sm:px-[15px]">
-      <div className=" w-full max-w-[1230px] mx-auto">
+      <div className="w-full max-w-[1230px] mx-auto overflow-x-auto">
         <nav className="py-4">
-          <ol className="flex items-center gap-1.5 text-[0.9rem] text-gray-500 font-medium">
+          <ol className="flex items-center gap-1.5 text-[0.9rem] text-gray-500 font-medium whitespace-nowrap">
             {items.map((item, index) => (
               <React.Fragment key={index}>
                 <li className="flex items-center gap-1">
@@ -43,9 +43,7 @@ const BreadCrumb = ({ items }: Props) => {
                       {item.name}
                     </Link>
                   ) : (
-                    <span className="text-black hidden md:block">
-                      {item.name}
-                    </span>
+                    <span className="text-black">{item.name}</span>
                   )}
                 </li>
 

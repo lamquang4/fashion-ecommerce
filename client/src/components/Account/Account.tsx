@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
 import SideBarMenu from "../SideBarMenu";
 import AccountInfo from "./AccountInfo";
+import BreadCrumb from "../BreadCrumb";
 
 function Account() {
   const router = useRouter();
@@ -13,14 +14,29 @@ function Account() {
       router.replace("/");
     }
   }, [status, router]);
-  return (
-    <section className="my-[40px]">
-      <div className=" w-full flex justify-center flex-wrap gap-6">
-        <SideBarMenu />
 
-        <AccountInfo />
-      </div>
-    </section>
+  const array = [
+    {
+      name: "Trang chủ",
+      href: "/",
+    },
+    {
+      name: "Thông tin tài khoản",
+    },
+  ];
+  return (
+    <>
+      <BreadCrumb items={array} />
+      <section className="mb-[40px]">
+        <div className="w-full max-w-[1230px] mx-auto">
+          <div className=" flex justify-center flex-wrap gap-5">
+            <SideBarMenu />
+
+            <AccountInfo />
+          </div>
+        </div>
+      </section>
+    </>
   );
 }
 

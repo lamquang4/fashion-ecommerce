@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import useGetAddress from "@/hooks/useGetAddress";
 import useGetProvinces from "@/hooks/useGetProvinceVN";
 import AddressInfo from "./AddressInfo";
+import BreadCrumb from "../BreadCrumb";
 function Address() {
   const { status } = useSession();
   const router = useRouter();
@@ -27,39 +28,56 @@ function Address() {
     setAddressId("");
   };
 
+  const array = [
+    {
+      name: "Trang chủ",
+      href: "/",
+    },
+    {
+      name: "Sổ địa chỉ",
+    },
+  ];
+
   return (
-    <section className="my-[40px]">
-      <div className="flex justify-center flex-wrap gap-6">
-        <SideBarMenu />
+    <>
+      <BreadCrumb items={array} />
 
-        <AddressInfo
-          toggleAddressModal={toggleAddressModal}
-          setAddressId={setAddressId}
-        />
-      </div>
+      <section className="mb-[40px]">
+        <div className="w-full max-w-[1230px] mx-auto">
+           <div className="flex justify-center flex-wrap gap-5">
+          <SideBarMenu />
 
-      {openAddressModal && (
-        <>
-          {!addressId && !isLoadingProvinces && (
-            <AddressModal
-              provinces={provinces!}
-              addressId=""
-              toggleMenu={toggleAddressModal}
-              isOpen={openAddressModal}
-            />
-          )}
+          <AddressInfo
+            toggleAddressModal={toggleAddressModal}
+            setAddressId={setAddressId}
+          />
+        </div>  
+        </div>
+     
 
-          {addressId && !isLoadingAddress && !isLoadingProvinces && (
-            <AddressModal
-              provinces={provinces!}
-              addressId={addressId}
-              toggleMenu={toggleAddressModal}
-              isOpen={openAddressModal}
-            />
-          )}
-        </>
-      )}
-    </section>
+        {openAddressModal && (
+          <>
+            {!addressId && !isLoadingProvinces && (
+              <AddressModal
+                provinces={provinces!}
+                addressId=""
+                toggleMenu={toggleAddressModal}
+                isOpen={openAddressModal}
+              />
+            )}
+
+            {addressId && !isLoadingAddress && !isLoadingProvinces && (
+              <AddressModal
+                provinces={provinces!}
+                addressId={addressId}
+                toggleMenu={toggleAddressModal}
+                isOpen={openAddressModal}
+              />
+            )}
+          </>
+        )}
+      </section>
+    </>
   );
 }
 
