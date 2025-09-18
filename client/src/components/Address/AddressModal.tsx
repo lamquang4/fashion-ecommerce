@@ -4,7 +4,6 @@ import Overplay from "../Overplay";
 import { memo, useEffect, useMemo, useState } from "react";
 import useGetAddress from "@/hooks/useGetAddress";
 import useUpdateAddress from "@/hooks/useUpdateAddress";
-import { useSession } from "next-auth/react";
 import useAddAddress from "@/hooks/useAddAddress";
 import toast from "react-hot-toast";
 import useGetAddresses from "@/hooks/useGetAddresses";
