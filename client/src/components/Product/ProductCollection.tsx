@@ -20,12 +20,13 @@ function ProductCollection() {
   } = useGetProductsSlug(slug);
 
   return (
-    <section className="my-[40px] px-[10px] sm:px-[15px]">
+    <section className="my-[40px]  px-[15px]">
       <div className="mx-auto max-w-[1230px] w-full">
         <ProductList
           products={products}
           category={category}
           isLoading={isLoadingCategory || isLoadingProductsSlug}
+          total={totalItems}
         />
 
         <Pagination

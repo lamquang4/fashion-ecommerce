@@ -36,15 +36,14 @@ function LoginForm() {
       });
 
       router.replace("/");
-
     } else if (result?.error) {
       toast.error(result?.error);
     }
   };
   return (
     <>
-      <section className="my-[60px]">
-        <div className="mx-auto max-w-[1230px] w-full px-[10px] sm:px-[15px]">
+      <section className="my-[60px] px-[15px]">
+        <div className="mx-auto max-w-[1230px] w-full">
           <div className="flex items-center justify-center">
             <div className="max-w-sm w-full">
               <h2 className="uppercase mb-[20px] text-center text-black">

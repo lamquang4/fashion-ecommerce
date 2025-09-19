@@ -46,7 +46,7 @@ function BlogDetail({ blog }: Props) {
   }, [headings]);
 
   return (
-    <section className="mb-[40px] relative px-[10px] sm:px-[15px]">
+    <section className="mb-[40px] relative px-[15px]">
       <div className=" w-full max-w-[1230px] mx-auto">
         <div className="flex gap-[25px] flex-wrap">
           <div className="main-prose relative lg:flex-1">

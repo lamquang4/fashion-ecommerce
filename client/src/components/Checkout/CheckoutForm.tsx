@@ -278,7 +278,7 @@ function CheckoutForm() {
   };
 
   return (
-    <section className="my-[40px] px-[10px] sm:px-[15px]">
+    <section className="my-[40px] px-[15px]">
       <div className="mx-auto max-w-[1230px] w-full">
         <Link href={"/"}>
           <Image

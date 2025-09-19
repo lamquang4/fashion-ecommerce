@@ -15,7 +15,7 @@ function BlogSlider({ title, blogs }: Props) {
   return (
     <>
       {blogs?.length > 0 && (
-        <section className="mb-[40px] px-[10px] sm:px-[15px]">
+        <section className="mb-[40px] px-[15px]">
           <div className="mx-auto max-w-[1230px] w-full">
             <h2 className="mb-[20px]">{title}</h2>
             <Swiper
@@ -23,8 +23,8 @@ function BlogSlider({ title, blogs }: Props) {
               modules={[FreeMode]}
               freeMode={true}
               breakpoints={{
-                0: { slidesPerView: 2 },
-                768: { slidesPerView: 2 },
+                0: { slidesPerView: 1 },
+                640: { slidesPerView: 2 },
                 1024: { slidesPerView: 3 },
               }}
             >

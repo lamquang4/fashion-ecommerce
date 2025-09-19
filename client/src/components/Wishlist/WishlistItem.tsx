@@ -24,7 +24,7 @@ function WishlistItem() {
     );
   };
   return (
-    <section className="my-[40px] px-[10px] sm:px-[15px]">
+    <section className="my-[40px]  px-[15px]">
       <div className="mx-auto max-w-[1230px] w-full">
         <h2 className="mb-[20px]">
           Yêu thích ({wishlist?.productsInWishlist.length || 0})

@@ -243,12 +243,12 @@ export async function GET(
 
     pipeline.push({ $skip: skip }, { $limit: limit });
 
-    const [products, totalCount] = await Promise.all([
+    const [products, totalResult] = await Promise.all([
       Product.aggregate(pipeline),
       Product.aggregate(countPipeline),
     ]);
 
-    const total = totalCount[0]?.total || 0;
+    const total = totalResult[0]?.total || 0;
 
     if (!products || products.length === 0) {
       return NextResponse.json(

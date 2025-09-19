@@ -251,7 +251,7 @@ function ProductDetail({ product }: Props) {
             </div>
           </div>
 
-          <div className="relative lg:w-[500px] w-full px-[10px] sm:px-[15px]">
+          <div className="relative lg:w-[500px] w-full  px-[15px]">
             <div className="space-y-[5px]">
               <h5 className="font-medium">
                 {product?.category?.namecategory} /{" "}
@@ -318,21 +318,22 @@ function ProductDetail({ product }: Props) {
                     Màu: {selectedColor?.namecolor}
                   </p>
                   <div className="flex space-x-2">
-                    {product?.variants.map((inv) => (
+                    {product?.variants.map((variant) => (
                       <button
-                        key={inv.color._id}
+                        key={variant.color._id}
                         type="button"
-                        title={inv.color.namecolor}
+                        title={variant.color.namecolor}
                         onClick={() => {
-                          setSelectedColor(inv.color);
-                          setSelectedVariant(inv);
-                          setMainImage(inv.images?.[0]);
+                          setSelectedColor(variant.color);
+                          setSelectedVariant(variant);
+                          setMainImage(variant.images?.[0]);
                         }}
-                        style={{ backgroundColor: `${inv.color.codecolor}` }}
-                        className={`w-8 h-8 rounded-full border border-gray-300 focus:outline-none ${
-                          selectedColor?.namecolor === inv.color.namecolor &&
-                          "ring-1 ring-offset-2  ring-red-800"
-                        }`}
+                        style={{
+                          backgroundColor: `${variant.color.codecolor}`,
+                        }}
+                        className={`w-8 h-8 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-offset-2 ring-red-800
+        ${selectedVariant?._id === variant._id ? "ring-1 ring-offset-2" : ""}
+      `}
                       ></button>
                     ))}
                   </div>

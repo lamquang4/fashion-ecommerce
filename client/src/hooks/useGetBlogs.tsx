@@ -16,11 +16,9 @@ const fetcher = (url: string): Promise<ResponseType> =>
 export default function useGetBlogs() {
   const searchParams = useSearchParams();
   const page = parseInt(searchParams.get("page") || "1");
-  const limit = parseInt(searchParams.get("limit") || "10");
 
   const query = new URLSearchParams();
   if (page) query.set("page", page.toString());
-  if (limit) query.set("limit", limit.toString());
 
   const url = `/api/get-blogs?${query.toString()}`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
@@ -37,7 +35,6 @@ export default function useGetBlogs() {
     totalPages: data?.totalPages || 1,
     totalItems: data?.total || 0,
     currentPage: page,
-    limit,
     error,
     isLoading,
     mutate,

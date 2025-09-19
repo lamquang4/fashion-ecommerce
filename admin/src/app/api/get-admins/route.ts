@@ -24,7 +24,17 @@ export async function GET(req: NextRequest) {
     }
 
     const [admins, total] = await Promise.all([
-      User.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }),
+      User.aggregate([
+        { $match: query },
+        { $sort: { createdAt: -1 } },
+        { $skip: skip },
+        { $limit: limit },
+        {
+          $project: {
+            password: 0,
+          },
+        },
+      ]),
       User.countDocuments(query),
     ]);
 

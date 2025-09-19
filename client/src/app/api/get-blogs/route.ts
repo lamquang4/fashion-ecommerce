@@ -7,15 +7,22 @@ export async function GET(req: NextRequest) {
     await connectMongoDB();
     const searchParams = req.nextUrl.searchParams;
     const page = parseInt(searchParams.get("page") || "1");
-    const limit = parseInt(searchParams.get("limit") || "10");
+    const limit = 12;
     const skip = (page - 1) * limit;
 
     const [blogs, total] = await Promise.all([
-      Blog.find({ status: 1 })
-        .skip(skip)
-        .limit(limit)
-        .sort({ createdAt: -1 })
-        .lean(),
+      Blog.aggregate([
+        { $match: { status: 1 } },
+        { $sort: { createdAt: -1 } },
+        { $skip: skip },
+        { $limit: limit },
+        {
+          $project: {
+            _id: 0,
+            content: 0,
+          },
+        },
+      ]),
       Blog.countDocuments({ status: 1 }),
     ]);
 

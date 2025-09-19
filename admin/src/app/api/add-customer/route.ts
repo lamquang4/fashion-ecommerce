@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       status: 1,
     });
 
-    return NextResponse.json({ user: newUser }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
     console.log(err);
     return NextResponse.json(

@@ -15,8 +15,9 @@ interface Props {
   category?: Category;
   products: Product[];
   isLoading: boolean;
+  total: number;
 }
-function ProductList({ category, products, isLoading }: Props) {
+function ProductList({ category, products, isLoading, total }: Props) {
   const searchParams = useSearchParams();
   const router = useRouter();
   const pathname = usePathname();
@@ -107,7 +108,13 @@ function ProductList({ category, products, isLoading }: Props) {
 
   return (
     <>
-      <h2 className="mb-[20px]">{getTitle()}</h2>
+      <h2 className="mb-[20px]">
+        {!isLoading && (
+          <>
+            {getTitle()} ({total})
+          </>
+        )}
+      </h2>
 
       <div className="flex justify-between items-center flex-wrap mb-[35px]">
         <button
@@ -206,19 +213,23 @@ function ProductList({ category, products, isLoading }: Props) {
                   </div>
                 </div>
                 <div className="py-[12px] space-y-[6px]">
-                  <div className="flex space-x-2 mb-[8px]">
-                    {product.variants.map((variant, index) => {
+                  <div className="flex space-x-2 mb-[10px]">
+                    {product.variants.map((variant1, index) => {
                       return (
                         <button
                           key={index}
                           onClick={() =>
-                            handleSelectVariant(product._id, variant)
+                            handleSelectVariant(product._id, variant1)
                           }
                           type="button"
-                          title={variant.color?.namecolor}
-                          className="w-5.5 h-5.5 border-gray-400 border rounded-full"
+                          title={variant1.color?.namecolor}
+                          className={`w-5.5 h-5.5 border-gray-400 border rounded-full focus:ring-1 focus:ring-offset-2 ring-red-800 ${
+                            variant._id === variant1._id
+                              ? "ring-1 ring-offset-2"
+                              : ""
+                          }`}
                           style={{
-                            backgroundColor: variant.color?.codecolor,
+                            backgroundColor: variant1.color?.codecolor,
                           }}
                         ></button>
                       );

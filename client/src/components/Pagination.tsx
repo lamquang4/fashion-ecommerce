@@ -47,8 +47,8 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
   return (
     <>
       {totalItems > 0 && (
-        <div className="mt-[20px]">
-          <div className="flex items-center justify-center px-[10px] sm:px-[15px] w-full flex-wrap gap-2.5 text-gray-600 text-[0.9rem]">
+        <div className="mt-[20px] px-[15px]">
+          <div className="flex items-center justify-center w-full flex-wrap gap-2.5 text-gray-600 text-[0.9rem]">
             <button
               type="button"
               className="h-8.5 w-8.5 flex justify-center items-center rounded-full border border-gray-600   "

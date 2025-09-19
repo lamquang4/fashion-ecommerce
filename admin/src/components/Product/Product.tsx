@@ -14,7 +14,13 @@ import useDeleteProduct from "@/hooks/useDeleteProduct";
 import Loading from "../Loading";
 import InputSearch from "../InputSearch";
 import toast from "react-hot-toast";
+import { Variant } from "@/types/types";
+import { useState } from "react";
 function Product() {
+  const [selectedVariant, setSelectedVariant] = useState<
+    Record<string, Variant>
+  >({});
+
   const {
     products,
     mutate,
@@ -43,6 +49,13 @@ function Product() {
       value: 0,
     },
   ];
+
+  const handleSelectVariant = (productId: string, variant: Variant) => {
+    setSelectedVariant((prev) => ({
+      ...prev,
+      [productId]: variant,
+    }));
+  };
 
   const handleDelete = async (id: string) => {
     if (!id) {
@@ -119,122 +132,149 @@ function Product() {
                 </td>
               </tr>
             ) : products.length > 0 ? (
-              products.map((product) => (
-                <tr key={product._id} className="hover:bg-[#f2f3f8]">
-                  <td className="p-[1rem]">
-                    <div className="flex gap-[10px] items-center">
-                      <div className="cursor-pointer">
-                        <Image
-                          Src={product.variants[0].images[0]}
-                          Alt={product.name}
-                          ClassName={"w-[75px] cursor-pointer"}
-                          loadingType="lazy"
-                        />
-                      </div>
+              products.map((product) => {
+                const variant =
+                  selectedVariant[product._id] ?? product.variants[0];
 
-                      <p className="text-[0.9rem] font-medium  text-[#444]">
-                        {product.name}
-                      </p>
-                    </div>
-                  </td>
-
-                  <td className="p-[1rem]  ">
-                    {product.discount > 0 ? (
-                      <div className="flex gap-[12px]  ">
-                        <del className="text-[#707072] text-[1rem]">
-                          {product.price.toLocaleString("vi-VN")}₫
-                        </del>
-
-                        <p className="font-medium text-[#c00]">
-                          {(product.price - product.discount).toLocaleString(
-                            "vi-VN"
+                return (
+                  <tr key={product._id} className="hover:bg-[#f2f3f8]">
+                    <td className="p-[1rem]">
+                      <div className="flex gap-[10px] items-center">
+                        <div className="relative group">
+                          {variant.images[0] && (
+                            <Image
+                              Src={variant.images[0]}
+                              Alt={product.name}
+                              ClassName={"w-[80px] z-[1] relative"}
+                              loadingType="lazy"
+                            />
                           )}
-                          ₫
+                          {variant.images[1] && (
+                            <Image
+                              Src={variant.images[1]}
+                              Alt={product.name}
+                              ClassName={
+                                "w-[80px] absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
+                              }
+                              loadingType="eager"
+                            />
+                          )}
+                        </div>
+
+                        <p className="text-[0.9rem] font-medium  text-[#444]">
+                          {product.name}
                         </p>
                       </div>
-                    ) : (
-                      <p className="font-medium">
-                        {product.price.toLocaleString("vi-VN")}₫
-                      </p>
-                    )}
-                  </td>
+                    </td>
 
-                  <td className="p-[1rem]  ">
-                    <div className="flex flex-col gap-1.5">
-                      <p>Tồn kho: {product.totalQuantity}</p>
-                      <p>Đã bán: {product.totalSold}</p>
-                    </div>
-                  </td>
+                    <td className="p-[1rem]  ">
+                      {product.discount > 0 ? (
+                        <div className="flex gap-[12px]  ">
+                          <del className="text-[#707072] text-[1rem]">
+                            {product.price.toLocaleString("vi-VN")}₫
+                          </del>
 
-                  <td className="p-[1rem]  ">
-                    <div className="flex gap-1.5">
-                      {product.variants.map((variant, index) => (
-                        <div
-                          className="w-5 h-5 border-gray-400 border rounded-full"
-                          style={{
-                            backgroundColor: variant.color?.codecolor,
-                          }}
-                          key={index}
-                          title={variant.color?.namecolor}
-                        ></div>
-                      ))}
-                    </div>
-                  </td>
+                          <p className="font-medium text-[#c00]">
+                            {(product.price - product.discount).toLocaleString(
+                              "vi-VN"
+                            )}
+                            ₫
+                          </p>
+                        </div>
+                      ) : (
+                        <p className="font-medium">
+                          {product.price.toLocaleString("vi-VN")}₫
+                        </p>
+                      )}
+                    </td>
 
-                  <td className="p-[1rem]  ">
-                    {new Date(product.createdAt).toLocaleDateString("vi-VN")}
-                  </td>
+                    <td className="p-[1rem]  ">
+                      <div className="flex flex-col gap-1.5">
+                        <p>Tồn kho: {product.totalQuantity}</p>
+                        <p>Đã bán: {product.totalSold}</p>
+                      </div>
+                    </td>
 
-                  <td className="p-[1rem]  ">
-                    {product.category.namecategory}/
-                    {product.category.gender === 1
-                      ? "Nam"
-                      : product.category.gender === 0
-                      ? "Nữ"
-                      : ""}
-                  </td>
+                    <td className="p-[1rem]  ">
+                      <div className="flex gap-1.5">
+                        {product.variants.map((variant1, index) => (
+                          <button
+                            className={`w-5.5 h-5.5 border-gray-400 border rounded-full focus:ring-1 focus:ring-offset-2 ring-red-800 ${
+                              variant._id === variant1._id
+                                ? "ring-1 ring-offset-2"
+                                : ""
+                            }`}
+                            style={{
+                              backgroundColor: variant1.color?.codecolor,
+                            }}
+                            onClick={() =>
+                              handleSelectVariant(product._id, variant1)
+                            }
+                            key={index}
+                            title={variant1.color?.namecolor}
+                          ></button>
+                        ))}
+                      </div>
+                    </td>
 
-                  <td className="p-[1rem]  ">
-                    {product.status === 1
-                      ? "Hiện"
-                      : product.status === 0
-                      ? "Ẩn"
-                      : ""}
-                  </td>
+                    <td className="p-[1rem]  ">
+                      {new Date(product.createdAt).toLocaleDateString("vi-VN")}
+                    </td>
 
-                  <td className="p-[1rem]  ">
-                    <div className="flex items-center gap-[15px]">
-                      <button
-                        disabled={isLoadingVisibleProduct}
-                        onClick={() =>
-                          handleVisible(
-                            product._id,
-                            product.status === 1 ? 0 : 1
-                          )
-                        }
-                      >
-                        {product.status === 1 ? (
-                          <FaRegEyeSlash size={22} className="text-[#74767d]" />
-                        ) : (
-                          <MdOutlineRemoveRedEye
-                            size={22}
-                            className="text-[#74767d]"
-                          />
-                        )}
-                      </button>
-                      <Link href={`/edit-product/${product._id}`}>
-                        <LiaEdit size={22} className="text-[#076ffe]" />
-                      </Link>
-                      <button
-                        disabled={isLoadingDeleteProduct}
-                        onClick={() => handleDelete(product._id)}
-                      >
-                        <VscTrash size={22} className="text-[#d9534f]" />
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              ))
+                    <td className="p-[1rem]  ">
+                      {product.category.namecategory}/
+                      {product.category.gender === 1
+                        ? "Nam"
+                        : product.category.gender === 0
+                        ? "Nữ"
+                        : ""}
+                    </td>
+
+                    <td className="p-[1rem]  ">
+                      {product.status === 1
+                        ? "Hiện"
+                        : product.status === 0
+                        ? "Ẩn"
+                        : ""}
+                    </td>
+
+                    <td className="p-[1rem]  ">
+                      <div className="flex items-center gap-[15px]">
+                        <button
+                          disabled={isLoadingVisibleProduct}
+                          onClick={() =>
+                            handleVisible(
+                              product._id,
+                              product.status === 1 ? 0 : 1
+                            )
+                          }
+                        >
+                          {product.status === 1 ? (
+                            <FaRegEyeSlash
+                              size={22}
+                              className="text-[#74767d]"
+                            />
+                          ) : (
+                            <MdOutlineRemoveRedEye
+                              size={22}
+                              className="text-[#74767d]"
+                            />
+                          )}
+                        </button>
+                        <Link href={`/edit-product/${product._id}`}>
+                          <LiaEdit size={22} className="text-[#076ffe]" />
+                        </Link>
+                        <button
+                          disabled={isLoadingDeleteProduct}
+                          onClick={() => handleDelete(product._id)}
+                        >
+                          <VscTrash size={22} className="text-[#d9534f]" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                );
+              })
             ) : (
               <tr>
                 <td colSpan={8} className="w-full h-[70vh]">

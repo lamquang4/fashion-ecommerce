@@ -11,8 +11,78 @@ export async function GET(req: NextRequest) {
     const skip = (page - 1) * limit;
     const q = searchParams.get("q") || "";
 
-    // tìm kiếm tên sản phẩm lấy trong Product
-    const [inventories, countTotal, countQuantity] = await Promise.all([
+    const pipeline: any[] = [
+      {
+        $lookup: {
+          from: "products",
+          localField: "product",
+          foreignField: "_id",
+          as: "product",
+        },
+      },
+      { $unwind: "$product" },
+      ...(q
+        ? [
+            {
+              $match: {
+                "product.name": { $regex: q, $options: "i" },
+              },
+            },
+          ]
+        : []),
+      {
+        $unwind: "$inventories",
+      },
+      {
+        $lookup: {
+          from: "sizes",
+          localField: "inventories.size",
+          foreignField: "_id",
+          as: "inventories.size",
+        },
+      },
+      { $unwind: "$inventories.size" },
+      {
+        $group: {
+          _id: "$_id",
+          product: { $first: "$product" },
+          images: { $first: "$images" },
+          color: { $first: "$color" },
+          createdAt: { $first: "$createdAt" },
+          inventories: { $push: "$inventories" },
+        },
+      },
+      {
+        $lookup: {
+          from: "colors",
+          localField: "color",
+          foreignField: "_id",
+          as: "color",
+        },
+      },
+      { $unwind: "$color" },
+      {
+        $project: {
+          _id: 1,
+          "product._id": 1,
+          "product.name": 1,
+          images: 1,
+          "color._id": 1,
+          "color.namecolor": 1,
+          "color.codecolor": 1,
+          inventories: {
+            size: {
+              _id: 1,
+              namesize: 1,
+            },
+            quantity: 1,
+          },
+          createdAt: 1,
+        },
+      },
+    ];
+
+    const [inventories, totalResult, countQuantity] = await Promise.all([
       Inventory.aggregate([
         {
           $lookup: {
@@ -32,9 +102,7 @@ export async function GET(req: NextRequest) {
               },
             ]
           : []),
-        {
-          $unwind: "$inventories",
-        },
+        { $unwind: "$inventories" },
         {
           $lookup: {
             from: "sizes",
@@ -43,9 +111,12 @@ export async function GET(req: NextRequest) {
             as: "inventories.size",
           },
         },
-        {
-          $unwind: "$inventories.size",
-        },
+        { $unwind: "$inventories.size" },
+
+        // Giới hạn trước khi group
+        { $sort: { createdAt: -1 } },
+        { $skip: skip },
+        { $limit: limit },
 
         {
           $group: {
@@ -54,12 +125,9 @@ export async function GET(req: NextRequest) {
             images: { $first: "$images" },
             color: { $first: "$color" },
             createdAt: { $first: "$createdAt" },
-            inventories: {
-              $push: "$inventories",
-            },
+            inventories: { $push: "$inventories" },
           },
         },
-
         {
           $lookup: {
             from: "colors",
@@ -68,64 +136,9 @@ export async function GET(req: NextRequest) {
             as: "color",
           },
         },
-        {
-          $unwind: "$color",
-        },
-        {
-          $project: {
-            _id: 1,
-            "product._id": 1,
-            "product.name": 1,
-            images: 1,
-            "color._id": 1,
-            "color.namecolor": 1,
-            "color.codecolor": 1,
-            inventories: {
-              size: {
-                _id: 1,
-                namesize: 1,
-              },
-              quantity: 1,
-            },
-            createdAt: 1,
-          },
-        },
-
-        { $sort: { "product._id": 1, color: -1 } },
-        { $skip: skip },
-        { $limit: limit },
+        { $unwind: "$color" },
       ]),
-      Inventory.aggregate([
-        {
-          $lookup: {
-            from: "products",
-            localField: "product",
-            foreignField: "_id",
-            as: "product",
-          },
-        },
-        { $unwind: "$product" },
-        ...(q
-          ? [
-              {
-                $match: {
-                  "product.name": { $regex: q, $options: "i" },
-                },
-              },
-            ]
-          : []),
-        {
-          $project: {
-            inventoriesCount: { $size: "$inventories" },
-          },
-        },
-        {
-          $group: {
-            _id: null,
-            total: { $sum: "$inventoriesCount" },
-          },
-        },
-      ]),
+      Inventory.aggregate([...pipeline, { $count: "total" }]),
       Inventory.aggregate([
         {
           $lookup: {
@@ -155,7 +168,7 @@ export async function GET(req: NextRequest) {
       ]),
     ]);
 
-    const total = countTotal[0]?.total || 0;
+    const total = totalResult[0]?.total || 0;
     const totalQuantity = countQuantity[0]?.totalQuantity || 0;
 
     if (!inventories || inventories.length === 0) {

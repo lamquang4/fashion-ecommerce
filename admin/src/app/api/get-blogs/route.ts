@@ -20,7 +20,18 @@ export async function GET(req: NextRequest) {
     }
 
     const [blogs, total] = await Promise.all([
-      Blog.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }).lean(),
+      Blog.aggregate([
+        { $match: query },
+        { $sort: { createdAt: -1 } },
+        { $skip: skip },
+        { $limit: limit },
+        {
+          $project: {
+            content: 0,
+            summary: 0,
+          },
+        },
+      ]),
       Blog.countDocuments(query),
     ]);
 

@@ -24,14 +24,24 @@ export async function GET(req: NextRequest) {
     }
 
     const [customers, total] = await Promise.all([
-      User.find(query).skip(skip).limit(limit).sort({ createdAt: -1 }).lean(),
+      User.aggregate([
+        { $match: query }, 
+        { $sort: { createdAt: -1 } }, 
+        { $skip: skip }, 
+        { $limit: limit }, 
+        {
+          $project: {
+            password: 0, 
+          },
+        },
+      ]),
       User.countDocuments(query),
     ]);
 
     if (!customers || customers.length === 0) {
       return NextResponse.json(
         {
-         msg: "Không tìm thấy"
+          msg: "Không tìm thấy",
         },
         { status: 404 }
       );

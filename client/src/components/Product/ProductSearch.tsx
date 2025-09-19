@@ -7,9 +7,13 @@ function ProductSearch() {
   const { products, totalPages, totalItems, currentPage, isLoading } =
     useGetProductsSearch();
   return (
-    <section className="my-[40px] px-[10px] sm:px-[15px]">
+    <section className="my-[40px]  px-[15px]">
       <div className="mx-auto max-w-[1230px] w-full">
-        <ProductList products={products} isLoading={isLoading} />
+        <ProductList
+          products={products}
+          isLoading={isLoading}
+          total={totalItems}
+        />
 
         <Pagination
           totalPages={totalPages}

@@ -25,7 +25,7 @@ function SizeChartModal({ sizes, isOpen, toggleMenu }: props) {
   return (
     <>
       <div className="fixed top-0 right-0 left-0 z-20 h-full overflow-y-auto overflow-x-hidden">
-        <div className="py-[40px] px-[10px] sm:px-[15px] flex justify-center items-center">
+        <div className="py-[40px] px-[15px] flex justify-center items-center">
           <div className="relative w-full max-w-[720px] max-h-full">
             <div className="relative sm:p-[25px_20px] p-[25px_15px] bg-white z-20 space-y-[15px] rounded-lg">
               <div className="flex items-center justify-between">
@@ -43,7 +43,7 @@ function SizeChartModal({ sizes, isOpen, toggleMenu }: props) {
               <hr className=" border-gray-300" />
 
               <div className="space-y-[15px]">
-                <h5 className="capitalize font-semibold">Bảng kích thước</h5>
+                <h5 className="font-semibold">Bảng kích thước</h5>
 
                 <div className=" w-full overflow-auto">
                   <table className="w-[260%] border-collapse sm:w-[180%] xl:w-full border border-gray-200 text-[0.9rem] text-left">
@@ -103,7 +103,7 @@ function SizeChartModal({ sizes, isOpen, toggleMenu }: props) {
               </div>
 
               <div className="space-y-[15px]">
-                <h5 className="capitalize font-semibold">Cách lấy số đo</h5>
+                <h5 className="font-semibold">Cách lấy số đo</h5>
 
                 <div className="grid gap-[15px] sm:grid-cols-2 grid-cols-1">
                   <div className="space-y-[10px]">

@@ -10,7 +10,7 @@ interface Props {
 
 const BreadCrumb = ({ items }: Props) => {
   return (
-    <div className="px-[10px] sm:px-[15px]">
+    <div className=" px-[15px]">
       <div className="w-full max-w-[1230px] mx-auto overflow-x-auto">
         <nav className="py-4">
           <ol className="flex items-center gap-1.5 text-[0.9rem] text-gray-500 font-medium whitespace-nowrap">

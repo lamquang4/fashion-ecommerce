@@ -53,7 +53,7 @@ function ProductSlider({ title, products }: Props) {
   return (
     <>
       {products.length > 0 && (
-        <section className="mb-[40px] px-[10px] sm:px-[15px]">
+        <section className="mb-[40px]  px-[15px]">
           <div className="mx-auto max-w-[1230px] w-full">
             <h2 className="mb-[20px]">{title}</h2>
             <Swiper
@@ -140,19 +140,23 @@ function ProductSlider({ title, products }: Props) {
                       </div>
                     </div>
                     <div className="py-[12px] space-y-[6px]">
-                      <div className="flex space-x-2 mb-[8px]">
-                        {product.variants.map((variant, index) => {
+                      <div className="flex space-x-2 mb-[10px]">
+                        {product.variants.map((variant1, index) => {
                           return (
                             <button
                               key={index}
                               onClick={() =>
-                                handleSelectVariant(product._id, variant)
+                                handleSelectVariant(product._id, variant1)
                               }
                               type="button"
                               title={variant.color?.namecolor}
-                              className="w-5.5 h-5.5 border-gray-400 border rounded-full"
+                              className={`w-5.5 h-5.5 border-gray-400 border rounded-full focus:ring-1 focus:ring-offset-2 ring-red-800 ${
+                                variant._id === variant1._id
+                                  ? "ring-1 ring-offset-2"
+                                  : ""
+                              }`}
                               style={{
-                                backgroundColor: variant.color?.codecolor,
+                                backgroundColor: variant1.color?.codecolor,
                               }}
                             ></button>
                           );

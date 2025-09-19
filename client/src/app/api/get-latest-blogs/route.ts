@@ -6,10 +6,17 @@ export async function GET() {
   try {
     await connectMongoDB();
     const limit = 6;
-    const blogs = await Blog.find({ status: 1 })
-      .limit(limit)
-      .sort({ createdAt: -1 })
-      .lean();
+    const blogs = await Blog.aggregate([
+      { $match: { status: 1 } },
+      { $sort: { createdAt: -1 } },
+      { $limit: limit },
+      {
+        $project: {
+          _id: 0,
+          content: 0,
+        },
+      },
+    ]);
 
     if (!blogs || blogs.length === 0) {
       return NextResponse.json(

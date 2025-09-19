@@ -36,25 +36,25 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
   return (
     <>
       <nav
-        className={`custom-scroll fixed top-0 w-full max-w-[320px] h-screen p-5 overflow-y-auto bg-white shadow-md transition-all duration-500 ease-in-out z-[22] ${
+        className={`custom-scroll fixed top-0 w-full max-w-[320px] h-screen py-[20px] overflow-y-auto bg-white shadow-md transition-all duration-500 ease-in-out z-[22] ${
           isOpen ? "right-0 visible" : "right-[-100%] invisible"
         }`}
       >
         <div className="flex justify-end items-center">
           <button onClick={toggleMenu}>
-            <HiMiniXMark size={30} color="black" />
+            <HiMiniXMark size={25} color="black" />
           </button>
         </div>
 
-        <ul className="py-[25px] font-semibold text-[0.9rem] uppercase">
-          <li className="border-b border-gray-300">
-            <div
-              onClick={() => toggleOpen(`abc`)}
-              className="w-full cursor-pointer flex justify-between items-center"
-            >
-              <p className="text-black py-4">Nam</p>
+        <ul className="py-[20px] font-semibold text-[0.9rem] uppercase">
+          <li
+            className="border-b border-gray-300 p-[15px] cursor-pointer"
+            onClick={() => toggleOpen(`a1`)}
+          >
+            <div className="w-full flex justify-between items-center">
+              <p>Nam</p>
               <button>
-                {openMenus[`abc`] ? (
+                {openMenus[`a1`] ? (
                   <FaMinus className="text-[#3b3a3a]" size={15} />
                 ) : (
                   <FaPlus className="text-[#3b3a3a]" size={15} />
@@ -65,7 +65,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
             {categoriesMale.length > 0 && (
               <ul
                 className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out ${
-                  openMenus[`abc`] ? "max-h-fit visible" : ""
+                  openMenus[`a1`] ? "max-h-fit visible" : ""
                 }`}
               >
                 <li className="my-[10px]">
@@ -90,14 +90,14 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
             )}
           </li>
 
-          <li className="border-b border-gray-300">
-            <div
-              onClick={() => toggleOpen(`xyz`)}
-              className="w-full cursor-pointer flex justify-between items-center"
-            >
-              <p className="text-black py-4">Nữ</p>
+          <li
+            className="border-b border-gray-300 p-[15px] cursor-pointer"
+            onClick={() => toggleOpen(`a2`)}
+          >
+            <div className="w-full flex justify-between items-center">
+              <p>Nữ</p>
               <button>
-                {openMenus[`xyz`] ? (
+                {openMenus[`a2`] ? (
                   <FaMinus className="text-[#3b3a3a]" size={15} />
                 ) : (
                   <FaPlus className="text-[#3b3a3a]" size={15} />
@@ -108,7 +108,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
             {categoriesFemale.length > 0 && (
               <ul
                 className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out ${
-                  openMenus[`xyz`] ? "max-h-fit visible" : ""
+                  openMenus[`a2`] ? "max-h-fit visible" : ""
                 }`}
               >
                 <li className="my-[10px]">
@@ -133,14 +133,14 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
             )}
           </li>
 
-          <li className="border-b border-gray-300">
-            <div
-              onClick={() => toggleOpen(`klo`)}
-              className="w-full cursor-pointer flex justify-between items-center"
-            >
-              <p className="text-black py-4">Giảm giá</p>
+          <li
+            className="border-b border-gray-300 p-[15px] cursor-pointer"
+            onClick={() => toggleOpen(`a3`)}
+          >
+            <div className="w-full flex justify-between items-center">
+              <p>Giảm giá</p>
               <button>
-                {openMenus[`klo`] ? (
+                {openMenus[`a3`] ? (
                   <FaMinus className="text-[#3b3a3a]" size={15} />
                 ) : (
                   <FaPlus className="text-[#3b3a3a]" size={15} />
@@ -150,7 +150,7 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
 
             <ul
               className={`max-h-0 overflow-hidden invisible transition-all duration-600 ease-in-out ${
-                openMenus[`klo`] ? "max-h-fit visible" : ""
+                openMenus[`a3`] ? "max-h-fit visible" : ""
               }`}
             >
               <li className="my-[10px]">
@@ -173,10 +173,8 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
             </ul>
           </li>
 
-          <li className="border-b border-gray-300">
-            <Link href={"/blog"} className="text-black py-4">
-              Tin tức
-            </Link>
+          <li className="border-b border-gray-300 p-[15px] cursor-pointer">
+            <Link href={"/blog"}>Tin tức</Link>
           </li>
         </ul>
       </nav>

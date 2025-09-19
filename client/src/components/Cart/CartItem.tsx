@@ -143,7 +143,7 @@ function CartItem({ cart }: Props) {
   };
 
   return (
-    <section className="my-[40px] px-[10px] sm:px-[15px]">
+    <section className="my-[40px] px-[15px]">
       <div className="max-w-[1230px] mx-auto">
         <h2 className="mb-[20px]">Giỏ hàng ({totalQuantity})</h2>
         {cart?.productsInCart && cart.productsInCart.length > 0 ? (

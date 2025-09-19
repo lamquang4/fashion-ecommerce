@@ -72,11 +72,11 @@ export async function PUT(
       updatedData.password = hashPassword;
     }
 
-    const updatedUser = await User.findByIdAndUpdate(id, updatedData, {
+    await User.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
 
-    return NextResponse.json({ user: updatedUser }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

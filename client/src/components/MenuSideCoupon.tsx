@@ -20,7 +20,7 @@ function MenuSideCoupon({ isOpen, toggleMenu }: Props) {
   return (
     <>
       <div
-        className={`custom-scroll fixed top-0 right-0 w-full max-w-[400px] h-screen overflow-y-auto bg-white z-[25] px-[12px] pl-[20px] transform transition-transform duration-350 ease-in-out ${
+        className={`custom-scroll fixed top-0 right-0 w-full max-w-[400px] h-screen overflow-y-auto bg-white z-[25] px-[15px] transform transition-transform duration-350 ease-in-out ${
           isOpen ? "translate-x-[0px]" : "translate-x-[400px]"
         }`}
       >
@@ -31,7 +31,7 @@ function MenuSideCoupon({ isOpen, toggleMenu }: Props) {
           </button>
         </div>
 
-        <div className="flex gap-[15px] flex-col items-center w-full py-[30px]">
+        <div className="flex gap-[15px] flex-col items-center w-full py-[20px]">
           {coupons.length > 0 &&
             coupons.map((coupon) => (
               <div
