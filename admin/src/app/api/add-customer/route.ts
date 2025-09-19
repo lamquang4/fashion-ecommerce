@@ -55,7 +55,7 @@ export async function POST(req: NextRequest) {
     }
 
     const hashPassword = await hashValue(password);
-    const newUser = await User.create({
+    await User.create({
       fullname,
       email,
       phone,
