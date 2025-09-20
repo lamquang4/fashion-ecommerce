@@ -36,7 +36,7 @@ function CategoryList() {
           ))}
         </div>
 
-        <div className="mx-auto">
+        <div className="mx-auto w-fit">
           <Swiper
             spaceBetween={30}
             slidesPerView={"auto"}
