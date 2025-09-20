@@ -36,24 +36,23 @@ function CategoryList() {
           ))}
         </div>
 
-        <div className="mx-auto w-fit">
+        <div className="flex justify-center">
           <Swiper
-            spaceBetween={30}
+            spaceBetween={20}
             slidesPerView={"auto"}
-            centeredSlides={false}
             modules={[FreeMode]}
             grabCursor={true}
           >
             {categories.map((category) => (
               <SwiperSlide
                 key={category._id}
-                className="!flex !flex-col !items-center !w-auto"
+                className="!flex !flex-col !items-center !w-auto group"
               >
                 <Link
                   href={`/collection/${category.slug}`}
                   className="space-y-[8px]"
                 >
-                  <div className="w-[100px] sm:w-[120px] border-gray-300 border">
+                  <div className="w-[110px] sm:w-[130px] border-gray-300 border rounded-full group-hover:border-black">
                     <Image
                       Src={category.image}
                       Alt={category.namecategory}

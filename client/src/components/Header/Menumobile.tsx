@@ -4,7 +4,7 @@ import { HiMiniXMark } from "react-icons/hi2";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import Link from "next/link";
-import Overplay from "./Overplay";
+import Overplay from "../Overplay";
 import useGetCategories from "@/hooks/useGetCategories";
 type MenuMobileProps = {
   isOpen: boolean;

@@ -17,13 +17,6 @@ button {
   width: 6px;
 }
 
-.menu-category:hover .dropdown-list {
-  box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
-  visibility: visible;
-  opacity: 1;
-  transform: translateY(10px);
-}
-
 input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;

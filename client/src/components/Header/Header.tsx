@@ -6,17 +6,18 @@ import { CiShoppingCart } from "react-icons/ci";
 import { CiUser, CiSearch } from "react-icons/ci";
 import { AiOutlineMenu } from "react-icons/ai";
 import Menumobile from "./Menumobile";
-import Overplay from "./Overplay";
-import ProfileMenu from "./ProfileMenu";
-import Image from "./Image";
+import Overplay from "../Overplay";
+import ProfileMenu from "../ProfileMenu";
+import Image from "../Image";
 import useGetCategories from "@/hooks/useGetCategories";
-import SearchMobile from "./SearchMobile";
-import SearchDesktop from "./SearchDesktop";
+import SearchMobile from "../SearchMobile";
+import SearchDesktop from "../SearchDesktop";
 import useGetCart from "@/hooks/useGetCart";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import { useSyncCart } from "@/hooks/useSyncCart";
 import { useSyncWishlist } from "@/hooks/useSyncWishlist";
 import { useSession } from "next-auth/react";
+import MenuDropDown from "./MenuDropDown";
 
 function Header() {
   const { categoriesMale, categoriesFemale } = useGetCategories();
@@ -93,89 +94,54 @@ function Header() {
 
           <nav className="hidden lg:block">
             <ul className="flex items-center gap-[30px] text-[0.9rem] font-semibold uppercase">
-              <li className="relative menu-category">
+              <li className="relative group">
                 <span className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
                   Nam
                 </span>
                 {categoriesMale.length > 0 && (
-                  <ul className="text-[#707072] absolute font-medium top-5 left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
-                    <li>
-                      <Link
-                        href={`/collection/nam`}
-                        className="  text-[0.9rem] p-3 transition-all duration-200 hover:text-black"
-                      >
-                        Đồ nam
-                      </Link>
-                    </li>
-                    {categoriesMale.map((category, index) => (
-                      <li key={index}>
-                        <Link
-                          href={`/collection/${category.slug}`}
-                          className="  text-[0.9rem] p-3 transition-all duration-200 hover:text-black"
-                        >
-                          {category.namecategory}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+                  <MenuDropDown
+                    items={[
+                      { name: "Đồ nam", href: "/collection/nam" },
+                      ...categoriesMale.map((c) => ({
+                        name: c.namecategory,
+                        href: `/collection/${c.slug}`,
+                      })),
+                    ]}
+                  />
                 )}
               </li>
 
-              <li className="relative menu-category">
+              <li className="relative group">
                 <span className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
                   Nữ
                 </span>
                 {categoriesFemale.length > 0 && (
-                  <ul className="text-[#707072] absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
-                    <li>
-                      <Link
-                        href={`/collection/nu`}
-                        className="  text-[0.9rem] p-3 transition-all duration-200 hover:text-black"
-                      >
-                        Đồ nữ
-                      </Link>
-                    </li>
-                    {categoriesFemale.map((category, index) => (
-                      <li key={index}>
-                        <Link
-                          href={`/collection/${category.slug}`}
-                          className="  text-[0.9rem] p-3 transition-all duration-200 hover:text-black"
-                        >
-                          {category.namecategory}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
+                  <MenuDropDown
+                    items={[
+                      { name: "Đồ nữ", href: "/collection/nu" },
+                      ...categoriesFemale.map((c) => ({
+                        name: c.namecategory,
+                        href: `/collection/${c.slug}`,
+                      })),
+                    ]}
+                  />
                 )}
               </li>
 
-              <li className="relative menu-category">
+              <li className="relative group">
                 <span className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
                   Giảm giá
                 </span>
 
-                <ul className="text-[#707072] absolute font-medium top-full left-0 w-[200px] bg-white translate-y-[12px] opacity-0 invisible transition-all duration-200 z-5 group-hover:opacity-100 group-hover:visible group-hover:translate-y-[12px] dropdown-list">
-                  <li>
-                    <Link
-                      href={"/sale/nam"}
-                      className="text-[0.9rem] p-3 transition-all duration-200 hover:text-black"
-                    >
-                      Giảm giá đồ nam
-                    </Link>
-                  </li>
-
-                  <li>
-                    <Link
-                      href={"/sale/nu"}
-                      className="text-[0.9rem] p-3 transition-all duration-200 hover:text-black"
-                    >
-                      Giảm giá đồ nữ
-                    </Link>
-                  </li>
-                </ul>
+                <MenuDropDown
+                  items={[
+                    { name: "Giảm giá đồ nam", href: "/sale/nam" },
+                    { name: "Giảm giá đồ nữ", href: "/sale/nu" },
+                  ]}
+                />
               </li>
 
-              <li className="relative menu-category">
+              <li className="relative group">
                 <Link href={"/blog"}>Tin tức</Link>
               </li>
             </ul>
