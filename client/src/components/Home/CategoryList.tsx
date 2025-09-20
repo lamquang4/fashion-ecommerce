@@ -36,25 +36,13 @@ function CategoryList() {
           ))}
         </div>
 
-        <div className="mx-auto w-fit">
+        <div className="mx-auto">
           <Swiper
             spaceBetween={30}
+            slidesPerView={"auto"}
+            centeredSlides={false}
             modules={[FreeMode]}
-            freeMode={true}
-            breakpoints={{
-              0: {
-                slidesPerView: 2,
-              },
-              768: {
-                slidesPerView: 3,
-              },
-              1024: {
-                slidesPerView: 4,
-              },
-              1640: {
-                slidesPerView: 4,
-              },
-            }}
+            grabCursor={true}
           >
             {categories.map((category) => (
               <SwiperSlide
