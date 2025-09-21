@@ -22,7 +22,7 @@ function RegisterForm() {
     otp: "",
   });
 
-  const [step, setStep] = useState<"step1" | "step2">("step1");
+  const [step, setStep] = useState<number>(1);
 
   const { handleRegister, isLoading } = useRegister();
   const { sendRegisterOTP, isLoading: isLoadingSendResetOTP } =
@@ -41,7 +41,7 @@ function RegisterForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (step === "step1") {
+    if (step === 1) {
       if (!validateEmail(data.email)) {
         toast.error("Email không hợp lệ");
         return;
@@ -49,7 +49,7 @@ function RegisterForm() {
 
       try {
         await sendRegisterOTP({ email: data.email.trim() });
-        setStep("step2");
+        setStep(2);
       } catch (err: any) {
         toast.error(err?.response?.data?.msg);
       }
@@ -104,7 +104,7 @@ function RegisterForm() {
                 Đăng kí
               </h2>
               <form className="space-y-[15px]" onSubmit={handleSubmit}>
-                {step === "step1" ? (
+                {step === 1 ? (
                   <div className="space-y-[5px]">
                     <label
                       htmlFor=""
@@ -228,7 +228,7 @@ function RegisterForm() {
                       <button
                         type="button"
                         onClick={() => {
-                          setStep("step1");
+                          setStep(1);
                           setData({
                             fullname: "",
                             email: "",

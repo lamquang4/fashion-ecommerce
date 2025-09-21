@@ -12,7 +12,7 @@ import { useResetPassword } from "@/hooks/useResetPassword";
 function ResetPassword() {
   const router = useRouter();
 
-  const [step, setStep] = useState<"step1" | "step2">("step1");
+  const [step, setStep] = useState<number>(1);
   const [data, setData] = useState({
     email: "",
     otp: "",
@@ -36,7 +36,7 @@ function ResetPassword() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (step === "step1") {
+    if (step === 1) {
       if (!validateEmail(data.email)) {
         toast.error("Email không hợp lệ");
         return;
@@ -45,7 +45,7 @@ function ResetPassword() {
       try {
         await sendResetOTP({ email: data.email.trim() });
         toast.success("Đã gửi OTP tới email");
-        setStep("step2");
+        setStep(2);
       } catch (err: any) {
         toast.error(err?.response?.data?.msg);
       }
@@ -88,7 +88,7 @@ function ResetPassword() {
               </h2>
 
               <form className="space-y-[15px]" onSubmit={handleSubmit}>
-                {step === "step1" ? (
+                {step === 1 ? (
                   <div className="space-y-[5px]">
                     <label className="block text-[0.9rem] font-medium">
                       Email
@@ -162,7 +162,7 @@ function ResetPassword() {
                   type="submit"
                   className="w-full bg-black text-white focus:outline-none font-semibold rounded-sm text-[0.9rem] px-5 py-2.5 text-center"
                 >
-                  {step === "step1" ? "Gửi mã xác nhận" : "Đặt lại mật khẩu"}
+                  {step === 1 ? "Gửi mã xác nhận" : "Đặt lại mật khẩu"}
                 </button>
               </form>
             </div>
