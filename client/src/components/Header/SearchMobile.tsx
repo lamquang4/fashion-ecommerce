@@ -1,8 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { memo, useEffect, useState } from "react";
-import { HiMiniXMark } from "react-icons/hi2";
-import SuggestionProduct from "./SuggestionProduct";
+import SuggestionProduct from "../SuggestionProduct";
 type Props = {
   toggleSearch: () => void;
   openSearch: boolean;
@@ -39,37 +38,47 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
 
   return (
     <div
-      className={`absolute left-0 w-full p-[10px_12px] bg-white border-y-[1.2px] border-gray-300 transition-all duration-300 overflow-hidden ${
+      className={`absolute left-0 w-full border-t border-gray-300 bg-white transition-all duration-300 overflow-hidden ${
         openSearch
           ? "opacity-100 visible top-[68px]"
           : "opacity-0 invisible top-[90px]"
       }`}
     >
       <div className="relative">
-        <div className="flex items-center">
-          <div className="w-full">
-            <form onSubmit={handleSearch}>
-              <input
-                type="text"
-                required
-                placeholder="Tìm kiếm..."
-                maxLength={50}
-                autoComplete="off"
-                className="w-full px-2 py-2 rounded outline-none"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-                onFocus={() => setFocused(true)}
-                onBlur={() => {
-                  setTimeout(() => {
-                    setFocused(false);
-                  }, 200);
-                }}
-              />
-            </form>
-          </div>
+        <div className="flex items-center px-[15px] py-4">
+          <form onSubmit={handleSearch} className="w-full">
+            <input
+              type="text"
+              required
+              placeholder="Tìm kiếm..."
+              maxLength={50}
+              autoComplete="off"
+              className="w-full rounded outline-none text-[0.9rem]"
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              onFocus={() => setFocused(true)}
+              onBlur={() => {
+                setTimeout(() => {
+                  setFocused(false);
+                }, 200);
+              }}
+            />
+          </form>
 
           <button onClick={toggleSearch}>
-            <HiMiniXMark size={25} />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-x-icon lucide-x w-3"
+              viewBox="5 5 14 14"
+            >
+              <path d="M18 6 6 18"></path>
+              <path d="m6 6 12 12"></path>
+            </svg>
           </button>
         </div>
 

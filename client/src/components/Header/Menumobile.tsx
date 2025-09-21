@@ -1,6 +1,5 @@
 "use client";
 import { memo, useEffect, useState } from "react";
-import { HiMiniXMark } from "react-icons/hi2";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import Link from "next/link";
@@ -36,22 +35,34 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
   return (
     <>
       <nav
-        className={`custom-scroll fixed top-0 w-full max-w-[320px] h-screen py-[20px] overflow-y-auto bg-white shadow-md transition-all duration-500 ease-in-out z-[22] ${
+        className={`custom-scroll fixed top-0 w-full max-w-[320px] h-screen py-[20px] px-[15px] overflow-y-auto bg-white shadow-md transition-all duration-500 ease-in-out z-[22] ${
           isOpen ? "right-0 visible" : "right-[-100%] invisible"
         }`}
       >
         <div className="flex justify-end items-center">
           <button onClick={toggleMenu}>
-            <HiMiniXMark size={25} color="black" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-x-icon lucide-x w-3.5"
+              viewBox="5 5 14 14"
+            >
+              <path d="M18 6 6 18"></path>
+              <path d="m6 6 12 12"></path>
+            </svg>
           </button>
         </div>
 
         <ul className="py-[20px] font-semibold text-[0.9rem] uppercase">
           <li
-            className="border-b border-gray-300 p-[15px] cursor-pointer"
+            className="border-b border-gray-300 cursor-pointer"
             onClick={() => toggleOpen(`a1`)}
           >
-            <div className="w-full flex justify-between items-center">
+            <div className="w-full flex justify-between items-center py-[15px]">
               <p>Nam</p>
               <button>
                 {openMenus[`a1`] ? (
@@ -68,19 +79,19 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                   openMenus[`a1`] ? "max-h-fit visible" : ""
                 }`}
               >
-                <li className="my-[10px]">
+                <li>
                   <Link
                     href={`/collection/nam`}
-                    className="py-[8px] text-[0.9rem] text-[#444] font-medium hover:text-black"
+                    className="py-[15px] text-[0.9rem] text-[#444] font-medium hover:text-black"
                   >
                     Đồ nam
                   </Link>
                 </li>
                 {categoriesMale.map((category) => (
-                  <li className="my-[10px]" key={category._id}>
+                  <li key={category._id}>
                     <Link
                       href={`/collection/${category.slug}`}
-                      className="py-[8px] text-[0.9rem] text-[#444] font-medium hover:text-black"
+                      className="py-[15px] text-[0.9rem] text-[#444] font-medium hover:text-black"
                     >
                       {category.namecategory}
                     </Link>
@@ -91,10 +102,10 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
           </li>
 
           <li
-            className="border-b border-gray-300 p-[15px] cursor-pointer"
+            className="border-b border-gray-300 cursor-pointer"
             onClick={() => toggleOpen(`a2`)}
           >
-            <div className="w-full flex justify-between items-center">
+            <div className="w-full flex justify-between items-center py-[15px]">
               <p>Nữ</p>
               <button>
                 {openMenus[`a2`] ? (
@@ -111,19 +122,19 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                   openMenus[`a2`] ? "max-h-fit visible" : ""
                 }`}
               >
-                <li className="my-[10px]">
+                <li>
                   <Link
                     href={`/collection/nu`}
-                    className="py-[8px] text-[0.9rem] text-[#444] font-medium hover:text-black"
+                    className="py-[15px] text-[0.9rem] text-[#444] font-medium hover:text-black"
                   >
                     Đồ nữ
                   </Link>
                 </li>
                 {categoriesFemale.map((category) => (
-                  <li className="my-[10px]" key={category._id}>
+                  <li key={category._id}>
                     <Link
                       href={`/collection/${category.slug}`}
-                      className="py-[8px] text-[0.9rem] text-[#444] font-medium hover:text-black"
+                      className="py-[15px] text-[0.9rem] text-[#444] font-medium hover:text-black"
                     >
                       {category.namecategory}
                     </Link>
@@ -134,10 +145,10 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
           </li>
 
           <li
-            className="border-b border-gray-300 p-[15px] cursor-pointer"
+            className="border-b border-gray-300 cursor-pointer"
             onClick={() => toggleOpen(`a3`)}
           >
-            <div className="w-full flex justify-between items-center">
+            <div className="w-full flex justify-between items-center py-[15px]">
               <p>Giảm giá</p>
               <button>
                 {openMenus[`a3`] ? (
@@ -153,19 +164,19 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
                 openMenus[`a3`] ? "max-h-fit visible" : ""
               }`}
             >
-              <li className="my-[10px]">
+              <li>
                 <Link
                   href={"/sale/nam"}
-                  className="py-[8px] text-[0.9rem] text-[#444] font-medium hover:text-black"
+                  className="py-[15px] text-[0.9rem] text-[#444] font-medium hover:text-black"
                 >
                   Giảm giá đồ nam
                 </Link>
               </li>
 
-              <li className="my-[10px]">
+              <li>
                 <Link
                   href={"/sale/nu"}
-                  className="py-[8px] text-[0.9rem] text-[#444] font-medium hover:text-black"
+                  className="py-[15px] text-[0.9rem] text-[#444] font-medium hover:text-black"
                 >
                   Giảm giá đồ nữ
                 </Link>
@@ -173,8 +184,10 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
             </ul>
           </li>
 
-          <li className="border-b border-gray-300 p-[15px] cursor-pointer">
-            <Link href={"/blog"}>Tin tức</Link>
+          <li className="border-b border-gray-300 cursor-pointer">
+            <Link href={"/blog"} className="py-[15px]">
+              Tin tức
+            </Link>
           </li>
         </ul>
       </nav>

@@ -1,7 +1,6 @@
 "use client";
 import { memo, useEffect } from "react";
 import Overplay from "./Overplay";
-import { HiMiniXMark } from "react-icons/hi2";
 import Image from "./Image";
 import { Size } from "@/types/type";
 type props = {
@@ -36,7 +35,19 @@ function SizeChartModal({ sizes, isOpen, toggleMenu }: props) {
                   className=" bg-transparent ms-auto"
                   onClick={toggleMenu}
                 >
-                  <HiMiniXMark size={30} />
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    className="lucide lucide-x-icon lucide-x w-3.5"
+                    viewBox="5 5 14 14"
+                  >
+                    <path d="M18 6 6 18"></path>
+                    <path d="m6 6 12 12"></path>
+                  </svg>
                 </button>
               </div>
 

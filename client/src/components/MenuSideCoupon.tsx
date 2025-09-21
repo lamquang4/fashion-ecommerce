@@ -1,7 +1,6 @@
 "use client";
 import useGetCoupons from "@/hooks/useGetCoupons";
 import Overplay from "./Overplay";
-import { HiMiniXMark } from "react-icons/hi2";
 import { MdContentCopy } from "react-icons/md";
 import toast from "react-hot-toast";
 import { memo } from "react";
@@ -27,7 +26,19 @@ function MenuSideCoupon({ isOpen, toggleMenu }: Props) {
         <div className="sticky top-0 overflow-hidden bg-white py-[15px] flex justify-between items-center border-b border-gray-300">
           <h4 className="uppercase">Phiếu giảm giá</h4>
           <button onClick={toggleMenu}>
-            <HiMiniXMark size={25} color="black" />
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              stroke="currentColor"
+              strokeWidth="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              className="lucide lucide-x-icon lucide-x w-3.5"
+              viewBox="5 5 14 14"
+            >
+              <path d="M18 6 6 18"></path>
+              <path d="m6 6 12 12"></path>
+            </svg>
           </button>
         </div>
 

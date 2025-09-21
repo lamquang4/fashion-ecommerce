@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { memo, useState } from "react";
 import { CiSearch } from "react-icons/ci";
-import SuggestionProduct from "./SuggestionProduct";
+import SuggestionProduct from "../SuggestionProduct";
 function SearchDesktop() {
   const router = useRouter();
 
@@ -46,7 +46,7 @@ function SearchDesktop() {
       </form>
 
       {focused && search && (
-        <div className="fixed top-12 right-12 z-12 w-96 max-w-[calc(100%-30px)] bg-white shadow-lg border-gray-300 border">
+        <div className="fixed right-12 z-12 w-96 max-w-[calc(100%-30px)] bg-white shadow-lg border-gray-300 border">
           <SuggestionProduct search={search} />
         </div>
       )}
