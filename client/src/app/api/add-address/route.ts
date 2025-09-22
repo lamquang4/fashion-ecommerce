@@ -28,17 +28,19 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const newAddress = await Address.create({
-      userId,
+    await Address.create({
       fullname,
       phone,
       speaddress,
       city,
       ward,
+      user: userId,
     });
 
-    return NextResponse.json({ address: newAddress }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
+    console.log(err);
+
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {

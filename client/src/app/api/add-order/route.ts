@@ -103,7 +103,7 @@ export async function POST(req: NextRequest) {
       await Coupon.findByIdAndUpdate(coupon, { $inc: { amount: -1 } });
     }
 
-    return NextResponse.json({ order: newOrder }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

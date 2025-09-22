@@ -77,7 +77,7 @@ export async function POST(req: NextRequest) {
 
     const imagePath = result.secure_url;
 
-    const newBlog = await Blog.create({
+    await Blog.create({
       summary,
       title,
       image: imagePath,
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
       status: 0,
     });
 
-    return NextResponse.json({ blog: newBlog }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

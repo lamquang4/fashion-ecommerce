@@ -57,7 +57,7 @@ export async function DELETE(
 
     const categoryId = product.category;
 
-    const deleteProduct = await Product.findByIdAndDelete(id);
+    await Product.findByIdAndDelete(id);
     await Inventory.deleteMany({ product: id });
 
     if (categoryId) {
@@ -72,7 +72,7 @@ export async function DELETE(
       }
     }
 
-    return NextResponse.json({ product: deleteProduct }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

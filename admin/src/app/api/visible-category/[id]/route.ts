@@ -21,10 +21,7 @@ export async function PUT(
 
     const category = await Category.findById(id);
     if (!category) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy" },
-        { status: 404 }
-      );
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
     // kiểm tra danh mục có chứa sản phẩm nào (không tính status)
@@ -39,7 +36,7 @@ export async function PUT(
       );
     }
 
-    const updatedCategory = await Category.findByIdAndUpdate(
+    await Category.findByIdAndUpdate(
       id,
       { status },
       {
@@ -47,7 +44,7 @@ export async function PUT(
       }
     );
 
-    return NextResponse.json({ category: updatedCategory }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

@@ -72,7 +72,7 @@ export async function POST(req: NextRequest) {
       createdBanners.push(newBanner);
     }
 
-    return NextResponse.json({ banners: createdBanners }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

@@ -110,11 +110,11 @@ export async function PUT(
       content,
     };
 
-    const updatedBlog = await Blog.findByIdAndUpdate(id, updatedData, {
+    await Blog.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
 
-    return NextResponse.json({ blog: updatedBlog }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

@@ -19,13 +19,10 @@ export async function PUT(
 
     const product = await Product.findById(id);
     if (!product) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy" },
-        { status: 404 }
-      );
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
-    const updatedProduct = await Product.findByIdAndUpdate(
+    await Product.findByIdAndUpdate(
       id,
       { status },
       {
@@ -33,7 +30,7 @@ export async function PUT(
       }
     );
 
-    return NextResponse.json({ Product: updatedProduct }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

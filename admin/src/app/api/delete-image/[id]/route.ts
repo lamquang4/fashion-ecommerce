@@ -38,13 +38,13 @@ export async function DELETE(
       await cloudinary.uploader.destroy(publicId);
     }
 
-    const deleteImage = await Inventory.findByIdAndUpdate(
+    await Inventory.findByIdAndUpdate(
       id,
       { $pull: { images: image } }, // pull xóa hình là image trong mảng image
       { new: true }
     );
 
-    return NextResponse.json({ inventory: deleteImage }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

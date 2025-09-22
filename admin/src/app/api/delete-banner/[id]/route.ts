@@ -32,9 +32,9 @@ export async function DELETE(
       await cloudinary.uploader.destroy(publicId);
     }
 
-    const deleteBanner = await Banner.findByIdAndDelete(id);
+    await Banner.findByIdAndDelete(id);
 
-    return NextResponse.json({ banner: deleteBanner }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

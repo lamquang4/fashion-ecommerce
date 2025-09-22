@@ -43,9 +43,9 @@ export async function DELETE(
       await cloudinary.uploader.destroy(publicId);
     }
 
-    const deleteCategory = await Category.findByIdAndDelete(id);
+    await Category.findByIdAndDelete(id);
 
-    return NextResponse.json({ category: deleteCategory }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

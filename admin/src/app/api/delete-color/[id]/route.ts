@@ -33,9 +33,9 @@ export async function DELETE(
       return NextResponse.json({ msg: "Không tìm thấy màu" }, { status: 404 });
     }
 
-    const deleteColor = await Color.findByIdAndDelete(id);
+    await Color.findByIdAndDelete(id);
 
-    return NextResponse.json({ color: deleteColor }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

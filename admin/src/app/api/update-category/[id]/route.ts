@@ -113,11 +113,11 @@ export async function PUT(
       image: imagePath,
     };
 
-    const updatedCategory = await Category.findByIdAndUpdate(id, updatedData, {
+    await Category.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
 
-    return NextResponse.json({ category: updatedCategory }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

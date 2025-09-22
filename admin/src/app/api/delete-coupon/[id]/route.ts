@@ -36,9 +36,9 @@ export async function DELETE(
       );
     }
 
-    const deleteCoupon = await Coupon.findByIdAndDelete(id);
+    await Coupon.findByIdAndDelete(id);
 
-    return NextResponse.json({ coupon: deleteCoupon }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

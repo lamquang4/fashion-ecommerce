@@ -48,7 +48,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const newSize = await Size.create({
+    await Size.create({
       namesize,
       chest,
       waist,
@@ -57,7 +57,7 @@ export async function POST(req: NextRequest) {
       weight,
     });
 
-    return NextResponse.json({ size: newSize }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

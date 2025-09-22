@@ -55,7 +55,7 @@ export async function PUT(
         if (sizeInventory) {
           sizeInventory.quantity += quantity;
         }
-        
+
         await inventory.save();
       }
     }
@@ -64,11 +64,11 @@ export async function PUT(
       status,
     };
 
-    const updatedOrder = await Order.findByIdAndUpdate(id, updatedData, {
+    await Order.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
 
-    return NextResponse.json({ order: updatedOrder }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

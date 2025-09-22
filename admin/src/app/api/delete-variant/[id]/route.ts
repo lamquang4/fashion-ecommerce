@@ -53,7 +53,7 @@ export async function DELETE(
       );
     }
 
-    const deleteVariant = await Inventory.findByIdAndDelete(id);
+    await Inventory.findByIdAndDelete(id);
 
     if (variant) {
       const allImages = variant.images;
@@ -66,7 +66,7 @@ export async function DELETE(
       );
     }
 
-    return NextResponse.json({ deleteVariant }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

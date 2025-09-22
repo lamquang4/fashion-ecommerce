@@ -137,7 +137,7 @@ export async function POST(req: NextRequest) {
       });
     }
 
-    return NextResponse.json({ product: newProduct }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

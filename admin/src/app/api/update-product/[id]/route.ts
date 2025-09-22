@@ -62,7 +62,7 @@ export async function PUT(
       slug,
     };
 
-    const updatedProduct = await Product.findByIdAndUpdate(id, updatedData, {
+    await Product.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
 
@@ -354,7 +354,7 @@ export async function PUT(
       }
     }
 
-    return NextResponse.json({ product: updatedProduct }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
   }

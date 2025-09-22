@@ -22,7 +22,7 @@ export async function PUT(
       return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
-    const updatedBanner = await Banner.findByIdAndUpdate(
+    await Banner.findByIdAndUpdate(
       id,
       { status },
       {
@@ -30,7 +30,7 @@ export async function PUT(
       }
     );
 
-    return NextResponse.json({ Banner: updatedBanner }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

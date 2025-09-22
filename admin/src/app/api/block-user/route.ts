@@ -23,7 +23,7 @@ export async function PUT(req: NextRequest) {
       );
     }
 
-    const updatedUser = await User.findByIdAndUpdate(
+    await User.findByIdAndUpdate(
       id,
       { status },
       {
@@ -31,7 +31,7 @@ export async function PUT(req: NextRequest) {
       }
     );
 
-    return NextResponse.json({ user: updatedUser }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

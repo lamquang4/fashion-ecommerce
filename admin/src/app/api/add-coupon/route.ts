@@ -136,9 +136,9 @@ export async function POST(req: NextRequest) {
       couponData.minOrderValue = minOrderValue;
     }
 
-    const newCoupon = await Coupon.create(couponData);
+    await Coupon.create(couponData);
 
-    return NextResponse.json({ coupon: newCoupon }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

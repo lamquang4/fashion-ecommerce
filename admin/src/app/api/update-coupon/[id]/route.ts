@@ -161,11 +161,11 @@ export async function PUT(
       couponData.minOrderValue = minOrderValue;
     }
 
-    const updatedCoupon = await Coupon.findByIdAndUpdate(id, couponData, {
+    await Coupon.findByIdAndUpdate(id, couponData, {
       new: true,
     });
 
-    return NextResponse.json({ coupon: updatedCoupon }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

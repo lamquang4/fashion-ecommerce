@@ -36,9 +36,9 @@ export async function DELETE(
       );
     }
 
-    const deleteSize = await Size.findByIdAndDelete(id);
+    await Size.findByIdAndDelete(id);
 
-    return NextResponse.json({ size: deleteSize }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

@@ -88,13 +88,9 @@ export async function PUT(
     }
 
     // Cập nhật
-    const updatedImage = await Inventory.findByIdAndUpdate(
-      id,
-      { images: imageList },
-      { new: true }
-    );
+    await Inventory.findByIdAndUpdate(id, { images: imageList }, { new: true });
 
-    return NextResponse.json({ inventory: updatedImage }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

@@ -28,9 +28,9 @@ export async function DELETE(
       await cloudinary.uploader.destroy(publicId);
     }
 
-    const deleteBlog = await Blog.findByIdAndDelete(id);
+    await Blog.findByIdAndDelete(id);
 
-    return NextResponse.json({ blog: deleteBlog }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

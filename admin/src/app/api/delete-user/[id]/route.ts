@@ -34,9 +34,9 @@ export async function DELETE(
       );
     }
 
-    const deleteUser = await User.findByIdAndDelete(id);
+    await User.findByIdAndDelete(id);
 
-    return NextResponse.json({ user: deleteUser }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

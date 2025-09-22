@@ -107,16 +107,16 @@ function AddressModal({ isOpen, toggleMenu, addressId, provinces }: Props) {
       } else {
         await addAddress(payload);
         toast.success("Thêm địa chỉ thành công");
+
+        setData({
+          fullname: "",
+          phone: "",
+          speaddress: "",
+        });
+
+        setSelectedProvinceName("");
+        setSelectedWard("");
       }
-
-      setData({
-        fullname: "",
-        phone: "",
-        speaddress: "",
-      });
-
-      setSelectedProvinceName("");
-      setSelectedWard("");
 
       mutateAddresses();
       mutate();

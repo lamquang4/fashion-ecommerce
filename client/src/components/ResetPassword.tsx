@@ -42,6 +42,11 @@ function ResetPassword() {
         return;
       }
 
+      if (data.email === process.env.EMAIL_USER) {
+        toast.error("Email này không hoạt động!");
+        return;
+      }
+
       try {
         await sendResetOTP({ email: data.email.trim() });
         toast.success("Đã gửi OTP tới email");

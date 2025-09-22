@@ -23,7 +23,7 @@ export async function PUT(
       return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
-    const updatedBlog = await Blog.findByIdAndUpdate(
+    await Blog.findByIdAndUpdate(
       id,
       { status },
       {
@@ -31,7 +31,7 @@ export async function PUT(
       }
     );
 
-    return NextResponse.json({ blog: updatedBlog }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

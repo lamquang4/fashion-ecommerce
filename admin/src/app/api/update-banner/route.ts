@@ -92,7 +92,7 @@ export async function PUT(req: NextRequest) {
       }
     }
 
-    return NextResponse.json({ banner: updatedBanners }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

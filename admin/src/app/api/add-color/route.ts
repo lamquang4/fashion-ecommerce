@@ -17,12 +17,12 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const newColor = await Color.create({
+    await Color.create({
       namecolor,
       codecolor,
     });
 
-    return NextResponse.json({ color: newColor }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

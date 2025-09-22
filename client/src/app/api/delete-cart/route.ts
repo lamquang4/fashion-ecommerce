@@ -16,9 +16,9 @@ export async function DELETE() {
       );
     }
 
-    const deleteCart = await Cart.findOneAndDelete({ user: userId });
+    await Cart.findOneAndDelete({ user: userId });
 
-    return NextResponse.json({ cart: deleteCart }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

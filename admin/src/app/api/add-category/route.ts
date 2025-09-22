@@ -79,7 +79,7 @@ export async function POST(req: NextRequest) {
 
     const imagePath = result.secure_url;
 
-    const newCategory = await Category.create({
+    await Category.create({
       namecategory,
       gender,
       image: imagePath,
@@ -87,7 +87,7 @@ export async function POST(req: NextRequest) {
       status: 0,
     });
 
-    return NextResponse.json({ user: newCategory }, { status: 201 });
+    return NextResponse.json({ status: 201 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

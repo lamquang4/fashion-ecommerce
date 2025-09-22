@@ -75,11 +75,11 @@ export async function PUT(
       weight,
     };
 
-    const updatedSize = await Size.findByIdAndUpdate(id, updatedData, {
+    await Size.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
 
-    return NextResponse.json({ size: updatedSize }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

@@ -37,11 +37,11 @@ export async function PUT(
       codecolor,
     };
 
-    const updatedColor = await Color.findByIdAndUpdate(id, updatedData, {
+    await Color.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
 
-    return NextResponse.json({ color: updatedColor }, { status: 200 });
+    return NextResponse.json({ status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
