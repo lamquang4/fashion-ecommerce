@@ -9,7 +9,7 @@ export default function useUpdateAddress(id: string) {
     if (!id) return;
     setIsLoading(true);
     try {
-      const url = `/api/update-address/${id}`;
+      const url = `/api/addresses/${id}`;
       await axios.put(url, data);
     } catch (err) {
       console.error("Lỗi:", err);

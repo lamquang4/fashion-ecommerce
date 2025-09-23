@@ -32,7 +32,7 @@ export default function useGetProductsSearch() {
   }
   if (q) query.set("q", q);
 
-  const url = `/api/get-products-search?${query.toString()}`;
+  const url = `/api/products/search?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,

@@ -13,14 +13,13 @@ import useAddOrder from "@/hooks/useAddOrder";
 import toast from "react-hot-toast";
 import useGetCoupon from "@/hooks/useGetCoupon";
 import usePaymentMomo from "@/hooks/usePaymentMomo";
-import useStatusMomo from "@/hooks/useStatusMomo";
-import useDeleteCart from "@/hooks/useDeleteCart";
 import Loading from "./../Loading";
 import Overplay from "./../Overplay";
 import ProductBuyList from "./ProductBuyList";
 import ShippingInfoForm from "./ShippingInfoForm";
 import CouponApply from "./CouponApply";
 import PaymentMethod from "./PaymentMethod";
+import useGetStatusPaymentMomo from "@/hooks/useGetStatusPaymentMomo";
 
 function CheckoutForm() {
   const router = useRouter();
@@ -36,10 +35,10 @@ function CheckoutForm() {
     isLoading: isLoadingCoupon,
   } = useGetCoupon();
   const { addOrder, isLoading: isLoadingAddOrder } = useAddOrder();
-  const { createPaymentMomo } = usePaymentMomo();
-  const { checkPaymentStatusMomo, isLoading: isLoadingCheckPaymentStatusMomo } =
-    useStatusMomo();
-  const { deleteCart, isLoading: isLoadingDeleteCart } = useDeleteCart();
+  const { createPaymentMomo, isLoading: isLoadingPaymentMomo } =
+    usePaymentMomo();
+  const { getStatusPaymentMomo, isLoading: isLoadingCheckPaymentStatusMomo } =
+    useGetStatusPaymentMomo();
 
   const [data, setData] = useState({
     fullname: "",
@@ -129,7 +128,7 @@ function CheckoutForm() {
     const handleOrderMomoPayment = async () => {
       if (!orderId || !checkoutData) return;
 
-      const res = await checkPaymentStatusMomo(orderId);
+      const res = await getStatusPaymentMomo(orderId);
 
       if (res.resultCode !== 0) {
         return;
@@ -159,7 +158,6 @@ function CheckoutForm() {
         coupon,
       });
 
-      await deleteCart();
       mutateCart({ productsInCart: [] }, false);
       localStorage.removeItem("checkoutData");
       localStorage.removeItem("orderId");
@@ -272,7 +270,6 @@ function CheckoutForm() {
       toast.success(`Đặt hàng thành công!`);
       router.replace("/");
 
-      await deleteCart();
       mutateCart({ productsInCart: [] }, false);
     }
   };
@@ -385,7 +382,7 @@ function CheckoutForm() {
       </div>
 
       {(isLoadingAddOrder ||
-        isLoadingDeleteCart ||
+        isLoadingPaymentMomo ||
         isLoadingCheckPaymentStatusMomo ||
         isLoadingCoupon) && (
         <Overplay IndexForZ={50}>

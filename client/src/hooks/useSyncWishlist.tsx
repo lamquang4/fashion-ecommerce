@@ -7,7 +7,7 @@ export function useSyncWishlist() {
   const syncWishlist = async () => {
     setIsLoading(true);
     try {
-      const url = `/api/sync-wishlist`;
+      const url = `/api/wishlist/sync`;
       await axios.post(url);
     } catch (err: any) {
       console.error("Lỗi:", err);

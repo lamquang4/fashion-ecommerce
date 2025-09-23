@@ -10,7 +10,7 @@ type ResponseType = {
 };
 
 export default function useGetProductsBestseller() {
-  const url = `/api/get-products-bestseller`;
+  const url = `/api/products/bestseller`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

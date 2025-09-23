@@ -6,7 +6,7 @@ export function useSendRegisterOTP() {
   const sendRegisterOTP = async (data: { email: string }) => {
     setIsLoading(true);
     try {
-      const url = `/api/auth/send-register-otp`;
+      const url = `/api/auth/otps/user`;
       await axios.post(url, data);
     } catch (err: any) {
       console.error("Lỗi:", err);

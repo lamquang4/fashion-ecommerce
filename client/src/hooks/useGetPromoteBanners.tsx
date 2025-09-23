@@ -4,13 +4,13 @@ import axios from "axios";
 import useSWR from "swr";
 
 type ResponseType = {
-  promotebanners: Banner[];
+  promotions: Banner[];
 };
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetPromoteBanners() {
-  const url = `/api/get-promotebanners`;
+  const url = `/api/banners/promotion`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,
@@ -21,7 +21,7 @@ export default function useGetPromoteBanners() {
   );
 
   return {
-    promotebanners: data?.promotebanners ?? [],
+    promotions: data?.promotions ?? [],
     error,
     isLoading,
     mutate,

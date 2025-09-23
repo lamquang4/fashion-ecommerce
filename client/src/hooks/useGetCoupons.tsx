@@ -10,7 +10,7 @@ type ResponseType = {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetCoupons() {
-  const url = `/api/get-coupons`;
+  const url = `/api/coupons`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

@@ -14,7 +14,7 @@ export default function useRegister() {
   }) => {
     setIsLoading(true);
     try {
-      const url = `/api/auth/register`;
+      const url = `/api/auth/user`;
       await axios.post(url, data);
     } catch (err) {
       console.error("Lỗi:", err);

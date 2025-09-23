@@ -11,7 +11,7 @@ const fetcher = (url: string): Promise<ResponseType> =>
   axios.get(url).then((res) => res.data);
 
 export default function useGetBlogs() {
-  const url = `/api/get-latest-blogs`;
+  const url = `/api/blogs/latest`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

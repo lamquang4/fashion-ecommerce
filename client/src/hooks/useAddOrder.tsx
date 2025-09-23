@@ -8,7 +8,7 @@ export default function useAddOrder() {
   const addOrder = async (data: OrderAdd) => {
     setIsLoading(true);
     try {
-      const url = `/api/add-order`;
+      const url = `/api/orders`;
       await axios.post(url, data);
     } catch (err) {
       console.error("Lỗi:", err);

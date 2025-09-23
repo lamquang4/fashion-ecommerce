@@ -10,7 +10,7 @@ type ResponseType = {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetColors() {
-  const url = `/api/get-colors`;
+  const url = `/api/colors`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

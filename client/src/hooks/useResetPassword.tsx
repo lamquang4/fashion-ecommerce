@@ -10,7 +10,7 @@ export function useResetPassword() {
   }) => {
     setIsLoading(true);
     try {
-      const url = `/api/auth/reset-password`;
+      const url = `/api/auth/password`;
       await axios.post(url, data);
     } catch (err: any) {
       console.error("Lỗi:", err);

@@ -17,7 +17,7 @@ export default function useGetCoupon() {
   const getCoupon = useCallback((code: string, totalPrice: number) => {
     if (!code || !totalPrice) return;
 
-    setUrl(`/api/get-coupon/${code}/${totalPrice}`);
+    setUrl(`/api/coupons/${code}/${totalPrice}`);
   }, []);
 
   return {

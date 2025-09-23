@@ -1,11 +1,14 @@
 "use client";
 import axios from "axios";
+import { useState } from "react";
 
 export default function usePaymentMomo() {
+  const [isLoading, setIsLoading] = useState(false);
   const createPaymentMomo = async (data: {
     total: number;
     paymethod: number;
   }) => {
+    setIsLoading(true);
     try {
       const url = `/api/momo/payment`;
       const res = await axios.post(url, data);
@@ -13,8 +16,10 @@ export default function usePaymentMomo() {
     } catch (err) {
       console.error("Lỗi", err);
       throw err;
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  return { createPaymentMomo };
+  return { createPaymentMomo, isLoading };
 }

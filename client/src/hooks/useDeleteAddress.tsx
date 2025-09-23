@@ -8,7 +8,7 @@ export default function useDeleteAddress() {
     if (!id) return;
     setIsLoading(true);
     try {
-      const url = `/api/delete-address/${id}`;
+      const url = `/api/addresses/${id}`;
       await axios.delete(url);
     } catch (err) {
       console.error("Lỗi:", err);

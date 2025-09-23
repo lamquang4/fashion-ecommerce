@@ -11,7 +11,7 @@ type ResponseType = {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetCategories() {
-  const url = `/api/get-categories`;
+  const url = `/api/categories`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

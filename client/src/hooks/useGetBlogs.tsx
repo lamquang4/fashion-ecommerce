@@ -20,7 +20,7 @@ export default function useGetBlogs() {
   const query = new URLSearchParams();
   if (page) query.set("page", page.toString());
 
-  const url = `/api/get-blogs?${query.toString()}`;
+  const url = `/api/blogs?${query.toString()}`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

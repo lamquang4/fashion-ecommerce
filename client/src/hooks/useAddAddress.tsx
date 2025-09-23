@@ -8,7 +8,7 @@ export default function useAddAddress() {
   const addAddress = async (data: Address) => {
     setIsLoading(true);
     try {
-      await axios.post("/api/add-address", data);
+      await axios.post("/api/addresses", data);
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

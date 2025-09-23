@@ -7,7 +7,7 @@ export function useSyncCart() {
   const syncCart = async () => {
     setIsLoading(true);
     try {
-      const url = `/api/sync-cart`;
+      const url = `/api/cart/sync`;
       await axios.post(url);
     } catch (err: any) {
       console.error("Lỗi:", err);

@@ -164,6 +164,18 @@ function ProductDetail({ product }: Props) {
     mutateWishlist();
   };
 
+  const handleSelectVariant = (variant: Variant) => {
+    setSelectedColor(variant.color);
+    setSelectedVariant(variant);
+    setMainImage(variant.images?.[0]);
+    setQuantity(1);
+  };
+
+  const handleSelectVariantSize = (size: { _id: string; namesize: string }) => {
+    setSelectedSize(size);
+    setQuantity(1);
+  };
+
   const toggleCouponMenu = useCallback(() => {
     setOpenCouponMenu((prev) => !prev);
   }, []);
@@ -323,11 +335,7 @@ function ProductDetail({ product }: Props) {
                         key={variant.color._id}
                         type="button"
                         title={variant.color.namecolor}
-                        onClick={() => {
-                          setSelectedColor(variant.color);
-                          setSelectedVariant(variant);
-                          setMainImage(variant.images?.[0]);
-                        }}
+                        onClick={() => handleSelectVariant(variant)}
                         style={{
                           backgroundColor: `${variant.color.codecolor}`,
                         }}
@@ -367,7 +375,7 @@ function ProductDetail({ product }: Props) {
                           key={index}
                           disabled={isSizeOutOfStock}
                           type="button"
-                          onClick={() => setSelectedSize(inv.size)}
+                          onClick={() => handleSelectVariantSize(inv.size)}
                           className={`relative w-[70px] h-[35px] border   font-medium text-[0.95rem] ${
                             isSelectedSize
                               ? "border-black"

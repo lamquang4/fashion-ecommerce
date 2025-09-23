@@ -32,7 +32,7 @@ export default function useGetOrders() {
     query.set("limit", limit.toString());
   }
 
-  const url = `/api/get-orders?${query.toString()}`;
+  const url = `/api/orders?${query.toString()}`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

@@ -11,7 +11,7 @@ export default function useAddCart() {
   }) => {
     setIsLoading(true);
     try {
-      const url = `/api/add-cart`;
+      const url = `/api/cart`;
       await axios.post(url, data);
     } catch (err) {
       console.error("Lỗi:", err);

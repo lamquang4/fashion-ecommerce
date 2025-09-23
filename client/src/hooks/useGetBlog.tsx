@@ -6,7 +6,7 @@ import useSWR from "swr";
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetBlog(slug: string) {
-  const url = slug ? `/api/get-blog/${slug}` : null;
+  const url = slug ? `/api/blogs/${slug}` : null;
   const { data, error, isLoading, mutate } = useSWR<Blog>(url, fetcher, {
     shouldRetryOnError: false,
     revalidateOnFocus: false,

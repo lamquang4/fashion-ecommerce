@@ -3,12 +3,12 @@ import Link from "next/link";
 import Loading from "./Loading";
 import Image from "./Image";
 import { memo, useEffect } from "react";
-import useGetProductsSuggest from "@/hooks/useGetProductsSuggest";
+import useGetProductsSuggestion from "@/hooks/useGetProductsSuggestion";
 type Props = {
   search: string;
 };
 function SuggestionProduct({ search }: Props) {
-  const { products, setKeyword, isLoading } = useGetProductsSuggest();
+  const { products, setKeyword, isLoading } = useGetProductsSuggestion();
 
   useEffect(() => {
     if (search) {

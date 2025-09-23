@@ -7,7 +7,7 @@ export default function useDeleteCart() {
   const deleteCart = async () => {
     setIsLoading(true);
     try {
-      const url = `/api/delete-cart`;
+      const url = `/api/cart`;
       await axios.delete(url);
     } catch (err) {
       console.error("Lỗi:", err);

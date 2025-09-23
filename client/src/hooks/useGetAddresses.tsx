@@ -11,7 +11,7 @@ const fetcher = (url: string): Promise<ResponseType> =>
   axios.get(url).then((res) => res.data);
 
 export default function useGetAddresses() {
-  const url = `/api/get-addresses`;
+  const url = `/api/addresses`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

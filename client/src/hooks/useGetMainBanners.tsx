@@ -11,7 +11,7 @@ type ResponseType = {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetMainBanners() {
-  const url = `/api/get-mainbanners`;
+  const url = `/api/banners/main`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

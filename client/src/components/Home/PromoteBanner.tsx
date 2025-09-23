@@ -5,11 +5,11 @@ interface PromoteBannerProp {
   gender: number;
 }
 function PromoteBanner({ gender }: PromoteBannerProp) {
-  const { promotebanners } = useGetPromoteBanners();
+  const { promotions } = useGetPromoteBanners();
 
   return (
     <>
-      {promotebanners.length > 0 && (
+      {promotions.length > 0 && (
         <section className="mb-[40px]  px-[15px]">
           <div className="mx-auto max-w-[1230px] w-full">
             <div className="flex flex-col gap-[20px] sm:gap-[30px]">
@@ -17,7 +17,7 @@ function PromoteBanner({ gender }: PromoteBannerProp) {
                 <Link href={"/collection/nam"}>
                   <div className="relative">
                     <Image
-                      Src={promotebanners[0].image}
+                      Src={promotions[0].image}
                       Alt=""
                       ClassName="w-full object-cover"
                       loadingType="lazy"
@@ -28,7 +28,7 @@ function PromoteBanner({ gender }: PromoteBannerProp) {
                 <Link href={"/collection/nu"}>
                   <div className="relative">
                     <Image
-                      Src={promotebanners[1].image}
+                      Src={promotions[1].image}
                       Alt=""
                       ClassName="w-full object-cover"
                       loadingType="lazy"

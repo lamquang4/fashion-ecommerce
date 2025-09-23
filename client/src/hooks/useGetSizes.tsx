@@ -10,7 +10,7 @@ type ResponseType = {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetSizes() {
-  const url = `/api/get-sizes`;
+  const url = `/api/sizes`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,
