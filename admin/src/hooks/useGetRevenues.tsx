@@ -10,7 +10,7 @@ interface ResponseType {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetRevenues(year: number) {
-  const url = `/api/get-revenues/${year}`;
+  const url = `/api/revenues/${year}`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

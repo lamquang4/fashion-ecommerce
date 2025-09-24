@@ -23,7 +23,7 @@ export default function useDeleteColor() {
     setIsLoading(true);
 
     try {
-      const url = `/api/delete-color/${id}`;
+      const url = `/api/colors/${id}`;
       await axios.delete(url);
       toast.dismiss(loadingToast);
       toast.success("Xóa thành công");

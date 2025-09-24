@@ -26,7 +26,7 @@ export default function useVisibleBlog() {
     setIsLoading(true);
 
     try {
-      const url = `/api/visible-blog/${id}`;
+      const url = `/api/blogs/status/${id}`;
       await axios.put(url, {
         status: status,
       });

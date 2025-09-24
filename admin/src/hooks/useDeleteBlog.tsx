@@ -23,7 +23,7 @@ export default function useDeleteBlog() {
     setIsLoading(true);
 
     try {
-      const url = `/api/delete-blog/${id}`;
+      const url = `/api/blogs/${id}`;
       await axios.delete(url);
       toast.dismiss(loadingToast);
       toast.success("Xóa thành công");

@@ -11,7 +11,7 @@ export default function useUpdateSize(id: string) {
     const loadingToast = toast.loading("Đang cập nhật...");
     setIsLoading(true);
     try {
-      const url = `/api/update-size/${id}`;
+      const url = `/api/sizes/${id}`;
       await axios.put(url, data);
       toast.dismiss(loadingToast);
       toast.success("Cập nhật thành công");

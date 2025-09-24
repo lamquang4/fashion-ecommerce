@@ -10,7 +10,7 @@ interface ResponseType {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetSizes1() {
-  const url = `/api/get-sizes1`;
+  const url = `/api/sizes1`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,

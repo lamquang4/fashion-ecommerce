@@ -25,7 +25,7 @@ export default function useGetCategories() {
   if (q) query.set("q", q);
   if (status) query.set("status", status.toString());
 
-  const url = `/api/get-categories?${query.toString()}`;
+  const url = `/api/categories?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,

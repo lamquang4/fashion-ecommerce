@@ -9,7 +9,7 @@ export default function useAddBlog() {
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {
-      const url = `/api/add-blog`;
+      const url = `/api/blogs`;
       await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

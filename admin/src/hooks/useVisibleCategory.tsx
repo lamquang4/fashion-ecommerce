@@ -26,7 +26,7 @@ export default function useVisibleCategory() {
     setIsLoading(true);
 
     try {
-      const url = `/api/visible-category/${id}`;
+      const url = `/api/categories/status/${id}`;
       await axios.put(url, {
         status: status,
       });

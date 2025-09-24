@@ -23,7 +23,7 @@ export default function useDeleteCoupon() {
     setIsLoading(true);
 
     try {
-      const url = `/api/delete-coupon/${id}`;
+      const url = `/api/coupons/${id}`;
       await axios.delete(url);
       toast.dismiss(loadingToast);
       toast.success("Xóa thành công");

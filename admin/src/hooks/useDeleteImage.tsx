@@ -23,7 +23,7 @@ export default function useDeleteImage() {
     setIsLoading(true);
 
     try {
-      const url = `/api/delete-image/${id}`;
+      const url = `/api/products/images/${id}`;
       await axios.delete(url, {
         params: { image },
       });

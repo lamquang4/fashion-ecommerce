@@ -9,7 +9,7 @@ export default function useAddProduct() {
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {
-      const url = `/api/add-product`;
+      const url = `/api/products`;
       await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

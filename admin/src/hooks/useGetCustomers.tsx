@@ -25,7 +25,7 @@ export default function useGetCustomers() {
   if (q) query.set("q", q);
   if (status) query.set("status", status.toString());
 
-  const url = `/api/get-customers?${query.toString()}`;
+  const url = `/api/users/customers?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,

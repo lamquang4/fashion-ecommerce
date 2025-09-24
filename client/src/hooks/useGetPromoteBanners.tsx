@@ -10,7 +10,7 @@ type ResponseType = {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetPromoteBanners() {
-  const url = `/api/banners/promotion`;
+  const url = `/api/banners/promotions`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

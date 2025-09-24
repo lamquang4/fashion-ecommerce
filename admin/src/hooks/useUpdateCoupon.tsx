@@ -11,7 +11,7 @@ export default function useUpdateCoupon(id: string) {
     const loadingToast = toast.loading("Đang cập nhật...");
     setIsLoading(true);
     try {
-      const url = `/api/update-coupon/${id}`;
+      const url = `/api/coupons/${id}`;
       await axios.put(url, data);
       toast.dismiss(loadingToast);
       toast.success("Cập nhật thành công");

@@ -23,7 +23,7 @@ export default function useDeleteBanner() {
     setIsLoading(true);
 
     try {
-      const url = `/api/delete-banner/${id}`;
+      const url = `/api/banners/${id}`;
       await axios.delete(url);
       toast.dismiss(loadingToast);
       toast.success("Xóa thành công");

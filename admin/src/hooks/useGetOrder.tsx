@@ -10,7 +10,7 @@ interface ResponseType {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetOrder(id: string) {
-  const url = `/api/get-order/${id}`;
+  const url = `/api/orders/${id}`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

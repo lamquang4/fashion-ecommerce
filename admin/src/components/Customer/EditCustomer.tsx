@@ -22,6 +22,7 @@ function EditCustomer() {
   });
 
   const { user, mutate, isLoading } = useGetUser(id);
+
   const { updateUser, isLoading: isLoadingUpdateUser } = useUpdateUser(id);
 
   const handleChange = (

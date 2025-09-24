@@ -25,7 +25,7 @@ export default function useGetMainBanners() {
   if (status) query.set("status", status.toString());
   if (type) query.set("type", type.toString());
 
-  const url = `/api/get-mainbanners?${query.toString()}`;
+  const url = `/api/banners/mains?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,

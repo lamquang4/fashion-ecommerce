@@ -25,7 +25,7 @@ export default function useGetAdmins() {
   if (q) query.set("q", q);
   if (status) query.set("status", status.toString());
 
-  const url = `/api/get-admins?${query.toString()}`;
+  const url = `/api/users/admins?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,

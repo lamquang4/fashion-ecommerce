@@ -23,7 +23,7 @@ export default function useDeleteUser() {
     setIsLoading(true);
 
     try {
-      const url = `/api/delete-user/${id}`;
+      const url = `/api/users/${id}`;
       await axios.delete(url);
       toast.dismiss(loadingToast);
       toast.success("Xóa thành công");

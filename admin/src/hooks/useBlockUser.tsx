@@ -26,9 +26,8 @@ export default function useBlockUser() {
     setIsLoading(true);
 
     try {
-      const url = `/api/block-user`;
+      const url = `/api/users/status/${id}`;
       await axios.put(url, {
-        id: id,
         status: status,
       });
       toast.dismiss(loadingToast);

@@ -10,7 +10,7 @@ export default function useUpdateProduct(id: string) {
     const loadingToast = toast.loading("Đang cập nhật...");
     setIsLoading(true);
     try {
-      const url = `/api/update-product/${id}`;
+      const url = `/api/products/${id}`;
       await axios.put(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

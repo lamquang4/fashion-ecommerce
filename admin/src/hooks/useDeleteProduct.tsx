@@ -23,7 +23,7 @@ export default function useDeleteProduct() {
     setIsLoading(true);
 
     try {
-      const url = `/api/delete-product/${id}`;
+      const url = `/api/products/${id}`;
       await axios.delete(url);
       toast.dismiss(loadingToast);
       toast.success("Xóa thành công");

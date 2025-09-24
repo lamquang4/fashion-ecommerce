@@ -10,7 +10,7 @@ type ResponseType = {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetCollectionBanners() {
-  const url = `/api/banners/collection`;
+  const url = `/api/banners/collections`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

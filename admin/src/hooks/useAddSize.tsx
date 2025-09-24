@@ -10,7 +10,7 @@ export default function useAddSize() {
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {
-      const url = `/api/add-size`;
+      const url = `/api/sizes`;
       await axios.post(url, data);
       toast.dismiss(loadingToast);
       toast.success("Thêm thành công");

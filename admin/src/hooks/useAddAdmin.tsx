@@ -10,7 +10,7 @@ export default function useAddAdmin() {
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {
-      const url = `/api/add-admin`;
+      const url = `/api/users/admins`;
       await axios.post(url, data);
       toast.dismiss(loadingToast);
       toast.success("Thêm thành công");

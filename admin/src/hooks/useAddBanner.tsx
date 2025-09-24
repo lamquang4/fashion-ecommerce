@@ -9,7 +9,7 @@ export default function useAddBanner() {
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {
-      const url = `/api/add-banner`;
+      const url = `/api/banners`;
       await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

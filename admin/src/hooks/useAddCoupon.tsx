@@ -10,7 +10,7 @@ export default function useAddCoupon() {
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {
-      const url = `/api/add-coupon`;
+      const url = `/api/coupons`;
       await axios.post(url, data);
       toast.dismiss(loadingToast);
       toast.success("Thêm thành công");

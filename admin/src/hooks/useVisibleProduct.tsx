@@ -25,7 +25,7 @@ export default function useVisibleProduct() {
 
     setIsLoading(true);
     try {
-      const url = `/api/visible-product/${id}`;
+      const url = `/api/products/status/${id}`;
       await axios.put(url, {
         status: status,
       });

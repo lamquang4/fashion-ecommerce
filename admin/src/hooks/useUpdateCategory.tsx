@@ -10,7 +10,7 @@ export default function useUpdateCategory(id: string) {
     const loadingToast = toast.loading("Đang cập nhật...");
     setIsLoading(true);
     try {
-      const url = `/api/update-category/${id}`;
+      const url = `/api/categories/${id}`;
       await axios.put(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

@@ -10,7 +10,7 @@ export default function useAddCustomer() {
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {
-      const url = `/api/add-customer`;
+      const url = `/api/users/customers`;
       await axios.post(url, data);
       toast.dismiss(loadingToast);
       toast.success("Thêm thành công");

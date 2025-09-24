@@ -23,7 +23,7 @@ export default function useGetColors() {
   if (limit) query.set("limit", limit.toString());
   if (q) query.set("q", q);
 
-  const url = `/api/get-colors?${query.toString()}`;
+  const url = `/api/colors?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,

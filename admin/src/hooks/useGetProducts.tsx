@@ -25,7 +25,7 @@ export default function useGetProducts() {
   if (q) query.set("q", q);
   if (status) query.set("status", status.toString());
 
-  const url = `/api/get-products?${query.toString()}`;
+  const url = `/api/products?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,

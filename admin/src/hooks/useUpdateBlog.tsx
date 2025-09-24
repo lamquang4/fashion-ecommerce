@@ -10,7 +10,7 @@ export default function useUpdateBlog(id: string) {
     const loadingToast = toast.loading("Đang cập nhật...");
     setIsLoading(true);
     try {
-      const url = `/api/update-blog/${id}`;
+      const url = `/api/blogs/${id}`;
       await axios.put(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

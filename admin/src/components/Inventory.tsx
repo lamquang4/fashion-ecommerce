@@ -21,7 +21,7 @@ function Inventory() {
     <>
       <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h2 className="mb-[20px] text-[#74767d]">
-          Hàng trong kho ({totalQuantity})
+          Hàng tồn kho ({totalQuantity})
         </h2>
       </div>
 

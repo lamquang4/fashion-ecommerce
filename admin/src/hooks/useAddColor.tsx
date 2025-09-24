@@ -10,7 +10,7 @@ export default function useAddColor() {
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {
-      const url = `/api/add-color`;
+      const url = `/api/colors`;
       await axios.post(url, data);
       toast.dismiss(loadingToast);
       toast.success("Thêm thành công");

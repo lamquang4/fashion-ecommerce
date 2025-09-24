@@ -25,7 +25,7 @@ export default function useUpdateStatusOrder() {
     setIsLoading(true);
 
     try {
-      const url = `/api/update-status-order/${id}`;
+      const url = `/api/orders/status/${id}`;
       await axios.put(url, {
         status: status,
       });

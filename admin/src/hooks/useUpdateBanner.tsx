@@ -9,7 +9,7 @@ export default function useUpdateBanner() {
     const loadingToast = toast.loading("Đang cập nhật...");
     setIsLoading(true);
     try {
-      const url = `/api/update-banner`;
+      const url = `/api/banners`;
       await axios.put(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

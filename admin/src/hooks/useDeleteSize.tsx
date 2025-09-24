@@ -23,7 +23,7 @@ export default function useDeleteSize() {
     setIsLoading(true);
 
     try {
-      const url = `/api/delete-size/${id}`;
+      const url = `/api/sizes/${id}`;
       await axios.delete(url);
       toast.dismiss(loadingToast);
       toast.success("Xóa thành công");

@@ -26,7 +26,7 @@ export default function useVisibleBanner() {
     setIsLoading(true);
 
     try {
-      const url = `/api/visible-banner/${id}`;
+      const url = `/api/banners/status/${id}`;
       await axios.put(url, {
         status: status,
       });

@@ -267,7 +267,7 @@ function Order() {
                   </td>
                   <td className="p-[1rem]  ">
                     <div className="flex items-center gap-[15px]">
-                      <Link href={`/order-detail/${order._id}`}>
+                      <Link href={`/order/${order._id}`}>
                         <LiaExternalLinkAltSolid
                           size={23}
                           className="text-[#076ffe]"

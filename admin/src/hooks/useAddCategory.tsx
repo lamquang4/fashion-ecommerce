@@ -9,7 +9,7 @@ export default function useAddCategory() {
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {
-      const url = `/api/add-category`;
+      const url = `/api/categories`;
       await axios.post(url, formData, {
         headers: {
           "Content-Type": "multipart/form-data",

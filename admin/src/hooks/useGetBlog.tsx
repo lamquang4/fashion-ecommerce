@@ -10,7 +10,7 @@ interface ResponseType {
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetBlog(id: string) {
-  const url = `/api/get-blog/${id}`;
+  const url = `/api/blogs/${id}`;
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
     fetcher,

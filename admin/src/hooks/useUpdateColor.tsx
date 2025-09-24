@@ -11,7 +11,7 @@ export default function useUpdateColor(id: string) {
     const loadingToast = toast.loading("Đang cập nhật...");
     setIsLoading(true);
     try {
-      const url = `/api/update-color/${id}`;
+      const url = `/api/colors/${id}`;
       await axios.put(url, data);
       toast.dismiss(loadingToast);
       toast.success("Cập nhật thành công");

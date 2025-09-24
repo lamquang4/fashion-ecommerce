@@ -23,7 +23,7 @@ export default function useDeleteCategory() {
     setIsLoading(true);
 
     try {
-      const url = `/api/delete-category/${id}`;
+      const url = `/api/categories/${id}`;
       await axios.delete(url);
       toast.dismiss(loadingToast);
       toast.success("Xóa thành công");

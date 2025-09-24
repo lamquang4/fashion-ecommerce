@@ -23,7 +23,7 @@ export default function useDeleteVariant() {
     setIsLoading(true);
 
     try {
-      const url = `/api/delete-variant/${id}`;
+      const url = `/api/products/variant/${id}`;
       await axios.delete(url);
       toast.dismiss(loadingToast);
       toast.success("Xóa thành công");

@@ -25,7 +25,7 @@ export default function useGetCoupons() {
   if (q) query.set("q", q);
   if (status) query.set("status", status.toString());
 
-  const url = `/api/get-coupons?${query.toString()}`;
+  const url = `/api/coupons?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,

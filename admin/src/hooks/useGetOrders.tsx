@@ -34,7 +34,7 @@ export default function useGetOrders() {
   if (start) query.set("start", start.toString());
   if (end) query.set("end", end.toString());
 
-  const url = `/api/get-orders?${query.toString()}`;
+  const url = `/api/orders?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,

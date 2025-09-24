@@ -24,7 +24,7 @@ export default function useGetInventories() {
   if (limit) query.set("limit", limit.toString());
   if (q) query.set("q", q);
 
-  const url = `/api/get-inventories?${query.toString()}`;
+  const url = `/api/inventories?${query.toString()}`;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,
