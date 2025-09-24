@@ -272,22 +272,23 @@ export async function POST(req: NextRequest) {
     for (const item of productsBuy) {
       const { product, color, size, quantity } = item;
 
-      const inventory = await Inventory.findOne({
-        product,
-        color,
-      });
-
-      if (inventory) {
-        const inventoryItem = inventory.inventories.find(
-          (inv: any) => inv.size.toString() === size
-        );
-
-        if (inventoryItem) {
-          inventoryItem.quantity -= quantity;
-          if (inventoryItem.quantity < 0) inventoryItem.quantity = 0;
+      const updatedInventory = await Inventory.updateOne(
+        {
+          product,
+          color,
+          "inventories.size": size,
+          "inventories.quantity": { $gte: quantity }, // chỉ cập nhật nếu còn đủ
+        },
+        {
+          $inc: { "inventories.$.quantity": -quantity },
         }
+      );
 
-        await inventory.save();
+      if (updatedInventory.modifiedCount === 0) {
+        return NextResponse.json(
+          { msg: "Sản phẩm đã hết hàng hoặc không đủ số lượng" },
+          { status: 400 }
+        );
       }
     }
 

@@ -78,7 +78,7 @@ function OrderHistory() {
         ) : orders.length > 0 ? (
           orders.map((order) => (
             <div className="border border-gray-300 px-[15px]" key={order._id}>
-              <div className="space-y-[10px] py-[15px]">
+              <div className="space-y-[10px] py-[15px] border-b border-gray-300">
                 <div className="flex justify-between flex-wrap gap-[10px]">
                   <h5 className="font-semibold">Đơn hàng {order.orderCode}</h5>
 
@@ -126,7 +126,7 @@ function OrderHistory() {
               {order.productsBuy.map((item, index) => (
                 <div
                   key={index}
-                  className="relative py-[15px] border-b border-t border-gray-300 w-full"
+                  className="relative py-[15px] border-b border-gray-300 w-full"
                 >
                   <Link href={`/order/${order.orderCode}`}>
                     <div className="flex items-center gap-[10px] w-full">

@@ -134,36 +134,40 @@ function CheckoutForm() {
         return;
       }
 
-      const {
-        fullname,
-        phone,
-        speaddress,
-        city,
-        ward,
-        paymethod,
-        productsBuy,
-        total,
-        coupon,
-      } = JSON.parse(checkoutData);
+      try {
+        const {
+          fullname,
+          phone,
+          speaddress,
+          city,
+          ward,
+          paymethod,
+          productsBuy,
+          total,
+          coupon,
+        } = JSON.parse(checkoutData);
 
-      await addOrder({
-        fullname,
-        phone,
-        speaddress,
-        city,
-        ward,
-        paymethod,
-        productsBuy,
-        total,
-        coupon,
-      });
+        await addOrder({
+          fullname,
+          phone,
+          speaddress,
+          city,
+          ward,
+          paymethod,
+          productsBuy,
+          total,
+          coupon,
+        });
 
-      mutateCart({ productsInCart: [] }, false);
-      localStorage.removeItem("checkoutData");
-      localStorage.removeItem("orderId");
+        mutateCart({ productsInCart: [] }, false);
+        localStorage.removeItem("checkoutData");
+        localStorage.removeItem("orderId");
 
-      toast.success(`Đặt hàng thành công!`);
-      router.replace("/");
+        toast.success(`Đặt hàng thành công!`);
+        router.replace("/");
+      } catch (err: any) {
+        toast.error(err?.response?.data?.msg);
+      }
     };
 
     handleOrderMomoPayment();
@@ -255,22 +259,26 @@ function CheckoutForm() {
 
       return;
     } else {
-      await addOrder({
-        fullname: data.fullname,
-        phone: data.phone,
-        speaddress: data.speaddress,
-        city: provinceName,
-        ward: ward,
-        paymethod: paymethod!,
-        productsBuy: items!,
-        total: finalTotal,
-        coupon: coupon?._id,
-      });
+      try {
+        await addOrder({
+          fullname: data.fullname,
+          phone: data.phone,
+          speaddress: data.speaddress,
+          city: provinceName,
+          ward: ward,
+          paymethod: paymethod!,
+          productsBuy: items!,
+          total: finalTotal,
+          coupon: coupon?._id,
+        });
 
-      toast.success(`Đặt hàng thành công!`);
-      router.replace("/");
+        toast.success(`Đặt hàng thành công!`);
+        router.replace("/");
 
-      mutateCart({ productsInCart: [] }, false);
+        mutateCart({ productsInCart: [] }, false);
+      } catch (err: any) {
+        toast.error(err?.response?.data?.msg);
+      }
     }
   };
 
