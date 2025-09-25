@@ -317,7 +317,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ status: 201 });
   } catch (err) {
     await session.abortTransaction();
+
+    return NextResponse.json(
+      { err, msg: "Lỗi" },
+      {
+        status: 500,
+      }
+    );
+  } finally {
     session.endSession();
-    return NextResponse.json({ msg: "Lỗi", err }, { status: 500 });
   }
 }
