@@ -289,13 +289,8 @@ export async function POST(req: NextRequest) {
       );
 
       if (updated.modifiedCount === 0) {
-        // rollback nếu fail
         await session.abortTransaction();
         session.endSession();
-        return NextResponse.json(
-          { msg: "Sản phẩm đã hết hàng hoặc không đủ số lượng" },
-          { status: 400 }
-        );
       }
     }
 
@@ -317,14 +312,15 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ status: 201 });
   } catch (err) {
     await session.abortTransaction();
-
+    session.endSession();
     return NextResponse.json(
-      { err, msg: "Lỗi" },
+      {
+        err,
+        msg: "Sản phẩm đã hết hàng hoặc không đủ số lượng do có người đã mua trước bạn!",
+      },
       {
         status: 500,
       }
     );
-  } finally {
-    session.endSession();
   }
 }

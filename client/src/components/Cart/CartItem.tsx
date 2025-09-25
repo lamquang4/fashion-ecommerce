@@ -131,7 +131,7 @@ function CartItem({ cart }: Props) {
       const errorMessage = outOfStockItems
         .map(
           (item) =>
-            `Sản phẩm ${item.name} (${item.variant.size.namesize}, ${item.variant.color.namecolor}) chỉ còn ${item.variant.stock} sản phẩm. Không đủ tồn kho!`
+            `Sản phẩm ${item.name} (${item.variant.size.namesize}, ${item.variant.color.namecolor}) chỉ còn ${item.variant.stock}!`
         )
         .join("\n");
       toast.error(`${errorMessage}`);

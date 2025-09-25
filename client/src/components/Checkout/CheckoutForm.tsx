@@ -111,10 +111,10 @@ function CheckoutForm() {
       const errorMessage = outOfStockItems
         .map(
           (item) =>
-            `Sản phẩm ${item.name} (${item.variant.size.namesize}, ${item.variant.color.namecolor}) chỉ còn ${item.variant.stock} đơn vị.`
+            `Sản phẩm ${item.name} (${item.variant.size.namesize}, ${item.variant.color.namecolor}) chỉ còn ${item.variant.stock}!`
         )
         .join("\n");
-      toast.error(`Không đủ tồn kho:\n${errorMessage}`);
+      toast.error(`${errorMessage}`);
       router.replace(`/cart`);
       return;
     }
@@ -167,6 +167,7 @@ function CheckoutForm() {
         router.replace("/");
       } catch (err: any) {
         toast.error(err?.response?.data?.msg);
+        router.replace(`/cart`);
       }
     };
 
@@ -278,6 +279,7 @@ function CheckoutForm() {
         mutateCart({ productsInCart: [] }, false);
       } catch (err: any) {
         toast.error(err?.response?.data?.msg);
+        router.replace(`/cart`);
       }
     }
   };
