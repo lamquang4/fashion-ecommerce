@@ -220,8 +220,8 @@ export async function POST(req: NextRequest) {
       productsBuy,
     } = await req.json();
 
-    const sessionData = await getServerSession(options);
-    const userId = sessionData?.user?.id;
+    const userSession = await getServerSession(options);
+    const userId = userSession?.user?.id;
 
     if (!userId) {
       return NextResponse.json(
@@ -237,6 +237,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Tạo đơn
     const generateOrderCode = () =>
       (Math.random().toString(36) + Math.random().toString(36))
         .substring(2, 12)
@@ -247,7 +248,6 @@ export async function POST(req: NextRequest) {
       orderCode = generateOrderCode();
     }
 
-    // tạo đơn hàng
     const newOrder = await Order.create(
       [
         {
@@ -261,28 +261,21 @@ export async function POST(req: NextRequest) {
           paymethod,
           total,
           status: 0,
-          ...(coupon && { coupon }),
         },
       ],
       { session }
     );
 
-    // chi tiết đơn
-    await OrderDetail.create(
-      [
-        {
-          order: newOrder[0]._id,
-          items: productsBuy,
-        },
-      ],
-      { session }
-    );
+    // Tạo chi tiết đơn
+    await OrderDetail.create([{ order: newOrder[0]._id, items: productsBuy }], {
+      session,
+    });
 
-    // cập nhật tồn kho với kiểm tra trong transaction
+    // Cập nhật tồn kho từng sản phẩm
     for (const item of productsBuy) {
       const { product, color, size, quantity } = item;
 
-      const updatedInventory = await Inventory.updateOne(
+      const updated = await Inventory.updateOne(
         {
           product,
           color,
@@ -295,8 +288,8 @@ export async function POST(req: NextRequest) {
         { session }
       );
 
-      if (updatedInventory.modifiedCount === 0) {
-        // rollback nếu không còn hàng
+      if (updated.modifiedCount === 0) {
+        // rollback nếu fail
         await session.abortTransaction();
         session.endSession();
         return NextResponse.json(
@@ -306,6 +299,7 @@ export async function POST(req: NextRequest) {
       }
     }
 
+    // Trừ coupon
     if (coupon) {
       await Coupon.findByIdAndUpdate(
         coupon,
@@ -314,7 +308,7 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // xóa giỏ hàng
+    // Xóa giỏ hàng
     await Cart.findOneAndDelete({ user: userId }, { session });
 
     await session.commitTransaction();
@@ -324,6 +318,6 @@ export async function POST(req: NextRequest) {
   } catch (err) {
     await session.abortTransaction();
     session.endSession();
-    return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
+    return NextResponse.json({ msg: "Lỗi", err }, { status: 500 });
   }
 }
