@@ -300,7 +300,6 @@ export async function POST(req: NextRequest) {
   }
 }
 
-
 // xóa biến thể của sản phẩm đó khỏi giỏ hàng
 export async function PUT(req: NextRequest) {
   try {
@@ -333,5 +332,3 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
   }
 }
-
-

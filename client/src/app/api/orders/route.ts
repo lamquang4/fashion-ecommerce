@@ -202,6 +202,9 @@ export async function GET(req: NextRequest) {
 }
 
 export async function POST(req: NextRequest) {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
     await connectMongoDB();
 
@@ -217,8 +220,8 @@ export async function POST(req: NextRequest) {
       productsBuy,
     } = await req.json();
 
-    const session = await getServerSession(options);
-    const userId = session?.user?.id;
+    const sessionData = await getServerSession(options);
+    const userId = sessionData?.user?.id;
 
     if (!userId) {
       return NextResponse.json(
@@ -244,31 +247,38 @@ export async function POST(req: NextRequest) {
       orderCode = generateOrderCode();
     }
 
-    const newOrderData: any = {
-      orderCode,
-      user: userId,
-      fullname,
-      phone,
-      speaddress,
-      city,
-      ward,
-      paymethod,
-      total,
-      status: 0,
-    };
+    // tạo đơn hàng
+    const newOrder = await Order.create(
+      [
+        {
+          orderCode,
+          user: userId,
+          fullname,
+          phone,
+          speaddress,
+          city,
+          ward,
+          paymethod,
+          total,
+          status: 0,
+          ...(coupon && { coupon }),
+        },
+      ],
+      { session }
+    );
 
-    if (coupon) {
-      newOrderData.coupon = coupon;
-    }
+    // chi tiết đơn
+    await OrderDetail.create(
+      [
+        {
+          order: newOrder[0]._id,
+          items: productsBuy,
+        },
+      ],
+      { session }
+    );
 
-    const newOrder = await Order.create(newOrderData);
-
-    await OrderDetail.create({
-      order: newOrder._id,
-      items: productsBuy,
-    });
-
-    // Cập nhật tồn kho
+    // cập nhật tồn kho với kiểm tra trong transaction
     for (const item of productsBuy) {
       const { product, color, size, quantity } = item;
 
@@ -277,14 +287,18 @@ export async function POST(req: NextRequest) {
           product,
           color,
           "inventories.size": size,
-          "inventories.quantity": { $gte: quantity }, // chỉ cập nhật nếu còn đủ
+          "inventories.quantity": { $gte: quantity },
         },
         {
           $inc: { "inventories.$.quantity": -quantity },
-        }
+        },
+        { session }
       );
 
       if (updatedInventory.modifiedCount === 0) {
+        // rollback nếu không còn hàng
+        await session.abortTransaction();
+        session.endSession();
         return NextResponse.json(
           { msg: "Sản phẩm đã hết hàng hoặc không đủ số lượng" },
           { status: 400 }
@@ -293,27 +307,23 @@ export async function POST(req: NextRequest) {
     }
 
     if (coupon) {
-      await Coupon.findByIdAndUpdate(coupon, { $inc: { amount: -1 } });
-    }
-
-    // xóa giỏ hàng
-    const cart = await Cart.find({ user: userId });
-    if (!cart) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy giỏ hàng" },
-        { status: 404 }
+      await Coupon.findByIdAndUpdate(
+        coupon,
+        { $inc: { amount: -1 } },
+        { session }
       );
     }
 
-    await Cart.findOneAndDelete({ user: userId });
+    // xóa giỏ hàng
+    await Cart.findOneAndDelete({ user: userId }, { session });
+
+    await session.commitTransaction();
+    session.endSession();
 
     return NextResponse.json({ status: 201 });
   } catch (err) {
-    return NextResponse.json(
-      { err, msg: "Lỗi" },
-      {
-        status: 500,
-      }
-    );
+    await session.abortTransaction();
+    session.endSession();
+    return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
   }
 }
