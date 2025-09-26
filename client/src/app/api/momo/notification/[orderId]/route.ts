@@ -33,7 +33,7 @@ export async function POST(
     };
 
     const response = await axios.post(
-      "https://test-payment.momo.vn/v2/gateway/api/query",
+      `${process.env.MOMO_URL}/query`,
       requestBody,
       {
         headers: { "Content-Type": "application/json" },

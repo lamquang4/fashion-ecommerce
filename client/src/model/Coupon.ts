@@ -65,6 +65,7 @@ const couponSchema = new Schema(
       },
     },
     status: {
+      // phiếu status = 1 đang hiệu lực
       type: Number,
       required: true,
     },

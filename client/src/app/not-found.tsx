@@ -12,16 +12,14 @@ function NotFoundPage() {
                 <Image
                   Src={"/assets/other/404-error.png"}
                   Alt={""}
-                  ClassName={"w-[250px]"}
+                  ClassName={"w-[210px]"}
                   loadingType="eager"
                 />
               </div>
 
               <div className="flex justify-center flex-col gap-3 items-center text-center">
-                <h2 className="text-[1.3rem] font-semibold uppercase">
-                  TRANG KHÔNG ĐƯỢC TÌM THẤY
-                </h2>
-                <button className="text-[0.95rem] border border-black rounded-md font-medium px-3 py-2 hover:bg-black hover:text-white">
+                <h4 className="uppercase">Trang không tìm thấy</h4>
+                <button className="text-[0.9rem] border border-black rounded-md font-medium px-3 py-2 hover:bg-black hover:text-white">
                   <Link href={"/"}>Về trang chủ</Link>
                 </button>
               </div>

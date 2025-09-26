@@ -7,6 +7,7 @@ export default function usePaymentMomo() {
   const createPaymentMomo = async (data: {
     total: number;
     paymethod: number;
+    coupon?: string;
   }) => {
     setIsLoading(true);
     try {

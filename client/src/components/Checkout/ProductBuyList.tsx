@@ -17,7 +17,7 @@ function ProductBuyList({ productsInCart }: Props) {
           <div className="relative">
             <Image
               Src={item.variant.images[0]}
-              Alt={""}
+              Alt={item.name}
               ClassName={"w-[120px] object-cover"}
               loadingType="eager"
             />
@@ -29,11 +29,11 @@ function ProductBuyList({ productsInCart }: Props) {
 
           <div className="flex w-full flex-col my-auto gap-[5px]">
             <span className="font-semibold">{item.name}</span>
-            <span className=" ">
+            <span>
               {item.variant.size.namesize} / {item.variant.color.namecolor}
             </span>
             {item.discount > 0 ? (
-              <div className="flex items-center gap-[8px]">
+              <div className="flex items-center gap-[8px] text-[0.9rem]">
                 <del className="text-[#707072]">
                   {item.price.toLocaleString("vi-VN")}₫
                 </del>

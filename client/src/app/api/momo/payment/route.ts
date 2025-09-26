@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   try {
     await connectMongoDB();
 
-    const { total, paymethod } = await req.json();
+    const { total, paymethod, coupon } = await req.json();
 
     if (paymethod === 1) {
       const partnerCode = process.env.MOMO_PARTNERCODE;
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
       const ipnUrl = `${process.env.NEXTAUTH_URL}/api/momo/notify/${orderId}`;
       const amount = total;
       const requestType = "captureWallet";
-      const extraData = "";
+      const extraData = coupon;
 
       const rawSignature =
         "accessKey=" +
@@ -65,7 +65,7 @@ export async function POST(req: NextRequest) {
       });
 
       const response = await axios.post(
-        "https://test-payment.momo.vn/v2/gateway/api/create", // https://payment.momo.vn
+        `${process.env.MOMO_URL}/create`, // https://payment.momo.vn
         requestBody,
         {
           headers: { "Content-Type": "application/json" },

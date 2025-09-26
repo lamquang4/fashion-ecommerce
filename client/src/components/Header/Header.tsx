@@ -31,6 +31,29 @@ function Header() {
   const [menuMobileOpen, setMenuMobileOpen] = useState<boolean>(false);
   const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (session?.user) {
+      (async () => {
+        await syncCart();
+        mutateCart();
+        await syncWishlist();
+        mutateWishlist();
+      })();
+    }
+  }, [session?.user, mutateCart, mutateWishlist]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 1024) {
+        setMenuMobileOpen(false);
+        setOpenSearch(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
   const totalQuantity = useMemo(() => {
     return (
       cart?.productsInCart.reduce((sum, item) => {
@@ -55,29 +78,6 @@ function Header() {
     setProfileMenuOpen((prev) => !prev);
     setMenuMobileOpen(false);
     setOpenSearch(false);
-  }, []);
-
-  useEffect(() => {
-    if (session?.user) {
-      (async () => {
-        await syncCart();
-        mutateCart();
-        await syncWishlist();
-        mutateWishlist();
-      })();
-    }
-  }, [session?.user, mutateCart, mutateWishlist]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth >= 1024) {
-        setMenuMobileOpen(false);
-        setOpenSearch(false);
-      }
-    };
-
-    window.addEventListener("resize", handleResize);
-    return () => window.removeEventListener("resize", handleResize);
   }, []);
   return (
     <>

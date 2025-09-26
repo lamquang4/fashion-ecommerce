@@ -260,6 +260,7 @@ export async function POST(req: NextRequest) {
           ward,
           paymethod,
           total,
+          ...(coupon && { coupon }),
           status: 0,
         },
       ],
@@ -279,13 +280,15 @@ export async function POST(req: NextRequest) {
         {
           product,
           color,
-          "inventories.size": size,
-          "inventories.quantity": { $gte: quantity },
+          inventories: { $elemMatch: { size, quantity: { $gte: quantity } } },
         },
         {
-          $inc: { "inventories.$.quantity": -quantity },
+          $inc: { "inventories.$[elem].quantity": -quantity },
         },
-        { session }
+        {
+          arrayFilters: [{ "elem.size": size }],
+          session,
+        }
       );
 
       if (updated.modifiedCount === 0) {

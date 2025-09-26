@@ -6,7 +6,7 @@ import MenuSideCoupon from "./../MenuSideCoupon";
 import useGetProvinces from "@/hooks/useGetProvinceVN";
 import useGetCart from "@/hooks/useGetCart";
 import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import useGetAddresses from "@/hooks/useGetAddresses";
 import { Address } from "@/types/type";
 import useAddOrder from "@/hooks/useAddOrder";
@@ -22,6 +22,8 @@ import PaymentMethod from "./PaymentMethod";
 import useGetStatusPaymentMomo from "@/hooks/useGetStatusPaymentMomo";
 
 function CheckoutForm() {
+  const searchParams = useSearchParams();
+  const orderId = searchParams.get("orderId");
   const router = useRouter();
 
   const { provinces } = useGetProvinces();
@@ -45,7 +47,6 @@ function CheckoutForm() {
     phone: "",
     speaddress: "",
   });
-
   const [provinceName, setProvinceName] = useState<string>("");
   const [ward, setWard] = useState<string>("");
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
@@ -62,6 +63,22 @@ function CheckoutForm() {
       }, 0) || 0
     );
   }, [cart?.productsInCart]);
+
+  const finalTotal = useMemo(() => {
+    let result = totalPrice;
+    if (coupon) {
+      if (coupon.discountType === 1) {
+        result -= coupon.discountValue;
+      } else if (coupon.discountType === 0) {
+        const discount = Math.min(
+          (totalPrice * coupon.discountValue) / 100,
+          coupon.maxDiscountValue!
+        );
+        result -= discount;
+      }
+    }
+    return Math.max(0, result);
+  }, [totalPrice, coupon]);
 
   const handleChange = useCallback(
     (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -122,30 +139,32 @@ function CheckoutForm() {
 
   // tạo đơn hàng khi thanh toán Momo thành công
   useEffect(() => {
-    const orderId = localStorage.getItem("orderId");
     const checkoutData = localStorage.getItem("checkoutData");
 
-    const handleOrderMomoPayment = async () => {
-      if (!orderId || !checkoutData) return;
+    const handleCreateOrder = async () => {
+      if (!orderId || !checkoutData || isLoadingCart) return;
 
       const res = await getStatusPaymentMomo(orderId);
 
       if (res.resultCode !== 0) {
+        localStorage.removeItem("checkoutData");
         return;
       }
 
+      const items = cart?.productsInCart.map((item) => {
+        return {
+          product: item._id,
+          size: item.variant.size._id,
+          color: item.variant.color._id,
+          quantity: item.variant.quantity,
+          price: item.price,
+          discount: item.discount,
+        };
+      });
+
       try {
-        const {
-          fullname,
-          phone,
-          speaddress,
-          city,
-          ward,
-          paymethod,
-          productsBuy,
-          total,
-          coupon,
-        } = JSON.parse(checkoutData);
+        const { fullname, phone, speaddress, city, ward } =
+          JSON.parse(checkoutData);
 
         await addOrder({
           fullname,
@@ -153,15 +172,14 @@ function CheckoutForm() {
           speaddress,
           city,
           ward,
-          paymethod,
-          productsBuy,
-          total,
-          coupon,
+          paymethod: 1,
+          productsBuy: items,
+          total: res.amount,
+          ...(res.extraData && { coupon: res.extraData }), // id của coupon
         });
 
         mutateCart({ productsInCart: [] }, false);
         localStorage.removeItem("checkoutData");
-        localStorage.removeItem("orderId");
 
         toast.success(`Đặt hàng thành công!`);
         router.replace("/");
@@ -171,24 +189,8 @@ function CheckoutForm() {
       }
     };
 
-    handleOrderMomoPayment();
-  }, []);
-
-  const finalTotal = useMemo(() => {
-    let result = totalPrice;
-    if (coupon) {
-      if (coupon.discountType === 1) {
-        result -= coupon.discountValue;
-      } else if (coupon.discountType === 0) {
-        const discount = Math.min(
-          (totalPrice * coupon.discountValue) / 100,
-          coupon.maxDiscountValue!
-        );
-        result -= discount;
-      }
-    }
-    return Math.max(0, result);
-  }, [totalPrice, coupon]);
+    handleCreateOrder();
+  }, [orderId, isLoadingCart, cart]);
 
   const toggleOpen = useCallback(() => {
     setMenuOpen((prev) => !prev);
@@ -219,6 +221,7 @@ function CheckoutForm() {
       toast.error(
         "Vui lòng chọn thanh toán COD vì đơn hàng có tổng tiền bằng 0"
       );
+      setPaymethod(0);
       return;
     }
 
@@ -237,9 +240,8 @@ function CheckoutForm() {
       const momoResponse = await createPaymentMomo({
         total: finalTotal,
         paymethod,
+        ...(coupon?._id && { coupon: coupon._id }),
       });
-
-      localStorage.setItem("orderId", momoResponse.orderId);
 
       localStorage.setItem(
         "checkoutData",
@@ -249,10 +251,6 @@ function CheckoutForm() {
           speaddress: data.speaddress,
           city: provinceName,
           ward: ward,
-          paymethod,
-          productsBuy: items,
-          total: finalTotal,
-          coupon: coupon?._id,
         })
       );
 
@@ -267,10 +265,10 @@ function CheckoutForm() {
           speaddress: data.speaddress,
           city: provinceName,
           ward: ward,
-          paymethod: paymethod!,
+          paymethod: 0,
           productsBuy: items!,
           total: finalTotal,
-          coupon: coupon?._id,
+          ...(coupon?._id && { coupon: coupon._id }),
         });
 
         toast.success(`Đặt hàng thành công!`);
@@ -290,7 +288,7 @@ function CheckoutForm() {
         <Link href={"/"}>
           <Image
             Src={"/assets/other/logo.png"}
-            Alt={""}
+            Alt={"logo"}
             ClassName={"w-[80px]"}
             loadingType="eager"
           />
