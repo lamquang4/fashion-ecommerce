@@ -10,9 +10,14 @@ import Loading from "./Loading";
 import { validateBirthday } from "@/utils/validateBirthday";
 import { useSendRegisterOTP } from "@/hooks/useSendRegisterOTP";
 import { useRouter } from "next/navigation";
-
+import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
 function RegisterForm() {
   const router = useRouter();
+
+  const { handleRegister, isLoading } = useRegister();
+  const { sendRegisterOTP, isLoading: isLoadingSendResetOTP } =
+    useSendRegisterOTP();
+
   const [data, setData] = useState({
     fullname: "",
     email: "",
@@ -21,12 +26,12 @@ function RegisterForm() {
     phone: "",
     otp: "",
   });
-
   const [step, setStep] = useState<number>(1);
+  const [showPassword, setShowPassword] = useState<boolean>(false);
 
-  const { handleRegister, isLoading } = useRegister();
-  const { sendRegisterOTP, isLoading: isLoadingSendResetOTP } =
-    useSendRegisterOTP();
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -213,15 +218,30 @@ function RegisterForm() {
                       >
                         Mật khẩu
                       </label>
-                      <input
-                        type="password"
-                        name="password"
-                        value={data.password}
-                        onChange={handleChange}
-                        placeholder="Nhập mật khẩu"
-                        className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
-                        required
-                      />
+
+                      <div className="relative">
+                        <input
+                          type={!showPassword ? "password" : "text"}
+                          name="password"
+                          value={data.password}
+                          onChange={handleChange}
+                          placeholder="Nhập mật khẩu"
+                          className="text-[0.9rem] block w-full  px-3 pr-12 py-2 border border-gray-200"
+                          required
+                        />
+
+                        <button
+                          type="button"
+                          className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                          onClick={toggleShowPassword}
+                        >
+                          {!showPassword ? (
+                            <HiOutlineEye size={22} />
+                          ) : (
+                            <HiOutlineEyeOff size={22} />
+                          )}
+                        </button>
+                      </div>
                     </div>
 
                     <div className="mt-4">

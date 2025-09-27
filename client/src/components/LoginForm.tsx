@@ -6,6 +6,7 @@ import useLogin from "@/hooks/useLogin";
 import Loading from "./Loading";
 import Overplay from "./Overplay";
 import { useRouter } from "next/navigation";
+import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
 
 function LoginForm() {
   const router = useRouter();
@@ -13,6 +14,11 @@ function LoginForm() {
   const { handleLogin, isLoading: isLoadingLogin } = useLogin();
 
   const [data, setData] = useState({ email: "", password: "" });
+  const [showPassword, setShowPassword] = useState<boolean>(false);
+
+  const toggleShowPassword = () => {
+    setShowPassword((prev) => !prev);
+  };
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -69,21 +75,33 @@ function LoginForm() {
                 </div>
 
                 <div className="space-y-[5px]">
-                  <label
-                    htmlFor=""
-                    className="block   text-[0.9rem] font-medium"
-                  >
+                  <label htmlFor="" className="block text-[0.9rem] font-medium">
                     Mật khẩu
                   </label>
-                  <input
-                    type="password"
-                    name="password"
-                    value={data.password}
-                    onChange={handleChange}
-                    placeholder="Nhập mật khẩu"
-                    className="text-[0.9rem] block w-full px-3 py-2 border border-gray-200"
-                    required
-                  />
+
+                  <div className="relative">
+                    <input
+                      type={!showPassword ? "password" : "text"}
+                      name="password"
+                      value={data.password}
+                      onChange={handleChange}
+                      placeholder="Nhập mật khẩu"
+                      className="text-[0.9rem] block w-full  px-3 pr-12 py-2 border border-gray-200"
+                      required
+                    />
+
+                    <button
+                      type="button"
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-500"
+                      onClick={toggleShowPassword}
+                    >
+                      {!showPassword ? (
+                        <HiOutlineEye size={22} />
+                      ) : (
+                        <HiOutlineEyeOff size={22} />
+                      )}
+                    </button>
+                  </div>
                 </div>
 
                 <div className="mt-4">
