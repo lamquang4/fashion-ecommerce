@@ -1,7 +1,6 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Inventory from "@/model/Inventory";
 import Order from "@/model/Order";
-import OrderDetail from "@/model/OrderDetail";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function PUT(
@@ -28,17 +27,9 @@ export async function PUT(
       );
     }
 
+    // hủy đơn hàng
     if (status === 4) {
-      const orderDetail = await OrderDetail.findOne({ order: order._id });
-
-      if (!orderDetail) {
-        return NextResponse.json(
-          { msg: "Không tìm thấy chi tiết đơn hàng" },
-          { status: 404 }
-        );
-      }
-
-      for (const item of orderDetail.items) {
+      for (const item of order.items) {
         const { product, color, size, quantity } = item;
 
         const inventory = await Inventory.findOne({
@@ -60,13 +51,7 @@ export async function PUT(
       }
     }
 
-    const updatedData: any = {
-      status,
-    };
-
-    await Order.findByIdAndUpdate(id, updatedData, {
-      new: true,
-    });
+    await Order.findByIdAndUpdate(id, { status }, { new: true });
 
     return NextResponse.json({ status: 200 });
   } catch (err) {

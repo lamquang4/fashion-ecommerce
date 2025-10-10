@@ -1,6 +1,5 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Order from "@/model/Order";
-import OrderDetail from "@/model/OrderDetail";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(req: NextRequest) {
@@ -56,22 +55,13 @@ export async function GET(req: NextRequest) {
         { $match: { status: 3 } },
         { $group: { _id: null, total: { $sum: "$total" } } },
       ]),
-      OrderDetail.aggregate([
-        {
-          $lookup: {
-            from: "orders",
-            localField: "order",
-            foreignField: "_id",
-            as: "orderInfo",
-          },
-        },
-        { $unwind: "$orderInfo" },
-        { $match: { "orderInfo.status": 3 } },
+      Order.aggregate([
+        { $match: { status: 3 } },
         { $unwind: "$items" },
         {
           $group: {
             _id: null,
-            total1: { $sum: "$items.quantity" },
+            totalSold: { $sum: "$items.quantity" },
           },
         },
       ]),

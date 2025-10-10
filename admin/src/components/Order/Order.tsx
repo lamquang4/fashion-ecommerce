@@ -54,6 +54,10 @@ function Order() {
       value: null,
     },
     {
+      name: "Chờ thanh toán",
+      value: -1,
+    },
+    {
       name: "Chờ xác nhận",
       value: 0,
     },
@@ -224,7 +228,7 @@ function Order() {
                     })}
                   </td>
 
-                  <td className="p-[1rem]  ">
+                  <td className="p-[1rem]">
                     <select
                       disabled={isLoadingUpdateStatusOrder}
                       name="status"
@@ -234,6 +238,11 @@ function Order() {
                       }
                       className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
                     >
+                      {order.status === -1 && (
+                        <option value="-1">
+                          Chờ thanh toán
+                        </option>
+                      )}
                       {order.status === 0 && (
                         <>
                           <option value="0">Chờ xác nhận</option>

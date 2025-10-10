@@ -2,7 +2,7 @@ import cloudinary from "@/lib/cloudinary";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Category from "@/model/Category";
 import Inventory from "@/model/Inventory";
-import OrderDetail from "@/model/OrderDetail";
+import Order from "@/model/Order";
 import Product from "@/model/Product";
 import { extractPublicId } from "@/utils/extractPublicId";
 import mongoose from "mongoose";
@@ -144,7 +144,7 @@ export async function DELETE(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const checkProduct = await OrderDetail.findOne({ "buy.product": id });
+    const checkProduct = await Order.findOne({ "items.product": id });
     if (checkProduct) {
       return NextResponse.json(
         {
@@ -383,7 +383,7 @@ export async function PUT(
         );
         const currentColor = inventory.color.toString();
 
-        const usedInOrders = await OrderDetail.aggregate([
+        const usedInOrders = await Order.aggregate([
           {
             $match: {
               "items.product": new mongoose.Types.ObjectId(id),

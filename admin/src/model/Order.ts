@@ -21,7 +21,51 @@ const orderSchema = new Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "Coupon",
     },
+    items: [
+      {
+        product: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Product",
+          required: true,
+        },
+        size: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Size",
+          required: true,
+        },
+        color: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Color",
+          required: true,
+        },
+        discount: {
+          type: Number,
+          required: true,
+          min: 0,
+          validate: {
+            validator: Number.isInteger,
+          },
+        }, // số tiền giảm giá tại lúc đặt hàng sản phẩm đó
+        price: {
+          type: Number,
+          required: true,
+          min: 1,
+          validate: {
+            validator: Number.isInteger,
+          },
+        }, // giá tại lúc đặt hàng sản phẩm đó
+        quantity: {
+          type: Number,
+          required: true,
+          min: 1,
+          validate: {
+            validator: Number.isInteger,
+          },
+        },
+      },
+    ],
     status: {
+      // -1: chờ thanh toán, 0: chờ xác nhận, 1: đã xác nhận, 2: đang giao, 3: đã giao, 4: hủy
       type: Number,
       required: true,
     },
@@ -38,6 +82,11 @@ const orderSchema = new Schema(
 );
 
 orderSchema.index({ status: 1 });
+
+orderSchema.index(
+  { createdAt: 1 },
+  { expireAfterSeconds: 900, partialFilterExpression: { status: -1 } }
+);
 
 const Order = models.Order || model("Order", orderSchema);
 export default Order;

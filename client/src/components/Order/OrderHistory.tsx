@@ -151,17 +151,21 @@ function OrderHistory() {
                         </div>
 
                         <div className="flex gap-[10px] flex-wrap font-medium">
-                          {item.discount > 0 && (
-                            <del>{item.price.toLocaleString("vi-VN")}₫</del>
-                          )}
-                          <span>
-                            {item.discount > 0
-                              ? (item.price - item.discount).toLocaleString(
+                          {item.discount > 0 ? (
+                            <>
+                              <del>{item.price.toLocaleString("vi-VN")}₫</del>
+                              <span className="font-medium text-[#c00]">
+                                {(item.price - item.discount).toLocaleString(
                                   "vi-VN"
-                                )
-                              : item.price.toLocaleString("vi-VN")}
-                            ₫
-                          </span>
+                                )}
+                                ₫
+                              </span>
+                            </>
+                          ) : (
+                            <span className="font-medium">
+                              {item.price.toLocaleString("vi-VN")} ₫
+                            </span>
+                          )}
                         </div>
                       </div>
                     </div>

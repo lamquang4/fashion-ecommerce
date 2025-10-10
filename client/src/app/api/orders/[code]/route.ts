@@ -16,15 +16,6 @@ export async function GET(
       },
       {
         $lookup: {
-          from: "orderdetails",
-          localField: "_id",
-          foreignField: "order",
-          as: "orderDetail",
-        },
-      },
-      { $unwind: "$orderDetail" },
-      {
-        $lookup: {
           from: "coupons",
           localField: "coupon",
           foreignField: "_id",
@@ -37,13 +28,11 @@ export async function GET(
           preserveNullAndEmptyArrays: true,
         },
       },
-      {
-        $unwind: "$orderDetail.items",
-      },
+      { $unwind: "$items" },
       {
         $lookup: {
           from: "products",
-          localField: "orderDetail.items.product",
+          localField: "items.product",
           foreignField: "_id",
           as: "product",
         },
@@ -52,7 +41,7 @@ export async function GET(
       {
         $lookup: {
           from: "sizes",
-          localField: "orderDetail.items.size",
+          localField: "items.size",
           foreignField: "_id",
           as: "size",
         },
@@ -61,7 +50,7 @@ export async function GET(
       {
         $lookup: {
           from: "colors",
-          localField: "orderDetail.items.color",
+          localField: "items.color",
           foreignField: "_id",
           as: "color",
         },
@@ -128,9 +117,9 @@ export async function GET(
                   codecolor: "$color.codecolor",
                 },
               },
-              quantity: "$orderDetail.items.quantity",
-              price: "$orderDetail.items.price",
-              discount: "$orderDetail.items.discount",
+              quantity: "$items.quantity",
+              price: "$items.price",
+              discount: "$items.discount",
             },
           },
         },

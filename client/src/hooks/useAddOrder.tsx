@@ -9,7 +9,8 @@ export default function useAddOrder() {
     setIsLoading(true);
     try {
       const url = `/api/orders`;
-      await axios.post(url, data);
+      const res = await axios.post(url, data);
+      return res.data;
     } catch (err) {
       console.error("Lỗi:", err);
       throw err;

@@ -149,27 +149,30 @@ function CheckoutForm() {
     });
 
     if (paymethod === 1) {
-      const momoResponse = await createPaymentMomo({
-        total: finalTotal,
-        paymethod,
-        ...(coupon?._id && { coupon: coupon._id }),
-      });
-
-      localStorage.setItem(
-        "checkoutData",
-        JSON.stringify({
+      try {
+        const orderResponse = await addOrder({
           fullname: data.fullname,
           phone: data.phone,
           speaddress: data.speaddress,
           city: provinceName,
           ward: ward,
-        })
-      );
+          paymethod: paymethod,
+          productsBuy: items!,
+          total: finalTotal,
+          ...(coupon?._id && { coupon: coupon._id }),
+        });
 
-      window.location.href = momoResponse.payUrl;
+        const momoResponse = await createPaymentMomo({
+          total: finalTotal,
+          orderCode: orderResponse.order.orderCode,
+        });
 
-      return;
-    } else {
+        window.location.href = momoResponse.payUrl;
+      } catch (err: any) {
+        toast.error(err?.response?.data?.msg);
+        router.replace(`/cart`);
+      }
+    } else if (paymethod === 0) {
       try {
         await addOrder({
           fullname: data.fullname,
@@ -177,7 +180,7 @@ function CheckoutForm() {
           speaddress: data.speaddress,
           city: provinceName,
           ward: ward,
-          paymethod: 0,
+          paymethod: paymethod,
           productsBuy: items!,
           total: finalTotal,
           ...(coupon?._id && { coupon: coupon._id }),
@@ -229,47 +232,17 @@ function CheckoutForm() {
 
   // tạo đơn hàng khi thanh toán Momo thành công
   useEffect(() => {
-    const checkoutData = localStorage.getItem("checkoutData");
-
-    const handleCreateOrder = async () => {
-      if (!orderId || !checkoutData || isLoadingCart) return;
+    const handlePaymentOrder = async () => {
+      if (!orderId || isLoadingCart) return;
 
       const res = await getStatusPaymentMomo(orderId);
 
       if (res.resultCode !== 0) {
-        localStorage.removeItem("checkoutData");
         return;
       }
 
-      const items = cart?.productsInCart.map((item) => {
-        return {
-          product: item._id,
-          size: item.variant.size._id,
-          color: item.variant.color._id,
-          quantity: item.variant.quantity,
-          price: item.price,
-          discount: item.discount,
-        };
-      });
-
       try {
-        const { fullname, phone, speaddress, city, ward } =
-          JSON.parse(checkoutData);
-
-        await addOrder({
-          fullname,
-          phone,
-          speaddress,
-          city,
-          ward,
-          paymethod: 1,
-          productsBuy: items,
-          total: res.amount,
-          ...(res.extraData && { coupon: res.extraData }), // id của coupon
-        });
-
         mutateCart({ productsInCart: [] }, false);
-        localStorage.removeItem("checkoutData");
 
         toast.success(`Đặt hàng thành công!`);
         router.replace("/");
@@ -279,7 +252,7 @@ function CheckoutForm() {
       }
     };
 
-    handleCreateOrder();
+    handlePaymentOrder();
   }, [orderId, isLoadingCart, cart]);
 
   return (

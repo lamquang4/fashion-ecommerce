@@ -5,7 +5,6 @@ import { NextRequest, NextResponse } from "next/server";
 import { options } from "../auth/[...nextauth]/options";
 import mongoose from "mongoose";
 import { validatePhone } from "@/utils/validatePhone";
-import OrderDetail from "@/model/OrderDetail";
 import Inventory from "@/model/Inventory";
 import Coupon from "@/model/Coupon";
 import Cart from "@/model/Cart";
@@ -28,9 +27,14 @@ export async function GET(req: NextRequest) {
       );
     }
 
-    const query: any = { user: new mongoose.Types.ObjectId(userId) };
+    const query: any = {
+      user: new mongoose.Types.ObjectId(userId),
+      status: { $ne: -1 },
+    };
     if (status) {
       query.status = parseInt(status);
+    } else {
+      query.status = { $ne: -1 };
     }
 
     const [orders, total] = await Promise.all([
@@ -38,15 +42,6 @@ export async function GET(req: NextRequest) {
         {
           $match: { ...query },
         },
-        {
-          $lookup: {
-            from: "orderdetails",
-            localField: "_id",
-            foreignField: "order",
-            as: "orderDetail",
-          },
-        },
-        { $unwind: "$orderDetail" },
         {
           $lookup: {
             from: "coupons",
@@ -61,13 +56,11 @@ export async function GET(req: NextRequest) {
             preserveNullAndEmptyArrays: true,
           },
         },
-        {
-          $unwind: "$orderDetail.items",
-        },
+        { $unwind: "$items" },
         {
           $lookup: {
             from: "products",
-            localField: "orderDetail.items.product",
+            localField: "items.product",
             foreignField: "_id",
             as: "product",
           },
@@ -76,7 +69,7 @@ export async function GET(req: NextRequest) {
         {
           $lookup: {
             from: "sizes",
-            localField: "orderDetail.items.size",
+            localField: "items.size",
             foreignField: "_id",
             as: "size",
           },
@@ -85,7 +78,7 @@ export async function GET(req: NextRequest) {
         {
           $lookup: {
             from: "colors",
-            localField: "orderDetail.items.color",
+            localField: "items.color",
             foreignField: "_id",
             as: "color",
           },
@@ -152,9 +145,9 @@ export async function GET(req: NextRequest) {
                     codecolor: "$color.codecolor",
                   },
                 },
-                quantity: "$orderDetail.items.quantity",
-                price: "$orderDetail.items.price",
-                discount: "$orderDetail.items.discount",
+                quantity: "$items.quantity",
+                price: "$items.price",
+                discount: "$items.discount",
               },
             },
           },
@@ -260,59 +253,57 @@ export async function POST(req: NextRequest) {
           ward,
           paymethod,
           total,
+          items: productsBuy,
           ...(coupon && { coupon }),
-          status: 0,
+          status: paymethod === 1 ? -1 : 0,
         },
       ],
       { session }
     );
 
-    // Tạo chi tiết đơn
-    await OrderDetail.create([{ order: newOrder[0]._id, items: productsBuy }], {
-      session,
-    });
+    if (paymethod === 0) {
+      // Cập nhật tồn kho từng sản phẩm
+      for (const item of productsBuy) {
+        const { product, color, size, quantity } = item;
 
-    // Cập nhật tồn kho từng sản phẩm
-    for (const item of productsBuy) {
-      const { product, color, size, quantity } = item;
+        const updated = await Inventory.updateOne(
+          {
+            product,
+            color,
+            inventories: { $elemMatch: { size, quantity: { $gte: quantity } } },
+          },
+          {
+            $inc: { "inventories.$[elem].quantity": -quantity },
+          },
+          {
+            arrayFilters: [{ "elem.size": size }],
+            session,
+          }
+        );
 
-      const updated = await Inventory.updateOne(
-        {
-          product,
-          color,
-          inventories: { $elemMatch: { size, quantity: { $gte: quantity } } },
-        },
-        {
-          $inc: { "inventories.$[elem].quantity": -quantity },
-        },
-        {
-          arrayFilters: [{ "elem.size": size }],
-          session,
+        if (updated.modifiedCount === 0) {
+          await session.abortTransaction();
+          session.endSession();
         }
-      );
-
-      if (updated.modifiedCount === 0) {
-        await session.abortTransaction();
-        session.endSession();
       }
-    }
 
-    // Trừ coupon
-    if (coupon) {
-      await Coupon.findByIdAndUpdate(
-        coupon,
-        { $inc: { amount: -1 } },
-        { session }
-      );
-    }
+      // Trừ coupon
+      if (coupon) {
+        await Coupon.findByIdAndUpdate(
+          coupon,
+          { $inc: { amount: -1 } },
+          { session }
+        );
+      }
 
-    // Xóa giỏ hàng
-    await Cart.findOneAndDelete({ user: userId }, { session });
+      // Xóa giỏ hàng
+      await Cart.findOneAndDelete({ user: userId }, { session });
+    }
 
     await session.commitTransaction();
     session.endSession();
 
-    return NextResponse.json({ status: 201 });
+    return NextResponse.json({ order: newOrder[0] }, { status: 201 });
   } catch (err) {
     await session.abortTransaction();
     session.endSession();
