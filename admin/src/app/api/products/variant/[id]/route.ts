@@ -1,7 +1,7 @@
 import cloudinary from "@/lib/cloudinary";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Inventory from "@/model/Inventory";
-import OrderDetail from "@/model/OrderDetail";
+import Order from "@/model/Order";
 import mongoose from "mongoose";
 import { extractPublicId } from "@/utils/extractPublicId";
 import { NextRequest, NextResponse } from "next/server";
@@ -35,7 +35,7 @@ export async function DELETE(
       );
     }
 
-    const existed = await OrderDetail.findOne({
+    const existed = await Order.findOne({
       items: {
         $elemMatch: {
           product: variant.product,
