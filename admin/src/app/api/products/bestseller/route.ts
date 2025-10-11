@@ -98,7 +98,7 @@ export async function GET() {
       },
       {
         $lookup: {
-          from: "orderdetails",
+          from: "orders",
           let: { productId: "$_id" },
           pipeline: [
             {
@@ -110,19 +110,8 @@ export async function GET() {
               },
             },
             {
-              $lookup: {
-                from: "orders",
-                localField: "order",
-                foreignField: "_id",
-                as: "order",
-              },
-            },
-            {
-              $unwind: "$order",
-            },
-            {
               $match: {
-                "order.status": 3,
+                status: 3,
               },
             },
             {
@@ -167,19 +156,11 @@ export async function GET() {
           variants: 1,
         },
       },
-      {
-        $project: {
-          sold: 0,
-        },
-      },
       { $limit: 10 },
     ]);
 
     if (!topProducts || topProducts.length === 0) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy" },
-        { status: 404 }
-      );
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
     return NextResponse.json({ topProducts }, { status: 200 });

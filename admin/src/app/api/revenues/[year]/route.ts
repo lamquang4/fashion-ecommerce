@@ -22,21 +22,12 @@ export async function GET(
           },
         },
       },
-      {
-        $lookup: {
-          from: "orderdetails",
-          localField: "_id",
-          foreignField: "order",
-          as: "details",
-        },
-      },
-      { $unwind: "$details" },
-      { $unwind: "$details.items" },
+      { $unwind: "$items" },
       {
         $group: {
           _id: { $month: "$createdAt" },
           totalRevenue: { $sum: "$total" },
-          totalQuantity: { $sum: "$details.items.quantity" },
+          totalQuantity: { $sum: "$items.quantity" },
         },
       },
       {
