@@ -1,7 +1,5 @@
 import { connectMongoDB } from "@/lib/MongoConnect";
 import { NextRequest, NextResponse } from "next/server";
-import crypto from "crypto";
-import axios from "axios";
 import Order from "@/model/Order";
 import Cart from "@/model/Cart";
 import Coupon from "@/model/Coupon";
