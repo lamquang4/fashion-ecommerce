@@ -7,16 +7,16 @@ export async function POST(req: NextRequest) {
   try {
     await connectMongoDB();
 
-    const { total, orderId: id } = await req.json();
+    const { total, orderCode } = await req.json();
 
     const partnerCode = process.env.MOMO_PARTNERCODE;
     const accessKey = process.env.MOMO_ACCESSKEY;
     const secretKey = process.env.MOMO_SECRETKEY;
-    const requestId = id; 
+    const requestId = orderCode;
     const orderId = requestId;
     const orderInfo = "Thanh toán bằng Momo"; // nội dung giao dịch
     const redirectUrl = `${process.env.NEXTAUTH_URL}/checkout`;
-    const ipnUrl = `${process.env.NEXTAUTH_URL}/api/momo/notification`;
+    const ipnUrl = `${process.env.NEXTAUTH_URL}/api/momo/notify/${orderId}`;
     const amount = total;
     const requestType = "captureWallet";
     const extraData = "";
@@ -71,7 +71,7 @@ export async function POST(req: NextRequest) {
       }
     );
 
-    return NextResponse.json({ payUrl: response.data.payUrl }, { status: 200 });
+    return NextResponse.json(response.data, { status: 200 });
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },

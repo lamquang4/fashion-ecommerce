@@ -255,7 +255,7 @@ export async function POST(req: NextRequest) {
           total,
           items: productsBuy,
           ...(coupon && { coupon }),
-          status: paymethod === 0 ? 0 : -1,
+          status: paymethod === 1 ? -1 : 0,
         },
       ],
       { session }
@@ -303,7 +303,7 @@ export async function POST(req: NextRequest) {
     await session.commitTransaction();
     session.endSession();
 
-    return NextResponse.json({ orderId: newOrder[0]._id }, { status: 201 });
+    return NextResponse.json({ order: newOrder[0] }, { status: 201 });
   } catch (err) {
     await session.abortTransaction();
     session.endSession();
