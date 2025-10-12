@@ -6,7 +6,7 @@ export default function usePaymentMomo() {
   const [isLoading, setIsLoading] = useState(false);
   const createPaymentMomo = async (data: {
     total: number;
-    orderCode: string;
+    orderId: string;
   }) => {
     setIsLoading(true);
     try {
