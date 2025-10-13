@@ -13,7 +13,12 @@ function PaymentMethod({ paymethod, setPaymethod }: Props) {
     },
     {
       image: "/assets/other/momo.png",
-      name: "Thanh toán Momo",
+      name: "Thanh toán MOMO",
+      enable: "true",
+    },
+    {
+      image: "/assets/other/vnpay.png",
+      name: "Thanh toán VNPAY",
       enable: "true",
     },
   ];

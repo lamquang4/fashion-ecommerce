@@ -47,6 +47,7 @@ function CheckoutForm() {
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [couponCode, setCouponCode] = useState<string>("");
   const [paymethod, setPaymethod] = useState<number>();
+  const [isOrdering, setIsOrdering] = useState<boolean>(false);
 
   const totalPrice = useMemo(() => {
     return (
@@ -159,7 +160,7 @@ function CheckoutForm() {
 
         const momoResponse = await createPaymentMomo({
           total: finalTotal,
-          orderCode: orderResponse.order.orderCode,
+          orderCode: orderResponse.orderCode,
         });
 
         window.location.href = momoResponse.payUrl;
@@ -181,18 +182,19 @@ function CheckoutForm() {
           ...(coupon?._id && { coupon: coupon._id }),
         });
 
-        toast.success(`Đặt hàng thành công!`);
-        router.replace("/");
+        setIsOrdering(true);
+
+        router.replace("/order-success");
 
         mutateCart({ productsInCart: [] }, false);
       } catch (err: any) {
         toast.error(err?.response?.data?.msg);
-        router.replace(`/cart`);
       }
     }
   };
 
   useEffect(() => {
+    if (isOrdering) return;
     if (isLoadingCart || isLoadingAddresses || status === "loading") return;
 
     // kiểm tra đăng nhập chưa
@@ -278,7 +280,7 @@ function CheckoutForm() {
               </div>
             </div>
 
-            <div className="order-first lg:order-last space-y-[15px]">
+            <div className="order-first lg:order-last space-y-[15px] sticky top-0 self-start">
               <ProductBuyList productsInCart={cart?.productsInCart ?? []} />
 
               <hr className="border-gray-300" />

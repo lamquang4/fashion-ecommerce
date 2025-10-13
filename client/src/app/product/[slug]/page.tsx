@@ -1,4 +1,3 @@
-"use client";
 import ProductDetailSlug from "@/components/Product/ProductDetail/ProductDetailSlug";
 import { Suspense } from "react";
 

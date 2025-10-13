@@ -22,7 +22,7 @@ export async function POST(req: NextRequest) {
       vnp_OrderInfo: `Thanh toán đơn hàng ${orderCode}`,
       vnp_OrderType: "other",
       vnp_Amount,
-      vnp_ReturnUrl: `${process.env.NEXTAUTH_URL}/api/vnpay/notification/${orderCode}`,
+      vnp_ReturnUrl: `${process.env.NEXTAUTH_URL}/api/vnpay/notification`,
       vnp_IpAddr: "127.0.0.1",
       vnp_CreateDate: formatDate(now),
       vnp_ExpireDate: formatDate(expire),
@@ -47,7 +47,6 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json({ payUrl: paymentUrl }, { status: 200 });
   } catch (err) {
-    console.error("Error", err);
     return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
   }
 }
