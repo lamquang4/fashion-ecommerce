@@ -19,6 +19,7 @@ import ProductBuyList from "./ProductBuyList";
 import ShippingInfoForm from "./ShippingInfoForm";
 import CouponApply from "./CouponApply";
 import PaymentMethod from "./PaymentMethod";
+import usePaymentVNPay from "@/hooks/usePaymentVNPay";
 
 function CheckoutForm() {
   const router = useRouter();
@@ -36,6 +37,8 @@ function CheckoutForm() {
   const { addOrder, isLoading: isLoadingAddOrder } = useAddOrder();
   const { createPaymentMomo, isLoading: isLoadingPaymentMomo } =
     usePaymentMomo();
+  const { createPaymentVNPay, isLoading: isLoadingPaymentVNPay } =
+    usePaymentVNPay();
 
   const [data, setData] = useState({
     fullname: "",
@@ -46,7 +49,7 @@ function CheckoutForm() {
   const [ward, setWard] = useState<string>("");
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [couponCode, setCouponCode] = useState<string>("");
-  const [paymethod, setPaymethod] = useState<number>();
+  const [paymethod, setPaymethod] = useState<string>("");
   const [isOrdering, setIsOrdering] = useState<boolean>(false);
 
   const totalPrice = useMemo(() => {
@@ -120,16 +123,16 @@ function CheckoutForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (paymethod === undefined) {
+    if (!paymethod) {
       toast.error("Vui lòng chọn phương thức thanh toán");
       return;
     }
 
-    if (paymethod === 1 && finalTotal === 0) {
+    if ((paymethod === "momo" || paymethod === "vnpay") && finalTotal === 0) {
       toast.error(
         "Vui lòng chọn thanh toán COD vì đơn hàng có tổng tiền bằng 0"
       );
-      setPaymethod(0);
+      setPaymethod("cod");
       return;
     }
 
@@ -144,7 +147,29 @@ function CheckoutForm() {
       };
     });
 
-    if (paymethod === 1) {
+    if (paymethod === "cod") {
+      try {
+        await addOrder({
+          fullname: data.fullname,
+          phone: data.phone,
+          speaddress: data.speaddress,
+          city: provinceName,
+          ward: ward,
+          paymethod: paymethod,
+          productsBuy: items!,
+          total: finalTotal,
+          ...(coupon?._id && { coupon: coupon._id }),
+        });
+
+        setIsOrdering(true);
+
+        router.replace("/order-success");
+
+        mutateCart({ productsInCart: [] }, false);
+      } catch (err: any) {
+        toast.error(err?.response?.data?.msg);
+      }
+    } else if (paymethod === "momo") {
       try {
         const orderResponse = await addOrder({
           fullname: data.fullname,
@@ -166,11 +191,10 @@ function CheckoutForm() {
         window.location.href = momoResponse.payUrl;
       } catch (err: any) {
         toast.error(err?.response?.data?.msg);
-        router.replace(`/cart`);
       }
-    } else if (paymethod === 0) {
+    } else if (paymethod === "vnpay") {
       try {
-        await addOrder({
+        const orderResponse = await addOrder({
           fullname: data.fullname,
           phone: data.phone,
           speaddress: data.speaddress,
@@ -182,11 +206,12 @@ function CheckoutForm() {
           ...(coupon?._id && { coupon: coupon._id }),
         });
 
-        setIsOrdering(true);
+        const vnpayResponse = await createPaymentVNPay({
+          total: finalTotal,
+          orderCode: orderResponse.orderCode,
+        });
 
-        router.replace("/order-success");
-
-        mutateCart({ productsInCart: [] }, false);
+        window.location.href = vnpayResponse.payUrl;
       } catch (err: any) {
         toast.error(err?.response?.data?.msg);
       }
@@ -280,7 +305,7 @@ function CheckoutForm() {
               </div>
             </div>
 
-            <div className="order-first lg:order-last space-y-[15px] sticky top-0 self-start">
+            <div className="order-first lg:order-last space-y-[15px] lg:sticky lg:top-0 lg:self-start">
               <ProductBuyList productsInCart={cart?.productsInCart ?? []} />
 
               <hr className="border-gray-300" />
@@ -334,7 +359,10 @@ function CheckoutForm() {
         <MenuSideCoupon toggleMenu={toggleOpen} isOpen={menuOpen} />
       </div>
 
-      {(isLoadingAddOrder || isLoadingPaymentMomo || isLoadingCoupon) && (
+      {(isLoadingAddOrder ||
+        isLoadingPaymentMomo ||
+        isLoadingPaymentVNPay ||
+        isLoadingCoupon) && (
         <Overplay IndexForZ={50}>
           <Loading height={0} size={55} color="white" thickness={8} />
           <h4 className="text-white">Vui lòng chờ trong giây lát...</h4>

@@ -113,7 +113,7 @@ export interface OrderFull {
   speaddress: string;
   city: string;
   ward: string;
-  paymethod: number;
+  paymethod: string;
   coupon?: {
     _id: string;
     code: string;
@@ -160,7 +160,7 @@ export interface OrderAdd {
   speaddress: string;
   city: string;
   ward: string;
-  paymethod: number;
+  paymethod: string;
   coupon?: string;
   productsBuy: {
     product: string;

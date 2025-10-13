@@ -14,7 +14,7 @@ const orderSchema = new Schema(
     city: { type: String, required: true },
     ward: { type: String, required: true },
     paymethod: {
-      type: Number,
+      type: String,
       required: true,
     },
     coupon: {

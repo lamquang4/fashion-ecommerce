@@ -213,7 +213,7 @@ function Order() {
                   </td>
                   <td className="p-[1rem]  ">{order.fullname}</td>
                   <td className="p-[1rem]  ">
-                    {order.paymethod === 1 ? "Momo" : "COD"}
+                    {order.paymethod}
                   </td>
                   <td className="p-[1rem]  ">
                     {order.total!.toLocaleString("vi-VN")}₫

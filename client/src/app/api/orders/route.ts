@@ -255,13 +255,13 @@ export async function POST(req: NextRequest) {
           total,
           items: productsBuy,
           ...(coupon && { coupon }),
-          status: paymethod === 0 ? 0 : -1,
+          status: paymethod === "cod" ? 0 : -1,
         },
       ],
       { session }
     );
 
-    if (paymethod === 0) {
+    if (paymethod === "cod") {
       // Cập nhật tồn kho từng sản phẩm
       for (const item of productsBuy) {
         const { product, color, size, quantity } = item;

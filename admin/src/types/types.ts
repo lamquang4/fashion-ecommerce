@@ -104,7 +104,7 @@ export interface Order {
   speaddress: string;
   city: string;
   ward: string;
-  paymethod: number;
+  paymethod: string;
   coupon?: string;
   status: number;
   total: number;
@@ -120,7 +120,7 @@ export interface OrderFull {
   speaddress: string;
   city: string;
   ward: string;
-  paymethod: number;
+  paymethod: string;
   coupon?: {
     _id: string;
     code: string;

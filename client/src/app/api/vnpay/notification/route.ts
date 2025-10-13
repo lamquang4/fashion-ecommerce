@@ -12,11 +12,20 @@ export async function GET(req: NextRequest) {
   try {
     await connectMongoDB();
     const { searchParams } = new URL(req.url);
-    const orderId = searchParams.get("orderId");
-    const resultCode = Number(searchParams.get("resultCode"));
+    const vnp_Params: Record<string, string> = {};
 
-    if (resultCode === 0) {
-      const order = await Order.findOne({ orderCode: orderId }).session(
+    searchParams.forEach((value, key) => {
+      vnp_Params[key] = value;
+    });
+
+    delete vnp_Params["vnp_SecureHash"];
+    delete vnp_Params["vnp_SecureHashType"];
+
+    const orderCode = vnp_Params["vnp_TxnRef"];
+    const responseCode = vnp_Params["vnp_ResponseCode"];
+
+    if (responseCode === "00") {
+      const order = await Order.findOne({ orderCode: orderCode }).session(
         session
       );
 
@@ -62,8 +71,10 @@ export async function GET(req: NextRequest) {
 
       await session.commitTransaction();
       session.endSession();
+      return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/order-success`);
+    } else {
+      return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/checkout`);
     }
-    return NextResponse.redirect(`${process.env.NEXTAUTH_URL}`);
   } catch (err) {
     await session.abortTransaction();
     session.endSession();

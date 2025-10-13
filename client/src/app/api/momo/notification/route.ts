@@ -62,8 +62,10 @@ export async function GET(req: NextRequest) {
 
       await session.commitTransaction();
       session.endSession();
+      return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/order-success`);
+    } else {
+      return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/checkout`);
     }
-    return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/order-success`);
   } catch (err) {
     await session.abortTransaction();
     session.endSession();

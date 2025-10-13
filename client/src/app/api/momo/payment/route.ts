@@ -64,7 +64,7 @@ export async function POST(req: NextRequest) {
     });
 
     const response = await axios.post(
-      `${process.env.MOMO_URL}/create`, // https://payment.momo.vn
+      `${process.env.MOMO_URL}`, // https://payment.momo.vn
       requestBody,
       {
         headers: { "Content-Type": "application/json" },

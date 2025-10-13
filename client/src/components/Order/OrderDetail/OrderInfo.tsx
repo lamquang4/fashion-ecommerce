@@ -129,7 +129,7 @@ function OrderInfo({ order, isLoading }: Props) {
             <p className="font-medium">
               Phương thức thanh toán:{" "}
               <span className="font-normal">
-                {order?.paymethod === 1 ? "Momo" : "COD"}
+                {order?.paymethod}
               </span>
             </p>
           </div>
