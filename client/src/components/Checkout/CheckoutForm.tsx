@@ -6,7 +6,7 @@ import MenuSideCoupon from "./../MenuSideCoupon";
 import useGetProvinces from "@/hooks/useGetProvinceVN";
 import useGetCart from "@/hooks/useGetCart";
 import { useSession } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import useGetAddresses from "@/hooks/useGetAddresses";
 import { Address } from "@/types/type";
 import useAddOrder from "@/hooks/useAddOrder";
