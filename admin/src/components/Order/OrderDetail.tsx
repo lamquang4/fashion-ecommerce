@@ -151,7 +151,9 @@ function OrderDetail() {
 
                   <p className="font-medium">
                     Phương thức thanh toán:{" "}
-                    <span className="font-normal">{order?.paymethod}</span>
+                    <span className="font-normal uppercase">
+                      {order?.paymethod}
+                    </span>
                   </p>
                 </div>
 
