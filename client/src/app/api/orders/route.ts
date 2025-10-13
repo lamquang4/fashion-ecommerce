@@ -310,7 +310,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(
       {
         err,
-        msg: "Sản phẩm đã hết hàng hoặc không đủ số lượng do có người đã mua trước bạn!",
+        msg: "Lỗi",
       },
       {
         status: 500,
