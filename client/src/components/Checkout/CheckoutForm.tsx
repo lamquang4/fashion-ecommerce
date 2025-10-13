@@ -19,12 +19,9 @@ import ProductBuyList from "./ProductBuyList";
 import ShippingInfoForm from "./ShippingInfoForm";
 import CouponApply from "./CouponApply";
 import PaymentMethod from "./PaymentMethod";
-import useGetStatusPaymentMomo from "@/hooks/useGetStatusPaymentMomo";
 
 function CheckoutForm() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const orderId = searchParams.get("orderId");
 
   const { provinces } = useGetProvinces();
   const { cart, mutate: mutateCart, isLoading: isLoadingCart } = useGetCart();
@@ -39,8 +36,6 @@ function CheckoutForm() {
   const { addOrder, isLoading: isLoadingAddOrder } = useAddOrder();
   const { createPaymentMomo, isLoading: isLoadingPaymentMomo } =
     usePaymentMomo();
-  const { getStatusPaymentMomo, isLoading: isLoadingCheckPaymentStatusMomo } =
-    useGetStatusPaymentMomo();
 
   const [data, setData] = useState({
     fullname: "",
@@ -230,31 +225,6 @@ function CheckoutForm() {
     }
   }, [cart, addresses, router, isLoadingCart, isLoadingAddresses, status]);
 
-  // tạo đơn hàng khi thanh toán Momo thành công
-  useEffect(() => {
-    const handlePaymentOrder = async () => {
-      if (!orderId || isLoadingCart) return;
-
-      const res = await getStatusPaymentMomo(orderId);
-
-      if (res.resultCode !== 0) {
-        return;
-      }
-
-      try {
-        mutateCart({ productsInCart: [] }, false);
-
-        toast.success(`Đặt hàng thành công!`);
-        router.replace("/");
-      } catch (err: any) {
-        toast.error(err?.response?.data?.msg);
-        router.replace(`/cart`);
-      }
-    };
-
-    handlePaymentOrder();
-  }, [orderId, isLoadingCart, cart]);
-
   return (
     <section className="my-[40px] px-[15px]">
       <div className="mx-auto max-w-[1230px] w-full">
@@ -362,10 +332,7 @@ function CheckoutForm() {
         <MenuSideCoupon toggleMenu={toggleOpen} isOpen={menuOpen} />
       </div>
 
-      {(isLoadingAddOrder ||
-        isLoadingPaymentMomo ||
-        isLoadingCheckPaymentStatusMomo ||
-        isLoadingCoupon) && (
+      {(isLoadingAddOrder || isLoadingPaymentMomo || isLoadingCoupon) && (
         <Overplay IndexForZ={50}>
           <Loading height={0} size={55} color="white" thickness={8} />
           <h4 className="text-white">Vui lòng chờ trong giây lát...</h4>
