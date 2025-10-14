@@ -1,12 +1,12 @@
 import { NextRequest, NextResponse } from "next/server";
 
-const {
+import {
   VNPay,
   ignoreLogger,
   ProductCode,
   VnpLocale,
   dateFormat,
-} = require("vnpay");
+} = from "vnpay";
 
 export async function POST(req: NextRequest) {
   try {
@@ -43,9 +43,9 @@ export async function POST(req: NextRequest) {
       },
       { status: 201 }
     );
-  } catch (error) {
+  } catch (err) {
     return NextResponse.json(
-      { message: "Lỗi khi tạo URL thanh toán VNPay" },
+      { message: "Lỗi", err },
       { status: 500 }
     );
   }
