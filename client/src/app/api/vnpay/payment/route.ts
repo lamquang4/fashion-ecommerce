@@ -1,12 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import {
-  VNPay,
-  ignoreLogger,
-  ProductCode,
-  VnpLocale,
-  dateFormat,
-} = from "vnpay";
+import { VNPay, ignoreLogger, ProductCode, VnpLocale, dateFormat } from "vnpay";
 
 export async function POST(req: NextRequest) {
   try {
@@ -17,7 +11,7 @@ export async function POST(req: NextRequest) {
       secureSecret: process.env.VNPAY_SECURE_SECRET!,
       vnpayHost: process.env.VNPAY_URL!,
       testMode: true,
-      hashAlgorithm: "SHA512",
+      hashAlgorithm: "SHA512" as any,
       enableLog: true,
       loggerFn: ignoreLogger,
     });
@@ -44,9 +38,6 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (err) {
-    return NextResponse.json(
-      { message: "Lỗi", err },
-      { status: 500 }
-    );
+    return NextResponse.json({ message: "Lỗi", err }, { status: 500 });
   }
 }
