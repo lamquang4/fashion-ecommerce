@@ -17,7 +17,8 @@ export async function POST(req: NextRequest) {
     });
 
     const now = new Date();
-    const expire = new Date(now.getTime() + 90 * 60 * 1000); // 1 tiếng rưỡi
+    const vnTime = new Date(now.getTime() + 7 * 60 * 60 * 1000);
+    const expire = new Date(vnTime.getTime() + 90 * 60 * 1000); // 1 tiếng rưỡi
 
     const resVnpay = vnpay.buildPaymentUrl({
       vnp_Amount: total,
@@ -27,7 +28,7 @@ export async function POST(req: NextRequest) {
       vnp_OrderType: ProductCode.Other,
       vnp_ReturnUrl: `${process.env.NEXTAUTH_URL}/api/vnpay/notification`,
       vnp_Locale: VnpLocale.VN,
-      vnp_CreateDate: dateFormat(now),
+      vnp_CreateDate: dateFormat(vnTime),
       vnp_ExpireDate: dateFormat(expire),
     });
 
