@@ -9,7 +9,7 @@ function OrderSuccess() {
             <Image
               Src={"/assets/other/successfully.png"}
               Alt={""}
-              ClassName={"w-[80px]"}
+              ClassName={"w-[100px]"}
               loadingType="eager"
             />
             <h4 className="uppercase text-center">Đặt đơn hàng thành công</h4>

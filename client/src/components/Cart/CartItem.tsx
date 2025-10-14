@@ -323,7 +323,7 @@ function CartItem({ cart }: Props) {
             </div>
           </form>
         ) : (
-          <div className="flex justify-center items-center h-[70vh]">
+          <div className="flex justify-center items-center h-[60vh]">
             <div className="flex flex-col justify-center items-center gap-[15px]">
               <Image
                 Src={"/assets/other/empty-cart.png"}

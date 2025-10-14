@@ -1,55 +1,49 @@
 import { NextRequest, NextResponse } from "next/server";
-import crypto from "crypto";
-import { formatDate } from "@/utils/formatDate"; // bạn đã có sẵn
+
+const {
+  VNPay,
+  ignoreLogger,
+  ProductCode,
+  VnpLocale,
+  dateFormat,
+} = require("vnpay");
 
 export async function POST(req: NextRequest) {
   try {
     const { total, orderCode } = await req.json();
 
-    const now = new Date();
-    const expire = new Date(now.getTime() + 15 * 60 * 1000); // 15 phút
-    const vnp_Amount = (total * 100).toString();
-
-    const vnp_Params: Record<string, string> = {
-      vnp_Version: "2.1.0",
-      vnp_Command: "pay",
-      vnp_TmnCode: process.env.VNPAY_TMN_CODE!,
-      vnp_Amount,
-      vnp_CurrCode: "VND",
-      vnp_TxnRef: orderCode.toString(),
-      vnp_OrderInfo: `Thanh toán đơn hàng ${orderCode}`,
-      vnp_OrderType: "other",
-      vnp_Locale: "vn",
-      vnp_ReturnUrl: `${process.env.NEXTAUTH_URL}/api/vnpay/check-payment`,
-      vnp_CreateDate: formatDate(now),
-      vnp_ExpireDate: formatDate(expire),
-      vnp_IpAddr: "127.0.0.1",
-    };
-
-    const sortedParams = Object.keys(vnp_Params)
-      .sort()
-      .reduce((acc: Record<string, string>, key) => {
-        acc[key] = vnp_Params[key];
-        return acc;
-      }, {});
-
-    const signData = Object.entries(sortedParams)
-      .map(([key, val]) => `${key}=${encodeURIComponent(val)}`)
-      .join("&");
-
-    const hmac = crypto.createHmac("sha512", process.env.VNPAY_SECURE_SECRET!);
-    const secureHash = hmac
-      .update(Buffer.from(signData, "utf-8"))
-      .digest("hex");
-
-    const payUrl = `${process.env.VNPAY_URL}?${signData}&vnp_SecureHash=${secureHash}`;
-
-    return NextResponse.json({
-      message: "Tạo URL thanh toán thành công",
-      payUrl,
+    const vnpay = await new VNPay({
+      tmnCode: process.env.VNPAY_TMN_CODE!,
+      secureSecret: process.env.VNPAY_SECURE_SECRET!,
+      vnpayHost: process.env.VNPAY_URL!,
+      testMode: true,
+      hashAlgorithm: "SHA512",
+      enableLog: true,
+      loggerFn: ignoreLogger,
     });
+
+    const now = new Date();
+    const expire = new Date(now.getTime() + 90 * 60 * 1000); // 1 tiếng rưỡi
+
+    const resVnpay = vnpay.buildPaymentUrl({
+      vnp_Amount: total,
+      vnp_IpAddr: "127.0.0.1",
+      vnp_TxnRef: orderCode,
+      vnp_OrderInfo: orderCode,
+      vnp_OrderType: ProductCode.Other,
+      vnp_ReturnUrl: `${process.env.NEXTAUTH_URL}/api/vnpay/notification`,
+      vnp_Locale: VnpLocale.VN,
+      vnp_CreateDate: dateFormat(now),
+      vnp_ExpireDate: dateFormat(expire),
+    });
+
+    return NextResponse.json(
+      {
+        payUrl: resVnpay,
+      },
+      { status: 201 }
+    );
   } catch (error) {
-    console.error("VNPay Payment Error:", error);
     return NextResponse.json(
       { message: "Lỗi khi tạo URL thanh toán VNPay" },
       { status: 500 }

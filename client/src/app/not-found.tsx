@@ -11,7 +11,7 @@ function NotFoundPage() {
               <Image
                 Src={"/assets/other/404-error.png"}
                 Alt={""}
-                ClassName={"w-[220px]"}
+                ClassName={"w-[230px]"}
                 loadingType="eager"
               />
 
