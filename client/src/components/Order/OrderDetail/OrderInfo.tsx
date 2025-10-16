@@ -26,10 +26,10 @@ function OrderInfo({ order, isLoading }: Props) {
   }, [order?.productsBuy]);
 
   const steps = [
-    { label: "Đơn đã đặt", icon: <LuArchive size={24} /> },
+    { label: "Chờ xác nhận", icon: <LuArchive size={24} /> },
     { label: "Đã xác nhận", icon: <LuCheck size={24} /> },
     { label: "Đang giao", icon: <LuTruck size={24} /> },
-    { label: "Đơn hoàn thành", icon: <LuStar size={24} /> },
+    { label: "Giao thành công", icon: <LuStar size={24} /> },
   ];
   return (
     <div className="w-full flex-1 border border-gray-300">
