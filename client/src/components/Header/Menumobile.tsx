@@ -9,7 +9,7 @@ type MenuMobileProps = {
   isOpen: boolean;
   toggleMenu: () => void;
 };
-function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
+function MenuMobile({ isOpen, toggleMenu }: MenuMobileProps) {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   const { categoriesMale, categoriesFemale } = useGetCategories();
 
@@ -197,4 +197,4 @@ function Menumobile({ isOpen, toggleMenu }: MenuMobileProps) {
   );
 }
 
-export default memo(Menumobile);
+export default memo(MenuMobile);
