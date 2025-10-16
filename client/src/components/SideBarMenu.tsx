@@ -59,7 +59,7 @@ function SideBarMenu() {
         <Link
           href="/order"
           className={` py-3 px-3.5   ${
-            pathname === "/order" || pathname.startsWith("/order-detail")
+            pathname === "/order" 
               ? "bg-gray-100  "
               : "hover:bg-gray-100"
           }`}
