@@ -42,9 +42,9 @@ function ProductDetailSlug() {
           : "",
       href: `/collection/${
         product?.category.gender === 1
-          ? "Nam"
+          ? "nam"
           : product?.category.gender === 0
-          ? "Nữ"
+          ? "nu"
           : ""
       }`,
     },
