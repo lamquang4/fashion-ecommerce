@@ -5,7 +5,6 @@ import { CiHeart } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
 import { CiUser, CiSearch } from "react-icons/ci";
 import { AiOutlineMenu } from "react-icons/ai";
-import MenuMobile from "./MenuMobile";
 import Overplay from "../Overplay";
 import ProfileMenu from "./ProfileMenu";
 import Image from "../Image";
@@ -18,6 +17,7 @@ import { useSyncCart } from "@/hooks/useSyncCart";
 import { useSyncWishlist } from "@/hooks/useSyncWishlist";
 import { useSession } from "next-auth/react";
 import MenuDropDown from "./MenuDropDown";
+import MenuMobile from "./MenuMobile";
 
 function Header() {
   const { categoriesMale, categoriesFemale } = useGetCategories();

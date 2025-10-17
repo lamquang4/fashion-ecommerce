@@ -5,11 +5,11 @@ import { FaMinus } from "react-icons/fa";
 import Link from "next/link";
 import Overplay from "../Overplay";
 import useGetCategories from "@/hooks/useGetCategories";
-type MenuMobileProps = {
+type Props = {
   isOpen: boolean;
   toggleMenu: () => void;
 };
-function MenuMobile({ isOpen, toggleMenu }: MenuMobileProps) {
+function MenuMobile({ isOpen, toggleMenu }: Props) {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   const { categoriesMale, categoriesFemale } = useGetCategories();
 
