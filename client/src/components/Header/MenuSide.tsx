@@ -9,7 +9,7 @@ type Props = {
   isOpen: boolean;
   toggleMenu: () => void;
 };
-function MenuMobile({ isOpen, toggleMenu }: Props) {
+function MenuSide({ isOpen, toggleMenu }: Props) {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   const { categoriesMale, categoriesFemale } = useGetCategories();
 
@@ -197,4 +197,4 @@ function MenuMobile({ isOpen, toggleMenu }: Props) {
   );
 }
 
-export default memo(MenuMobile);
+export default memo(MenuSide);

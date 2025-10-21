@@ -17,7 +17,7 @@ import { useSyncCart } from "@/hooks/useSyncCart";
 import { useSyncWishlist } from "@/hooks/useSyncWishlist";
 import { useSession } from "next-auth/react";
 import MenuDropDown from "./MenuDropDown";
-import MenuMobile from "./MenuMobile";
+import MenuSide from "./MenuSide";
 
 function Header() {
   const { categoriesMale, categoriesFemale } = useGetCategories();
@@ -237,7 +237,7 @@ function Header() {
           </div>
         </div>
 
-        <MenuMobile isOpen={menuMobileOpen} toggleMenu={toggleMobileMenu} />
+        <MenuSide isOpen={menuMobileOpen} toggleMenu={toggleMobileMenu} />
       </header>
 
       {openSearch && <Overplay closeMenu={toggleSearch} IndexForZ={12} />}
