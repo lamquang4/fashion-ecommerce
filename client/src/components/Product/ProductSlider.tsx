@@ -98,7 +98,7 @@ function ProductSlider({ title, products }: Props) {
                             ClassName={
                               "w-full absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
                             }
-                            loadingType="eager"
+                            loadingType="lazy"
                           />
                         )}
                       </Link>

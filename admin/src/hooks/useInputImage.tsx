@@ -1,15 +1,19 @@
-import { useCallback, useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 export function useInputImage(max: number = 1) {
+  const router = useRouter();
   const [previewImages, setPreviewImages] = useState<string[]>([]);
   const [selectedFiles, setSelectedFiles] = useState<File[]>([]);
+  const allUrlsRef = useRef<string[]>([]);
 
   useEffect(() => {
     return () => {
-      previewImages.forEach((url) => URL.revokeObjectURL(url));
+      allUrlsRef.current.forEach((url) => URL.revokeObjectURL(url));
+      allUrlsRef.current = [];
     };
-  }, [previewImages]);
+  }, [router]);
 
   const handleRemovePreviewImage = useCallback(
     (index: number) => {
@@ -20,6 +24,7 @@ export function useInputImage(max: number = 1) {
 
       setPreviewImages(newImages);
       setSelectedFiles(newFiles);
+      allUrlsRef.current = allUrlsRef.current.filter((_, i) => i !== index);
     },
     [previewImages, selectedFiles]
   );
@@ -38,6 +43,8 @@ export function useInputImage(max: number = 1) {
       }
 
       const imageUrls = incomingFiles.map((file) => URL.createObjectURL(file));
+
+      allUrlsRef.current.push(...imageUrls);
 
       setPreviewImages((prev) => [...prev, ...imageUrls]);
       setSelectedFiles((prev) => [...prev, ...incomingFiles]);

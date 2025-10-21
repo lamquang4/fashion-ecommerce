@@ -6,36 +6,43 @@ import useGetAddress from "@/hooks/useGetAddress";
 import useUpdateAddress from "@/hooks/useUpdateAddress";
 import useAddAddress from "@/hooks/useAddAddress";
 import toast from "react-hot-toast";
-import useGetAddresses from "@/hooks/useGetAddresses";
 import { validatePhone } from "@/utils/validatePhone";
 import { useRouter } from "next/navigation";
-import { Province } from "@/types/type";
+import useGetProvinces from "@/hooks/useGetProvinceVN";
 
 type Props = {
   isOpen: boolean;
   toggleMenu: () => void;
+  mutateAddresses: () => void;
   addressId: string;
-  provinces: Province[];
+  addressesLength: number;
 };
-function AddressModal({ isOpen, toggleMenu, addressId, provinces }: Props) {
+function AddressModal({
+  isOpen,
+  toggleMenu,
+  mutateAddresses,
+  addressesLength,
+  addressId,
+}: Props) {
   const router = useRouter();
-
+  const { provinces } = useGetProvinces();
   const { address, mutate, isLoading } = useGetAddress(addressId);
-  const { addresses, mutate: mutateAddresses } = useGetAddresses();
   const { addAddress, isLoading: isLoadingAddAddress } = useAddAddress();
   const { updateAddress, isLoading: isLoadingUpdateAddress } =
     useUpdateAddress(addressId);
 
-  const [selectedProvinceName, setSelectedProvinceName] = useState<string>("");
-  const [selectedWard, setSelectedWard] = useState<string>("");
-  const [data, setData] = useState({ fullname: "", phone: "", speaddress: "" });
+  const [data, setData] = useState({
+    fullname: "",
+    phone: "",
+    speaddress: "",
+    city: "",
+    ward: "",
+  });
 
-  const selectedProvince = useMemo(() => {
-    return provinces?.find(
-      (province) => province.province === selectedProvinceName
-    );
-  }, [provinces, selectedProvinceName]);
-
+  const selectedProvince = useMemo(
+    () => provinces?.find((p) => p.province === data.city),
+    [provinces, data.city]
+  );
   useEffect(() => {
     if (isLoading) return;
 
@@ -49,12 +56,12 @@ function AddressModal({ isOpen, toggleMenu, addressId, provinces }: Props) {
   useEffect(() => {
     if (address && !isLoading) {
       setData({
-        fullname: address.fullname || "",
-        phone: address.phone || "",
-        speaddress: address.speaddress || "",
+        fullname: address?.fullname || "",
+        phone: address?.phone || "",
+        speaddress: address?.speaddress || "",
+        city: address?.city || "",
+        ward: address?.ward || "",
       });
-      setSelectedProvinceName(address.city || "");
-      setSelectedWard(address.ward || "");
     }
   }, [address, isLoading]);
 
@@ -86,7 +93,7 @@ function AddressModal({ isOpen, toggleMenu, addressId, provinces }: Props) {
       return;
     }
 
-    if (addresses.length === 5 && !addressId) {
+    if (addressesLength === 5 && !addressId) {
       toast.error("Bạn chỉ có thể lưu tối đa 5 địa chỉ cho tài khoản");
       mutate();
       return;
@@ -97,8 +104,8 @@ function AddressModal({ isOpen, toggleMenu, addressId, provinces }: Props) {
         fullname: data.fullname.trim(),
         phone: data.phone,
         speaddress: data.speaddress.trim(),
-        city: selectedProvinceName,
-        ward: selectedWard,
+        city: data.city,
+        ward: data.ward,
       };
 
       if (addressId) {
@@ -112,10 +119,9 @@ function AddressModal({ isOpen, toggleMenu, addressId, provinces }: Props) {
           fullname: "",
           phone: "",
           speaddress: "",
+          city: "",
+          ward: "",
         });
-
-        setSelectedProvinceName("");
-        setSelectedWard("");
       }
 
       mutateAddresses();
@@ -212,11 +218,14 @@ function AddressModal({ isOpen, toggleMenu, addressId, provinces }: Props) {
                   <select
                     name="cỉty"
                     required
-                    value={selectedProvinceName}
-                    onChange={(e) => {
-                      setSelectedProvinceName(e.target.value);
-                      setSelectedWard("");
-                    }}
+                    value={data.city}
+                    onChange={(e) =>
+                      setData((prev) => ({
+                        ...prev,
+                        city: e.target.value,
+                        ward: "",
+                      }))
+                    }
                     className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
                   >
                     <option value="">Chọn tỉnh/thành phố</option>
@@ -238,9 +247,8 @@ function AddressModal({ isOpen, toggleMenu, addressId, provinces }: Props) {
                   <select
                     name="ward"
                     required
-                    disabled={!selectedProvince}
-                    value={selectedWard}
-                    onChange={(e) => setSelectedWard(e.target.value)}
+                    value={data.ward}
+                    onChange={handleChange}
                     className="bg-gray-50 border border-gray-300   text-[0.9rem] rounded-sm block w-full p-2 outline-0"
                   >
                     <option value="">Chọn phường/xã</option>

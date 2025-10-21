@@ -4,18 +4,16 @@ import SideBarMenu from "../SideBarMenu";
 import AddressModal from "./AddressModal";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import useGetAddress from "@/hooks/useGetAddress";
-import useGetProvinces from "@/hooks/useGetProvinceVN";
 import AddressInfo from "./AddressInfo";
 import BreadCrumb from "../BreadCrumb";
+import useGetAddresses from "@/hooks/useGetAddresses";
 function Address() {
   const { status } = useSession();
   const router = useRouter();
+  const { addresses, mutate, isLoading } = useGetAddresses();
 
   const [addressId, setAddressId] = useState<string>("");
   const [openAddressModal, setOpenAddressModal] = useState<boolean>(false);
-  const { isLoading: isLoadingAddress } = useGetAddress(addressId);
-  const { provinces, isLoading: isLoadingProvinces } = useGetProvinces();
 
   useEffect(() => {
     if (status === "unauthenticated") {
@@ -44,37 +42,27 @@ function Address() {
 
       <section className="mb-[40px]">
         <div className="w-full max-w-[1230px] mx-auto">
-           <div className="flex justify-center flex-wrap gap-5">
-          <SideBarMenu />
+          <div className="flex justify-center flex-wrap gap-5">
+            <SideBarMenu />
 
-          <AddressInfo
-            toggleAddressModal={toggleAddressModal}
-            setAddressId={setAddressId}
-          />
-        </div>  
+            <AddressInfo
+              toggleAddressModal={toggleAddressModal}
+              addresses={addresses}
+              mutate={mutate}
+              isLoading={isLoading}
+              setAddressId={setAddressId}
+            />
+          </div>
         </div>
-     
 
         {openAddressModal && (
-          <>
-            {!addressId && !isLoadingProvinces && (
-              <AddressModal
-                provinces={provinces!}
-                addressId=""
-                toggleMenu={toggleAddressModal}
-                isOpen={openAddressModal}
-              />
-            )}
-
-            {addressId && !isLoadingAddress && !isLoadingProvinces && (
-              <AddressModal
-                provinces={provinces!}
-                addressId={addressId}
-                toggleMenu={toggleAddressModal}
-                isOpen={openAddressModal}
-              />
-            )}
-          </>
+          <AddressModal
+            addressId={addressId}
+            mutateAddresses={mutate}
+            addressesLength={addresses.length}
+            toggleMenu={toggleAddressModal}
+            isOpen={openAddressModal}
+          />
         )}
       </section>
     </>

@@ -7,33 +7,38 @@ type Props = {
     fullname: string;
     phone: string;
     speaddress: string;
+    city: string;
+    ward: string;
   };
+  setData: React.Dispatch<
+    React.SetStateAction<{
+      fullname: string;
+      phone: string;
+      speaddress: string;
+      city: string;
+      ward: string;
+    }>
+  >;
   addresses: Address[];
-  provinces: Province[];
-  provinceName: string;
-  ward: string;
   handleChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
   handleGetAddress: (address: Address | null) => void;
-  setProvinceName: (value: string) => void;
-  setWard: (value: string) => void;
+  provinces: Province[];
 };
 
 function ShippingInfoForm({
   data,
+  setData,
   addresses,
-  provinces,
-  provinceName,
-  ward,
   handleChange,
   handleGetAddress,
-  setProvinceName,
-  setWard,
+  provinces,
 }: Props) {
-  const selectedProvince = useMemo(() => {
-    return provinces?.find((province) => province.province === provinceName);
-  }, [provinces, provinceName]);
+  const selectedProvince = useMemo(
+    () => provinces?.find((p) => p.province === data.city),
+    [provinces, data.city]
+  );
 
   return (
     <div className="space-y-[15px]">
@@ -118,11 +123,14 @@ function ShippingInfoForm({
           <select
             name="city"
             required
-            value={provinceName}
-            onChange={(e) => {
-              setProvinceName(e.target.value);
-              setWard("");
-            }}
+            value={data.city}
+            onChange={(e) =>
+              setData((prev) => ({
+                ...prev,
+                city: e.target.value,
+                ward: "",
+              }))
+            }
             className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
           >
             <option value="">Chọn tỉnh/thành phố</option>
@@ -142,8 +150,8 @@ function ShippingInfoForm({
             name="ward"
             required
             disabled={!selectedProvince}
-            value={ward}
-            onChange={(e) => setWard(e.target.value)}
+            value={data.ward}
+            onChange={handleChange}
             className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 text-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
           >
             <option value="">Chọn phường/xã</option>

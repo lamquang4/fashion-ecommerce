@@ -1,17 +1,25 @@
 "use client";
-import useGetAddresses from "@/hooks/useGetAddresses";
 import useDeleteAddress from "@/hooks/useDeleteAddress";
 import toast from "react-hot-toast";
 import Loading from "../Loading";
 import Image from "../Image";
+import { Address } from "@/types/type";
 
 type Props = {
   toggleAddressModal: () => void;
   setAddressId: (value: string) => void;
+  addresses: Address[];
+  isLoading: boolean;
+  mutate: () => void;
 };
 
-function AddressInfo({ toggleAddressModal, setAddressId }: Props) {
-  const { addresses, isLoading, mutate } = useGetAddresses();
+function AddressInfo({
+  toggleAddressModal,
+  setAddressId,
+  addresses,
+  isLoading,
+  mutate,
+}: Props) {
   const { deleteAddress, isLoading: isLoadingDeleteAddress } =
     useDeleteAddress();
 

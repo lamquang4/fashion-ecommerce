@@ -44,9 +44,10 @@ function CheckoutForm() {
     fullname: "",
     phone: "",
     speaddress: "",
+    city: "",
+    ward: "",
   });
-  const [provinceName, setProvinceName] = useState<string>("");
-  const [ward, setWard] = useState<string>("");
+
   const [menuOpen, setMenuOpen] = useState<boolean>(false);
   const [couponCode, setCouponCode] = useState<string>("");
   const [paymethod, setPaymethod] = useState<string>("");
@@ -93,13 +94,11 @@ function CheckoutForm() {
         fullname: address.fullname,
         phone: address.phone,
         speaddress: address.speaddress,
+        city: address.city,
+        ward: address.ward,
       });
-      setProvinceName(address.city);
-      setWard(address.ward);
     } else {
-      setData({ fullname: "", phone: "", speaddress: "" });
-      setProvinceName("");
-      setWard("");
+      setData({ fullname: "", phone: "", speaddress: "", city: "", ward: "" });
     }
   }, []);
 
@@ -153,8 +152,8 @@ function CheckoutForm() {
           fullname: data.fullname,
           phone: data.phone,
           speaddress: data.speaddress,
-          city: provinceName,
-          ward: ward,
+          city: data.city,
+          ward: data.ward,
           paymethod: paymethod,
           productsBuy: items!,
           total: finalTotal,
@@ -175,8 +174,8 @@ function CheckoutForm() {
           fullname: data.fullname,
           phone: data.phone,
           speaddress: data.speaddress,
-          city: provinceName,
-          ward: ward,
+          city: data.city,
+          ward: data.ward,
           paymethod: paymethod,
           productsBuy: items!,
           total: finalTotal,
@@ -198,8 +197,8 @@ function CheckoutForm() {
           fullname: data.fullname,
           phone: data.phone,
           speaddress: data.speaddress,
-          city: provinceName,
-          ward: ward,
+          city: data.city,
+          ward: data.ward,
           paymethod: paymethod,
           productsBuy: items!,
           total: finalTotal,
@@ -272,10 +271,7 @@ function CheckoutForm() {
               <div className="space-y-[30px]">
                 <ShippingInfoForm
                   data={data}
-                  provinceName={provinceName}
-                  setProvinceName={setProvinceName}
-                  ward={ward}
-                  setWard={setWard}
+                  setData={setData}
                   handleGetAddress={handleGetAddress}
                   handleChange={handleChange}
                   addresses={addresses ?? []}
