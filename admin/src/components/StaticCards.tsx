@@ -2,8 +2,9 @@ type Props = {
   array: { title: string; number: number | string; icon1: React.ReactNode }[];
 };
 function StaticCards({ array }: Props) {
+  
   return (
-    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3 lg:gap-6">
+    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-4 lg:gap-6">
       {array.map((item, index) => (
         <div
           key={index}

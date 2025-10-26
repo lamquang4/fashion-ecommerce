@@ -87,7 +87,7 @@ export async function GET(req: NextRequest) {
         totalStatus3,
         totalStatus4,
         totalRevenue: totalRevenue[0]?.total || 0,
-        totalSold: totalSold[0]?.total1 || 0,
+        totalSold: totalSold[0]?.totalSold || 0,
       },
       { status: 200 }
     );

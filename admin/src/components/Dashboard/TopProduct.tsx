@@ -20,7 +20,7 @@ function TopProduct() {
   };
   return (
     <div>
-      <div className="py-[1.3rem] px-[1.2rem]">
+      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <h2 className="text-[#74767d]">Top 10 bán chạy nhất</h2>
       </div>
 

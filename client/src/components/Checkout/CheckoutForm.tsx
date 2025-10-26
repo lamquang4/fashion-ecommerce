@@ -127,9 +127,9 @@ function CheckoutForm() {
       return;
     }
 
-    if ((paymethod === "momo" || paymethod === "vnpay") && finalTotal === 0) {
+    if ((paymethod === "momo" || paymethod === "vnpay") && finalTotal < 10000) {
       toast.error(
-        "Vui lòng chọn thanh toán COD vì đơn hàng có tổng tiền bằng 0"
+        "Vui lòng chọn thanh toán COD vì đơn hàng có tổng tiền nhỏ hơn 10.000đ"
       );
       setPaymethod("cod");
       return;

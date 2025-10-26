@@ -14,8 +14,6 @@ import useGetOrders from "@/hooks/useGetOrders";
 import useUpdateStatusOrder from "@/hooks/useUpdateStatusOrder";
 import Loading from "../Loading";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { FaRegMoneyBillAlt } from "react-icons/fa";
-import { PiTShirtBold } from "react-icons/pi";
 
 function Order() {
   const pathname = usePathname();
@@ -33,8 +31,6 @@ function Order() {
     totalStatus0,
     totalStatus3,
     totalStatus4,
-    totalRevenue,
-    totalSold,
   } = useGetOrders();
 
   const { updateStatusOrder, isLoading: isLoadingUpdateStatusOrder } =
@@ -100,16 +96,6 @@ function Order() {
       number: totalStatus0,
       icon1: <LuClock size={25} />,
     },
-    {
-      title: "Doanh thu",
-      number: `${totalRevenue.toLocaleString("vi-VN")}₫`,
-      icon1: <FaRegMoneyBillAlt size={25} />,
-    },
-    {
-      title: "Số lượng bán ra",
-      number: totalSold,
-      icon1: <PiTShirtBold size={25} />,
-    },
   ];
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -136,9 +122,7 @@ function Order() {
       <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9] space-y-[20px]">
         <h2 className=" text-[#74767d]">Đơn hàng</h2>
 
-        <div>
-          <StaticCards array={array1} />
-        </div>
+        <StaticCards array={array1} />
 
         <div>
           <form onSubmit={handleSubmit}>
@@ -212,9 +196,7 @@ function Order() {
                     {order.orderCode}
                   </td>
                   <td className="p-[1rem]  ">{order.fullname}</td>
-                  <td className="p-[1rem]  ">
-                    {order.paymethod}
-                  </td>
+                  <td className="p-[1rem]  ">{order.paymethod}</td>
                   <td className="p-[1rem]  ">
                     {order.total!.toLocaleString("vi-VN")}₫
                   </td>
@@ -239,9 +221,7 @@ function Order() {
                       className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
                     >
                       {order.status === -1 && (
-                        <option value="-1">
-                          Chờ thanh toán
-                        </option>
+                        <option value="-1">Chờ thanh toán</option>
                       )}
                       {order.status === 0 && (
                         <>

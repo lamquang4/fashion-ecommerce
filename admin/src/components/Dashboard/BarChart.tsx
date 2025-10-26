@@ -33,7 +33,7 @@ function BarChart() {
     return monthlySoldData.reduce((sum, value) => sum + value, 0);
   }, [monthlySoldData]);
   return (
-    <div className="space-y-[1.3rem]">
+    <div className="space-y-[1.3rem] bg-[#f1f4f9]">
       <div className="py-[1.3rem] px-[1.2rem] space-y-[20px]">
         <div className="flex items-center gap-2">
           <h2 className="text-[#74767d]">Năm</h2>
