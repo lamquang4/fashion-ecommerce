@@ -46,6 +46,7 @@ function AddProduct() {
     discount: 0,
     description: "",
     category: "",
+    status: "",
   });
 
   const handleChange = (
@@ -71,6 +72,7 @@ function AddProduct() {
     formData.append("discount", data.discount.toString());
     formData.append("description", data.description.trim());
     formData.append("category", data.category);
+    formData.append("status", data.status);
     formData.append("newInventories", JSON.stringify(newVariants));
 
     if (!newVariants) {
@@ -119,6 +121,7 @@ function AddProduct() {
         discount: 0,
         description: "",
         category: "",
+        status: "",
       });
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
@@ -168,6 +171,23 @@ function AddProduct() {
                         {category.gender === 1 ? "Nam" : "Nữ"}
                       </option>
                     ))}
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-1 w-full">
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
+                    Tình trạng
+                  </label>
+                  <select
+                    name="status"
+                    value={data.status}
+                    onChange={handleChange}
+                    required
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
+                  >
+                    <option value="">Chọn tình trạng</option>
+                    <option value="1">Hiện</option>
+                    <option value="0">Ẩn</option>
                   </select>
                 </div>
               </div>

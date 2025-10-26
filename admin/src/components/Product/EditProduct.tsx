@@ -41,6 +41,7 @@ function EditProduct() {
     discount: 0,
     description: "",
     category: "",
+    status: "",
   });
   const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
@@ -146,6 +147,7 @@ function EditProduct() {
         discount: product.discount,
         description: product.description,
         category: product.category._id!,
+        status: String(product.status),
       });
 
       setCurrentVariants(
@@ -171,6 +173,7 @@ function EditProduct() {
     formData.append("discount", data.discount.toString());
     formData.append("description", data.description.trim());
     formData.append("category", data.category);
+    formData.append("status", data.status);
 
     if (newVariants) {
       formData.append("newInventories", JSON.stringify(newVariants));
@@ -289,6 +292,23 @@ function EditProduct() {
                           : ""}
                       </option>
                     ))}
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-1 w-full">
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
+                    Tình trạng
+                  </label>
+                  <select
+                    name="status"
+                    value={data.status}
+                    onChange={handleChange}
+                    required
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
+                  >
+                    <option value="">Chọn tình trạng</option>
+                    <option value="1">Hiện</option>
+                    <option value="0">Ẩn</option>
                   </select>
                 </div>
               </div>

@@ -117,6 +117,7 @@ export async function POST(req: NextRequest) {
     const formData = await req.formData();
     const namecategory = formData.get("namecategory") as string;
     const gender = Number(formData.get("gender"));
+    const status = Number(formData.get("status"));
     const file = formData.get("image") as File;
 
     const checkName = await Category.findOne({ namecategory, gender });
@@ -184,7 +185,7 @@ export async function POST(req: NextRequest) {
       gender,
       image: imagePath,
       slug: slug,
-      status: 0,
+      status: status,
     });
 
     return NextResponse.json({ status: 201 });

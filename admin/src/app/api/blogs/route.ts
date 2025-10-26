@@ -82,6 +82,7 @@ export async function POST(req: NextRequest) {
     const title = formData.get("title") as string;
     const summary = formData.get("summary") as string;
     const content = formData.get("content") as string;
+    const status = Number(formData.get("status"));
     const file = formData.get("image") as File;
     const session = await getServerSession(options);
     const userId = session?.user?.id;
@@ -146,7 +147,7 @@ export async function POST(req: NextRequest) {
       slug: slug,
       content,
       user: userId,
-      status: 0,
+      status,
     });
 
     return NextResponse.json({ status: 201 });

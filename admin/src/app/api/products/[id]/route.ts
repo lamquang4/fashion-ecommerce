@@ -221,6 +221,7 @@ export async function PUT(
     const description = formData.get("description") as string;
     const category = formData.get("category") as string;
     const slug = removeVietNamese(name);
+    const status = Number(formData.get("status"));
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
@@ -247,6 +248,21 @@ export async function PUT(
       return NextResponse.json(
         { msg: "Tên sản phẩm đã được sử dụng" },
         { status: 409 }
+      );
+    }
+
+    const categoryDoc = await Category.findById(category);
+    if (!categoryDoc) {
+      return NextResponse.json(
+        { msg: "Danh mục không tồn tại" },
+        { status: 404 }
+      );
+    }
+
+    if (status === 1 && categoryDoc.status === 0) {
+      return NextResponse.json(
+        { msg: "Không thể hiện sản phẩm này vì danh mục đang bị ẩn" },
+        { status: 400 }
       );
     }
 

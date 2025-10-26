@@ -19,6 +19,7 @@ function EditCategory() {
     namecategory: "",
     gender: "",
     image: "",
+    status: "",
   });
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
@@ -52,6 +53,7 @@ function EditCategory() {
         namecategory: category.namecategory,
         gender: String(category.gender),
         image: category.image,
+        status: String(category.status),
       });
     }
   }, [category]);
@@ -77,6 +79,7 @@ function EditCategory() {
     const formData = new FormData();
     formData.append("namecategory", data.namecategory.trim());
     formData.append("gender", data.gender);
+    formData.append("status", data.status);
     if (selectedFiles[0]) {
       formData.append("image", selectedFiles[0]);
     }
@@ -154,20 +157,39 @@ function EditCategory() {
                 />
               </div>
 
-              <div className="flex flex-col gap-1">
-                <label htmlFor="" className="text-[0.9rem] font-medium">
-                  Giới tính
-                </label>
-                <select
-                  name="gender"
-                  value={data.gender}
-                  onChange={handleChange}
-                  required
-                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
-                >
-                  <option value="1">Nam</option>
-                  <option value="0">Nữ</option>
-                </select>
+              <div className="flex flex-wrap md:flex-nowrap gap-[15px]">
+                <div className="flex flex-col gap-1 w-full">
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
+                    Giới tính
+                  </label>
+                  <select
+                    name="gender"
+                    value={data.gender}
+                    onChange={handleChange}
+                    required
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
+                  >
+                    <option value="1">Nam</option>
+                    <option value="0">Nữ</option>
+                  </select>
+                </div>
+
+                <div className="flex flex-col gap-1 w-full">
+                  <label htmlFor="" className="text-[0.9rem] font-medium">
+                    Tình trạng
+                  </label>
+                  <select
+                    name="status"
+                    value={data.status}
+                    onChange={handleChange}
+                    required
+                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
+                  >
+                    <option value="">Chọn tình trạng</option>
+                    <option value="1">Hiện</option>
+                    <option value="0">Ẩn</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>

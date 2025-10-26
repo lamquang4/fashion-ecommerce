@@ -103,6 +103,7 @@ export async function PUT(
     const formData = await req.formData();
     const namecategory = formData.get("namecategory") as string;
     const gender = Number(formData.get("gender"));
+    const status = Number(formData.get("status"));
     const file = formData.get("image") as File;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -190,12 +191,20 @@ export async function PUT(
       namecategory,
       gender,
       slug,
+      status,
       image: imagePath,
     };
 
     await Category.findByIdAndUpdate(id, updatedData, {
       new: true,
     });
+
+    if (status === 0) {
+      await Product.updateMany(
+        { category: id, status: 1 },
+        { $set: { status: 0 } }
+      );
+    }
 
     return NextResponse.json({ status: 200 });
   } catch (err) {

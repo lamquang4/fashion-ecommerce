@@ -88,6 +88,7 @@ export async function PUT(
     const title = formData.get("title") as string;
     const summary = formData.get("summary") as string;
     const content = formData.get("content") as string;
+    const status = Number(formData.get("status"));
     const file = formData.get("image") as File;
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
@@ -172,6 +173,7 @@ export async function PUT(
       image: imagePath,
       slug: slug,
       content,
+      status,
     };
 
     await Blog.findByIdAndUpdate(id, updatedData, {

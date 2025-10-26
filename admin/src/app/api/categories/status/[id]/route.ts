@@ -24,18 +24,6 @@ export async function PUT(
       return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
-    // kiểm tra danh mục có chứa sản phẩm nào (không tính status)
-    const hasProduct = await Product.exists({ category: id });
-
-    if (!hasProduct && status !== 0) {
-      return NextResponse.json(
-        {
-          msg: "Danh mục chưa có sản phẩm nào!",
-        },
-        { status: 404 }
-      );
-    }
-
     await Category.findByIdAndUpdate(
       id,
       { status },
@@ -43,6 +31,13 @@ export async function PUT(
         new: true,
       }
     );
+
+    if (status === 0 && category.status !== 0) {
+      await Product.updateMany(
+        { category: id, status: 1 },
+        { $set: { status: 0 } }
+      );
+    }
 
     return NextResponse.json({ status: 200 });
   } catch (err) {

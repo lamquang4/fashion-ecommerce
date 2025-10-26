@@ -17,9 +17,16 @@ export async function PUT(
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate("category");
     if (!product) {
       return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
+    }
+
+    if (status === 1 && product.category.status === 0) {
+      return NextResponse.json(
+        { msg: "Không thể hiện sản phẩm này vì danh mục đang bị ẩn" },
+        { status: 400 }
+      );
     }
 
     await Product.findByIdAndUpdate(

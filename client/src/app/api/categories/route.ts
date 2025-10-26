@@ -31,25 +31,16 @@ export async function GET() {
       ]);
     };
 
-    const [categoriesMale, categoriesFemale] = await Promise.all([
+    const results = await Promise.allSettled([
       categoriesByGender(1),
       categoriesByGender(0),
     ]);
 
-    if (!categoriesMale || categoriesMale.length === 0) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy danh mục nam" },
-        { status: 404 }
-      );
-    }
-
-    if (!categoriesFemale || categoriesFemale.length === 0) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy danh mục nữ" },
-        { status: 404 }
-      );
-    }
-
+    const categoriesMale =
+      results[0].status === "fulfilled" ? results[0].value : [];
+    const categoriesFemale =
+      results[1].status === "fulfilled" ? results[1].value : [];
+      
     return NextResponse.json(
       {
         categoriesMale,

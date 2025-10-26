@@ -12,6 +12,7 @@ function AddBlog() {
     title: "",
     summary: "",
     content: "",
+    status: "",
   });
 
   const { addBlog, isLoading } = useAddBlog();
@@ -49,6 +50,7 @@ function AddBlog() {
     formData.append("title", data.title.trim());
     formData.append("summary", data.summary.trim());
     formData.append("content", data.content.trim());
+    formData.append("status", data.status);
     if (selectedFiles[0]) {
       formData.append("image", selectedFiles[0]);
     }
@@ -65,6 +67,7 @@ function AddBlog() {
         title: "",
         summary: "",
         content: "",
+        status: "",
       });
       setPreviewImages([]);
       setSelectedFiles([]);
@@ -104,6 +107,23 @@ function AddBlog() {
                 required
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400"
               />
+            </div>
+
+            <div className="flex flex-col gap-1">
+              <label htmlFor="" className="text-[0.9rem] font-medium">
+                Tình trạng
+              </label>
+              <select
+                name="status"
+                value={data.status}
+                onChange={handleChange}
+                required
+                className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
+              >
+                <option value="">Chọn tình trạng</option>
+                <option value="1">Công bố</option>
+                <option value="0">Ẩn</option>
+              </select>
             </div>
 
             <div className="flex flex-col gap-1">

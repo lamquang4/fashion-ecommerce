@@ -21,6 +21,7 @@ function EditBlog() {
     summary: "",
     content: "",
     image: "",
+    status: "",
   });
   const [openViewer, setOpenViewer] = useState(false);
   const [viewerImage, setViewerImage] = useState<string>("");
@@ -54,6 +55,7 @@ function EditBlog() {
         summary: blog.summary,
         image: blog.image,
         content: blog.content,
+        status: String(blog.status),
       });
     }
   }, [blog]);
@@ -88,6 +90,7 @@ function EditBlog() {
     formData.append("title", data.title.trim());
     formData.append("summary", data.summary.trim());
     formData.append("content", data.content.trim());
+    formData.append("status", data.status);
     if (selectedFiles[0]) {
       formData.append("image", selectedFiles[0]);
     }
@@ -161,6 +164,23 @@ function EditBlog() {
                   required
                   className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400"
                 />
+              </div>
+
+              <div className="flex flex-col gap-1">
+                <label htmlFor="" className="text-[0.9rem] font-medium">
+                  Tình trạng
+                </label>
+                <select
+                  name="status"
+                  value={data.status}
+                  onChange={handleChange}
+                  required
+                  className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
+                >
+                  <option value="">Chọn tình trạng</option>
+                  <option value="1">Công bố</option>
+                  <option value="0">Ẩn</option>
+                </select>
               </div>
 
               <div className="flex flex-col gap-1">

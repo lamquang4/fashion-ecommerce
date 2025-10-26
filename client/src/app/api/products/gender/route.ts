@@ -103,25 +103,15 @@ export async function GET() {
       ]);
     };
 
-    const [productsMale, productsFemale] = await Promise.all([
+    const results = await Promise.allSettled([
       productsGender(1),
       productsGender(0),
     ]);
 
-    if (!productsFemale || productsFemale.length === 0) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy sản phẩm" },
-        { status: 404 }
-      );
-    }
-
-    if (!productsMale || productsMale.length === 0) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy sản phẩm" },
-        { status: 404 }
-      );
-    }
-
+    const productsMale =
+      results[0].status === "fulfilled" ? results[0].value : [];
+    const productsFemale =
+      results[1].status === "fulfilled" ? results[1].value : [];
     return NextResponse.json(
       {
         productsMale,
