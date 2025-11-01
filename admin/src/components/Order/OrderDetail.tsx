@@ -56,29 +56,35 @@ function OrderDetail() {
                   <div className="flex flex-col gap-[8px]">
                     <h4 className="uppercase">Đơn hàng</h4>
 
-                    <span>Mã: {order?.orderCode}</span>
-                    <span>
+                    <p className="font-medium">
+                      Mã:{" "}
+                      <span className="font-normal">{order?.orderCode}</span>
+                    </p>
+
+                    <p className="font-medium">
                       Ngày:{" "}
-                      {order?.createdAt && (
-                        <>
-                          {new Date(order.createdAt).toLocaleDateString(
-                            "vi-VN",
-                            {
-                              day: "2-digit",
-                              month: "2-digit",
-                              year: "numeric",
-                            }
-                          )}{" "}
-                          {new Date(order.createdAt).toLocaleTimeString(
-                            "vi-VN",
-                            {
-                              hour: "2-digit",
-                              minute: "2-digit",
-                            }
-                          )}
-                        </>
-                      )}
-                    </span>
+                      <span className="font-normal">
+                        {order?.createdAt && (
+                          <>
+                            {new Date(order.createdAt).toLocaleDateString(
+                              "vi-VN",
+                              {
+                                day: "2-digit",
+                                month: "2-digit",
+                                year: "numeric",
+                              }
+                            )}{" "}
+                            {new Date(order.createdAt).toLocaleTimeString(
+                              "vi-VN",
+                              {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                              }
+                            )}
+                          </>
+                        )}
+                      </span>
+                    </p>
                   </div>
 
                   <Link href={"/order"} className="text-center">

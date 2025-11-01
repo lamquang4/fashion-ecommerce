@@ -66,6 +66,21 @@ function AddProduct() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
+    if (Number(data.price) < Number(data.discount)) {
+      toast.error("Số tiền giảm không được lớn hơn giá gốc");
+      return;
+    }
+
+    if (Number(data.discount) < 0) {
+      toast.error("Số tiền giảm phải lớn hơn hoặc bằng 0");
+      return;
+    }
+
+    if (Number(data.price) <= 0) {
+      toast.error("Giá gốc phải lớn hơn 0");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("name", data.name.trim());
     formData.append("price", data.price.toString());
