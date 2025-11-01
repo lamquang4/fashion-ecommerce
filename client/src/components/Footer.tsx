@@ -10,7 +10,7 @@ function Footer() {
           <div className="col-span-full lg:col-span-1  space-y-4">
             <Link href={"/"}>
               <Image
-                Src={"/assets/logo.png"}
+                Src={"/assets/other/logo.png"}
                 Alt={"logo"}
                 ClassName={"w-[100px]"}
                 loadingType="eager"
