@@ -12,7 +12,7 @@ function Footer() {
               <Image
                 Src={"/assets/other/logo.png"}
                 Alt={"logo"}
-                ClassName={"w-[100px]"}
+                ClassName={"w-[80px]"}
                 loadingType="eager"
               />
             </Link>
