@@ -20,6 +20,7 @@ import ShippingInfoForm from "./ShippingInfoForm";
 import CouponApply from "./CouponApply";
 import PaymentMethod from "./PaymentMethod";
 import usePaymentVNPay from "@/hooks/usePaymentVNPay";
+import { validatePhone } from "@/utils/validatePhone";
 
 function CheckoutForm() {
   const router = useRouter();
@@ -132,6 +133,11 @@ function CheckoutForm() {
         "Vui lòng chọn thanh toán COD vì đơn hàng có tổng tiền nhỏ hơn 10.000đ"
       );
       setPaymethod("cod");
+      return;
+    }
+
+    if (!validatePhone(data.phone)) {
+      toast.error("Số điện thoại không hợp lệ");
       return;
     }
 
