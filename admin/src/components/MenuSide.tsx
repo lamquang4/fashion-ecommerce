@@ -29,7 +29,7 @@ function MenuSide({ menuOpen, toggleMenu }: Props) {
 
   const menuData = [
     {
-      title: "Hàng hóa",
+      title: "Sản phẩm",
       items: [
         {
           icon: <LuChartNoAxesCombined size={20} />,
@@ -38,11 +38,11 @@ function MenuSide({ menuOpen, toggleMenu }: Props) {
         },
         {
           icon: <PiTShirtBold size={20} />,
-          label: "Sản phẩm",
+          label: "Quần áo",
           key: "2a",
           children: [
-            { label: "Danh sách sản phẩm", path: "/product" },
-            { label: "Thêm sản phẩm", path: "/add-product" },
+            { label: "Danh sách quần áo", path: "/product" },
+            { label: "Thêm quần áo", path: "/add-product" },
           ],
         },
         {
@@ -55,14 +55,51 @@ function MenuSide({ menuOpen, toggleMenu }: Props) {
           ],
         },
         {
+          icon: <IoColorPaletteOutline size={20} />,
+          label: "Màu",
+          key: "14a",
+          children: [
+            { label: "Danh sách màu", path: "/color" },
+            { label: "Thêm màu", path: "/add-color" },
+          ],
+        },
+        {
+          icon: <RxSize size={20} />,
+          label: "Kích thước",
+          key: "28a",
+          children: [
+            { label: "Danh sách kích thước", path: "/size" },
+            { label: "Thêm kích thước", path: "/add-size" },
+          ],
+        },
+        {
           icon: <LuWarehouse size={20} />,
           label: "Hàng tồn kho",
           path: "/inventory",
         },
+      ],
+    },
+    {
+      title: "Đơn hàng & thanh toán",
+      items: [
         {
           icon: <RiShoppingBag4Line size={20} />,
           label: "Đơn hàng",
           path: "/order",
+        },
+      ],
+    },
+    {
+      title: "Khuyến mãi",
+      items: [
+        {
+          icon: <RiCoupon2Line size={20} />,
+          label: "Phiếu giảm giá",
+          key: "10a",
+          children: [
+            { label: "Danh sách phiếu giảm giá", path: "/coupon" },
+            { label: "Thêm phiếu giảm giá", path: "/add-coupon" },
+          ],
         },
       ],
     },
@@ -85,38 +122,6 @@ function MenuSide({ menuOpen, toggleMenu }: Props) {
           children: [
             { label: "Danh sách khách hàng", path: "/customer" },
             { label: "Thêm khách hàng", path: "/add-customer" },
-          ],
-        },
-      ],
-    },
-    {
-      title: "Khác",
-      items: [
-        {
-          icon: <RiCoupon2Line size={20} />,
-          label: "Phiếu giảm giá",
-          key: "10a",
-          children: [
-            { label: "Danh sách phiếu giảm giá", path: "/coupon" },
-            { label: "Thêm phiếu giảm giá", path: "/add-coupon" },
-          ],
-        },
-        {
-          icon: <IoColorPaletteOutline size={20} />,
-          label: "Màu",
-          key: "14a",
-          children: [
-            { label: "Danh sách màu", path: "/color" },
-            { label: "Thêm màu", path: "/add-color" },
-          ],
-        },
-        {
-          icon: <RxSize size={20} />,
-          label: "Kích thước",
-          key: "28a",
-          children: [
-            { label: "Danh sách kích thước", path: "/size" },
-            { label: "Thêm kích thước", path: "/add-size" },
           ],
         },
       ],
