@@ -442,7 +442,7 @@ function EditProduct() {
                         (img, imgIndex) => (
                           <SwiperSlide key={index} className="!w-auto relative">
                             <div
-                              className="w-[150px] border border-gray-300 cursor-pointer"
+                              className="w-full border border-gray-300 cursor-pointer"
                               onClick={(e) => {
                                 e.stopPropagation();
                                 e.preventDefault();
