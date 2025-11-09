@@ -473,6 +473,7 @@ function EditProduct() {
                                           img
                                         )
                                       }
+                                      disabled={isLoadingDeleteImage}
                                       type="button"
                                     >
                                       <VscTrash
