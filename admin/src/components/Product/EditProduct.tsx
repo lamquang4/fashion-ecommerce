@@ -23,6 +23,9 @@ import { useCurrentInventory } from "@/hooks/useCurrentInventory";
 import useGetColors1 from "@/hooks/useGetColors1";
 import useGetSizes1 from "@/hooks/useGetSizes1";
 import useDeleteVariant from "@/hooks/useDeleteVariant";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import { FreeMode } from "swiper/modules";
 
 const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),
@@ -428,73 +431,78 @@ function EditProduct() {
                     blockIndex={index}
                   />
 
-                  <div className="flex gap-3 flex-wrap justify-center">
-                    {product?.variants?.[index]?.images?.map(
-                      (img, imgIndex) => (
-                        <div className="relative" key={imgIndex}>
-                          <div
-                            className="cursor-pointer"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              e.preventDefault();
-                              handleOpenViewer(img);
-                            }}
-                          >
-                            <Image
-                              Src={
-                                previewImages2?.[index]?.[imgIndex] ||
-                                img ||
-                                "/assets/banner/default-banner.jpg"
-                              }
-                              Alt=""
-                              ClassName="w-full max-w-[140px]"
-                              loadingType="eager"
-                            />
-                          </div>
-
-                          <div className="absolute top-[6px] right-[6px]">
-                            <div className="flex items-center flex-col gap-2">
-                              {!previewImages2?.[index]?.[imgIndex] ? (
-                                <>
-                                  <button
-                                    className="bg-white rounded-full p-1 border border-gray-300"
-                                    disabled={isLoadingDeleteImage}
-                                    type="button"
-                                    onClick={() =>
-                                      handleDeleteImage(
-                                        product?.variants?.[index]?._id,
-                                        img
-                                      )
-                                    }
-                                  >
-                                    <VscTrash
-                                      size={22}
-                                      className="text-[#d9534f]"
-                                    />
-                                  </button>
-
-                                  <InputImage1
-                                    onFileSelect={(file) =>
-                                      onFileSelect(file, index, imgIndex)
-                                    }
-                                    InputId={`c${index}-${imgIndex}`}
-                                    sizeIcon={22}
-                                  />
-                                </>
-                              ) : (
-                                <button
-                                  type="button"
-                                  className="p-2"
-                                  onClick={() => handleClear(index, imgIndex)}
-                                >
-                                  <HiMiniXMark size={26} />
-                                </button>
-                              )}
+                  <div className="flex justify-center items-center">
+                    <Swiper
+                      spaceBetween={15}
+                      slidesPerView={"auto"}
+                      modules={[FreeMode]}
+                      grabCursor={true}
+                    >
+                      {product?.variants?.[index]?.images?.map(
+                        (img, imgIndex) => (
+                          <SwiperSlide key={index} className="!w-auto relative">
+                            <div
+                              className="w-[150px] border border-gray-300 cursor-pointer"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                e.preventDefault();
+                                handleOpenViewer(img);
+                              }}
+                            >
+                              <Image
+                                Src={
+                                  previewImages2?.[index]?.[imgIndex] ||
+                                  img ||
+                                  "/assets/banner/default-banner.jpg"
+                                }
+                                Alt=""
+                                ClassName="w-full max-w-[140px]"
+                                loadingType="eager"
+                              />
                             </div>
-                          </div>
-                        </div>
-                      )
-                    )}
+
+                            <div className="absolute top-[6px] right-[6px]">
+                              <div className="flex items-center flex-col gap-2">
+                                {!previewImages2?.[index]?.[imgIndex] ? (
+                                  <>
+                                    <button
+                                      className="bg-white rounded-full p-1 border border-gray-300"
+                                      onClick={() =>
+                                        handleDeleteImage(
+                                          product?.variants?.[index]?._id,
+                                          img
+                                        )
+                                      }
+                                      type="button"
+                                    >
+                                      <VscTrash
+                                        size={22}
+                                        className="text-[#d9534f]"
+                                      />
+                                    </button>
+                                    <InputImage1
+                                      onFileSelect={(file) =>
+                                        onFileSelect(file, index, imgIndex)
+                                      }
+                                      InputId={`c${index}-${imgIndex}`}
+                                      sizeIcon={22}
+                                    />
+                                  </>
+                                ) : (
+                                  <button
+                                    type="button"
+                                    className="p-2"
+                                    onClick={() => handleClear(index, imgIndex)}
+                                  >
+                                    <HiMiniXMark size={26} />
+                                  </button>
+                                )}
+                              </div>
+                            </div>
+                          </SwiperSlide>
+                        )
+                      )}
+                    </Swiper>
                   </div>
                 </div>
 
