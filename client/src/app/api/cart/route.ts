@@ -152,6 +152,14 @@ export async function POST(req: NextRequest) {
     const userId = session?.user?.id || null;
 
     const { variant, size, quantity } = await req.json();
+
+    if (quantity < 1) {
+      return NextResponse.json(
+        { msg: "Số lượng mua phải lớn hơn 1" },
+        { status: 409 }
+      );
+    }
+
     const cartId = req.cookies.get("cart")?.value;
 
     const inventory = await Inventory.aggregate([

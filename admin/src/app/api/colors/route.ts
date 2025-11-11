@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
         {
           msg: "Không tìm thấy",
         },
-        { status: 200 }
+        { status: 404 }
       );
     }
 

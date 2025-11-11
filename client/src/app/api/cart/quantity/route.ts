@@ -14,6 +14,10 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
     }
 
+    if(quantity < 1){
+      return NextResponse.json({ msg: "Số lượng mua phải lớn hơn 1" }, { status: 409 });
+    }
+
     const cart = await Cart.findById(cartId);
     if (!cart) {
       return NextResponse.json(
