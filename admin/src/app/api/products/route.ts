@@ -212,6 +212,20 @@ export async function POST(req: NextRequest) {
     const category = formData.get("category") as string;
     const slug = removeVietNamese(name);
 
+    if (price < 0) {
+      return NextResponse.json(
+        { msg: "Giá sản phẩm phải lớn hơn 0" },
+        { status: 400 }
+      );
+    }
+
+    if (discount < 0) {
+      return NextResponse.json(
+        { msg: "Giá giảm sản phẩm phải lớn hơn 0" },
+        { status: 400 }
+      );
+    }
+
     if (price < discount) {
       return NextResponse.json(
         { msg: "Giá sản phẩm phải lớn hơn giá giảm" },
@@ -240,6 +254,19 @@ export async function POST(req: NextRequest) {
     const newInventoryBlocks = JSON.parse(
       formData.get("newInventories") as string
     );
+
+    // kiểm tra các biển thể của 1 sản phẩm có bị trùng màu
+    const colorIds = newInventoryBlocks.map((block: any) => block.color);
+    const hasDuplicateColor = new Set(colorIds).size !== colorIds.length;
+
+    if (hasDuplicateColor) {
+      return NextResponse.json(
+        {
+          msg: "Một sản phẩm không được chứa hai biến thể cùng màu",
+        },
+        { status: 400 }
+      );
+    }
 
     for (
       let blockIndex = 0;
@@ -313,6 +340,19 @@ export async function POST(req: NextRequest) {
         });
 
         imagePaths.push(result.secure_url);
+      }
+
+      // kiểm tra có trùng size ở 1 biến thể của 1 sản phẩm
+      const sizeIds = block.inventories.map((inv: any) => inv.size);
+      const hasDuplicateSize = new Set(sizeIds).size !== sizeIds.length;
+
+      if (hasDuplicateSize) {
+        return NextResponse.json(
+          {
+            msg: `Một biến thể của một sản phẩm chỉ được chứa 1 kích thước duy nhất`,
+          },
+          { status: 400 }
+        );
       }
 
       await Inventory.create({

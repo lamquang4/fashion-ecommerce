@@ -222,9 +222,43 @@ export async function PUT(
     const category = formData.get("category") as string;
     const slug = removeVietNamese(name);
     const status = Number(formData.get("status"));
+    const newInventoryBlocks = JSON.parse(
+      formData.get("newInventories") as string
+    );
+
+    const currentInventories = JSON.parse(
+      formData.get("currentInventories") as string
+    );
+
+    // kiểm tra các biển thể của 1 sản phẩm có bị trùng màu
+    const allColorIds = [
+      ...(newInventoryBlocks?.map((block: any) => block.color) || []),
+      ...(currentInventories?.map((block: any) => block.color) || []),
+    ];
+    const hasDuplicateColor = new Set(allColorIds).size !== allColorIds.length;
+    if (hasDuplicateColor) {
+      return NextResponse.json(
+        { msg: "Một sản phẩm không được chứa hai biến thể cùng màu" },
+        { status: 400 }
+      );
+    }
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
+    }
+
+    if (price < 0) {
+      return NextResponse.json(
+        { msg: "Giá sản phẩm phải lớn hơn 0" },
+        { status: 400 }
+      );
+    }
+
+    if (discount < 0) {
+      return NextResponse.json(
+        { msg: "Giá giảm sản phẩm phải lớn hơn 0" },
+        { status: 400 }
+      );
     }
 
     if (price < discount) {
@@ -280,9 +314,6 @@ export async function PUT(
     });
 
     // Thêm Inventory mới
-    const newInventoryBlocks = JSON.parse(
-      formData.get("newInventories") as string
-    );
 
     if (newInventoryBlocks) {
       for (
@@ -359,6 +390,19 @@ export async function PUT(
           imagePaths.push(result.secure_url);
         }
 
+        // kiểm tra có trùng size ở 1 biến thể của 1 sản phẩm
+        const sizeIds = block.inventories.map((inv: any) => inv.size);
+        const hasDuplicateSize = new Set(sizeIds).size !== sizeIds.length;
+
+        if (hasDuplicateSize) {
+          return NextResponse.json(
+            {
+              msg: `Một biến thể của một sản phẩm chỉ được chứa 1 kích thước duy nhất`,
+            },
+            { status: 400 }
+          );
+        }
+
         await Inventory.create({
           product: id,
           images: imagePaths,
@@ -372,9 +416,6 @@ export async function PUT(
     }
 
     // Cập nhật Inventory đã có
-    const currentInventories = JSON.parse(
-      formData.get("currentInventories") as string
-    );
 
     if (currentInventories) {
       for (
@@ -534,6 +575,19 @@ export async function PUT(
           });
 
           imagePaths.push(result.secure_url);
+        }
+
+        // kiểm tra có trùng size ở 1 biến thể của 1 sản phẩm
+        const sizeIds = block.inventories.map((inv: any) => inv.size);
+        const hasDuplicateSize = new Set(sizeIds).size !== sizeIds.length;
+
+        if (hasDuplicateSize) {
+          return NextResponse.json(
+            {
+              msg: `Một biến thể của một sản phẩm chỉ được chứa 1 kích thước duy nhất`,
+            },
+            { status: 400 }
+          );
         }
 
         await Inventory.findByIdAndUpdate(block._id, {
