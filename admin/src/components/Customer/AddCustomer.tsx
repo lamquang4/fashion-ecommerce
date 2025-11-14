@@ -96,7 +96,6 @@ function AddCustomer() {
               <input
                 type="text"
                 name="email"
-                inputMode="numeric"
                 value={data.email}
                 onChange={handleChange}
                 required
@@ -112,6 +111,7 @@ function AddCustomer() {
                 <input
                   type="number"
                   name="phone"
+                  inputMode="numeric"
                   value={data.phone}
                   onChange={handleChange}
                   required
