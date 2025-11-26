@@ -71,14 +71,18 @@ function Blog() {
   return (
     <>
       <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h2 className="mb-[20px] text-[#74767d]  ">Bài viết ({totalItems})</h2>
+        <div className="flex justify-between items-center flex-wrap gap-[20px]">
+          <h2 className="mb-[20px] text-[#74767d]  ">
+            Bài viết ({totalItems})
+          </h2>
 
-        <Link
-          href={"/add-blog"}
-          className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium w-[90px] !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
-        >
-          <IoMdAddCircle size={22} /> Thêm
-        </Link>
+          <Link
+            href={"/add-blog"}
+            className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium w-[90px] !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
+          >
+            <IoMdAddCircle size={22} /> Thêm
+          </Link>
+        </div>
       </div>
 
       <div className="shadow-sm bg-white rounded-[3px] w-full overflow-auto">

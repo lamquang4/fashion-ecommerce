@@ -18,6 +18,7 @@ import { PiHouseLineBold } from "react-icons/pi";
 import { MdOutlineContentPasteSearch } from "react-icons/md";
 import { RxSize } from "react-icons/rx";
 import { BsPostcard } from "react-icons/bs";
+import { AiOutlineCreditCard } from "react-icons/ai";
 type Props = {
   menuOpen: boolean;
   toggleMenu: () => void;
@@ -80,12 +81,17 @@ function MenuSide({ menuOpen, toggleMenu }: Props) {
       ],
     },
     {
-      title: "Đơn hàng & thanh toán",
+      title: "Đặt hàng",
       items: [
         {
           icon: <RiShoppingBag4Line size={20} />,
           label: "Đơn hàng",
           path: "/order",
+        },
+        {
+          icon: <AiOutlineCreditCard size={20} />,
+          label: "Thanh toán",
+          path: "/payment",
         },
       ],
     },

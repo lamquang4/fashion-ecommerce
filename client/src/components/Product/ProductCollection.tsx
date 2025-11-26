@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import Pagination from "../Pagination";
 import ProductList from "./ProductList";
 import useGetProductsCollection from "@/hooks/useGetProductsCollection";
+import BreadCrumb from "../BreadCrumb";
 
 function ProductCollection() {
   const params = useParams();
@@ -16,19 +17,38 @@ function ProductCollection() {
     totalPages,
     totalItems,
     currentPage,
-    isLoading: isLoadingProductsSlug,
+    isLoading: isLoadingProducts,
   } = useGetProductsCollection(slug);
 
+  const getTitle = () => {
+    if (category) {
+      return `${category.namecategory} ${
+        category.gender === 1 ? "nam" : category.gender === 0 ? "nữ" : ""
+      }`;
+    }
+    return "";
+  };
+
+  const array = [
+    {
+      name: "Trang chủ",
+      href: "/",
+    },
+    {
+      name: getTitle(),
+    },
+  ];
+
   return (
-    <section className="my-[40px]  px-[15px]">
+    <section className="px-[15px] mb-[40px]">
+      <BreadCrumb items={array} />
       <div className="mx-auto max-w-[1230px] w-full">
         <ProductList
           products={products}
           category={category}
-          isLoading={isLoadingCategory || isLoadingProductsSlug}
+          isLoading={isLoadingCategory || isLoadingProducts}
           total={totalItems}
         />
-
         <Pagination
           totalPages={totalPages}
           currentPage={currentPage}

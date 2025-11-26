@@ -168,7 +168,7 @@ function CheckoutForm() {
 
         setIsOrdering(true);
 
-        router.replace("/order-success");
+        router.replace("/order-result?result=successful");
 
         mutateCart({ productsInCart: [] }, false);
       } catch (err: any) {

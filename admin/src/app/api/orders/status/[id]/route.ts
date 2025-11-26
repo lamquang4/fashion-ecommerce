@@ -1,6 +1,8 @@
+import { refundPayment } from "@/lib/Momo";
 import { connectMongoDB } from "@/lib/MongoConnect";
 import Inventory from "@/model/Inventory";
 import Order from "@/model/Order";
+import Payment from "@/model/Payment";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function PUT(
@@ -48,6 +50,33 @@ export async function PUT(
         }
 
         await inventory.save();
+
+        // hoàn tiền nếu huy đơn thanh toán bằng Momo
+        if (order.paymethod === "momo") {
+          const payment = await Payment.findOne({ order: order._id });
+
+          if (!payment) {
+            return NextResponse.json(
+              { msg: "Không tìm thấy giao dịch" },
+              { status: 404 }
+            );
+          }
+
+          await refundPayment({
+            transId: payment.transactionId,
+            amount: Number(payment.amount),
+            orderId: payment.order.toString(),
+          });
+
+          // lưu giao dịch thành công
+          await Payment.create({
+            order: order._id,
+            paymethod: order.paymethod,
+            amount: order.total,
+            transactionId: payment.transactionId,
+            status: 0,
+          });
+        }
       }
     }
 

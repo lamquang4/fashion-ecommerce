@@ -6,6 +6,7 @@ import Cart from "@/model/Cart";
 import Coupon from "@/model/Coupon";
 import Inventory from "@/model/Inventory";
 import mongoose from "mongoose";
+import Payment from "@/model/Payment";
 export async function GET(req: NextRequest) {
   const session = await mongoose.startSession();
   session.startTransaction();
@@ -23,6 +24,7 @@ export async function GET(req: NextRequest) {
 
     const orderCode = vnp_Params["vnp_TxnRef"];
     const responseCode = vnp_Params["vnp_ResponseCode"];
+    const transId = vnp_Params["vnp_TransactionNo"];
 
     if (responseCode === "00") {
       const order = await Order.findOne({ orderCode: orderCode }).session(
@@ -30,13 +32,40 @@ export async function GET(req: NextRequest) {
       );
 
       if (order) {
-        order.status = 0;
-        await order.save({ session });
+        let inventoryEnough = true;
 
+        // Kiểm tra tồn kho
         for (const item of order.items) {
           const { product, color, size, quantity } = item;
+          const inv = await Inventory.findOne({
+            product,
+            color,
+            "inventories.size": size,
+            "inventories.quantity": { $gte: quantity },
+          }).session(session);
 
-          const updated = await Inventory.updateOne(
+          if (!inv) {
+            inventoryEnough = false;
+            break;
+          }
+        }
+
+        if (!inventoryEnough) {
+          // Không đủ tồn, hoàn tiền
+          // await refundPayment({ transId, amount: Number(amount), orderId });
+
+          await Order.deleteOne({ _id: order._id }).session(session);
+          await session.commitTransaction();
+          session.endSession();
+          return NextResponse.redirect(
+            `${process.env.NEXTAUTH_URL}/order-result?result=fail`
+          );
+        }
+
+        // Cập nhật tồn kho
+        for (const item of order.items) {
+          const { product, color, size, quantity } = item;
+          await Inventory.updateOne(
             {
               product,
               color,
@@ -44,20 +73,12 @@ export async function GET(req: NextRequest) {
                 $elemMatch: { size, quantity: { $gte: quantity } },
               },
             },
-            {
-              $inc: { "inventories.$[elem].quantity": -quantity },
-            },
-            {
-              arrayFilters: [{ "elem.size": size }],
-              session,
-            }
+            { $inc: { "inventories.$[elem].quantity": -quantity } },
+            { arrayFilters: [{ "elem.size": size }], session }
           );
-
-          if (updated.modifiedCount === 0) {
-            throw new Error("Sản phẩm không đủ tồn kho.");
-          }
         }
 
+        // Cập nhật coupon
         if (order.coupon) {
           await Coupon.findByIdAndUpdate(
             order.coupon,
@@ -66,15 +87,30 @@ export async function GET(req: NextRequest) {
           );
         }
 
+        // Xóa giỏ hàng
         await Cart.findOneAndDelete({ user: order.user }, { session });
-      }
 
-      await session.commitTransaction();
-      session.endSession();
-      return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/order-success`);
-    } else {
-      return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/checkout`);
+        order.status = 0;
+        await order.save({ session });
+
+        // lưu giao dịch thành công
+        await Payment.create({
+          order: order._id,
+          paymethod: order.paymethod,
+          amount: order.total,
+          transactionId: transId,
+          status: 1,
+        });
+
+        await session.commitTransaction();
+        session.endSession();
+        return NextResponse.redirect(
+          `${process.env.NEXTAUTH_URL}/order-result?result=successful`
+        );
+      }
     }
+
+    return NextResponse.redirect(`${process.env.NEXTAUTH_URL}/checkout`);
   } catch (err) {
     await session.abortTransaction();
     session.endSession();

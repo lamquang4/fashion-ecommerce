@@ -142,7 +142,7 @@ function Header() {
                   />
                 </li>
 
-                <li className="relative group">
+                <li className="cursor-pointer relative after:content-[''] after:absolute after:-bottom-2.5 after:left-0 after:w-full after:h-[1.5px] after:bg-black after:origin-left after:scale-x-0 after:transition-transform after:duration-200 after:ease-in-out hover:after:scale-x-100">
                   <Link href={"/blog"}>Tin tức</Link>
                 </li>
               </ul>

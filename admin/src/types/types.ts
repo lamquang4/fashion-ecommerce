@@ -159,6 +159,19 @@ export interface OrderFull {
   createdAt?: string;
 }
 
+export interface Payment {
+  _id: string;
+  order: {
+    _id: string;
+    orderCode: string;
+  };
+  paymethod: string;
+  amount: number;
+  transactionId: string;
+  status: number;
+  createdAt: string;
+}
+
 export interface Blog {
   _id: string;
   title: string;

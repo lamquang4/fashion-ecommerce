@@ -173,6 +173,19 @@ export interface OrderAdd {
   total: number;
 }
 
+export interface Payment {
+  _id: string;
+  order: {
+    _id: string;
+    orderCode: string;
+  };
+  paymethod: string;
+  amount: number;
+  transactionId: string;
+  status: number;
+  createdAt: string;
+}
+
 export interface Banner {
   _id: string;
   image: string;
