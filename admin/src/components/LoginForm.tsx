@@ -5,11 +5,13 @@ import toast from "react-hot-toast";
 import useLogin from "@/hooks/useLogin";
 import { useRouter } from "next/navigation";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
+import Overplay from "./Overplay";
+import Loading from "./Loading";
 function LoginForm() {
   const router = useRouter();
   const [data, setData] = useState({ email: "", password: "" });
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const { handleLogin } = useLogin();
+  const { handleLogin, isLoading } = useLogin();
 
   const toggleShowPassword = () => {
     setShowPassword((prev) => !prev);
@@ -36,7 +38,7 @@ function LoginForm() {
         password: "",
       });
 
-      router.replace("/dashboard");
+      router.replace("/account");
     } else if (result?.error) {
       toast.error(result?.error);
     }
@@ -126,6 +128,13 @@ function LoginForm() {
           </div>
         </div>
       </section>
+
+      {isLoading && (
+        <Overplay>
+          <Loading height={0} size={55} color="white" thickness={8} />
+          <h4 className="text-white">Vui lòng chờ trong giây lát...</h4>
+        </Overplay>
+      )}
     </>
   );
 }
