@@ -1,5 +1,4 @@
 "use client";
-import Link from "next/link";
 import Pagination from "./Pagination";
 import Image from "./Image";
 import Loading from "./Loading";

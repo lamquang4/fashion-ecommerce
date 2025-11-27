@@ -1,7 +1,12 @@
-import OrderSuccess from "@/components/OrderResult";
+import OrderResult from "@/components/OrderResult";
+import { Suspense } from "react";
 
 function page() {
-  return <><OrderSuccess/></>;
+  return (
+    <Suspense>
+      <OrderResult />
+    </Suspense>
+  );
 }
 
 export default page;
