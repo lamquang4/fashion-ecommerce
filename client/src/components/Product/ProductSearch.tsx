@@ -28,22 +28,25 @@ function ProductSearch() {
     },
   ];
   return (
-    <section className="px-[15px] mb-[40px]">
+    <>
       <BreadCrumb items={array} />
-      <div className="mx-auto max-w-[1230px] w-full">
-        <ProductList
-          products={products}
-          isLoading={isLoading}
-          total={totalItems}
-        />
 
-        <Pagination
-          totalPages={totalPages}
-          currentPage={currentPage}
-          totalItems={totalItems}
-        />
-      </div>
-    </section>
+      <section className="px-[15px] mb-[40px]">
+        <div className="mx-auto max-w-[1230px] w-full">
+          <ProductList
+            products={products}
+            isLoading={isLoading}
+            total={totalItems}
+          />
+
+          <Pagination
+            totalPages={totalPages}
+            currentPage={currentPage}
+            totalItems={totalItems}
+          />
+        </div>
+      </section>
+    </>
   );
 }
 
