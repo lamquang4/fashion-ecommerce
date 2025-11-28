@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "../../Image";
 import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
@@ -17,12 +17,16 @@ import useGetWishlist from "@/hooks/useGetWishlist";
 import useAddWishlist from "@/hooks/useAddWishlist";
 import SizeChartModal from "../../SizeChartModal";
 import useGetSizes from "@/hooks/useGetSizes";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
 
 type Props = {
   product: Product;
 };
 
 function ProductDetail({ product }: Props) {
+  const max = 15;
+  const maxHeight = 200;
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedVariant, setSelectedVariant] = useState<Variant>();
   const [selectedSize, setSelectedSize] = useState<{
@@ -36,6 +40,9 @@ function ProductDetail({ product }: Props) {
   const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
   const [currentImageIndex, setCurrentImageIndex] = useState<number>(0);
+  const [isLargeScreen, setIsLargeScreen] = useState(window.innerWidth >= 1024);
+  const [expanded, setExpanded] = useState(false);
+  const [isLongDescription, setIsLongDescription] = useState(false);
 
   const { sizes, isLoading: isLoadingSizes } = useGetSizes();
   const { coupons } = useGetCoupons();
@@ -65,6 +72,27 @@ function ProductDetail({ product }: Props) {
       setSelectedSize(undefined);
     }
   }, [selectedVariant]);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsLargeScreen(window.innerWidth >= 1024);
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
+  const descriptionRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (descriptionRef.current) {
+      const height = descriptionRef.current.scrollHeight;
+      setIsLongDescription(height > maxHeight);
+    }
+  }, [product?.description]);
 
   const isInWishlist = useMemo(() => {
     return wishlist?.productsInWishlist?.some(
@@ -108,7 +136,7 @@ function ProductDetail({ product }: Props) {
 
   const HandleIncrement = () => {
     const maxQuantity =
-      currentInventory?.quantity! > 15 ? 15 : currentInventory?.quantity!;
+      currentInventory?.quantity! > max ? max : currentInventory?.quantity!;
     setQuantity((prev) => (prev < maxQuantity ? prev + 1 : prev));
   };
 
@@ -186,61 +214,24 @@ function ProductDetail({ product }: Props) {
 
   return (
     <section className="w-full mb-[40px]">
-      <div className="mx-auto max-w-[1230px] w-full">
-        <div className="flex flex-wrap gap-x-[15px] gap-y-[30px]">
-          <div className="flex justify-center">
-            <div className="flex flex-col md:flex-col-reverse xl:flex-row flex-wrap gap-[15px] lg:sticky lg:top-[100px]">
-              <div className="md:order-2 relative grow overflow-hidden bg-white">
-                <div className="w-full lg:max-w-[600px] flex flex-col gap-[20px]">
-                  <div className="relative group">
-                    <button
-                      type="button"
-                      onClick={handleNextImage}
-                      className="absolute border border-gray-100 right-1.5 top-1/2 w-11 h-11 bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 xl:opacity-0 xl:group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
-                    >
-                      <GrNext size={18} />
-                    </button>
-
-                    {mainImage && (
-                      <div
-                        className="cursor-pointer"
-                        onClick={(e) => {
-                          e.stopPropagation();
-                          e.preventDefault();
-                          handleOpenViewer(mainImage);
-                        }}
-                      >
-                        <Image
-                          Src={mainImage}
-                          Alt=""
-                          ClassName="w-full h-full object-cover "
-                          loadingType="eager"
-                        />
-                      </div>
-                    )}
-
-                    <button
-                      type="button"
-                      onClick={handlePrevImage}
-                      className="absolute left-1.5 top-1/2 w-11 h-11 border border-gray-100 bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 xl:opacity-0 xl:group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
-                    >
-                      <GrPrevious size={18} />
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="md:order-1 flex justify-center">
-                <div className="max-h-[500px] max-w-[400px] flex flex-row xl:flex-col gap-[15px] overflow-x-auto overflow-y-auto">
+      <div className="mx-auto w-full max-w-[1230px]">
+        <div className="flex flex-col lg:flex-row gap-x-[15px] gap-y-[30px] w-full">
+          <div className="flex-1/6" id="div1">
+            <div className="lg:items-start items-center flex lg:flex-row flex-col-reverse gap-3 flex-1/6 lg:sticky lg:top-[100px]">
+              <div className="lg:w-[70px] w-full lg:flex-shrink-0 lg:px-0 px-[15px]">
+                <Swiper
+                  slidesPerView="auto"
+                  spaceBetween={10}
+                  className="lg:max-h-[600px] w-full flex justify-center 
+                  [&&_.swiper-wrapper]:flex 
+                  [&&_.swiper-wrapper]:justify-center"
+                  direction={isLargeScreen ? "vertical" : "horizontal"}
+                >
                   {product?.variants.map((variant) =>
                     variant.images.map((img) => (
-                      <div
+                      <SwiperSlide
                         key={`${variant._id}-${img}`}
-                        className={`shrink-0 border  overflow-hidden cursor-pointer w-[70px] ${
-                          mainImage === img
-                            ? "border-gray-500"
-                            : "border-gray-300"
-                        }`}
+                        className="!w-[70px] !h-[90px] cursor-pointer flex-shrink-0"
                         onMouseEnter={() => {
                           setMainImage(img);
                           const indexOfImage = allImages.indexOf(img);
@@ -249,22 +240,74 @@ function ProductDetail({ product }: Props) {
                           }
                         }}
                       >
-                        <Image
-                          Src={img}
-                          Alt=""
-                          ClassName="w-full h-full object-cover"
-                          loadingType="eager"
-                        />
-                      </div>
+                        <div
+                          className={`border flex items-center justify-center w-full h-full ${
+                            mainImage === img
+                              ? "border-gray-500"
+                              : "border-gray-300"
+                          }`}
+                        >
+                          <Image
+                            Src={img}
+                            Alt=""
+                            ClassName="w-full h-full object-contain"
+                            loadingType="eager"
+                          />
+                        </div>
+                      </SwiperSlide>
                     ))
                   )}
-                </div>
+                </Swiper>
+              </div>
+
+              <div className="group flex justify-center w-full relative flex-1">
+                {mainImage && (
+                  <div
+                    className="cursor-pointer group"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      handleOpenViewer(mainImage);
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleNextImage;
+                      }}
+                      className="absolute border right-1.5 top-1/2 w-10 h-10 bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 lg:opacity-0 lg:group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
+                    >
+                      <GrNext size={20} />
+                    </button>
+
+                    <div className="w-full h-full overflow-hidden">
+                      <Image
+                        Src={mainImage}
+                        Alt=""
+                        ClassName="w-full h-full object-contain"
+                        loadingType="eager"
+                      />
+                    </div>
+
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handlePrevImage;
+                      }}
+                      className="absolute left-1.5 top-1/2 w-10 h-10 border bg-white rounded-full flex justify-center items-center -translate-y-1/2 z-10 p-2 lg:opacity-0 lg:group-hover:opacity-100 transition duration-300 hover:bg-black hover:text-white"
+                    >
+                      <GrPrevious size={20} />
+                    </button>
+                  </div>
+                )}
               </div>
             </div>
           </div>
 
-          <div className="relative lg:w-[500px] w-full  px-[15px]">
-            <div className="space-y-[5px]">
+          <div className="relative flex-1 px-[15px]" id="div2">
+            <div className="space-y-[10px]">
               <h5 className="font-medium">
                 {product?.category?.namecategory} /{" "}
                 {product?.category?.gender === 1
@@ -273,7 +316,9 @@ function ProductDetail({ product }: Props) {
                   ? "Nữ"
                   : ""}
               </h5>
-              <h3 className="font-semibold">{product?.name}</h3>
+
+              <h3>{product?.name}</h3>
+
               <div className="flex items-center gap-[15px]">
                 {product && product?.discount > 0 ? (
                   <>
@@ -340,8 +385,12 @@ function ProductDetail({ product }: Props) {
                           backgroundColor: `${variant.color.codecolor}`,
                         }}
                         className={`w-8 h-8 rounded-full border border-gray-300 focus:outline-none focus:ring-1 focus:ring-offset-2 ring-red-800
-        ${selectedVariant?._id === variant._id ? "ring-1 ring-offset-2" : ""}
-      `}
+                          ${
+                            selectedVariant?._id === variant._id
+                              ? "ring-1 ring-offset-2"
+                              : ""
+                          }
+                        `}
                       ></button>
                     ))}
                   </div>
@@ -407,12 +456,12 @@ function ProductDetail({ product }: Props) {
                     type="number"
                     name="quantity"
                     readOnly
-                    className="h-11 text-center   w-11 outline-none placeholder:  text-[1rem] font-normal"
+                    className="h-11 text-center w-11 outline-none placeholder:  text-[1rem] font-normal"
                     placeholder="1"
                     min={1}
                     max={
-                      currentInventory?.quantity! > 15
-                        ? 15
+                      currentInventory?.quantity! > max
+                        ? max
                         : currentInventory?.quantity!
                     }
                     value={quantity}
@@ -422,8 +471,8 @@ function ProductDetail({ product }: Props) {
                     onClick={HandleIncrement}
                     disabled={
                       quantity >=
-                      (currentInventory?.quantity! > 15
-                        ? 15
+                      (currentInventory?.quantity! > max
+                        ? max
                         : currentInventory?.quantity!)
                     }
                     className=" p-3 h-11 outline-none"
@@ -475,17 +524,41 @@ function ProductDetail({ product }: Props) {
                   </button>
                 </div>
 
-                <div>
+                <div className="space-y-[15px]">
                   <h4 className="font-medium">Mô tả sản phẩm</h4>
 
-                  <hr className="border my-[15px]" />
-
                   <div
-                    className="main-prose"
-                    dangerouslySetInnerHTML={{
-                      __html: product?.description || "",
-                    }}
-                  ></div>
+                    ref={descriptionRef}
+                    className={`main-prose relative transition-all duration-300 ${
+                      expanded || !isLongDescription
+                        ? "max-h-none"
+                        : "overflow-hidden"
+                    }`}
+                    style={
+                      !expanded && isLongDescription
+                        ? { maxHeight: `${maxHeight}px` }
+                        : {}
+                    }
+                  >
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: product.description || "",
+                      }}
+                    />
+
+                    {!expanded && isLongDescription && (
+                      <div className="absolute bottom-0 left-0 w-full h-[60px] bg-gradient-to-t from-white to-transparent"></div>
+                    )}
+                  </div>
+
+                  {isLongDescription && (
+                    <button
+                      onClick={() => setExpanded(!expanded)}
+                      className="text-blue-600 text-[0.9rem] font-medium w-full"
+                    >
+                      {expanded ? "Thu gọn" : "Xem thêm"}
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

@@ -193,7 +193,7 @@ function ButtonTool({
     visibleTools && visibleTools.length > 0
       ? buttonTools.filter((_, index) => visibleTools.includes(index))
       : buttonTools;
-      
+
   return (
     <>
       {tools.map((tool, index) => (
