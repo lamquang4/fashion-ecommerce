@@ -6,7 +6,7 @@ import useSWR from "swr";
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 
 export default function useGetCategory(slug: string) {
-  const url = `/api/categories/${slug}`;
+  const url = slug ? `/api/categories/${slug}` : null;
   const { data, error, isLoading, mutate } = useSWR<Category>(url, fetcher, {
     shouldRetryOnError: false,
     revalidateOnFocus: false,

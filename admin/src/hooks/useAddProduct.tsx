@@ -6,6 +6,9 @@ import toast from "react-hot-toast";
 export default function useAddProduct() {
   const [isLoading, setIsLoading] = useState(false);
   const addProduct = async (formData: FormData) => {
+    if (!formData) {
+      return;
+    }
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {

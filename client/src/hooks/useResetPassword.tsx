@@ -8,6 +8,9 @@ export function useResetPassword() {
     email: string;
     password: string;
   }) => {
+    if (!data.otp || !data.email || !data.password) {
+      return;
+    }
     setIsLoading(true);
     try {
       const url = `/api/auth/password`;

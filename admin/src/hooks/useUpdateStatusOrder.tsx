@@ -16,7 +16,7 @@ export default function useUpdateStatusOrder() {
       cancelButtonText: "Hủy",
     });
 
-    if (!result.isConfirmed) {
+    if (!result.isConfirmed || !id) {
       return;
     }
 

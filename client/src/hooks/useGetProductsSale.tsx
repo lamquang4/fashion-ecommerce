@@ -30,7 +30,7 @@ export default function useGetProductsSlug(slug: string) {
     colors.forEach((c) => query.append("color", c));
   }
 
-  const url = `/api/products/sale/${slug}?${query.toString()}`;
+  const url = slug ? `/api/products/sale/${slug}?${query.toString()}` : null;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,

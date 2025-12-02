@@ -17,7 +17,7 @@ export default function useVisibleCategory() {
       cancelButtonText: "Hủy",
     });
 
-    if (!result.isConfirmed) {
+    if (!result.isConfirmed || !id) {
       return;
     }
 

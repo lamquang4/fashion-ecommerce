@@ -6,6 +6,9 @@ import toast from "react-hot-toast";
 export default function useAddCategory() {
   const [isLoading, setIsLoading] = useState(false);
   const addCategory = async (formData: FormData) => {
+    if (!formData) {
+      return;
+    }
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {

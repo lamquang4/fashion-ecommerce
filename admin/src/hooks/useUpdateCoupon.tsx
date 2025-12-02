@@ -7,7 +7,7 @@ import toast from "react-hot-toast";
 export default function useUpdateCoupon(id: string) {
   const [isLoading, setIsLoading] = useState(false);
   const updateCoupon = async (data: Coupon) => {
-    if (!id) return;
+    if (!id || !data) return;
     const loadingToast = toast.loading("Đang cập nhật...");
     setIsLoading(true);
     try {

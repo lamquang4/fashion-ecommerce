@@ -8,6 +8,9 @@ export default function usePaymentVNPay() {
     total: number;
     orderCode: string;
   }) => {
+    if (!data.total || !data.orderCode) {
+      return;
+    }
     setIsLoading(true);
     try {
       const url = `/api/vnpay/payment`;

@@ -5,7 +5,7 @@ import { useState } from "react";
 export default function useUpdateImage() {
   const [isLoading, setIsLoading] = useState(false);
   const updateImage = async (formData: FormData, id: string) => {
-    if (!id) return;
+    if (!id || !formData) return;
     setIsLoading(true);
     try {
       const url = `/api/products/images/${id}`;

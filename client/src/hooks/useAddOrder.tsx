@@ -6,6 +6,9 @@ import axios from "axios";
 export default function useAddOrder() {
   const [isLoading, setIsLoading] = useState(false);
   const addOrder = async (data: OrderAdd) => {
+    if (!data) {
+      return;
+    }
     setIsLoading(true);
     try {
       const url = `/api/orders`;

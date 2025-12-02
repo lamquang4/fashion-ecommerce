@@ -7,6 +7,9 @@ import toast from "react-hot-toast";
 export default function useAddColor() {
   const [isLoading, setIsLoading] = useState(false);
   const addColor = async (data: Color) => {
+    if (!data) {
+      return;
+    }
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {

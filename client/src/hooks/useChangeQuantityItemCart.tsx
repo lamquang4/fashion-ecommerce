@@ -10,6 +10,9 @@ export function useChangeQuantityItemCart() {
     size: string;
     quantity: number;
   }) => {
+    if (!data.cartId || !data.variant || !data.size || !data.quantity) {
+      return;
+    }
     setIsLoading(true);
     try {
       const url = `/api/cart/quantity`;

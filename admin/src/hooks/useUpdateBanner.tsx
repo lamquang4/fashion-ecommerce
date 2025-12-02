@@ -6,6 +6,9 @@ import toast from "react-hot-toast";
 export default function useUpdateBanner() {
   const [isLoading, setIsLoading] = useState(false);
   const updateBanner = async (formData: FormData) => {
+    if (!formData) {
+      return;
+    }
     const loadingToast = toast.loading("Đang cập nhật...");
     setIsLoading(true);
     try {

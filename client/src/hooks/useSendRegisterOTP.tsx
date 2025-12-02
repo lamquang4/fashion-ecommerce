@@ -4,6 +4,9 @@ import { useState } from "react";
 export function useSendRegisterOTP() {
   const [isLoading, setIsLoading] = useState(false);
   const sendRegisterOTP = async (data: { email: string }) => {
+    if (!data.email) {
+      return;
+    }
     setIsLoading(true);
     try {
       const url = `/api/auth/otps/user`;

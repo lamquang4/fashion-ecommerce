@@ -6,7 +6,7 @@ import toast from "react-hot-toast";
 export default function useUpdateCategory(id: string) {
   const [isLoading, setIsLoading] = useState(false);
   const updateCategory = async (formData: FormData) => {
-    if (!id) return;
+    if (!id || !formData) return;
     const loadingToast = toast.loading("Đang cập nhật...");
     setIsLoading(true);
     try {

@@ -8,6 +8,9 @@ export default function usePaymentMomo() {
     total: number;
     orderCode: string;
   }) => {
+    if (!data.total || !data.orderCode) {
+      return;
+    }
     setIsLoading(true);
     try {
       const url = `/api/momo/payment`;

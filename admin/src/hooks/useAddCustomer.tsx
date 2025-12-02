@@ -7,6 +7,9 @@ import toast from "react-hot-toast";
 export default function useAddCustomer() {
   const [isLoading, setIsLoading] = useState(false);
   const addCustomer = async (data: User) => {
+    if (!data) {
+      return;
+    }
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {

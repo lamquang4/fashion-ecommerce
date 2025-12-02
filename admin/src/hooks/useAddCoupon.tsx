@@ -7,6 +7,9 @@ import toast from "react-hot-toast";
 export default function useAddCoupon() {
   const [isLoading, setIsLoading] = useState(false);
   const addCoupon = async (data: Coupon) => {
+    if (!data) {
+      return;
+    }
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {

@@ -31,7 +31,9 @@ export default function useGetProductsCollection(slug: string) {
     colors.forEach((c) => query.append("color", c));
   }
 
-  const url = `/api/products/collection/${slug}?${query.toString()}`;
+  const url = slug
+    ? `/api/products/collection/${slug}?${query.toString()}`
+    : null;
 
   const { data, error, isLoading, mutate } = useSWR<ResponseType>(
     url,

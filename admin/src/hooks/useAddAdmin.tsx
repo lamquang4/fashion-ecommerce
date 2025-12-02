@@ -7,6 +7,9 @@ import toast from "react-hot-toast";
 export default function useAddAdmin() {
   const [isLoading, setIsLoading] = useState(false);
   const addAdmin = async (data: User) => {
+    if (!data) {
+      return;
+    }
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {

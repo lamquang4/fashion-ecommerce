@@ -18,7 +18,7 @@ type Props = {
 
 function CartItem({ cart }: Props) {
   const router = useRouter();
-
+  const max = 15;
   const { mutate } = useGetCart();
   const { data: session } = useSession();
   const { removeItem, isLoading: isLoadingRemoveItem } = useRemoveItemCart();
@@ -74,8 +74,12 @@ function CartItem({ cart }: Props) {
     currentQuantity: number,
     stock: number
   ) => {
-    if (currentQuantity >= (stock > 15 ? 15 : stock)) return;
+    const limit = stock > max ? max : stock; // số lượng tối đa có thể mua
 
+    if (currentQuantity >= limit) {
+      toast.error("Số lượng tồn kho cho sản phẩm này là " + limit);
+      return;
+    }
     handleChangeQuantity(cartId, variantId, sizeId, currentQuantity + 1);
   };
 
@@ -259,9 +263,9 @@ function CartItem({ cart }: Props) {
                               }
                               disabled={
                                 item.variant.quantity >=
-                                  (item.variant.stock < 15
+                                  (item.variant.stock < max
                                     ? item.variant.stock
-                                    : 15) || isLoadingChangeQuantity
+                                    : max) || isLoadingChangeQuantity
                               }
                               className="flex items-center justify-center w-7 h-7 outline-none bg-[#F7F7F7] border-gray-300 border"
                             >

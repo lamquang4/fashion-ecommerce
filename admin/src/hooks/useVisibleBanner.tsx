@@ -17,7 +17,7 @@ export default function useVisibleBanner() {
       cancelButtonText: "Hủy",
     });
 
-    if (!result.isConfirmed) {
+    if (!result.isConfirmed || !id) {
       return;
     }
 

@@ -9,6 +9,9 @@ export default function useAddCart() {
     size: string;
     quantity: number;
   }) => {
+    if (!data.variant || !data.size || !data.quantity) {
+      return;
+    }
     setIsLoading(true);
     try {
       const url = `/api/cart`;

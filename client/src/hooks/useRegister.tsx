@@ -12,6 +12,16 @@ export default function useRegister() {
     password: string;
     otp: string;
   }) => {
+    if (
+      !data.fullname ||
+      !data.email ||
+      !data.phone ||
+      !data.birthday ||
+      !data.password ||
+      !data.otp
+    ) {
+      return;
+    }
     setIsLoading(true);
     try {
       const url = `/api/auth/user`;

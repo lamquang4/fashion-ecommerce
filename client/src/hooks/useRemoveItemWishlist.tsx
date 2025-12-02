@@ -4,6 +4,9 @@ import { useState } from "react";
 export function useRemoveItemWishlist() {
   const [isLoading, setIsLoading] = useState(false);
   const removeItem = async (data: { wishlistId: string; variant: string }) => {
+    if (!data.variant || !data.wishlistId) {
+      return;
+    }
     setIsLoading(true);
     try {
       const url = `/api/wishlist`;

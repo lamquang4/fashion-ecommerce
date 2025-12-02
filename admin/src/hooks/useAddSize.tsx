@@ -7,6 +7,9 @@ import toast from "react-hot-toast";
 export default function useAddSize() {
   const [isLoading, setIsLoading] = useState(false);
   const addSize = async (data: Size) => {
+    if (!data) {
+      return;
+    }
     const loadingToast = toast.loading("Đang thêm...");
     setIsLoading(true);
     try {

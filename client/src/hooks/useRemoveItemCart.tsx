@@ -8,6 +8,9 @@ export function useRemoveItemCart() {
     variant: string;
     size: string;
   }) => {
+    if (!data.cartId || !data.size || !data.variant) {
+      return;
+    }
     setIsLoading(true);
     try {
       const url = `/api/cart`;
