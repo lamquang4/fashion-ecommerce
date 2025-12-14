@@ -249,21 +249,21 @@ export async function PUT(
 
     if (price < 0) {
       return NextResponse.json(
-        { msg: "Giá sản phẩm phải lớn hơn 0" },
+        { msg: "Giá bán phải lớn hơn 0" },
         { status: 400 }
       );
     }
 
     if (discount < 0) {
       return NextResponse.json(
-        { msg: "Giá giảm sản phẩm phải lớn hơn 0" },
+        { msg: "Số tiền giảm phải lớn hơn 0" },
         { status: 400 }
       );
     }
 
     if (price < discount) {
       return NextResponse.json(
-        { msg: "Giá sản phẩm phải lớn hơn giá giảm" },
+        { msg: "Giá bán phải lớn hơn số tiền giảm" },
         { status: 400 }
       );
     }

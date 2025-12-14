@@ -172,7 +172,7 @@ function EditProduct() {
     e.preventDefault();
 
     if (Number(data.price) < Number(data.discount)) {
-      toast.error("Số tiền giảm không được lớn hơn giá gốc");
+      toast.error("Số tiền giảm không được lớn hơn giá bán");
       return;
     }
 
@@ -182,7 +182,7 @@ function EditProduct() {
     }
 
     if (Number(data.price) <= 0) {
-      toast.error("Giá gốc phải lớn hơn 0");
+      toast.error("Giá bán phải lớn hơn 0");
       return;
     }
 

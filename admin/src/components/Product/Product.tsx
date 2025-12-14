@@ -108,7 +108,7 @@ function Product() {
             <tr className="bg-[#E9EDF2] text-left">
               <th className="p-[1rem]  ">Sản phẩm</th>
 
-              <th className="p-[1rem]  ">Giá</th>
+              <th className="p-[1rem]  ">Giá bán</th>
 
               <th className="p-[1rem]  ">Số lượng</th>
 
