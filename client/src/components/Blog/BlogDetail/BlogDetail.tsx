@@ -3,6 +3,7 @@ import { Blog } from "@/types/type";
 import { generateNumberingTOC } from "@/utils/generateNumberingTOC";
 import { removeVietNamese } from "@/utils/removeVietnamese";
 import { useEffect, useMemo, useState } from "react";
+import { HashLink } from "react-router-hash-link";
 type Props = {
   blog: Blog;
 };
@@ -89,10 +90,10 @@ function BlogDetail({ blog }: Props) {
                           : "0px",
                     }}
                   >
-                    <a href={`#${h.id}`}>
+                    <HashLink to={`#${h.id}`}>
                       {h.numbering}.{" "}
                       <span className="text-[#158ed4]">{h.text}</span>
-                    </a>
+                    </HashLink>
                   </li>
                 ))}
               </ol>
