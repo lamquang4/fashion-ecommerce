@@ -569,13 +569,13 @@ function ProductDetail({ product }: Props) {
           {openSizeChartModal && !isLoadingSizes && (
             <SizeChartModal
               sizes={sizes}
-              toggleMenu={toggleSizeChartModal}
+              onToggleMenu={toggleSizeChartModal}
               isOpen={openSizeChartModal}
             />
           )}
 
           <MenuSideCoupon
-            toggleMenu={toggleCouponMenu}
+            onToggleMenu={toggleCouponMenu}
             isOpen={openCouponMenu}
           />
 

@@ -278,8 +278,8 @@ function CheckoutForm() {
                 <ShippingInfoForm
                   data={data}
                   setData={setData}
-                  handleGetAddress={handleGetAddress}
-                  handleChange={handleChange}
+                  onGetAddress={handleGetAddress}
+                  onChange={handleChange}
                   addresses={addresses ?? []}
                   provinces={provinces ?? []}
                 />
@@ -313,9 +313,9 @@ function CheckoutForm() {
               <hr className="border-gray-300" />
 
               <CouponApply
-                toggleOpen={toggleOpen}
+                onToggleOpen={toggleOpen}
                 setCouponCode={setCouponCode}
-                handleApplyCoupon={handleApplyCoupon}
+                onApplyCoupon={handleApplyCoupon}
                 coupon={coupon!}
                 isLoadingCoupon={isLoadingCoupon}
               />
@@ -358,7 +358,7 @@ function CheckoutForm() {
           </div>
         </form>
 
-        <MenuSideCoupon toggleMenu={toggleOpen} isOpen={menuOpen} />
+        <MenuSideCoupon onToggleMenu={toggleOpen} isOpen={menuOpen} />
       </div>
 
       {(isLoadingAddOrder ||

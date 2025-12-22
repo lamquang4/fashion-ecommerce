@@ -8,9 +8,9 @@ import useGetColors from "@/hooks/useGetColors";
 import { memo, useEffect } from "react";
 type Props = {
   isOpen: boolean;
-  toggleMenu: () => void;
+  onToggleMenu: () => void;
 };
-function AdvancedSearch({ isOpen, toggleMenu }: Props) {
+function AdvancedSearch({ isOpen, onToggleMenu }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -63,7 +63,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: Props) {
 
     params.set("page", "1");
     router.push(`?${params.toString()}`);
-    toggleMenu();
+    onToggleMenu();
   };
 
   const handleRemovePriceFiler = () => {
@@ -91,7 +91,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: Props) {
         <div className="sticky top-0 overflow-hidden p-[15px] bg-white z-[25] flex justify-between items-center border-b border-gray-300">
           <h4 className="uppercase">Bộ lọc</h4>
 
-          <button onClick={toggleMenu}>
+          <button onClick={onToggleMenu}>
             <HiMiniXMark size={30} color="black" />
           </button>
         </div>
@@ -255,7 +255,7 @@ function AdvancedSearch({ isOpen, toggleMenu }: Props) {
         </div>
       </div>
 
-      {isOpen && <Overplay closeMenu={toggleMenu} IndexForZ={15} />}
+      {isOpen && <Overplay onClose={onToggleMenu} IndexForZ={15} />}
     </>
   );
 }

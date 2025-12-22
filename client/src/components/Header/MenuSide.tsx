@@ -7,9 +7,9 @@ import Overplay from "../Overplay";
 import useGetCategories from "@/hooks/useGetCategories";
 type Props = {
   isOpen: boolean;
-  toggleMenu: () => void;
+  onToggleMenu: () => void;
 };
-function MenuSide({ isOpen, toggleMenu }: Props) {
+function MenuSide({ isOpen, onToggleMenu }: Props) {
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
   const { categoriesMale, categoriesFemale } = useGetCategories();
 
@@ -40,7 +40,7 @@ function MenuSide({ isOpen, toggleMenu }: Props) {
         }`}
       >
         <div className="flex justify-end items-center">
-          <button onClick={toggleMenu}>
+          <button onClick={onToggleMenu}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -192,7 +192,7 @@ function MenuSide({ isOpen, toggleMenu }: Props) {
         </ul>
       </nav>
 
-      {isOpen && <Overplay closeMenu={toggleMenu} IndexForZ={15} />}
+      {isOpen && <Overplay onClose={onToggleMenu} IndexForZ={15} />}
     </>
   );
 }

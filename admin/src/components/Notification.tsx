@@ -3,15 +3,15 @@ import   { memo } from "react";
 import { LiaBell } from "react-icons/lia";
 type Props = {
   menuOpen: boolean;
-  toggleMenu: () => void;
+  onToggleMenu: () => void;
 };
-function Notification({ menuOpen, toggleMenu }: Props) {
+function Notification({ menuOpen, onToggleMenu }: Props) {
   const { orders } = useGetNotifyOrders();
   return (
     <div
       className="flex cursor-pointer items-center gap-[6px] text-[0.9rem] relative"
-      onMouseOver={toggleMenu}
-      onMouseOut={toggleMenu}
+      onMouseOver={onToggleMenu}
+      onMouseOut={onToggleMenu}
     >
       <button className="w-8.5 h-8.5 rounded-lg border border-gray-200 justify-center items-center flex relative">
         <LiaBell size={20} />

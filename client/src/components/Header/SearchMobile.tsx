@@ -3,11 +3,11 @@ import { useRouter } from "next/navigation";
 import { memo, useEffect, useState } from "react";
 import SuggestionProduct from "../SuggestionProduct";
 type Props = {
-  toggleSearch: () => void;
+  onToggleSearch: () => void;
   openSearch: boolean;
 };
 
-function SearchMobile({ toggleSearch, openSearch }: Props) {
+function SearchMobile({ onToggleSearch, openSearch }: Props) {
   const router = useRouter();
 
   const [search, setSearch] = useState<string>("");
@@ -21,7 +21,7 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
 
     router.push(`/search?q=${encodeURIComponent(search.trim())}`);
     setSearch("");
-    toggleSearch();
+    onToggleSearch();
   };
 
   useEffect(() => {
@@ -65,7 +65,7 @@ function SearchMobile({ toggleSearch, openSearch }: Props) {
             />
           </form>
 
-          <button onClick={toggleSearch}>
+          <button onClick={onToggleSearch}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"

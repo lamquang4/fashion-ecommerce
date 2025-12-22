@@ -188,7 +188,7 @@ function Header() {
             </div>
 
             {/* Mobile Search */}
-            <SearchMobile toggleSearch={toggleSearch} openSearch={openSearch} />
+            <SearchMobile onToggleSearch={toggleSearch} openSearch={openSearch} />
 
             {/* Mobile */}
             <div className="flex lg:hidden items-center gap-[15px] relative">
@@ -237,10 +237,10 @@ function Header() {
           </div>
         </div>
 
-        <MenuSide isOpen={menuMobileOpen} toggleMenu={toggleMobileMenu} />
+        <MenuSide isOpen={menuMobileOpen} onToggleMenu={toggleMobileMenu} />
       </header>
 
-      {openSearch && <Overplay closeMenu={toggleSearch} IndexForZ={12} />}
+      {openSearch && <Overplay onClose={toggleSearch} IndexForZ={12} />}
     </>
   );
 }

@@ -8,9 +8,9 @@ import { signOut, useSession } from "next-auth/react";
 
 type Props = {
   menuOpen: boolean;
-  toggleMenu: () => void;
+  onToggleMenu: () => void;
 };
-function ProfileMenu({ menuOpen, toggleMenu }: Props) {
+function ProfileMenu({ menuOpen, onToggleMenu }: Props) {
   const { data: session } = useSession({
     required: true,
   });
@@ -20,8 +20,8 @@ function ProfileMenu({ menuOpen, toggleMenu }: Props) {
       {session?.user && (
         <div
           className=" text-[0.9rem] relative"
-          onMouseOver={toggleMenu}
-          onMouseOut={toggleMenu}
+          onMouseOver={onToggleMenu}
+          onMouseOut={onToggleMenu}
         >
           <div className="flex cursor-pointer items-center gap-[6px] text-[0.9rem]">
             <div className="w-[30px] rounded-full border border-gray-300 p-1">

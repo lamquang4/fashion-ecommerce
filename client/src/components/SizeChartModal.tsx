@@ -6,9 +6,9 @@ import { Size } from "@/types/type";
 type props = {
   sizes: Size[];
   isOpen: boolean;
-  toggleMenu: () => void;
+  onToggleMenu: () => void;
 };
-function SizeChartModal({ sizes, isOpen, toggleMenu }: props) {
+function SizeChartModal({ sizes, isOpen, onToggleMenu }: props) {
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
@@ -33,7 +33,7 @@ function SizeChartModal({ sizes, isOpen, toggleMenu }: props) {
                 <button
                   type="button"
                   className=" bg-transparent ms-auto"
-                  onClick={toggleMenu}
+                  onClick={onToggleMenu}
                 >
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -150,7 +150,7 @@ function SizeChartModal({ sizes, isOpen, toggleMenu }: props) {
             </div>
           </div>
 
-          {isOpen && <Overplay closeMenu={toggleMenu} IndexForZ={15} />}
+          {isOpen && <Overplay onClose={onToggleMenu} IndexForZ={15} />}
         </div>
       </div>
     </>

@@ -3,17 +3,17 @@ import { Coupon } from "@/types/type";
 import { memo } from "react";
 
 type Props = {
-  toggleOpen: () => void;
+  onToggleOpen: () => void;
   setCouponCode: (value: string) => void;
-  handleApplyCoupon: () => void;
+  onApplyCoupon: () => void;
   coupon: Coupon;
   isLoadingCoupon: boolean;
 };
 
 function CouponApply({
-  toggleOpen,
+  onToggleOpen,
   setCouponCode,
-  handleApplyCoupon,
+  onApplyCoupon,
   coupon,
   isLoadingCoupon,
 }: Props) {
@@ -26,7 +26,7 @@ function CouponApply({
         <button
           type="button"
           className="underline text-[0.9rem]"
-          onClick={toggleOpen}
+          onClick={onToggleOpen}
         >
           Xem tất cả
         </button>
@@ -47,7 +47,7 @@ function CouponApply({
         <button
           type="button"
           disabled={isLoadingCoupon}
-          onClick={() => handleApplyCoupon()}
+          onClick={() => onApplyCoupon()}
           className="w-[120px] text-[0.9rem] rounded-md bg-[#197FB6] py-2 font-medium text-white"
         >
           Sử dụng

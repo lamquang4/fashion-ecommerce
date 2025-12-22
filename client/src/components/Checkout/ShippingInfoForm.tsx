@@ -20,10 +20,10 @@ type Props = {
     }>
   >;
   addresses: Address[];
-  handleChange: (
+  onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => void;
-  handleGetAddress: (address: Address | null) => void;
+  onGetAddress: (address: Address | null) => void;
   provinces: Province[];
 };
 
@@ -31,8 +31,8 @@ function ShippingInfoForm({
   data,
   setData,
   addresses,
-  handleChange,
-  handleGetAddress,
+  onChange,
+  onGetAddress,
   provinces,
 }: Props) {
   const selectedProvince = useMemo(
@@ -52,10 +52,10 @@ function ShippingInfoForm({
           onChange={(e) => {
             const value = e.target.value;
             if (value === "") {
-              handleGetAddress(null);
+              onGetAddress(null);
             } else {
               const selected = addresses.find((addr) => addr._id === value);
-              if (selected) handleGetAddress(selected);
+              if (selected) onGetAddress(selected);
             }
           }}
           className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
@@ -77,7 +77,7 @@ function ShippingInfoForm({
           type="text"
           name="fullname"
           value={data.fullname}
-          onChange={handleChange}
+          onChange={onChange}
           required
           className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
           placeholder="Họ và tên"
@@ -93,7 +93,7 @@ function ShippingInfoForm({
           inputMode="numeric"
           name="phone"
           value={data.phone}
-          onChange={handleChange}
+          onChange={onChange}
           required
           className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
           placeholder="Số điện thoại"
@@ -108,7 +108,7 @@ function ShippingInfoForm({
           type="text"
           name="speaddress"
           value={data.speaddress}
-          onChange={handleChange}
+          onChange={onChange}
           required
           className="w-full rounded-md border border-gray-200 px-2.5 py-2 text-[0.9rem] outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
           placeholder="Địa chỉ cụ thể"
@@ -151,7 +151,7 @@ function ShippingInfoForm({
             required
             disabled={!selectedProvince}
             value={data.ward}
-            onChange={handleChange}
+            onChange={onChange}
             className="w-full rounded-md text-[0.9rem] border border-gray-200 px-2.5 py-2 text-sm outline-none focus:z-10 focus:border-blue-500 focus:ring-blue-500"
           >
             <option value="">Chọn phường/xã</option>

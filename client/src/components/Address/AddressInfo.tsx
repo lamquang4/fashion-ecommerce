@@ -6,7 +6,7 @@ import Image from "../Image";
 import { Address } from "@/types/type";
 
 type Props = {
-  toggleAddressModal: () => void;
+  onToggleModal: () => void;
   setAddressId: (value: string) => void;
   addresses: Address[];
   isLoading: boolean;
@@ -14,7 +14,7 @@ type Props = {
 };
 
 function AddressInfo({
-  toggleAddressModal,
+  onToggleModal,
   setAddressId,
   addresses,
   isLoading,
@@ -49,7 +49,7 @@ function AddressInfo({
         <h2>Sổ địa chỉ</h2>
 
         <button
-          onClick={toggleAddressModal}
+          onClick={onToggleModal}
           type="button"
           className="px-[10px] py-[6px] bg-red-600 text-white text-[0.9rem] font-medium text-center rounded-sm hover:bg-red-700"
         >
@@ -90,7 +90,7 @@ function AddressInfo({
                       className="border-0 p-1 outline-0 text-[0.9rem] text-blue-500 font-medium"
                       type="button"
                       onClick={() => {
-                        toggleAddressModal();
+                        onToggleModal();
                         setAddressId(address._id || "");
                       }}
                     >

@@ -21,10 +21,10 @@ import { BsPostcard } from "react-icons/bs";
 import { AiOutlineCreditCard } from "react-icons/ai";
 type Props = {
   menuOpen: boolean;
-  toggleMenu: () => void;
+  onToggleMenu: () => void;
 };
 
-function MenuSide({ menuOpen, toggleMenu }: Props) {
+function MenuSide({ menuOpen, onToggleMenu }: Props) {
   const pathname = usePathname();
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
 
@@ -269,7 +269,7 @@ function MenuSide({ menuOpen, toggleMenu }: Props) {
         </ul>
       </nav>
 
-      {menuOpen && <Overplay closeMenu={toggleMenu} />}
+      {menuOpen && <Overplay onClose={onToggleMenu} />}
     </>
   );
 }

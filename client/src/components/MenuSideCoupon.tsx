@@ -6,9 +6,9 @@ import toast from "react-hot-toast";
 import { memo } from "react";
 type Props = {
   isOpen: boolean;
-  toggleMenu: () => void;
+  onToggleMenu: () => void;
 };
-function MenuSideCoupon({ isOpen, toggleMenu }: Props) {
+function MenuSideCoupon({ isOpen, onToggleMenu }: Props) {
   const { coupons } = useGetCoupons();
 
   const handleCopy = (code: string) => {
@@ -25,7 +25,7 @@ function MenuSideCoupon({ isOpen, toggleMenu }: Props) {
       >
         <div className="sticky top-0 overflow-hidden bg-white py-[15px] flex justify-between items-center border-b border-gray-300">
           <h4 className="uppercase">Phiếu giảm giá</h4>
-          <button onClick={toggleMenu}>
+          <button onClick={onToggleMenu}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               fill="none"
@@ -102,7 +102,7 @@ function MenuSideCoupon({ isOpen, toggleMenu }: Props) {
         </div>
       </div>
 
-      {isOpen && <Overplay closeMenu={toggleMenu} IndexForZ={15} />}
+      {isOpen && <Overplay onClose={onToggleMenu} IndexForZ={15} />}
     </>
   );
 }
