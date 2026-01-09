@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "react-hot-toast";
 import LayoutPage from "../components/LayoutPage";
 import { AuthProvider } from "./AuthProvider";
+import ScrollToTop from "@/components/ScrollToTop";
 
 const quicksand = Quicksand({
   subsets: ["latin"],
@@ -30,6 +31,7 @@ export default function RootLayout({
             },
           }}
         />
+        <ScrollToTop />
         <AuthProvider>
           <LayoutPage>{children}</LayoutPage>
         </AuthProvider>
