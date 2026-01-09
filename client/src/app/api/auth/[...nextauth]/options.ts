@@ -20,7 +20,7 @@ export const options: NextAuthOptions = {
         try {
           await connectMongoDB();
           const user = await User.findOne({ email });
-          if (!user) throw new Error("Email không tồn tại");
+          if (!user) throw new Error("Email hoặc mật khẩu không đúng");
 
           if (![4, 5].includes(user.role)) {
             throw new Error("Chỉ tài khoản khách hàng mới được phép đăng nhập");
