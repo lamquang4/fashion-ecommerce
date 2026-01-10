@@ -75,7 +75,7 @@ function MenuSide({ menuOpen, onToggleMenu }: Props) {
         },
         {
           icon: <LuWarehouse size={20} />,
-          label: "Hàng tồn kho",
+          label: "Kho",
           path: "/inventory",
         },
       ],

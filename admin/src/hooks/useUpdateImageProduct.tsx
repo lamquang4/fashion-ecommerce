@@ -2,9 +2,9 @@
 import axios from "axios";
 import { useState } from "react";
 
-export default function useUpdateImage() {
+export default function useUpdateImageProduct() {
   const [isLoading, setIsLoading] = useState(false);
-  const updateImage = async (formData: FormData, id: string) => {
+  const updateImageProduct = async (formData: FormData, id: string) => {
     if (!id || !formData) return;
     setIsLoading(true);
     try {
@@ -22,5 +22,5 @@ export default function useUpdateImage() {
     }
   };
 
-  return { updateImage, isLoading };
+  return { updateImageProduct, isLoading };
 }

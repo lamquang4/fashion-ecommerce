@@ -1,12 +1,21 @@
 "use client";
+import useUploadImageBlog from "@/hooks/useUploadImageBlog";
 import { Editor } from "@tiptap/react";
 import { memo, useRef, useState } from "react";
+import { toast } from "react-hot-toast";
 import { FaRegImage } from "react-icons/fa";
 import { TbCloudUpload } from "react-icons/tb";
 
-function ImageTool({ editor }: { editor: Editor | null }) {
+type Props = {
+  editor: Editor | null;
+  draftId: string;
+};
+
+function ImageTool({ editor, draftId }: Props) {
   const [openImage, setOpenImage] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
+
+  const { uploadImageBlog } = useUploadImageBlog();
 
   const toggleImage = () => {
     setOpenImage((prev) => !prev);
@@ -24,14 +33,26 @@ function ImageTool({ editor }: { editor: Editor | null }) {
     }
   };
 
-  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
-    const url = URL.createObjectURL(file);
-    e.target.value = "";
 
-    if (url) {
-      editor?.chain().focus().setImage({ src: url }).run();
+    const formData = new FormData();
+    formData.append("image", file);
+    formData.append("draftId", draftId);
+
+    try {
+      const imageUrl = await uploadImageBlog(formData);
+
+      editor
+        ?.chain()
+        .focus()
+        .setImage({
+          src: imageUrl,
+        })
+        .run();
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
     }
   };
 

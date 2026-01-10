@@ -12,7 +12,6 @@ import useGetProduct from "@/hooks/useGetProduct";
 import toast from "react-hot-toast";
 import useUpdateProduct from "@/hooks/useUpdateProduct";
 import useDeleteImage from "@/hooks/useDeleteImage";
-import useUpdateImage from "@/hooks/useUpdateImage";
 import useGetCategories1 from "@/hooks/useGetCategories1";
 import { GoTrash } from "react-icons/go";
 import { useInputImage2 } from "@/hooks/useInputImage2";
@@ -26,6 +25,7 @@ import useDeleteVariant from "@/hooks/useDeleteVariant";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { FreeMode } from "swiper/modules";
+import useUpdateImageProduct from "@/hooks/useUpdateImageProduct";
 
 const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),
@@ -56,7 +56,8 @@ function EditProduct() {
   const { updateProduct, isLoading: isLoadingUpdateProduct } =
     useUpdateProduct(id);
   const { deleteImage, isLoading: isLoadingDeleteImage } = useDeleteImage();
-  const { updateImage, isLoading: isLoadingSUpdateImage } = useUpdateImage();
+  const { updateImageProduct, isLoading: isLoadingSUpdateImage } =
+    useUpdateImageProduct();
   const { deleteVariant, isLoading: isLoadingDeleteVariant } =
     useDeleteVariant();
 
@@ -245,7 +246,7 @@ function EditProduct() {
           formData.append("imageUpdate", file);
           formData.append("imageNeedUpdate", imageNeedUpdate);
           try {
-            await updateImage(formData, inventoryId);
+            await updateImageProduct(formData, inventoryId);
           } catch (err: any) {
             toast.error(err?.response?.data?.msg);
             return;
@@ -337,6 +338,7 @@ function EditProduct() {
                   Mô tả
                 </label>
                 <TextBoxEditor
+                  draftId=""
                   content={data.description}
                   onChange={handleDescriptionChange}
                 />
@@ -440,7 +442,10 @@ function EditProduct() {
                     >
                       {product?.variants?.[index]?.images?.map(
                         (img, imgIndex) => (
-                          <SwiperSlide key={index} className="!w-auto relative">
+                          <SwiperSlide
+                            key={`${block._id}-${imgIndex}`}
+                            className="!w-auto relative"
+                          >
                             <div
                               className="w-full border border-gray-300 cursor-pointer"
                               onClick={(e) => {
@@ -573,7 +578,10 @@ function EditProduct() {
                       }
                     >
                       {block.inventories.map((inventory, i) => (
-                        <tr key={i} className=" cursor-move">
+                        <tr
+                          key={`${inventory.size}-${i}`}
+                          className=" cursor-move"
+                        >
                           <td className="py-[1rem]">
                             <select
                               name="size"

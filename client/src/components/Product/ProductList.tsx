@@ -159,24 +159,24 @@ function ProductList({ category, products, isLoading, total }: Props) {
               <div key={product._id}>
                 <div className="relative group">
                   <Link href={`/product/${product.slug}`}>
-                    {variant.images[0] && (
-                      <Image
-                        Src={variant.images[0]}
-                        Alt={product.name}
-                        ClassName={"w-full z-[1] relative"}
-                        loadingType="lazy"
-                      />
-                    )}
-                    {variant.images[1] && (
-                      <Image
-                        Src={variant.images[1]}
-                        Alt={product.name}
-                        ClassName={
-                          "w-full absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
-                        }
-                        loadingType="lazy"
-                      />
-                    )}
+                    <div className="w-full overflow-hidden pt-[100%] relative group">
+                      {variant.images[0] && (
+                        <Image
+                          Src={variant.images[0]}
+                          Alt={product.name}
+                          ClassName="absolute inset-0 w-full h-full object-cover z-1 group-hover:opacity-0"
+                          loadingType="lazy"
+                        />
+                      )}
+                      {variant.images[1] && (
+                        <Image
+                          Src={variant.images[1]}
+                          Alt={product.name}
+                          ClassName="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 z-2"
+                          loadingType="lazy"
+                        />
+                      )}
+                    </div>
                   </Link>
 
                   <div className="flex gap-2 flex-col absolute top-[12px] left-[12px] z-[3] font-semibold text-center  ">

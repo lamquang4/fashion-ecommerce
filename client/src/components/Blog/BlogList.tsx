@@ -25,7 +25,7 @@ function BlogList({ blogs, isLoading }: Props) {
         >
           {blogs.map((blog) => (
             <div
-              key={blog._id}
+              key={blog._id || blog.slug}
               className=" group cursor-pointer h-auto rounded-md shadow-md"
             >
               <Link href={`/blog/${blog.slug}`} className="h-full">
@@ -41,12 +41,7 @@ function BlogList({ blogs, isLoading }: Props) {
                 <div className="flex flex-col flex-grow space-y-3 py-6 px-[15px] leading-relaxed">
                   <h5 className="font-semibold">{blog.title}</h5>
 
-                  <p
-                    className="text-gray-500 line-clamp-3"
-                    dangerouslySetInnerHTML={{
-                      __html: blog?.summary || "",
-                    }}
-                  />
+                  <p className="text-gray-500 line-clamp-3">{blog.summary}</p>
 
                   <div className="flex justify-between items-center pt-4 border-t border-gray-300">
                     <div className="text-gray-500 flex items-center gap-1">

@@ -21,83 +21,85 @@ export async function PUT(
 
     const { id } = await params;
     const formData = await req.formData();
-    const file = formData.get("imageUpdate") as File;
-    const image = formData.get("imageNeedUpdate") as string;
+    const file = formData.get("imageUpdate") as File; // Hình mới
+    const imageToReplace = formData.get("imageNeedUpdate") as string; // Hình cần thay thế
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-      return NextResponse.json({ msg: "ID không hợp lệ" }, { status: 400 });
+     return NextResponse.json(
+        { msg: "Không tìm thấy biến thể" },
+        { status: 404 }
+      );
     }
 
     const inventory = await Inventory.findById(id);
     if (!inventory) {
-      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
+      return NextResponse.json(
+        { msg: "Không tìm thấy biến thể" },
+        { status: 404 }
+      );
     }
 
     const imageList = inventory.images;
-    const indexToUpdate = imageList.indexOf(image);
-
-    if (file && file.size > 0) {
-      // Kiểm tra định dạng
-      const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
-      if (!allowedTypes.includes(file.type)) {
-        return NextResponse.json(
-          {
-            msg: `Hình "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.`,
-          },
-          { status: 400 }
-        );
-      }
-
-      // Kiểm tra dung lượng
-      const maxSizeKB = 1000;
-      if (file.size / 1024 > maxSizeKB) {
-        return NextResponse.json(
-          {
-            msg: `Hình "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.`,
-          },
-          { status: 400 }
-        );
-      }
-
-      // Xoá hình cũ
-      const publicId = extractPublicId(image);
-      await cloudinary.uploader.destroy(publicId);
-
-      // Thêm hình mới
-      const slug = removeVietNamese(file.name.split(".")[0]);
-      const arrayBuffer = await file.arrayBuffer();
-      const buffer = Buffer.from(arrayBuffer);
-
-      const result: any = await new Promise((resolve, reject) => {
-        const stream = cloudinary.uploader.upload_stream(
-          {
-            folder: "aura-fashion/product",
-            public_id: `${slug}-${Date.now()}`,
-            resource_type: "image",
-            transformation: [{ quality: "auto" }, { fetch_format: "auto" }],
-          },
-          (error, result) => {
-            if (error) reject(error);
-            else resolve(result);
-          }
-        );
-        stream.end(buffer);
-      });
-
-      imageList[indexToUpdate] = result.secure_url;
+    const indexToUpdate = imageList.indexOf(imageToReplace);
+    if (indexToUpdate === -1) {
+      return NextResponse.json(
+        { msg: "Hình cần cập nhật không tồn tại" },
+        { status: 404 }
+      );
     }
 
-    // Cập nhật
-    await Inventory.findByIdAndUpdate(id, { images: imageList }, { new: true });
+    if (!file || file.size === 0) {
+      return NextResponse.json(
+        { msg: "Hình mới không hợp lệ" },
+        { status: 400 }
+      );
+    }
 
-    return NextResponse.json({ status: 200 });
-  } catch (err) {
-    return NextResponse.json(
-      { err, msg: "Lỗi" },
-      {
-        status: 500,
-      }
+    const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
+    if (!allowedTypes.includes(file.type)) {
+      return NextResponse.json(
+        { msg: "Chỉ hỗ trợ PNG, JPG hoặc WEBP" },
+        { status: 400 }
+      );
+    }
+    const maxSizeKB = 1000;
+    if (file.size / 1024 > maxSizeKB) {
+      return NextResponse.json(
+        { msg: `Hình vượt quá ${maxSizeKB}KB` },
+        { status: 400 }
+      );
+    }
+
+    // Xóa hình cũ
+    const publicId = extractPublicId(imageToReplace); // Hàm bạn tự viết
+    await cloudinary.uploader.destroy(publicId);
+
+    const slug = removeVietNamese(file.name.split(".")[0]);
+    const buffer = Buffer.from(await file.arrayBuffer());
+
+    const result: any = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: `aura-fashion/product/${inventory.product}/${inventory._id}`,
+          public_id: `${slug}-${Date.now()}`,
+          resource_type: "image",
+          transformation: [{ quality: "auto" }, { fetch_format: "auto" }],
+        },
+        (err, res) => (err ? reject(err) : resolve(res))
+      );
+      stream.end(buffer);
+    });
+
+    imageList[indexToUpdate] = result.secure_url;
+    await Inventory.findByIdAndUpdate(
+      id,
+      { images: imageList },
+      { new: true }
     );
+
+    return NextResponse.json({ status: 200, images: imageList });
+  } catch (err) {
+    return NextResponse.json({ err, msg: "Lỗi server" }, { status: 500 });
   }
 }
 

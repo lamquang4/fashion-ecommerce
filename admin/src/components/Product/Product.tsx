@@ -142,23 +142,22 @@ function Product() {
                   <tr key={product._id} className="hover:bg-[#f2f3f8]">
                     <td className="p-[1rem]">
                       <div className="flex gap-[10px] items-center">
-                        <div className="relative group">
+                        <div className="relative w-[100px] h-[100px] overflow-hidden group">
                           {variant.images[0] && (
                             <Image
                               Src={variant.images[0]}
                               Alt={product.name}
-                              ClassName={"w-[80px] z-[1] relative"}
+                              ClassName="absolute inset-0 w-full h-full object-contain opacity-100 group-hover:opacity-0"
                               loadingType="lazy"
                             />
                           )}
+
                           {variant.images[1] && (
                             <Image
                               Src={variant.images[1]}
                               Alt={product.name}
-                              ClassName={
-                                "w-[80px] absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
-                              }
-                              loadingType="eager"
+                              ClassName="absolute inset-0 w-full h-full object-contain opacity-0 group-hover:opacity-100"
+                              loadingType="lazy"
                             />
                           )}
                         </div>

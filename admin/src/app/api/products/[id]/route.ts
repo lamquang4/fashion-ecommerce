@@ -338,10 +338,33 @@ export async function PUT(
           );
         }
 
+        // kiểm tra có trùng size ở 1 biến thể của 1 sản phẩm
+        const sizeIds = block.inventories.map((inv: any) => inv.size);
+        const hasDuplicateSize = new Set(sizeIds).size !== sizeIds.length;
+
+        if (hasDuplicateSize) {
+          return NextResponse.json(
+            {
+              msg: `Một biến thể của một sản phẩm chỉ được chứa 1 kích thước duy nhất`,
+            },
+            { status: 400 }
+          );
+        }
+
+        const variant = await Inventory.create({
+          product: id,
+          images: [],
+          color: block.color,
+          inventories: block.inventories.map((inv: any) => ({
+            quantity: inv.quantity,
+            size: inv.size,
+          })),
+        });
+
         const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
         const maxSizeKB = 1000;
 
-        const imagePaths = [];
+        const imagePaths: string[] = [];
 
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
@@ -374,15 +397,12 @@ export async function PUT(
           const result: any = await new Promise((resolve, reject) => {
             const stream = cloudinary.uploader.upload_stream(
               {
-                folder: `aura-fashion/product`, // tên thư mục
-                public_id: `${slug}-${Date.now()}`, // tên hình
+                folder: `aura-fashion/product/${id}/${variant._id}`,
+                public_id: `${slug}-${Date.now()}-${i}`,
                 resource_type: "image",
                 transformation: [{ quality: "auto" }, { fetch_format: "auto" }],
               },
-              (error, result) => {
-                if (error) reject(error);
-                else resolve(result);
-              }
+              (err, res) => (err ? reject(err) : resolve(res))
             );
             stream.end(buffer);
           });
@@ -390,27 +410,8 @@ export async function PUT(
           imagePaths.push(result.secure_url);
         }
 
-        // kiểm tra có trùng size ở 1 biến thể của 1 sản phẩm
-        const sizeIds = block.inventories.map((inv: any) => inv.size);
-        const hasDuplicateSize = new Set(sizeIds).size !== sizeIds.length;
-
-        if (hasDuplicateSize) {
-          return NextResponse.json(
-            {
-              msg: `Một biến thể của một sản phẩm chỉ được chứa 1 kích thước duy nhất`,
-            },
-            { status: 400 }
-          );
-        }
-
-        await Inventory.create({
-          product: id,
-          images: imagePaths,
-          color: block.color,
-          inventories: block.inventories.map((inv: any) => ({
-            quantity: inv.quantity,
-            size: inv.size,
-          })),
+        await Inventory.findByIdAndUpdate(variant._id, {
+          $push: { images: { $each: imagePaths } },
         });
       }
     }
@@ -524,7 +525,7 @@ export async function PUT(
         const allowedTypes = ["image/png", "image/jpeg", "image/webp"];
         const maxSizeKB = 1000;
 
-        const imagePaths = [];
+        const imagePaths: string[] = [];
 
         for (let i = 0; i < files.length; i++) {
           const file = files[i];
@@ -557,8 +558,8 @@ export async function PUT(
           const result: any = await new Promise((resolve, reject) => {
             const stream = cloudinary.uploader.upload_stream(
               {
-                folder: `aura-fashion/product`, // thư mục
-                public_id: `${slug}-${Date.now()}`, // tên file
+                folder: `aura-fashion/product/${id}/${variantId}`,
+                public_id: `${slug}-${Date.now()}-${i}`,
                 resource_type: "image",
                 transformation: [
                   { width: 800, height: 1000, crop: "fill" },
@@ -566,10 +567,7 @@ export async function PUT(
                   { fetch_format: "auto" },
                 ],
               },
-              (error, result) => {
-                if (error) reject(error);
-                else resolve(result);
-              }
+              (err, res) => (err ? reject(err) : resolve(res))
             );
             stream.end(buffer);
           });

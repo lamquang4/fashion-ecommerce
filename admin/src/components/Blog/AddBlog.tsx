@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useCallback, useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import TextBoxEditor from "../TextBoxEditor/TextBoxEditor";
 import { useInputImage } from "@/hooks/useInputImage";
 import InputImage from "../InputImage";
@@ -8,6 +8,8 @@ import toast from "react-hot-toast";
 import useAddBlog from "@/hooks/useAddBlog";
 
 function AddBlog() {
+  const draftId = useRef<string>(crypto.randomUUID());
+
   const [data, setData] = useState({
     title: "",
     summary: "",
@@ -26,7 +28,9 @@ function AddBlog() {
   } = useInputImage(1);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
+    >
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({
@@ -39,10 +43,6 @@ function AddBlog() {
     setData((prev) => ({ ...prev, content: val }));
   }, []);
 
-  const handleSummaryChange = useCallback((val: string) => {
-    setData((prev) => ({ ...prev, summary: val }));
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -50,6 +50,7 @@ function AddBlog() {
     formData.append("title", data.title.trim());
     formData.append("summary", data.summary.trim());
     formData.append("content", data.content.trim());
+    formData.append("draftId", draftId.current);
     formData.append("status", data.status);
     if (selectedFiles[0]) {
       formData.append("image", selectedFiles[0]);
@@ -130,10 +131,12 @@ function AddBlog() {
               <label htmlFor="" className="text-[0.9rem]  font-medium">
                 Tóm tắt
               </label>
-              <TextBoxEditor
-                content={data.summary}
-                onChange={handleSummaryChange}
-              />
+              <textarea
+                name="summary"
+                value={data.summary}
+                onChange={handleChange}
+                className="border border-gray-300 h-[120px] p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
+              ></textarea>
             </div>
 
             <div className="flex flex-col gap-1">
@@ -143,6 +146,7 @@ function AddBlog() {
               <TextBoxEditor
                 content={data.content}
                 onChange={handleContentChange}
+                draftId={draftId.current}
               />
             </div>
           </div>
