@@ -71,6 +71,6 @@ export async function POST(req: NextRequest) {
       { status: 201 }
     );
   } catch (err) {
-    return NextResponse.json({ msg: "Lỗi" }, { status: 500 });
+    return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
   }
 }

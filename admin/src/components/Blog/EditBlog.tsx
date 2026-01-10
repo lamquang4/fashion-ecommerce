@@ -83,10 +83,6 @@ function EditBlog() {
     setData((prev) => ({ ...prev, content: val }));
   }, []);
 
-  const handleSummaryChange = useCallback((val: string) => {
-    setData((prev) => ({ ...prev, summary: val }));
-  }, []);
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
