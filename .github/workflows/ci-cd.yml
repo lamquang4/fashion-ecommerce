@@ -3,8 +3,6 @@ name: CI/CD Pipeline
 on:
   push:
     branches: [main]
-  pull_request:
-    branches: [main]
 
 jobs:
   test-client:
@@ -75,7 +73,7 @@ jobs:
 
       - name: Deploy client to Vercel
         working-directory: ./client
-        run: npx vercel deploy --prod --yes
+        run: npx vercel deploy --prod --yes --token=$VERCEL_TOKEN
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
@@ -83,7 +81,7 @@ jobs:
 
       - name: Deploy admin to Vercel
         working-directory: ./admin
-        run: npx vercel deploy --prod --yes
+        run: npx vercel deploy --prod --yes --token=$VERCEL_TOKEN
         env:
           VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
