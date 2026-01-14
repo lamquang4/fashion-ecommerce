@@ -1,4 +1,4 @@
-import AddMainBanner from "@/components/banner/MainBanner/AddMainBanner";
+import AddMainBanner from "@/components/banner/mainbanner/AddMainBanner";
 import LayoutPage from "../../components/LayoutPage";
 import { Suspense } from "react";
 

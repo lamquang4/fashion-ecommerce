@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import LayoutPage from "../../components/LayoutPage";
-import MainBanner from "@/components/banner/MainBanner/MainBanner";
+import MainBanner from "@/components/banner/mainbanner/MainBanner";
 
 export default async function page() {
   return (
