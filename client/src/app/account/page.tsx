@@ -1,4 +1,4 @@
-import Account from "@/components/Account/Account";
+import Account from "@/components/account/Account";
 
 async function page() {
   return <Account />;

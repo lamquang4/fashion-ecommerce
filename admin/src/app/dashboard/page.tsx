@@ -1,4 +1,4 @@
-import Dashboard from "@/components/Dashboard/Dashboard";
+import Dashboard from "@/components/dashboard/Dashboard";
 import LayoutPage from "../../components/LayoutPage";
 import { Suspense } from "react";
 

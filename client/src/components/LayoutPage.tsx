@@ -1,6 +1,6 @@
 "use client";
 import { usePathname } from "next/navigation";
-import Header from "./Header/Header";
+import Header from "./header/Header";
 import Footer from "./Footer";
 
 export default function LayoutPage({

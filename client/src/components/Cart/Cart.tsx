@@ -3,7 +3,7 @@ import useGetCart from "@/hooks/useGetCart";
 import useGetProductsBestseller from "@/hooks/useGetProductsBestseller";
 import Loading from "../Loading";
 import CartItem from "./CartItem";
-import ProductSlider from "../Product/ProductSlider";
+import ProductSlider from "../product/ProductSlider";
 
 function Cart() {
   const { cart, isLoading: isLoadingCart } = useGetCart();

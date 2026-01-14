@@ -1,4 +1,4 @@
-import Color from "@/components/Color/Color";
+import Color from "@/components/color/Color";
 import LayoutPage from "../../components/LayoutPage";
 import { Suspense } from "react";
 

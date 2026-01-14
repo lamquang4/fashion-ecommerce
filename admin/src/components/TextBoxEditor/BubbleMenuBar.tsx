@@ -2,9 +2,9 @@
 import { memo } from "react";
 import { Editor } from "@tiptap/react";
 import { BubbleMenu } from "@tiptap/react/menus";
-import BlockStyleTool from "./ToolBar/BlockStyleTool";
-import ButtonTool from "./ToolBar/ButtonTool";
-import EditTableTool from "./ToolBar/EditTableTool";
+import BlockStyleTool from "./toolbar/BlockStyleTool";
+import ButtonTool from "./toolbar/ButtonTool";
+import EditTableTool from "./toolbar/EditTableTool";
 function BubbleMenuBar({ editor }: { editor: Editor | null }) {
   return (
     <>

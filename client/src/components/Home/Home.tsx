@@ -3,13 +3,13 @@ import useGetProductsGender from "@/hooks/useGetProductsGender";
 import Loading from "@/components/Loading";
 import useGetMainBanners from "@/hooks/useGetMainBanners";
 import useGetLatestBlogs from "@/hooks/useGetLatestBlogs";
+import BlogSlider from "../blog/BlogSlider";
+import ProductSlider from "../product/ProductSlider";
 import MainBanner from "./MainBanner";
 import ServiceFeature from "./ServiceFeature";
 import CategoryList from "./CategoryList";
 import PromoteBanner from "./PromoteBanner";
 import CollectionBanner from "./CollectionBanner";
-import BlogSlider from "../Blog/BlogSlider";
-import ProductSlider from "../Product/ProductSlider";
 
 export default function Home() {
   const { isLoading } = useGetMainBanners();

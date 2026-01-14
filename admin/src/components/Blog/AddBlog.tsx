@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useCallback, useRef, useState } from "react";
-import TextBoxEditor from "../TextBoxEditor/TextBoxEditor";
+import TextBoxEditor from "../textboxeditor/TextBoxEditor";
 import { useInputImage } from "@/hooks/useInputImage";
 import InputImage from "../InputImage";
 import toast from "react-hot-toast";

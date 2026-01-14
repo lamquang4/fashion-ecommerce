@@ -18,7 +18,7 @@ import {
 } from "@tiptap/extension-table";
 import Link from "@tiptap/extension-link";
 import ImageResize from "tiptap-extension-resize-image";
-import ToolBar from "./ToolBar/ToolBar";
+import ToolBar from "./toolbar/ToolBar";
 import BubbleMenuBar from "./BubbleMenuBar";
 
 type Props = {

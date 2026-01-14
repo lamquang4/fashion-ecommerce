@@ -1,4 +1,4 @@
-import EditCoupon from "@/components/Coupon/EditCoupon";
+import EditCoupon from "@/components/coupon/EditCoupon";
 import LayoutPage from "@/components/LayoutPage";
 import { Suspense } from "react";
 

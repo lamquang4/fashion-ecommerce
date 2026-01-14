@@ -1,4 +1,4 @@
-import AddBlog from "@/components/Blog/AddBlog";
+import AddBlog from "@/components/blog/AddBlog";
 import LayoutPage from "../../components/LayoutPage";
 import { Suspense } from "react";
 

@@ -1,4 +1,4 @@
-import EditSize from "@/components/Size/EditSize";
+import EditSize from "@/components/size/EditSize";
 import LayoutPage from "@/components/LayoutPage";
 import { Suspense } from "react";
 

@@ -1,4 +1,4 @@
-import EditCategory from "@/components/Category/EditCategory";
+import EditCategory from "@/components/category/EditCategory";
 import LayoutPage from "@/components/LayoutPage";
 import { Suspense } from "react";
 

@@ -1,4 +1,4 @@
-import ProductCollection from "@/components/Product/ProductCollection";
+import ProductCollection from "@/components/product/ProductCollection";
 import { Suspense } from "react";
 
 function page() {

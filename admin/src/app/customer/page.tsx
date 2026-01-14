@@ -1,4 +1,4 @@
-import Customer from "@/components/Customer/Customer";
+import Customer from "@/components/customer/Customer";
 import LayoutPage from "../../components/LayoutPage";
 import { Suspense } from "react";
 

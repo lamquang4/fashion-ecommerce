@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import Order from "@/components/Order/Order";
+import Order from "@/components/order/Order";
 
 function page() {
   return (

@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import ProductSale from "@/components/Product/ProductSale";
+import ProductSale from "@/components/product/ProductSale";
 
 function page() {
   return (

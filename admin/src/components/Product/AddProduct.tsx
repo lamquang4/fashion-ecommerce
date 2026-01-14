@@ -10,7 +10,7 @@ import dynamic from "next/dynamic";
 import { useNewInventory } from "@/hooks/useNewInventory";
 import useGetSizes1 from "@/hooks/useGetSizes1";
 import useGetColors1 from "@/hooks/useGetColors1";
-import TextBoxEditor from "../TextBoxEditor/TextBoxEditor";
+import TextBoxEditor from "../textboxeditor/TextBoxEditor";
 
 const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),
@@ -212,7 +212,7 @@ function AddProduct() {
                   Mô tả
                 </label>
                 <TextBoxEditor
-                draftId=""
+                  draftId=""
                   content={data.description}
                   onChange={handleDescriptionChange}
                 />

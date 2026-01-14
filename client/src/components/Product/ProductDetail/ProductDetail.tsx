@@ -175,21 +175,21 @@ function ProductDetail({ product }: Props) {
     }
   };
 
-  const handleAddToWishlist = async () => {
+  const toggleWishlist = async () => {
     if (!selectedVariant || !product) return;
 
-    await addWishlist({ variant: selectedVariant._id });
-    mutateWishlist();
-    toast.success("Đã thêm vào yêu thích!");
-  };
+    if (isInWishlist) {
+      await removeItem({
+        wishlistId: wishlist?._id || "",
+        variant: selectedVariant._id,
+      });
+      toast.success("Đã xóa khỏi yêu thích!");
+    } else {
+      await addWishlist({ variant: selectedVariant._id });
+      toast.success("Đã thêm vào yêu thích!");
+    }
 
-  const handleRemove = async () => {
-    if (!selectedVariant || !product) return;
-    await removeItem({
-      wishlistId: wishlist?._id || "",
-      variant: selectedVariant._id,
-    });
-    mutateWishlist();
+    mutateWishlist(undefined, { revalidate: true });
   };
 
   const handleSelectVariant = (variant: Variant) => {
@@ -496,15 +496,7 @@ function ProductDetail({ product }: Props) {
                   <button
                     disabled={isLoadingAddWishlist || isLoadingRemoveItem}
                     type="button"
-                    onClick={() => {
-                      if (!selectedVariant || !product) return;
-
-                      if (isInWishlist) {
-                        handleRemove();
-                      } else {
-                        handleAddToWishlist();
-                      }
-                    }}
+                    onClick={toggleWishlist}
                     className={`px-[10px] py-[10px] w-full uppercase flex hover:border-black hover:bg-[#F7F7F7] gap-[5px] justify-center items-center text-[0.9rem] border font-medium  ${
                       isInWishlist
                         ? "bg-[#F7F7F7] border-black"

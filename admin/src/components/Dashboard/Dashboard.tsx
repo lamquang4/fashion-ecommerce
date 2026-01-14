@@ -1,6 +1,6 @@
 "use client";
 import { FaRegMoneyBillAlt } from "react-icons/fa";
-import BarChart from "../Dashboard/BarChart";
+import BarChart from "./BarChart";
 import TopProduct from "./TopProduct";
 import { PiTShirtBold } from "react-icons/pi";
 import useGetOrders from "@/hooks/useGetOrders";

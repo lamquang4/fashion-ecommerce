@@ -16,7 +16,7 @@ import useGetCategories1 from "@/hooks/useGetCategories1";
 import { GoTrash } from "react-icons/go";
 import { useInputImage2 } from "@/hooks/useInputImage2";
 import dynamic from "next/dynamic";
-import TextBoxEditor from "../TextBoxEditor/TextBoxEditor";
+import TextBoxEditor from "../textboxeditor/TextBoxEditor";
 import { useNewInventory } from "@/hooks/useNewInventory";
 import { useCurrentInventory } from "@/hooks/useCurrentInventory";
 import useGetColors1 from "@/hooks/useGetColors1";

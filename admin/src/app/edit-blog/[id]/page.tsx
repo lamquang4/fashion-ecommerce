@@ -1,7 +1,6 @@
-
 import { Suspense } from "react";
 import LayoutPage from "@/components/LayoutPage";
-import EditBlog from "@/components/Blog/EditBlog";
+import EditBlog from "@/components/blog/EditBlog";
 
 export default async function page() {
   return (

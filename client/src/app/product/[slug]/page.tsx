@@ -1,4 +1,4 @@
-import ProductDetailSlug from "@/components/Product/ProductDetail/ProductDetailSlug";
+import ProductDetailSlug from "@/components/product/productdetail/ProductDetailSlug";
 import { Suspense } from "react";
 
 function page() {

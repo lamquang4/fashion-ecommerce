@@ -1,4 +1,4 @@
-import Address from "@/components/Address/Address";
+import Address from "@/components/address/Address";
 
 function page() {
   return <Address />;

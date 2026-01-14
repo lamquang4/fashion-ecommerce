@@ -1,4 +1,4 @@
-import OrderDetail from "@/components/Order/OrderDetail/OrderDetail";
+import OrderDetail from "@/components/order/orderdetail/OrderDetail";
 import { Suspense } from "react";
 
 function page() {

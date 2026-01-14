@@ -1,5 +1,5 @@
 "use client";
-import Image from "./../Image";
+import Image from "../Image";
 type Props = {
   paymethod: string;
   setPaymethod: (value: string) => void;

@@ -1,4 +1,4 @@
-import CollectionBanner from "@/components/Banner/CollectionBanner";
+import CollectionBanner from "@/components/banner/CollectionBanner";
 import LayoutPage from "../../components/LayoutPage";
 import { Suspense } from "react";
 

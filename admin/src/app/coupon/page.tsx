@@ -1,4 +1,4 @@
-import Coupon from "@/components/Coupon/Coupon";
+import Coupon from "@/components/coupon/Coupon";
 import LayoutPage from "../../components/LayoutPage";
 import { Suspense } from "react";
 
