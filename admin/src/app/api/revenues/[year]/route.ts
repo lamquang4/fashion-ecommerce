@@ -1,0 +1,52 @@
+import { connectMongoDB } from "@/lib/MongoConnect";
+import Order from "@/model/Order";
+import { NextRequest, NextResponse } from "next/server";
+
+export async function GET(
+  _req: NextRequest,
+  { params }: { params: Promise<{ year: string }> }
+) {
+  try {
+    await connectMongoDB();
+    const { year } = await params;
+
+    const yearNumber = parseInt(year);
+
+    const revenues = await Order.aggregate([
+      {
+        $match: {
+          status: 3,
+          createdAt: {
+            $gte: new Date(`${yearNumber}-01-01T00:00:00.000Z`),
+            $lt: new Date(`${yearNumber + 1}-01-01T00:00:00.000Z`),
+          },
+        },
+      },
+      { $unwind: "$items" },
+      {
+        $group: {
+          _id: { $month: "$createdAt" },
+          totalRevenue: { $sum: "$total" },
+          totalQuantity: { $sum: "$items.quantity" },
+        },
+      },
+      {
+        $project: {
+          month: "$_id",
+          totalRevenue: 1,
+          totalQuantity: 1,
+          _id: 0,
+        },
+      },
+      { $sort: { month: 1 } },
+    ]);
+
+    if (!revenues || revenues.length === 0) {
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
+    }
+
+    return NextResponse.json({ revenues }, { status: 200 });
+  } catch (err) {
+    return NextResponse.json({ err, msg: "Lỗi" }, { status: 500 });
+  }
+}

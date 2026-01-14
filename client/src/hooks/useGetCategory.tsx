@@ -1,0 +1,21 @@
+"use client";
+import { Category } from "@/types/type";
+import axios from "axios";
+import useSWR from "swr";
+
+const fetcher = (url: string) => axios.get(url).then((res) => res.data);
+
+export default function useGetCategory(slug: string) {
+  const url = slug ? `/api/categories/${slug}` : null;
+  const { data, error, isLoading, mutate } = useSWR<Category>(url, fetcher, {
+    shouldRetryOnError: false,
+    revalidateOnFocus: false,
+  });
+
+  return {
+    category: data,
+    error,
+    isLoading,
+    mutate,
+  };
+}

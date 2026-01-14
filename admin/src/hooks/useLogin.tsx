@@ -1,0 +1,28 @@
+"use client";
+import { signIn } from "next-auth/react";
+import { useState } from "react";
+
+export default function useLogin() {
+  const [isLoading, setIsLoading] = useState(false);
+  const handleLogin = async (data: { email: string; password: string }) => {
+    if (!data.email || !data.password) {
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const result = await signIn("credentials", {
+        email: data.email.trim(),
+        password: data.password.trim(),
+        redirect: false,
+      });
+
+      return result;
+    } catch (err) {
+      console.error("Lỗi:", err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  return { handleLogin, isLoading };
+}
