@@ -29,7 +29,6 @@ function Header() {
 
   const [openSearch, setOpenSearch] = useState<boolean>(false);
   const [menuMobileOpen, setMenuMobileOpen] = useState<boolean>(false);
-  const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (session?.user) {
@@ -65,20 +64,13 @@ function Header() {
   const toggleSearch = useCallback(() => {
     setOpenSearch((prev) => !prev);
     setMenuMobileOpen(false);
-    setProfileMenuOpen(false);
   }, []);
 
   const toggleMobileMenu = useCallback(() => {
     setMenuMobileOpen((prev) => !prev);
     setOpenSearch(false);
-    setProfileMenuOpen(false);
   }, []);
 
-  const toggleProfileMenu = useCallback(() => {
-    setProfileMenuOpen((prev) => !prev);
-    setMenuMobileOpen(false);
-    setOpenSearch(false);
-  }, []);
   return (
     <>
       <header className="w-full bg-white sticky top-0 border-b border-gray-200 z-15">
@@ -151,13 +143,9 @@ function Header() {
             <div className="hidden lg:flex items-center gap-5">
               <SearchDesktop />
 
-              <div
-                className="relative cursor-pointer group"
-                onMouseEnter={toggleProfileMenu}
-                onMouseLeave={toggleProfileMenu}
-              >
+              <div className="relative cursor-pointer group">
                 <CiUser size={24} />
-                <ProfileMenu isOpen={profileMenuOpen} />
+                <ProfileMenu />
               </div>
 
               <Link href={"/cart"} className="relative">
@@ -188,7 +176,10 @@ function Header() {
             </div>
 
             {/* Mobile Search */}
-            <SearchMobile onToggleSearch={toggleSearch} openSearch={openSearch} />
+            <SearchMobile
+              onToggleSearch={toggleSearch}
+              openSearch={openSearch}
+            />
 
             {/* Mobile */}
             <div className="flex lg:hidden items-center gap-[15px] relative">
@@ -196,13 +187,9 @@ function Header() {
                 <CiSearch size={23} />
               </button>
 
-              <div
-                className="relative cursor-pointer group"
-                onMouseOver={toggleProfileMenu}
-                onMouseOut={toggleProfileMenu}
-              >
+              <div className="relative cursor-pointer group">
                 <CiUser size={23} />
-                <ProfileMenu isOpen={profileMenuOpen} />
+                <ProfileMenu />
               </div>
 
               <Link href={"/cart"} className="relative">

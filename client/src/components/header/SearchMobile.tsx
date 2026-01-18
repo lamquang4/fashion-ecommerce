@@ -40,7 +40,7 @@ function SearchMobile({ onToggleSearch, openSearch }: Props) {
     <div
       className={`absolute left-0 w-full border-t border-gray-300 bg-white transition-all duration-300 overflow-hidden ${
         openSearch
-          ? "opacity-100 visible top-[68px]"
+          ? "opacity-100 visible top-full"
           : "opacity-0 invisible top-[90px]"
       }`}
     >
