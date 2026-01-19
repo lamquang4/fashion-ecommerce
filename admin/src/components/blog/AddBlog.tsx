@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useState } from "react";
 import TextBoxEditor from "../textboxeditor/TextBoxEditor";
 import { useInputImage } from "@/hooks/useInputImage";
 import InputImage from "../InputImage";
@@ -8,8 +8,6 @@ import toast from "react-hot-toast";
 import useAddBlog from "@/hooks/useAddBlog";
 
 function AddBlog() {
-  const draftId = useRef<string>(crypto.randomUUID());
-
   const [data, setData] = useState({
     title: "",
     summary: "",
@@ -30,7 +28,7 @@ function AddBlog() {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({
@@ -50,7 +48,6 @@ function AddBlog() {
     formData.append("title", data.title.trim());
     formData.append("summary", data.summary.trim());
     formData.append("content", data.content.trim());
-    formData.append("draftId", draftId.current);
     formData.append("status", data.status);
     if (selectedFiles[0]) {
       formData.append("image", selectedFiles[0]);
@@ -146,7 +143,6 @@ function AddBlog() {
               <TextBoxEditor
                 content={data.content}
                 onChange={handleContentChange}
-                draftId={draftId.current}
               />
             </div>
           </div>

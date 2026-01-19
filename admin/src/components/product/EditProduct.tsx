@@ -31,7 +31,7 @@ const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),
   {
     ssr: false,
-  }
+  },
 );
 function EditProduct() {
   const router = useRouter();
@@ -120,7 +120,7 @@ function EditProduct() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({
@@ -164,7 +164,7 @@ function EditProduct() {
           })),
           previewImages: [],
           selectedFiles: [],
-        }))
+        })),
       );
     }
   }, [product, setCurrentVariants]);
@@ -308,8 +308,8 @@ function EditProduct() {
                         {category.gender === 1
                           ? "Nam"
                           : category.gender === 0
-                          ? "Nữ"
-                          : ""}
+                            ? "Nữ"
+                            : ""}
                       </option>
                     ))}
                   </select>
@@ -338,7 +338,6 @@ function EditProduct() {
                   Mô tả
                 </label>
                 <TextBoxEditor
-                  draftId=""
                   content={data.description}
                   onChange={handleDescriptionChange}
                 />
@@ -475,7 +474,7 @@ function EditProduct() {
                                       onClick={() =>
                                         handleDeleteImage(
                                           product?.variants?.[index]?._id,
-                                          img
+                                          img,
                                         )
                                       }
                                       disabled={isLoadingDeleteImage}
@@ -506,7 +505,7 @@ function EditProduct() {
                               </div>
                             </div>
                           </SwiperSlide>
-                        )
+                        ),
                       )}
                     </Swiper>
                   </div>
@@ -538,10 +537,10 @@ function EditProduct() {
                     {colors
                       .filter((color) => {
                         const checkColorInCurrent = currentVariants.some(
-                          (b, i) => i !== index && b.color === color._id
+                          (b, i) => i !== index && b.color === color._id,
                         );
                         const checkColorInNew = newVariants.some(
-                          (b) => b.color === color._id
+                          (b) => b.color === color._id,
                         );
                         return !checkColorInCurrent && !checkColorInNew;
                       })
@@ -592,7 +591,7 @@ function EditProduct() {
                                   index,
                                   i,
                                   "size",
-                                  e.target.value
+                                  e.target.value,
                                 )
                               }
                               className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
@@ -601,7 +600,8 @@ function EditProduct() {
                               {sizes
                                 .filter((size) => {
                                   return !block.inventories.some(
-                                    (inv, j) => j !== i && inv.size === size._id
+                                    (inv, j) =>
+                                      j !== i && inv.size === size._id,
                                   );
                                 })
                                 .map((size) => (
@@ -625,7 +625,7 @@ function EditProduct() {
                                   index,
                                   i,
                                   "quantity",
-                                  e.target.value
+                                  e.target.value,
                                 )
                               }
                               className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
@@ -716,10 +716,10 @@ function EditProduct() {
                       {colors
                         .filter((color) => {
                           const checkColorInNew = newVariants.some(
-                            (b, i) => i !== index && b.color === color._id
+                            (b, i) => i !== index && b.color === color._id,
                           );
                           const checkColorInCurrent = currentVariants.some(
-                            (b) => b.color === color._id
+                            (b) => b.color === color._id,
                           );
                           return !checkColorInNew && !checkColorInCurrent;
                         })
@@ -767,7 +767,7 @@ function EditProduct() {
                                     index,
                                     i,
                                     "size",
-                                    e.target.value
+                                    e.target.value,
                                   )
                                 }
                                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
@@ -777,7 +777,7 @@ function EditProduct() {
                                   .filter((size) => {
                                     return !block.inventories.some(
                                       (inv, j) =>
-                                        j !== i && inv.size === size._id
+                                        j !== i && inv.size === size._id,
                                     );
                                   })
                                   .map((size) => (
@@ -800,7 +800,7 @@ function EditProduct() {
                                     index,
                                     i,
                                     "quantity",
-                                    e.target.value
+                                    e.target.value,
                                   )
                                 }
                                 min={1}

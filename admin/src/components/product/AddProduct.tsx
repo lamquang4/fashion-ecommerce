@@ -212,7 +212,7 @@ function AddProduct() {
                   Mô tả
                 </label>
                 <TextBoxEditor
-                  draftId=""
+                
                   content={data.description}
                   onChange={handleDescriptionChange}
                 />

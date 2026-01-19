@@ -24,10 +24,9 @@ import BubbleMenuBar from "./BubbleMenuBar";
 type Props = {
   content: string;
   onChange?: (value: string) => void;
-  draftId: string;
 };
 
-function TextBoxEditor({ content, onChange, draftId }: Props) {
+function TextBoxEditor({ content, onChange }: Props) {
   const editor = useEditor({
     editable: true,
     immediatelyRender: false,
@@ -84,7 +83,7 @@ function TextBoxEditor({ content, onChange, draftId }: Props) {
   return (
     <div className="w-full text-[0.9rem]">
       <div className="relative z-5">
-        <ToolBar editor={editor} draftId={draftId} />
+        <ToolBar editor={editor} />
         <EditorContent editor={editor} />
         <BubbleMenuBar editor={editor} />
       </div>

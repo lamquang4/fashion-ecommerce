@@ -9,10 +9,9 @@ import TableTool from "./TableTool";
 
 type Props = {
   editor: Editor | null;
-  draftId: string;
 };
 
-function ToolBar({ editor, draftId }: Props) {
+function ToolBar({ editor }: Props) {
   return (
     <div className="border border-gray-300 border-b-0 bg-gray-50 w-full">
       <div className="flex items-center flex-wrap gap-x-0.5">
@@ -20,7 +19,7 @@ function ToolBar({ editor, draftId }: Props) {
 
         <ButtonTool editor={editor} />
 
-        <ImageTool editor={editor} draftId={draftId} />
+        <ImageTool editor={editor} />
 
         <LinkTool editor={editor} />
 

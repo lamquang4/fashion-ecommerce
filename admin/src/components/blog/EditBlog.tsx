@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TextBoxEditor from "../textboxeditor/TextBoxEditor";
 import { useInputImage } from "@/hooks/useInputImage";
 import InputImage from "../InputImage";
@@ -15,8 +15,6 @@ function EditBlog() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
-
-  const draftId = useRef<string>(crypto.randomUUID());
 
   const [data, setData] = useState({
     title: "",
@@ -65,7 +63,7 @@ function EditBlog() {
   const handleChange = (
     e: React.ChangeEvent<
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
-    >
+    >,
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({
@@ -91,7 +89,6 @@ function EditBlog() {
     formData.append("summary", data.summary.trim());
     formData.append("content", data.content.trim());
     formData.append("status", data.status);
-    formData.append("draftId", draftId.current);
     if (selectedFiles[0]) {
       formData.append("image", selectedFiles[0]);
     }
@@ -203,7 +200,6 @@ function EditBlog() {
                 <TextBoxEditor
                   content={data.content}
                   onChange={handleContentChange}
-                  draftId={draftId.current}
                 />
               </div>
             </div>

@@ -7,10 +7,9 @@ import { TbCloudUpload } from "react-icons/tb";
 
 type Props = {
   editor: Editor | null;
-  draftId: string;
 };
 
-function ImageTool({ editor, draftId }: Props) {
+function ImageTool({ editor }: Props) {
   const [openImage, setOpenImage] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
