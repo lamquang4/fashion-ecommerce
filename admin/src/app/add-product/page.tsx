@@ -1,5 +1,5 @@
 import { Suspense } from "react";
-import LayoutPage from "../../components/LayoutPage";
+import LayoutPage from "../../components/layout/LayoutPage";
 import AddProduct from "@/components/product/AddProduct";
 
 export default function Page() {

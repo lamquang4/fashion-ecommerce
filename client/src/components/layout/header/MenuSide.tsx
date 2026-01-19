@@ -3,7 +3,7 @@ import { memo, useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import Link from "next/link";
-import Overplay from "../Overplay";
+import Overplay from "../../Overplay";
 import useGetCategories from "@/hooks/useGetCategories";
 type Props = {
   isOpen: boolean;
@@ -35,7 +35,7 @@ function MenuSide({ isOpen, onToggleMenu }: Props) {
   return (
     <>
       <nav
-        className={`custom-scroll fixed top-0 w-full max-w-[320px] h-screen py-[20px] px-[15px] overflow-y-auto bg-white shadow-md transition-all duration-500 ease-in-out z-[22] ${
+        className={`custom-scroll fixed top-0 w-full max-w-[320px] h-screen py-[20px] px-[15px] overflow-y-auto bg-white shadow-md transition-all duration-500 ease-in-out z-[22] text-[0.9rem] ${
           isOpen ? "right-0 visible" : "right-[-100%] invisible"
         }`}
       >
@@ -57,19 +57,15 @@ function MenuSide({ isOpen, onToggleMenu }: Props) {
           </button>
         </div>
 
-        <ul className="py-[20px] font-semibold text-[0.9rem] uppercase">
+        <ul className="py-[20px]">
           <li
             className="border-b border-gray-300 cursor-pointer"
             onClick={() => toggleOpen(`a1`)}
           >
-            <div className="w-full flex justify-between items-center py-[15px]">
+            <div className="w-full flex justify-between items-center py-[15px] text-black font-semibold">
               <p>Nam</p>
               <button>
-                {openMenus[`a1`] ? (
-                  <FaMinus className="text-[#3b3a3a]" size={15} />
-                ) : (
-                  <FaPlus className="text-[#3b3a3a]" size={15} />
-                )}
+                {openMenus[`a1`] ? <FaMinus size={15} /> : <FaPlus size={15} />}
               </button>
             </div>
 
@@ -82,7 +78,7 @@ function MenuSide({ isOpen, onToggleMenu }: Props) {
                 <li>
                   <Link
                     href={`/collection/nam`}
-                    className="py-[15px] text-[0.9rem] text-[#444] font-medium hover:text-black"
+                    className="py-[15px]   font-medium hover:text-black"
                   >
                     Đồ nam
                   </Link>
@@ -91,7 +87,7 @@ function MenuSide({ isOpen, onToggleMenu }: Props) {
                   <li key={category._id}>
                     <Link
                       href={`/collection/${category.slug}`}
-                      className="py-[15px] text-[0.9rem] text-[#444] font-medium hover:text-black"
+                      className="py-[15px]   font-medium hover:text-black"
                     >
                       {category.namecategory}
                     </Link>
@@ -105,14 +101,10 @@ function MenuSide({ isOpen, onToggleMenu }: Props) {
             className="border-b border-gray-300 cursor-pointer"
             onClick={() => toggleOpen(`a2`)}
           >
-            <div className="w-full flex justify-between items-center py-[15px]">
+            <div className="w-full flex justify-between items-center py-[15px] text-black font-semibold">
               <p>Nữ</p>
               <button>
-                {openMenus[`a2`] ? (
-                  <FaMinus className="text-[#3b3a3a]" size={15} />
-                ) : (
-                  <FaPlus className="text-[#3b3a3a]" size={15} />
-                )}
+                {openMenus[`a2`] ? <FaMinus size={15} /> : <FaPlus size={15} />}
               </button>
             </div>
 
@@ -125,7 +117,7 @@ function MenuSide({ isOpen, onToggleMenu }: Props) {
                 <li>
                   <Link
                     href={`/collection/nu`}
-                    className="py-[15px] text-[0.9rem] text-[#444] font-medium hover:text-black"
+                    className="py-[15px]   font-medium hover:text-black"
                   >
                     Đồ nữ
                   </Link>
@@ -134,7 +126,7 @@ function MenuSide({ isOpen, onToggleMenu }: Props) {
                   <li key={category._id}>
                     <Link
                       href={`/collection/${category.slug}`}
-                      className="py-[15px] text-[0.9rem] text-[#444] font-medium hover:text-black"
+                      className="py-[15px]   font-medium hover:text-black"
                     >
                       {category.namecategory}
                     </Link>
@@ -148,14 +140,10 @@ function MenuSide({ isOpen, onToggleMenu }: Props) {
             className="border-b border-gray-300 cursor-pointer"
             onClick={() => toggleOpen(`a3`)}
           >
-            <div className="w-full flex justify-between items-center py-[15px]">
+            <div className="w-full flex justify-between items-center py-[15px] text-black font-semibold">
               <p>Giảm giá</p>
               <button>
-                {openMenus[`a3`] ? (
-                  <FaMinus className="text-[#3b3a3a]" size={15} />
-                ) : (
-                  <FaPlus className="text-[#3b3a3a]" size={15} />
-                )}
+                {openMenus[`a3`] ? <FaMinus size={15} /> : <FaPlus size={15} />}
               </button>
             </div>
 
@@ -167,7 +155,7 @@ function MenuSide({ isOpen, onToggleMenu }: Props) {
               <li>
                 <Link
                   href={"/sale/nam"}
-                  className="py-[15px] text-[0.9rem] text-[#444] font-medium hover:text-black"
+                  className="py-[15px]   font-medium hover:text-black"
                 >
                   Giảm giá đồ nam
                 </Link>
@@ -176,7 +164,7 @@ function MenuSide({ isOpen, onToggleMenu }: Props) {
               <li>
                 <Link
                   href={"/sale/nu"}
-                  className="py-[15px] text-[0.9rem] text-[#444] font-medium hover:text-black"
+                  className="py-[15px] font-medium hover:text-black"
                 >
                   Giảm giá đồ nữ
                 </Link>
@@ -184,7 +172,7 @@ function MenuSide({ isOpen, onToggleMenu }: Props) {
             </ul>
           </li>
 
-          <li className="border-b border-gray-300 cursor-pointer">
+          <li className="border-b border-gray-300 cursor-pointer text-black font-semibold">
             <Link href={"/blog"} className="py-[15px]">
               Tin tức
             </Link>

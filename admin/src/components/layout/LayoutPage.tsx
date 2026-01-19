@@ -1,7 +1,7 @@
 "use client";
 import { ReactNode, useEffect, useState } from "react";
+import Header from "./header/Header";
 import MenuSide from "./MenuSide";
-import Header from "./Header";
 
 type LayoutProps = {
   children: ReactNode;

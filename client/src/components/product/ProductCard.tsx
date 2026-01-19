@@ -95,7 +95,7 @@ function ProductCard({
           })}
         </div>
 
-        <h5 className="  font-medium capitalize">{product.name}</h5>
+        <h5 className="line-clamp-2 font-medium capitalize">{product.name}</h5>
 
         <p className="font-medium text-[#444]">
           {product.category.namecategory} /{" "}

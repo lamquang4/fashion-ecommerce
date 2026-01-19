@@ -1,4 +1,4 @@
-import LayoutPage from "../../components/LayoutPage";
+import LayoutPage from "../../components/layout/LayoutPage";
 import Inventory from "../../components/Inventory";
 import { Suspense } from "react";
 

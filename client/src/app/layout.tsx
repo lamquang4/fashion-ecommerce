@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import { Quicksand } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "react-hot-toast";
-import LayoutPage from "../components/LayoutPage";
+import LayoutPage from "../components/layout/LayoutPage";
 import { AuthProvider } from "./AuthProvider";
 import ScrollToTop from "@/components/ScrollToTop";
 

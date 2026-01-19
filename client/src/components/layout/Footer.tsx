@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import Image from "./Image";
+import Image from "../Image";
 import { memo } from "react";
 function Footer() {
   return (

@@ -10,7 +10,7 @@ function ProfileMenu() {
 
   return (
     <>
-      <div className="absolute top-full right-0 z-20 bg-white shadow-md rounded-sm overflow-hidden hidden group-hover:block min-w-[120px]">
+      <div className="text-[0.9rem] absolute top-full right-0 z-20 bg-white shadow-md rounded-sm overflow-hidden hidden group-hover:block min-w-[120px]">
         {session?.user ? (
           <>
             <p className="border-b p-2.5 border-gray-200 max-w-[210px] overflow-hidden text-ellipsis whitespace-nowrap text-center">
@@ -18,14 +18,14 @@ function ProfileMenu() {
             </p>
 
             <Link
-              className="hover:bg-gray-100 w-full block p-2.5 text-[0.9rem]"
+              className="hover:bg-gray-100 w-full block p-2.5"
               href="/account"
             >
               Thông tin tài khoản
             </Link>
 
             <Link
-              className="hover:bg-gray-100 w-full block p-2.5 text-[0.9rem]"
+              className="hover:bg-gray-100 w-full block p-2.5"
               href="/order"
             >
               Đơn hàng
@@ -33,7 +33,7 @@ function ProfileMenu() {
 
             <Link
               href="/address"
-              className="hover:bg-gray-100 w-full block p-2.5 text-[0.9rem]  "
+              className="hover:bg-gray-100 w-full block p-2.5"
             >
               Sổ địa chỉ
             </Link>
@@ -42,7 +42,7 @@ function ProfileMenu() {
               onClick={() => {
                 signOut();
               }}
-              className="hover:bg-gray-100 w-full block p-2.5 text-[0.9rem] text-left"
+              className="hover:bg-gray-100 w-full block p-2.5 text-left"
             >
               Đăng xuất
             </button>
@@ -50,14 +50,14 @@ function ProfileMenu() {
         ) : (
           <>
             <Link
-              className="hover:bg-gray-100 w-full block p-2.5 text-[0.9rem]"
+              className="hover:bg-gray-100 w-full block p-2.5  "
               href="/login"
             >
               Đăng nhập
             </Link>
 
             <Link
-              className="hover:bg-gray-100 w-full block p-2.5 text-[0.9rem]"
+              className="hover:bg-gray-100 w-full block p-2.5  "
               href="/register"
             >
               Đăng ký

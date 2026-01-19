@@ -1,4 +1,4 @@
-import LayoutPage from "../../components/LayoutPage";
+import LayoutPage from "../../components/layout/LayoutPage";
 import AddAdmin from "../../components/admin/AddAdmin";
 import { Suspense } from "react";
 

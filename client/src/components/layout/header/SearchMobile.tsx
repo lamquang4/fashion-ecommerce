@@ -1,7 +1,7 @@
 "use client";
 import { useRouter } from "next/navigation";
 import { memo, useEffect, useState } from "react";
-import SuggestionProduct from "../SuggestionProduct";
+import SuggestionProduct from "../../SuggestionProduct";
 type Props = {
   onToggleSearch: () => void;
   openSearch: boolean;

@@ -1,5 +1,5 @@
 import useGetNotifyOrders from "@/hooks/useGetNotifyOrders";
-import   { memo } from "react";
+import { memo } from "react";
 import { LiaBell } from "react-icons/lia";
 type Props = {
   menuOpen: boolean;
@@ -46,7 +46,7 @@ function Notification({ menuOpen, onToggleMenu }: Props) {
                         {
                           hour: "2-digit",
                           minute: "2-digit",
-                        }
+                        },
                       )}
                     </small>
                   </div>

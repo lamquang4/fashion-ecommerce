@@ -2,17 +2,16 @@
 import { useCallback, useEffect, useState } from "react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { TbMaximize } from "react-icons/tb";
-import ProfileMenu from "./ProfileMenu";
 import Notification from "./Notification";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
+import ProfileMenu from "./ProfileMenu";
 
 type Props = {
   onToggleMenu: () => void;
 };
 
 function Header({ onToggleMenu }: Props) {
-  const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
   const [notifyMenuOpen, setNotifyMenuOpen] = useState<boolean>(false);
   const { status } = useSession();
   const router = useRouter();
@@ -23,14 +22,8 @@ function Header({ onToggleMenu }: Props) {
     }
   }, [status, router]);
 
-  const toggleProfileMenu = useCallback(() => {
-    setProfileMenuOpen((prev) => !prev);
-    setNotifyMenuOpen(false);
-  }, []);
-
   const toggleNotifyMenu = useCallback(() => {
     setNotifyMenuOpen((prev) => !prev);
-    setProfileMenuOpen(false);
   }, []);
 
   const handleFullscreen = () => {
@@ -66,10 +59,7 @@ function Header({ onToggleMenu }: Props) {
               menuOpen={notifyMenuOpen}
             />
 
-            <ProfileMenu
-              onToggleMenu={toggleProfileMenu}
-              menuOpen={profileMenuOpen}
-            />
+            <ProfileMenu />
           </div>
         </div>
       </header>

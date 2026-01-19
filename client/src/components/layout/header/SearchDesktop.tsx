@@ -2,7 +2,7 @@
 import { useRouter } from "next/navigation";
 import { memo, useState } from "react";
 import { CiSearch } from "react-icons/ci";
-import SuggestionProduct from "../SuggestionProduct";
+import SuggestionProduct from "../../SuggestionProduct";
 function SearchDesktop() {
   const router = useRouter();
 

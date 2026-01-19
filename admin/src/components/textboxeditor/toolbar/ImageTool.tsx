@@ -1,5 +1,4 @@
 "use client";
-import useUploadImageBlog from "@/hooks/useUploadImageBlog";
 import { Editor } from "@tiptap/react";
 import { memo, useRef, useState } from "react";
 import { toast } from "react-hot-toast";
@@ -14,8 +13,6 @@ type Props = {
 function ImageTool({ editor, draftId }: Props) {
   const [openImage, setOpenImage] = useState<boolean>(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
-
-  const { uploadImageBlog } = useUploadImageBlog();
 
   const toggleImage = () => {
     setOpenImage((prev) => !prev);
@@ -33,27 +30,20 @@ function ImageTool({ editor, draftId }: Props) {
     }
   };
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    if (!file) return;
+    if (!file || !editor) return;
 
-    const formData = new FormData();
-    formData.append("image", file);
-    formData.append("draftId", draftId);
-
-    try {
-      const imageUrl = await uploadImageBlog(formData);
-
-      editor
-        ?.chain()
-        .focus()
-        .setImage({
-          src: imageUrl,
-        })
-        .run();
-    } catch (err: any) {
-      toast.error(err?.response?.data?.msg);
+    if (!file.type.startsWith("image/")) {
+      toast.error("File không phải hình ảnh");
+      return;
     }
+
+    const imageUrl = URL.createObjectURL(file);
+
+    editor.chain().focus().setImage({ src: imageUrl }).run();
+
+    e.target.value = "";
   };
 
   const imageTools = [

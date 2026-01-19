@@ -1,4 +1,4 @@
-import LayoutPage from "@/components/LayoutPage";
+import LayoutPage from "@/components/layout/LayoutPage";
 import EditProduct from "@/components/product/EditProduct";
 import { Suspense } from "react";
 

@@ -1,4 +1,4 @@
-import LayoutPage from "../../components/LayoutPage";
+import LayoutPage from "../../components/layout/LayoutPage";
 import AddSize from "../../components/size/AddSize";
 import { Suspense } from "react";
 
