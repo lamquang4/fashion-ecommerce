@@ -28,7 +28,9 @@ function SizeChartModal({ sizes, isOpen, onToggleMenu }: props) {
           <div className="relative w-full max-w-[720px] max-h-full">
             <div className="relative sm:p-[25px_20px] p-[25px_15px] bg-white z-20 space-y-[15px] rounded-lg">
               <div className="flex items-center justify-between">
-                <h4 className="uppercase">Hướng dẫn chọn size</h4>
+                <h4 className="uppercase truncate">
+                  Hướng dẫn chọn kích thước
+                </h4>
 
                 <button
                   type="button"
