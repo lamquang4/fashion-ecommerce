@@ -2,7 +2,6 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
-import { LiaRulerHorizontalSolid } from "react-icons/lia";
 import MenuSideCoupon from "../../MenuSideCoupon";
 import useGetCoupons from "@/hooks/useGetCoupons";
 import toast from "react-hot-toast";

@@ -31,15 +31,17 @@ function Header() {
   const [menuMobileOpen, setMenuMobileOpen] = useState<boolean>(false);
 
   useEffect(() => {
-    if (session?.user) {
-      (async () => {
-        await syncCart();
-        mutateCart();
-        await syncWishlist();
-        mutateWishlist();
-      })();
-    }
-  }, [session?.user, mutateCart, mutateWishlist]);
+    if (!session?.user) return;
+
+    const sync = async () => {
+      await syncCart();
+      mutateCart();
+      await syncWishlist();
+      mutateWishlist();
+    };
+
+    sync();
+  }, [session?.user, syncCart, syncWishlist, mutateCart, mutateWishlist]);
 
   useEffect(() => {
     const handleResize = () => {
