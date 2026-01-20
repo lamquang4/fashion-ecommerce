@@ -9,7 +9,7 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import BreadCrumb from "../../BreadCrumb";
 
-function ProductDetailSlug() {
+function ProductDetailContainer() {
   const params = useParams();
   const slug = params.slug as string;
   const router = useRouter();
@@ -78,4 +78,4 @@ function ProductDetailSlug() {
   );
 }
 
-export default ProductDetailSlug;
+export default ProductDetailContainer;

@@ -1,10 +1,10 @@
-import ProductDetailSlug from "@/components/product/productdetail/ProductDetailSlug";
+import ProductDetailContainer from "@/components/product/productdetail/ProductDetailContainer";
 import { Suspense } from "react";
 
 function page() {
   return (
     <Suspense>
-      <ProductDetailSlug />
+      <ProductDetailContainer />
     </Suspense>
   );
 }
