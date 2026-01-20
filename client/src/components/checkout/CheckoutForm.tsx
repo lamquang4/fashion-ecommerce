@@ -73,7 +73,7 @@ function CheckoutForm() {
       } else if (coupon.discountType === 0) {
         const discount = Math.min(
           (totalPrice * coupon.discountValue) / 100,
-          coupon.maxDiscountValue!
+          coupon.maxDiscountValue!,
         );
         result -= discount;
       }
@@ -86,7 +86,7 @@ function CheckoutForm() {
       const { name, value } = e.target;
       setData((prev) => ({ ...prev, [name]: value }));
     },
-    []
+    [],
   );
 
   const handleGetAddress = useCallback((address: Address | null) => {
@@ -114,11 +114,13 @@ function CheckoutForm() {
     }
 
     getCoupon(couponCode.trim(), totalPrice);
+  }, [couponCode, totalPrice, getCoupon]);
 
+  useEffect(() => {
     if (error && !isLoadingCoupon) {
       toast.error(error?.response?.data?.msg);
     }
-  }, [couponCode, error, isLoadingCoupon]);
+  }, [error, isLoadingCoupon]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -130,7 +132,7 @@ function CheckoutForm() {
 
     if ((paymethod === "momo" || paymethod === "vnpay") && finalTotal < 10000) {
       toast.error(
-        "Vui lòng chọn thanh toán COD vì đơn hàng có tổng tiền nhỏ hơn 10.000đ"
+        "Vui lòng chọn thanh toán COD vì đơn hàng có tổng tiền nhỏ hơn 10.000đ",
       );
       setPaymethod("cod");
       return;
@@ -227,35 +229,32 @@ function CheckoutForm() {
     if (isOrdering) return;
     if (isLoadingCart || isLoadingAddresses || status === "loading") return;
 
-    // kiểm tra đăng nhập chưa
     if (status === "unauthenticated") {
       router.replace("/login");
       return;
     }
 
-    // kiểm tra giỏ hàng
     if (!cart || !cart.productsInCart?.length) {
       router.replace("/cart");
       return;
     }
 
-    const outOfStockItems = cart?.productsInCart.filter(
-      (item) => item.variant.quantity > item.variant.stock
+    const outOfStockItems = cart.productsInCart.filter(
+      (item) => item.variant.quantity > item.variant.stock,
     );
 
-    // kiểm tra tồn kho sản phẩm
     if (outOfStockItems.length > 0) {
       const errorMessage = outOfStockItems
         .map(
           (item) =>
-            `Sản phẩm ${item.name} (${item.variant.size.namesize}, ${item.variant.color.namecolor}) chỉ còn ${item.variant.stock}!`
+            `Sản phẩm ${item.name} (${item.variant.size.namesize}, ${item.variant.color.namecolor}) chỉ còn ${item.variant.stock}!`,
         )
         .join("\n");
-      toast.error(`${errorMessage}`);
-      router.replace(`/cart`);
-      return;
+
+      toast.error(errorMessage);
+      router.replace("/cart");
     }
-  }, [cart, addresses, router, isLoadingCart, isLoadingAddresses, status]);
+  }, [isOrdering, cart, isLoadingCart, isLoadingAddresses, status, router]);
 
   return (
     <section className="my-[40px] px-[15px]">
@@ -337,11 +336,11 @@ function CheckoutForm() {
                       {coupon.discountType === 1
                         ? coupon.discountValue.toLocaleString("vi-VN")
                         : coupon.discountType === 0
-                        ? Math.min(
-                            (totalPrice * coupon.discountValue) / 100,
-                            coupon.maxDiscountValue!
-                          ).toLocaleString("vi-VN")
-                        : ""}
+                          ? Math.min(
+                              (totalPrice * coupon.discountValue) / 100,
+                              coupon.maxDiscountValue!,
+                            ).toLocaleString("vi-VN")
+                          : ""}
                       ₫
                     </h5>
                   </div>
