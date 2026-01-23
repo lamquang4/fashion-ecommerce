@@ -1,7 +1,7 @@
+"use client";
 import Link from "next/link";
 import { memo } from "react";
 import { IoMdAddCircle } from "react-icons/io";
-("use client");
 
 interface Props {
   title: string;
