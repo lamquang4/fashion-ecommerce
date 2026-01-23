@@ -1,3 +1,5 @@
+import { memo } from "react";
+
 type Props = {
   array: { title: string; number: number | string; icon1: React.ReactNode }[];
 };
@@ -24,4 +26,4 @@ function StaticCards({ array }: Props) {
   );
 }
 
-export default StaticCards;
+export default memo(StaticCards);

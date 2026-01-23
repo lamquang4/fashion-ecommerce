@@ -1,12 +1,12 @@
 import LayoutPage from "../../components/layout/LayoutPage";
-import Inventory from "../../components/Inventory";
 import { Suspense } from "react";
+import InventoryList from "../../components/InventoryList";
 
 export default async function page() {
   return (
     <LayoutPage>
       <Suspense>
-        <Inventory />
+        <InventoryList />
       </Suspense>
     </LayoutPage>
   );

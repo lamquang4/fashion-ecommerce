@@ -1,39 +1,37 @@
 "use client";
-import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
-import { LiaEdit } from "react-icons/lia";
-import { IoMdAddCircle } from "react-icons/io";
 import { FaRegEyeSlash } from "react-icons/fa";
-import Pagination from "../Pagination";
-import Image from "../Image";
-import FilterDropDownMenu from "../FilterDropDownMenu";
-import InputSearch from "../InputSearch";
-import useGetBlogs from "@/hooks/useGetBlogs";
+import Pagination from "../../Pagination";
+import Image from "../../Image";
+import FilterDropDownMenu from "../../FilterDropDownMenu";
+import useGetMainBanners from "@/hooks/useGetMainBanners";
+import Loading from "../../Loading";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
-import useDeleteBlog from "@/hooks/useDeleteBlog";
+import useDeleteBanner from "@/hooks/useDeleteBanner";
+import useVisibleBanner from "@/hooks/useVisibleBanner";
 import toast from "react-hot-toast";
-import useVisibleBlog from "@/hooks/useVisibleBlog";
-import Loading from "../Loading";
-function Blog() {
+import ListHeader from "@/components/list/ListHeader";
+import ListBody from "@/components/list/ListBody";
+function MainBannerList() {
   const {
-    blogs,
+    mainbanners,
+    mutate,
+    isLoading,
     totalPages,
     totalItems,
     currentPage,
     limit,
-    mutate,
-    isLoading,
-  } = useGetBlogs();
-  const { deleteBlog, isLoading: isLoadingDeleteBlog } = useDeleteBlog();
-  const { visibleBlog, isLoading: isLoadingVisibleBlog } = useVisibleBlog();
-
+  } = useGetMainBanners();
+  const { deleteBanner, isLoading: isLoadingDeleteBanner } = useDeleteBanner();
+  const { visibleBanner, isLoading: isLoadingVisibleBanner } =
+    useVisibleBanner();
   const array = [
     {
       name: "Tất cả",
       value: null,
     },
     {
-      name: "Công bố",
+      name: "Hiện",
       value: 1,
     },
     {
@@ -42,12 +40,27 @@ function Blog() {
     },
   ];
 
+  const array1 = [
+    {
+      name: "Tất cả",
+      value: null,
+    },
+    {
+      name: "Banner chính desktop",
+      value: 0,
+    },
+    {
+      name: "Banner chính mobile",
+      value: 1,
+    },
+  ];
+
   const handleDelete = async (id: string) => {
     if (!id) {
       return;
     }
     try {
-      await deleteBlog(id);
+      await deleteBanner(id);
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
@@ -60,52 +73,42 @@ function Blog() {
       return;
     }
     try {
-      await visibleBlog(id, status);
+      await visibleBanner(id, status);
       mutate();
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
       mutate();
     }
   };
-
   return (
     <>
-      <div className="p-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <div className="flex justify-between items-center flex-wrap gap-[20px]">
-          <h2 className="mb-[20px] text-[#74767d]  ">
-            Bài viết ({totalItems})
-          </h2>
+      <ListHeader
+        title="Banner chính"
+        totalItems={totalItems}
+        addLink="/add-mainbanner"
+      />
 
-          <Link
-            href={"/add-blog"}
-            className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium w-[90px] !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
-          >
-            <IoMdAddCircle size={22} /> Thêm
-          </Link>
-        </div>
-      </div>
-
-      <div className="shadow-sm bg-white rounded-[3px] w-full overflow-auto">
-        <div className="p-[1.2rem]">
-          <InputSearch />
-        </div>
-
+      <ListBody>
         <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full text-[0.9rem]">
           <thead>
             <tr className="bg-[#E9EDF2] text-left">
-              <th className="p-[1rem]">Hình nền</th>
-
-              <th className="p-[1rem]">Tiêu đề</th>
-
-              <th className="p-[1rem]">Ngày tạo</th>
-              <th className="p-[1rem] relative">
+              <th className="p-[1rem]  ">Hình</th>
+              <th className="p-[1rem]  ">Ngày thêm</th>
+              <th className="p-[1rem]   relative">
+                <FilterDropDownMenu
+                  title="Loại"
+                  array={array1}
+                  paramName="type"
+                />
+              </th>
+              <th className="p-[1rem]   relative">
                 <FilterDropDownMenu
                   title="Tình trạng"
                   array={array}
                   paramName="status"
                 />
               </th>
-              <th className="p-[1rem]">Hành động</th>
+              <th className="p-[1rem]  ">Hành động</th>
             </tr>
           </thead>
           <tbody>
@@ -115,41 +118,46 @@ function Blog() {
                   <Loading height={60} size={50} color="black" thickness={2} />
                 </td>
               </tr>
-            ) : blogs.length > 0 ? (
-              blogs.map((blog) => (
-                <tr key={blog._id} className="hover:bg-[#f2f3f8]">
+            ) : mainbanners.length > 0 ? (
+              mainbanners.map((mainbanner) => (
+                <tr key={mainbanner._id} className="hover:bg-[#f2f3f8]">
                   <td className="p-[1rem]">
                     <div className="flex gap-[10px] items-center">
-                      <Image
-                        Src={blog.image}
-                        Alt={blog.title}
-                        ClassName={"w-[120px] cursor-pointer"}
-                        loadingType="lazy"
-                      />
+                      <div className="cursor-pointer">
+                        <Image
+                          Src={mainbanner.image}
+                          Alt={""}
+                          ClassName={"w-[120px] cursor-pointer"}
+                          loadingType="lazy"
+                        />
+                      </div>
                     </div>
                   </td>
-                  <td className="p-[1rem]">{blog.title}</td>
-
-                  <td className="p-[1rem]">
-                    {new Date(blog.createdAt as string).toLocaleDateString(
-                      "vi-VN"
-                    )}
+                  <td className="p-[1rem]  ">
+                    {new Date(
+                      mainbanner.createdAt as string,
+                    ).toLocaleDateString("vi-VN")}
                   </td>
-                  <td className="p-[1rem]">
-                    {blog.status === 1 ? "Công bố" : "Ẩn"}
+                  <td className="p-[1rem]  ">
+                    {mainbanner.type === 0
+                      ? "Banner chính desktop"
+                      : "Banner chính mobile"}
                   </td>
-                  <td className="p-[1rem]">
+                  <td className="p-[1rem]  ">
+                    {mainbanner.status === 0 ? "Ẩn" : "Hiện"}
+                  </td>
+                  <td className="p-[1rem]  ">
                     <div className="flex items-center gap-[15px]">
                       <button
-                        disabled={isLoadingVisibleBlog}
+                        disabled={isLoadingVisibleBanner}
                         onClick={() =>
                           handleVisible(
-                            blog._id || "",
-                            blog.status === 1 ? 0 : 1
+                            mainbanner._id,
+                            mainbanner.status === 1 ? 0 : 1,
                           )
                         }
                       >
-                        {blog.status === 1 ? (
+                        {mainbanner.status === 1 ? (
                           <FaRegEyeSlash size={22} className="text-[#74767d]" />
                         ) : (
                           <MdOutlineRemoveRedEye
@@ -158,12 +166,10 @@ function Blog() {
                           />
                         )}
                       </button>
-                      <Link href={`/edit-blog/${blog._id}`}>
-                        <LiaEdit size={22} className="text-[#076ffe]" />
-                      </Link>
+
                       <button
-                        disabled={isLoadingDeleteBlog}
-                        onClick={() => handleDelete(blog._id || "")}
+                        disabled={isLoadingDeleteBanner}
+                        onClick={() => handleDelete(mainbanner._id)}
                       >
                         <VscTrash size={22} className="text-[#d9534f]" />
                       </button>
@@ -187,7 +193,7 @@ function Blog() {
             )}
           </tbody>
         </table>
-      </div>
+      </ListBody>
 
       <Pagination
         totalPages={totalPages}
@@ -199,4 +205,4 @@ function Blog() {
   );
 }
 
-export default Blog;
+export default MainBannerList;

@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
-import { IoMdAddCircle } from "react-icons/io";
 import { FaRegEyeSlash } from "react-icons/fa";
 import Image from "../Image";
 import Pagination from "../Pagination";
@@ -16,7 +15,9 @@ import InputSearch from "../InputSearch";
 import toast from "react-hot-toast";
 import { Variant } from "@/types/types";
 import { useState } from "react";
-function Product() {
+import ListHeader from "../list/ListHeader";
+import ListBody from "../list/ListBody";
+function ProductList() {
   const [selectedVariant, setSelectedVariant] = useState<
     Record<string, Variant>
   >({});
@@ -85,20 +86,13 @@ function Product() {
 
   return (
     <>
-      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <div className="flex justify-between items-center flex-wrap gap-[20px]">
-          <h2 className="mb-[20px] text-[#74767d]">Quần áo ({totalItems})</h2>
+      <ListHeader
+        title="Sản phẩm"
+        totalItems={totalItems}
+        addLink="/add-product"
+      />
 
-          <Link
-            href={"/add-product"}
-            className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium w-[90px] !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
-          >
-            <IoMdAddCircle size={22} /> Thêm
-          </Link>
-        </div>
-      </div>
-
-      <div className=" bg-white w-full overflow-auto">
+      <ListBody>
         <div className="p-[1.2rem]">
           <InputSearch />
         </div>
@@ -177,7 +171,7 @@ function Product() {
 
                           <p className="font-medium text-[#c00]">
                             {(product.price - product.discount).toLocaleString(
-                              "vi-VN"
+                              "vi-VN",
                             )}
                             ₫
                           </p>
@@ -227,16 +221,16 @@ function Product() {
                       {product.category.gender === 1
                         ? "Nam"
                         : product.category.gender === 0
-                        ? "Nữ"
-                        : ""}
+                          ? "Nữ"
+                          : ""}
                     </td>
 
                     <td className="p-[1rem]  ">
                       {product.status === 1
                         ? "Hiện"
                         : product.status === 0
-                        ? "Ẩn"
-                        : ""}
+                          ? "Ẩn"
+                          : ""}
                     </td>
 
                     <td className="p-[1rem]  ">
@@ -246,7 +240,7 @@ function Product() {
                           onClick={() =>
                             handleVisible(
                               product._id,
-                              product.status === 1 ? 0 : 1
+                              product.status === 1 ? 0 : 1,
                             )
                           }
                         >
@@ -292,7 +286,7 @@ function Product() {
             )}
           </tbody>
         </table>
-      </div>
+      </ListBody>
 
       <Pagination
         totalPages={totalPages}
@@ -304,4 +298,4 @@ function Product() {
   );
 }
 
-export default Product;
+export default ProductList;

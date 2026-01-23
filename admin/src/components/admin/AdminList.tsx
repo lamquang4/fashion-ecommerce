@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
-import { IoMdAddCircle } from "react-icons/io";
 import { TbLock, TbLockOpen } from "react-icons/tb";
 import Pagination from "../Pagination";
 import FilterDropDownMenu from "../FilterDropDownMenu";
@@ -14,8 +13,10 @@ import useDeleteUser from "@/hooks/useDeleteUser";
 import InputSearch from "../InputSearch";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
+import ListHeader from "../list/ListHeader";
+import ListBody from "../list/ListBody";
 
-function Admin() {
+function AdminList() {
   const { data: session } = useSession({
     required: true,
   });
@@ -73,22 +74,13 @@ function Admin() {
 
   return (
     <>
-      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <div className="flex justify-between items-center flex-wrap gap-[20px]">
-          <h2 className="mb-[20px] text-[#74767d]">
-            Quản trị viên ({totalItems})
-          </h2>
+      <ListHeader
+        title="Quản trị viên"
+        totalItems={totalItems}
+        addLink="/add-admin"
+      />
 
-          <Link
-            href={"/add-admin"}
-            className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium w-[90px] !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
-          >
-            <IoMdAddCircle size={22} /> Thêm
-          </Link>
-        </div>
-      </div>
-
-      <div className=" bg-white w-full overflow-auto">
+      <ListBody>
         <div className="p-[1.2rem]">
           <InputSearch />
         </div>
@@ -130,22 +122,22 @@ function Admin() {
                   <td className="p-[1rem]  ">{admin.phone}</td>
                   <td className="p-[1rem]  ">
                     {new Date(admin.birthday as string).toLocaleDateString(
-                      "vi-VN"
+                      "vi-VN",
                     )}
                   </td>
                   <td className="p-[1rem]  ">
                     {new Date(admin.createdAt as string).toLocaleDateString(
-                      "vi-VN"
+                      "vi-VN",
                     )}
                   </td>
                   <td className="p-[1rem]  ">
                     {admin.role === 0
                       ? "Quản trị viên"
                       : admin.role === 1
-                      ? "Nhân viên bán hàng"
-                      : admin.role === 2
-                      ? "Nhân viên nội dung"
-                      : ""}
+                        ? "Nhân viên bán hàng"
+                        : admin.role === 2
+                          ? "Nhân viên nội dung"
+                          : ""}
                   </td>
                   <td className="p-[1rem]  ">
                     {admin.status === 1 ? "Bình thường" : "Đã chặn"}
@@ -157,7 +149,7 @@ function Admin() {
                         onClick={() =>
                           handleBlock(
                             admin._id || "",
-                            admin.status === 1 ? 0 : 1
+                            admin.status === 1 ? 0 : 1,
                           )
                         }
                       >
@@ -198,7 +190,7 @@ function Admin() {
             )}
           </tbody>
         </table>
-      </div>
+      </ListBody>
 
       <Pagination
         totalPages={totalPages}
@@ -210,4 +202,4 @@ function Admin() {
   );
 }
 
-export default Admin;
+export default AdminList;

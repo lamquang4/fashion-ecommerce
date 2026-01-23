@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
-import { IoMdAddCircle } from "react-icons/io";
 import { TbLock, TbLockOpen } from "react-icons/tb";
 import Pagination from "../Pagination";
 import FilterDropDownMenu from "../FilterDropDownMenu";
@@ -13,6 +12,8 @@ import useDeleteUser from "@/hooks/useDeleteUser";
 import Loading from "../Loading";
 import InputSearch from "../InputSearch";
 import toast from "react-hot-toast";
+import ListHeader from "../list/ListHeader";
+import ListBody from "../list/ListBody";
 function Customer() {
   const {
     customers,
@@ -68,22 +69,9 @@ function Customer() {
   };
   return (
     <>
-      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <div className="flex justify-between items-center flex-wrap gap-[20px]">
-          <h2 className="mb-[20px] text-[#74767d]">
-            Khách hàng ({totalItems})
-          </h2>
+      <ListHeader title="Khách hàng" totalItems={totalItems} />
 
-          <Link
-            href={"/add-customer"}
-            className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium w-[90px] !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
-          >
-            <IoMdAddCircle size={22} /> Thêm
-          </Link>
-        </div>
-      </div>
-
-      <div className=" bg-white w-full overflow-auto">
+      <ListBody>
         <div className="p-[1.2rem]">
           <InputSearch />
         </div>
@@ -124,12 +112,12 @@ function Customer() {
                   <td className="p-[1rem]  ">{customer.phone}</td>
                   <td className="p-[1rem]  ">
                     {new Date(customer.birthday as string).toLocaleDateString(
-                      "vi-VN"
+                      "vi-VN",
                     )}
                   </td>
                   <td className="p-[1rem]  ">
                     {new Date(customer.createdAt as string).toLocaleDateString(
-                      "vi-VN"
+                      "vi-VN",
                     )}
                   </td>
                   <td className="p-[1rem]  ">
@@ -142,7 +130,7 @@ function Customer() {
                         onClick={() =>
                           handleBlock(
                             customer._id || "",
-                            customer.status === 1 ? 0 : 1
+                            customer.status === 1 ? 0 : 1,
                           )
                         }
                       >
@@ -183,7 +171,7 @@ function Customer() {
             )}
           </tbody>
         </table>
-      </div>
+      </ListBody>
 
       <Pagination
         totalPages={totalPages}

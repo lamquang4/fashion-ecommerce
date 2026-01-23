@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
-import { IoMdAddCircle } from "react-icons/io";
 import { FaRegEyeSlash } from "react-icons/fa";
 import Pagination from "../Pagination";
 import Image from "../Image";
@@ -14,7 +13,9 @@ import useDeleteCategory from "@/hooks/useDeleteCategory";
 import useVisibleCategory from "@/hooks/useVisibleCategory";
 import InputSearch from "../InputSearch";
 import toast from "react-hot-toast";
-function Category() {
+import ListHeader from "../list/ListHeader";
+import ListBody from "../list/ListBody";
+function CategoryList() {
   const {
     categories,
     totalPages,
@@ -71,20 +72,13 @@ function Category() {
   };
   return (
     <>
-      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <div className="flex justify-between items-center flex-wrap gap-[20px]">
-          <h2 className="mb-[20px] text-[#74767d]">Danh mục ({totalItems})</h2>
+      <ListHeader
+        title="Danh mục"
+        totalItems={totalItems}
+        addLink="/add-category"
+      />
 
-          <Link
-            href={"/add-category"}
-            className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium w-[90px] !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
-          >
-            <IoMdAddCircle size={22} /> Thêm
-          </Link>
-        </div>
-      </div>
-
-      <div className=" bg-white w-full overflow-auto">
+      <ListBody>
         <div className="p-[1.2rem]">
           <InputSearch />
         </div>
@@ -138,8 +132,8 @@ function Category() {
                     {category.gender === 1
                       ? "Nam"
                       : category.gender === 0
-                      ? "Nữ"
-                      : ""}
+                        ? "Nữ"
+                        : ""}
                   </td>
                   <td className="p-[1rem]  ">
                     <div className="flex flex-col gap-[10px]">
@@ -149,7 +143,7 @@ function Category() {
                   </td>
                   <td className="p-[1rem]  ">
                     {new Date(category.createdAt as string).toLocaleDateString(
-                      "vi-VN"
+                      "vi-VN",
                     )}
                   </td>
                   <td className="p-[1rem]  ">
@@ -162,7 +156,7 @@ function Category() {
                         onClick={() =>
                           handleVisible(
                             category._id || "",
-                            category.status === 1 ? 0 : 1
+                            category.status === 1 ? 0 : 1,
                           )
                         }
                       >
@@ -206,7 +200,7 @@ function Category() {
             )}
           </tbody>
         </table>
-      </div>
+      </ListBody>
 
       <Pagination
         totalPages={totalPages}
@@ -218,4 +212,4 @@ function Category() {
   );
 }
 
-export default Category;
+export default CategoryList;

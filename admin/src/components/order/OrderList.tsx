@@ -14,8 +14,10 @@ import useGetOrders from "@/hooks/useGetOrders";
 import useUpdateStatusOrder from "@/hooks/useUpdateStatusOrder";
 import Loading from "../Loading";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import ListHeader from "../list/ListHeader";
+import ListBody from "../list/ListBody";
 
-function Order() {
+function OrderList() {
   const pathname = usePathname();
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -119,45 +121,47 @@ function Order() {
   };
   return (
     <>
-      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9] space-y-[20px]">
-        <h2 className=" text-[#74767d]">Đơn hàng</h2>
+      <ListHeader title="Đơn hàng" totalItems={totalItems} />
 
+      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <StaticCards array={array1} />
-
-        <div>
-          <form onSubmit={handleSubmit}>
-            <div className="flex gap-[15px] flex-wrap">
-              <div className="relative flex gap-1.5 items-center">
-                <label htmlFor="" className="text-[0.9rem]   font-medium">
-                  Từ:
-                </label>
-                <input
-                  name="start"
-                  type="date"
-                  className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400  "
-                />
-              </div>
-
-              <div className="relative flex gap-1.5 items-center">
-                <label htmlFor="" className="text-[0.9rem]   font-medium">
-                  Đến:
-                </label>
-                <input
-                  name="end"
-                  type="date"
-                  className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400  "
-                />
-              </div>
-
-              <button className="p-[6px_10px] text-[0.9rem] bg-[#22BAA0] text-white">
-                Tìm kiếm
-              </button>
-            </div>
-          </form>
-        </div>
       </div>
 
-      <div className=" bg-white  w-full overflow-auto">
+      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
+        <form onSubmit={handleSubmit}>
+          <div className="flex gap-[15px] flex-wrap">
+            <div className="relative flex gap-1.5 items-center">
+              <label htmlFor="" className="text-[0.9rem]   font-medium">
+                Từ:
+              </label>
+              <input
+                required
+                name="start"
+                type="date"
+                className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400  "
+              />
+            </div>
+
+            <div className="relative flex gap-1.5 items-center">
+              <label htmlFor="" className="text-[0.9rem]   font-medium">
+                Đến:
+              </label>
+              <input
+                required
+                name="end"
+                type="date"
+                className="bg-gray-50 border border-gray-300 text-[0.9rem] p-[6px_10px] outline-none focus:border-gray-400  "
+              />
+            </div>
+
+            <button className="p-[6px_10px] text-[0.9rem] bg-blue-500 text-white">
+              Tìm kiếm
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <ListBody>
         <div className="p-[1.2rem]">
           <InputSearch />
         </div>
@@ -282,7 +286,7 @@ function Order() {
             )}
           </tbody>
         </table>
-      </div>
+      </ListBody>
 
       <Pagination
         totalPages={totalPages}
@@ -294,4 +298,4 @@ function Order() {
   );
 }
 
-export default Order;
+export default OrderList;

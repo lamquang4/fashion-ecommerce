@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import LayoutPage from "../../components/layout/LayoutPage";
-import Size from "@/components/size/Size";
+import SizeList from "@/components/size/SizeList";
 
 export default async function page() {
   return (
     <LayoutPage>
       <Suspense>
-        <Size />
+        <SizeList />
       </Suspense>
     </LayoutPage>
   );

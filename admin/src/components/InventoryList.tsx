@@ -6,7 +6,9 @@ import Pagination from "./Pagination";
 import useGetInventories from "@/hooks/useGetInventories";
 import Loading from "./Loading";
 import InputSearch from "./InputSearch";
-function Inventory() {
+import ListHeader from "./list/ListHeader";
+import ListBody from "./list/ListBody";
+function InventoryList() {
   const {
     inventories,
     totalPages,
@@ -19,11 +21,9 @@ function Inventory() {
 
   return (
     <>
-      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <h2 className="mb-[20px] text-[#74767d]">Kho ({totalQuantity})</h2>
-      </div>
+      <ListHeader title="Tồn kho" totalItems={totalItems} />
 
-      <div className=" bg-white w-full overflow-auto">
+      <ListBody>
         <div className="p-[1.2rem]">
           <InputSearch />
         </div>
@@ -85,7 +85,7 @@ function Inventory() {
 
                     <td className="p-[1rem]  ">
                       {new Date(
-                        inventory.createdAt as string
+                        inventory.createdAt as string,
                       ).toLocaleDateString("vi-VN")}
                     </td>
 
@@ -100,7 +100,7 @@ function Inventory() {
                       </div>
                     </td>
                   </tr>
-                ))
+                )),
               )
             ) : (
               <tr>
@@ -118,7 +118,7 @@ function Inventory() {
             )}
           </tbody>
         </table>
-      </div>
+      </ListBody>
 
       <Pagination
         totalPages={totalPages}
@@ -130,4 +130,4 @@ function Inventory() {
   );
 }
 
-export default Inventory;
+export default InventoryList;

@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import LayoutPage from "../../components/layout/LayoutPage";
-import Product from "@/components/product/Product";
+import ProductList from "@/components/product/ProductList";
 
 export default async function page() {
   return (
     <LayoutPage>
       <Suspense>
-        <Product />
+        <ProductList />
       </Suspense>
     </LayoutPage>
   );

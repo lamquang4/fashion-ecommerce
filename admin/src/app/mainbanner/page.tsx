@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import LayoutPage from "../../components/layout/LayoutPage";
-import MainBanner from "@/components/banner/mainbanner/MainBanner";
+import MainBannerList from "@/components/banner/mainbanner/MainBannerList";
 
 export default async function page() {
   return (
     <LayoutPage>
       <Suspense>
-        <MainBanner />
+        <MainBannerList />
       </Suspense>
     </LayoutPage>
   );

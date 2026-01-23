@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import LayoutPage from "../../components/layout/LayoutPage";
-import Order from "../../components/order/Order";
+import OrderList from "../../components/order/OrderList";
 
 export default async function page() {
   return (
     <LayoutPage>
       <Suspense>
-        <Order />
+        <OrderList />
       </Suspense>
     </LayoutPage>
   );

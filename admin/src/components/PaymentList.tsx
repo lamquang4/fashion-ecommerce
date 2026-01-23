@@ -5,7 +5,9 @@ import Loading from "./Loading";
 import InputSearch from "./InputSearch";
 import FilterDropDownMenu from "./FilterDropDownMenu";
 import useGetPayments from "@/hooks/useGetPayments";
-function Payment() {
+import ListHeader from "./list/ListHeader";
+import ListBody from "./list/ListBody";
+function PaymentList() {
   const { payments, isLoading, totalItems, totalPages, currentPage, limit } =
     useGetPayments();
 
@@ -16,15 +18,9 @@ function Payment() {
   ];
   return (
     <>
-      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <div className="flex justify-between items-center flex-wrap gap-[20px]">
-          <h2 className="mb-[20px] text-[#74767d]">
-            Thanh toán ({totalItems})
-          </h2>
-        </div>
-      </div>
+      <ListHeader title="Thanh toán" totalItems={totalItems} />
 
-      <div className="bg-white w-full overflow-auto">
+      <ListBody>
         <div className="p-[1.2rem]">
           <InputSearch />
         </div>
@@ -72,8 +68,8 @@ function Payment() {
                     {payment.status === 1
                       ? "Thành công"
                       : payment.status === 0
-                      ? "Hoàn tiền"
-                      : ""}
+                        ? "Hoàn tiền"
+                        : ""}
                   </td>
                   <td className="p-[1rem]">
                     {new Date(payment.createdAt).toLocaleString("vi-VN", {
@@ -102,7 +98,7 @@ function Payment() {
             )}
           </tbody>
         </table>
-      </div>
+      </ListBody>
 
       <Pagination
         totalPages={totalPages}
@@ -114,4 +110,4 @@ function Payment() {
   );
 }
 
-export default Payment;
+export default PaymentList;

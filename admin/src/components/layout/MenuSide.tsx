@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { ReactNode, useState } from "react";
 import Link from "next/link";
 import Overplay from "../Overplay";
 import Image from "../Image";
@@ -24,11 +24,40 @@ type Props = {
   onToggleMenu: () => void;
 };
 
+type MenuChild = {
+  label: string;
+  path: string;
+};
+
+type MenuItemBase = {
+  icon: ReactNode;
+  label: string;
+};
+
+type MenuItemWithChildren = MenuItemBase & {
+  key: string;
+  children: MenuChild[];
+  path?: never;
+};
+
+type MenuItemSingle = MenuItemBase & {
+  path: string;
+  children?: never;
+  key?: never;
+};
+
+type MenuItem = MenuItemWithChildren | MenuItemSingle;
+
+type MenuGroup = {
+  title: string;
+  items: MenuItem[];
+};
+
 function MenuSide({ menuOpen, onToggleMenu }: Props) {
   const pathname = usePathname();
   const [openMenus, setOpenMenus] = useState<Record<string, boolean>>({});
 
-  const menuData = [
+  const menuData: MenuGroup[] = [
     {
       title: "Sản phẩm",
       items: [
@@ -124,11 +153,7 @@ function MenuSide({ menuOpen, onToggleMenu }: Props) {
         {
           icon: <FaRegCircleUser size={20} />,
           label: "Khách hàng",
-          key: "6a",
-          children: [
-            { label: "Danh sách khách hàng", path: "/customer" },
-            { label: "Thêm khách hàng", path: "/add-customer" },
-          ],
+          path: "/customer",
         },
       ],
     },
@@ -213,7 +238,7 @@ function MenuSide({ menuOpen, onToggleMenu }: Props) {
                         <button>
                           {openMenus[item.key] ||
                           item.children.some(
-                            (child) => pathname === child.path
+                            (child) => pathname === child.path,
                           ) ? (
                             <IoIosArrowDown size={18} />
                           ) : (
