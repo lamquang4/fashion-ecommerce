@@ -36,7 +36,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
           currentPage,
           currentPage + 1,
           "...",
-          totalPages
+          totalPages,
         );
       }
     }
@@ -51,7 +51,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
           <div className="flex items-center justify-center w-full flex-wrap gap-2.5 text-gray-600 text-[0.9rem]">
             <button
               type="button"
-              className="h-8.5 w-8.5 flex justify-center items-center rounded-full border border-gray-600   "
+              className="h-8.5 w-8.5 flex justify-center items-center rounded-full border border-gray-600 hover:bg-gray-100"
               disabled={currentPage <= 1}
               onClick={() => currentPage > 1 && goToPage(currentPage - 1)}
             >
@@ -79,7 +79,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
                   className={`h-8.5 w-8.5 border flex justify-center items-center   font-medium rounded-full ${
                     currentPage === page
                       ? "bg-black text-white"
-                      : "border-gray-600   hover:bg-gray-50"
+                      : "border-gray-600 hover:bg-gray-100"
                   }`}
                 >
                   {page}
@@ -92,7 +92,7 @@ function Pagination({ totalPages, currentPage, totalItems }: Props) {
               onClick={() =>
                 currentPage < totalPages && goToPage(currentPage + 1)
               }
-              className="h-8.5 w-8.5 flex justify-center items-center rounded-full border border-gray-600  "
+              className="h-8.5 w-8.5 flex justify-center items-center rounded-full border border-gray-600 hover:bg-gray-100"
             >
               <GrFormNext size={20} />
             </button>

@@ -1,12 +1,12 @@
 "use client";
-import Pagination from "./Pagination";
-import Image from "./Image";
-import Loading from "./Loading";
-import InputSearch from "./InputSearch";
-import FilterDropDownMenu from "./FilterDropDownMenu";
+import Pagination from "../Pagination";
+import Image from "../Image";
+import Loading from "../Loading";
+import InputSearch from "../InputSearch";
+import FilterDropDownMenu from "../FilterDropDownMenu";
 import useGetPayments from "@/hooks/useGetPayments";
-import ListHeader from "./list/ListHeader";
-import ListBody from "./list/ListBody";
+import ListHeader from "../list/ListHeader";
+import ListBody from "../list/ListBody";
 function PaymentList() {
   const { payments, isLoading, totalItems, totalPages, currentPage, limit } =
     useGetPayments();

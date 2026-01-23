@@ -1,4 +1,4 @@
-import PaymentList from "@/components/PaymentList";
+import PaymentList from "@/components/payment/PaymentList";
 import LayoutPage from "../../components/layout/LayoutPage";
 import { Suspense } from "react";
 

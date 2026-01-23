@@ -1,13 +1,13 @@
 "use client";
 import Link from "next/link";
 import { LiaExternalLinkAltSolid } from "react-icons/lia";
-import Image from "./Image";
-import Pagination from "./Pagination";
+import Image from "../Image";
+import Pagination from "../Pagination";
 import useGetInventories from "@/hooks/useGetInventories";
-import Loading from "./Loading";
-import InputSearch from "./InputSearch";
-import ListHeader from "./list/ListHeader";
-import ListBody from "./list/ListBody";
+import Loading from "../Loading";
+import InputSearch from "../InputSearch";
+import ListHeader from "../list/ListHeader";
+import ListBody from "../list/ListBody";
 function InventoryList() {
   const {
     inventories,
