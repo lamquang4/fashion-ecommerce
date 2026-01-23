@@ -21,7 +21,7 @@ function InventoryList() {
 
   return (
     <>
-      <ListHeader title="Tồn kho" totalItems={totalItems} />
+      <ListHeader title="Tồn kho" totalItems={totalQuantity} />
 
       <ListBody>
         <div className="p-[1.2rem]">

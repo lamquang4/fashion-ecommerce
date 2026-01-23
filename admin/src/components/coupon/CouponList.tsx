@@ -2,7 +2,6 @@
 import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
-import { IoMdAddCircle } from "react-icons/io";
 import Pagination from "../Pagination";
 import FilterDropDownMenu from "../FilterDropDownMenu";
 import useGetCoupons from "@/hooks/useGetCoupons";
