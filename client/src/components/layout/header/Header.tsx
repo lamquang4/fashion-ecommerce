@@ -27,8 +27,9 @@ function Header() {
   const { syncWishlist } = useSyncWishlist();
   const { data: session } = useSession();
 
-  const [openSearch, setOpenSearch] = useState<boolean>(false);
+  const [searchOpen, setSearchOpen] = useState<boolean>(false);
   const [menuMobileOpen, setMenuMobileOpen] = useState<boolean>(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
 
   useEffect(() => {
     if (!session?.user) return;
@@ -41,13 +42,13 @@ function Header() {
     };
 
     sync();
-  }, [session?.user, syncCart, syncWishlist, mutateCart, mutateWishlist]);
+  }, [session?.user, mutateCart, mutateWishlist]);
 
   useEffect(() => {
     const handleResize = () => {
       if (window.innerWidth >= 1024) {
         setMenuMobileOpen(false);
-        setOpenSearch(false);
+        setSearchOpen(false);
       }
     };
 
@@ -63,14 +64,22 @@ function Header() {
     );
   }, [cart?.productsInCart]);
 
-  const toggleSearch = useCallback(() => {
-    setOpenSearch((prev) => !prev);
+  const toggleProfileMenu = useCallback(() => {
+    setProfileMenuOpen((prev) => !prev);
     setMenuMobileOpen(false);
+    setSearchOpen(false);
+  }, []);
+
+  const toggleSearch = useCallback(() => {
+    setSearchOpen((prev) => !prev);
+    setMenuMobileOpen(false);
+    setProfileMenuOpen(false);
   }, []);
 
   const toggleMobileMenu = useCallback(() => {
     setMenuMobileOpen((prev) => !prev);
-    setOpenSearch(false);
+    setSearchOpen(false);
+    setProfileMenuOpen(false);
   }, []);
 
   return (
@@ -145,9 +154,13 @@ function Header() {
             <div className="hidden lg:flex items-center gap-5">
               <SearchDesktop />
 
-              <div className="relative cursor-pointer group">
+              <div
+                className="relative cursor-pointer group"
+                onMouseEnter={toggleProfileMenu}
+                onMouseLeave={toggleProfileMenu}
+              >
                 <CiUser size={24} />
-                <ProfileMenu />
+                <ProfileMenu profileMenuOpen={profileMenuOpen} />
               </div>
 
               <Link href={"/cart"} className="relative">
@@ -180,7 +193,7 @@ function Header() {
             {/* Mobile Search */}
             <SearchMobile
               onToggleSearch={toggleSearch}
-              openSearch={openSearch}
+              searchOpen={searchOpen}
             />
 
             {/* Mobile */}
@@ -189,9 +202,13 @@ function Header() {
                 <CiSearch size={23} />
               </button>
 
-              <div className="relative cursor-pointer group">
+              <div
+                className="relative cursor-pointer group"
+                onMouseEnter={toggleProfileMenu}
+                onMouseLeave={toggleProfileMenu}
+              >
                 <CiUser size={23} />
-                <ProfileMenu />
+                <ProfileMenu profileMenuOpen={profileMenuOpen} />
               </div>
 
               <Link href={"/cart"} className="relative">
@@ -229,7 +246,7 @@ function Header() {
         <MenuSide isOpen={menuMobileOpen} onToggleMenu={toggleMobileMenu} />
       </header>
 
-      {openSearch && <Overplay onClose={toggleSearch} IndexForZ={12} />}
+      {searchOpen && <Overplay onClose={toggleSearch} IndexForZ={12} />}
     </>
   );
 }

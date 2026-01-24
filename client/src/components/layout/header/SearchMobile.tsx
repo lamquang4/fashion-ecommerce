@@ -4,10 +4,10 @@ import { memo, useEffect, useState } from "react";
 import SuggestionProduct from "../../SuggestionProduct";
 type Props = {
   onToggleSearch: () => void;
-  openSearch: boolean;
+  searchOpen: boolean;
 };
 
-function SearchMobile({ onToggleSearch, openSearch }: Props) {
+function SearchMobile({ onToggleSearch, searchOpen }: Props) {
   const router = useRouter();
 
   const [search, setSearch] = useState<string>("");
@@ -25,7 +25,7 @@ function SearchMobile({ onToggleSearch, openSearch }: Props) {
   };
 
   useEffect(() => {
-    if (openSearch) {
+    if (searchOpen) {
       document.body.style.overflow = "hidden";
     } else {
       document.body.style.overflow = "";
@@ -34,12 +34,12 @@ function SearchMobile({ onToggleSearch, openSearch }: Props) {
     return () => {
       document.body.style.overflow = "";
     };
-  }, [openSearch]);
+  }, [searchOpen]);
 
   return (
     <div
       className={`absolute left-0 w-full border-t border-gray-300 bg-white transition-all duration-300 overflow-hidden ${
-        openSearch
+        searchOpen
           ? "opacity-100 visible top-full"
           : "opacity-0 invisible top-[90px]"
       }`}

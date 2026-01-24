@@ -2,10 +2,10 @@
 import useGetCart from "@/hooks/useGetCart";
 import useGetProductsBestseller from "@/hooks/useGetProductsBestseller";
 import Loading from "../Loading";
-import CartItem from "./CartItem";
+import CartItem from "./CartItemList";
 import ProductSlider from "../product/ProductSlider";
 
-function Cart() {
+function CartContainer() {
   const { cart, isLoading: isLoadingCart } = useGetCart();
   const { productsBestseller, isLoading: isLoadingProductsBestseller } =
     useGetProductsBestseller();
@@ -27,4 +27,4 @@ function Cart() {
   );
 }
 
-export default Cart;
+export default CartContainer;

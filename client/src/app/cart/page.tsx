@@ -1,7 +1,7 @@
-import Cart from "@/components/cart/Cart";
+import CartContainer from "@/components/cart/CartContainer";
 
 function page() {
-  return <Cart />;
+  return <CartContainer />;
 }
 
 export default page;

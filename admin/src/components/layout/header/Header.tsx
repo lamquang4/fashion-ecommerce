@@ -13,6 +13,7 @@ type Props = {
 
 function Header({ onToggleMenu }: Props) {
   const [notifyMenuOpen, setNotifyMenuOpen] = useState<boolean>(false);
+  const [profileMenuOpen, setProfileMenuOpen] = useState<boolean>(false);
   const { status } = useSession();
   const router = useRouter();
 
@@ -24,6 +25,12 @@ function Header({ onToggleMenu }: Props) {
 
   const toggleNotifyMenu = useCallback(() => {
     setNotifyMenuOpen((prev) => !prev);
+    setProfileMenuOpen(false);
+  }, []);
+
+  const toggleProfileMenu = useCallback(() => {
+    setProfileMenuOpen((prev) => !prev);
+    setNotifyMenuOpen(false);
   }, []);
 
   const handleFullscreen = () => {
@@ -59,7 +66,10 @@ function Header({ onToggleMenu }: Props) {
               menuOpen={notifyMenuOpen}
             />
 
-            <ProfileMenu />
+            <ProfileMenu
+              onToggleMenu={toggleProfileMenu}
+              menuOpen={profileMenuOpen}
+            />
           </div>
         </div>
       </header>
