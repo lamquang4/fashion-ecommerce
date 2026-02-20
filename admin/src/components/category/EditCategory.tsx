@@ -126,10 +126,10 @@ function EditCategory() {
                     >
                       {data.image && (
                         <Image
-                          Src={data.image}
-                          Alt={data.image}
-                          ClassName="w-full max-w-[140px]"
-                          loadingType="eager"
+                          src={data.image}
+                          alt={""}
+                          className="w-full max-w-[140px]"
+                          loading="eager"
                         />
                       )}
                     </div>
