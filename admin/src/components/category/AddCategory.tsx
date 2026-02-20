@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { useState } from "react";
-import InputImage from "../InputImage";
+import InputImage from "../ui/InputImage";
 import useAddCategory from "@/hooks/useAddCategory";
 import toast from "react-hot-toast";
 import { useInputImage } from "@/hooks/useInputImage";
@@ -24,7 +24,7 @@ function AddCategory() {
   } = useInputImage(1);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setData({

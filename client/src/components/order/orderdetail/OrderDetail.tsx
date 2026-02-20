@@ -1,12 +1,12 @@
 "use client";
-import SideBarMenu from "../../SideBarMenu";
+import SideBarMenu from "../../ui/SideBarMenu";
 import { useParams, useRouter } from "next/navigation";
 import useGetOrder from "@/hooks/useGetOrder";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import OrderInfo from "./OrderInfo";
-import BreadCrumb from "@/components/BreadCrumb";
+import BreadCrumb from "@/components/ui/BreadCrumb";
 function OrderDetail() {
   const params = useParams();
   const code = params.code as string;

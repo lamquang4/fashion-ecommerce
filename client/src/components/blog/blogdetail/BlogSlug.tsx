@@ -5,9 +5,9 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import BlogDetail from "./BlogDetail";
 import BlogSlider from "../BlogSlider";
-import Loading from "../../Loading";
+import Loading from "../../ui/Loading";
 import useGetLatestBlogs from "@/hooks/useGetLatestBlogs";
-import BreadCrumb from "@/components/BreadCrumb";
+import BreadCrumb from "@/components/ui/BreadCrumb";
 
 function BlogSlug() {
   const params = useParams();

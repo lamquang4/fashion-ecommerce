@@ -1,15 +1,15 @@
 "use client";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import InputImage from "../InputImage";
-import Image from "../Image";
-import ImageViewer from "../ImageViewer";
+import InputImage from "../ui/InputImage";
+import Image from "../ui/Image";
+import ImageViewer from "../ui/ImageViewer";
 import useUpdateCategory from "@/hooks/useUpdateCategory";
 import toast from "react-hot-toast";
 import { useParams, useRouter } from "next/navigation";
 import useGetCategory from "@/hooks/useGetCategory";
 import { useInputImage } from "@/hooks/useInputImage";
-import Loading from "../Loading";
+import Loading from "../ui/Loading";
 function EditCategory() {
   const router = useRouter();
   const params = useParams();
@@ -59,7 +59,7 @@ function EditCategory() {
   }, [category]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setData({

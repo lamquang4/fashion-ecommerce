@@ -3,15 +3,15 @@ import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
 import { FaRegEyeSlash } from "react-icons/fa";
-import Image from "../Image";
-import Pagination from "../Pagination";
-import FilterDropDownMenu from "../FilterDropDownMenu";
+import Image from "../ui/Image";
+import Pagination from "../ui/Pagination";
+import FilterDropDownMenu from "../ui/FilterDropDownMenu";
 import useGetProducts from "@/hooks/useGetProducts";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import useVisibleProduct from "@/hooks/useVisibleProduct";
 import useDeleteProduct from "@/hooks/useDeleteProduct";
-import Loading from "../Loading";
-import InputSearch from "../InputSearch";
+import Loading from "../ui/Loading";
+import InputSearch from "../ui/InputSearch";
 import toast from "react-hot-toast";
 import { Variant } from "@/types/types";
 import { useState } from "react";
@@ -139,19 +139,19 @@ function ProductList() {
                         <div className="relative w-[100px] h-[100px] overflow-hidden group">
                           {variant.images[0] && (
                             <Image
-                              Src={variant.images[0]}
-                              Alt={product.name}
-                              ClassName="absolute inset-0 w-full h-full object-contain opacity-100 group-hover:opacity-0"
-                              loadingType="lazy"
+                              src={variant.images[0]}
+                              alt={product.name}
+                              className="absolute inset-0 w-full h-full object-contain opacity-100 group-hover:opacity-0"
+                              loading="lazy"
                             />
                           )}
 
                           {variant.images[1] && (
                             <Image
-                              Src={variant.images[1]}
-                              Alt={product.name}
-                              ClassName="absolute inset-0 w-full h-full object-contain opacity-0 group-hover:opacity-100"
-                              loadingType="lazy"
+                              src={variant.images[1]}
+                              alt={product.name}
+                              className="absolute inset-0 w-full h-full object-contain opacity-0 group-hover:opacity-100"
+                              loading="lazy"
                             />
                           )}
                         </div>
@@ -275,10 +275,10 @@ function ProductList() {
                 <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex justify-center items-center">
                     <Image
-                      Src={"/assets/other/notfound1.png"}
-                      Alt={""}
-                      ClassName={"w-[135px]"}
-                      loadingType="lazy"
+                      src={"/assets/other/notfound1.png"}
+                      alt={""}
+                      className={"w-[135px]"}
+                      loading="lazy"
                     />
                   </div>
                 </td>

@@ -4,7 +4,7 @@ import BarChart from "./BarChart";
 import TopProduct from "./TopProduct";
 import { PiTShirtBold } from "react-icons/pi";
 import useGetOrders from "@/hooks/useGetOrders";
-import StaticCards from "../StaticCards";
+import StaticCards from "../ui/StaticCards";
 
 function Dashboard() {
   const { totalRevenue, totalSold } = useGetOrders();

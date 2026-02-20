@@ -1,10 +1,10 @@
 "use client";
 import Link from "next/link";
-import Image from "../Image";
+import Image from "../ui/Image";
 import useGetOrders from "@/hooks/useGetOrders";
-import Loading from "../Loading";
+import Loading from "../ui/Loading";
 import { useRouter, useSearchParams } from "next/navigation";
-import Pagination from "../Pagination";
+import Pagination from "../ui/Pagination";
 import { CiCalendar } from "react-icons/ci";
 
 function OrderHistory() {
@@ -87,27 +87,27 @@ function OrderHistory() {
                       order.status === 0
                         ? "text-gray-500"
                         : order.status === 1
-                        ? "text-gray-500"
-                        : order.status === 2
-                        ? "text-gray-500"
-                        : order.status === 3
-                        ? "text-green-600"
-                        : order.status === 4
-                        ? "text-red-500"
-                        : "text-gray-500"
+                          ? "text-gray-500"
+                          : order.status === 2
+                            ? "text-gray-500"
+                            : order.status === 3
+                              ? "text-green-600"
+                              : order.status === 4
+                                ? "text-red-500"
+                                : "text-gray-500"
                     }`}
                   >
                     {order.status === 0
                       ? "Chờ xác nhận"
                       : order.status === 1
-                      ? "Xác nhận"
-                      : order.status === 2
-                      ? "Đang giao"
-                      : order.status === 3
-                      ? "Giao thành công"
-                      : order.status === 4
-                      ? "Hủy"
-                      : ""}
+                        ? "Xác nhận"
+                        : order.status === 2
+                          ? "Đang giao"
+                          : order.status === 3
+                            ? "Giao thành công"
+                            : order.status === 4
+                              ? "Hủy"
+                              : ""}
                   </p>
                 </div>
 
@@ -132,10 +132,10 @@ function OrderHistory() {
                     <div className="flex items-center gap-[10px] w-full">
                       <div className="w-full max-w-[120px]">
                         <Image
-                          Src={item.variant.images[0]}
-                          Alt={item.product.name}
-                          ClassName={"w-full object-cover"}
-                          loadingType="lazy"
+                          src={item.variant.images[0]}
+                          alt={item.product.name}
+                          className={"w-full object-cover"}
+                          loading="lazy"
                         />
                       </div>
 
@@ -156,7 +156,7 @@ function OrderHistory() {
                               <del>{item.price.toLocaleString("vi-VN")}₫</del>
                               <span className="font-medium text-[#c00]">
                                 {(item.price - item.discount).toLocaleString(
-                                  "vi-VN"
+                                  "vi-VN",
                                 )}
                                 ₫
                               </span>
@@ -193,10 +193,10 @@ function OrderHistory() {
           <div className="flex justify-center items-center h-[70vh]">
             <div className="flex flex-col justify-center items-center gap-[15px]">
               <Image
-                Src={"/assets/other/empty-order.png"}
-                Alt={""}
-                ClassName={"w-[120px]"}
-                loadingType="eager"
+                src={"/assets/other/empty-order.png"}
+                alt={""}
+                className={"w-[120px]"}
+                loading="eager"
               />
 
               <h4 className="text-gray-600">Không có đơn hàng nào</h4>

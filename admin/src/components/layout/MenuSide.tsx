@@ -1,8 +1,8 @@
 "use client";
 import { ReactNode, useState } from "react";
 import Link from "next/link";
-import Overplay from "../Overplay";
-import Image from "../Image";
+import Overplay from "../ui/Overplay";
+import Image from "../ui/Image";
 import { IoIosArrowDown } from "react-icons/io";
 import { IoIosArrowUp } from "react-icons/io";
 import { TbCategoryPlus } from "react-icons/tb";
@@ -209,10 +209,10 @@ function MenuSide({ menuOpen, onToggleMenu }: Props) {
       >
         <div className="mb-[20px] flex justify-center sticky top-0 bg-white px-3.5 py-4.5">
           <Image
-            Src={"/assets/other/logo.png"}
-            Alt=""
-            ClassName="w-[80px]"
-            loadingType="eager"
+            src={"/assets/other/logo.png"}
+            alt={""}
+            className="w-[80px]"
+            loading="eager"
           />
         </div>
         <ul className="flex flex-col gap-[15px] font-semibold px-3.5">
@@ -228,7 +228,7 @@ function MenuSide({ menuOpen, onToggleMenu }: Props) {
                         className={`${
                           openMenus[item.key] ||
                           item.children.some((child) => pathname === child.path)
-                            ? "text-[#0AB39C]"
+                            ? "text-primary"
                             : "hover:bg-gray-100"
                         } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
                       >
@@ -259,7 +259,7 @@ function MenuSide({ menuOpen, onToggleMenu }: Props) {
                             key={childIndex}
                             className={`rounded-lg w-full cursor-pointer my-[5px] ${
                               pathname === child.path
-                                ? "text-[#0AB39C] bg-[#daf4f0]"
+                                ? "text-primary bg-secondary"
                                 : "hover:bg-gray-100"
                             }`}
                           >
@@ -278,7 +278,7 @@ function MenuSide({ menuOpen, onToggleMenu }: Props) {
                       href={item.path}
                       className={`${
                         pathname === item.path
-                          ? "text-[#0AB39C] bg-[#daf4f0]"
+                          ? "text-primary bg-secondary"
                           : "hover:bg-gray-100"
                       } rounded-lg p-3 w-full cursor-pointer flex justify-between items-center`}
                     >

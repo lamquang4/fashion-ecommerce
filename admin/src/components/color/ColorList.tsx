@@ -2,12 +2,12 @@
 import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
-import Pagination from "../Pagination";
-import Image from "../Image";
-import Loading from "../Loading";
+import Pagination from "../ui/Pagination";
+import Image from "../ui/Image";
+import Loading from "../ui/Loading";
 import useGetColors from "@/hooks/useGetColors";
 import useDeleteColor from "@/hooks/useDeleteColor";
-import InputSearch from "../InputSearch";
+import InputSearch from "../ui/InputSearch";
 import toast from "react-hot-toast";
 import ListHeader from "../list/ListHeader";
 import ListBody from "../list/ListBody";
@@ -101,10 +101,10 @@ function ColorList() {
                 <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex justify-center items-center">
                     <Image
-                      Src={"/assets/other/notfound1.png"}
-                      Alt={""}
-                      ClassName={"w-[135px]"}
-                      loadingType="lazy"
+                      src={"/assets/other/notfound1.png"}
+                      alt={""}
+                      className={"w-[135px]"}
+                      loading="lazy"
                     />
                   </div>
                 </td>

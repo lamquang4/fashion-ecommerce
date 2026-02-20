@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import React, { useState } from "react";
-import Image from "../Image";
+import Image from "../ui/Image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -56,10 +56,10 @@ function CategoryList() {
                     >
                       <div className="w-[110px] sm:w-[130px] border-gray-300 border rounded-full group-hover:border-black">
                         <Image
-                          Src={category.image}
-                          Alt={category.namecategory}
-                          ClassName="w-full"
-                          loadingType="lazy"
+                          src={category.image}
+                          alt={category.namecategory}
+                          className="w-full"
+                          loading="lazy"
                         />
                       </div>
                       <div className="text-center">

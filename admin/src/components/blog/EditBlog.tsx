@@ -3,14 +3,14 @@ import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
 import TextBoxEditor from "../textboxeditor/TextBoxEditor";
 import { useInputImage } from "@/hooks/useInputImage";
-import InputImage from "../InputImage";
-import Image from "../Image";
+import InputImage from "../ui/InputImage";
+import Image from "../ui/Image";
 import { useParams, useRouter } from "next/navigation";
-import Loading from "../Loading";
+import Loading from "../ui/Loading";
 import useGetBlog from "@/hooks/useGetBlog";
 import useUpdateBlog from "@/hooks/useUpdateBlog";
 import toast from "react-hot-toast";
-import ImageViewer from "../ImageViewer";
+import ImageViewer from "../ui/ImageViewer";
 function EditBlog() {
   const router = useRouter();
   const params = useParams();
@@ -135,10 +135,10 @@ function EditBlog() {
                     >
                       {data.image && (
                         <Image
-                          Src={data.image}
-                          Alt={data.image}
-                          ClassName="w-full max-w-[140px]"
-                          loadingType="eager"
+                          src={data.image}
+                          alt={data.image}
+                          className="w-full max-w-[140px]"
+                          loading="eager"
                         />
                       )}
                     </div>

@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import InputImage from "../../InputImage";
+import InputImage from "../../ui/InputImage";
 import toast from "react-hot-toast";
 import useAddBanner from "@/hooks/useAddBanner";
 import { useInputImage } from "@/hooks/useInputImage";
@@ -79,9 +79,7 @@ function AddMainBanner() {
 
           <div className="flex gap-[25px] w-full flex-col">
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-              <h5 className="font-bold text-[#74767d]">
-                Banner chính desktop
-              </h5>
+              <h5 className="font-bold text-[#74767d]">Banner chính desktop</h5>
 
               <InputImage
                 InputId="desktop-banner"
@@ -93,9 +91,7 @@ function AddMainBanner() {
             </div>
 
             <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
-              <h5 className="font-bold text-[#74767d]">
-                Banner chính mobile
-              </h5>
+              <h5 className="font-bold text-[#74767d]">Banner chính mobile</h5>
 
               <InputImage
                 InputId="mobile-banner"

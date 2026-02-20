@@ -1,7 +1,7 @@
 "use client";
 import useGetCart from "@/hooks/useGetCart";
 import useGetProductsBestseller from "@/hooks/useGetProductsBestseller";
-import Loading from "../Loading";
+import Loading from "../ui/Loading";
 import CartItem from "./CartItemList";
 import ProductSlider from "../product/ProductSlider";
 

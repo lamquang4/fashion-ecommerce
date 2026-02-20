@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import Image from "../Image";
+import Image from "../ui/Image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
@@ -36,10 +36,10 @@ function BlogSlider({ title, blogs }: Props) {
                   <Link href={`/blog/${blog.slug}`} className="h-full">
                     <div className="w-full aspect-[16/9] overflow-hidden">
                       <Image
-                        Src={blog.image}
-                        Alt={blog.title}
-                        ClassName="w-full h-full object-cover"
-                        loadingType="lazy"
+                        src={blog.image}
+                        alt={blog.title}
+                        className="w-full h-full object-cover"
+                        loading="lazy"
                       />
                     </div>
 

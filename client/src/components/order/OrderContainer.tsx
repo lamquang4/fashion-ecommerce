@@ -1,12 +1,12 @@
 "use client";
-import SideBarMenu from "../SideBarMenu";
+import SideBarMenu from "../ui/SideBarMenu";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useEffect } from "react";
 import OrderHistory from "./OrderHistory";
-import BreadCrumb from "../BreadCrumb";
+import BreadCrumb from "../ui/BreadCrumb";
 
-function Order() {
+function OrderContainer() {
   const router = useRouter();
 
   const { status } = useSession();
@@ -44,4 +44,4 @@ function Order() {
   );
 }
 
-export default Order;
+export default OrderContainer;

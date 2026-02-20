@@ -1,9 +1,9 @@
 "use client";
-import Pagination from "@/components/Pagination";
+import Pagination from "@/components/ui/Pagination";
 import useGetProductsSearch from "@/hooks/useGetProductsSearch";
 import ProductList from "./ProductList";
 import { usePathname, useSearchParams } from "next/navigation";
-import BreadCrumb from "../BreadCrumb";
+import BreadCrumb from "../ui/BreadCrumb";
 
 function ProductSearch() {
   const searchParams = useSearchParams();

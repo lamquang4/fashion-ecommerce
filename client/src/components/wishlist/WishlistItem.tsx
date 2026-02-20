@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import Image from "../Image";
+import Image from "../ui/Image";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
 function WishlistItem() {
@@ -17,10 +17,10 @@ function WishlistItem() {
       (prevCart) => ({
         ...prevCart!,
         productsInWishlist: prevCart!.productsInWishlist.filter(
-          (item) => !(item.variant._id === variant)
+          (item) => !(item.variant._id === variant),
         ),
       }),
-      false
+      false,
     );
   };
   return (
@@ -42,10 +42,10 @@ function WishlistItem() {
                     <Link href={`/product/${item.slug}`}>
                       <div className="w-full max-w-[270px] shrink-0">
                         <Image
-                          Src={item.variant.images[0]}
-                          Alt={""}
-                          ClassName={"w-full h-full object-cover"}
-                          loadingType="eager"
+                          src={item.variant.images[0]}
+                          alt={""}
+                          className={"w-full h-full object-cover"}
+                          loading="eager"
                         />
                       </div>
                     </Link>
@@ -63,7 +63,7 @@ function WishlistItem() {
                         onClick={() =>
                           handleRemoveItem(
                             wishlist?._id || "",
-                            item.variant._id
+                            item.variant._id,
                           )
                         }
                       >
@@ -89,10 +89,10 @@ function WishlistItem() {
           <div className="flex justify-center items-center h-[60vh]">
             <div className="flex flex-col justify-center items-center gap-[15px]">
               <Image
-                Src={"/assets/other/empty-wishlist.png"}
-                Alt={""}
-                ClassName={"w-[170px]"}
-                loadingType="eager"
+                src={"/assets/other/empty-wishlist.png"}
+                alt={""}
+                className={"w-[170px]"}
+                loading="eager"
               />
 
               <h4 className="text-gray-600">Không có gì trong yêu thích hết</h4>

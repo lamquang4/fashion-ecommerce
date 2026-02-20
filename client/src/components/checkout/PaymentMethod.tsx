@@ -1,5 +1,5 @@
 "use client";
-import Image from "../Image";
+import Image from "../ui/Image";
 type Props = {
   paymethod: string;
   setPaymethod: (value: string) => void;
@@ -43,10 +43,10 @@ function PaymentMethod({ paymethod, setPaymethod }: Props) {
               htmlFor={`paymethod-${method.value}`}
             >
               <Image
-                Src={method.image}
-                ClassName="w-[60px] rounded-lg border border-gray-300"
-                loadingType="eager"
-                Alt=""
+                src={method.image}
+                className="w-[60px] rounded-lg border border-gray-300"
+                loading="eager"
+                alt={method.name}
               />
               <span className="font-medium">{method.name}</span>
             </label>

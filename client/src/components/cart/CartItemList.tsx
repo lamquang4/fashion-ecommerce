@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import Image from "../Image";
+import Image from "../ui/Image";
 import { memo, useMemo } from "react";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
@@ -119,10 +119,10 @@ function CartItemList({ cart }: Props) {
           <div className="flex justify-center items-center h-[60vh]">
             <div className="flex flex-col justify-center items-center gap-[15px]">
               <Image
-                Src={"/assets/other/empty-cart.png"}
-                Alt={""}
-                ClassName={"w-[150px]"}
-                loadingType="eager"
+                src={"/assets/other/empty-cart.png"}
+                alt={""}
+                className={"w-[150px]"}
+                loading="eager"
               />
 
               <h4 className="text-gray-600">Không có gì trong giỏ hết</h4>

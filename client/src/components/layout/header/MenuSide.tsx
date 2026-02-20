@@ -3,7 +3,7 @@ import { memo, useEffect, useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { FaMinus } from "react-icons/fa";
 import Link from "next/link";
-import Overplay from "../../Overplay";
+import Overplay from "../../ui/Overplay";
 import useGetCategories from "@/hooks/useGetCategories";
 type Props = {
   isOpen: boolean;

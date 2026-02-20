@@ -1,6 +1,6 @@
 "use client";
 import { useSearchParams } from "next/navigation";
-import Image from "./Image";
+import Image from "./ui/Image";
 function OrderResult() {
   const searchParams = useSearchParams();
   const result = searchParams.get("result");
@@ -11,10 +11,10 @@ function OrderResult() {
           {result === "successful" ? (
             <div className="flex flex-col justify-center items-center gap-[15px]">
               <Image
-                Src={"/assets/other/successful.png"}
-                Alt={""}
-                ClassName={"w-[100px]"}
-                loadingType="eager"
+                src={"/assets/other/successful.png"}
+                alt={""}
+                className={"w-[100px]"}
+                loading="eager"
               />
               <h4 className="uppercase text-center">Đặt hàng thành công</h4>
               <p className="font-medium">
@@ -28,10 +28,10 @@ function OrderResult() {
           ) : result === "fail" ? (
             <div className="flex flex-col justify-center items-center gap-[15px]">
               <Image
-                Src={"/assets/other/fail.png"}
-                Alt={""}
-                ClassName={"w-[120px]"}
-                loadingType="eager"
+                src={"/assets/other/fail.png"}
+                alt={""}
+                className={"w-[120px]"}
+                loading="eager"
               />
               <h4 className="uppercase text-center">Đặt hàng thất bại</h4>
               <p className="font-medium">

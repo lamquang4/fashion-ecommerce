@@ -1,5 +1,5 @@
 import React from "react";
-import Image from "../components/Image";
+import Image from "../components/ui/Image";
 import Link from "next/link";
 function NotFoundPage() {
   return (
@@ -9,10 +9,10 @@ function NotFoundPage() {
           <div className="flex justify-center items-center h-[60vh]">
             <div className="flex flex-col justify-center items-center gap-[15px]">
               <Image
-                Src={"/assets/other/404-error.png"}
-                Alt={""}
-                ClassName={"w-[230px]"}
-                loadingType="eager"
+                src={"/assets/other/404-error.png"}
+                alt={""}
+                className={"w-[230px]"}
+                loading="eager"
               />
 
               <div className="flex justify-center flex-col gap-[15px] items-center text-center">

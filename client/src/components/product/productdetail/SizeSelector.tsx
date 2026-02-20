@@ -1,5 +1,4 @@
 "use client";
-
 import { LiaRulerHorizontalSolid } from "react-icons/lia";
 import { Variant } from "@/types/type";
 import { memo } from "react";

@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
-import Image from "../Image";
+import Image from "../ui/Image";
 import useGetMainBanners from "@/hooks/useGetMainBanners";
 
 function MainBanner() {
@@ -36,10 +36,10 @@ function MainBanner() {
                       )}
 
                       <Image
-                        Src={banner1.image}
-                        Alt={"banner"}
-                        ClassName={"w-full"}
-                        loadingType="eager"
+                        src={banner1.image}
+                        alt={"banner"}
+                        className={"w-full"}
+                        loading="eager"
                       />
                     </picture>
                     <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-center w-full">

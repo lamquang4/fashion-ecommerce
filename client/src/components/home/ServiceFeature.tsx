@@ -1,4 +1,4 @@
-import Image from "../Image";
+import Image from "../ui/Image";
 function ServiceFeature() {
   const services = [
     {
@@ -32,10 +32,10 @@ function ServiceFeature() {
               className="flex flex-col items-center text-center xl:flex-row xl:text-start gap-2.5"
             >
               <Image
-                Src={service.img}
-                Alt={""}
-                ClassName={"w-[40px]"}
-                loadingType="eager"
+                src={service.img}
+                alt={""}
+                className={"w-[40px]"}
+                loading="eager"
               />
               <div>
                 <p className="font-medium">{service.title}</p>

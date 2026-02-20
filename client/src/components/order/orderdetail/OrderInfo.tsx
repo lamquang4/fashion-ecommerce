@@ -1,6 +1,6 @@
 "use client";
-import Image from "../../Image";
-import Loading from "../../Loading";
+import Image from "../../ui/Image";
+import Loading from "../../ui/Loading";
 import { LuArchive, LuCheck, LuStar, LuTruck } from "react-icons/lu";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { TbCancel } from "react-icons/tb";
@@ -153,10 +153,10 @@ function OrderInfo({ order, isLoading }: Props) {
                     <td className="p-[20px]  ">
                       <div className="flex items-center gap-[10px]">
                         <Image
-                          Src={item.variant.images[0]}
-                          Alt={""}
-                          ClassName={"w-[75px]"}
-                          loadingType="eager"
+                          src={item.variant.images[0]}
+                          alt={""}
+                          className={"w-[75px]"}
+                          loading="eager"
                         />
 
                         <div className="space-y-[10px] font-medium">
@@ -177,7 +177,7 @@ function OrderInfo({ order, isLoading }: Props) {
 
                           <p className="font-medium text-[#c00]">
                             {(item.price - item.discount).toLocaleString(
-                              "vi-VN"
+                              "vi-VN",
                             )}
                             ₫
                           </p>
@@ -229,7 +229,7 @@ function OrderInfo({ order, isLoading }: Props) {
                           -
                           {Math.min(
                             (totalPrice * order?.coupon?.discountValue) / 100,
-                            order?.coupon?.maxDiscountValue ?? 0
+                            order?.coupon?.maxDiscountValue ?? 0,
                           )}
                         </p>
                       ) : (

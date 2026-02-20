@@ -1,11 +1,11 @@
 "use client";
 import { useEffect, useState } from "react";
-import SideBarMenu from "../SideBarMenu";
+import SideBarMenu from "../ui/SideBarMenu";
 import AddressModal from "./AddressModal";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import AddressInfo from "./AddressInfo";
-import BreadCrumb from "../BreadCrumb";
+import BreadCrumb from "../ui/BreadCrumb";
 import useGetAddresses from "@/hooks/useGetAddresses";
 function Address() {
   const { status } = useSession();

@@ -1,9 +1,9 @@
 "use client";
-import Pagination from "../Pagination";
-import Image from "../Image";
-import Loading from "../Loading";
-import InputSearch from "../InputSearch";
-import FilterDropDownMenu from "../FilterDropDownMenu";
+import Pagination from "../ui/Pagination";
+import Image from "../ui/Image";
+import Loading from "../ui/Loading";
+import InputSearch from "../ui/InputSearch";
+import FilterDropDownMenu from "../ui/FilterDropDownMenu";
 import useGetPayments from "@/hooks/useGetPayments";
 import ListHeader from "../list/ListHeader";
 import ListBody from "../list/ListBody";
@@ -87,10 +87,10 @@ function PaymentList() {
                 <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex justify-center items-center">
                     <Image
-                      Src={"/assets/other/notfound1.png"}
-                      Alt={""}
-                      ClassName={"w-[135px]"}
-                      loadingType="lazy"
+                      src={"/assets/other/notfound1.png"}
+                      alt={""}
+                      className={"w-[135px]"}
+                      loading="lazy"
                     />
                   </div>
                 </td>

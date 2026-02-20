@@ -1,6 +1,6 @@
 "use client";
 import { memo } from "react";
-import Image from "../Image";
+import Image from "../ui/Image";
 import { ProductInCart } from "@/types/type";
 
 type Props = {
@@ -16,10 +16,10 @@ function ProductBuyList({ productsInCart }: Props) {
         <div className="flex rounded-lg bg-white gap-[15px]" key={index}>
           <div className="relative">
             <Image
-              Src={item.variant.images[0]}
-              Alt={item.name}
-              ClassName={"w-[120px] object-cover"}
-              loadingType="eager"
+              src={item.variant.images[0]}
+              alt={item.name}
+              className={"w-[120px] object-cover"}
+              loading="eager"
             />
 
             <small className="text-[0.8rem] absolute flex items-center justify-center top-[-7px] right-[-9px] bg-[#197FB6] text-white font-medium rounded-full w-[25px] h-[25px]">

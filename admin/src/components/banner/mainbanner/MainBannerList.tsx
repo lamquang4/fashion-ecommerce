@@ -1,11 +1,11 @@
 "use client";
 import { VscTrash } from "react-icons/vsc";
 import { FaRegEyeSlash } from "react-icons/fa";
-import Pagination from "../../Pagination";
-import Image from "../../Image";
-import FilterDropDownMenu from "../../FilterDropDownMenu";
+import Pagination from "../../ui/Pagination";
+import Image from "../../ui/Image";
+import FilterDropDownMenu from "../../ui/FilterDropDownMenu";
 import useGetMainBanners from "@/hooks/useGetMainBanners";
-import Loading from "../../Loading";
+import Loading from "../../ui/Loading";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import useDeleteBanner from "@/hooks/useDeleteBanner";
 import useVisibleBanner from "@/hooks/useVisibleBanner";
@@ -125,10 +125,10 @@ function MainBannerList() {
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">
                         <Image
-                          Src={mainbanner.image}
-                          Alt={""}
-                          ClassName={"w-[120px] cursor-pointer"}
-                          loadingType="lazy"
+                          src={mainbanner.image}
+                          alt={""}
+                          className={"w-[120px] cursor-pointer"}
+                          loading="lazy"
                         />
                       </div>
                     </div>
@@ -182,10 +182,10 @@ function MainBannerList() {
                 <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex justify-center items-center">
                     <Image
-                      Src={"/assets/other/notfound1.png"}
-                      Alt={""}
-                      ClassName={"w-[135px]"}
-                      loadingType="lazy"
+                      src={"/assets/other/notfound1.png"}
+                      alt={""}
+                      className={"w-[135px]"}
+                      loading="lazy"
                     />
                   </div>
                 </td>

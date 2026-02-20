@@ -1,7 +1,7 @@
 "use client";
 import { Product, Variant } from "@/types/type";
 import Link from "next/link";
-import Image from "../Image";
+import Image from "../ui/Image";
 import { memo } from "react";
 
 interface Props {
@@ -26,18 +26,18 @@ function ProductCard({
           <div className="w-full overflow-hidden pt-[100%] relative group">
             {variant.images[0] && (
               <Image
-                Src={variant.images[0]}
-                Alt={product.name}
-                ClassName="absolute inset-0 w-full h-full object-cover z-1 group-hover:opacity-0"
-                loadingType="lazy"
+                src={variant.images[0]}
+                alt={product.name}
+                className="absolute inset-0 w-full h-full object-cover z-1 group-hover:opacity-0"
+                loading="lazy"
               />
             )}
             {variant.images[1] && (
               <Image
-                Src={variant.images[1]}
-                Alt={product.name}
-                ClassName="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 z-2"
-                loadingType="lazy"
+                src={variant.images[1]}
+                alt={product.name}
+                className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 z-2"
+                loading="lazy"
               />
             )}
           </div>
@@ -102,8 +102,8 @@ function ProductCard({
           {product.category.gender === 1
             ? "Nam"
             : product.category.gender === 0
-            ? "Nữ"
-            : ""}
+              ? "Nữ"
+              : ""}
         </p>
 
         {product.discount > 0 ? (

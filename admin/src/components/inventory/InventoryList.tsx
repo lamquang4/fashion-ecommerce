@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
 import { LiaExternalLinkAltSolid } from "react-icons/lia";
-import Image from "../Image";
-import Pagination from "../Pagination";
+import Image from "../ui/Image";
+import Pagination from "../ui/Pagination";
 import useGetInventories from "@/hooks/useGetInventories";
-import Loading from "../Loading";
-import InputSearch from "../InputSearch";
+import Loading from "../ui/Loading";
+import InputSearch from "../ui/InputSearch";
 import ListHeader from "../list/ListHeader";
 import ListBody from "../list/ListBody";
 function InventoryList() {
@@ -58,10 +58,10 @@ function InventoryList() {
                       <div className="flex gap-[10px] items-center">
                         <div className="cursor-pointer">
                           <Image
-                            Src={inventory.images[0]}
-                            Alt={""}
-                            ClassName={"w-[75px] cursor-pointer"}
-                            loadingType="lazy"
+                            src={inventory.images[0]}
+                            alt={""}
+                            className={"w-[75px] cursor-pointer"}
+                            loading="lazy"
                           />
                         </div>
 
@@ -107,10 +107,10 @@ function InventoryList() {
                 <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex justify-center items-center">
                     <Image
-                      Src={"/assets/other/notfound1.png"}
-                      Alt={""}
-                      ClassName={"w-[135px]"}
-                      loadingType="lazy"
+                      src={"/assets/other/notfound1.png"}
+                      alt={""}
+                      className={"w-[135px]"}
+                      loading="lazy"
                     />
                   </div>
                 </td>

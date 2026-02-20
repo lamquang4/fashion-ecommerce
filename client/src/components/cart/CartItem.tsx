@@ -1,6 +1,6 @@
 "use client";
 import { useChangeQuantityItemCart } from "@/hooks/useChangeQuantityItemCart";
-import Image from "../Image";
+import Image from "../ui/Image";
 import { ProductInCart } from "@/types/type";
 import Link from "next/link";
 import { HiOutlineMinusSmall, HiOutlinePlusSmall } from "react-icons/hi2";
@@ -94,10 +94,10 @@ function CartItem({ cartId, item }: Props) {
         <Link href={`/product/${item.slug}`}>
           <div className="w-full max-w-[250px] shrink-0">
             <Image
-              Src={item.variant.images[0]}
-              Alt={item.name}
-              ClassName={"w-full"}
-              loadingType="eager"
+              src={item.variant.images[0]}
+              alt={item.name}
+              className={"w-full"}
+              loading="eager"
             />
           </div>
         </Link>

@@ -3,16 +3,16 @@ import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
 import { FaRegEyeSlash } from "react-icons/fa";
-import Pagination from "../Pagination";
-import Image from "../Image";
-import FilterDropDownMenu from "../FilterDropDownMenu";
-import InputSearch from "../InputSearch";
+import Pagination from "../ui/Pagination";
+import Image from "../ui/Image";
+import FilterDropDownMenu from "../ui/FilterDropDownMenu";
+import InputSearch from "../ui/InputSearch";
 import useGetBlogs from "@/hooks/useGetBlogs";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import useDeleteBlog from "@/hooks/useDeleteBlog";
 import toast from "react-hot-toast";
 import useVisibleBlog from "@/hooks/useVisibleBlog";
-import Loading from "../Loading";
+import Loading from "../ui/Loading";
 import ListHeader from "../list/ListHeader";
 import ListBody from "../list/ListBody";
 function BlogList() {
@@ -113,10 +113,10 @@ function BlogList() {
                   <td className="p-[1rem]">
                     <div className="flex gap-[10px] items-center">
                       <Image
-                        Src={blog.image}
-                        Alt={blog.title}
-                        ClassName={"w-[120px] cursor-pointer"}
-                        loadingType="lazy"
+                        src={blog.image}
+                        alt={blog.title}
+                        className={"w-[120px] cursor-pointer"}
+                        loading="lazy"
                       />
                     </div>
                   </td>
@@ -168,10 +168,10 @@ function BlogList() {
                 <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex justify-center items-center">
                     <Image
-                      Src={"/assets/other/notfound1.png"}
-                      Alt={""}
-                      ClassName={"w-[135px]"}
-                      loadingType="lazy"
+                      src={"/assets/other/notfound1.png"}
+                      alt={""}
+                      className={"w-[135px]"}
+                      loading="lazy"
                     />
                   </div>
                 </td>

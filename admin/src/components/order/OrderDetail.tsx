@@ -1,11 +1,11 @@
 "use client";
-import Image from "../Image";
+import Image from "../ui/Image";
 import { useParams, useRouter } from "next/navigation";
 import useGetOrder from "@/hooks/useGetOrder";
 import { LuArchive, LuCheck, LuStar, LuTruck } from "react-icons/lu";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { TbCancel } from "react-icons/tb";
-import Loading from "../Loading";
+import Loading from "../ui/Loading";
 import Link from "next/link";
 import { useEffect, useMemo } from "react";
 import toast from "react-hot-toast";
@@ -72,14 +72,14 @@ function OrderDetail() {
                                 day: "2-digit",
                                 month: "2-digit",
                                 year: "numeric",
-                              }
+                              },
                             )}{" "}
                             {new Date(order.createdAt).toLocaleTimeString(
                               "vi-VN",
                               {
                                 hour: "2-digit",
                                 minute: "2-digit",
-                              }
+                              },
                             )}
                           </>
                         )}
@@ -179,10 +179,10 @@ function OrderDetail() {
                           <td className="p-[20px]  ">
                             <div className="flex items-center gap-[10px]">
                               <Image
-                                Src={item.variant.images[0]}
-                                Alt={""}
-                                ClassName={"w-[75px]"}
-                                loadingType="eager"
+                                src={item.variant.images[0]}
+                                alt={""}
+                                className={"w-[75px]"}
+                                loading="eager"
                               />
 
                               <div className="space-y-[10px] font-medium">
@@ -203,7 +203,7 @@ function OrderDetail() {
 
                                 <p className="font-medium text-[#c00]">
                                   {(item.price - item.discount).toLocaleString(
-                                    "vi-VN"
+                                    "vi-VN",
                                   )}
                                   ₫
                                 </p>
@@ -222,7 +222,7 @@ function OrderDetail() {
                                   item.quantity
                                 ).toLocaleString("vi-VN")
                               : (item.price * item.quantity).toLocaleString(
-                                  "vi-VN"
+                                  "vi-VN",
                                 )}
                             ₫
                           </td>
@@ -250,7 +250,7 @@ function OrderDetail() {
                               <p>
                                 -
                                 {order?.coupon?.discountValue.toLocaleString(
-                                  "vi-VN"
+                                  "vi-VN",
                                 )}
                                 ₫
                               </p>
@@ -260,7 +260,7 @@ function OrderDetail() {
                                 {Math.min(
                                   (totalPrice * order?.coupon?.discountValue) /
                                     100,
-                                  order?.coupon?.maxDiscountValue ?? 0
+                                  order?.coupon?.maxDiscountValue ?? 0,
                                 )}
                               </p>
                             ) : (

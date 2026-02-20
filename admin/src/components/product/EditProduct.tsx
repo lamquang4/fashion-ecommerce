@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
 import { useCallback, useEffect, useState } from "react";
-import InputImage from "../InputImage";
-import Image from "../Image";
+import InputImage from "../ui/InputImage";
+import Image from "../ui/Image";
 import { VscTrash } from "react-icons/vsc";
-import ImageViewer from "../ImageViewer";
-import InputImage1 from "../InputImage1";
+import ImageViewer from "../ui/ImageViewer";
+import InputImage1 from "../ui/InputImage1";
 import { HiMiniXMark } from "react-icons/hi2";
 import { useParams, useRouter } from "next/navigation";
 import useGetProduct from "@/hooks/useGetProduct";
@@ -26,6 +26,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { FreeMode } from "swiper/modules";
 import useUpdateImageProduct from "@/hooks/useUpdateImageProduct";
+import SearchableSelect from "../ui/SearchableSelect";
 
 const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),
@@ -95,6 +96,13 @@ function EditProduct() {
     handleRemoveImageCurrent,
     handleSortCurrentInventory,
   } = useCurrentInventory();
+
+  const categoryOptions = categories
+    .filter((c) => c._id)
+    .map((c) => ({
+      value: c._id!,
+      label: `${c.namecategory} - ${c.gender === 1 ? "Nam" : c.gender === 0 ? "Nữ" : ""}`,
+    }));
 
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);
@@ -295,24 +303,17 @@ function EditProduct() {
                   <label htmlFor="" className="text-[0.9rem] font-medium">
                     Danh mục
                   </label>
-                  <select
-                    name="category"
-                    required
+                  <SearchableSelect
+                    options={categoryOptions}
                     value={data.category}
-                    onChange={handleChange}
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
-                  >
-                    {categories.map((category) => (
-                      <option value={category._id} key={category._id}>
-                        {category.namecategory}-
-                        {category.gender === 1
-                          ? "Nam"
-                          : category.gender === 0
-                            ? "Nữ"
-                            : ""}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={(val) =>
+                      setData((prev) => ({
+                        ...prev,
+                        category: val,
+                      }))
+                    }
+                    placeholder="Chọn danh mục"
+                  />
                 </div>
 
                 <div className="flex flex-col gap-1 w-full">
@@ -388,7 +389,7 @@ function EditProduct() {
                   type="button"
                   disabled={currentVariants.length + newVariants.length >= 5}
                   onClick={handleAddInventoryBlock}
-                  className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
+                  className="bg-secondary border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-primary hover:bg-primary hover:text-white"
                 >
                   Thêm biến thể
                 </button>
@@ -454,14 +455,14 @@ function EditProduct() {
                               }}
                             >
                               <Image
-                                Src={
+                                src={
                                   previewImages2?.[index]?.[imgIndex] ||
                                   img ||
                                   "/assets/banner/default-banner.jpg"
                                 }
-                                Alt=""
-                                ClassName="w-full max-w-[140px]"
-                                loadingType="eager"
+                                alt=""
+                                className="w-full max-w-[140px]"
+                                loading="eager"
                               />
                             </div>
 
@@ -516,7 +517,7 @@ function EditProduct() {
                     type="button"
                     onClick={() => handleAddCurrentInventory(index)}
                     disabled={block.inventories.length === sizes.length}
-                    className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
+                    className="bg-secondary border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-primary hover:bg-primary hover:text-white"
                   >
                     Thêm số lượng
                   </button>
@@ -686,7 +687,7 @@ function EditProduct() {
                       type="button"
                       onClick={() => handleAddNewInventory(index)}
                       disabled={block.inventories.length === sizes.length}
-                      className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
+                      className="bg-secondary border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-primary hover:bg-primary hover:text-white"
                     >
                       Thêm số lượng
                     </button>

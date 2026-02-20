@@ -3,15 +3,15 @@ import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
 import { FaRegEyeSlash } from "react-icons/fa";
-import Pagination from "../Pagination";
-import Image from "../Image";
-import FilterDropDownMenu from "../FilterDropDownMenu";
+import Pagination from "../ui/Pagination";
+import Image from "../ui/Image";
+import FilterDropDownMenu from "../ui/FilterDropDownMenu";
 import useGetCategories from "@/hooks/useGetCategories";
-import Loading from "../Loading";
+import Loading from "../ui/Loading";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import useDeleteCategory from "@/hooks/useDeleteCategory";
 import useVisibleCategory from "@/hooks/useVisibleCategory";
-import InputSearch from "../InputSearch";
+import InputSearch from "../ui/InputSearch";
 import toast from "react-hot-toast";
 import ListHeader from "../list/ListHeader";
 import ListBody from "../list/ListBody";
@@ -116,10 +116,10 @@ function CategoryList() {
                     <div className="flex gap-[10px] items-center">
                       <div className="cursor-pointer">
                         <Image
-                          Src={category.image}
-                          Alt={category.image}
-                          ClassName={"w-[75px] cursor-pointer"}
-                          loadingType="lazy"
+                          src={category.image}
+                          alt={category.image}
+                          className={"w-[75px] cursor-pointer"}
+                          loading="lazy"
                         />
                       </div>
 
@@ -189,10 +189,10 @@ function CategoryList() {
                 <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex justify-center items-center">
                     <Image
-                      Src={"/assets/other/notfound1.png"}
-                      Alt={""}
-                      ClassName={"w-[135px]"}
-                      loadingType="lazy"
+                      src={"/assets/other/notfound1.png"}
+                      alt={""}
+                      className={"w-[135px]"}
+                      loading="lazy"
                     />
                   </div>
                 </td>

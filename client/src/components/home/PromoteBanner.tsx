@@ -1,5 +1,5 @@
 import useGetPromoteBanners from "@/hooks/useGetPromoteBanners";
-import Image from "../Image";
+import Image from "../ui/Image";
 import Link from "next/link";
 interface PromoteBannerProp {
   gender: number;
@@ -17,10 +17,10 @@ function PromoteBanner({ gender }: PromoteBannerProp) {
                 <Link href={"/collection/nam"}>
                   <div className="relative">
                     <Image
-                      Src={promotions[0].image}
-                      Alt=""
-                      ClassName="w-full object-cover"
-                      loadingType="lazy"
+                      src={promotions[0].image}
+                      alt=""
+                      className="w-full object-cover"
+                      loading="lazy"
                     />
                   </div>
                 </Link>
@@ -28,10 +28,10 @@ function PromoteBanner({ gender }: PromoteBannerProp) {
                 <Link href={"/collection/nu"}>
                   <div className="relative">
                     <Image
-                      Src={promotions[1].image}
-                      Alt=""
-                      ClassName="w-full object-cover"
-                      loadingType="lazy"
+                      src={promotions[1].image}
+                      alt=""
+                      className="w-full object-cover"
+                      loading="lazy"
                     />
                   </div>
                 </Link>

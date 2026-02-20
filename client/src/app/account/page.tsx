@@ -1,7 +1,7 @@
-import Account from "@/components/account/Account";
+import AccountContainer from "@/components/account/AccountContainer";
 
 async function page() {
-  return <Account />;
+  return <AccountContainer />;
 }
 
 export default page;

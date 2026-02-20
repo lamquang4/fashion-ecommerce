@@ -9,7 +9,7 @@ type InputImageProps = {
   previewImages: string[];
   onPreviewImage: (
     e: React.ChangeEvent<HTMLInputElement>,
-    blockIndex: number
+    blockIndex: number,
   ) => void;
   onRemovePreviewImage: (index: number, blockIndex: number) => void;
   blockIndex: number;
@@ -71,10 +71,10 @@ function InputImage({
                   }}
                 >
                   <Image
-                    Src={image}
-                    Alt={""}
-                    ClassName="w-full max-w-[220px]"
-                    loadingType="eager"
+                    src={image}
+                    alt={""}
+                    className="w-full max-w-[220px]"
+                    loading="eager"
                   />
                 </div>
 

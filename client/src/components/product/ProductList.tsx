@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useMemo, useState } from "react";
-import AdvancedSearch from "../AdvancedSearch";
-import Image from "../Image";
+import AdvancedSearch from "../ui/AdvancedSearch";
+import Image from "../ui/Image";
 import { VscSettings } from "react-icons/vsc";
 import { Category, Product, Variant } from "@/types/type";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
@@ -9,7 +9,7 @@ import useGetWishlist from "@/hooks/useGetWishlist";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
 import useAddWishlist from "@/hooks/useAddWishlist";
 import ProductCard from "./ProductCard";
-import ProductCardSkeleton from "./ProductCardSkeleton";
+import ProductCardSkeleton from "../skeleton/ProductCardSkeleton";
 
 interface Props {
   category?: Category;
@@ -41,7 +41,7 @@ function ProductList({ category, products, isLoading, total }: Props) {
 
   const wishlistVariantId = useMemo(() => {
     return new Set(
-      wishlist?.productsInWishlist.map((item: any) => item.variant._id)
+      wishlist?.productsInWishlist.map((item: any) => item.variant._id),
     );
   }, [wishlist?.productsInWishlist]);
 
@@ -51,7 +51,7 @@ function ProductList({ category, products, isLoading, total }: Props) {
 
   const toggleWishlist = async (variant: Variant) => {
     const isInWishlist = wishlist?.productsInWishlist?.some(
-      (item: any) => item.variant._id === variant._id
+      (item: any) => item.variant._id === variant._id,
     );
 
     if (isInWishlist) {
@@ -180,10 +180,10 @@ function ProductList({ category, products, isLoading, total }: Props) {
         <div className="flex justify-center items-center h-[60vh]">
           <div className="flex flex-col justify-center items-center gap-[15px]">
             <Image
-              Src={"/assets/other/notfound1.png"}
-              Alt={""}
-              ClassName={"w-[150px]"}
-              loadingType="eager"
+              src={"/assets/other/notfound1.png"}
+              alt={""}
+              className={"w-[150px]"}
+              loading="eager"
             />
 
             <h4 className="text-gray-600">Không tìm thấy sản phẩm nào</h4>

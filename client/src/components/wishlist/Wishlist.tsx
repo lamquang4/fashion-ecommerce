@@ -2,7 +2,7 @@
 import useGetWishlist from "@/hooks/useGetWishlist";
 import WishlistItem from "./WishlistItem";
 import useGetProductsBestseller from "@/hooks/useGetProductsBestseller";
-import Loading from "../Loading";
+import Loading from "../ui/Loading";
 import ProductSlider from "../product/ProductSlider";
 
 function Wishlist() {

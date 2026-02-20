@@ -1,13 +1,13 @@
 "use client";
 import useGetProductSlug from "@/hooks/useGetProductSlug";
 import { useParams, useRouter } from "next/navigation";
-import Loading from "@/components/Loading";
 import ProductDetail from "./ProductDetail";
 import ProductSlider from "../ProductSlider";
 import useGetProductsBestseller from "@/hooks/useGetProductsBestseller";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
-import BreadCrumb from "../../BreadCrumb";
+import BreadCrumb from "../../ui/BreadCrumb";
+import Loading from "@/components/ui/Loading";
 
 function ProductDetailContainer() {
   const params = useParams();
@@ -38,14 +38,14 @@ function ProductDetailContainer() {
         product?.category.gender === 1
           ? "Nam"
           : product?.category.gender === 0
-          ? "Nữ"
-          : "",
+            ? "Nữ"
+            : "",
       href: `/collection/${
         product?.category.gender === 1
           ? "nam"
           : product?.category.gender === 0
-          ? "nu"
-          : ""
+            ? "nu"
+            : ""
       }`,
     },
     {

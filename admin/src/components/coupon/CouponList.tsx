@@ -2,13 +2,13 @@
 import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
-import Pagination from "../Pagination";
-import FilterDropDownMenu from "../FilterDropDownMenu";
+import Pagination from "../ui/Pagination";
+import FilterDropDownMenu from "../ui/FilterDropDownMenu";
 import useGetCoupons from "@/hooks/useGetCoupons";
 import useDeleteCoupon from "@/hooks/useDeleteCoupon";
-import Loading from "../Loading";
-import Image from "../Image";
-import InputSearch from "../InputSearch";
+import Loading from "../ui/Loading";
+import Image from "../ui/Image";
+import InputSearch from "../ui/InputSearch";
 import toast from "react-hot-toast";
 import ListHeader from "../list/ListHeader";
 import ListBody from "../list/ListBody";
@@ -174,10 +174,10 @@ function CouponList() {
                 <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex justify-center items-center">
                     <Image
-                      Src={"/assets/other/notfound1.png"}
-                      Alt={""}
-                      ClassName={"w-[135px]"}
-                      loadingType="lazy"
+                      src={"/assets/other/notfound1.png"}
+                      alt={""}
+                      className={"w-[135px]"}
+                      loading="lazy"
                     />
                   </div>
                 </td>

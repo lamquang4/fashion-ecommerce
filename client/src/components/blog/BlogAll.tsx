@@ -1,8 +1,8 @@
 "use client";
 import BlogList from "./BlogList";
 import useGetBlogs from "@/hooks/useGetBlogs";
-import Pagination from "../Pagination";
-import BreadCrumb from "../BreadCrumb";
+import Pagination from "../ui/Pagination";
+import BreadCrumb from "../ui/BreadCrumb";
 
 function BlogAll() {
   const { blogs, totalItems, totalPages, currentPage, isLoading } =

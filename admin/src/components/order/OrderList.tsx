@@ -5,14 +5,14 @@ import { RiShoppingBag4Line } from "react-icons/ri";
 import { RiTruckLine } from "react-icons/ri";
 import { LuClock } from "react-icons/lu";
 import { TbCancel } from "react-icons/tb";
-import Image from "../Image";
-import Pagination from "../Pagination";
-import FilterDropDownMenu from "../FilterDropDownMenu";
-import StaticCards from "../StaticCards";
-import InputSearch from "../InputSearch";
+import Image from "../ui/Image";
+import Pagination from "../ui/Pagination";
+import FilterDropDownMenu from "../ui/FilterDropDownMenu";
+import StaticCards from "../ui/StaticCards";
+import InputSearch from "../ui/InputSearch";
 import useGetOrders from "@/hooks/useGetOrders";
 import useUpdateStatusOrder from "@/hooks/useUpdateStatusOrder";
-import Loading from "../Loading";
+import Loading from "../ui/Loading";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import ListHeader from "../list/ListHeader";
 import ListBody from "../list/ListBody";
@@ -121,11 +121,7 @@ function OrderList() {
   };
   return (
     <>
-      <ListHeader title="Đơn hàng" totalItems={totalItems} />
-
-      <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
-        <StaticCards array={array1} />
-      </div>
+      <ListHeader title="Đơn hàng" totalItems={totalItems} arrayData={array1} />
 
       <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9]">
         <form onSubmit={handleSubmit}>
@@ -154,7 +150,7 @@ function OrderList() {
               />
             </div>
 
-            <button className="p-[6px_10px] text-[0.9rem] bg-blue-500 text-white">
+            <button className="p-[6px_10px] text-[0.9rem] bg-primary text-white">
               Tìm kiếm
             </button>
           </div>
@@ -275,10 +271,10 @@ function OrderList() {
                 <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex justify-center items-center">
                     <Image
-                      Src={"/assets/other/notfound1.png"}
-                      Alt={""}
-                      ClassName={"w-[135px]"}
-                      loadingType="lazy"
+                      src={"/assets/other/notfound1.png"}
+                      alt={""}
+                      className={"w-[135px]"}
+                      loading="lazy"
                     />
                   </div>
                 </td>

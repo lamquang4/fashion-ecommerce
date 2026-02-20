@@ -1,6 +1,6 @@
 "use client";
 import { memo } from "react";
-import Image from "../../Image";
+import Image from "../../ui/Image";
 import Link from "next/link";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { RiLogoutBoxLine } from "react-icons/ri";
@@ -25,10 +25,10 @@ function ProfileMenu({ menuOpen, onToggleMenu }: Props) {
           <div className="flex cursor-pointer items-center gap-[6px]">
             <div className="w-[30px] rounded-full border border-gray-300 p-1">
               <Image
-                Src={"/assets/other/owner.png"}
-                Alt={""}
-                ClassName="w-full"
-                loadingType="eager"
+                src={"/assets/other/owner.png"}
+                alt={""}
+                className="w-full"
+                loading="eager"
               />
             </div>
             <p>{session?.user.fullname || ""}</p>

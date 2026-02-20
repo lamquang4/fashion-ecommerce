@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import Image from "../Image";
+import Image from "../ui/Image";
 import { memo } from "react";
 function Footer() {
   return (
@@ -10,15 +10,15 @@ function Footer() {
           <div className="col-span-full lg:col-span-1  space-y-4">
             <Link href={"/"}>
               <Image
-                Src={"/assets/other/logo.png"}
-                Alt={"logo"}
-                ClassName={"w-[80px]"}
-                loadingType="eager"
+                src={"/assets/other/logo.png"}
+                alt={"logo"}
+                className={"w-[80px]"}
+                loading="eager"
               />
             </Link>
             <p className=" text-gray-500">
-              Aura nhận đặt hàng trực tuyến và giao hàng tận nơi. KHÔNG hỗ
-              trợ đặt mua và nhận hàng trực tiếp.
+              Aura nhận đặt hàng trực tuyến và giao hàng tận nơi. KHÔNG hỗ trợ
+              đặt mua và nhận hàng trực tiếp.
             </p>
           </div>
 

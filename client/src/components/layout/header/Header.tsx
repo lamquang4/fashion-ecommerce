@@ -5,9 +5,9 @@ import { CiHeart } from "react-icons/ci";
 import { CiShoppingCart } from "react-icons/ci";
 import { CiUser, CiSearch } from "react-icons/ci";
 import { AiOutlineMenu } from "react-icons/ai";
-import Overplay from "../../Overplay";
+import Overplay from "../../ui/Overplay";
 import ProfileMenu from "./ProfileMenu";
-import Image from "../../Image";
+import Image from "../../ui/Image";
 import useGetCategories from "@/hooks/useGetCategories";
 import SearchMobile from "./SearchMobile";
 import SearchDesktop from "./SearchDesktop";
@@ -89,10 +89,10 @@ function Header() {
           <div className="flex justify-between items-center w-full max-w-[1230px] mx-auto">
             <Link href={"/"}>
               <Image
-                Src={"/assets/other/logo.png"}
-                Alt={"logo"}
-                ClassName={"w-[80px]"}
-                loadingType="eager"
+                src={"/assets/other/logo.png"}
+                alt={"logo"}
+                className={"w-[80px]"}
+                loading="eager"
               />
             </Link>
 

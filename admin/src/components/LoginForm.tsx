@@ -1,12 +1,12 @@
 "use client";
-import Image from "./Image";
+import Image from "./ui/Image";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useLogin from "@/hooks/useLogin";
 import { useRouter } from "next/navigation";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
-import Overplay from "./Overplay";
-import Loading from "./Loading";
+import Overplay from "./ui/Overplay";
+import Loading from "./ui/Loading";
 function LoginForm() {
   const router = useRouter();
   const [data, setData] = useState({ email: "", password: "" });
@@ -18,7 +18,7 @@ function LoginForm() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));
@@ -68,7 +68,7 @@ function LoginForm() {
                       name="email"
                       value={data.email}
                       onChange={handleChange}
-                      className="text-[0.9rem] block w-full px-3 py-2 outline-none border border-gray-300 focus:border-[#0AB39C] focus:text-[#0AB39C]"
+                      className="text-[0.9rem] block w-full px-3 py-2 outline-none border border-gray-300 focus:border-primary focus:text-primary"
                       placeholder="Nhập email"
                       required
                     />
@@ -89,7 +89,7 @@ function LoginForm() {
                         value={data.password}
                         onChange={handleChange}
                         placeholder="Nhập mật khẩu"
-                        className="text-[0.9rem] block w-full px-3 pr-12 py-2 outline-none border border-gray-300 focus:border-[#0AB39C] focus:text-[#0AB39C]"
+                        className="text-[0.9rem] block w-full px-3 pr-12 py-2 outline-none border border-gray-300 focus:border-primary focus:text-primary"
                         required
                       />
 
@@ -109,7 +109,7 @@ function LoginForm() {
 
                   <button
                     type="submit"
-                    className="w-full bg-[#0AB39C] text-[0.9rem] text-white focus:outline-none font-semibold rounded-sm px-5 py-2.5 text-center mt-6"
+                    className="w-full bg-primary text-[0.9rem] text-white focus:outline-none font-semibold rounded-sm px-5 py-2.5 text-center mt-6"
                   >
                     Đăng nhập
                   </button>
@@ -118,10 +118,10 @@ function LoginForm() {
 
               <div className="hidden sm:block border-l-2 border-gray-200 sm:px-2">
                 <Image
-                  Src={"/assets/other/urban.webp"}
-                  Alt={""}
-                  ClassName={"w-auto"}
-                  loadingType="eager"
+                  src={"/assets/other/urban.webp"}
+                  alt={""}
+                  className={"w-auto"}
+                  loading="eager"
                 />
               </div>
             </div>

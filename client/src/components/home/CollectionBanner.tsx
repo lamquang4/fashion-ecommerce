@@ -1,6 +1,6 @@
 "use client";
 import useGetCollectionBanners from "@/hooks/useGetCollectionBanners";
-import Image from "../Image";
+import Image from "../ui/Image";
 import Link from "next/link";
 function CollectionBanner() {
   const { collections } = useGetCollectionBanners();
@@ -14,10 +14,10 @@ function CollectionBanner() {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-[20px]">
               <div className="relative">
                 <Image
-                  Src={collections[0].image}
-                  Alt={""}
-                  ClassName={"w-full"}
-                  loadingType="lazy"
+                  src={collections[0].image}
+                  alt={""}
+                  className={"w-full"}
+                  loading="lazy"
                 />
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
                   <h2 className="mb-[10px]">NAM</h2>
@@ -31,10 +31,10 @@ function CollectionBanner() {
               </div>
               <div className="relative">
                 <Image
-                  Src={collections[1].image}
-                  Alt={""}
-                  ClassName={"w-full"}
-                  loadingType="lazy"
+                  src={collections[1].image}
+                  alt={""}
+                  className={"w-full"}
+                  loading="lazy"
                 />
                 <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
                   <h2 className="mb-[10px]">NỮ</h2>

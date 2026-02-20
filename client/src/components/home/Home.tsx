@@ -1,6 +1,5 @@
 "use client";
 import useGetProductsGender from "@/hooks/useGetProductsGender";
-import Loading from "@/components/Loading";
 import useGetMainBanners from "@/hooks/useGetMainBanners";
 import useGetLatestBlogs from "@/hooks/useGetLatestBlogs";
 import BlogSlider from "../blog/BlogSlider";
@@ -10,6 +9,7 @@ import ServiceFeature from "./ServiceFeature";
 import CategoryList from "./CategoryList";
 import PromoteBanner from "./PromoteBanner";
 import CollectionBanner from "./CollectionBanner";
+import Loading from "../ui/Loading";
 
 export default function Home() {
   const { isLoading } = useGetMainBanners();

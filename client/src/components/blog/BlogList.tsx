@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import Image from "../Image";
+import Image from "../ui/Image";
 import { CiCalendar } from "react-icons/ci";
 import { Blog } from "@/types/type";
 import Loading from "../Loading";

@@ -1,5 +1,4 @@
 "use client";
-
 import { Color, Variant } from "@/types/type";
 import { memo } from "react";
 

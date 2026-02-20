@@ -33,10 +33,10 @@ function SuggestionProduct({ search }: Props) {
                 <div className="hover:bg-[#F7F7F7] p-2.5 w-full flex gap-3.5 border-t border-gray-200">
                   <div>
                     <Image
-                      Src={product.variants[0].images[0]}
-                      Alt=""
-                      ClassName="w-[80px]"
-                      loadingType="eager"
+                      src={product.variants[0].images[0]}
+                      alt=""
+                      className="w-[80px]"
+                      loading="eager"
                     />
                   </div>
 
@@ -50,7 +50,7 @@ function SuggestionProduct({ search }: Props) {
 
                         <p className="font-medium text-[#c00]">
                           {(product.price - product.discount).toLocaleString(
-                            "vi-VN"
+                            "vi-VN",
                           )}
                           ₫
                         </p>

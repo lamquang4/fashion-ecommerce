@@ -1,14 +1,14 @@
 "use client";
-import Image from "../Image";
+import Image from "../ui/Image";
 import { HiMiniXMark } from "react-icons/hi2";
 import useGetPromoteBanners from "@/hooks/useGetPromoteBanners";
 import useAddBanner from "@/hooks/useAddBanner";
 import useUpdateBanner from "@/hooks/useUpdateBanner";
 import toast from "react-hot-toast";
 import { useInputImage1 } from "@/hooks/useInputImage1";
-import ImageViewer from "../ImageViewer";
-import InputImage1 from "../InputImage1";
-import Loading from "../Loading";
+import ImageViewer from "../ui/ImageViewer";
+import InputImage1 from "../ui/InputImage1";
+import Loading from "../ui/Loading";
 import { useState } from "react";
 
 function PromoteBanner() {
@@ -88,19 +88,19 @@ function PromoteBanner() {
                             e.stopPropagation();
                             e.preventDefault();
                             handleOpenViewer(
-                              previewImages1[index] || item?.image
+                              previewImages1[index] || item?.image,
                             );
                           }}
                         >
                           <Image
-                            Src={
+                            src={
                               previewImages1[index] ||
                               item?.image ||
                               "/assets/other/default-banner.png"
                             }
-                            Alt=""
-                            ClassName="w-full object-cover"
-                            loadingType="eager"
+                            alt=""
+                            className="w-full object-cover"
+                            loading="eager"
                           />
                         </div>
 

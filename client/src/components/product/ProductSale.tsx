@@ -1,9 +1,9 @@
 "use client";
 import { useParams, usePathname } from "next/navigation";
 import useGetProductsSale from "@/hooks/useGetProductsSale";
-import Pagination from "@/components/Pagination";
+import Pagination from "@/components/ui/Pagination";
 import ProductList from "./ProductList";
-import BreadCrumb from "../BreadCrumb";
+import BreadCrumb from "../ui/BreadCrumb";
 
 function ProductSale() {
   const params = useParams();

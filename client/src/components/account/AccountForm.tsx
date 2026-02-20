@@ -1,7 +1,7 @@
 "use client";
 import { useSession } from "next-auth/react";
 
-function AccountInfo() {
+function AccountForm() {
   const { data: session } = useSession();
   return (
     <div className="w-full flex-1 px-[15px]">
@@ -79,4 +79,4 @@ function AccountInfo() {
   );
 }
 
-export default AccountInfo;
+export default AccountForm;

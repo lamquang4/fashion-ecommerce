@@ -2,7 +2,7 @@
 import useDeleteAddress from "@/hooks/useDeleteAddress";
 import toast from "react-hot-toast";
 import Loading from "../Loading";
-import Image from "../Image";
+import Image from "../ui/Image";
 import { Address } from "@/types/type";
 
 type Props = {

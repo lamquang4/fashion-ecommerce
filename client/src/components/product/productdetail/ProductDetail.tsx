@@ -2,7 +2,7 @@
 import { memo, useCallback, useEffect, useMemo, useState } from "react";
 import { HiOutlineMinusSmall } from "react-icons/hi2";
 import { HiOutlinePlusSmall } from "react-icons/hi2";
-import MenuSideCoupon from "../../MenuSideCoupon";
+import MenuSideCoupon from "../../ui/MenuSideCoupon";
 import useGetCoupons from "@/hooks/useGetCoupons";
 import toast from "react-hot-toast";
 import { Color, Product, Variant } from "@/types/type";
@@ -11,7 +11,7 @@ import useGetCart from "@/hooks/useGetCart";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import useAddWishlist from "@/hooks/useAddWishlist";
-import SizeChartModal from "../../SizeChartModal";
+import SizeChartModal from "../../ui/SizeChartModal";
 import useGetSizes from "@/hooks/useGetSizes";
 import ProductGallery from "./ProductGallery";
 import ProductDescription from "./ProductDescription";

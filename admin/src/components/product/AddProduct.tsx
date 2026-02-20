@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import InputImage from "../InputImage";
+import InputImage from "../ui/InputImage";
 import { GoTrash } from "react-icons/go";
 import { useCallback, useState } from "react";
 import useAddProduct from "@/hooks/useAddProduct";
@@ -11,17 +11,25 @@ import { useNewInventory } from "@/hooks/useNewInventory";
 import useGetSizes1 from "@/hooks/useGetSizes1";
 import useGetColors1 from "@/hooks/useGetColors1";
 import TextBoxEditor from "../textboxeditor/TextBoxEditor";
+import SearchableSelect from "../ui/SearchableSelect";
 
 const Sortable = dynamic(
   () => import("react-sortablejs").then((mod) => mod.ReactSortable),
   {
     ssr: false,
-  }
+  },
 );
 function AddProduct() {
   const { categories } = useGetCategories1();
   const { colors } = useGetColors1();
   const { sizes } = useGetSizes1();
+
+  const categoryOptions = categories
+    .filter((c) => c._id)
+    .map((c) => ({
+      value: c._id!,
+      label: `${c.namecategory} - ${c.gender === 1 ? "Nam" : c.gender === 0 ? "Nữ" : ""}`,
+    }));
 
   const { addProduct, isLoading } = useAddProduct();
 
@@ -50,7 +58,7 @@ function AddProduct() {
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setData({
@@ -172,21 +180,17 @@ function AddProduct() {
                   <label htmlFor="" className="text-[0.9rem] font-medium">
                     Danh mục
                   </label>
-                  <select
-                    name="category"
-                    required
-                    onChange={handleChange}
+                  <SearchableSelect
+                    options={categoryOptions}
                     value={data.category}
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
-                  >
-                    <option value="">Chọn danh mục</option>
-                    {categories.map((category) => (
-                      <option value={category._id} key={category._id}>
-                        {category.namecategory}-
-                        {category.gender === 1 ? "Nam" : "Nữ"}
-                      </option>
-                    ))}
-                  </select>
+                    onChange={(val) =>
+                      setData((prev) => ({
+                        ...prev,
+                        category: val,
+                      }))
+                    }
+                    placeholder="Chọn danh mục"
+                  />
                 </div>
 
                 <div className="flex flex-col gap-1 w-full">
@@ -212,7 +216,6 @@ function AddProduct() {
                   Mô tả
                 </label>
                 <TextBoxEditor
-                
                   content={data.description}
                   onChange={handleDescriptionChange}
                 />
@@ -263,7 +266,7 @@ function AddProduct() {
                   type="button"
                   disabled={newVariants.length > 5}
                   onClick={handleAddInventoryBlock}
-                  className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
+                  className="bg-secondary border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-primary hover:bg-primary hover:text-white"
                 >
                   Thêm biến thể
                 </button>
@@ -313,7 +316,7 @@ function AddProduct() {
                       type="button"
                       onClick={() => handleAddNewInventory(index)}
                       disabled={block.inventories.length === sizes.length}
-                      className="bg-[#daf4f0] border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-[#0ab39c] hover:bg-[#0ab39c] hover:text-white"
+                      className="bg-secondary border-0 cursor-pointer text-[0.9rem] font-medium !flex p-[10px_12px] items-center justify-center gap-[5px] text-primary hover:bg-primary hover:text-white"
                     >
                       Thêm số lượng
                     </button>
@@ -343,7 +346,7 @@ function AddProduct() {
                       {colors
                         .filter((color) => {
                           return !newVariants.some(
-                            (b, i) => i !== index && b.color === color._id
+                            (b, i) => i !== index && b.color === color._id,
                           );
                         })
                         .map((color) => (
@@ -390,7 +393,7 @@ function AddProduct() {
                                     index,
                                     i,
                                     "size",
-                                    e.target.value
+                                    e.target.value,
                                   )
                                 }
                                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
@@ -400,7 +403,7 @@ function AddProduct() {
                                   .filter((size) => {
                                     return !block.inventories.some(
                                       (inv, j) =>
-                                        j !== i && inv.size === size._id
+                                        j !== i && inv.size === size._id,
                                     );
                                   })
                                   .map((size) => (
@@ -423,7 +426,7 @@ function AddProduct() {
                                     index,
                                     i,
                                     "quantity",
-                                    e.target.value
+                                    e.target.value,
                                   )
                                 }
                                 min={1}

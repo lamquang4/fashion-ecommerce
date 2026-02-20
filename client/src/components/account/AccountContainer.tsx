@@ -2,11 +2,11 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import React, { useEffect } from "react";
-import SideBarMenu from "../SideBarMenu";
-import AccountInfo from "./AccountInfo";
-import BreadCrumb from "../BreadCrumb";
+import SideBarMenu from "../ui/SideBarMenu";
+import AccountInfo from "./AccountForm";
+import BreadCrumb from "../ui/BreadCrumb";
 
-function Account() {
+function AccountContainer() {
   const router = useRouter();
   const { status } = useSession();
   useEffect(() => {
@@ -40,4 +40,4 @@ function Account() {
   );
 }
 
-export default Account;
+export default AccountContainer;

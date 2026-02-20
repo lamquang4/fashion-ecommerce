@@ -1,13 +1,13 @@
 "use client";
 import Link from "next/link";
-import Pagination from "../Pagination";
+import Pagination from "../ui/Pagination";
 import { LiaEdit } from "react-icons/lia";
 import { VscTrash } from "react-icons/vsc";
 import useGetSizes from "@/hooks/useGetSizes";
-import Loading from "../Loading";
-import Image from "../Image";
+import Loading from "../ui/Loading";
+import Image from "../ui/Image";
 import useDeleteSize from "@/hooks/useDeleteSize";
-import InputSearch from "../InputSearch";
+import InputSearch from "../ui/InputSearch";
 import toast from "react-hot-toast";
 import ListHeader from "../list/ListHeader";
 function SizeList() {
@@ -124,10 +124,10 @@ function SizeList() {
                 <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex justify-center items-center">
                     <Image
-                      Src={"/assets/other/notfound1.png"}
-                      Alt={""}
-                      ClassName={"w-[135px]"}
-                      loadingType="lazy"
+                      src={"/assets/other/notfound1.png"}
+                      alt={""}
+                      className={"w-[135px]"}
+                      loading="lazy"
                     />
                   </div>
                 </td>

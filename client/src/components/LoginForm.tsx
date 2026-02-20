@@ -3,8 +3,8 @@ import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 import useLogin from "@/hooks/useLogin";
-import Loading from "./Loading";
-import Overplay from "./Overplay";
+import Loading from "./ui/Loading";
+import Overplay from "./ui/Overplay";
 import { useRouter } from "next/navigation";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
 

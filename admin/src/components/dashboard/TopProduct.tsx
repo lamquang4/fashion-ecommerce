@@ -1,8 +1,8 @@
 "use client";
 import { LiaExternalLinkAltSolid } from "react-icons/lia";
 import Link from "next/link";
-import Image from "../Image";
-import Loading from "../Loading";
+import Image from "../ui/Image";
+import Loading from "../ui/Loading";
 import useGetTop10Products from "@/hooks/useGetTop10Products";
 import { Variant } from "@/types/types";
 import { useState } from "react";
@@ -59,20 +59,20 @@ function TopProduct() {
                         <div className="relative group">
                           {variant.images[0] && (
                             <Image
-                              Src={variant.images[0]}
-                              Alt={product.name}
-                              ClassName={"w-[80px] z-[1] relative"}
-                              loadingType="lazy"
+                              src={variant.images[0]}
+                              alt={product.name}
+                              className={"w-[80px] z-[1] relative"}
+                              loading="lazy"
                             />
                           )}
                           {variant.images[1] && (
                             <Image
-                              Src={variant.images[1]}
-                              Alt={product.name}
-                              ClassName={
+                              src={variant.images[1]}
+                              alt={product.name}
+                              className={
                                 "w-[80px] absolute top-0 left-0 opacity-0 z-[2] transition-opacity duration-300 group-hover:opacity-100"
                               }
-                              loadingType="eager"
+                              loading="eager"
                             />
                           )}
                         </div>
@@ -92,7 +92,7 @@ function TopProduct() {
 
                           <p className="font-medium text-[#c00]">
                             {(product.price - product.discount).toLocaleString(
-                              "vi-VN"
+                              "vi-VN",
                             )}
                             ₫
                           </p>
@@ -137,8 +137,8 @@ function TopProduct() {
                       {product.category.gender === 1
                         ? "Nam"
                         : product.category.gender === 0
-                        ? "Nữ"
-                        : ""}
+                          ? "Nữ"
+                          : ""}
                     </td>
 
                     <td className="p-[1rem]  ">
@@ -159,10 +159,10 @@ function TopProduct() {
                 <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex justify-center items-center">
                     <Image
-                      Src={"/assets/other/notfound1.png"}
-                      Alt={""}
-                      ClassName={"w-[135px]"}
-                      loadingType="lazy"
+                      src={"/assets/other/notfound1.png"}
+                      alt={""}
+                      className={"w-[135px]"}
+                      loading="lazy"
                     />
                   </div>
                 </td>

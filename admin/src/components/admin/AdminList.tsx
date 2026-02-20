@@ -3,14 +3,14 @@ import Link from "next/link";
 import { VscTrash } from "react-icons/vsc";
 import { LiaEdit } from "react-icons/lia";
 import { TbLock, TbLockOpen } from "react-icons/tb";
-import Pagination from "../Pagination";
-import FilterDropDownMenu from "../FilterDropDownMenu";
+import Pagination from "../ui/Pagination";
+import FilterDropDownMenu from "../ui/FilterDropDownMenu";
 import useGetAdmins from "@/hooks/useGetAdmins";
-import Image from "../Image";
+import Image from "../ui/Image";
 import useBlockUser from "@/hooks/useBlockUser";
-import Loading from "../Loading";
+import Loading from "../ui/Loading";
 import useDeleteUser from "@/hooks/useDeleteUser";
-import InputSearch from "../InputSearch";
+import InputSearch from "../ui/InputSearch";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
 import ListHeader from "../list/ListHeader";
@@ -179,10 +179,10 @@ function AdminList() {
                 <td colSpan={8} className="w-full h-[70vh]">
                   <div className="flex justify-center items-center">
                     <Image
-                      Src={"/assets/other/notfound1.png"}
-                      Alt={""}
-                      ClassName={"w-[135px]"}
-                      loadingType="lazy"
+                      src={"/assets/other/notfound1.png"}
+                      alt={""}
+                      className={"w-[135px]"}
+                      loading="lazy"
                     />
                   </div>
                 </td>

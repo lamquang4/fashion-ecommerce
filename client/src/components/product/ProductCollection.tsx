@@ -1,10 +1,10 @@
 "use client";
 import useGetCategory from "@/hooks/useGetCategory";
 import { useParams } from "next/navigation";
-import Pagination from "../Pagination";
+import Pagination from "../ui/Pagination";
 import ProductList from "./ProductList";
 import useGetProductsCollection from "@/hooks/useGetProductsCollection";
-import BreadCrumb from "../BreadCrumb";
+import BreadCrumb from "../ui/BreadCrumb";
 
 function ProductCollection() {
   const params = useParams();

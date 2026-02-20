@@ -1,11 +1,11 @@
 "use client";
 import { memo, useEffect, useMemo, useState } from "react";
-import Image from "../../Image";
+import Image from "../../ui/Image";
 import { GrNext, GrPrevious } from "react-icons/gr";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Variant } from "@/types/type";
-import ImageViewer from "@/components/ImageViewer";
+import ImageViewer from "@/components/ui/ImageViewer";
 
 type Props = {
   variants: Variant[];
@@ -82,10 +82,10 @@ function ProductGallery({ variants, mainImage, setMainImage }: Props) {
                   }`}
                 >
                   <Image
-                    Src={img}
-                    Alt=""
-                    ClassName="w-full h-full object-contain"
-                    loadingType="eager"
+                    src={img}
+                    alt=""
+                    className="w-full h-full object-contain"
+                    loading="eager"
                   />
                 </div>
               </SwiperSlide>
@@ -116,10 +116,10 @@ function ProductGallery({ variants, mainImage, setMainImage }: Props) {
             </button>
 
             <Image
-              Src={mainImage}
-              Alt=""
-              ClassName="w-full h-full object-contain"
-              loadingType="eager"
+              src={mainImage}
+              alt=""
+              className="w-full h-full object-contain"
+              loading="eager"
             />
 
             <button

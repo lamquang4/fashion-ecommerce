@@ -3,7 +3,7 @@ import Link from "next/link";
 import { useCallback, useState } from "react";
 import TextBoxEditor from "../textboxeditor/TextBoxEditor";
 import { useInputImage } from "@/hooks/useInputImage";
-import InputImage from "../InputImage";
+import InputImage from "../ui/InputImage";
 import toast from "react-hot-toast";
 import useAddBlog from "@/hooks/useAddBlog";
 

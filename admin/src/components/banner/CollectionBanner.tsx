@@ -6,10 +6,10 @@ import useAddBanner from "@/hooks/useAddBanner";
 import useUpdateBanner from "@/hooks/useUpdateBanner";
 import { useInputImage1 } from "@/hooks/useInputImage1";
 import { useState } from "react";
-import ImageViewer from "../ImageViewer";
-import InputImage1 from "../InputImage1";
-import Loading from "../Loading";
-import Image from "../Image";
+import ImageViewer from "../ui/ImageViewer";
+import InputImage1 from "../ui/InputImage1";
+import Loading from "../ui/Loading";
+import Image from "../ui/Image";
 
 function CollectionBanner() {
   const [openViewer, setOpenViewer] = useState<boolean>(false);
@@ -88,19 +88,19 @@ function CollectionBanner() {
                             e.stopPropagation();
                             e.preventDefault();
                             handleOpenViewer(
-                              previewImages1[index] || item?.image
+                              previewImages1[index] || item?.image,
                             );
                           }}
                         >
                           <Image
-                            Src={
+                            src={
                               previewImages1[index] ||
                               item?.image ||
                               "/assets/other/default-banner.png"
                             }
-                            Alt=""
-                            ClassName="w-full object-cover"
-                            loadingType="lazy"
+                            alt=""
+                            className="w-full object-cover"
+                            loading="lazy"
                           />
                           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-center text-white">
                             <h2 className="mb-[10px]">

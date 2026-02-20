@@ -1,5 +1,5 @@
 "use client";
-import TableOfContent from "@/components/TableOfContent";
+import TableOfContent from "@/components/ui/TableOfContent";
 import { Blog } from "@/types/type";
 import { generateNumberingTOC } from "@/utils/generateNumberingTOC";
 import { removeVietNamese } from "@/utils/removeVietnamese";

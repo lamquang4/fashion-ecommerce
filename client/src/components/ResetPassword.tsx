@@ -4,8 +4,8 @@ import { validateEmail } from "@/utils/validateEmail";
 import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
-import Overplay from "./Overplay";
-import Loading from "./Loading";
+import Overplay from "./ui/Overplay";
+import Loading from "./ui/Loading";
 import { useRouter } from "next/navigation";
 import { useResetPassword } from "@/hooks/useResetPassword";
 import { HiOutlineEyeOff, HiOutlineEye } from "react-icons/hi";
@@ -30,7 +30,7 @@ function ResetPassword() {
   };
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({
