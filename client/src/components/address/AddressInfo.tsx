@@ -1,7 +1,7 @@
 "use client";
 import useDeleteAddress from "@/hooks/useDeleteAddress";
 import toast from "react-hot-toast";
-import Loading from "../Loading";
+import Loading from "../ui/Loading";
 import Image from "../ui/Image";
 import { Address } from "@/types/type";
 
@@ -112,10 +112,10 @@ function AddressInfo({
             <div className="flex justify-center items-center h-[70vh]">
               <div className="flex flex-col justify-center items-center gap-[15px]">
                 <Image
-                  Src={"/assets/other/address.png"}
-                  Alt={""}
-                  ClassName={"w-[80px]"}
-                  loadingType="eager"
+                  src={"/assets/other/address.png"}
+                  alt={""}
+                  className={"w-[80px]"}
+                  loading="eager"
                 />
 
                 <h4 className="text-gray-600">Không có địa chỉ nào</h4>

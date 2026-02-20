@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import AddressInfo from "./AddressInfo";
 import BreadCrumb from "../ui/BreadCrumb";
 import useGetAddresses from "@/hooks/useGetAddresses";
-function Address() {
+function AddressContainer() {
   const { status } = useSession();
   const router = useRouter();
   const { addresses, mutate, isLoading } = useGetAddresses();
@@ -69,4 +69,4 @@ function Address() {
   );
 }
 
-export default Address;
+export default AddressContainer;

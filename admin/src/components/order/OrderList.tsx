@@ -8,7 +8,6 @@ import { TbCancel } from "react-icons/tb";
 import Image from "../ui/Image";
 import Pagination from "../ui/Pagination";
 import FilterDropDownMenu from "../ui/FilterDropDownMenu";
-import StaticCards from "../ui/StaticCards";
 import InputSearch from "../ui/InputSearch";
 import useGetOrders from "@/hooks/useGetOrders";
 import useUpdateStatusOrder from "@/hooks/useUpdateStatusOrder";

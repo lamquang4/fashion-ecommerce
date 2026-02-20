@@ -1,7 +1,7 @@
-import Address from "@/components/address/Address";
+import AddressContainer from "@/components/address/AddressContainer";
 
 function page() {
-  return <Address />;
+  return <AddressContainer />;
 }
 
 export default page;

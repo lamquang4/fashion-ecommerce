@@ -1,6 +1,6 @@
 "use client";
 import { HiMiniXMark } from "react-icons/hi2";
-import Overplay from "../Overplay";
+import Overplay from "../ui/Overplay";
 import { memo, useEffect, useMemo, useState } from "react";
 import useGetAddress from "@/hooks/useGetAddress";
 import useUpdateAddress from "@/hooks/useUpdateAddress";
@@ -41,7 +41,7 @@ function AddressModal({
 
   const selectedProvince = useMemo(
     () => provinces?.find((p) => p.province === data.city),
-    [provinces, data.city]
+    [provinces, data.city],
   );
   useEffect(() => {
     if (isLoading) return;
@@ -78,7 +78,7 @@ function AddressModal({
   }, [isOpen]);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({ ...prev, [name]: value }));

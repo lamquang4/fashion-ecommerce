@@ -3,7 +3,7 @@ import Link from "next/link";
 import Image from "../ui/Image";
 import { CiCalendar } from "react-icons/ci";
 import { Blog } from "@/types/type";
-import Loading from "../Loading";
+import Loading from "../ui/Loading";
 
 type Props = {
   blogs: Blog[];
@@ -31,10 +31,10 @@ function BlogList({ blogs, isLoading }: Props) {
               <Link href={`/blog/${blog.slug}`} className="h-full">
                 <div className="w-full aspect-[16/9] overflow-hidden">
                   <Image
-                    Src={blog.image}
-                    Alt={blog.title}
-                    ClassName="w-full h-full object-cover"
-                    loadingType="lazy"
+                    src={blog.image}
+                    alt={blog.title}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
                   />
                 </div>
 
@@ -71,10 +71,10 @@ function BlogList({ blogs, isLoading }: Props) {
         <div className="flex justify-center items-center h-[60vh]">
           <div className="flex flex-col justify-center items-center gap-[15px]">
             <Image
-              Src={"/assets/other/notfound1.png"}
-              Alt={""}
-              ClassName={"w-[150px]"}
-              loadingType="eager"
+              src={"/assets/other/notfound1.png"}
+              alt={""}
+              className={"w-[150px]"}
+              loading="eager"
             />
 
             <h4 className="text-gray-600">Không có bài viết nào</h4>
