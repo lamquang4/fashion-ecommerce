@@ -31,6 +31,11 @@ function AddProduct() {
       label: `${c.namecategory} - ${c.gender === 1 ? "Nam" : c.gender === 0 ? "Nữ" : ""}`,
     }));
 
+  const colorOptions = colors.map((c) => ({
+    value: c._id!,
+    label: `${c.namecolor} - (${c.codecolor})`,
+  }));
+
   const { addProduct, isLoading } = useAddProduct();
 
   const {
@@ -87,6 +92,13 @@ function AddProduct() {
     if (Number(data.price) <= 0) {
       toast.error("Giá bán phải lớn hơn 0");
       return;
+    }
+
+    if (data.discount > 0) {
+      if (Math.floor((data.discount / data.price) * 100) < 1) {
+        toast.error("Phần trăm giảm giá phải lớn hơn hoặc bằng 1%");
+        return;
+      }
     }
 
     const formData = new FormData();
@@ -331,30 +343,20 @@ function AddProduct() {
                   </div>
 
                   <div>
-                    <select
-                      name="color"
+                    <SearchableSelect
+                      options={colorOptions.filter((color) => {
+                        return !newVariants.some(
+                          (b, i) => i !== index && b.color === color.value,
+                        );
+                      })}
                       value={block.color}
-                      onChange={(e) => {
+                      onChange={(val) => {
                         const updated = [...newVariants];
-                        updated[index].color = e.target.value;
+                        updated[index].color = val;
                         setNewVariants(updated);
                       }}
-                      required
-                      className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
-                    >
-                      <option value="">Chọn màu</option>
-                      {colors
-                        .filter((color) => {
-                          return !newVariants.some(
-                            (b, i) => i !== index && b.color === color._id,
-                          );
-                        })
-                        .map((color) => (
-                          <option value={color._id} key={color._id}>
-                            {color.namecolor} ({color.codecolor})
-                          </option>
-                        ))}
-                    </select>
+                      placeholder="Chọn màu"
+                    />
                   </div>
 
                   <div className="bg-white w-full overflow-auto">

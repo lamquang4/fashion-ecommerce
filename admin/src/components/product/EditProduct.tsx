@@ -104,6 +104,11 @@ function EditProduct() {
       label: `${c.namecategory} - ${c.gender === 1 ? "Nam" : c.gender === 0 ? "Nữ" : ""}`,
     }));
 
+  const colorOptions = colors.map((c) => ({
+    value: c._id!,
+    label: `${c.namecolor} - (${c.codecolor})`,
+  }));
+
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);
     setOpenViewer(true);
@@ -193,6 +198,13 @@ function EditProduct() {
     if (Number(data.price) <= 0) {
       toast.error("Giá bán phải lớn hơn 0");
       return;
+    }
+
+    if (data.discount > 0) {
+      if (Math.floor((data.discount / data.price) * 100) < 1) {
+        toast.error("Phần trăm giảm giá phải lớn hơn hoặc bằng 1%");
+        return;
+      }
     }
 
     const formData = new FormData();
@@ -524,33 +536,33 @@ function EditProduct() {
                 </div>
 
                 <div>
-                  <select
-                    name="color"
-                    value={block.color}
-                    onChange={(e) => {
-                      const updated = [...currentVariants];
-                      updated[index].color = e.target.value;
-                      setCurrentVariants(updated);
-                    }}
-                    required
-                    className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
-                  >
-                    {colors
+                  <SearchableSelect
+                    options={colors
                       .filter((color) => {
-                        const checkColorInCurrent = currentVariants.some(
+                        if (color._id === block.color) return true;
+
+                        const checkColorInNew = newVariants.some(
                           (b, i) => i !== index && b.color === color._id,
                         );
-                        const checkColorInNew = newVariants.some(
+
+                        const checkColorInCurrent = currentVariants.some(
                           (b) => b.color === color._id,
                         );
-                        return !checkColorInCurrent && !checkColorInNew;
+
+                        return !checkColorInNew && !checkColorInCurrent;
                       })
-                      .map((color) => (
-                        <option value={color._id} key={color._id}>
-                          {color.namecolor} ({color.codecolor})
-                        </option>
-                      ))}
-                  </select>
+                      .map((c) => ({
+                        value: c._id!,
+                        label: `${c.namecolor} (${c.codecolor})`,
+                      }))}
+                    value={block.color}
+                    onChange={(val) => {
+                      const updated = [...currentVariants];
+                      updated[index].color = val;
+                      setCurrentVariants(updated);
+                    }}
+                    placeholder="Chọn màu"
+                  />
                 </div>
 
                 <div className="bg-white w-full overflow-auto">
