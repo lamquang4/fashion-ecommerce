@@ -1,9 +1,17 @@
 "use client";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
+import { useEffect } from "react";
 import Image from "./ui/Image";
 function OrderResult() {
   const searchParams = useSearchParams();
+  const router = useRouter();
   const result = searchParams.get("result");
+
+  useEffect(() => {
+    if (result !== "successful" && result !== "fail") {
+      router.replace("/");
+    }
+  }, [result, router]);
   return (
     <section className="my-[40px] px-[15px]">
       <div className="mx-auto max-w-[1200px] w-full">
