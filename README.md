@@ -1,5 +1,9 @@
 # WEBSITE THỜI TRANG
 
+![](docs/images/ui1.png)
+
+![](docs/images/ui2.png)
+
 ## Cài đặt môi trường
 
 **1. Clone repository**
