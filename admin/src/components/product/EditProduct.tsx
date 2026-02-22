@@ -104,11 +104,6 @@ function EditProduct() {
       label: `${c.namecategory} - ${c.gender === 1 ? "Nam" : c.gender === 0 ? "Nữ" : ""}`,
     }));
 
-  const colorOptions = colors.map((c) => ({
-    value: c._id!,
-    label: `${c.namecolor} - (${c.codecolor})`,
-  }));
-
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);
     setOpenViewer(true);
@@ -205,6 +200,11 @@ function EditProduct() {
         toast.error("Phần trăm giảm giá phải lớn hơn hoặc bằng 1%");
         return;
       }
+    }
+
+    if (!data.category) {
+       toast.error("Vui lòng chọn danh mục sản phẩm");
+       return
     }
 
     const formData = new FormData();

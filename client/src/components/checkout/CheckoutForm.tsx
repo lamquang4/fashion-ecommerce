@@ -143,85 +143,58 @@ function CheckoutForm() {
       return;
     }
 
-    const items = cart?.productsInCart.map((item) => {
-      return {
-        product: item._id,
-        size: item.variant.size._id,
-        color: item.variant.color._id,
-        quantity: item.variant.quantity,
-        price: item.price,
-        discount: item.discount,
+    const items = cart?.productsInCart.map((item) => ({
+      product: item._id,
+      size: item.variant.size._id,
+      color: item.variant.color._id,
+      quantity: item.variant.quantity,
+      price: item.price,
+      discount: item.discount,
+    }));
+
+    try {
+      const orderPayload = {
+        fullname: data.fullname,
+        phone: data.phone,
+        speaddress: data.speaddress,
+        city: data.city,
+        ward: data.ward,
+        paymethod,
+        productsBuy: items!,
+        total: finalTotal,
+        ...(coupon?._id && { coupon: coupon._id }),
       };
-    });
 
-    if (paymethod === "cod") {
-      try {
-        await addOrder({
-          fullname: data.fullname,
-          phone: data.phone,
-          speaddress: data.speaddress,
-          city: data.city,
-          ward: data.ward,
-          paymethod: paymethod,
-          productsBuy: items!,
-          total: finalTotal,
-          ...(coupon?._id && { coupon: coupon._id }),
-        });
+      const orderResponse = await addOrder(orderPayload);
 
+      if (paymethod === "cod") {
         setIsOrdering(true);
-
-        router.replace("/order-result?result=successful");
-
         mutateCart({ productsInCart: [] }, false);
-      } catch (err: any) {
-        toast.error(err?.response?.data?.msg);
+        router.replace("/order-result?result=successful");
+        return;
       }
-    } else if (paymethod === "momo") {
-      try {
-        const orderResponse = await addOrder({
-          fullname: data.fullname,
-          phone: data.phone,
-          speaddress: data.speaddress,
-          city: data.city,
-          ward: data.ward,
-          paymethod: paymethod,
-          productsBuy: items!,
-          total: finalTotal,
-          ...(coupon?._id && { coupon: coupon._id }),
-        });
 
+      if (paymethod === "momo") {
         const momoResponse = await createPaymentMomo({
           total: finalTotal,
           orderCode: orderResponse.orderCode,
         });
 
         window.location.href = momoResponse.payUrl;
-      } catch (err: any) {
-        toast.error(err?.response?.data?.msg);
+        return;
       }
-    } else if (paymethod === "vnpay") {
-      try {
-        const orderResponse = await addOrder({
-          fullname: data.fullname,
-          phone: data.phone,
-          speaddress: data.speaddress,
-          city: data.city,
-          ward: data.ward,
-          paymethod: paymethod,
-          productsBuy: items!,
-          total: finalTotal,
-          ...(coupon?._id && { coupon: coupon._id }),
-        });
 
+      if (paymethod === "vnpay") {
         const vnpayResponse = await createPaymentVNPay({
           total: finalTotal,
           orderCode: orderResponse.orderCode,
         });
 
         window.location.href = vnpayResponse.payUrl;
-      } catch (err: any) {
-        toast.error(err?.response?.data?.msg);
+        return;
       }
+    } catch (err: any) {
+      toast.error(err?.response?.data?.msg);
     }
   };
 

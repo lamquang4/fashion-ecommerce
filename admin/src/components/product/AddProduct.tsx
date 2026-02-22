@@ -101,6 +101,11 @@ function AddProduct() {
       }
     }
 
+    if (!data.category) {
+      toast.error("Vui lòng chọn danh mục sản phẩm");
+      return;
+    }
+
     const formData = new FormData();
     formData.append("name", data.name.trim());
     formData.append("price", data.price.toString());
