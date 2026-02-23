@@ -2,6 +2,7 @@
 import Image from "../ui/Image";
 import { useParams, useRouter } from "next/navigation";
 import useGetOrder from "@/hooks/useGetOrder";
+import useUpdateStatusOrder from "@/hooks/useUpdateStatusOrder";
 import { LuArchive, LuCheck, LuStar, LuTruck } from "react-icons/lu";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { TbCancel } from "react-icons/tb";
@@ -14,7 +15,23 @@ function OrderDetail() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
-  const { order, isLoading } = useGetOrder(id);
+  const { order, mutate, isLoading } = useGetOrder(id);
+
+  const { updateStatusOrder, isLoading: isLoadingUpdate } =
+    useUpdateStatusOrder();
+
+  const handleUpdateStatus = async (id: string, status: number) => {
+    if (!id && !status) {
+      return;
+    }
+    try {
+      await updateStatusOrder(id, status);
+      mutate();
+    } catch (err: any) {
+      toast.error(err?.response?.data?.message);
+      mutate();
+    }
+  };
 
   useEffect(() => {
     if (isLoading) return;
@@ -87,51 +104,106 @@ function OrderDetail() {
                     </p>
                   </div>
 
-                  <Link href={"/order"} className="text-center">
+                  <Link href={"/admin/order"} className="text-center">
                     <span className="flex items-center font-semibold text-gray-600">
                       <RiArrowLeftSLine size={20} /> Trở về
                     </span>
                   </Link>
                 </div>
 
-                {order?.status !== 4 ? (
-                  <div className="relative gap-y-5 grid grid-cols-2 md:grid-cols-4 py-[20px] px-[20px]   border-b border-gray-300">
-                    {steps.map((step, index) => {
-                      const isActive = (order?.status ?? -1) >= index;
-                      return (
-                        <div
-                          key={index}
-                          className="flex flex-col items-center relative z-10 bg-white"
-                        >
-                          <div
-                            className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 border-2 ${
-                              isActive
-                                ? "border-green-500 text-green-500"
-                                : "border-gray-400 text-gray-400"
-                            }`}
-                          >
-                            {step.icon}
-                          </div>
-                          <span
-                            className={`font-medium text-center ${
-                              isActive ? " text-green-500" : " "
-                            }`}
-                          >
-                            {step.label}
-                          </span>
-                        </div>
-                      );
-                    })}
+                <div className="px-[20px]">
+                  <div className="flex justify-center w-full py-[20px]">
+                    <select
+                      name="status"
+                      disabled={isLoadingUpdate}
+                      onChange={(e) =>
+                        handleUpdateStatus(order!._id, parseInt(e.target.value))
+                      }
+                      value={order?.status}
+                      className="border border-gray-300 p-[6px_10px] text-[0.9rem] outline-none focus:border-gray-400  "
+                    >
+                      {order?.status === -1 && (
+                        <option value="-1">Chờ thanh toán</option>
+                      )}
+                      {order?.status === 0 && (
+                        <>
+                          <option value="0">Chờ xác nhận</option>
+                          <option value="1">Xác nhận</option>
+                          <option value="4">Hủy</option>
+                        </>
+                      )}
+                      {order?.status === 1 && (
+                        <>
+                          <option value="1">Xác nhận</option>
+                          <option value="2">Đang giao</option>
+                          <option value="4">Hủy</option>
+                        </>
+                      )}
+                      {order?.status === 2 && (
+                        <>
+                          <option value="2">Đang giao</option>
+                          <option value="3">Giao thành công</option>
+                          <option value="4">Hủy</option>
+                        </>
+                      )}
+                      {order?.status === 3 && (
+                        <>
+                          <option value="3">Giao thành công</option>
+                          <option value="5">Trả hàng</option>
+                        </>
+                      )}
+                      {order?.status === 4 && <option value="4">Hủy</option>}
+                      {order?.status === 5 && (
+                        <option value="5">Trả hàng</option>
+                      )}
+                    </select>
                   </div>
-                ) : (
-                  <div className="relative flex items-center justify-center py-[20px] px-[20px]   border-b border-gray-300">
-                    <span className="font-semibold text-center text-red-500 flex items-center gap-2">
-                      <TbCancel size={25} /> Đã hủy đơn hàng
-                    </span>
-                  </div>
-                )}
 
-                <div className="px-[20px]   space-y-[8px] py-[20px]">
+                  {order?.status === 4 ? (
+                    <div className="relative flex items-center justify-center py-[20px] px-[20px] border-b border-gray-300">
+                      <span className="font-semibold text-center text-red-500 flex items-center gap-2">
+                        <TbCancel size={25} /> Đã hủy đơn hàng
+                      </span>
+                    </div>
+                  ) : order?.status === 5 ? (
+                    <div className="relative flex items-center justify-center py-[20px] border-b border-gray-300">
+                      <span className="font-semibold text-center text-red-500 flex items-center gap-2">
+                        <TbCancel size={25} /> Đã trả hàng
+                      </span>
+                    </div>
+                  ) : (
+                    <div className="relative gap-y-5 grid grid-cols-2 md:grid-cols-4 py-[20px] border-b border-gray-300">
+                      {steps.map((step, index) => {
+                        const isActive = (order?.status ?? -1) >= index;
+                        return (
+                          <div
+                            key={index}
+                            className="flex flex-col items-center relative z-10 bg-white"
+                          >
+                            <div
+                              className={`w-12 h-12 rounded-full flex items-center justify-center mb-2 border-2 ${
+                                isActive
+                                  ? "border-green-500 text-green-500"
+                                  : "border-gray-400 text-gray-400"
+                              }`}
+                            >
+                              {step.icon}
+                            </div>
+                            <span
+                              className={`font-medium text-center ${
+                                isActive ? " text-green-500" : ""
+                              }`}
+                            >
+                              {step.label}
+                            </span>
+                          </div>
+                        );
+                      })}
+                    </div>
+                  )}
+                </div>
+
+                <div className="px-[20px] space-y-[8px] py-[20px]">
                   <h4 className="uppercase">Thông tin giao hàng</h4>
 
                   <p className="font-medium">
