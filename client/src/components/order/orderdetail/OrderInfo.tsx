@@ -66,7 +66,7 @@ function OrderInfo({ order, isLoading }: Props) {
             </div>
 
             <Link href={"/order"} className="text-center">
-              <span className="flex items-center font-semibold text-gray-600">
+              <span className="flex items-center font-semibold text-gray-400">
                 <RiArrowLeftSLine size={20} /> Trở về
               </span>
             </Link>
@@ -102,14 +102,14 @@ function OrderInfo({ order, isLoading }: Props) {
               })}
             </div>
           ) : (
-            <div className="relative flex items-center justify-center py-[20px] px-[20px]   border-b border-gray-300">
+            <div className="relative flex items-center justify-center py-[20px] px-[20px] border-b border-gray-300">
               <span className="font-semibold text-center text-red-500 flex items-center gap-2">
                 <TbCancel size={25} /> Đã hủy đơn hàng
               </span>
             </div>
           )}
 
-          <div className="px-[20px]   space-y-[8px] py-[20px]">
+          <div className="px-[20px] space-y-[8px] py-[20px]">
             <h4 className="uppercase">Thông tin giao hàng</h4>
 
             <p className="font-medium">
@@ -216,7 +216,7 @@ function OrderInfo({ order, isLoading }: Props) {
 
                 {order?.coupon && (
                   <tr className="text-[1rem] font-medium ">
-                    <td className="p-[20px]  ">Phiếu giảm giá:</td>
+                    <td className="p-[20px] ">Phiếu giảm giá:</td>
                     <td className="p-[20px]  ">
                       {order?.coupon?.discountType === 1 ? (
                         <p>
