@@ -9,7 +9,6 @@ import useAddWishlist from "@/hooks/useAddWishlist";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
 import ProductCard from "./ProductCard";
-import ProductCardSkeleton from "../skeleton/ProductListSkeleton";
 import ProductListSkeleton from "../skeleton/ProductListSkeleton";
 
 interface Props {

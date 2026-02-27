@@ -23,7 +23,7 @@ function BlogList({ blogs, isLoading }: Props) {
           }`}
         >
           {blogs.map((blog) => (
-            <BlogCard blog={blog} />
+            <BlogCard blog={blog} key={blog._id} />
           ))}
         </div>
       ) : (
