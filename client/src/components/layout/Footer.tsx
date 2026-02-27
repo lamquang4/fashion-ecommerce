@@ -5,9 +5,9 @@ import { memo } from "react";
 function Footer() {
   return (
     <footer className="bg-gray-50 border-t border-gray-200 px-[15px]">
-      <div className="mx-auto w-full max-w-[1200px]">
+      <div className="mx-auto w-full max-w-[1230px]">
         <div className="grid grid-cols-2 gap-8 md:grid-cols-4 py-8">
-          <div className="col-span-full lg:col-span-1  space-y-4">
+          <div className="col-span-full lg:col-span-1 space-y-4">
             <Link href={"/"}>
               <Image
                 src={"/assets/other/logo.png"}

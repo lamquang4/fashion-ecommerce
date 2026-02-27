@@ -1,20 +1,26 @@
 "use client";
-import useGetCollectionBanners from "@/hooks/useGetCollectionBanners";
 import Image from "../ui/Image";
 import Link from "next/link";
-function CollectionBanner() {
-  const { collections } = useGetCollectionBanners();
-
+import { Banner } from "@/types/type";
+import CollectionBannerSkeleton from "../skeleton/CollectionBannerSkeleton";
+type Props = {
+  banners: Banner[];
+  isLoading: boolean;
+};
+function CollectionBanner({ banners, isLoading }: Props) {
   return (
     <>
-      {collections.length > 0 && (
-        <section className="mb-[40px]  px-[15px]">
-          <div className="mx-auto max-w-[1230px] w-full">
-            <h2 className="mb-[20px] font-semibold">Bộ sưu tập</h2>
+      <section className="mb-[40px]  px-[15px]">
+        <div className="mx-auto max-w-[1230px] w-full">
+          <h2 className="mb-[20px] font-semibold">Bộ sưu tập</h2>
+
+          {isLoading ? (
+            <CollectionBannerSkeleton />
+          ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-[20px]">
-              <div className="relative">
+              <div className="relative aspect-[4/5] overflow-hidden">
                 <Image
-                  src={collections[0].image}
+                  src={banners[0].image}
                   alt={""}
                   className={"w-full"}
                   loading="lazy"
@@ -29,9 +35,9 @@ function CollectionBanner() {
                   </Link>
                 </div>
               </div>
-              <div className="relative">
+              <div className="relative aspect-[4/5] overflow-hidden">
                 <Image
-                  src={collections[1].image}
+                  src={banners[1].image}
                   alt={""}
                   className={"w-full"}
                   loading="lazy"
@@ -47,9 +53,9 @@ function CollectionBanner() {
                 </div>
               </div>
             </div>
-          </div>
-        </section>
-      )}
+          )}
+        </div>
+      </section>
     </>
   );
 }

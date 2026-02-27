@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useMemo, useState } from "react";
+import { memo, useCallback, useMemo, useState } from "react";
 import AdvancedSearch from "../ui/AdvancedSearch";
 import Image from "../ui/Image";
 import { VscSettings } from "react-icons/vsc";
@@ -9,7 +9,7 @@ import useGetWishlist from "@/hooks/useGetWishlist";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
 import useAddWishlist from "@/hooks/useAddWishlist";
 import ProductCard from "./ProductCard";
-import ProductCardSkeleton from "../skeleton/ProductCardSkeleton";
+import ProductListSkeleton from "../skeleton/ProductListSkeleton";
 
 interface Props {
   category?: Category;
@@ -113,11 +113,7 @@ function ProductList({ category, products, isLoading, total }: Props) {
   return (
     <>
       <h2 className="mb-[20px]">
-        {!isLoading && (
-          <>
-            {getTitle()} ({total})
-          </>
-        )}
+        {isLoading ? "Sản phẩm" : `${getTitle()} (${total})`}
       </h2>
 
       <div className="flex justify-between items-center flex-wrap mb-[35px]">
@@ -149,11 +145,7 @@ function ProductList({ category, products, isLoading, total }: Props) {
       />
 
       {isLoading ? (
-        <div className="grid grid-cols-2 gap-x-[12px] gap-y-[35px] lg:grid-cols-3 2xl:grid-cols-4 sm:grid-cols-2">
-          {Array.from({ length: 8 }).map((_, index) => (
-            <ProductCardSkeleton key={index} />
-          ))}
-        </div>
+        <ProductListSkeleton count={12} />
       ) : products.length > 0 ? (
         <div
           className={`grid grid-cols-2 gap-x-[12px] gap-y-[35px] lg:grid-cols-3 2xl:grid-cols-4 sm:grid-cols-2 ${
@@ -194,4 +186,4 @@ function ProductList({ category, products, isLoading, total }: Props) {
   );
 }
 
-export default ProductList;
+export default memo(ProductList);

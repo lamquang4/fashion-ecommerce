@@ -1,12 +1,12 @@
 "use client";
 import Image from "../../ui/Image";
-import Loading from "../../ui/Loading";
 import { LuArchive, LuCheck, LuStar, LuTruck } from "react-icons/lu";
 import { RiArrowLeftSLine } from "react-icons/ri";
 import { TbCancel } from "react-icons/tb";
 import Link from "next/link";
 import { useMemo } from "react";
 import { OrderFull } from "@/types/type";
+import OrderInfoSkeleton from "@/components/skeleton/OrderInfoSkeleton";
 
 type Props = {
   order: OrderFull;
@@ -34,7 +34,7 @@ function OrderInfo({ order, isLoading }: Props) {
   return (
     <div className="w-full flex-1 border border-gray-300">
       {isLoading ? (
-        <Loading height={70} size={50} color="black" thickness={3} />
+         <OrderInfoSkeleton />
       ) : (
         <div className=" pb-[20px]">
           <div className="flex justify-between px-[20px] py-[20px] border-b border-gray-300">

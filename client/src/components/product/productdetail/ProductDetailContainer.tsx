@@ -7,26 +7,26 @@ import useGetProductsBestseller from "@/hooks/useGetProductsBestseller";
 import { useEffect } from "react";
 import toast from "react-hot-toast";
 import BreadCrumb from "../../ui/BreadCrumb";
-import Loading from "@/components/ui/Loading";
 
 function ProductDetailContainer() {
   const params = useParams();
   const slug = params.slug as string;
   const router = useRouter();
 
-  const { product, isLoading: isLoadingProductSlug } = useGetProductSlug(slug);
+  const { product, isLoading: isLoadingProduct } = useGetProductSlug(slug);
 
-  const { productsBestseller } = useGetProductsBestseller();
+  const { productsBestseller, isLoading: isLoadingProducts } =
+    useGetProductsBestseller();
 
   useEffect(() => {
-    if (isLoadingProductSlug) return;
+    if (isLoadingProduct) return;
 
     if (!product) {
       toast.error("Không tìm thấy sản phẩm");
       router.push("/");
       return;
     }
-  }, [product, isLoadingProductSlug, router]);
+  }, [product, isLoadingProduct, router]);
 
   const array = [
     {
@@ -59,21 +59,14 @@ function ProductDetailContainer() {
 
   return (
     <>
-      {isLoadingProductSlug ? (
-        <Loading height={70} size={50} color="black" thickness={2} />
-      ) : (
-        <>
-          <BreadCrumb items={array} />
-          <ProductDetail product={product!} />
-        </>
-      )}
+      <BreadCrumb items={array} />
+      <ProductDetail product={product!} />
 
-      {!isLoadingProductSlug && (
-        <ProductSlider
-          title={"Có thể bạn sẽ thích"}
-          products={productsBestseller ?? []}
-        />
-      )}
+      <ProductSlider
+        title={"Có thể bạn sẽ thích"}
+        products={productsBestseller!}
+        isLoading={isLoadingProducts}
+      />
     </>
   );
 }

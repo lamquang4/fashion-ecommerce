@@ -1,9 +1,9 @@
 "use client";
 import useDeleteAddress from "@/hooks/useDeleteAddress";
 import toast from "react-hot-toast";
-import Loading from "../ui/Loading";
 import Image from "../ui/Image";
 import { Address } from "@/types/type";
+import AddressListSkeleton from "../skeleton/AddressListSkeleton";
 
 type Props = {
   onToggleModal: () => void;
@@ -58,7 +58,7 @@ function AddressInfo({
 
         <div>
           {isLoading ? (
-            <Loading height={70} size={50} color="black" thickness={3} />
+            <AddressListSkeleton count={4} />
           ) : addresses.length > 0 ? (
             addresses.map((address) => (
               <div

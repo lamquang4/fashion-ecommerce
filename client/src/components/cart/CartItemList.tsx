@@ -7,12 +7,14 @@ import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
 import { Cart } from "@/types/type";
 import CartItem from "./CartItem";
+import CartItemListSkeleton from "../skeleton/CartItemListSkeleton";
 
 type Props = {
   cart: Cart;
+  isLoading: boolean;
 };
 
-function CartItemList({ cart }: Props) {
+function CartItemList({ cart, isLoading = false }: Props) {
   const router = useRouter();
   const { data: session } = useSession();
 
@@ -43,8 +45,7 @@ function CartItemList({ cart }: Props) {
     );
   }, [cart?.productsInCart]);
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleCheckout = () => {
     if (!session?.user) {
       toast.error("Vui lòng đăng nhập");
       router.push(`/login`);
@@ -76,45 +77,45 @@ function CartItemList({ cart }: Props) {
     <section className="my-[40px] px-[15px]">
       <div className="max-w-[1230px] mx-auto">
         <h2 className="mb-[20px]">Giỏ hàng ({totalQuantity})</h2>
-        {cart?.productsInCart && cart.productsInCart.length > 0 ? (
-          <form onSubmit={handleSubmit}>
-            <div className="flex gap-8 w-full lg:flex-row flex-col">
-              <div className="flex flex-col gap-8 bg-white basis-[70%]">
-                {cart?.productsInCart.map((item) => (
-                  <CartItem
-                    key={`${item._id}-${item.variant._id}-${item.variant.color._id}-${item.variant.size._id}`}
-                    item={item}
-                    cartId={cart?._id!}
-                  />
-                ))}
+        {isLoading ? (
+          <CartItemListSkeleton count={2} />
+        ) : cart?.productsInCart && cart.productsInCart.length > 0 ? (
+          <div className="flex gap-8 w-full lg:flex-row flex-col">
+            <div className="flex flex-col gap-8 bg-white basis-[70%]">
+              {cart?.productsInCart.map((item) => (
+                <CartItem
+                  key={`${item._id}-${item.variant._id}-${item.variant.color._id}-${item.variant.size._id}`}
+                  item={item}
+                  cartId={cart?._id!}
+                />
+              ))}
+            </div>
+
+            <div className="bg-[#F7F7F7] rounded-sm px-4 py-6 h-auto basis-[30%]">
+              <div className="uppercase flex justify-between items-center font-semibold">
+                <h5>Tổng cộng</h5>
+                <h5>{totalPrice.toLocaleString("vi-VN")}₫</h5>
               </div>
 
-              <div className="bg-[#F7F7F7] rounded-sm px-4 py-6 h-auto basis-[30%]">
-                <div className="uppercase flex justify-between items-center font-semibold">
-                  <h5>Tổng cộng</h5>
-                  <h5>{totalPrice.toLocaleString("vi-VN")}₫</h5>
-                </div>
+              <hr className="border-gray-300 my-[20px]" />
 
-                <hr className="border-gray-300 my-[20px]" />
+              <div className="space-y-[20px]">
+                <button
+                  onClick={handleCheckout}
+                  className="text-[0.9rem] px-4 py-2.5 w-full font-semibold tracking-wide bg-slate-900 hover:bg-slate-700 text-white rounded-md"
+                >
+                  Thanh toán
+                </button>
 
-                <div className="space-y-[20px]">
-                  <button
-                    type="submit"
-                    className="text-[0.9rem] px-4 py-2.5 w-full font-semibold tracking-wide bg-slate-900 hover:bg-slate-700 text-white rounded-md"
-                  >
-                    Thanh toán
-                  </button>
-
-                  <Link
-                    className="text-[0.9rem] px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-gray-200 text-slate-900 border border-gray-300 rounded-md text-center"
-                    href={"/collection/all"}
-                  >
-                    Tiếp tục mua sắm
-                  </Link>
-                </div>
+                <Link
+                  className="text-[0.9rem] px-4 py-2.5 w-full font-semibold tracking-wide bg-transparent hover:bg-gray-200 text-slate-900 border border-gray-300 rounded-md text-center"
+                  href={"/collection/all"}
+                >
+                  Tiếp tục mua sắm
+                </Link>
               </div>
             </div>
-          </form>
+          </div>
         ) : (
           <div className="flex justify-center items-center h-[60vh]">
             <div className="flex flex-col justify-center items-center gap-[15px]">

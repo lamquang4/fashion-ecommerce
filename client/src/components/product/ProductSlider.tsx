@@ -3,18 +3,21 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/free-mode";
 import { FreeMode } from "swiper/modules";
-import { useMemo, useState } from "react";
+import { memo, useMemo, useState } from "react";
 import { Product, Variant } from "@/types/type";
 import useAddWishlist from "@/hooks/useAddWishlist";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
 import ProductCard from "./ProductCard";
+import ProductCardSkeleton from "../skeleton/ProductListSkeleton";
+import ProductListSkeleton from "../skeleton/ProductListSkeleton";
 
 interface Props {
   title: string;
   products: Product[];
+  isLoading: boolean;
 }
-function ProductSlider({ title, products }: Props) {
+function ProductSlider({ title, products, isLoading = false }: Props) {
   const [selectedVariant, setSelectedVariant] = useState<
     Record<string, Variant>
   >({});
@@ -32,13 +35,13 @@ function ProductSlider({ title, products }: Props) {
 
   const wishlistVariantId = useMemo(() => {
     return new Set(
-      wishlist?.productsInWishlist.map((item: any) => item.variant._id)
+      wishlist?.productsInWishlist.map((item: any) => item.variant._id),
     );
   }, [wishlist?.productsInWishlist]);
 
   const toggleWishlist = async (variant: Variant) => {
     const isInWishlist = wishlist?.productsInWishlist?.some(
-      (item: any) => item.variant._id === variant._id
+      (item: any) => item.variant._id === variant._id,
     );
 
     if (isInWishlist) {
@@ -53,12 +56,19 @@ function ProductSlider({ title, products }: Props) {
     await mutate(undefined, { revalidate: true });
   };
 
+  if (!isLoading && (!products || products.length === 0)) {
+    return null;
+  }
+
   return (
-    <>
-      {products.length > 0 && (
-        <section className="mb-[40px] px-[15px]">
-          <div className="mx-auto max-w-[1230px] w-full">
-            <h2 className="mb-[20px]">{title}</h2>
+    <section className="mb-[40px] px-[15px] text-black">
+      <div className="mx-auto max-w-[1230px] w-full">
+        <h2 className="mb-[20px]">{title}</h2>
+
+        {isLoading ? (
+          <ProductListSkeleton count={4} />
+        ) : (
+          products.length > 0 && (
             <Swiper
               spaceBetween={12}
               modules={[FreeMode]}
@@ -95,11 +105,11 @@ function ProductSlider({ title, products }: Props) {
                 );
               })}
             </Swiper>
-          </div>
-        </section>
-      )}
-    </>
+          )
+        )}
+      </div>
+    </section>
   );
 }
 
-export default ProductSlider;
+export default memo(ProductSlider);

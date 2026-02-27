@@ -1,7 +1,6 @@
 "use client";
 import useGetCart from "@/hooks/useGetCart";
 import useGetProductsBestseller from "@/hooks/useGetProductsBestseller";
-import Loading from "../ui/Loading";
 import CartItem from "./CartItemList";
 import ProductSlider from "../product/ProductSlider";
 
@@ -11,18 +10,13 @@ function CartContainer() {
     useGetProductsBestseller();
   return (
     <>
-      {isLoadingCart || isLoadingProductsBestseller ? (
-        <Loading height={70} size={50} color="black" thickness={2} />
-      ) : (
-        <>
-          <CartItem cart={cart!} />
+      <CartItem cart={cart!} isLoading={isLoadingCart} />
 
-          <ProductSlider
-            products={productsBestseller ?? []}
-            title={"Sản phẩm bán chạy"}
-          />
-        </>
-      )}
+      <ProductSlider
+        products={productsBestseller ?? []}
+        title={"Sản phẩm bán chạy"}
+        isLoading={isLoadingProductsBestseller}
+      />
     </>
   );
 }

@@ -18,6 +18,7 @@ import ProductDescription from "./ProductDescription";
 import CouponList from "./CouponList";
 import ColorSelector from "./ColorSelector";
 import SizeSelector from "./SizeSelector";
+import ProductDetailSkeleton from "@/components/skeleton/ProductDetailSkeleton";
 
 type Props = {
   product: Product;
@@ -157,6 +158,8 @@ function ProductDetail({ product }: Props) {
   const toggleSizeChartModal = useCallback(() => {
     setOpenSizeChartModal((prev) => !prev);
   }, []);
+
+  if (!product) return <ProductDetailSkeleton />;
 
   return (
     <section className="w-full mb-[40px]">

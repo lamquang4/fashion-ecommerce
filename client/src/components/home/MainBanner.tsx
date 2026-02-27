@@ -6,11 +6,17 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import Link from "next/link";
 import Image from "../ui/Image";
-import useGetMainBanners from "@/hooks/useGetMainBanners";
-
-function MainBanner() {
-  const { banners1, banners2 } = useGetMainBanners();
-
+import { Banner } from "@/types/type";
+import MainBannerSkeleton from "../skeleton/MainBannerSkeleton";
+type Props = {
+  banners1: Banner[];
+  banners2: Banner[];
+  isLoading: boolean;
+};
+function MainBanner({ banners1, banners2, isLoading }: Props) {
+  if (isLoading) {
+    return <MainBannerSkeleton />;
+  }
   return (
     <>
       {(banners1.length > 0 || banners2.length > 0) && (

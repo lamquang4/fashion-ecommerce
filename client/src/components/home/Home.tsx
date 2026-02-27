@@ -9,32 +9,74 @@ import ServiceFeature from "./ServiceFeature";
 import CategoryList from "./CategoryList";
 import PromoteBanner from "./PromoteBanner";
 import CollectionBanner from "./CollectionBanner";
-import Loading from "../ui/Loading";
+import useGetPromoteBanners from "@/hooks/useGetPromoteBanners";
+import useGetCollectionBanners from "@/hooks/useGetCollectionBanners";
+import useGetCategories from "@/hooks/useGetCategories";
 
 export default function Home() {
-  const { isLoading } = useGetMainBanners();
-  const { blogs } = useGetLatestBlogs();
-  const { productsMale, productsFemale } = useGetProductsGender();
+  const {
+    banners1,
+    banners2,
+    isLoading: isLoadingBanners,
+  } = useGetMainBanners();
+  const { blogs, isLoading: isLoadingBlogs } = useGetLatestBlogs();
+  const {
+    productsMale,
+    productsFemale,
+    isLoading: isLoadingProducts,
+  } = useGetProductsGender();
+
+  const { promotions, isLoading: isLoadingPromotions } = useGetPromoteBanners();
+  const { collections, isLoading: isLoadingCollections } =
+    useGetCollectionBanners();
+  const {
+    categoriesMale,
+    categoriesFemale,
+    isLoading: isLoadingCategories,
+  } = useGetCategories();
   return (
     <>
-      {isLoading ? (
-        <Loading height={70} size={50} color="black" thickness={3} />
-      ) : (
-        <MainBanner />
-      )}
+      <MainBanner
+        banners1={banners1}
+        banners2={banners2}
+        isLoading={isLoadingBanners}
+      />
 
-      {!isLoading && (
-        <>
-          <ServiceFeature />
-          <CategoryList />
-          <PromoteBanner gender={1} />
-          <ProductSlider title={"Nam"} products={productsMale} />
-          <PromoteBanner gender={0} />
-          <ProductSlider title={"Nữ"} products={productsFemale} />
-          <CollectionBanner />
-          <BlogSlider title="Tin tức thời trang" blogs={blogs} />
-        </>
-      )}
+      <ServiceFeature />
+      <CategoryList
+        categoriesFemale={categoriesFemale}
+        categoriesMale={categoriesMale}
+        isLoading={isLoadingCategories}
+      />
+      <PromoteBanner
+        banners={promotions}
+        gender={1}
+        isLoading={isLoadingPromotions}
+      />
+      <ProductSlider
+        title={"Nam"}
+        products={productsMale}
+        isLoading={isLoadingProducts}
+      />
+      <PromoteBanner
+        banners={promotions}
+        gender={0}
+        isLoading={isLoadingPromotions}
+      />
+      <ProductSlider
+        title={"Nữ"}
+        products={productsFemale}
+        isLoading={isLoadingProducts}
+      />
+      <CollectionBanner
+        banners={collections}
+        isLoading={isLoadingCollections}
+      />
+      <BlogSlider
+        title="Tin tức thời trang"
+        blogs={blogs}
+        isLoading={isLoadingBlogs}
+      />
     </>
   );
 }

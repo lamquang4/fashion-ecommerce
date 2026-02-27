@@ -2,10 +2,10 @@
 import Link from "next/link";
 import Image from "../ui/Image";
 import useGetOrders from "@/hooks/useGetOrders";
-import Loading from "../ui/Loading";
 import { useRouter, useSearchParams } from "next/navigation";
 import Pagination from "../ui/Pagination";
 import { CiCalendar } from "react-icons/ci";
+import OrderListSkeleton from "../skeleton/OrderListSkeleton";
 
 function OrderHistory() {
   const router = useRouter();
@@ -74,7 +74,7 @@ function OrderHistory() {
 
       <div className="flex gap-5 flex-col">
         {isLoading ? (
-          <Loading height={70} size={50} color="black" thickness={3} />
+          <OrderListSkeleton count={3} />
         ) : orders.length > 0 ? (
           orders.map((order) => (
             <div className="border border-gray-300 px-[15px]" key={order._id}>

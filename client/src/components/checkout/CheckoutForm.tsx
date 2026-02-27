@@ -280,7 +280,10 @@ function CheckoutForm() {
             </div>
 
             <div className="order-first lg:order-last space-y-[15px] lg:sticky lg:top-0 lg:self-start">
-              <ProductBuyList productsInCart={cart?.productsInCart ?? []} />
+              <ProductBuyList
+                isLoading={isLoadingCart}
+                productsInCart={cart?.productsInCart ?? []}
+              />
 
               <hr className="border-gray-300" />
 
