@@ -8,7 +8,7 @@ import BlogSlider from "../BlogSlider";
 import useGetLatestBlogs from "@/hooks/useGetLatestBlogs";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 
-function BlogSlug() {
+function BlogDetailContainer() {
   const params = useParams();
   const slug = params.slug as string;
   const router = useRouter();
@@ -54,4 +54,4 @@ function BlogSlug() {
   );
 }
 
-export default BlogSlug;
+export default BlogDetailContainer;

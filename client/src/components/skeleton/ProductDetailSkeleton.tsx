@@ -17,7 +17,7 @@ function ProductDetailSkeleton() {
             </div>
 
             <div className="flex-1">
-              <div className="w-full h-full bg-gray-200 rounded" />
+              <div className="w-full h-[350px] lg:h-full bg-gray-200" />
             </div>
           </div>
 

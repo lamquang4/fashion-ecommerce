@@ -10,7 +10,7 @@ function ProductBuyListSkeleton({ count }: Props) {
           className="flex rounded-lg bg-white gap-[15px] animate-pulse"
         >
           <div className="relative">
-            <div className="w-[120px] h-[120px] bg-gray-200 rounded-md" />
+            <div className="w-[100px] h-[100px] bg-gray-200 rounded-md" />
 
             <div className="absolute top-[-7px] right-[-9px] w-[25px] h-[25px] bg-gray-300 rounded-full" />
           </div>

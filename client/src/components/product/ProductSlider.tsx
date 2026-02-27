@@ -9,7 +9,7 @@ import useAddWishlist from "@/hooks/useAddWishlist";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
 import ProductCard from "./ProductCard";
-import ProductListSkeleton from "../skeleton/ProductListSkeleton";
+import ProductSliderSkeleton from "../skeleton/ProductSliderSkeleton";
 
 interface Props {
   title: string;
@@ -65,7 +65,7 @@ function ProductSlider({ title, products, isLoading = false }: Props) {
         <h2 className="mb-[20px]">{title}</h2>
 
         {isLoading ? (
-          <ProductListSkeleton count={4} />
+          <ProductSliderSkeleton count={12} />
         ) : (
           products.length > 0 && (
             <Swiper

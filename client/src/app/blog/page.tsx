@@ -1,10 +1,10 @@
-import BlogAll from "@/components/blog/BlogAll";
+import BlogListContainer from "@/components/blog/BlogListContainer";
 import { Suspense } from "react";
 
 function page() {
   return (
     <Suspense>
-      <BlogAll />
+      <BlogListContainer />
     </Suspense>
   );
 }

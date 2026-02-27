@@ -1,11 +1,11 @@
-import BlogSlug from "@/components/blog/blogdetail/BlogSlug";
+import BlogDetailContainer from "@/components/blog/blogdetail/BlogDetailContainer";
 import { Suspense } from "react";
 
 function page() {
   return (
     <>
       <Suspense>
-        <BlogSlug />
+        <BlogDetailContainer />
       </Suspense>
     </>
   );

@@ -4,7 +4,7 @@ import useGetBlogs from "@/hooks/useGetBlogs";
 import Pagination from "../ui/Pagination";
 import BreadCrumb from "../ui/BreadCrumb";
 
-function BlogAll() {
+function BlogListContainer() {
   const { blogs, totalItems, totalPages, currentPage, isLoading } =
     useGetBlogs();
 
@@ -36,4 +36,4 @@ function BlogAll() {
   );
 }
 
-export default BlogAll;
+export default BlogListContainer;

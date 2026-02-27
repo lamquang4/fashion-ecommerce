@@ -2,7 +2,7 @@
 import Image from "../ui/Image";
 import { Blog } from "@/types/type";
 import BlogCard from "./BlogCard";
-import BlogCardSkeleton from "../skeleton/BlogListSkeleton";
+import BlogListSkeleton from "../skeleton/BlogListSkeleton";
 
 type Props = {
   blogs: Blog[];
@@ -15,7 +15,7 @@ function BlogList({ blogs, isLoading }: Props) {
       <h2 className="mb-[20px]">Tất cả tin tức</h2>
 
       {isLoading ? (
-        <BlogCardSkeleton count={12} />
+        <BlogListSkeleton count={6} />
       ) : blogs.length > 0 ? (
         <div
           className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-4 gap-y-8 ${
