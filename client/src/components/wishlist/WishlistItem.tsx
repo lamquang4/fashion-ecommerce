@@ -3,8 +3,9 @@ import Link from "next/link";
 import Image from "../ui/Image";
 import useGetWishlist from "@/hooks/useGetWishlist";
 import { useRemoveItemWishlist } from "@/hooks/useRemoveItemWishlist";
+import WishlistItemListSkeleton from "../skeleton/WishlistItemListSkeleton";
 function WishlistItem() {
-  const { wishlist, mutate } = useGetWishlist();
+  const { wishlist, isLoading, mutate } = useGetWishlist();
   const { removeItem } = useRemoveItemWishlist();
 
   const handleRemoveItem = async (wishlistId: string, variant: string) => {
@@ -29,8 +30,11 @@ function WishlistItem() {
         <h2 className="mb-[20px]">
           Yêu thích ({wishlist?.productsInWishlist.length || 0})
         </h2>
-        {wishlist?.productsInWishlist &&
-        wishlist?.productsInWishlist.length > 0 ? (
+        
+        {isLoading ? (
+          <WishlistItemListSkeleton count={2} />
+        ) : wishlist?.productsInWishlist &&
+          wishlist?.productsInWishlist.length > 0 ? (
           <div className="flex gap-8 lg:max-w-xl mx-auto w-full">
             <div className="flex flex-col gap-5 bg-white basis-full">
               {wishlist?.productsInWishlist.map((item) => (
