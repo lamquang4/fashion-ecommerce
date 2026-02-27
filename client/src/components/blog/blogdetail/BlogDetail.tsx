@@ -1,4 +1,5 @@
 "use client";
+import BlogDetailSkeleton from "@/components/skeleton/BlogDetailSkeleton";
 import TableOfContent from "@/components/ui/TableOfContent";
 import { Blog } from "@/types/type";
 import { generateNumberingTOC } from "@/utils/generateNumberingTOC";
@@ -16,7 +17,7 @@ function BlogDetail({ blog }: Props) {
 
   const numberedHeadings = useMemo(
     () => generateNumberingTOC(headings),
-    [headings]
+    [headings],
   );
 
   useEffect(() => {
@@ -45,6 +46,10 @@ function BlogDetail({ blog }: Props) {
     if (!headings.length) return 1;
     return Math.min(...headings.map((h) => h.level));
   }, [headings]);
+
+  if (!blog) {
+    return <BlogDetailSkeleton />;
+  }
 
   return (
     <section className="mb-[40px] relative px-[15px]">

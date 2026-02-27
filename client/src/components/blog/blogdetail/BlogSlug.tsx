@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import toast from "react-hot-toast";
 import BlogDetail from "./BlogDetail";
 import BlogSlider from "../BlogSlider";
-import Loading from "../../ui/Loading";
 import useGetLatestBlogs from "@/hooks/useGetLatestBlogs";
 import BreadCrumb from "@/components/ui/BreadCrumb";
 
@@ -15,7 +14,7 @@ function BlogSlug() {
   const router = useRouter();
 
   const { blog, isLoading } = useGetBlog(slug);
-  const { blogs } = useGetLatestBlogs();
+  const { blogs, isLoading: isLoadingBlogs } = useGetLatestBlogs();
 
   useEffect(() => {
     if (isLoading) return;
@@ -43,16 +42,14 @@ function BlogSlug() {
 
   return (
     <>
-      {isLoading ? (
-        <Loading height={70} size={50} color="black" thickness={2} />
-      ) : (
-        <>
-          <BreadCrumb items={array} />
-          <BlogDetail blog={blog!} />
-        </>
-      )}
+      <BreadCrumb items={array} />
+      <BlogDetail blog={blog!} />
 
-      {!isLoading && <BlogSlider title="Tin tức liên quan" blogs={blogs} />}
+      <BlogSlider
+        title="Tin tức liên quan"
+        blogs={blogs}
+        isLoading={isLoadingBlogs}
+      />
     </>
   );
 }
