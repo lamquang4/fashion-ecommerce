@@ -23,8 +23,8 @@ function SizeChartModal({ sizes, isOpen, onToggleMenu }: props) {
 
   return (
     <>
-      <div className="fixed top-0 right-0 left-0 z-20 h-full overflow-y-auto overflow-x-hidden">
-        <div className="py-[40px] px-[15px] flex justify-center items-center">
+      <div className="fixed top-0 right-0 left-0 z-20 h-full custom-scroll overflow-y-auto overflow-x-hidden">
+        <div className="py-[15px] px-[15px] flex justify-center items-center">
           <div className="relative w-full max-w-[720px] max-h-full">
             <div className="relative sm:p-[25px_20px] p-[25px_15px] bg-white z-20 space-y-[15px] rounded-lg">
               <div className="flex items-center justify-between">

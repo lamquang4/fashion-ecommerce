@@ -84,7 +84,7 @@ function AdvancedSearch({ isOpen, onToggleMenu }: Props) {
   return (
     <>
       <div
-        className={`fixed top-0 left-0 w-[320px] h-screen bg-white z-[25] transform transition-transform duration-300 ease-in-out ${
+        className={`absolute top-0 left-0 w-[320px] h-screen bg-white z-[25] transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-[0px]" : "translate-x-[-320px]"
         }`}
       >
@@ -116,7 +116,7 @@ function AdvancedSearch({ isOpen, onToggleMenu }: Props) {
                     <span className="text-[0.9rem]">
                       {searchParams.get("min") &&
                         Number(searchParams.get("min")).toLocaleString(
-                          "vi-VN"
+                          "vi-VN",
                         ) + "₫"}
                       {searchParams.get("min") &&
                         searchParams.get("max") &&
@@ -126,7 +126,7 @@ function AdvancedSearch({ isOpen, onToggleMenu }: Props) {
                         " "}
                       {searchParams.get("max") &&
                         Number(searchParams.get("max")).toLocaleString(
-                          "vi-VN"
+                          "vi-VN",
                         ) + "₫"}
                       {searchParams.get("min") &&
                         !searchParams.get("max") &&
