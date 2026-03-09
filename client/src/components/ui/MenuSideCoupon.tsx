@@ -19,8 +19,8 @@ function MenuSideCoupon({ isOpen, onToggleMenu }: Props) {
   return (
     <>
       <div
-        className={`custom-scroll fixed top-0 right-0 w-full max-w-[400px] h-screen overflow-y-auto bg-white z-[25] px-[15px] transform transition-transform duration-350 ease-in-out ${
-          isOpen ? "translate-x-[0px]" : "translate-x-[400px]"
+        className={`custom-scroll fixed top-0 right-0 w-full max-w-[480px] h-screen overflow-y-auto bg-white z-[25] px-[15px] transform transition-transform duration-350 ease-in-out ${
+          isOpen ? "translate-x-[0px]" : "translate-x-[480px]"
         }`}
       >
         <div className="sticky top-0 overflow-hidden bg-white py-[15px] flex justify-between items-center border-b border-gray-300">

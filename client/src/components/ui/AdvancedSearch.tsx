@@ -84,7 +84,7 @@ function AdvancedSearch({ isOpen, onToggleMenu }: Props) {
   return (
     <>
       <div
-        className={`absolute top-0 left-0 w-[320px] h-screen bg-white z-[25] transform transition-transform duration-300 ease-in-out ${
+        className={`absolute top-0 left-0 w-[320px] h-screen flex flex-col bg-white z-[25] transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-[0px]" : "translate-x-[-320px]"
         }`}
       >
@@ -96,7 +96,7 @@ function AdvancedSearch({ isOpen, onToggleMenu }: Props) {
           </button>
         </div>
 
-        <div className="overflow-y-auto h-[calc(100vh-100px)] pb-[60px] custom-scroll ">
+        <div className="overflow-y-auto flex-1 pb-[80px] custom-scroll">
           {(searchParams.get("min") ||
             searchParams.get("max") ||
             searchParams.get("color")) && (
@@ -243,7 +243,7 @@ function AdvancedSearch({ isOpen, onToggleMenu }: Props) {
           </form>
         </div>
 
-        <div className="fixed bottom-0 left-0 w-[320px] bg-white z-[30] p-[15px] flex justify-center">
+        <div className="sticky bottom-0 left-0 w-[320px] bg-white z-[30] p-[15px] flex justify-center">
           <button
             type="submit"
             form="advanced-search-form"
