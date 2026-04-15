@@ -13,8 +13,8 @@ import useDeleteCategory from "@/hooks/useDeleteCategory";
 import useVisibleCategory from "@/hooks/useVisibleCategory";
 import InputSearch from "../ui/InputSearch";
 import toast from "react-hot-toast";
-import ListHeader from "../list/ListHeader";
-import ListBody from "../list/ListBody";
+import ListHeader from "../ui/list/ListHeader";
+import ListBody from "../ui/list/ListBody";
 function CategoryList() {
   const {
     categories,

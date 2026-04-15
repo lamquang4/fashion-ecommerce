@@ -5,8 +5,8 @@ import Loading from "../ui/Loading";
 import InputSearch from "../ui/InputSearch";
 import FilterDropDownMenu from "../ui/FilterDropDownMenu";
 import useGetPayments from "@/hooks/useGetPayments";
-import ListHeader from "../list/ListHeader";
-import ListBody from "../list/ListBody";
+import ListHeader from "../ui/list/ListHeader";
+import ListBody from "../ui/list/ListBody";
 function PaymentList() {
   const { payments, isLoading, totalItems, totalPages, currentPage, limit } =
     useGetPayments();

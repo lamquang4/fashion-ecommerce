@@ -13,8 +13,8 @@ import useGetOrders from "@/hooks/useGetOrders";
 import useUpdateStatusOrder from "@/hooks/useUpdateStatusOrder";
 import Loading from "../ui/Loading";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import ListHeader from "../list/ListHeader";
-import ListBody from "../list/ListBody";
+import ListHeader from "../ui/list/ListHeader";
+import ListBody from "../ui/list/ListBody";
 
 function OrderList() {
   const pathname = usePathname();

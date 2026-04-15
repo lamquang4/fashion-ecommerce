@@ -13,8 +13,8 @@ import useDeleteBlog from "@/hooks/useDeleteBlog";
 import toast from "react-hot-toast";
 import useVisibleBlog from "@/hooks/useVisibleBlog";
 import Loading from "../ui/Loading";
-import ListHeader from "../list/ListHeader";
-import ListBody from "../list/ListBody";
+import ListHeader from "../ui/list/ListHeader";
+import ListBody from "../ui/list/ListBody";
 function BlogList() {
   const {
     blogs,

@@ -13,8 +13,8 @@ import useDeleteUser from "@/hooks/useDeleteUser";
 import InputSearch from "../ui/InputSearch";
 import { useSession } from "next-auth/react";
 import toast from "react-hot-toast";
-import ListHeader from "../list/ListHeader";
-import ListBody from "../list/ListBody";
+import ListHeader from "../ui/list/ListHeader";
+import ListBody from "../ui/list/ListBody";
 
 function AdminList() {
   const { data: session } = useSession({

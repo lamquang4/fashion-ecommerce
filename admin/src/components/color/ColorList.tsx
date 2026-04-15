@@ -9,8 +9,8 @@ import useGetColors from "@/hooks/useGetColors";
 import useDeleteColor from "@/hooks/useDeleteColor";
 import InputSearch from "../ui/InputSearch";
 import toast from "react-hot-toast";
-import ListHeader from "../list/ListHeader";
-import ListBody from "../list/ListBody";
+import ListHeader from "../ui/list/ListHeader";
+import ListBody from "../ui/list/ListBody";
 function ColorList() {
   const {
     colors,

@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { memo } from "react";
 import { IoMdAddCircle } from "react-icons/io";
-import StaticCards from "../ui/StaticCards";
+import StaticCards from "../StaticCards";
 
 interface Props {
   title: string;

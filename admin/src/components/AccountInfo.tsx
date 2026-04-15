@@ -1,6 +1,6 @@
 "use client";
 import { useSession } from "next-auth/react";
-function Account() {
+function AccountInfo() {
   const { data: session } = useSession({
     required: true,
   });
@@ -79,10 +79,10 @@ function Account() {
                   session?.user.role === 0
                     ? "Quản trị viên"
                     : session?.user.role === 1
-                    ? "Nhân viên bán hàng"
-                    : session?.user.role === 2
-                    ? "Nhân viên nội dung"
-                    : ""
+                      ? "Nhân viên bán hàng"
+                      : session?.user.role === 2
+                        ? "Nhân viên nội dung"
+                        : ""
                 }
                 readOnly
                 className="border border-gray-300 p-[6px_10px] text-[0.9rem] w-full outline-none focus:border-gray-400  "
@@ -95,4 +95,4 @@ function Account() {
   );
 }
 
-export default Account;
+export default AccountInfo;

@@ -10,8 +10,8 @@ import { MdOutlineRemoveRedEye } from "react-icons/md";
 import useDeleteBanner from "@/hooks/useDeleteBanner";
 import useVisibleBanner from "@/hooks/useVisibleBanner";
 import toast from "react-hot-toast";
-import ListHeader from "@/components/list/ListHeader";
-import ListBody from "@/components/list/ListBody";
+import ListHeader from "@/components/ui/list/ListHeader";
+import ListBody from "@/components/ui/list/ListBody";
 function MainBannerList() {
   const {
     mainbanners,

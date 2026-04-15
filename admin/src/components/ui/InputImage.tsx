@@ -1,5 +1,5 @@
 "use client";
-import { memo, useState } from "react";
+import { memo, useRef, useState } from "react";
 import Image from "./Image";
 import { HiMiniXMark } from "react-icons/hi2";
 import ImageViewer from "./ImageViewer";
@@ -23,16 +23,48 @@ function InputImage({
 }: InputImageProps) {
   const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement>(null);
 
   const handleOpenViewer = (image: string) => {
     setViewerImage(image);
     setOpenViewer(true);
   };
 
+  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+
+    const files = e.dataTransfer.files;
+    if (!files || files.length === 0) return;
+
+    if (inputRef.current) {
+      const dataTransfer = new DataTransfer();
+      Array.from(files).forEach((file) => {
+        if (["image/png", "image/jpeg", "image/webp"].includes(file.type)) {
+          dataTransfer.items.add(file);
+        }
+      });
+      inputRef.current.files = dataTransfer.files;
+      inputRef.current.dispatchEvent(new Event("change", { bubbles: true }));
+    }
+  };
+
   return (
     <div className="flex items-center justify-center w-full">
       <label
         htmlFor={InputId}
+        onDragOver={handleDragOver}
+        onDragLeave={handleDragLeave}
+        onDrop={handleDrop}
         className="flex flex-col items-center justify-center w-full h-auto min-h-62 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 "
       >
         {!previewImages.length ? (

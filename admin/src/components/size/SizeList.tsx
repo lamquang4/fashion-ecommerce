@@ -9,7 +9,7 @@ import Image from "../ui/Image";
 import useDeleteSize from "@/hooks/useDeleteSize";
 import InputSearch from "../ui/InputSearch";
 import toast from "react-hot-toast";
-import ListHeader from "../list/ListHeader";
+import ListHeader from "../ui/list/ListHeader";
 function SizeList() {
   const {
     sizes,

@@ -6,8 +6,8 @@ import Pagination from "../ui/Pagination";
 import useGetInventories from "@/hooks/useGetInventories";
 import Loading from "../ui/Loading";
 import InputSearch from "../ui/InputSearch";
-import ListHeader from "../list/ListHeader";
-import ListBody from "../list/ListBody";
+import ListHeader from "../ui/list/ListHeader";
+import ListBody from "../ui/list/ListBody";
 function InventoryList() {
   const {
     inventories,
