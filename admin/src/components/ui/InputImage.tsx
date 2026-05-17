@@ -14,6 +14,7 @@ type InputImageProps = {
   onRemovePreviewImage: (index: number, blockIndex: number) => void;
   blockIndex: number;
 };
+
 function InputImage({
   InputId,
   previewImages,
@@ -30,16 +31,16 @@ function InputImage({
     setOpenViewer(true);
   };
 
-  const handleDragOver = (e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
   };
 
-  const handleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
   };
 
-  const handleDrop = (e: React.DragEvent<HTMLLabelElement>) => {
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
     e.stopPropagation();
 
@@ -60,15 +61,17 @@ function InputImage({
 
   return (
     <div className="flex items-center justify-center w-full">
-      <label
-        htmlFor={InputId}
+      <div
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className="flex flex-col items-center justify-center w-full h-auto min-h-62 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 "
+        className="flex flex-col items-center justify-center w-full h-auto min-h-62 border-2 border-gray-300 border-dashed rounded-lg bg-gray-50"
       >
         {!previewImages.length ? (
-          <div className="flex flex-col items-center justify-center py-8">
+          <label
+            htmlFor={InputId}
+            className="flex flex-col items-center justify-center py-8 w-full cursor-pointer"
+          >
             <svg
               className="w-12 h-12 mb-4"
               aria-hidden="true"
@@ -84,16 +87,15 @@ function InputImage({
                 d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
               />
             </svg>
-
             <p className="mb-2">
               <span className="font-semibold">Bấm để tải, kéo hoặc thả</span>
             </p>
             <p>PNG, JPG, WEBP</p>
-          </div>
+          </label>
         ) : (
-          <div className="flex gap-3 px-[15px] flex-wrap py-5 justify-center">
+          <div className="flex gap-3 px-[15px] flex-wrap py-5 justify-center w-full">
             {previewImages.map((image, index) => (
-              <div className=" relative" key={index}>
+              <div className="relative" key={index}>
                 <div
                   className="cursor-pointer"
                   onClick={(e) => {
@@ -104,12 +106,11 @@ function InputImage({
                 >
                   <Image
                     src={image}
-                    alt={""}
+                    alt=""
                     className="w-full max-w-[220px]"
                     loading="eager"
                   />
                 </div>
-
                 <div className="absolute top-[6px] right-[6px]">
                   <button
                     type="button"
@@ -125,6 +126,28 @@ function InputImage({
                 </div>
               </div>
             ))}
+
+            <label
+              htmlFor={InputId}
+              className="flex flex-col items-center justify-center w-[220px] min-h-[120px] border-2 border-gray-300 border-dashed rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+            >
+              <svg
+                className="w-8 h-8 mb-2 text-gray-400"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                fill="none"
+                viewBox="0 0 20 16"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"
+                />
+              </svg>
+              <span className="text-sm text-gray-500">Thêm ảnh</span>
+            </label>
           </div>
         )}
 
@@ -138,7 +161,7 @@ function InputImage({
           multiple
           onChange={(e) => onPreviewImage(e, blockIndex)}
         />
-      </label>
+      </div>
 
       {openViewer && (
         <ImageViewer
