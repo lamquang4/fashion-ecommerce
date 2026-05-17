@@ -1,12 +1,12 @@
 "use client";
 import { usePathname, useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useLayoutEffect } from "react";
 
 export default function ScrollToTop() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     window.scrollTo({ top: 0 });
   }, [pathname, searchParams]);
 

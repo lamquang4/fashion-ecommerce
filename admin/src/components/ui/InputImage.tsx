@@ -129,6 +129,7 @@ function InputImage({
         )}
 
         <input
+          ref={inputRef}
           id={InputId}
           type="file"
           className="hidden"

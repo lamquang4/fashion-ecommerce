@@ -41,25 +41,7 @@ function Footer() {
                   href={"/collection/all"}
                   className=" text-gray-500 font-medium text-[0.9rem] hover:text-black"
                 >
-                  Tất cả sách
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href={"/sale/nam"}
-                  className=" text-gray-500 font-medium text-[0.9rem] hover:text-black"
-                >
-                  Giảm giá đồ nam
-                </Link>
-              </li>
-
-              <li>
-                <Link
-                  href={"/sale/nu"}
-                  className=" text-gray-500 font-medium text-[0.9rem] hover:text-black"
-                >
-                  Giảm giá đồ nữ
+                  Tất cả sản phẩm
                 </Link>
               </li>
 

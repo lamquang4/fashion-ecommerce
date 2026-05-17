@@ -24,12 +24,14 @@ function ProductCard({
       <div className="space-y-[15px]">
         <div className="relative group">
           <Link href={`/product/${product.slug}`}>
-            <div className="w-full overflow-hidden pt-[100%] relative group">
+            <div className="w-full aspect-[4/5] overflow-hidden pt-[100%] relative group">
               {variant.images[0] && (
                 <Image
                   src={variant.images[0]}
                   alt={product.name}
-                  className="absolute inset-0 w-full h-full object-cover z-1 group-hover:opacity-0"
+                  className={`absolute inset-0 w-full h-full object-cover z-1  ${
+                    variant.images.length > 1 ? "group-hover:opacity-0" : ""
+                  }`}
                   loading="lazy"
                 />
               )}
