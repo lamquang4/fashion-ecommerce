@@ -10,9 +10,7 @@ function ProductListSkeleton({ count }: Props) {
     <div className="grid grid-cols-2 gap-x-[12px] gap-y-[35px] lg:grid-cols-3 2xl:grid-cols-4 sm:grid-cols-2">
       {Array.from({ length: count }).map((_, index) => (
         <div className="space-y-[15px] animate-pulse" key={index}>
-          <div className="relative">
-            <div className="w-full pt-[100%] bg-gray-200 rounded relative" />
-          </div>
+          <div className="w-full aspect-[4/5] bg-gray-200" />
 
           <div className="py-[12px] space-y-[10px]">
             <div className="flex gap-2 mb-[10px]">

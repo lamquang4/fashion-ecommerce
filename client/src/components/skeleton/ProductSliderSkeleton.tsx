@@ -24,9 +24,7 @@ function ProductSliderSkeleton({ count }: Props) {
       {Array.from({ length: count }).map((_, index) => (
         <SwiperSlide key={index}>
           <div className="space-y-[15px] animate-pulse">
-            <div className="relative">
-              <div className="w-full pt-[100%] bg-gray-200 rounded relative" />
-            </div>
+            <div className="w-full aspect-[4/5] bg-gray-200" />
 
             <div className="py-[12px] space-y-[10px]">
               <div className="flex gap-2 mb-[10px]">
