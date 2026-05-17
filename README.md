@@ -6,6 +6,12 @@ Xây dựng nền tảng thương mại điện tử thời trang với đầy �
 
 ![](docs/images/ui2.png)
 
+## Demo
+
+Website: [fashion-aura-ten.vercel.app](https://fashion-aura-ten.vercel.app)
+
+Admin: [fashion-aura-admin.vercel.app](https://fashion-aura-admin.vercel.app)
+
 ## Cài đặt môi trường
 
 **1. Clone repository**

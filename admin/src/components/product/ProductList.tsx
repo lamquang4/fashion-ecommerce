@@ -141,7 +141,7 @@ function ProductList() {
                             <Image
                               src={variant.images[0]}
                               alt={product.name}
-                              className={`absolute inset-0 w-full h-full object-cover z-1  ${
+                              className={`absolute inset-0 w-full h-full object-contain z-1  ${
                                 variant.images.length > 1
                                   ? "group-hover:opacity-0"
                                   : ""
@@ -154,7 +154,7 @@ function ProductList() {
                             <Image
                               src={variant.images[1]}
                               alt={product.name}
-                              className="absolute inset-0 w-full h-full object-cover opacity-0 group-hover:opacity-100 z-2"
+                              className="absolute inset-0 w-full h-full object-contain opacity-0 group-hover:opacity-100 z-2"
                               loading="lazy"
                             />
                           )}
