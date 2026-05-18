@@ -28,11 +28,11 @@ docker compose up --build
 
 ## Công nghệ sử dụng
 
-| Danh mục       | Tools / Frameworks  |
-| -------------- | ------------------- |
-| Frontend       | Nextjs + TypeScript |
-| Backend        | Nextjs + API Routes |
-| Database       | MongoDB             |
-| Authentication | NextAuth.js         |
-| CI/CD          | GitHub Actions      |
-| Deployment     | Vercel              |
+| Danh mục       | Tools / Frameworks                                    |
+| -------------- | ----------------------------------------------------- |
+| Frontend       | Nextjs + TypeScript <br> TailwindCSS <br> Axios + SWR |
+| Backend        | Nextjs + API Routes                                   |
+| Database       | MongoDB                                               |
+| Authentication | NextAuth.js                                           |
+| CI/CD          | GitHub Actions                                        |
+| Deployment     | Vercel                                                |
