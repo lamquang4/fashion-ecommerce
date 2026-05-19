@@ -11,7 +11,7 @@ import InputImage1 from "../ui/InputImage1";
 import Loading from "../ui/Loading";
 import Image from "../ui/Image";
 
-function CollectionBanner() {
+function CollectionBannerForm() {
   const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
 
@@ -166,4 +166,4 @@ function CollectionBanner() {
   );
 }
 
-export default CollectionBanner;
+export default CollectionBannerForm;

@@ -9,7 +9,7 @@ import { useParams, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import toast from "react-hot-toast";
 
-function EditAdmin() {
+function EditAdminForm() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
@@ -30,7 +30,7 @@ function EditAdmin() {
   const { updateUser, isLoading: isLoadingUpdateUser } = useUpdateUser(id);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({
@@ -77,7 +77,7 @@ function EditAdmin() {
 
     if (session?.user.id === id) {
       toast(
-        "Tài khoản hiện đang đăng nhập nên sẽ không thấy thông tin thay đổi chỉ khi đăng nhập lại!"
+        "Tài khoản hiện đang đăng nhập nên sẽ không thấy thông tin thay đổi chỉ khi đăng nhập lại!",
       );
     }
 
@@ -220,4 +220,4 @@ function EditAdmin() {
   );
 }
 
-export default EditAdmin;
+export default EditAdminForm;

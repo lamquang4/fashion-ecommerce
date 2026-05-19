@@ -1,13 +1,10 @@
 "use client";
-import Link from "next/link";
-import { LiaExternalLinkAltSolid } from "react-icons/lia";
-import Image from "../ui/Image";
 import Pagination from "../ui/Pagination";
 import useGetInventories from "@/hooks/useGetInventories";
-import Loading from "../ui/Loading";
 import InputSearch from "../ui/InputSearch";
 import ListHeader from "../ui/list/ListHeader";
 import ListBody from "../ui/list/ListBody";
+import InventoryTable from "./InventoryTable";
 function InventoryList() {
   const {
     inventories,
@@ -28,96 +25,7 @@ function InventoryList() {
           <InputSearch />
         </div>
 
-        <table className="w-[350%] border-collapse sm:w-[220%] xl:w-full text-[0.9rem]">
-          <thead>
-            <tr className="bg-[#E9EDF2] text-left">
-              <th className="p-[1rem]  ">Sản phẩm</th>
-              <th className="p-[1rem]  ">Màu</th>
-              <th className="p-[1rem]  ">Kích thước</th>
-              <th className="p-[1rem]  ">Số lượng</th>
-              <th className="p-[1rem]  ">Ngày tạo</th>
-
-              <th className="p-[1rem]  ">Hành động</th>
-            </tr>
-          </thead>
-          <tbody>
-            {isLoading ? (
-              <tr>
-                <td colSpan={8} className="w-full">
-                  <Loading height={60} size={50} color="black" thickness={2} />
-                </td>
-              </tr>
-            ) : inventories.length > 0 ? (
-              inventories.map((inventory) =>
-                inventory.inventories.map((inv) => (
-                  <tr
-                    key={`${inventory._id}-${inventory.color._id}-${inv.size._id}`}
-                    className="hover:bg-[#f2f3f8]"
-                  >
-                    <td className="p-[1rem]">
-                      <div className="flex gap-[10px] items-center">
-                        <div className="cursor-pointer">
-                          <Image
-                            src={inventory.images[0]}
-                            alt={""}
-                            className={"w-[75px] cursor-pointer"}
-                            loading="lazy"
-                          />
-                        </div>
-
-                        <p className="text-[0.9rem] font-semibold">
-                          {inventory.product.name}
-                        </p>
-                      </div>
-                    </td>
-
-                    <td className="p-[1rem] text-[0.9rem]  text-[#444]">
-                      <div className="flex gap-[10px] items-center">
-                        <div
-                          className={`w-5 h-5 border-gray-500 border`}
-                          style={{ backgroundColor: inventory.color.codecolor }}
-                        ></div>
-                        {inventory.color.namecolor}
-                      </div>
-                    </td>
-                    <td className="p-[1rem]  ">{inv.size.namesize}</td>
-                    <td className="p-[1rem]  ">{inv.quantity}</td>
-
-                    <td className="p-[1rem]  ">
-                      {new Date(
-                        inventory.createdAt as string,
-                      ).toLocaleDateString("vi-VN")}
-                    </td>
-
-                    <td className="p-[1rem]  ">
-                      <div className="flex items-center gap-[15px]">
-                        <Link href={`/edit-product/${inventory.product._id}`}>
-                          <LiaExternalLinkAltSolid
-                            size={23}
-                            className="text-[#076ffe]"
-                          />
-                        </Link>
-                      </div>
-                    </td>
-                  </tr>
-                )),
-              )
-            ) : (
-              <tr>
-                <td colSpan={8} className="w-full h-[70vh]">
-                  <div className="flex justify-center items-center">
-                    <Image
-                      src={"/assets/other/notfound1.png"}
-                      alt={""}
-                      className={"w-[135px]"}
-                      loading="lazy"
-                    />
-                  </div>
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+        <InventoryTable inventories={inventories} isLoading={isLoading} />
       </ListBody>
 
       <Pagination

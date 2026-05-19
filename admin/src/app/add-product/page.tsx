@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import LayoutPage from "../../components/layout/LayoutPage";
-import AddProduct from "@/components/product/AddProduct";
+import AddProductForm from "@/components/product/AddProductForm";
 
 export default function Page() {
   return (
     <LayoutPage>
       <Suspense>
-        <AddProduct />
+        <AddProductForm />
       </Suspense>
     </LayoutPage>
   );

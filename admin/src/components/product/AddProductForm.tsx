@@ -19,7 +19,7 @@ const Sortable = dynamic(
     ssr: false,
   },
 );
-function AddProduct() {
+function AddProductForm() {
   const { categories } = useGetCategories1();
   const { colors } = useGetColors1();
   const { sizes } = useGetSizes1();
@@ -482,4 +482,4 @@ function AddProduct() {
   );
 }
 
-export default AddProduct;
+export default AddProductForm;

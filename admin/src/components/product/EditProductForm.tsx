@@ -22,8 +22,8 @@ import { useCurrentInventory } from "@/hooks/useCurrentInventory";
 import useGetColors1 from "@/hooks/useGetColors1";
 import useGetSizes1 from "@/hooks/useGetSizes1";
 import useDeleteVariant from "@/hooks/useDeleteVariant";
-import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { FreeMode } from "swiper/modules";
 import useUpdateImageProduct from "@/hooks/useUpdateImageProduct";
 import SearchableSelect from "../ui/SearchableSelect";
@@ -34,7 +34,7 @@ const Sortable = dynamic(
     ssr: false,
   },
 );
-function EditProduct() {
+function EditProductForm() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
@@ -203,8 +203,8 @@ function EditProduct() {
     }
 
     if (!data.category) {
-       toast.error("Vui lòng chọn danh mục sản phẩm");
-       return
+      toast.error("Vui lòng chọn danh mục sản phẩm");
+      return;
     }
 
     const formData = new FormData();
@@ -872,4 +872,4 @@ function EditProduct() {
   );
 }
 
-export default EditProduct;
+export default EditProductForm;

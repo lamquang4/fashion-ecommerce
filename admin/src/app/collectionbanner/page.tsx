@@ -1,4 +1,4 @@
-import CollectionBanner from "@/components/banner/CollectionBanner";
+import CollectionBannerForm from "@/components/banner/CollectionBannerForm";
 import LayoutPage from "../../components/layout/LayoutPage";
 import { Suspense } from "react";
 
@@ -6,7 +6,7 @@ export default async function page() {
   return (
     <LayoutPage>
       <Suspense>
-        <CollectionBanner />
+        <CollectionBannerForm />
       </Suspense>
     </LayoutPage>
   );

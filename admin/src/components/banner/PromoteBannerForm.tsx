@@ -11,7 +11,7 @@ import InputImage1 from "../ui/InputImage1";
 import Loading from "../ui/Loading";
 import { useState } from "react";
 
-function PromoteBanner() {
+function PromoteBannerForm() {
   const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
 
@@ -155,4 +155,4 @@ function PromoteBanner() {
   );
 }
 
-export default PromoteBanner;
+export default PromoteBannerForm;

@@ -11,7 +11,7 @@ import useGetBlog from "@/hooks/useGetBlog";
 import useUpdateBlog from "@/hooks/useUpdateBlog";
 import toast from "react-hot-toast";
 import ImageViewer from "../ui/ImageViewer";
-function EditBlog() {
+function EditBlogForm() {
   const router = useRouter();
   const params = useParams();
   const id = params.id as string;
@@ -234,4 +234,4 @@ function EditBlog() {
   );
 }
 
-export default EditBlog;
+export default EditBlogForm;

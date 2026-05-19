@@ -7,7 +7,7 @@ import InputImage from "../ui/InputImage";
 import toast from "react-hot-toast";
 import useAddBlog from "@/hooks/useAddBlog";
 
-function AddBlog() {
+function AddBlogForm() {
   const [data, setData] = useState({
     title: "",
     summary: "",
@@ -168,4 +168,4 @@ function AddBlog() {
   );
 }
 
-export default AddBlog;
+export default AddBlogForm;

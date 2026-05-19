@@ -1,4 +1,4 @@
-import AddMainBanner from "@/components/banner/mainbanner/AddMainBanner";
+import AddMainBannerForm from "@/components/banner/mainbanner/AddMainBannerForm";
 import LayoutPage from "../../components/layout/LayoutPage";
 import { Suspense } from "react";
 
@@ -6,7 +6,7 @@ export default async function page() {
   return (
     <LayoutPage>
       <Suspense>
-        <AddMainBanner />
+        <AddMainBannerForm />
       </Suspense>
     </LayoutPage>
   );

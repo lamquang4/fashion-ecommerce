@@ -5,7 +5,7 @@ import toast from "react-hot-toast";
 import useAddBanner from "@/hooks/useAddBanner";
 import { useInputImage } from "@/hooks/useInputImage";
 
-function AddMainBanner() {
+function AddMainBannerForm() {
   const { addBanner, isLoading } = useAddBanner();
 
   const {
@@ -124,4 +124,4 @@ function AddMainBanner() {
   );
 }
 
-export default AddMainBanner;
+export default AddMainBannerForm;

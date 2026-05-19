@@ -1,12 +1,12 @@
 import LayoutPage from "../../components/layout/LayoutPage";
-import AddSize from "../../components/size/AddSize";
+import AddSizeForm from "../../components/size/AddSizeForm";
 import { Suspense } from "react";
 
 export default async function page() {
   return (
     <LayoutPage>
       <Suspense>
-        <AddSize />
+        <AddSizeForm />
       </Suspense>
     </LayoutPage>
   );

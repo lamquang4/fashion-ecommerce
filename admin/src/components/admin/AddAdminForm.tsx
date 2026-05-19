@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useState } from "react";
 import toast from "react-hot-toast";
 
-function AddAdmin() {
+function AddAdminForm() {
   const [data, setData] = useState({
     fullname: "",
     email: "",
@@ -20,7 +20,7 @@ function AddAdmin() {
   const { addAdmin, isLoading } = useAddAdmin();
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({
@@ -191,4 +191,4 @@ function AddAdmin() {
   );
 }
 
-export default AddAdmin;
+export default AddAdminForm;

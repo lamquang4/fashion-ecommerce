@@ -1,16 +1,10 @@
 "use client";
-import useGetSize from "@/hooks/useGetSize";
-import useUpdateSize from "@/hooks/useUpdateSize";
+import useAddSize from "@/hooks/useAddSize";
 import Link from "next/link";
-import { useParams, useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import toast from "react-hot-toast";
 
-function EditSize() {
-  const router = useRouter();
-  const params = useParams();
-  const id = params.id as string;
-
+function AddSizeForm() {
   const [data, setData] = useState({
     namesize: "",
     chestMin: 1,
@@ -25,11 +19,10 @@ function EditSize() {
     weightMax: 1,
   });
 
-  const { size, mutate, isLoading } = useGetSize(id);
-  const { updateSize, isLoading: isLoadingUpdateSize } = useUpdateSize(id);
+  const { addSize, isLoading } = useAddSize();
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
     setData((prev) => ({
@@ -37,34 +30,6 @@ function EditSize() {
       [name]: value,
     }));
   };
-
-  useEffect(() => {
-    if (isLoading) return;
-
-    if (!size) {
-      toast.error("Không tìm thấy kích thước");
-      router.push("/size");
-      return;
-    }
-  }, [size, isLoading, router]);
-
-  useEffect(() => {
-    if (size) {
-      setData({
-        namesize: size.namesize,
-        chestMin: size.chest[0],
-        chestMax: size.chest[1],
-        waistMin: size.waist[0],
-        waistMax: size.waist[1],
-        hipMin: size.hip[0],
-        hipMax: size.hip[1],
-        heightMin: size.height[0],
-        heightMax: size.height[1],
-        weightMin: size.weight[0],
-        weightMax: size.weight[1],
-      });
-    }
-  }, [size]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,7 +56,7 @@ function EditSize() {
     }
 
     try {
-      await updateSize({
+      await addSize({
         namesize: data.namesize.trim(),
         chest: [data.chestMin, data.chestMax],
         waist: [data.waistMin, data.waistMax],
@@ -100,7 +65,19 @@ function EditSize() {
         weight: [data.weightMin, data.weightMax],
       });
 
-      mutate();
+      setData({
+        namesize: "",
+        chestMin: 1,
+        chestMax: 1,
+        waistMin: 1,
+        waistMax: 1,
+        hipMin: 1,
+        hipMax: 1,
+        heightMin: 1,
+        heightMax: 1,
+        weightMin: 1,
+        weightMax: 1,
+      });
     } catch (err: any) {
       toast.error(err?.response?.data?.msg);
     }
@@ -109,7 +86,7 @@ function EditSize() {
   return (
     <div className="py-[30px] sm:px-[25px] px-[15px] bg-[#F1F4F9] h-full">
       <form className="flex flex-col gap-7 w-full" onSubmit={handleSubmit}>
-        <h2 className="text-[#74767d]">Chỉnh sửa kích thước</h2>
+        <h2 className="text-[#74767d]">Thêm kích thước</h2>
 
         <div className="flex gap-[25px] w-full flex-col">
           <div className="md:p-[25px] p-[15px] bg-white rounded-md flex flex-col gap-[20px] w-full">
@@ -297,11 +274,11 @@ function EditSize() {
 
         <div className="flex justify-center gap-6">
           <button
-            disabled={isLoadingUpdateSize}
+            disabled={isLoading}
             type="submit"
             className="p-[6px_10px] bg-teal-500 text-white text-[0.9rem] font-medium text-center hover:bg-teal-600 rounded-sm"
           >
-            {isLoadingUpdateSize ? "Đang cập nhật..." : "Cập nhật"}
+            {isLoading ? "Đang thêm..." : "Thêm"}
           </button>
           <Link
             href="/size"
@@ -315,4 +292,4 @@ function EditSize() {
   );
 }
 
-export default EditSize;
+export default AddSizeForm;

@@ -1,12 +1,12 @@
 import { Suspense } from "react";
 import LayoutPage from "@/components/layout/LayoutPage";
-import EditBlog from "@/components/blog/EditBlog";
+import EditBlogForm from "@/components/blog/EditBlogForm";
 
 export default async function page() {
   return (
     <LayoutPage>
       <Suspense>
-        <EditBlog />
+        <EditBlogForm />
       </Suspense>
     </LayoutPage>
   );

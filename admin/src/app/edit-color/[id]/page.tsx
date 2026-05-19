@@ -1,4 +1,4 @@
-import EditColor from "@/components/color/EditColor";
+import EditColorForm from "@/components/color/EditColorForm";
 import LayoutPage from "@/components/layout/LayoutPage";
 import { Suspense } from "react";
 
@@ -6,7 +6,7 @@ export default async function page() {
   return (
     <LayoutPage>
       <Suspense>
-        <EditColor />
+        <EditColorForm />
       </Suspense>
     </LayoutPage>
   );
