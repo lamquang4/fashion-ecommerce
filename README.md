@@ -8,9 +8,9 @@ Xây dựng nền tảng thương mại điện tử thời trang với đầy �
 
 ## Demo
 
-Website: [fashion-aura-ten.vercel.app](https://fashion-aura-ten.vercel.app)
+Website: [![Live Demo](https://img.shields.io/badge/Live_Demo-000000?style=flat-square&logo=vercel&logoColor=white)](https://fashion-aura-ten.vercel.app)
 
-Admin: [fashion-aura-admin.vercel.app](https://fashion-aura-admin.vercel.app)
+Admin: [![Live Demo](https://img.shields.io/badge/Live_Demo-000000?style=flat-square&logo=vercel&logoColor=white)](https://fashion-aura-admin.vercel.app)
 
 ## Cài đặt môi trường
 
