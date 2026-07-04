@@ -34,5 +34,4 @@ docker compose up --build
 | Backend        | Nextjs + API Routes                                   |
 | Database       | MongoDB                                               |
 | Authentication | NextAuth.js                                           |
-| CI/CD          | GitHub Actions                                        |
 | Deployment     | Vercel                                                |
