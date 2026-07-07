@@ -50,7 +50,7 @@ function LoginForm() {
         <div className="flex justify-center items-center h-screen sm:px-[15px] px-[10px]">
           <div className="relative bg-white rounded-lg shadow-md border border-gray-300 max-w-[850px] w-full h-[500px]">
             <div className="h-full grid grid-cols-1 sm:grid-cols-2 items-center">
-              <div className="w-full px-4 sm:px-8 bg-white">
+              <div className="w-full px-4 sm:px-8">
                 <h1 className="relative text-center uppercase mb-6">
                   Đăng nhập
                 </h1>
@@ -116,7 +116,7 @@ function LoginForm() {
                 </form>
               </div>
 
-              <div className="hidden sm:block border-l-2 border-gray-200 sm:px-2">
+              <div className="hidden sm:block border-l-2 border-gray-200 px-4 sm:px-8">
                 <Image
                   src={"/assets/other/urban.webp"}
                   alt={""}
