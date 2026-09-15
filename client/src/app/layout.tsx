@@ -41,23 +41,14 @@ export const metadata: Metadata = {
       "Cửa hàng thời trang quần áo nam nữ với đa dạng mẫu mã, chất lượng cao.",
     images: [
       {
-        url: "/og.png",
+        url: "/assets/og.png",
         width: 1200,
         height: 630,
         alt: "Aura Fashion",
       },
     ],
   },
-  twitter: {
-    card: "summary_large_image",
-    title: "Aura - Thời trang nam nữ chính hãng",
-    description: "Cửa hàng thời trang quần áo nam nữ chất lượng cao.",
-    images: ["/og-image.jpg"],
-  },
-  icons: {
-    icon: "/favicon.ico",
-    apple: "/apple-touch-icon.png",
-  },
+
   alternates: {
     canonical: "/",
   },
