@@ -1,6 +1,5 @@
 "use client";
 import { HiMiniXMark } from "react-icons/hi2";
-import { IoIosArrowDown } from "react-icons/io";
 import { FaArrowRightLong } from "react-icons/fa6";
 import Overplay from "./Overplay";
 import { useRouter, useSearchParams } from "next/navigation";
