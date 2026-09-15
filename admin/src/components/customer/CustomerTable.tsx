@@ -145,7 +145,7 @@ function CustomerTable({ customers, isLoading, mutate }: Props) {
             <td colSpan={8} className="w-full h-[70vh]">
               <div className="flex justify-center items-center">
                 <Image
-                  src={"/assets/other/notfound1.png"}
+                  src={"/assets/notfound1.png"}
                   alt={""}
                   className={"w-[135px]"}
                   loading="lazy"

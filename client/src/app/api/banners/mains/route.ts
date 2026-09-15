@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import Banner from "@/model/Banner";
 import { NextResponse } from "next/server";
 
@@ -24,14 +24,14 @@ export async function GET() {
         banners1,
         banners2,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

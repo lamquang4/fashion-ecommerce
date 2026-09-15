@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Payment from "@/model/Payment";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -55,7 +55,7 @@ export async function GET(req: NextRequest) {
             orderCode: "$order.orderCode",
           },
         },
-      }
+      },
     );
 
     const [payments, totalResult] = await Promise.all([
@@ -73,7 +73,7 @@ export async function GET(req: NextRequest) {
         {
           msg: "Không tìm thấy",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -87,14 +87,14 @@ export async function GET(req: NextRequest) {
         limit,
         totalPages: Math.ceil(total / limit),
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

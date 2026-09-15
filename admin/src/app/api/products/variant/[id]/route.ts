@@ -1,5 +1,5 @@
 import cloudinary from "@/lib/cloudinary";
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Inventory from "@/model/Inventory";
 import Order from "@/model/Order";
 import mongoose from "mongoose";
@@ -7,7 +7,7 @@ import { extractPublicId } from "@/utils/extractPublicId";
 import { NextRequest, NextResponse } from "next/server";
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -22,7 +22,7 @@ export async function DELETE(
     if (!variant) {
       return NextResponse.json(
         { msg: "Không tìm thấy biến thế của sản phẩm" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -31,7 +31,7 @@ export async function DELETE(
     if (variants.length === 1) {
       return NextResponse.json(
         { msg: "Sản phẩm này chỉ còn 1 biến thể nên không thể xóa!" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -49,7 +49,7 @@ export async function DELETE(
         {
           msg: "Biến thể của sản phẩm này đã được khách đặt hàng nên không thể xóa!",
         },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -62,7 +62,7 @@ export async function DELETE(
         .filter(Boolean) as string[];
 
       await Promise.all(
-        publicIds.map((pid) => cloudinary.uploader.destroy(pid))
+        publicIds.map((pid) => cloudinary.uploader.destroy(pid)),
       );
     }
 
@@ -72,7 +72,7 @@ export async function DELETE(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

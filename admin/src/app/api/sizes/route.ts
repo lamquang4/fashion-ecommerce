@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Size from "@/model/Size";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -26,7 +26,7 @@ export async function GET(req: NextRequest) {
         {
           msg: "Không tìm thấy",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -38,14 +38,14 @@ export async function GET(req: NextRequest) {
         limit,
         totalPages: Math.ceil(total / limit),
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
@@ -60,31 +60,31 @@ export async function POST(req: NextRequest) {
     if (chest[0] >= chest[1]) {
       return NextResponse.json(
         { msg: "Vòng ngực tối thiểu không được lớn hơn hoặc bằng tối đa" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     if (waist[0] >= waist[1]) {
       return NextResponse.json(
         { msg: "Vòng eo tối thiểu không được lớn hơn hoặc bằng tối đa" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     if (hip[0] >= hip[1]) {
       return NextResponse.json(
         { msg: "Vòng mông tối thiểu không được lớn hơn hoặc bằng tối đa" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     if (height[0] >= height[1]) {
       return NextResponse.json(
         { msg: "Chiều cao tối thiểu không được lớn hơn hoặc bằng tối đa" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     if (weight[0] >= weight[1]) {
       return NextResponse.json(
         { msg: "Cân nặng tối thiểu không được lớn hơn hoặc bằng tối đa" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -92,7 +92,7 @@ export async function POST(req: NextRequest) {
     if (checkName) {
       return NextResponse.json(
         { msg: "Tên kích thước đã được sử dụng" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -111,7 +111,7 @@ export async function POST(req: NextRequest) {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

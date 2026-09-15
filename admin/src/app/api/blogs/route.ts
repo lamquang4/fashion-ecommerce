@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Blog from "@/model/Blog";
 import { NextRequest, NextResponse } from "next/server";
 import { removeVietNamese } from "@/utils/removeVietnamese";
@@ -44,7 +44,7 @@ export async function GET(req: NextRequest) {
         {
           msg: "Không tìm thấy",
         },
-        { status: 200 }
+        { status: 200 },
       );
     }
 
@@ -56,14 +56,14 @@ export async function GET(req: NextRequest) {
         limit,
         totalPages: Math.ceil(total / limit),
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
@@ -93,7 +93,7 @@ export async function POST(req: NextRequest) {
         {
           msg: `Tiêu đề bài viết đã sử dụng`,
         },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -105,7 +105,7 @@ export async function POST(req: NextRequest) {
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
         { msg: `Hình "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.` },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -113,7 +113,7 @@ export async function POST(req: NextRequest) {
     if (file.size / 1024 > maxSizeKB) {
       return NextResponse.json(
         { msg: `Hình "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.` },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -133,7 +133,7 @@ export async function POST(req: NextRequest) {
         (error, uploadResult) => {
           if (error) reject(error);
           else resolve(uploadResult);
-        }
+        },
       );
       stream.end(buffer);
     });
@@ -156,7 +156,7 @@ export async function POST(req: NextRequest) {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

@@ -234,7 +234,7 @@ function CheckoutForm() {
       <div className="mx-auto max-w-[1230px] w-full">
         <Link href={"/"}>
           <Image
-            src={"/assets/other/logo.png"}
+            src={"/assets/logo.png"}
             alt={"logo"}
             className={"w-[80px]"}
             loading="eager"

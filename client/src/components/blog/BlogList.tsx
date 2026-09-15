@@ -30,7 +30,7 @@ function BlogList({ blogs, isLoading }: Props) {
         <div className="flex justify-center items-center h-[60vh]">
           <div className="flex flex-col justify-center items-center gap-[15px]">
             <Image
-              src={"/assets/other/notfound1.png"}
+              src={"/assets/notfound1.png"}
               alt={""}
               className={"w-[150px]"}
               loading="eager"

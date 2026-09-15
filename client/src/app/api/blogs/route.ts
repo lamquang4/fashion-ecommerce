@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import Blog from "@/model/Blog";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -31,7 +31,7 @@ export async function GET(req: NextRequest) {
         {
           msg: "Không tìm thấy",
         },
-        { status: 200 }
+        { status: 200 },
       );
     }
 
@@ -43,14 +43,14 @@ export async function GET(req: NextRequest) {
         limit,
         totalPages: Math.ceil(total / limit),
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

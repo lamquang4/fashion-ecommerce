@@ -1,11 +1,11 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Order from "@/model/Order";
 import mongoose from "mongoose";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -141,7 +141,7 @@ export async function GET(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

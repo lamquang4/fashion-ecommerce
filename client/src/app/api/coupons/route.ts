@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import Coupon from "@/model/Coupon";
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
@@ -56,7 +56,7 @@ export async function GET() {
     if (!coupons || coupons.length === 0) {
       return NextResponse.json(
         { msg: "Không tìm thấy phiếu giảm giá" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 

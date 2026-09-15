@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import Inventory from "@/model/Inventory";
 import { NextResponse } from "next/server";
 
@@ -38,7 +38,7 @@ export async function GET() {
     if (!colors || colors.length === 0) {
       return NextResponse.json(
         { msg: "Không tìm thấy danh màu" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -48,7 +48,7 @@ export async function GET() {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

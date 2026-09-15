@@ -1,5 +1,5 @@
 import cloudinary from "@/lib/cloudinary";
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Category from "@/model/Category";
 import Product from "@/model/Product";
 import { extractPublicId } from "@/utils/extractPublicId";
@@ -9,7 +9,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -31,14 +31,14 @@ export async function GET(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -56,7 +56,7 @@ export async function DELETE(
         },
         {
           status: 409,
-        }
+        },
       );
     }
 
@@ -64,7 +64,7 @@ export async function DELETE(
     if (!category) {
       return NextResponse.json(
         { msg: "Không tìm thấy danh mục" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -81,7 +81,7 @@ export async function DELETE(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
@@ -94,7 +94,7 @@ export const config = {
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -114,7 +114,7 @@ export async function PUT(
     if (!category) {
       return NextResponse.json(
         { msg: "Không tìm thấy danh mục" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -130,7 +130,7 @@ export async function PUT(
             gender === 0 ? "nữ" : "nam"
           }.`,
         },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -146,7 +146,7 @@ export async function PUT(
           {
             msg: `Hình "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.`,
           },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -156,7 +156,7 @@ export async function PUT(
           {
             msg: `Hình "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.`,
           },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -179,7 +179,7 @@ export async function PUT(
           (error, result) => {
             if (error) reject(error);
             else resolve(result);
-          }
+          },
         );
         stream.end(buffer);
       });
@@ -202,7 +202,7 @@ export async function PUT(
     if (status === 0) {
       await Product.updateMany(
         { category: id, status: 1 },
-        { $set: { status: 0 } }
+        { $set: { status: 0 } },
       );
     }
 
@@ -212,7 +212,7 @@ export async function PUT(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

@@ -1,5 +1,5 @@
 import cloudinary from "@/lib/cloudinary";
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Category from "@/model/Category";
 import Inventory from "@/model/Inventory";
 import Order from "@/model/Order";
@@ -13,7 +13,7 @@ import Cart from "@/model/Cart";
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -126,14 +126,14 @@ export async function GET(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -152,7 +152,7 @@ export async function DELETE(
         },
         {
           status: 409,
-        }
+        },
       );
     }
 
@@ -160,7 +160,7 @@ export async function DELETE(
     if (!product) {
       return NextResponse.json(
         { msg: "Không tìm thấy sản phẩm" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -174,7 +174,7 @@ export async function DELETE(
         .filter(Boolean) as string[];
 
       await Promise.all(
-        publicIds.map((pid) => cloudinary.uploader.destroy(pid))
+        publicIds.map((pid) => cloudinary.uploader.destroy(pid)),
       );
     }
 
@@ -201,14 +201,14 @@ export async function DELETE(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -223,11 +223,11 @@ export async function PUT(
     const slug = removeVietNamese(name);
     const status = Number(formData.get("status"));
     const newInventoryBlocks = JSON.parse(
-      formData.get("newInventories") as string
+      formData.get("newInventories") as string,
     );
 
     const currentInventories = JSON.parse(
-      formData.get("currentInventories") as string
+      formData.get("currentInventories") as string,
     );
 
     // kiểm tra các biển thể của 1 sản phẩm có bị trùng màu
@@ -239,7 +239,7 @@ export async function PUT(
     if (hasDuplicateColor) {
       return NextResponse.json(
         { msg: "Một sản phẩm không được chứa hai biến thể cùng màu" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -250,21 +250,21 @@ export async function PUT(
     if (price < 0) {
       return NextResponse.json(
         { msg: "Giá bán phải lớn hơn 0" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (discount < 0) {
       return NextResponse.json(
         { msg: "Số tiền giảm phải lớn hơn 0" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (price < discount) {
       return NextResponse.json(
         { msg: "Giá bán phải lớn hơn số tiền giảm" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -273,7 +273,7 @@ export async function PUT(
     if (!product) {
       return NextResponse.json(
         { msg: "Không tìm thấy sản phẩm" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -281,7 +281,7 @@ export async function PUT(
     if (checkName) {
       return NextResponse.json(
         { msg: "Tên sản phẩm đã được sử dụng" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -289,14 +289,14 @@ export async function PUT(
     if (!categoryDoc) {
       return NextResponse.json(
         { msg: "Danh mục không tồn tại" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     if (status === 1 && categoryDoc.status === 0) {
       return NextResponse.json(
         { msg: "Không thể hiện sản phẩm này vì danh mục đang bị ẩn" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -327,14 +327,14 @@ export async function PUT(
         if (files.length === 0 || !files) {
           return NextResponse.json(
             { msg: "Hình sản phẩm biến thể này không để trống" },
-            { status: 404 }
+            { status: 404 },
           );
         }
 
         if (files.length > 5) {
           return NextResponse.json(
             { msg: "Hình sản phẩm biến thể này không vượt quá 5 hình" },
-            { status: 400 }
+            { status: 400 },
           );
         }
 
@@ -347,7 +347,7 @@ export async function PUT(
             {
               msg: `Một biến thể của một sản phẩm chỉ được chứa 1 kích thước duy nhất`,
             },
-            { status: 400 }
+            { status: 400 },
           );
         }
 
@@ -376,7 +376,7 @@ export async function PUT(
                   blockIndex + 1
                 } không đúng định dạng PNG, JPG hoặc WEBP.`,
               },
-              { status: 400 }
+              { status: 400 },
             );
           }
 
@@ -387,7 +387,7 @@ export async function PUT(
                   blockIndex + 1
                 } vượt quá dung lượng ${maxSizeKB}KB.`,
               },
-              { status: 400 }
+              { status: 400 },
             );
           }
 
@@ -402,7 +402,7 @@ export async function PUT(
                 resource_type: "image",
                 transformation: [{ quality: "auto" }, { fetch_format: "auto" }],
               },
-              (err, res) => (err ? reject(err) : resolve(res))
+              (err, res) => (err ? reject(err) : resolve(res)),
             );
             stream.end(buffer);
           });
@@ -437,7 +437,7 @@ export async function PUT(
         const variantId = inventory._id;
 
         const currentSizes = inventory.inventories.map((inv: any) =>
-          inv.size.toString()
+          inv.size.toString(),
         );
         const currentColor = inventory.color.toString();
 
@@ -448,7 +448,7 @@ export async function PUT(
               "items.color": new mongoose.Types.ObjectId(currentColor),
               "items.size": {
                 $in: currentSizes.map(
-                  (sizeId: string) => new mongoose.Types.ObjectId(sizeId)
+                  (sizeId: string) => new mongoose.Types.ObjectId(sizeId),
                 ),
               },
             },
@@ -489,12 +489,12 @@ export async function PUT(
               {
                 msg: "Không thể thay đổi màu sắc vì biến thể đã được sử dụng trong đơn hàng hoặc giỏ hàng.",
               },
-              { status: 400 }
+              { status: 400 },
             );
           }
 
           const newSizes = block.inventories.map((inv: any) =>
-            inv.size.toString()
+            inv.size.toString(),
           );
 
           const sizeChanged =
@@ -506,7 +506,7 @@ export async function PUT(
               {
                 msg: "Không thể thay đổi kích thước vì biến thể đã được sử dụng trong đơn hàng hoặc giỏ hàng.",
               },
-              { status: 400 }
+              { status: 400 },
             );
           }
         }
@@ -518,7 +518,7 @@ export async function PUT(
                 blockIndex + 1
               } không vượt quá 5 hình`,
             },
-            { status: 400 }
+            { status: 400 },
           );
         }
 
@@ -537,7 +537,7 @@ export async function PUT(
                   blockIndex + 1
                 } không đúng định dạng PNG, JPG hoặc WEBP.`,
               },
-              { status: 400 }
+              { status: 400 },
             );
           }
 
@@ -548,7 +548,7 @@ export async function PUT(
                   blockIndex + 1
                 } vượt quá dung lượng ${maxSizeKB}KB.`,
               },
-              { status: 400 }
+              { status: 400 },
             );
           }
 
@@ -567,7 +567,7 @@ export async function PUT(
                   { fetch_format: "auto" },
                 ],
               },
-              (err, res) => (err ? reject(err) : resolve(res))
+              (err, res) => (err ? reject(err) : resolve(res)),
             );
             stream.end(buffer);
           });
@@ -584,7 +584,7 @@ export async function PUT(
             {
               msg: `Một biến thể của một sản phẩm chỉ được chứa 1 kích thước duy nhất`,
             },
-            { status: 400 }
+            { status: 400 },
           );
         }
 

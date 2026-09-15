@@ -155,10 +155,7 @@ function AdvancedSearch({ isOpen, onToggleMenu }: Props) {
 
           <form id="advanced-search-form" onSubmit={handleSubmit}>
             <div className="border-b border-gray-300 p-[15px] space-y-[15px]">
-              <div className="flex items-center justify-between">
-                <h5 className="capitalize font-semibold">Giá</h5>
-                <IoIosArrowDown size={18} />
-              </div>
+              <h5 className="capitalize font-semibold">Giá</h5>
 
               <div className="w-full flex justify-center items-center gap-[10px]">
                 <div className="border border-gray-300 p-2.5 w-full">
@@ -204,10 +201,7 @@ function AdvancedSearch({ isOpen, onToggleMenu }: Props) {
             </div>
 
             <div className="border-b border-gray-300 p-[15px] space-y-[15px]">
-              <div className="flex items-center justify-between">
-                <h5 className="capitalize font-semibold">Màu</h5>
-                <IoIosArrowDown size={18} />
-              </div>
+              <h5 className="capitalize font-semibold">Màu</h5>
 
               <div className="w-full grid grid-cols-2 gap-[15px]">
                 {colors.map((color, index) => {

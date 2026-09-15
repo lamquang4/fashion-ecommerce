@@ -17,6 +17,26 @@ interface Props {
   isLoading: boolean;
   total: number;
 }
+
+const sortArray = [
+  {
+    name: "Hàng mới",
+    sort: "newest",
+  },
+  {
+    name: "Giá (thấp-cao)",
+    sort: "price-asc",
+  },
+  {
+    name: "Giá (cao-thấp)",
+    sort: "price-desc",
+  },
+  {
+    name: "Bán chạy nhất",
+    sort: "bestseller",
+  },
+];
+
 function ProductList({ category, products, isLoading, total }: Props) {
   const searchParams = useSearchParams();
   const router = useRouter();
@@ -65,25 +85,6 @@ function ProductList({ category, products, isLoading, total }: Props) {
 
     await mutate(undefined, { revalidate: true });
   };
-
-  const sortArray = [
-    {
-      name: "Hàng mới",
-      sort: "newest",
-    },
-    {
-      name: "Giá (thấp-cao)",
-      sort: "price-asc",
-    },
-    {
-      name: "Giá (cao-thấp)",
-      sort: "price-desc",
-    },
-    {
-      name: "Bán chạy nhất",
-      sort: "bestseller",
-    },
-  ];
 
   const handleSortChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const sort = e.target.value;
@@ -172,7 +173,7 @@ function ProductList({ category, products, isLoading, total }: Props) {
         <div className="flex justify-center items-center h-[60vh]">
           <div className="flex flex-col justify-center items-center gap-[15px]">
             <Image
-              src={"/assets/other/notfound1.png"}
+              src={"/assets/notfound1.png"}
               alt={""}
               className={"w-[150px]"}
               loading="eager"

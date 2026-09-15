@@ -1,5 +1,5 @@
-import { refundPayment } from "@/lib/Momo";
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { refundPayment } from "@/lib/momo.service";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Inventory from "@/model/Inventory";
 import Order from "@/model/Order";
 import Payment from "@/model/Payment";
@@ -7,7 +7,7 @@ import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -25,7 +25,7 @@ export async function PUT(
     if (!order) {
       return NextResponse.json(
         { msg: "Không tìm thấy đơn hàng" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -42,7 +42,7 @@ export async function PUT(
         if (!inventory) continue;
 
         const sizeInventory = inventory.inventories.find((inv: any) =>
-          inv.size.equals(size)
+          inv.size.equals(size),
         );
 
         if (sizeInventory) {
@@ -58,7 +58,7 @@ export async function PUT(
           if (!payment) {
             return NextResponse.json(
               { msg: "Không tìm thấy giao dịch" },
-              { status: 404 }
+              { status: 404 },
             );
           }
 
@@ -88,7 +88,7 @@ export async function PUT(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

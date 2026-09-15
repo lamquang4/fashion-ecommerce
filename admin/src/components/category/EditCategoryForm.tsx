@@ -21,7 +21,7 @@ function EditCategoryForm() {
     image: "",
     status: "",
   });
-  const [openViewer, setOpenViewer] = useState(false);
+  const [openViewer, setOpenViewer] = useState<boolean>(false);
   const [viewerImage, setViewerImage] = useState<string>("");
 
   const { category, mutate, isLoading } = useGetCategory(id);

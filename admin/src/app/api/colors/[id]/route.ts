@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Color from "@/model/Color";
 import Inventory from "@/model/Inventory";
 import mongoose from "mongoose";
@@ -6,7 +6,7 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -28,14 +28,14 @@ export async function GET(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -54,7 +54,7 @@ export async function DELETE(
         },
         {
           status: 409,
-        }
+        },
       );
     }
 
@@ -71,14 +71,14 @@ export async function DELETE(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -101,7 +101,7 @@ export async function PUT(
     if (checkName) {
       return NextResponse.json(
         { msg: "Tên màu đã được sử dụng" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -120,7 +120,7 @@ export async function PUT(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

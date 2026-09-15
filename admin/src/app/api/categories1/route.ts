@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Category from "@/model/Category";
 import { NextResponse } from "next/server";
 
@@ -20,10 +20,7 @@ export async function GET() {
     ]);
 
     if (!categories || categories.length === 0) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy" },
-        { status: 404 }
-      );
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
     return NextResponse.json({ categories }, { status: 200 });
@@ -32,7 +29,7 @@ export async function GET() {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

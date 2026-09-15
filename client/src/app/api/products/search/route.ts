@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import Product from "@/model/Product";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -128,7 +128,7 @@ export async function GET(req: NextRequest) {
       },
       {
         $sort: { createdAt: -1 },
-      }
+      },
     );
 
     if (colors.length > 0) {
@@ -205,7 +205,7 @@ export async function GET(req: NextRequest) {
           $project: {
             sold: 0,
           },
-        }
+        },
       );
     } else {
       pipeline.push({ $sort: { createdAt: -1 } });
@@ -227,7 +227,7 @@ export async function GET(req: NextRequest) {
         {
           msg: "Không tìm thấy sản phẩm",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -238,14 +238,14 @@ export async function GET(req: NextRequest) {
         totalPages: Math.ceil(total / limit),
         page,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

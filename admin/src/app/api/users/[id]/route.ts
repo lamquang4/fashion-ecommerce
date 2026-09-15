@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Order from "@/model/Order";
 import User from "@/model/User";
 import { hashValue } from "@/utils/hashValue";
@@ -9,7 +9,7 @@ import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -40,14 +40,14 @@ export async function GET(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -64,7 +64,7 @@ export async function DELETE(
         {
           msg: "Người dùng này đẫ mua hàng nên không được xóa!",
         },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -72,7 +72,7 @@ export async function DELETE(
     if (!user) {
       return NextResponse.json(
         { msg: "Không tìm thấy người dùng" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -84,14 +84,14 @@ export async function DELETE(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -112,7 +112,7 @@ export async function PUT(
     if (!validatePhone(phone)) {
       return NextResponse.json(
         { msg: "Số điện thoại không hợp lệ" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -120,7 +120,7 @@ export async function PUT(
     if (!user) {
       return NextResponse.json(
         { msg: "Không tìm thấy người dùng" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -128,7 +128,7 @@ export async function PUT(
     if (checkEmail) {
       return NextResponse.json(
         { msg: "Email đã được sử dụng" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -136,7 +136,7 @@ export async function PUT(
     if (checkPhone) {
       return NextResponse.json(
         { msg: "Số điện thoại đã được sử dụng" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -166,7 +166,7 @@ export async function PUT(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

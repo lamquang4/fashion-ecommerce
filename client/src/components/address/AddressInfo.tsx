@@ -112,7 +112,7 @@ function AddressInfo({
             <div className="flex justify-center items-center h-[70vh]">
               <div className="flex flex-col justify-center items-center gap-[15px]">
                 <Image
-                  src={"/assets/other/address.png"}
+                  src={"/assets/address.png"}
                   alt={""}
                   className={"w-[80px]"}
                   loading="eager"

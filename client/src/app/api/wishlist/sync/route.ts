@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import { getServerSession } from "next-auth";
 import { options } from "../../auth/[...nextauth]/options";
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     if (!userId)
       return NextResponse.json(
         { msg: "Tài khoản chưa đăng nhập" },
-        { status: 401 }
+        { status: 401 },
       );
 
     const wishlistId = req.cookies.get("wishlist")?.value;
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
       if (userWishlist) {
         for (const item of guestWishlist.items) {
           const exists = userWishlist.items.some(
-            (it: any) => it.variant.toString() === item.variant.toString()
+            (it: any) => it.variant.toString() === item.variant.toString(),
           );
           if (!exists) {
             userWishlist.items.push(item);

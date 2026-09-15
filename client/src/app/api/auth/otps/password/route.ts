@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import User from "@/model/User";
 import { NextRequest, NextResponse } from "next/server";
 import nodemailer from "nodemailer";
@@ -18,7 +18,7 @@ export async function POST(req: NextRequest) {
     if (!checkEmail) {
       return NextResponse.json(
         { message: "Email không tồn tại" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -102,7 +102,7 @@ export async function POST(req: NextRequest) {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

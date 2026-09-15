@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import Category from "@/model/Category";
 import { NextResponse } from "next/server";
 
@@ -40,20 +40,20 @@ export async function GET() {
       results[0].status === "fulfilled" ? results[0].value : [];
     const categoriesFemale =
       results[1].status === "fulfilled" ? results[1].value : [];
-      
+
     return NextResponse.json(
       {
         categoriesMale,
         categoriesFemale,
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

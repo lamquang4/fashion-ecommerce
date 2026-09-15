@@ -1,5 +1,5 @@
 "use client";
-import WishlistItem from "./WishlistItem";
+import WishlistItemList from "./WishlistItemList";
 import useGetProductsBestseller from "@/hooks/useGetProductsBestseller";
 import ProductSlider from "../product/ProductSlider";
 
@@ -8,7 +8,7 @@ function WishlistContainer() {
     useGetProductsBestseller();
   return (
     <>
-      <WishlistItem />
+      <WishlistItemList />
 
       <ProductSlider
         products={productsBestseller || []}

@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 import { Product, Variant } from "@/types/types";
 import { useState } from "react";
 
-const array = [
+const arrayStatus = [
   {
     name: "Tất cả",
     value: null,
@@ -93,7 +93,7 @@ function ProductTable({ products, isLoading, mutate }: Props) {
           <th className="p-[1rem]   relative">
             <FilterDropDownMenu
               title="Tình trạng"
-              array={array}
+              array={arrayStatus}
               paramName="status"
             />
           </th>
@@ -252,7 +252,7 @@ function ProductTable({ products, isLoading, mutate }: Props) {
             <td colSpan={8} className="w-full h-[70vh]">
               <div className="flex justify-center items-center">
                 <Image
-                  src={"/assets/other/notfound1.png"}
+                  src={"/assets/notfound1.png"}
                   alt={""}
                   className={"w-[135px]"}
                   loading="lazy"

@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import Cart from "@/model/Cart";
 import { getServerSession } from "next-auth";
@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
     if (!userId)
       return NextResponse.json(
         { msg: "Tài khoản chưa đăng nhập" },
-        { status: 401 }
+        { status: 401 },
       );
 
     const cartId = req.cookies.get("cart")?.value;
@@ -31,7 +31,7 @@ export async function POST(req: NextRequest) {
           const existing = userCart.items.find(
             (it: any) =>
               it.variant.toString() === item.variant.toString() &&
-              it.size.toString() === item.size.toString()
+              it.size.toString() === item.size.toString(),
           );
 
           if (existing) {

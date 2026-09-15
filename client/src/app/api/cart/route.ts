@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import Cart from "@/model/Cart";
@@ -29,7 +29,7 @@ export async function GET(req: NextRequest) {
         {
           msg: "Không biết",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -133,7 +133,7 @@ export async function GET(req: NextRequest) {
         {
           msg: "Không tìm thấy",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -156,7 +156,7 @@ export async function POST(req: NextRequest) {
     if (quantity < 1) {
       return NextResponse.json(
         { msg: "Số lượng mua phải lớn hơn 1" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -192,7 +192,7 @@ export async function POST(req: NextRequest) {
     if (stock === 0) {
       return NextResponse.json(
         { msg: "Sản phẩm đã hết hàng" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -208,7 +208,7 @@ export async function POST(req: NextRequest) {
             const existingItem = userCart.items.find(
               (it: any) =>
                 it.variant.toString() === item.variant.toString() &&
-                it.size.toString() === item.size.toString()
+                it.size.toString() === item.size.toString(),
             );
 
             if (existingItem) {
@@ -249,7 +249,7 @@ export async function POST(req: NextRequest) {
 
     const existingItem = cart.items.find(
       (item: any) =>
-        item.variant.toString() === variant && item.size.toString() === size
+        item.variant.toString() === variant && item.size.toString() === size,
     );
 
     if (existingItem) {
@@ -258,7 +258,7 @@ export async function POST(req: NextRequest) {
       if (totalQuantity > stock) {
         return NextResponse.json(
           { msg: `Bạn chỉ có thể mua tối đa ${stock} sản phẩm này.` },
-          { status: 409 }
+          { status: 409 },
         );
       }
 
@@ -267,7 +267,7 @@ export async function POST(req: NextRequest) {
       if (quantity > stock) {
         return NextResponse.json(
           { msg: `Sản phẩm chỉ còn ${stock} cái.` },
-          { status: 409 }
+          { status: 409 },
         );
       }
 
@@ -324,13 +324,13 @@ export async function PUT(req: NextRequest) {
     if (!cart) {
       return NextResponse.json(
         { msg: "Không tìm thấy giỏ hàng" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     cart.items = cart.items.filter(
       (item: any) =>
-        item.variant.toString() !== variant || item.size.toString() !== size
+        item.variant.toString() !== variant || item.size.toString() !== size,
     );
 
     await cart.save();

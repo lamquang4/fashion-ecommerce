@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Size from "@/model/Size";
 import { NextResponse } from "next/server";
 
@@ -19,10 +19,7 @@ export async function GET() {
     ]);
 
     if (!sizes || sizes.length === 0) {
-      return NextResponse.json(
-        { msg: "Không tìm thấy" },
-        { status: 404 }
-      );
+      return NextResponse.json({ msg: "Không tìm thấy" }, { status: 404 });
     }
 
     return NextResponse.json({ sizes }, { status: 200 });
@@ -31,7 +28,7 @@ export async function GET() {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

@@ -1,10 +1,10 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Product from "@/model/Product";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -25,7 +25,7 @@ export async function PUT(
     if (status === 1 && product.category.status === 0) {
       return NextResponse.json(
         { msg: "Không thể hiện sản phẩm này vì danh mục đang bị ẩn" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -34,7 +34,7 @@ export async function PUT(
       { status },
       {
         new: true,
-      }
+      },
     );
 
     return NextResponse.json({ status: 200 });
@@ -43,7 +43,7 @@ export async function PUT(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

@@ -1,7 +1,7 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
-import { createPayment } from "@/lib/Momo";
+import { createPayment } from "@/lib/momo.service";
 export async function POST(req: NextRequest) {
   try {
     await connectMongoDB();
@@ -16,7 +16,7 @@ export async function POST(req: NextRequest) {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

@@ -1,5 +1,5 @@
 import cloudinary from "@/lib/cloudinary";
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Inventory from "@/model/Inventory";
 import { extractPublicId } from "@/utils/extractPublicId";
 import { removeVietNamese } from "@/utils/removeVietnamese";
@@ -14,7 +14,7 @@ export const config = {
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -25,9 +25,9 @@ export async function PUT(
     const imageToReplace = formData.get("imageNeedUpdate") as string; // Hình cần thay thế
 
     if (!mongoose.Types.ObjectId.isValid(id)) {
-     return NextResponse.json(
+      return NextResponse.json(
         { msg: "Không tìm thấy biến thể" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -35,7 +35,7 @@ export async function PUT(
     if (!inventory) {
       return NextResponse.json(
         { msg: "Không tìm thấy biến thể" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -44,14 +44,14 @@ export async function PUT(
     if (indexToUpdate === -1) {
       return NextResponse.json(
         { msg: "Hình cần cập nhật không tồn tại" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     if (!file || file.size === 0) {
       return NextResponse.json(
         { msg: "Hình mới không hợp lệ" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -59,14 +59,14 @@ export async function PUT(
     if (!allowedTypes.includes(file.type)) {
       return NextResponse.json(
         { msg: "Chỉ hỗ trợ PNG, JPG hoặc WEBP" },
-        { status: 400 }
+        { status: 400 },
       );
     }
     const maxSizeKB = 1000;
     if (file.size / 1024 > maxSizeKB) {
       return NextResponse.json(
         { msg: `Hình vượt quá ${maxSizeKB}KB` },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -85,17 +85,13 @@ export async function PUT(
           resource_type: "image",
           transformation: [{ quality: "auto" }, { fetch_format: "auto" }],
         },
-        (err, res) => (err ? reject(err) : resolve(res))
+        (err, res) => (err ? reject(err) : resolve(res)),
       );
       stream.end(buffer);
     });
 
     imageList[indexToUpdate] = result.secure_url;
-    await Inventory.findByIdAndUpdate(
-      id,
-      { images: imageList },
-      { new: true }
-    );
+    await Inventory.findByIdAndUpdate(id, { images: imageList }, { new: true });
 
     return NextResponse.json({ status: 200, images: imageList });
   } catch (err) {
@@ -105,7 +101,7 @@ export async function PUT(
 
 export async function DELETE(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -126,7 +122,7 @@ export async function DELETE(
     if (inventory.images.length === 1) {
       return NextResponse.json(
         { msg: "Hình sản phẩm của biến thể này chỉ còn 1 nên không được xóa!" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -139,7 +135,7 @@ export async function DELETE(
     await Inventory.findByIdAndUpdate(
       id,
       { $pull: { images: image } }, // pull xóa hình là image trong mảng image
-      { new: true }
+      { new: true },
     );
 
     return NextResponse.json({ status: 200 });
@@ -148,7 +144,7 @@ export async function DELETE(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

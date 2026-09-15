@@ -1,4 +1,4 @@
-import { createPayment } from "@/lib/Vnpay";
+import { createPayment } from "@/lib/vnpay.service";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {

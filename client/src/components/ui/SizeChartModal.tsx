@@ -139,7 +139,7 @@ function SizeChartModal({ sizes, isOpen, onToggleMenu }: props) {
                 <div className="flex justify-center sm:justify-end items-center w-full">
                   <Image
                     alt=""
-                    src="/assets/other/body-size.png"
+                    src="/assets/body-size.png"
                     className="w-auto"
                     loading="eager"
                   />

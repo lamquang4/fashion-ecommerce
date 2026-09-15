@@ -3,25 +3,27 @@ type Props = {
 };
 function WishlistItemListSkeleton({ count }: Props) {
   return (
-    <div className="flex gap-8 lg:max-w-xl mx-auto w-full">
-      <div className="flex flex-col gap-5 bg-white basis-full">
-        {Array.from({ length: count }).map((_, index) => (
-          <div key={index} className="flex w-full gap-4 relative animate-pulse">
-            <div className="flex gap-4.5 w-full">
-              <div className="mx-auto bg-gray-200 w-[200px] h-[200px]" />
+    <div className="grid grid-cols-1 gap-4 bg-white lg:grid-cols-2">
+      {Array.from({ length: count }).map((_, index) => (
+        <div key={index} className="relative flex w-full gap-4 animate-pulse">
+          <div className="flex w-full min-w-0 gap-4">
+            <div className="aspect-square w-[180px] shrink-0 bg-gray-200" />
 
-              <div className="flex justify-between gap-4 w-full">
-                <div className="flex flex-col gap-3 w-full">
-                  <div className="h-5 bg-gray-200 rounded w-2/3" />
-                  <div className="h-4 bg-gray-200 rounded w-1/3" />
+            <div className="flex w-full min-w-0 flex-col items-start justify-between gap-4 sm:flex-row">
+              <div className="flex min-w-0 flex-1 flex-col gap-2">
+                <div className="h-5 w-3/4 rounded bg-gray-200" />
+
+                <div className="flex items-center gap-2">
+                  <div className="h-5.5 w-5.5 shrink-0 rounded-full bg-gray-200" />
+                  <div className="h-4 w-20 rounded bg-gray-200" />
                 </div>
-
-                <div className="h-6 w-6 bg-gray-200 mb-auto" />
               </div>
+
+              <div className="h-[22px] w-[22px] shrink-0 rounded bg-gray-200" />
             </div>
           </div>
-        ))}
-      </div>
+        </div>
+      ))}
     </div>
   );
 }

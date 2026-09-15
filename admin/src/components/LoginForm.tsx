@@ -118,7 +118,7 @@ function LoginForm() {
 
               <div className="hidden sm:block border-l-2 border-gray-200 px-4 sm:px-8">
                 <Image
-                  src={"/assets/other/urban.webp"}
+                  src={"/assets/urban.webp"}
                   alt={""}
                   className={"w-auto"}
                   loading="eager"

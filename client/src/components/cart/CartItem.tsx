@@ -90,13 +90,13 @@ function CartItem({ cartId, item }: Props) {
       className="w-full relative space-y-4"
       key={`${item._id}-${item.variant._id}-${item.variant.color._id}-${item.variant.size._id}`}
     >
-      <div className="flex gap-4 w-full">
-        <Link href={`/product/${item.slug}`}>
-          <div className="w-full max-w-[250px] shrink-0">
+      <div className="flex w-full min-w-0 gap-4">
+        <Link href={`/product/${item.slug}`} className="shrink-0">
+          <div className="aspect-square w-[180px] overflow-hidden bg-gray-100">
             <Image
               src={item.variant.images[0]}
               alt={item.name}
-              className={"w-full"}
+              className="h-full w-full object-contain"
               loading="eager"
             />
           </div>
@@ -104,14 +104,28 @@ function CartItem({ cartId, item }: Props) {
 
         <div className="flex flex-col gap-4 w-full">
           <div className="flex justify-between gap-4">
-            <div className="flex flex-col gap-2">
-              <h5 className=" ">{item.name}</h5>
-              <p className="font-medium  ">
-                Màu: {item.variant.color.namecolor}
-              </p>
-              <p className="font-medium  ">
-                Kích thước: {item.variant.size.namesize}
-              </p>
+            <div className="flex flex-col gap-4">
+              <h5 className="line-clamp-2">{item.name}</h5>
+
+              <div className="flex items-center gap-4 flex-wrap">
+                <div className="flex items-center gap-2">
+                  <span className="truncate font-medium">
+                    Màu: {item.variant?.color?.namecolor}
+                  </span>
+
+                  <div
+                    style={{
+                      backgroundColor: item.variant?.color?.codecolor,
+                    }}
+                    className="h-5.5 w-5.5 shrink-0 rounded-full"
+                  />
+                </div>
+
+                <p className="font-medium">
+                  Kích thước: {item.variant.size.namesize}
+                </p>
+              </div>
+
               {item.discount > 0 ? (
                 <p className="font-medium text-[#c00]">
                   Giá giảm:{" "}

@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import Order from "@/model/Order";
@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
 
     if (responseCode === "00") {
       const order = await Order.findOne({ orderCode: orderCode }).session(
-        session
+        session,
       );
 
       if (order) {
@@ -58,7 +58,7 @@ export async function GET(req: NextRequest) {
           await session.commitTransaction();
           session.endSession();
           return NextResponse.redirect(
-            `${process.env.NEXTAUTH_URL}/order-result?result=fail`
+            `${process.env.NEXTAUTH_URL}/order-result?result=fail`,
           );
         }
 
@@ -74,7 +74,7 @@ export async function GET(req: NextRequest) {
               },
             },
             { $inc: { "inventories.$[elem].quantity": -quantity } },
-            { arrayFilters: [{ "elem.size": size }], session }
+            { arrayFilters: [{ "elem.size": size }], session },
           );
         }
 
@@ -83,7 +83,7 @@ export async function GET(req: NextRequest) {
           await Coupon.findByIdAndUpdate(
             order.coupon,
             { $inc: { amount: -1 } },
-            { session }
+            { session },
           );
         }
 
@@ -105,7 +105,7 @@ export async function GET(req: NextRequest) {
         await session.commitTransaction();
         session.endSession();
         return NextResponse.redirect(
-          `${process.env.NEXTAUTH_URL}/order-result?result=successful`
+          `${process.env.NEXTAUTH_URL}/order-result?result=successful`,
         );
       }
     }
@@ -118,7 +118,7 @@ export async function GET(req: NextRequest) {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

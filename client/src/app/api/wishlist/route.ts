@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import { NextRequest, NextResponse } from "next/server";
 import mongoose from "mongoose";
 import { getServerSession } from "next-auth";
@@ -27,7 +27,7 @@ export async function GET(req: NextRequest) {
         {
           msg: "Không biết",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -94,7 +94,7 @@ export async function GET(req: NextRequest) {
         {
           msg: "Không tìm thấy",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -125,7 +125,7 @@ export async function POST(req: NextRequest) {
         if (userWishlist) {
           for (const item of guestWishlist.items) {
             const exists = userWishlist.items.some(
-              (it: any) => it.variant.toString() === item.variant.toString()
+              (it: any) => it.variant.toString() === item.variant.toString(),
             );
             if (!exists) userWishlist.items.push(item);
           }
@@ -157,7 +157,7 @@ export async function POST(req: NextRequest) {
     }
 
     const alreadyExists = wishlist.items.some(
-      (item: any) => item.variant.toString() === variant
+      (item: any) => item.variant.toString() === variant,
     );
 
     if (!alreadyExists) {
@@ -208,12 +208,12 @@ export async function PUT(req: NextRequest) {
     if (!wishlist) {
       return NextResponse.json(
         { msg: "Không tìm thấy yêu thích" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     wishlist.items = wishlist.items.filter(
-      (item: any) => item.variant.toString() !== variant
+      (item: any) => item.variant.toString() !== variant,
     );
 
     await wishlist.save();
@@ -223,5 +223,3 @@ export async function PUT(req: NextRequest) {
     return NextResponse.json({ msg: "Lỗi", err }, { status: 500 });
   }
 }
-
-

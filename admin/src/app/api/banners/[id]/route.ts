@@ -1,5 +1,5 @@
 import cloudinary from "@/lib/cloudinary";
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Banner from "@/model/Banner";
 import { extractPublicId } from "@/utils/extractPublicId";
 import mongoose from "mongoose";
@@ -7,7 +7,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -23,7 +23,7 @@ export async function DELETE(
     if (!banner) {
       return NextResponse.json(
         { msg: "Không tìm thấy banner" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -40,7 +40,7 @@ export async function DELETE(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

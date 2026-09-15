@@ -1,10 +1,10 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import User from "@/model/User";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -22,7 +22,7 @@ export async function PUT(
     if (!user) {
       return NextResponse.json(
         { msg: "Không tìm thấy người dùng" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -31,7 +31,7 @@ export async function PUT(
       { status },
       {
         new: true,
-      }
+      },
     );
 
     return NextResponse.json({ status: 200 });
@@ -40,7 +40,7 @@ export async function PUT(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

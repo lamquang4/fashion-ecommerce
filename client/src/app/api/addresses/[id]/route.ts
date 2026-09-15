@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import Address from "@/model/Address";
 import { validatePhone } from "@/utils/validatePhone";
 import mongoose from "mongoose";
@@ -7,7 +7,7 @@ import { getServerSession } from "next-auth";
 import { options } from "../../auth/[...nextauth]/options";
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -22,7 +22,7 @@ export async function GET(
     if (!address) {
       return NextResponse.json(
         { msg: "Không tìm thấy địa chỉ" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -32,14 +32,14 @@ export async function GET(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -50,7 +50,7 @@ export async function PUT(
     if (!userId) {
       return NextResponse.json(
         { msg: "Tài khoản chưa đăng nhập" },
-        { status: 401 }
+        { status: 401 },
       );
     }
     const body = await req.json();
@@ -64,7 +64,7 @@ export async function PUT(
     if (!validatePhone(phone)) {
       return NextResponse.json(
         { msg: "Số điện thoại không hợp lệ" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -72,7 +72,7 @@ export async function PUT(
     if (!address) {
       return NextResponse.json(
         { msg: "Không tìm thấy địa chỉ" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -95,14 +95,14 @@ export async function PUT(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -118,7 +118,7 @@ export async function DELETE(
     if (!address) {
       return NextResponse.json(
         { msg: "Không tìm thấy địa chỉ" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -130,7 +130,7 @@ export async function DELETE(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

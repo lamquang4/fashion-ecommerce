@@ -11,7 +11,7 @@ import toast from "react-hot-toast";
 import useBlockUser from "@/hooks/useBlockUser";
 import useDeleteUser from "@/hooks/useDeleteUser";
 
-const array = [
+const arrayStatus = [
   { name: "Tất cả", value: null },
   { name: "Bình thường", value: 1 },
   { name: "Đã chặn", value: 0 },
@@ -79,7 +79,7 @@ function AdminTable({ admins, isLoading, mutate }: Props) {
           <th className="p-[1rem]  ">
             <FilterDropDownMenu
               title="Tình trạng"
-              array={array}
+              array={arrayStatus}
               paramName="status"
             />
           </th>
@@ -155,7 +155,7 @@ function AdminTable({ admins, isLoading, mutate }: Props) {
             <td colSpan={8} className="w-full h-[70vh]">
               <div className="flex justify-center items-center">
                 <Image
-                  src={"/assets/other/notfound1.png"}
+                  src={"/assets/notfound1.png"}
                   alt={""}
                   className={"w-[135px]"}
                   loading="lazy"

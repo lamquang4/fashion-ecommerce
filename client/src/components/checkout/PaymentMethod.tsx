@@ -7,17 +7,17 @@ type Props = {
 function PaymentMethod({ paymethod, setPaymethod }: Props) {
   const paymethods = [
     {
-      image: "/assets/other/cod.png",
+      image: "/assets/cod.png",
       name: "Thanh toán khi giao hàng",
       value: "cod",
     },
     {
-      image: "/assets/other/momo.png",
+      image: "/assets/momo.png",
       name: "Thanh toán MOMO",
       value: "momo",
     },
     {
-      image: "/assets/other/vnpay.png",
+      image: "/assets/vnpay.png",
       name: "Thanh toán VNPAY",
       value: "vnpay",
     },

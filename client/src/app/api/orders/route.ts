@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import Order from "@/model/Order";
 import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
     if (!userId) {
       return NextResponse.json(
         { msg: "Tài khoản chưa đăng nhập" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
@@ -170,7 +170,7 @@ export async function GET(req: NextRequest) {
         {
           msg: "Không tìm thấy đơn hàng",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -182,14 +182,14 @@ export async function GET(req: NextRequest) {
         limit,
         totalPages: Math.ceil(total / limit),
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
@@ -219,14 +219,14 @@ export async function POST(req: NextRequest) {
     if (!userId) {
       return NextResponse.json(
         { msg: "Tài khoản chưa đăng nhập" },
-        { status: 401 }
+        { status: 401 },
       );
     }
 
     if (!validatePhone(phone)) {
       return NextResponse.json(
         { msg: "Số điện thoại không hợp lệ" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -258,7 +258,7 @@ export async function POST(req: NextRequest) {
           status: paymethod === "cod" ? 0 : -1,
         },
       ],
-      { session }
+      { session },
     );
 
     if (paymethod === "cod") {
@@ -278,7 +278,7 @@ export async function POST(req: NextRequest) {
           {
             arrayFilters: [{ "elem.size": size }],
             session,
-          }
+          },
         );
 
         if (updated.modifiedCount === 0) {
@@ -292,7 +292,7 @@ export async function POST(req: NextRequest) {
         await Coupon.findByIdAndUpdate(
           coupon,
           { $inc: { amount: -1 } },
-          { session }
+          { session },
         );
       }
 
@@ -305,7 +305,7 @@ export async function POST(req: NextRequest) {
 
     return NextResponse.json(
       { orderCode: newOrder[0].orderCode },
-      { status: 201 }
+      { status: 201 },
     );
   } catch (err) {
     await session.abortTransaction();
@@ -317,7 +317,7 @@ export async function POST(req: NextRequest) {
       },
       {
         status: 500,
-      }
+      },
     );
   }
 }

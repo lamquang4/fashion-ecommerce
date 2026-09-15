@@ -96,7 +96,7 @@ function CollectionBannerForm() {
                             src={
                               previewImages1[index] ||
                               item?.image ||
-                              "/assets/other/default-banner.png"
+                              "/assets/default-banner.png"
                             }
                             alt=""
                             className="w-full object-cover"

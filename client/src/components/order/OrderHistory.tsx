@@ -193,7 +193,7 @@ function OrderHistory() {
           <div className="flex justify-center items-center h-[70vh]">
             <div className="flex flex-col justify-center items-center gap-[15px]">
               <Image
-                src={"/assets/other/empty-order.png"}
+                src={"/assets/empty-order.png"}
                 alt={""}
                 className={"w-[120px]"}
                 loading="eager"

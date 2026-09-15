@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Color from "@/model/Color";
 import { NextResponse } from "next/server";
 
@@ -29,7 +29,7 @@ export async function GET() {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

@@ -1,10 +1,10 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import Order from "@/model/Order";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ code: string }> }
+  { params }: { params: Promise<{ code: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -129,7 +129,7 @@ export async function GET(
     if (!order[0]) {
       return NextResponse.json(
         { msg: "Không tìm thấy đơn hàng" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -139,7 +139,7 @@ export async function GET(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

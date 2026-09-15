@@ -13,8 +13,54 @@ const quicksand = Quicksand({
 });
 
 export const metadata: Metadata = {
-  title: "Aura",
-  description: "Quần áo cho nam và nữ",
+  metadataBase: new URL(process.env.NEXTAUTH_URL || "https://your-domain.com"),
+  title: {
+    default: "Aura - Thời trang nam nữ chính hãng",
+    template: "%s | Aura",
+  },
+  description:
+    "Aura - Cửa hàng thời trang quần áo nam nữ với đa dạng mẫu mã, chất lượng cao, giá tốt.",
+  keywords: ["thời trang", "quần áo nam nữ", "aura", "shop quần áo"],
+  authors: [{ name: "Aura Team" }],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+    },
+  },
+  openGraph: {
+    type: "website",
+    locale: "vi_VN",
+    siteName: "Aura",
+    title: "Aura - Thời trang nam nữ chính hãng",
+    description:
+      "Cửa hàng thời trang quần áo nam nữ với đa dạng mẫu mã, chất lượng cao.",
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Aura Fashion",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aura - Thời trang nam nữ chính hãng",
+    description: "Cửa hàng thời trang quần áo nam nữ chất lượng cao.",
+    images: ["/og-image.jpg"],
+  },
+  icons: {
+    icon: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+  alternates: {
+    canonical: "/",
+  },
 };
 
 export default function RootLayout({
@@ -23,7 +69,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="vi">
       <body className={quicksand.className}>
         <Toaster
           toastOptions={{

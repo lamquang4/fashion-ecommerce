@@ -1,10 +1,10 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import Category from "@/model/Category";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ slug: string }> }
+  { params }: { params: Promise<{ slug: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -20,11 +20,11 @@ export async function GET(
       category = { namecategory: "Đồ nữ" };
     } else {
       category = await Category.findOne({ slug }).lean();
-      
+
       if (!category) {
         return NextResponse.json(
           { msg: "Không tìm thấy danh mục" },
-          { status: 404 }
+          { status: 404 },
         );
       }
     }
@@ -35,7 +35,7 @@ export async function GET(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

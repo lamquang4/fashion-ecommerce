@@ -61,7 +61,7 @@ function CategoryList({ categoriesMale, categoriesFemale, isLoading }: Props) {
                     href={`/collection/${category.slug}`}
                     className="space-y-[8px]"
                   >
-                    <div className="w-[110px] sm:w-[130px] border-gray-300 border rounded-full group-hover:border-black">
+                    <div className="w-[110px] h-[110px] sm:w-[130px] sm:h-[130px] border-gray-300 border rounded-full group-hover:border-black overflow-hidden">
                       <Image
                         src={category.image}
                         alt={category.namecategory}

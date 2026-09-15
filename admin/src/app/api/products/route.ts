@@ -1,5 +1,5 @@
 import cloudinary from "@/lib/cloudinary";
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Inventory from "@/model/Inventory";
 import Product from "@/model/Product";
 import { removeVietNamese } from "@/utils/removeVietnamese";

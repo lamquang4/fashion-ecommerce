@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import User from "@/model/User";
 import { hashValue } from "@/utils/hashValue";
 import { validateBirthday } from "@/utils/validateBirthday";
@@ -47,7 +47,7 @@ export async function GET(req: NextRequest) {
         {
           msg: "Không tìm thấy",
         },
-        { status: 200 }
+        { status: 200 },
       );
     }
 
@@ -59,14 +59,14 @@ export async function GET(req: NextRequest) {
         limit,
         totalPages: Math.ceil(total / limit),
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
@@ -85,21 +85,21 @@ export async function POST(req: NextRequest) {
     if (!validatePhone(phone)) {
       return NextResponse.json(
         { msg: "Số điện thoại không hợp lệ" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!validateBirthday(birthday)) {
       return NextResponse.json(
         { msg: "Bạn phải đủ 18 tuổi trở lên" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (password.length < 6) {
       return NextResponse.json(
         { msg: "Mật khẩu phải có ít nhất 6 ký tự" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -107,7 +107,7 @@ export async function POST(req: NextRequest) {
     if (checkEmail) {
       return NextResponse.json(
         { msg: "Email đã được sử dụng" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -115,7 +115,7 @@ export async function POST(req: NextRequest) {
     if (checkPhone) {
       return NextResponse.json(
         { msg: "Số điện thoại đã được sử dụng" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -136,7 +136,7 @@ export async function POST(req: NextRequest) {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

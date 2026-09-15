@@ -1,6 +1,6 @@
 import User from "@/model/User";
 import { NextRequest, NextResponse } from "next/server";
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import { validateEmail } from "@/utils/validateEmail";
 import Otp from "@/model/Otp";
 import { hashValue } from "@/utils/hashValue";
@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
       { _id: user._id },
       {
         $set: { password: hashPassword },
-      }
+      },
     );
 
     await Otp.findByIdAndDelete(currentOtp._id);
@@ -46,7 +46,7 @@ export async function POST(req: NextRequest) {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

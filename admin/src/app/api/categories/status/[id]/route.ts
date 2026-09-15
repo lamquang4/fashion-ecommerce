@@ -1,11 +1,11 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Category from "@/model/Category";
 import Product from "@/model/Product";
 import mongoose from "mongoose";
 import { NextRequest, NextResponse } from "next/server";
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -29,13 +29,13 @@ export async function PUT(
       { status },
       {
         new: true,
-      }
+      },
     );
 
     if (status === 0 && category.status !== 0) {
       await Product.updateMany(
         { category: id, status: 1 },
-        { $set: { status: 0 } }
+        { $set: { status: 0 } },
       );
     }
 
@@ -45,7 +45,7 @@ export async function PUT(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

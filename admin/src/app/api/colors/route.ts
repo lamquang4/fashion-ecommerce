@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Color from "@/model/Color";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
         {
           msg: "Không tìm thấy",
         },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -40,14 +40,14 @@ export async function GET(req: NextRequest) {
         limit,
         totalPages: Math.ceil(total / limit),
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
@@ -63,7 +63,7 @@ export async function POST(req: NextRequest) {
     if (checkName) {
       return NextResponse.json(
         { msg: "Tên màu đã được sử dụng" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

@@ -1,10 +1,10 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/mongodb";
 import Coupon from "@/model/Coupon";
 import { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ code: string; totalPrice: number }> }
+  { params }: { params: Promise<{ code: string; totalPrice: number }> },
 ) {
   try {
     await connectMongoDB();
@@ -15,7 +15,7 @@ export async function GET(
     if (!coupon) {
       return NextResponse.json(
         { msg: "Mã giảm giá không khả dụng" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -24,7 +24,7 @@ export async function GET(
     if (coupon.status !== 1) {
       return NextResponse.json(
         { msg: "Mã giảm giá không còn hoạt động" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -33,13 +33,13 @@ export async function GET(
     if (now < start) {
       return NextResponse.json(
         { msg: "Mã giảm giá chưa được bắt đầu" },
-        { status: 409 }
+        { status: 409 },
       );
     }
     if (now > end) {
       return NextResponse.json(
         { msg: "Mã giảm giá đã hết hạn" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -47,10 +47,10 @@ export async function GET(
       return NextResponse.json(
         {
           msg: `Đơn hàng cần tối thiểu ${coupon.minOrderValue.toLocaleString(
-            "vi-VN"
+            "vi-VN",
           )}₫ để sử dụng mã này`,
         },
-        { status: 422 }
+        { status: 422 },
       );
     }
 
@@ -60,7 +60,7 @@ export async function GET(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

@@ -89,7 +89,7 @@ function Header() {
           <div className="flex justify-between items-center w-full max-w-[1230px] mx-auto">
             <Link href={"/"}>
               <Image
-                src={"/assets/other/logo.png"}
+                src={"/assets/logo.png"}
                 alt={"logo"}
                 className={"w-[80px]"}
                 loading="eager"

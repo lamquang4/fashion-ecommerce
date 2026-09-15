@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Coupon from "@/model/Coupon";
 import { validateNonNegativeNumber } from "@/utils/validateNonNegativeNumber";
 import { validatePercentNumber } from "@/utils/validatePercentNumber";
@@ -40,14 +40,14 @@ export async function GET(req: NextRequest) {
         limit,
         totalPages: Math.ceil(total / limit),
       },
-      { status: 200 }
+      { status: 200 },
     );
   } catch (err) {
     return NextResponse.json(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
     if (checkCode) {
       return NextResponse.json(
         { msg: "Mã phiếu giảm giá đã được sử dụng" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -84,35 +84,35 @@ export async function POST(req: NextRequest) {
     if (start < now) {
       return NextResponse.json(
         { msg: "Ngày bắt đầu không được sau ngày hiện tại" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (start >= expiry) {
       return NextResponse.json(
         { msg: "Ngày kết thúc phải sau ngày bắt đầu" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (amount < limit) {
       return NextResponse.json(
         { msg: "Số lượng phát hành phải lớn hơn số lần dùng" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!validatePositiveNumber(amount)) {
       return NextResponse.json(
         { msg: "Số lượng phải lớn hơn 0" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!validatePositiveNumber(limit)) {
       return NextResponse.json(
         { msg: "Số lần dùng phải lớn hơn 0" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -120,7 +120,7 @@ export async function POST(req: NextRequest) {
       if (!validatePositiveNumber(discountValue)) {
         return NextResponse.json(
           { msg: "Giá trị tiền cố định giảm giá phải lớn hơn 0" },
-          { status: 400 }
+          { status: 400 },
         );
       }
     }
@@ -129,7 +129,7 @@ export async function POST(req: NextRequest) {
       if (!validatePercentNumber(discountValue)) {
         return NextResponse.json(
           { msg: "Giá trị % giảm giá từ 1 đến 100" },
-          { status: 400 }
+          { status: 400 },
         );
       }
     }
@@ -139,7 +139,7 @@ export async function POST(req: NextRequest) {
         {
           msg: "Giá trị tiền cố định đơn hàng tối thiểu phải lớn hơn hoặc bằng 0",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -149,7 +149,7 @@ export async function POST(req: NextRequest) {
           {
             msg: "Giá trị tiền cố định giảm tối đa (chỉ áp dụng loại phiếu %) phải lớn hơn 0",
           },
-          { status: 400 }
+          { status: 400 },
         );
       }
     }
@@ -191,7 +191,7 @@ export async function POST(req: NextRequest) {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

@@ -1,10 +1,10 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Order from "@/model/Order";
 import { NextRequest, NextResponse } from "next/server";
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ year: string }> }
+  { params }: { params: Promise<{ year: string }> },
 ) {
   try {
     await connectMongoDB();

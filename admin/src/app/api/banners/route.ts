@@ -1,5 +1,5 @@
 import cloudinary from "@/lib/cloudinary";
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Banner from "@/model/Banner";
 import { extractPublicId } from "@/utils/extractPublicId";
 import mongoose from "mongoose";
@@ -30,7 +30,7 @@ export async function POST(req: NextRequest) {
           {
             msg: `Hình "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.`,
           },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -38,7 +38,7 @@ export async function POST(req: NextRequest) {
       if (file.size / 1024 > maxSizeKB) {
         return NextResponse.json(
           { msg: `Hình "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.` },
-          { status: 400 }
+          { status: 400 },
         );
       }
 
@@ -56,7 +56,7 @@ export async function POST(req: NextRequest) {
           (error, uploadResult) => {
             if (error) reject(error);
             else resolve(uploadResult);
-          }
+          },
         );
         stream.end(buffer);
       });
@@ -78,7 +78,7 @@ export async function POST(req: NextRequest) {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
@@ -113,7 +113,7 @@ export async function PUT(req: NextRequest) {
             {
               msg: `Hình "${file.name}" không đúng định dạng PNG, JPG hoặc WEBP.`,
             },
-            { status: 400 }
+            { status: 400 },
           );
         }
 
@@ -121,7 +121,7 @@ export async function PUT(req: NextRequest) {
         if (file.size / 1024 > maxSizeKB) {
           return NextResponse.json(
             { msg: `Hình "${file.name}" vượt quá dung lượng ${maxSizeKB}KB.` },
-            { status: 400 }
+            { status: 400 },
           );
         }
 
@@ -148,7 +148,7 @@ export async function PUT(req: NextRequest) {
             (error, result) => {
               if (error) reject(error);
               else resolve(result);
-            }
+            },
           );
           stream.end(buffer);
         });
@@ -158,7 +158,7 @@ export async function PUT(req: NextRequest) {
         const updatedBanner = await Banner.findByIdAndUpdate(
           id,
           { image: imagePath },
-          { new: true }
+          { new: true },
         );
 
         updatedBanners.push(updatedBanner);
@@ -171,7 +171,7 @@ export async function PUT(req: NextRequest) {
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }

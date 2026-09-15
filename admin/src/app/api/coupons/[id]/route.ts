@@ -1,4 +1,4 @@
-import { connectMongoDB } from "@/lib/MongoConnect";
+import { connectMongoDB } from "@/lib/db/mongodb";
 import Coupon from "@/model/Coupon";
 import Order from "@/model/Order";
 import { validateNonNegativeNumber } from "@/utils/validateNonNegativeNumber";
@@ -10,7 +10,7 @@ import { NextResponse } from "next/server";
 
 export async function GET(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -32,14 +32,14 @@ export async function GET(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function DELETE(
   _req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -58,7 +58,7 @@ export async function DELETE(
         },
         {
           status: 409,
-        }
+        },
       );
     }
 
@@ -66,7 +66,7 @@ export async function DELETE(
     if (!coupon) {
       return NextResponse.json(
         { msg: "Không tìm thấy phiếu giảm giá" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
@@ -78,14 +78,14 @@ export async function DELETE(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
 
 export async function PUT(
   req: NextRequest,
-  { params }: { params: Promise<{ id: string }> }
+  { params }: { params: Promise<{ id: string }> },
 ) {
   try {
     await connectMongoDB();
@@ -113,14 +113,14 @@ export async function PUT(
     if (!coupon) {
       return NextResponse.json(
         { msg: "Không tìm thấy phiếu giảm giá" },
-        { status: 404 }
+        { status: 404 },
       );
     }
 
     if (coupon.status === 3) {
       return NextResponse.json(
         { msg: "Phiếu giảm giá đã hết hạn nên không được cập nhật!" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -128,7 +128,7 @@ export async function PUT(
     if (checkCode) {
       return NextResponse.json(
         { msg: "Mã phiếu giảm giá đã được sử dụng" },
-        { status: 409 }
+        { status: 409 },
       );
     }
 
@@ -139,35 +139,35 @@ export async function PUT(
     if (start < now && coupon.status != 1) {
       return NextResponse.json(
         { msg: "Ngày bắt đầu không được sau ngày hiện tại" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (start >= expiry && coupon.status != 1) {
       return NextResponse.json(
         { msg: "Ngày kết thúc phải sau ngày bắt đầu" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (amount < limit) {
       return NextResponse.json(
         { msg: "Số lượng phát hành phải lớn hơn số lần dùng" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!validatePositiveNumber(amount)) {
       return NextResponse.json(
         { msg: "Số lượng phải lớn hơn 0" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
     if (!validatePositiveNumber(limit)) {
       return NextResponse.json(
         { msg: "Số lần dùng phải lớn hơn 0" },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -175,7 +175,7 @@ export async function PUT(
       if (!validatePositiveNumber(discountValue)) {
         return NextResponse.json(
           { msg: "Giá trị tiền cố định giảm giá phải lớn hơn 0" },
-          { status: 400 }
+          { status: 400 },
         );
       }
     }
@@ -184,7 +184,7 @@ export async function PUT(
       if (!validatePercentNumber(discountValue)) {
         return NextResponse.json(
           { msg: "Giá trị % giảm giá từ 1 đến 100" },
-          { status: 400 }
+          { status: 400 },
         );
       }
     }
@@ -194,7 +194,7 @@ export async function PUT(
         {
           msg: "Giá trị tiền cố định đơn hàng tối thiểu phải lớn hơn hoặc bằng 0",
         },
-        { status: 400 }
+        { status: 400 },
       );
     }
 
@@ -204,7 +204,7 @@ export async function PUT(
           {
             msg: "Giá trị tiền cố định giảm tối đa (chỉ áp dụng loại phiếu %) phải lớn hơn 0",
           },
-          { status: 400 }
+          { status: 400 },
         );
       }
     }
@@ -248,7 +248,7 @@ export async function PUT(
       { err, msg: "Lỗi" },
       {
         status: 500,
-      }
+      },
     );
   }
 }
