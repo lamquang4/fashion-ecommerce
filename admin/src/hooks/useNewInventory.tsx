@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 
 export const useNewInventory = () => {
@@ -12,13 +12,18 @@ export const useNewInventory = () => {
     }[]
   >([]);
 
+  const newVariantsRef = useRef(newVariants);
+  useEffect(() => {
+    newVariantsRef.current = newVariants;
+  }, [newVariants]);
+
   useEffect(() => {
     return () => {
-      newVariants.forEach((block) => {
+      newVariantsRef.current.forEach((block) => {
         block.previewImages.forEach((url) => URL.revokeObjectURL(url));
       });
     };
-  }, [newVariants]);
+  }, []);
 
   const handleImage = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>, blockIndex: number) => {
@@ -40,7 +45,7 @@ export const useNewInventory = () => {
         }
 
         const imageUrls = incomingFiles.map((file) =>
-          URL.createObjectURL(file)
+          URL.createObjectURL(file),
         );
 
         updated[blockIndex] = {
@@ -53,7 +58,7 @@ export const useNewInventory = () => {
       });
       e.target.value = "";
     },
-    []
+    [],
   );
 
   const handleChangeNewInventory = useCallback(
@@ -61,7 +66,7 @@ export const useNewInventory = () => {
       blockIndex: number,
       index: number,
       field: keyof { size: string; quantity: number },
-      value: string | number
+      value: string | number,
     ) => {
       setNewVariants((prev) => {
         const updated = [...prev];
@@ -69,7 +74,7 @@ export const useNewInventory = () => {
         return updated;
       });
     },
-    []
+    [],
   );
 
   const handleAddInventoryBlock = () => {
@@ -92,7 +97,7 @@ export const useNewInventory = () => {
       const updated = [...prev];
 
       updated[blockIndex].previewImages.forEach((url) =>
-        URL.revokeObjectURL(url)
+        URL.revokeObjectURL(url),
       );
 
       updated.splice(blockIndex, 1);
@@ -110,7 +115,7 @@ export const useNewInventory = () => {
           ...block,
           inventories: [...block.inventories, { size: "", quantity: 1 }],
         };
-      })
+      }),
     );
   };
 
@@ -124,7 +129,7 @@ export const useNewInventory = () => {
           ...block,
           inventories: block.inventories.filter((_, j) => j !== index),
         };
-      })
+      }),
     );
   };
 
@@ -138,7 +143,7 @@ export const useNewInventory = () => {
 
   const handleSortNewInventory = (
     blockIndex: number,
-    newList: { size: string; quantity: number }[]
+    newList: { size: string; quantity: number }[],
   ) => {
     setNewVariants((prev) => {
       const updated = [...prev];
@@ -172,7 +177,7 @@ export const useNewInventory = () => {
         return updated;
       });
     },
-    []
+    [],
   );
 
   return {

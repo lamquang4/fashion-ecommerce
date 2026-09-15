@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import toast from "react-hot-toast";
 import Swal from "sweetalert2";
 
@@ -14,13 +14,18 @@ export const useCurrentInventory = () => {
     }[]
   >([]);
 
+  const currentVariantsRef = useRef(currentVariants);
+  useEffect(() => {
+    currentVariantsRef.current = currentVariants;
+  }, [currentVariants]);
+
   useEffect(() => {
     return () => {
-      currentVariants.forEach((block) => {
+      currentVariantsRef.current.forEach((block) => {
         block.previewImages.forEach((url) => URL.revokeObjectURL(url));
       });
     };
-  }, [currentVariants]);
+  }, []);
 
   const handleAddCurrentInventory = (blockIndex: number) => {
     setCurrentVariants((prev) =>
@@ -31,13 +36,13 @@ export const useCurrentInventory = () => {
           ...block,
           inventories: [...block.inventories, { size: "", quantity: 1 }],
         };
-      })
+      }),
     );
   };
 
   const handleRemoveCurrentInventory = async (
     blockIndex: number,
-    index: number
+    index: number,
   ) => {
     const result = await Swal.fire({
       title: `Xác nhận xóa?`,
@@ -59,7 +64,7 @@ export const useCurrentInventory = () => {
           ...block,
           inventories: block.inventories.filter((_, j) => j !== index),
         };
-      })
+      }),
     );
   };
 
@@ -79,7 +84,7 @@ export const useCurrentInventory = () => {
         size: string;
         quantity: number;
       },
-      value: string | number
+      value: string | number,
     ) => {
       setCurrentVariants((prev) => {
         const updated = [...prev];
@@ -87,7 +92,7 @@ export const useCurrentInventory = () => {
         return updated;
       });
     },
-    []
+    [],
   );
 
   const handleImageCurrent = useCallback(
@@ -110,7 +115,7 @@ export const useCurrentInventory = () => {
         }
 
         const imageUrls = incomingFiles.map((file) =>
-          URL.createObjectURL(file)
+          URL.createObjectURL(file),
         );
 
         updated[blockIndex] = {
@@ -123,7 +128,7 @@ export const useCurrentInventory = () => {
       });
       e.target.value = "";
     },
-    []
+    [],
   );
 
   const handleRemoveImageCurrent = useCallback(
@@ -144,12 +149,12 @@ export const useCurrentInventory = () => {
         return updated;
       });
     },
-    []
+    [],
   );
 
   const handleSortCurrentInventory = (
     blockIndex: number,
-    newList: { size: string; quantity: number }[]
+    newList: { size: string; quantity: number }[],
   ) => {
     setCurrentVariants((prev) => {
       const updated = [...prev];
