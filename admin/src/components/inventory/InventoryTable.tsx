@@ -55,10 +55,10 @@ function InventoryTable({ inventories, isLoading }: Props) {
                   </div>
                 </td>
 
-                <td className="p-[1rem] text-[0.9rem]  text-[#444]">
+                <td className="p-[1rem] text-[0.9rem] text-[#444]">
                   <div className="flex gap-[10px] items-center">
                     <div
-                      className={`w-5 h-5 border-gray-500 border`}
+                      className={`w-5 h-5 border-gray-500 border rounded-full`}
                       style={{ backgroundColor: inventory.color.codecolor }}
                     ></div>
                     {inventory.color.namecolor}

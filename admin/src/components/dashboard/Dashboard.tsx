@@ -24,7 +24,7 @@ function Dashboard() {
   return (
     <>
       <div className="py-[1.3rem] px-[1.2rem] bg-[#f1f4f9] space-y-[20px]">
-        <h2 className=" text-[#74767d]">Thống ke</h2>
+        <h2 className=" text-[#74767d]">Thống kê</h2>
 
         <StaticCards array={array1} />
       </div>

@@ -36,7 +36,7 @@ function WishlistItem({ item, onRemove }: WishlistItemProps) {
                 style={{
                   backgroundColor: item.variant?.color?.codecolor,
                 }}
-                className="h-5.5 w-5.5 shrink-0 rounded-full"
+                className="h-5.5 w-5.5 shrink-0 rounded-full border"
               />
             </div>
           </div>
