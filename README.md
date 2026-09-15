@@ -1,6 +1,10 @@
 # WEBSITE THƯƠNG MẠI ĐIỆN TỬ THỜI TRANG
 
-Xây dựng nền tảng thương mại điện tử thời trang với đầy đủ tính năng từ quản lý sản phẩm đa biến thể (màu sắc, kích thước) đến quy trình mua hàng hoàn chỉnh. Hệ thống bao gồm giao diện quản trị riêng biệt dành cho admin, cho phép kiểm soát toàn bộ hoạt động của cửa hàng.
+Xây dựng nền tảng thương mại điện tử thời trang dành cho nam và nữ, hỗ trợ sản phẩm đa biến thể theo màu sắc và kích thước với tồn kho riêng cho từng biến thể, cùng các chức năng giỏ hàng, yêu thích, đặt hàng, thanh toán, blog và quản lý người dùng
+
+Triển khai xác thực người dùng với NextAuth.js và và sử dụng cơ chế App Router để xây dựng các API Routes, kết hợp MongoDB để lưu trữ dữ liệu và Cloudinary để quản lý hình ảnh
+
+Triển khai SEO toàn hệ thống và theo từng trang với robots.txt, sitemap động được tạo từ dữ liệu MongoDB và metadata động cho các trang chi tiết sản phẩm, blog giúp công cụ tìm kiếm dễ dàng thu thập và hiển thị nội dung của website
 
 ![](docs/images/ui1.png)
 

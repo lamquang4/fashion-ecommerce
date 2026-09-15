@@ -9,7 +9,7 @@ export async function generateProductMetadata(slug: string): Promise<Metadata> {
     return { title: "Sản phẩm không tồn tại" };
   }
 
-  const firstImage = product.variants?.[0]?.images?.[0];
+  const firstImage = product.variants[0].images[0];
   const description = stripHtml(product.description || "").slice(0, 160);
 
   return {
