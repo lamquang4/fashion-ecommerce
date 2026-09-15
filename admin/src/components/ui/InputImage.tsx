@@ -95,7 +95,7 @@ function InputImage({
         ) : (
           <div className="flex gap-3 px-[15px] flex-wrap py-5 justify-center w-full">
             {previewImages.map((image, index) => (
-              <div className="relative" key={index}>
+              <div className="relative" key={image}>
                 <div
                   className="cursor-pointer"
                   onClick={(e) => {

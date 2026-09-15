@@ -5,10 +5,12 @@ import Overplay from "./Overplay";
 import { useRouter, useSearchParams } from "next/navigation";
 import useGetColors from "@/hooks/useGetColors";
 import { memo, useEffect } from "react";
+
 type Props = {
   isOpen: boolean;
   onToggleMenu: () => void;
 };
+
 function AdvancedSearch({ isOpen, onToggleMenu }: Props) {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -83,7 +85,7 @@ function AdvancedSearch({ isOpen, onToggleMenu }: Props) {
   return (
     <>
       <div
-        className={`absolute top-0 left-0 w-[320px] h-screen flex flex-col bg-white z-[25] transform transition-transform duration-300 ease-in-out ${
+        className={`fixed top-0 left-0 w-[320px] h-screen flex flex-col bg-white z-[25] transform transition-transform duration-300 ease-in-out ${
           isOpen ? "translate-x-[0px]" : "translate-x-[-320px]"
         }`}
       >
