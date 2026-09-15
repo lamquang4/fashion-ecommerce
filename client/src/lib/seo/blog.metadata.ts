@@ -1,5 +1,6 @@
 import { Metadata } from "next";
 import { getBlogBySlug } from "@/lib/queries/blog.queries";
+import { stripHtml } from "@/utils/stripHtml";
 
 export async function generateBlogMetadata(slug: string): Promise<Metadata> {
   const blog: any = await getBlogBySlug(slug);
@@ -8,13 +9,15 @@ export async function generateBlogMetadata(slug: string): Promise<Metadata> {
     return { title: "Bài viết không tồn tại" };
   }
 
+  const summary = stripHtml(blog.summary || "").slice(0, 160);
+
   return {
     title: blog.title,
-    description: blog.excerpt?.slice(0, 160),
+    description: summary,
     openGraph: {
       title: blog.title,
-      description: blog.excerpt?.slice(0, 160),
-      images: blog.thumbnail ? [{ url: blog.thumbnail }] : [],
+      description: summary,
+      images: blog.image ? [{ url: blog.image }] : [],
     },
     alternates: {
       canonical: `/blog/${blog.slug}`,

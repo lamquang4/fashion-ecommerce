@@ -36,7 +36,7 @@ export const metadata: Metadata = {
     type: "website",
     locale: "vi_VN",
     siteName: "Aura",
-    title: "Aura - Thời trang nam nữ chính hãng",
+    title: "Aura - Thời trang nam nữ",
     description:
       "Cửa hàng thời trang quần áo nam nữ với đa dạng mẫu mã, chất lượng cao.",
     images: [
@@ -48,7 +48,6 @@ export const metadata: Metadata = {
       },
     ],
   },
-
   alternates: {
     canonical: "/",
   },
