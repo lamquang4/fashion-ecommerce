@@ -10,7 +10,7 @@ Triển khai SEO toàn hệ thống và theo từng trang với robots.txt, site
 
 ![](docs/images/ui2.png)
 
-## Demo
+**Live demo**
 
 Website: [![Live Demo](https://img.shields.io/badge/Live_Demo-000000?style=flat-square&logo=vercel&logoColor=white)](https://fashion-aura-ten.vercel.app)
 
