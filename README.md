@@ -21,7 +21,7 @@ Admin: [![Live Demo](https://img.shields.io/badge/Live_Demo-000000?style=flat-sq
 **1. Clone repository**
 
 ```
-https://github.com/lamquang4/fashion-ecommerce.git
+git clone https://github.com/lamquang4/fashion-ecommerce.git
 ```
 
 **2. Chạy website bằng Docker**
